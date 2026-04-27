@@ -195,6 +195,9 @@
           <button class="top-tab" id="open-mock-exam" data-tab="mock-exam" aria-label="פתח מבחן מדומה — Mock Exam עם טיימר">
             <span class="emoji" aria-hidden="true">📝</span><span>מבחן מדומה</span>
           </button>
+          <button class="top-tab" id="open-gap-matrix" data-tab="gap-matrix" aria-label="פתח מטריצת פערים — ראה היכן יש חולשות">
+            <span class="emoji" aria-hidden="true">📊</span><span>פערים</span>
+          </button>
           <button class="top-tab" id="open-comparator" data-tab="comparator" aria-label="פתח השוואות — Side-by-Side">
             <span class="emoji" aria-hidden="true">⚖️</span><span>השוואות</span>
           </button>
@@ -248,6 +251,11 @@
                   <span class="stat-num" id="stat-bank">0</span>
                   <span class="stat-label">שאלות במאגר</span>
                 </div>
+              </div>
+              <!-- W10 — Export/Import progress -->
+              <div class="progress-sync-row">
+                <button class="km-btn-mini" id="btn-export-progress" title="ייצא את כל ההתקדמות שלך לקובץ JSON">⬇️ ייצוא התקדמות</button>
+                <button class="km-btn-mini" id="btn-import-progress" title="ייבא קובץ התקדמות JSON שייצאת בעבר">⬆️ ייבוא התקדמות</button>
               </div>
               <div class="glow-orb"></div>
               <div class="glow-orb glow-orb-2"></div>
@@ -375,7 +383,38 @@
                 <button class="km-btn-mini" id="t-mode-mixed">🔀 מצב מעורב</button>
                 <button class="km-btn-mini" id="t-export-csv">📥 ייצוא CSV</button>
                 <button class="km-btn-mini danger" id="t-reset-scores">🔄 איפוס ציונים</button>
+                <button class="km-btn-mini" id="t-open-pair-match">🎯 התאמות</button>
+                <button class="km-btn-mini" id="t-open-bug-quests">🕵️ קווסטים</button>
               </div>
+            </div>
+
+            <!-- W8 Bug Quest modal (overlay) -->
+            <div class="bug-quest-overlay" id="bug-quest-overlay" style="display:none" role="dialog" aria-modal="true">
+              <div class="bug-quest-modal glass-panel">
+                <div class="bq-header">
+                  <div>
+                    <h3 id="bq-title">🕵️ קווסטים</h3>
+                    <div class="bq-progress" id="bq-progress"></div>
+                  </div>
+                  <button class="bq-close" id="bq-close" aria-label="סגור">✕</button>
+                </div>
+                <div id="bq-body"><!-- content injected by JS --></div>
+              </div>
+            </div>
+
+            <!-- W8 Pair-Match game panel -->
+            <div class="pair-match-panel glass-panel" id="pair-match-panel" style="display:none">
+              <div class="pm-header">
+                <h3 id="pm-title">🎯 התאמות</h3>
+                <button class="pm-close-btn" id="pm-close">✕ סגור</button>
+              </div>
+              <div class="pm-game-select" id="pm-game-select">
+                <!-- Game buttons injected by JS -->
+              </div>
+              <div class="pm-board" id="pm-board">
+                <!-- Columns injected by JS -->
+              </div>
+              <div class="pm-status" id="pm-status"></div>
             </div>
 
             <div class="trainer-quiz-card glass-panel" id="trainer-quiz-card">
@@ -487,6 +526,23 @@
             <div class="trace-list" id="trace-list"></div>
             <!-- Active trace player (hidden until user picks one) -->
             <div class="trace-player glass-panel" id="trace-player" style="display:none"></div>
+          </div>
+
+          <!-- P2.2 — Gap Matrix View -->
+          <div class="gap-matrix-view" id="gap-matrix-view" style="display:none">
+            <div class="gm-header glass-panel">
+              <h2>📊 מטריצת פערים — היכן צריך לחזק?</h2>
+              <p>סקירה של כל נושאי הלימוד לפי מצב שליטה. לחץ על שורה לפרטי המושגים.</p>
+              <div class="gm-toolbar">
+                <button class="gm-filter-btn active" data-filter="all">הכל</button>
+                <button class="gm-filter-btn" data-filter="gap">🔴 פערים</button>
+                <button class="gm-filter-btn" data-filter="learning">🟡 בעבודה</button>
+                <button class="gm-filter-btn" data-filter="strong">✅ חזק</button>
+                <button class="gm-filter-btn" data-filter="untouched">⏳ לא נגעת 7 ימים</button>
+                <button class="gm-filter-btn" data-filter="always-wrong">🎯 תמיד טועה</button>
+              </div>
+            </div>
+            <div id="gm-matrix-container"></div>
           </div>
 
           <!-- Side-by-Side Comparator View -->
@@ -618,12 +674,45 @@
     <!-- Sprint 2 — Creative Methods (war stories + side-by-side comparator) -->
     <script src="data/war_stories.js"></script>
     <script src="data/comparisons.js"></script>
+    <!-- W7 — Metaphor Library + Learning Pathways -->
+    <script src="data/metaphors.js"></script>
+    <script src="data/pathways.js"></script>
+    <!-- W8 — Pair-Match games + Bug Hunt Quests -->
+    <script src="data/pair_match.js"></script>
+    <script src="data/bug_quests.js"></script>
+    <!-- W9 — AI Tutor FAB + modal -->
     <script src="content-loader.js"></script>
     <!-- Track A — Foundation libs (must load before app.js) -->
+    <!-- W9 — AI Tutor FAB and Modal (injected before app.js) -->
     <script src="lib/rng.js"></script>
     <script src="lib/srs.js"></script>
     <!-- P1.4.1 — Sandboxed code runner -->
     <script src="lib/code-runner.js"></script>
     <script src="app.js"></script>
+
+    <!-- W9 — AI Tutor: FAB button + modal (rendered before closing body) -->
+    <button id="ai-tutor-fab" class="ai-tutor-fab" aria-label="פתח מאמן AI" title="💬 מאמן AI — שאל שאלה, קבל הסבר, בדוק ידע">💬 מאמן</button>
+    <div id="ai-tutor-modal" class="ai-tutor-modal hidden" role="dialog" aria-modal="true" aria-labelledby="ai-tutor-modal-title">
+      <div class="ai-tutor-modal-inner glass-panel">
+        <div class="ai-head">
+          <div>
+            <h3 id="ai-tutor-modal-title">💬 מאמן AI</h3>
+            <div class="ai-usage" id="ai-usage-display"></div>
+          </div>
+          <button class="ai-close" id="ai-tutor-close" aria-label="סגור">✕</button>
+        </div>
+        <div class="ai-mode-tabs" role="tablist">
+          <button class="ai-mode-tab active" data-mode="coach" role="tab" aria-selected="true">🧭 מאמן</button>
+          <button class="ai-mode-tab" data-mode="explain" role="tab" aria-selected="false">💡 הסבר</button>
+          <button class="ai-mode-tab" data-mode="check" role="tab" aria-selected="false">✔️ בדיקה</button>
+        </div>
+        <div class="ai-context-bar" id="ai-context-bar"></div>
+        <div class="ai-response-area" id="ai-response" aria-live="polite"></div>
+        <div class="ai-input-row">
+          <textarea class="ai-textarea" id="ai-input" placeholder="שאל שאלה על המושג הנוכחי..." rows="2" aria-label="שאלה למאמן AI"></textarea>
+          <button class="ai-send-btn" id="ai-send" aria-label="שלח שאלה">שלח ↑</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

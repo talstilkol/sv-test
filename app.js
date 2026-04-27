@@ -802,6 +802,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (_mxView) _mxView.style.display = "none";
     const _cmpView = document.getElementById("comparator-view");
     if (_cmpView) _cmpView.style.display = "none";
+    const _gmView = document.getElementById("gap-matrix-view");
+    if (_gmView) _gmView.style.display = "none";
     document
       .querySelectorAll(".top-tab")
       .forEach((b) => b.classList.remove("active"));
@@ -1455,11 +1457,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Conservative fallback if lib/srs.js failed to load.
     return {
-      ease: 2.5,
-      interval: 0,
-      due: Date.now(),
-      repetitions: 0,
+      stability: 1.0,
+      difficulty: 0.3,
+      reps: 0,
       lapses: 0,
+      due: Date.now(),
       lastReviewed: null,
     };
   }
@@ -1490,8 +1492,24 @@ document.addEventListener("DOMContentLoaded", () => {
     let touched = false;
     Object.keys(scores).forEach((k) => {
       const s = scores[k];
-      if (s && (!s.srsState || typeof s.srsState !== "object")) {
+      if (!s) return;
+      if (!s.srsState || typeof s.srsState !== "object") {
         s.srsState = defaultSrsState();
+        touched = true;
+      } else if (
+        typeof s.srsState.ease === "number" &&
+        typeof s.srsState.stability === "undefined"
+      ) {
+        // Migrate SM-2 → FSRS-4
+        const old = s.srsState;
+        s.srsState = {
+          stability: Math.max(1, old.interval || 1),
+          difficulty: 0.3,
+          reps: old.repetitions || 0,
+          lapses: old.lapses || 0,
+          due: old.due || Date.now(),
+          lastReviewed: old.lastReviewed || null,
+        };
         touched = true;
       }
     });
@@ -3705,6 +3723,389 @@ document.addEventListener("DOMContentLoaded", () => {
       .join("");
   }
   document.getElementById("open-comparator")?.addEventListener("click", openComparator);
+
+  // =========== P2.2 — GAP MATRIX ===========
+  let gmFilter = "all";
+
+  function openGapMatrix() {
+    hideAllViews();
+    currentLessonId = null;
+    currentLessonTitle.textContent = "📊 מטריצת פערים";
+    currentLessonDesc.textContent = "ניתוח מצב שליטה לפי נושא — מה צריך לחזק?";
+    const view = document.getElementById("gap-matrix-view");
+    if (!view) return;
+    view.style.display = "block";
+    document.getElementById("open-gap-matrix")?.classList.add("active");
+    renderGapMatrix();
+    scrollToTop();
+    sidebar.classList.remove("open");
+  }
+
+  function renderGapMatrix() {
+    const container = document.getElementById("gm-matrix-container");
+    if (!container || !window.LESSONS_DATA) return;
+
+    const DAY_MS = 86_400_000;
+    const now = Date.now();
+
+    // Aggregate per topic
+    const topicMap = {};
+    window.LESSONS_DATA.forEach((lesson) => {
+      const tax = getTopicForLesson(lesson.id);
+      if (!topicMap[tax.topic]) {
+        topicMap[tax.topic] = { emoji: tax.emoji, topic: tax.topic, concepts: [] };
+      }
+      (lesson.concepts || []).forEach((c) => {
+        const sc = getScore(lesson.id, c.conceptName);
+        topicMap[tax.topic].concepts.push({
+          lesson: lesson.id,
+          name: c.conceptName,
+          level: sc.level,
+          attempts: sc.attempts,
+          correct: sc.correct,
+          weakReports: sc.weakReports || 0,
+          srsState: sc.srsState,
+        });
+      });
+    });
+
+    // Compute stats per topic
+    const rows = Object.values(topicMap).map((t) => {
+      const total = t.concepts.length;
+      const mastered = t.concepts.filter((c) => c.level >= 7).length;
+      const learning = t.concepts.filter((c) => c.attempts > 0 && c.level < 7).length;
+      const notStarted = t.concepts.filter((c) => c.attempts === 0).length;
+      const pctMastered = total ? (mastered / total) * 100 : 0;
+      const pctLearning = total ? (learning / total) * 100 : 0;
+      const pctNew = total ? (notStarted / total) * 100 : 0;
+      const untouched7d = t.concepts.filter((c) => {
+        if (!c.srsState || !c.srsState.lastReviewed) return true;
+        return now - c.srsState.lastReviewed > 7 * DAY_MS;
+      }).length;
+      const alwaysWrong = t.concepts.filter(
+        (c) => c.attempts > 3 && c.correct / c.attempts < 0.5
+      ).length;
+      return { ...t, total, mastered, learning, notStarted, pctMastered, pctLearning, pctNew, untouched7d, alwaysWrong };
+    });
+
+    // Determine category per row
+    function rowCategory(r) {
+      if (r.pctMastered >= 70) return "strong";
+      if (r.learning > 0 || r.mastered > 0) return "learning";
+      return "gap";
+    }
+
+    // Filter
+    const filtered = rows.filter((r) => {
+      if (gmFilter === "all") return true;
+      if (gmFilter === "gap") return rowCategory(r) === "gap";
+      if (gmFilter === "learning") return rowCategory(r) === "learning";
+      if (gmFilter === "strong") return rowCategory(r) === "strong";
+      if (gmFilter === "untouched") return r.untouched7d > r.total * 0.4;
+      if (gmFilter === "always-wrong") return r.alwaysWrong > 0;
+      return true;
+    });
+
+    // Sort: gap first, then learning, then strong
+    const order = { gap: 0, learning: 1, strong: 2 };
+    filtered.sort((a, b) => order[rowCategory(a)] - order[rowCategory(b)]);
+
+    if (!filtered.length) {
+      container.innerHTML = '<div class="gm-empty">אין נושאים להציג בסינון זה.</div>';
+      return;
+    }
+
+    container.innerHTML = filtered
+      .map((r) => {
+        const cat = rowCategory(r);
+        const catIcon = cat === "strong" ? "✅" : cat === "learning" ? "🟡" : "🔴";
+        const bars = `
+          <div class="gm-bars">
+            <div class="gm-bar gm-bar-mastered" style="width:${r.pctMastered.toFixed(1)}%" title="שולט: ${r.mastered}"></div>
+            <div class="gm-bar gm-bar-learning" style="width:${r.pctLearning.toFixed(1)}%" title="לומד: ${r.learning}"></div>
+            <div class="gm-bar gm-bar-new" style="width:${r.pctNew.toFixed(1)}%" title="טרם התחיל: ${r.notStarted}"></div>
+          </div>`;
+        const smartTags = [
+          r.untouched7d > 0 ? `<span class="gm-tag">⏳ ${r.untouched7d} לא נגעת 7 ימים</span>` : "",
+          r.alwaysWrong > 0 ? `<span class="gm-tag gm-tag-warn">🎯 ${r.alwaysWrong} תמיד טועה</span>` : "",
+        ].join("");
+        return `
+          <details class="gm-row gm-cat-${cat}">
+            <summary>
+              <span class="gm-cat-icon">${catIcon}</span>
+              <span class="gm-topic-emoji">${r.emoji}</span>
+              <span class="gm-topic-name">${esc(r.topic)}</span>
+              <span class="gm-stats">${r.mastered}/${r.total} שולט</span>
+              ${bars}
+              <div class="gm-smart-tags">${smartTags}</div>
+            </summary>
+            <div class="gm-concept-list">
+              ${r.concepts
+                .sort((a, b) => a.level - b.level)
+                .map((c) => {
+                  const lvlClass = c.level >= 7 ? "gm-lvl-mastered" : c.level >= 4 ? "gm-lvl-mid" : "gm-lvl-low";
+                  const due = c.srsState && c.srsState.due < now ? "🔁" : "";
+                  return `<span class="gm-concept-chip ${lvlClass}" title="רמה ${c.level}/7">${due}${esc(c.name)}</span>`;
+                })
+                .join("")}
+            </div>
+          </details>`;
+      })
+      .join("");
+  }
+
+  document.getElementById("open-gap-matrix")?.addEventListener("click", openGapMatrix);
+  document.getElementById("gap-matrix-view")?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".gm-filter-btn");
+    if (!btn) return;
+    gmFilter = btn.dataset.filter || "all";
+    document.querySelectorAll(".gm-filter-btn").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderGapMatrix();
+  });
+  // ===== W8 — Pair-Match Game =====
+  const PAIR_MATCH_STORE = "lumenportal:pair_match:v1";
+  let pmScores = (() => { try { return JSON.parse(localStorage.getItem(PAIR_MATCH_STORE) || "{}"); } catch { return {}; } })();
+  let pmCurrentGame = null;
+  let pmMatched = new Set(); // matched term indices
+
+  function openPairMatch() {
+    const panel = document.getElementById("pair-match-panel");
+    if (!panel) return;
+    panel.style.display = panel.style.display === "none" ? "" : "none";
+    if (panel.style.display !== "none") renderPairMatchGameSelect();
+  }
+
+  function renderPairMatchGameSelect() {
+    const sel = document.getElementById("pm-game-select");
+    if (!sel || typeof PAIR_MATCH_GAMES === "undefined") return;
+    const title = document.getElementById("pm-title");
+    if (title) title.textContent = "🎯 בחר משחק";
+    sel.innerHTML = PAIR_MATCH_GAMES.map((g) => {
+      const done = pmScores[g.id]?.completed ? " ✅" : "";
+      return `<button class="pm-game-btn" data-game="${g.id}">${g.title}${done}</button>`;
+    }).join("");
+    document.getElementById("pm-board").innerHTML = "";
+    document.getElementById("pm-status").textContent = "";
+  }
+
+  function startPairMatchGame(gameId) {
+    const game = (typeof PAIR_MATCH_GAMES !== "undefined") && PAIR_MATCH_GAMES.find((g) => g.id === gameId);
+    if (!game) return;
+    pmCurrentGame = game;
+    pmMatched = new Set();
+    const title = document.getElementById("pm-title");
+    if (title) title.textContent = `🎯 ${game.title}`;
+    document.getElementById("pm-game-select").innerHTML = "";
+    renderPairMatchBoard(game);
+  }
+
+  function renderPairMatchBoard(game) {
+    const board = document.getElementById("pm-board");
+    if (!board) return;
+    // Shuffle definitions
+    const defs = [...game.pairs].sort(() => Math.random() - 0.5);
+    board.innerHTML = `
+      <div class="pm-col pm-col-terms">
+        <div class="pm-col-head">מושג</div>
+        ${game.pairs.map((p, i) => `<div class="pm-term" data-idx="${i}" draggable="true">${esc(p.term)}</div>`).join("")}
+      </div>
+      <div class="pm-col pm-col-defs">
+        <div class="pm-col-head">הגדרה</div>
+        ${defs.map((p, i) => {
+          const origIdx = game.pairs.findIndex((op) => op.term === p.term);
+          return `<div class="pm-def" data-orig="${origIdx}" data-slot="${i}">${esc(p.definition)}</div>`;
+        }).join("")}
+      </div>`;
+    wirePairMatchDragDrop();
+    document.getElementById("pm-status").textContent = `התאם ${game.pairs.length} זוגות`;
+  }
+
+  function wirePairMatchDragDrop() {
+    let draggingIdx = null;
+    document.querySelectorAll(".pm-term").forEach((el) => {
+      el.addEventListener("dragstart", () => { draggingIdx = parseInt(el.dataset.idx, 10); el.classList.add("dragging"); });
+      el.addEventListener("dragend", () => { el.classList.remove("dragging"); draggingIdx = null; });
+      el.addEventListener("click", () => handlePairMatchTap(el));
+    });
+    document.querySelectorAll(".pm-def").forEach((el) => {
+      el.addEventListener("dragover", (e) => { e.preventDefault(); el.classList.add("drag-over"); });
+      el.addEventListener("dragleave", () => el.classList.remove("drag-over"));
+      el.addEventListener("drop", (e) => {
+        e.preventDefault();
+        el.classList.remove("drag-over");
+        if (draggingIdx !== null) checkPairMatch(draggingIdx, parseInt(el.dataset.orig, 10), el);
+      });
+      el.addEventListener("click", () => handlePairMatchTapDef(el));
+    });
+  }
+
+  let pmTappedTermIdx = null;
+  function handlePairMatchTap(termEl) {
+    if (pmMatched.has(parseInt(termEl.dataset.idx, 10))) return;
+    document.querySelectorAll(".pm-term.selected").forEach((e) => e.classList.remove("selected"));
+    pmTappedTermIdx = parseInt(termEl.dataset.idx, 10);
+    termEl.classList.add("selected");
+  }
+  function handlePairMatchTapDef(defEl) {
+    if (pmTappedTermIdx === null) return;
+    const origIdx = parseInt(defEl.dataset.orig, 10);
+    checkPairMatch(pmTappedTermIdx, origIdx, defEl);
+    pmTappedTermIdx = null;
+    document.querySelectorAll(".pm-term.selected").forEach((e) => e.classList.remove("selected"));
+  }
+
+  function checkPairMatch(termIdx, defOrigIdx, defEl) {
+    if (pmMatched.has(termIdx)) return;
+    const correct = termIdx === defOrigIdx;
+    const termEl = document.querySelector(`.pm-term[data-idx="${termIdx}"]`);
+    if (correct) {
+      pmMatched.add(termIdx);
+      termEl?.classList.add("pm-matched");
+      defEl.classList.add("pm-matched");
+      if (pmMatched.size === pmCurrentGame.pairs.length) {
+        document.getElementById("pm-status").textContent = "🎉 כל הזוגות הותאמו! מעולה!";
+        if (!pmScores[pmCurrentGame.id]) pmScores[pmCurrentGame.id] = {};
+        pmScores[pmCurrentGame.id].completed = true;
+        try { localStorage.setItem(PAIR_MATCH_STORE, JSON.stringify(pmScores)); } catch {}
+      }
+    } else {
+      termEl?.classList.add("pm-wrong");
+      defEl.classList.add("pm-wrong");
+      setTimeout(() => { termEl?.classList.remove("pm-wrong"); defEl.classList.remove("pm-wrong"); }, 600);
+    }
+  }
+
+  document.getElementById("t-open-pair-match")?.addEventListener("click", openPairMatch);
+  document.getElementById("pm-close")?.addEventListener("click", () => {
+    const panel = document.getElementById("pair-match-panel");
+    if (panel) panel.style.display = "none";
+  });
+  document.getElementById("pm-game-select")?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".pm-game-btn");
+    if (btn) startPairMatchGame(btn.dataset.game);
+  });
+  // ===== end Pair-Match =====
+
+  // ===== W8 — Bug Hunt Quests =====
+  const BQ_STORE = "lumenportal:bug_quests:v1";
+  let bqScores = (() => { try { return JSON.parse(localStorage.getItem(BQ_STORE) || "{}"); } catch { return {}; } })();
+  let bqCurrentQuest = null;
+  let bqBugIdx = 0;
+  let bqAnswered = false;
+
+  function openBugQuests() {
+    const overlay = document.getElementById("bug-quest-overlay");
+    if (!overlay) return;
+    overlay.style.display = "";
+    renderBugQuestList();
+  }
+
+  function renderBugQuestList() {
+    const body = document.getElementById("bq-body");
+    const title = document.getElementById("bq-title");
+    const prog = document.getElementById("bq-progress");
+    if (!body) return;
+    if (title) title.textContent = "🕵️ בחר קווסט";
+    if (prog) prog.textContent = "";
+    if (typeof BUG_QUESTS === "undefined") { body.innerHTML = "<p>טוען...</p>"; return; }
+    body.innerHTML = `<div class="bq-quest-list">` +
+      BUG_QUESTS.map((q) => {
+        const done = bqScores[q.id]?.completed;
+        return `<div class="bq-quest-card ${done ? 'bq-completed' : ''}" data-bq-id="${q.id}">
+          <div class="bq-quest-title">${q.title}${done ? " ✅" : ""}</div>
+          <div class="bq-quest-chapter">📖 ${esc(q.chapter)}</div>
+          <div class="bq-quest-narrative">${esc(q.narrative)}</div>
+          <button class="bq-start-btn" data-bq-id="${q.id}">▶ התחל</button>
+        </div>`;
+      }).join("") + `</div>`;
+  }
+
+  function startBugQuest(questId) {
+    const quest = (typeof BUG_QUESTS !== "undefined") && BUG_QUESTS.find((q) => q.id === questId);
+    if (!quest) return;
+    bqCurrentQuest = quest;
+    bqBugIdx = 0;
+    bqAnswered = false;
+    showBugQuestBug();
+  }
+
+  function showBugQuestBug() {
+    const quest = bqCurrentQuest;
+    if (!quest) return;
+    const bug = quest.bugs[bqBugIdx];
+    if (!bug) { showBugQuestComplete(); return; }
+    const title = document.getElementById("bq-title");
+    const prog = document.getElementById("bq-progress");
+    const body = document.getElementById("bq-body");
+    if (title) title.textContent = quest.title;
+    if (prog) prog.textContent = `באג ${bqBugIdx + 1} מתוך ${quest.bugs.length}`;
+    bqAnswered = false;
+    body.innerHTML = `
+      <div class="bq-bug-card">
+        <pre class="bq-code"><code>${esc(bug.code)}</code></pre>
+        <p class="bq-question">${esc(bug.question)}</p>
+        <div class="bq-options">
+          ${bug.options.map((opt, i) => `<button class="bq-opt" data-opt="${i}">${esc(opt)}</button>`).join("")}
+        </div>
+        <div class="bq-explanation" id="bq-explanation" style="display:none">${esc(bug.explanation)}</div>
+        <button class="bq-next-btn" id="bq-next" style="display:none">המשך ←</button>
+      </div>`;
+  }
+
+  function showBugQuestComplete() {
+    const quest = bqCurrentQuest;
+    if (!quest) return;
+    if (!bqScores[quest.id]) bqScores[quest.id] = {};
+    bqScores[quest.id].completed = true;
+    try { localStorage.setItem(BQ_STORE, JSON.stringify(bqScores)); } catch {}
+    const body = document.getElementById("bq-body");
+    const prog = document.getElementById("bq-progress");
+    if (prog) prog.textContent = "";
+    if (body) body.innerHTML = `
+      <div class="bq-complete">
+        <div class="bq-complete-icon">🎉</div>
+        <h4>הקווסט הושלם!</h4>
+        <p>תיקנת את כל ${quest.bugs.length} הבאגים ב"${quest.title}".</p>
+        <button class="bq-back-btn">← חזור לרשימה</button>
+      </div>`;
+  }
+
+  document.getElementById("t-open-bug-quests")?.addEventListener("click", openBugQuests);
+  document.getElementById("bq-close")?.addEventListener("click", () => {
+    const overlay = document.getElementById("bug-quest-overlay");
+    if (overlay) overlay.style.display = "none";
+  });
+  document.getElementById("bq-body")?.addEventListener("click", (e) => {
+    const startBtn = e.target.closest(".bq-start-btn");
+    if (startBtn) { startBugQuest(startBtn.dataset.bqId); return; }
+
+    const backBtn = e.target.closest(".bq-back-btn");
+    if (backBtn) { renderBugQuestList(); return; }
+
+    const nextBtn = e.target.closest("#bq-next");
+    if (nextBtn) { bqBugIdx++; showBugQuestBug(); return; }
+
+    const optBtn = e.target.closest(".bq-opt");
+    if (optBtn && !bqAnswered) {
+      bqAnswered = true;
+      const chosen = parseInt(optBtn.dataset.opt, 10);
+      const bug = bqCurrentQuest?.bugs[bqBugIdx];
+      if (!bug) return;
+      const correct = chosen === bug.correct;
+      document.querySelectorAll(".bq-opt").forEach((b, i) => {
+        b.disabled = true;
+        if (i === bug.correct) b.classList.add("bq-opt-correct");
+        else if (i === chosen && !correct) b.classList.add("bq-opt-wrong");
+      });
+      const expEl = document.getElementById("bq-explanation");
+      if (expEl) expEl.style.display = "";
+      const nextEl = document.getElementById("bq-next");
+      if (nextEl) nextEl.style.display = "";
+    }
+  });
+  // ===== end Bug Quests =====
+
   document.getElementById("cmp-search")?.addEventListener("input", (e) => {
     cmpSearch = e.target.value;
     renderComparator();
@@ -5373,6 +5774,9 @@ document.addEventListener("DOMContentLoaded", () => {
       bestExplanation(concept) ||
       "אין הסבר זמין למושג זה.";
 
+    const pathways = (typeof CONCEPT_PATHWAYS !== "undefined") ? CONCEPT_PATHWAYS[k] : null;
+    const pathwayText = pathways ? pathways[currentPathway] : null;
+
     const lvlInfo = LEVEL_INFO[displayLevelIdx];
     const realLvlInfo = LEVEL_INFO[actualLevel];
     const isOverride = !!overrideLevel && overrideLevel !== actualLevel;
@@ -5406,6 +5810,11 @@ document.addEventListener("DOMContentLoaded", () => {
       ? `<span class="weak-badge" title="${sc.weakReports} דיווחי חולשה — המאמן יציג את המושג הזה לעיתים תכופות יותר">🆘 חלש ×${sc.weakReports}</span>`
       : "";
 
+    const srsDueBadge =
+      sc.srsState && isSrsDue(sc) && sc.srsState.reps > 0
+        ? `<span class="srs-due-badge" title="מנגנון החזרה המרווחת מציע לחזור על מושג זה כעת">🔁 חזרה מומלצת</span>`
+        : "";
+
     return `
       <div class="concept-card adaptive" data-cid="${idx}" data-concept="${esc(concept.conceptName)}">
         <div class="concept-card-head">
@@ -5413,6 +5822,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="concept-level-row">
             ${diffPill}
             ${weakBadge}
+            ${srsDueBadge}
             ${masteredBadge}
             ${vProgressBadge}
             ${overrideBadge}
@@ -5428,7 +5838,15 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         </div>
 
-        <p class="concept-explanation">${esc(explanation)}</p>
+        ${pathways ? `
+        <div class="pathway-toggle" role="group" aria-label="בחר רמת הסבר">
+          <button class="pathway-btn${currentPathway === 'grandma' ? ' active' : ''}" data-action="set-pathway" data-pathway="grandma" title="הסבר פשוט — כמו לסבתא">👵</button>
+          <button class="pathway-btn${currentPathway === 'parent' ? ' active' : ''}" data-action="set-pathway" data-pathway="parent" title="הסבר לאדם לא טכני">🧑‍🏫</button>
+          <button class="pathway-btn${currentPathway === 'technical' ? ' active' : ''}" data-action="set-pathway" data-pathway="technical" title="הסבר טכני מלא">👨‍💻</button>
+        </div>` : ""}
+
+        <p class="concept-explanation"${pathwayText ? ' style="display:none"' : ""}>${esc(explanation)}</p>
+        ${pathwayText ? `<p class="pathway-explanation">${esc(pathwayText)}</p>` : '<p class="pathway-explanation" style="display:none"></p>'}
 
         ${
           hasIllustration
@@ -5468,6 +5886,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${renderMiniBuildPanel(concept)}
         ${renderWarStoriesPanel(concept)}
         ${renderComparisonsPanel(concept)}
+        ${renderMetaphorCarousel(k)}
         ${renderAudioModeButton(concept, explanation)}
 
         <div class="concept-actions">
@@ -5725,6 +6144,85 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="wif-outcome" data-wif-outcome="${esc(concept.conceptName)}">${esc(opt0.outcome || "")}</div>
         </div>
       </details>`;
+  }
+
+  // Learning Pathway state (grandma / parent / technical)
+  const PATHWAY_KEY = "lumenportal:pathway:v1";
+  let currentPathway = localStorage.getItem(PATHWAY_KEY) || "parent";
+  function setPathway(p) {
+    currentPathway = p;
+    try { localStorage.setItem(PATHWAY_KEY, p); } catch {}
+    document.querySelectorAll(".concept-card.adaptive").forEach((card) => {
+      const pRow = card.querySelector(".pathway-toggle");
+      if (pRow) pRow.querySelectorAll("[data-pathway]").forEach((b) => b.classList.toggle("active", b.dataset.pathway === p));
+      const concName = card.dataset.concept;
+      const lesson = window.LESSONS_DATA?.find((l) => l.id === currentLessonId);
+      if (!lesson || !concName) return;
+      const concept = (lesson.concepts || []).find((c) => c.conceptName === concName);
+      if (!concept) return;
+      const k = conceptKey(lesson.id, concName);
+      const pathways = (typeof CONCEPT_PATHWAYS !== "undefined") ? CONCEPT_PATHWAYS[k] : null;
+      const pathBox = card.querySelector(".pathway-explanation");
+      const stdBox = card.querySelector(".concept-explanation");
+      if (pathways && pathways[p]) {
+        if (pathBox) { pathBox.textContent = pathways[p]; pathBox.style.display = ""; }
+        if (stdBox) stdBox.style.display = "none";
+      } else {
+        if (pathBox) pathBox.style.display = "none";
+        if (stdBox) stdBox.style.display = "";
+      }
+    });
+  }
+
+  // Metaphor carousel runtime state (per-concept key → current index 0-based)
+  const METAPHOR_STORE_KEY = "lumenportal:metaphors:v1";
+  const metaphorIdxMap = (() => {
+    try { return JSON.parse(localStorage.getItem(METAPHOR_STORE_KEY) || "{}"); }
+    catch { return {}; }
+  })();
+  function saveMetaphorIdx() {
+    try { localStorage.setItem(METAPHOR_STORE_KEY, JSON.stringify(metaphorIdxMap)); } catch {}
+  }
+
+  function renderMetaphorCarousel(conceptKey) {
+    const metaphors = (typeof CONCEPT_METAPHORS !== "undefined" && CONCEPT_METAPHORS[conceptKey]) || [];
+    if (!metaphors.length) return "";
+    const idx = Math.min(metaphorIdxMap[conceptKey] || 0, metaphors.length - 1);
+    const m = metaphors[idx];
+    return `
+      <details class="metaphor-panel">
+        <summary>🔮 מטאפורות (${metaphors.length})</summary>
+        <div class="metaphor-carousel" data-metaphor-key="${esc(conceptKey)}">
+          <div class="metaphor-card">
+            <div class="metaphor-title">${esc(m.title || "")}</div>
+            <div class="metaphor-body">${esc(m.body || "")}</div>
+            <div class="metaphor-source">📦 ${esc(m.source || "")}</div>
+          </div>
+          <div class="metaphor-nav">
+            <button class="metaphor-btn" data-action="metaphor-prev" ${idx === 0 ? "disabled" : ""} aria-label="מטאפורה קודמת">‹</button>
+            <span class="metaphor-counter">${idx + 1} / ${metaphors.length}</span>
+            <button class="metaphor-btn" data-action="metaphor-next" ${idx >= metaphors.length - 1 ? "disabled" : ""} aria-label="מטאפורה הבאה">›</button>
+          </div>
+        </div>
+      </details>`;
+  }
+
+  function updateMetaphorCarousel(conceptKey, delta) {
+    const metaphors = (typeof CONCEPT_METAPHORS !== "undefined" && CONCEPT_METAPHORS[conceptKey]) || [];
+    if (!metaphors.length) return;
+    const cur = metaphorIdxMap[conceptKey] || 0;
+    const next = Math.max(0, Math.min(metaphors.length - 1, cur + delta));
+    metaphorIdxMap[conceptKey] = next;
+    saveMetaphorIdx();
+    const carousel = document.querySelector(`.metaphor-carousel[data-metaphor-key="${CSS.escape(conceptKey)}"]`);
+    if (!carousel) return;
+    const m = metaphors[next];
+    carousel.querySelector(".metaphor-title").textContent = m.title || "";
+    carousel.querySelector(".metaphor-body").textContent = m.body || "";
+    carousel.querySelector(".metaphor-source").textContent = `📦 ${m.source || ""}`;
+    carousel.querySelector(".metaphor-counter").textContent = `${next + 1} / ${metaphors.length}`;
+    carousel.querySelector('[data-action="metaphor-prev"]').disabled = next === 0;
+    carousel.querySelector('[data-action="metaphor-next"]').disabled = next >= metaphors.length - 1;
   }
 
   // Animator runtime state (per-concept). Map of conceptName → {idx, autoTimer}
@@ -6179,6 +6677,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 : "✅ נשמר לכיס";
               setTimeout(() => { if (btn.classList.contains("is-pocketed")) btn.textContent = "📌 בכיס — לחץ להסיר"; else btn.textContent = "📌 שמור לכיס"; }, 1200);
             }
+          } else if (action === "set-pathway") {
+            setPathway(btn.dataset.pathway);
+          } else if (action === "metaphor-prev") {
+            updateMetaphorCarousel(k, -1);
+          } else if (action === "metaphor-next") {
+            updateMetaphorCarousel(k, 1);
           } else if (action === "wif-pick") {
             // Sprint 3 — What-If Simulator: switch knob option
             const wif = concept.whatIf;
@@ -6826,6 +7330,218 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     sel.dataset.trackAExtended = "1";
   })();
+
+  // ===== W9 — AI Tutor =====
+  const AI_USAGE_KEY = "lumenportal:ai_usage:v1";
+  const AI_DAILY_LIMIT = 20;
+  let aiCurrentMode = "coach";
+
+  function getAIUsage() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(AI_USAGE_KEY) || "{}");
+      const today = new Date().toISOString().slice(0, 10);
+      if (stored.date !== today) return { date: today, count: 0 };
+      return stored;
+    } catch { return { date: new Date().toISOString().slice(0, 10), count: 0 }; }
+  }
+  function incrementAIUsage() {
+    const u = getAIUsage();
+    u.count++;
+    try { localStorage.setItem(AI_USAGE_KEY, JSON.stringify(u)); } catch {}
+    return u;
+  }
+
+  function openAITutor(prefillMsg) {
+    const modal = document.getElementById("ai-tutor-modal");
+    if (!modal) return;
+    modal.classList.remove("hidden");
+    updateAIUsageDisplay();
+    const concName = (() => {
+      const card = document.querySelector(".concept-card.adaptive");
+      return card?.dataset.concept || "";
+    })();
+    const ctxBar = document.getElementById("ai-context-bar");
+    if (ctxBar) ctxBar.textContent = concName ? `📌 הקשר: ${concName}` : "";
+    if (prefillMsg) {
+      const inp = document.getElementById("ai-input");
+      if (inp) inp.value = prefillMsg;
+    }
+    document.getElementById("ai-input")?.focus();
+  }
+
+  function updateAIUsageDisplay() {
+    const el = document.getElementById("ai-usage-display");
+    if (!el) return;
+    const u = getAIUsage();
+    const left = Math.max(0, AI_DAILY_LIMIT - u.count);
+    el.textContent = `${left} שאלות נותרו היום`;
+  }
+
+  const AI_DEMO_RESPONSES = {
+    coach: [
+      "כשאתה נתקע, נסה לפרק את הבעיה לחלקים קטנים. מה הדבר הראשון שאתה לא מבין?",
+      "מעולה ששאלת! הבעיה הנפוצה עם מושג זה היא שמבלבלים בין ___ ל-___. נסה לכתוב דוגמה פשוטה.",
+      "בוא נפרק את זה. קודם בדוק אם אתה מבין את ה-basics: האם תוכל להסביר לי בשפה שלך מה המושג הזה עושה?",
+    ],
+    explain: [
+      "המושג הנוכחי עובד בצורה הבאה: תחשוב עליו כמו ___. כל פעם ש___ קורה, ___ מגיב.",
+      "הסבר קצר: המושג הזה קיים כדי לפתור את הבעיה של ___. ללא זה, היית צריך לכתוב ___ בכל פעם.",
+      "יש 3 נקודות מפתח להבנה: 1) מה זה עושה. 2) מתי להשתמש. 3) מה לא לבלבל עמו.",
+    ],
+    check: [
+      "שאלה לבדיקה: האם תוכל לכתוב דוגמה קוד פשוטה שמשתמשת במושג זה? שתף אותי ואני אבדוק.",
+      "בדיקה קצרה: מה ההבדל בין המושג הנוכחי לאלטרנטיבה הנפוצה? עניית נכון = הבנת!",
+      "לפני שנמשיך — בדוק את עצמך: האם תוכל להסביר מושג זה לחבר שלא מכיר תכנות?",
+    ],
+  };
+
+  function getAIDemoResponse(mode, conceptName) {
+    const pool = AI_DEMO_RESPONSES[mode] || AI_DEMO_RESPONSES.coach;
+    const r = pool[Math.floor(Math.random() * pool.length)];
+    return conceptName ? r.replace(/מושג זה|המושג הנוכחי|מושג הנוכחי/g, conceptName) : r;
+  }
+
+  async function sendAIMessage() {
+    const input = document.getElementById("ai-input");
+    const responseEl = document.getElementById("ai-response");
+    if (!input || !responseEl) return;
+    const msg = input.value.trim();
+    if (!msg) return;
+    const u = getAIUsage();
+    if (u.count >= AI_DAILY_LIMIT) {
+      responseEl.innerHTML = `<div class="ai-msg ai-msg-system">הגעת למכסה היומית (${AI_DAILY_LIMIT} שאלות). חזור מחר!</div>`;
+      return;
+    }
+    const concName = document.querySelector(".concept-card.adaptive")?.dataset.concept || "";
+    responseEl.innerHTML += `<div class="ai-msg ai-msg-user">${esc(msg)}</div>`;
+    input.value = "";
+    incrementAIUsage();
+    updateAIUsageDisplay();
+
+    const thinkingEl = document.createElement("div");
+    thinkingEl.className = "ai-msg ai-msg-thinking";
+    thinkingEl.textContent = "מחשב...";
+    responseEl.appendChild(thinkingEl);
+    responseEl.scrollTop = responseEl.scrollHeight;
+
+    // Real API call (if configured) or demo fallback
+    let reply = "";
+    try {
+      const apiResp = await fetch("/api/ai-tutor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg, mode: aiCurrentMode, concept: concName }),
+        signal: AbortSignal.timeout(8000),
+      });
+      if (apiResp.ok) {
+        const data = await apiResp.json();
+        reply = data.reply || getAIDemoResponse(aiCurrentMode, concName);
+      } else {
+        reply = getAIDemoResponse(aiCurrentMode, concName);
+      }
+    } catch {
+      reply = getAIDemoResponse(aiCurrentMode, concName);
+    }
+
+    thinkingEl.remove();
+    const replyEl = document.createElement("div");
+    replyEl.className = "ai-msg ai-msg-bot";
+    replyEl.textContent = reply;
+    responseEl.appendChild(replyEl);
+    responseEl.scrollTop = responseEl.scrollHeight;
+  }
+
+  // Misconception detector: 3 consecutive wrong answers on same concept
+  window._aiWrongStreak = window._aiWrongStreak || {};
+  const _origApplyAnswer = typeof applyAnswer !== "undefined" ? applyAnswer : null;
+  function checkMisconception(lessonId, conceptName, correct) {
+    const k = `${lessonId}::${conceptName}`;
+    if (!correct) {
+      window._aiWrongStreak[k] = (window._aiWrongStreak[k] || 0) + 1;
+      if (window._aiWrongStreak[k] >= 3) {
+        window._aiWrongStreak[k] = 0;
+        setTimeout(() => openAITutor(`נתקעתי במושג "${conceptName}" — תעזור לי להבין?`), 500);
+      }
+    } else {
+      window._aiWrongStreak[k] = 0;
+    }
+  }
+  window.reportMisconception = checkMisconception;
+
+  document.getElementById("ai-tutor-fab")?.addEventListener("click", () => openAITutor());
+  document.getElementById("ai-tutor-close")?.addEventListener("click", () => {
+    document.getElementById("ai-tutor-modal")?.classList.add("hidden");
+  });
+  document.getElementById("ai-send")?.addEventListener("click", sendAIMessage);
+  document.getElementById("ai-input")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendAIMessage(); }
+  });
+  document.querySelectorAll(".ai-mode-tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      aiCurrentMode = btn.dataset.mode;
+      document.querySelectorAll(".ai-mode-tab").forEach((b) => {
+        b.classList.toggle("active", b === btn);
+        b.setAttribute("aria-selected", b === btn ? "true" : "false");
+      });
+    });
+  });
+  // ===== end AI Tutor =====
+
+  // ===== W10 — Export/Import Progress =====
+  function exportProgress() {
+    const data = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      scores: {},
+      proficiency: {},
+    };
+    // Collect all lumenportal:scores entries
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k) continue;
+      if (k.startsWith("lumenportal:scores:")) data.scores[k] = localStorage.getItem(k);
+      if (k.startsWith("lumenportal:prof:")) data.proficiency[k] = localStorage.getItem(k);
+    }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `lumenportal-progress-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importProgress(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (!data.version || (!data.scores && !data.proficiency)) throw new Error("invalid format");
+        const confirmed = confirm(
+          `ייבוא ${Object.keys(data.scores || {}).length} שיעורים ו-${Object.keys(data.proficiency || {}).length} רמות ידע?\n` +
+          "פעולה זו תדרוס נתונים קיימים בדפדפן זה."
+        );
+        if (!confirmed) return;
+        Object.entries(data.scores || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+        Object.entries(data.proficiency || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+        alert("הייבוא הצליח! רענן את הדף כדי לראות את הנתונים.");
+      } catch (err) {
+        alert("שגיאה בקובץ — ודא שזה קובץ JSON תקין שיוצא מ-LumenPortal.");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  // Wire export/import buttons (added to settings/profile area)
+  document.getElementById("btn-export-progress")?.addEventListener("click", exportProgress);
+  document.getElementById("btn-import-progress")?.addEventListener("click", () => {
+    const picker = document.createElement("input");
+    picker.type = "file";
+    picker.accept = ".json";
+    picker.onchange = (e) => { if (e.target.files[0]) importProgress(e.target.files[0]); };
+    picker.click();
+  });
+  // ===== end Export/Import =====
 
   // =========== BOOT ===========
   setTimeout(() => {
