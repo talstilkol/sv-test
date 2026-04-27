@@ -3,7 +3,11 @@
  * scripts/validate_bank.js
  *
  * Validates data/questions_bank.js against data/lesson*.js + workbooks.
- * Usage: node scripts/validate_bank.js
+ * Usage:
+ *   node scripts/validate_bank.js            # default — warnings stay warnings
+ *   node scripts/validate_bank.js --strict   # CI mode — warnings + boilerplate +
+ *                                              missing-difficulty all become
+ *                                              errors → exit code 1
  *
  * Checks:
  *   ✓ All `conceptKey` values point to a real (lesson, concept) pair
@@ -20,6 +24,7 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 
+const STRICT = process.argv.includes("--strict");
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
 
@@ -256,6 +261,9 @@ function validate({ lessons, bank, seededBank, guide }) {
 
 function main() {
   console.log("📦 Loading data files...");
+  if (STRICT) {
+    console.log("🔒 STRICT mode — warnings, boilerplate, and missing-difficulty are errors.");
+  }
   const data = loadDataFiles();
   console.log(
     `   ${data.lessons.length} lessons · ` +
@@ -271,11 +279,45 @@ function main() {
     totalConcepts, curatedMC, curatedFill, seededMC, seededFill,
   } = validate(data);
 
+  // In strict mode, escalate severity for things that historically were warnings.
+  if (STRICT) {
+    warnings.forEach((w) => errors.push(`[strict:warning] ${w}`));
+    boilerplateMatches.forEach((m) =>
+      errors.push(`[strict:boilerplate] ${m.lesson}::${m.concept}`),
+    );
+    missingDifficulty.forEach((m) =>
+      errors.push(`[strict:missing-difficulty] ${m.lesson}::${m.concept}`),
+    );
+  }
+
   if (errors.length === 0) {
     console.log("✅ No errors.");
   } else {
     console.error(`❌ ${errors.length} error(s):`);
-    errors.forEach((e) => console.error(`   • ${e}`));
+    const cap = STRICT ? 50 : errors.length;
+    errors.slice(0, cap).forEach((e) => console.error(`   • ${e}`));
+    if (errors.length > cap) {
+      console.error(`   … and ${errors.length - cap} more (strict mode trims output).`);
+    }
+    if (STRICT) {
+      // Categorized summary so CI logs surface counts at a glance.
+      const buckets = {
+        warning: 0,
+        boilerplate: 0,
+        "missing-difficulty": 0,
+        other: 0,
+      };
+      errors.forEach((e) => {
+        const m = /^\[strict:([\w-]+)\]/.exec(e);
+        if (m && buckets.hasOwnProperty(m[1])) buckets[m[1]]++;
+        else buckets.other++;
+      });
+      console.error("\n📊 Strict-mode breakdown:");
+      console.error(`   • warnings (fill ambiguity etc.): ${buckets.warning}`);
+      console.error(`   • boilerplate concepts:            ${buckets.boilerplate}`);
+      console.error(`   • missing difficulty:              ${buckets["missing-difficulty"]}`);
+      if (buckets.other > 0) console.error(`   • other:                          ${buckets.other}`);
+    }
   }
 
   if (warnings.length > 0) {

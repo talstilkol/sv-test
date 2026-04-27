@@ -4,7 +4,30 @@
 // level: 1=grandma, 2=child, 3=soldier, 4=student, 5=junior, 6=professor
 // Bank grows freely — every question that's added here is automatically picked up
 // by the Trainer (when matching a concept) and by the Quick Guide (when matching a topic).
+//
+// ┌──────────────── Versioning ────────────────────────────────────────────┐
+// │ _version       — semver of the question bank schema/contents          │
+// │ _lastUpdate    — ISO date string of the most recent bump              │
+// │ _changelog     — list of releases (newest last)                       │
+// │ Bumped by Track A (Foundation). Track B/C add changelog entries when  │
+// │ they fix boilerplate, add concepts, or rewrite ambiguous questions.   │
+// │ app.js reads these on load and prompts the user to refresh progress   │
+// │ when the version stored in localStorage no longer matches.            │
+// └────────────────────────────────────────────────────────────────────────┘
+var QUESTIONS_BANK_VERSION = "2.0.0";
+var QUESTIONS_BANK_LAST_UPDATE = "2026-04-27";
+var QUESTIONS_BANK_CHANGELOG = [
+  {
+    v: "2.0.0",
+    date: "2026-04-27",
+    changes:
+      "Track A: introduce schema versioning, SRS state on scores, deterministic seeded RNG.",
+  },
+];
 var QUESTIONS_BANK = {
+  _version: QUESTIONS_BANK_VERSION,
+  _lastUpdate: QUESTIONS_BANK_LAST_UPDATE,
+  _changelog: QUESTIONS_BANK_CHANGELOG,
   mc: [
     // ===== Topic 1 — Variables & Data Types =====
     {
