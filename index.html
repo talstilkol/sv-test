@@ -118,6 +118,9 @@
           <button class="top-tab" id="open-mock-exam" data-tab="mock-exam" aria-label="פתח מבחן מדומה — Mock Exam עם טיימר">
             <span class="emoji" aria-hidden="true">📝</span><span>מבחן מדומה</span>
           </button>
+          <button class="top-tab" id="open-comparator" data-tab="comparator" aria-label="פתח השוואות — Side-by-Side">
+            <span class="emoji" aria-hidden="true">⚖️</span><span>השוואות</span>
+          </button>
           <button class="top-tab" id="open-trainer" data-tab="trainer" aria-label="פתח מאמן ידע + דוח">
             <span class="emoji" aria-hidden="true">🧠</span><span>מאמן ידע + דוח</span>
           </button>
@@ -407,6 +410,20 @@
             <div class="trace-list" id="trace-list"></div>
             <!-- Active trace player (hidden until user picks one) -->
             <div class="trace-player glass-panel" id="trace-player" style="display:none"></div>
+          </div>
+
+          <!-- Side-by-Side Comparator View -->
+          <div class="comparator-view" id="comparator-view" style="display:none">
+            <div class="cmp-header glass-panel">
+              <h2>⚖️ השוואות זוגות — מתי להשתמש במה</h2>
+              <p>טבלאות השוואה לזוגות מושגים שמתבלבלים. לחץ על זוג כדי לראות פירוט שורה-שורה.</p>
+              <div class="cmp-toolbar">
+                <input type="text" id="cmp-search" placeholder="🔍 חיפוש (useState / props / Tailwind)..." />
+                <button class="km-btn-mini" id="cmp-expand-all">⬇️ פתח הכל</button>
+                <button class="km-btn-mini" id="cmp-collapse-all">⬆️ סגור הכל</button>
+              </div>
+            </div>
+            <div id="cmp-list"></div>
           </div>
 
           <!-- P1.5.1 — Mock Exam View -->

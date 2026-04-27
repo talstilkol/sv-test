@@ -459,6 +459,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (traceView) traceView.style.display = "none";
     const _mxView = document.getElementById("mock-exam-view");
     if (_mxView) _mxView.style.display = "none";
+    const _cmpView = document.getElementById("comparator-view");
+    if (_cmpView) _cmpView.style.display = "none";
     document
       .querySelectorAll(".top-tab")
       .forEach((b) => b.classList.remove("active"));
@@ -3277,6 +3279,80 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("mx-next")?.addEventListener("click", gotoNextMxQuestion);
   document.getElementById("mx-skip")?.addEventListener("click", gotoNextMxQuestion);
   document.getElementById("mx-submit")?.addEventListener("click", () => submitMockExam(false));
+
+  // =========== Side-by-Side Comparator View ===========
+  let cmpSearch = "";
+  function openComparator() {
+    hideAllViews();
+    currentLessonId = null;
+    currentLessonTitle.textContent = "⚖️ השוואות זוגות";
+    currentLessonDesc.textContent = "טבלאות השוואה לזוגות מושגים שמתבלבלים. בחר זוג כדי לראות פירוט.";
+    const view = document.getElementById("comparator-view");
+    if (!view) return;
+    view.style.display = "block";
+    document.getElementById("open-comparator")?.classList.add("active");
+    renderComparator();
+    scrollToTop();
+    sidebar.classList.remove("open");
+  }
+  function renderComparator() {
+    const container = document.getElementById("cmp-list");
+    if (!container) return;
+    const all = typeof COMPARISONS !== "undefined" ? Object.values(COMPARISONS) : [];
+    const q = cmpSearch.trim().toLowerCase();
+    const filtered = all.filter((c) => {
+      if (!q) return true;
+      const blob = JSON.stringify(c).toLowerCase();
+      return blob.includes(q);
+    });
+    if (!filtered.length) {
+      container.innerHTML = '<div class="cmp-empty">🔍 לא נמצאו תוצאות.</div>';
+      return;
+    }
+    container.innerHTML = filtered
+      .map((cmp) => {
+        const rows = (cmp.rows || [])
+          .map((r) => `
+            <tr>
+              <td class="cmp-dim">${esc(r.dim || "")}</td>
+              <td class="cmp-a">${esc(r.a || "")}</td>
+              <td class="cmp-b">${esc(r.b || "")}</td>
+            </tr>`)
+          .join("");
+        return `
+          <details class="cmp-card" data-cmp="${esc(cmp.pairKey)}">
+            <summary class="cmp-summary">
+              <span class="cmp-sum-icons">${esc(cmp.a?.icon || "")} <strong>${esc(cmp.a?.name || "")}</strong> &nbsp;vs&nbsp; ${esc(cmp.b?.icon || "")} <strong>${esc(cmp.b?.name || "")}</strong></span>
+              <span class="cmp-sum-tags">${cmp.a?.tagline ? `<span class="cmp-tag">${esc(cmp.a.tagline)}</span>` : ""} ${cmp.b?.tagline ? `<span class="cmp-tag">${esc(cmp.b.tagline)}</span>` : ""}</span>
+            </summary>
+            <div class="cmp-body">
+              <table class="cmp-table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>${esc(cmp.a?.icon || "")} ${esc(cmp.a?.name || "")}</th>
+                    <th>${esc(cmp.b?.icon || "")} ${esc(cmp.b?.name || "")}</th>
+                  </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+              </table>
+              ${cmp.when ? `<div class="cmp-when"><strong>📌 מתי להשתמש:</strong> ${esc(cmp.when)}</div>` : ""}
+            </div>
+          </details>`;
+      })
+      .join("");
+  }
+  document.getElementById("open-comparator")?.addEventListener("click", openComparator);
+  document.getElementById("cmp-search")?.addEventListener("input", (e) => {
+    cmpSearch = e.target.value;
+    renderComparator();
+  });
+  document.getElementById("cmp-expand-all")?.addEventListener("click", () => {
+    document.querySelectorAll("#cmp-list details").forEach((d) => d.setAttribute("open", ""));
+  });
+  document.getElementById("cmp-collapse-all")?.addEventListener("click", () => {
+    document.querySelectorAll("#cmp-list details").forEach((d) => d.removeAttribute("open"));
+  });
 
   // =========== OPEN CODE ANATOMY (read-only token-by-token breakdown page) ===========
   function openCodeAnatomy() {

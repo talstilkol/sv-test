@@ -3860,6 +3860,101 @@ body {
 .anatomy-empty { color: var(--text-muted); font-style: italic; padding: 1rem; }
 
 /* ============================================================ */
+/* Side-by-Side Comparator (dedicated view) — Sprint 3          */
+/* ============================================================ */
+.comparator-view { padding: 1rem 0.5rem; }
+.cmp-header { padding: 1rem; margin-bottom: 1rem; }
+.cmp-header h2 { color: #c4b5fd; margin: 0 0 0.4rem; }
+.cmp-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.7rem;
+}
+.cmp-toolbar input {
+  flex: 1 1 200px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-bright);
+  padding: 0.45rem 0.7rem;
+  border-radius: 6px;
+  font-family: inherit;
+}
+.cmp-card {
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  margin-bottom: 0.7rem;
+  overflow: hidden;
+}
+.cmp-summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 1rem;
+  flex-wrap: wrap;
+}
+.cmp-summary::-webkit-details-marker { display: none; }
+.cmp-summary::before {
+  content: "▶";
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-left: 0.4rem;
+  transition: transform 0.15s;
+}
+.cmp-card[open] .cmp-summary::before { transform: rotate(90deg); }
+.cmp-sum-icons { font-size: 1rem; color: var(--text-bright); }
+.cmp-sum-tags { display: flex; gap: 0.3rem; margin-right: auto; flex-wrap: wrap; }
+.cmp-tag {
+  font-size: 0.78rem;
+  background: rgba(99, 102, 241, 0.18);
+  color: #c7d2fe;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.cmp-body { padding: 0 1rem 1rem; }
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.7rem;
+}
+.cmp-table th, .cmp-table td {
+  padding: 0.5rem 0.7rem;
+  text-align: right;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  vertical-align: top;
+}
+.cmp-table thead th {
+  background: rgba(99, 102, 241, 0.12);
+  color: #c7d2fe;
+  font-weight: 700;
+}
+.cmp-dim {
+  color: #fde68a;
+  font-weight: 600;
+  width: 22%;
+  white-space: nowrap;
+}
+.cmp-a, .cmp-b { color: var(--text-bright); width: 39%; line-height: 1.5; }
+.cmp-when {
+  background: rgba(245, 158, 11, 0.08);
+  border-right: 3px solid #f59e0b;
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.cmp-empty { color: var(--text-muted); font-style: italic; padding: 2rem; text-align: center; }
+@media (max-width: 700px) {
+  .cmp-table thead { display: none; }
+  .cmp-table tr { display: block; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .cmp-table td { display: block; width: 100% !important; border: none; padding: 0.2rem 0.7rem; }
+  .cmp-dim { color: #fde68a; font-weight: 700; }
+}
+
+/* ============================================================ */
 /* P1.5.1 — Mock Exam Mode                                      */
 /* ============================================================ */
 .mock-exam-view { padding: 1rem 0.5rem; }
