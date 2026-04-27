@@ -342,8 +342,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("km-lessons-container");
     if (!container || !window.LESSONS_DATA) return;
 
-    // Update top stats — based on per-concept LEVEL (1..7)
+    // Update top stats — combines per-concept LEVEL (1..7) and mastery state.
     let masterCount = 0, weakCnt = 0, partialCnt = 0, pendingCnt = 0;
+    let atRiskCnt = 0, dueCnt = 0;
     let levelSum = 0;
     allConcepts().forEach(({ lesson, concept }) => {
       const sc = getScore(lesson.id, concept.conceptName);
@@ -352,6 +353,8 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (sc.attempts === 0 && sc.level === 1) pendingCnt++;
       else if (sc.level <= 2) weakCnt++;
       else partialCnt++;
+      if (getMasteryState(sc) === "at-risk") atRiskCnt++;
+      if (sc.attempts > 0 && isSrsDue(sc)) dueCnt++;
     });
     const totalConcepts = masterCount + weakCnt + partialCnt + pendingCnt;
     const avgLvl = totalConcepts ? levelSum / totalConcepts : 1;
@@ -363,26 +366,56 @@ document.addEventListener("DOMContentLoaded", () => {
       ? Math.round(((avgLvl - 1) / 6) * 100)
       : 0;
     document.getElementById("km-mastery-fill").style.width = masteryPct + "%";
+    const dueSummary = dueCnt > 0 ? ` · 🔁 ${dueCnt} לחזרה` : "";
+    const riskSummary = atRiskCnt > 0 ? ` · ⚠️ ${atRiskCnt} בסיכון` : "";
     document.getElementById("km-mastery-text").textContent =
-      `רמת שליטה: ${masteryPct}% · רמה ממוצעת ${avgLvl.toFixed(2)}/7 (${masterCount} 🏆 · ${partialCnt} בתהליך · ${weakCnt} חלשים · ${pendingCnt} לא נבחנו)`;
+      `רמת שליטה: ${masteryPct}% · רמה ממוצעת ${avgLvl.toFixed(2)}/7 (${masterCount} 🏆 · ${partialCnt} בתהליך · ${weakCnt} חלשים · ${pendingCnt} לא נבחנו)${riskSummary}${dueSummary}`;
 
     // Build groups
     const q = kmQuery.toLowerCase().trim();
+    const MASTERY_LABEL = {
+      new: "🆕 חדש",
+      learning: "📘 בלימוד",
+      review: "📗 בחזרה",
+      "at-risk": "⚠️ בסיכון",
+      mastered: "🏆 מאסטר",
+    };
     const html = window.LESSONS_DATA
       .map((lesson) => {
         const concepts = (lesson.concepts || []).filter((c) => {
           const sc = getScore(lesson.id, c.conceptName);
           // Track A — A5: filter by mastery state (5 buckets) instead of raw level.
-          // Existing dropdown values are mapped: "known" → mastered,
-          // "unknown" → learning OR at-risk, "pending" → new.
+          // Legacy values are aliased to mastery states so the existing dropdown
+          // entries keep working:
+          //   known   → mastered
+          //   unknown → learning ∪ at-risk
+          //   pending → new
+          // New additive values (injected at boot): learning, review,
+          // at-risk, mastered, new, due.
           const state = getMasteryState(sc);
-          if (kmFilter === "known" && state !== "mastered") return false;
-          if (
-            kmFilter === "unknown" &&
-            !(state === "learning" || state === "at-risk")
-          )
-            return false;
-          if (kmFilter === "pending" && state !== "new") return false;
+          switch (kmFilter) {
+            case "all": break;
+            case "known":
+            case "mastered":
+              if (state !== "mastered") return false;
+              break;
+            case "unknown":
+              if (!(state === "learning" || state === "at-risk")) return false;
+              break;
+            case "pending":
+            case "new":
+              if (state !== "new") return false;
+              break;
+            case "learning":
+            case "review":
+            case "at-risk":
+              if (state !== kmFilter) return false;
+              break;
+            case "due":
+              if (!(sc.attempts > 0 && isSrsDue(sc))) return false;
+              break;
+            default: break;
+          }
           if (q && !c.conceptName.toLowerCase().includes(q)) return false;
           return true;
         });
@@ -398,14 +431,6 @@ document.addEventListener("DOMContentLoaded", () => {
           ? lessonScores.reduce((s, e) => s + e.level, 0) / lessonTotal
           : 1;
         const lessonPct = Math.round(((lessonAvg - 1) / 6) * 100);
-
-        const MASTERY_LABEL = {
-          new: "🆕 חדש",
-          learning: "📘 בלימוד",
-          review: "📗 בחזרה",
-          "at-risk": "⚠️ בסיכון",
-          mastered: "🏆 מאסטר",
-        };
 
         const rows = concepts
           .map((c) => {
@@ -883,6 +908,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const sc = ensureScore(lessonId, conceptName);
     sc.weakReports = (sc.weakReports || 0) + 1;
     sc.correctRunCount = 0; // reset V progress on weak-report
+    // Track A — A4: a weak-report is semantically "I forgot this". Push it
+    // into SRS as a lapse so the trainer surfaces it again sooner.
+    try {
+      if (window.SRS && typeof window.SRS.update === "function") {
+        const ref = findConceptByKey(conceptKey(lessonId, conceptName));
+        const diff = ref ? getDifficulty(ref.concept) : 5;
+        window.SRS.update(sc.srsState, false, diff);
+      }
+    } catch (_) {}
     saveScores();
   }
 
@@ -4704,8 +4738,8 @@ document.addEventListener("DOMContentLoaded", () => {
         Object.keys(scores).length > 0 || Object.keys(proficiency).length > 0;
       if (hasProgress) {
         const ok = confirm(
-          `\ud83d\udd04 \u05de\u05d0\u05d2\u05e8 \u05d4\u05e9\u05d0\u05dc\u05d5\u05ea \u05e2\u05d5\u05d3\u05db\u05df \u05de\u05d2\u05e8\u05e1\u05d4 ${stored} \u2192 ${version}.\n` +
-            `\u05d4\u05d0\u05dd \u05dc\u05e8\u05e2\u05e0\u05df \u05d0\u05ea \u05d4\u05d4\u05ea\u05e7\u05d3\u05de\u05d5\u05ea \u05d4\u05de\u05e7\u05d5\u05de\u05d9\u05ea? (\u05d6\u05d4 \u05d9\u05d0\u05e4\u05e1 \u05d8\u05d1\u05dc\u05d0\u05ea \u05e6\u05d9\u05d5\u05e0\u05d9\u05dd \u05d5-SRS)`
+          `🔄 מאגר השאלות עודכן מגרסה ${stored} → ${version}.\n` +
+            `האם לרענן את ההתקדמות המקומית? (זה יאפס טבלת ציונים ו-SRS)`,
         );
         if (ok) {
           scores = {};
@@ -4738,6 +4772,27 @@ document.addEventListener("DOMContentLoaded", () => {
     style.id = "track-a-mastery-styles";
     style.textContent = css;
     document.head.appendChild(style);
+  })();
+
+  // Track A — A5: extend the existing #km-filter dropdown with mastery-state
+  // options. Done programmatically so we don't touch index.html (Track D's
+  // territory). Idempotent — guards against double-injection on reload.
+  (function injectMasteryFilterOptions() {
+    const sel = document.getElementById("km-filter");
+    if (!sel || sel.dataset.trackAExtended === "1") return;
+    const extra = [
+      { value: "learning", label: "📘 בלימוד" },
+      { value: "review", label: "📗 בחזרה" },
+      { value: "at-risk", label: "⚠️ בסיכון" },
+      { value: "due", label: "🔁 הגיע מועד חזרה" },
+    ];
+    extra.forEach((o) => {
+      const opt = document.createElement("option");
+      opt.value = o.value;
+      opt.textContent = o.label;
+      sel.appendChild(opt);
+    });
+    sel.dataset.trackAExtended = "1";
   })();
 
   // =========== BOOT ===========

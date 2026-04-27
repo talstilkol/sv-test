@@ -299,6 +299,25 @@ function main() {
     if (errors.length > cap) {
       console.error(`   … and ${errors.length - cap} more (strict mode trims output).`);
     }
+    if (STRICT) {
+      // Categorized summary so CI logs surface counts at a glance.
+      const buckets = {
+        warning: 0,
+        boilerplate: 0,
+        "missing-difficulty": 0,
+        other: 0,
+      };
+      errors.forEach((e) => {
+        const m = /^\[strict:([\w-]+)\]/.exec(e);
+        if (m && buckets.hasOwnProperty(m[1])) buckets[m[1]]++;
+        else buckets.other++;
+      });
+      console.error("\n📊 Strict-mode breakdown:");
+      console.error(`   • warnings (fill ambiguity etc.): ${buckets.warning}`);
+      console.error(`   • boilerplate concepts:            ${buckets.boilerplate}`);
+      console.error(`   • missing difficulty:              ${buckets["missing-difficulty"]}`);
+      if (buckets.other > 0) console.error(`   • other:                          ${buckets.other}`);
+    }
   }
 
   if (warnings.length > 0) {
