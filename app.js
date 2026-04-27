@@ -446,6 +446,220 @@ document.addEventListener("DOMContentLoaded", () => {
 
     applyState();
 
+    // ----- A11y toggles -----
+    const A11Y_KEY = "lumenportal:a11y:v1";
+    const A11Y_TOGGLES = ["dyslexia-font", "reduce-motion", "high-contrast", "large-text"];
+    let a11yState = Object.fromEntries(A11Y_TOGGLES.map((k) => [k, false]));
+    try {
+      const saved = JSON.parse(localStorage.getItem(A11Y_KEY) || "null");
+      if (saved && typeof saved === "object") {
+        A11Y_TOGGLES.forEach((k) => { if (typeof saved[k] === "boolean") a11yState[k] = saved[k]; });
+      }
+    } catch (_) {}
+    function applyA11y() {
+      A11Y_TOGGLES.forEach((k) => {
+        document.body.classList.toggle(`a11y-${k}`, a11yState[k]);
+        const btn = panel.querySelector(`.vm-a11y-toggle[data-a11y="${k}"]`);
+        if (btn) btn.setAttribute("aria-pressed", a11yState[k] ? "true" : "false");
+      });
+      try { localStorage.setItem(A11Y_KEY, JSON.stringify(a11yState)); } catch (_) {}
+    }
+    panel.querySelectorAll(".vm-a11y-toggle").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const k = btn.dataset.a11y;
+        a11yState[k] = !a11yState[k];
+        applyA11y();
+      });
+    });
+    applyA11y();
+
+    // ----- Glossary modal -----
+    const glossaryModal = document.getElementById("glossary-modal");
+    const glossaryList = document.getElementById("glossary-list");
+    const glossarySearchEl = document.getElementById("glossary-search");
+    function openGlossary() {
+      if (!glossaryModal) return;
+      glossaryModal.removeAttribute("hidden");
+      panel.setAttribute("hidden", "");
+      fab.setAttribute("aria-expanded", "false");
+      renderGlossary("");
+      glossarySearchEl?.focus();
+    }
+    function renderGlossary(q) {
+      if (!glossaryList) return;
+      const G = window.GLOSSARY || {};
+      const ql = q.trim().toLowerCase();
+      const entries = Object.entries(G).filter(([term, info]) => {
+        if (!ql) return true;
+        const blob = `${term} ${info.he || ""} ${info.short || ""} ${info.long || ""}`.toLowerCase();
+        return blob.includes(ql);
+      });
+      if (entries.length === 0) {
+        glossaryList.innerHTML = '<div class="glossary-empty">🔍 לא נמצא מונח. נסה מילה אחרת.</div>';
+        return;
+      }
+      glossaryList.innerHTML = entries
+        .map(([term, info]) => {
+          const cat = info.category || "";
+          const example = info.example ? `<pre class="glossary-example"><code>${esc(info.example)}</code></pre>` : "";
+          return `
+            <details class="glossary-entry" data-cat="${esc(cat)}">
+              <summary>
+                <span class="glossary-term">${esc(term)}</span>
+                ${info.he ? `<span class="glossary-he">${esc(info.he)}</span>` : ""}
+                ${cat ? `<span class="glossary-cat">${esc(cat)}</span>` : ""}
+              </summary>
+              <div class="glossary-body">
+                ${info.short ? `<div class="glossary-short">${esc(info.short)}</div>` : ""}
+                ${info.long ? `<div class="glossary-long">${esc(info.long)}</div>` : ""}
+                ${example}
+              </div>
+            </details>`;
+        })
+        .join("");
+    }
+    glossarySearchEl?.addEventListener("input", (e) => renderGlossary(e.target.value));
+    document.getElementById("glossary-close")?.addEventListener("click", () => glossaryModal?.setAttribute("hidden", ""));
+    glossaryModal?.addEventListener("click", (e) => { if (e.target === glossaryModal) glossaryModal.setAttribute("hidden", ""); });
+    document.getElementById("vm-open-glossary")?.addEventListener("click", openGlossary);
+
+    // ----- Daily Reflection -----
+    const REFLECT_KEY = "lumenportal:reflections:v1";
+    const reflectModal = document.getElementById("reflection-modal");
+    const reflectConfRange = document.getElementById("reflect-confidence");
+    const reflectConfOut = document.getElementById("reflect-confidence-out");
+    function loadReflections() { try { return JSON.parse(localStorage.getItem(REFLECT_KEY) || "[]"); } catch (_) { return []; } }
+    function saveReflectionRecord(rec) {
+      const arr = loadReflections();
+      arr.unshift(rec);
+      arr.length = Math.min(arr.length, 30);
+      try { localStorage.setItem(REFLECT_KEY, JSON.stringify(arr)); } catch (_) {}
+    }
+    function openReflection() {
+      if (!reflectModal) return;
+      reflectModal.removeAttribute("hidden");
+      panel.setAttribute("hidden", "");
+      fab.setAttribute("aria-expanded", "false");
+      renderReflectionHistory();
+    }
+    function renderReflectionHistory() {
+      const list = loadReflections();
+      const cont = document.getElementById("reflect-history");
+      if (!cont) return;
+      if (list.length === 0) { cont.innerHTML = '<div class="reflect-history-empty">אין רפלקציות עדיין.</div>'; return; }
+      cont.innerHTML = '<h4>📊 היסטוריה (10 אחרונות)</h4>' + list.slice(0, 10).map((r) => {
+        const d = new Date(r.date);
+        return `<div class="reflect-row">
+          <div class="reflect-row-meta">${d.getDate()}/${d.getMonth()+1} · ביטחון ${r.confidence}%</div>
+          ${r.learned ? `<div class="reflect-row-text"><strong>למד:</strong> ${esc(r.learned)}</div>` : ""}
+          ${r.stuck ? `<div class="reflect-row-text"><strong>קשה:</strong> ${esc(r.stuck)}</div>` : ""}
+        </div>`;
+      }).join("");
+    }
+    reflectConfRange?.addEventListener("input", () => { if (reflectConfOut) reflectConfOut.textContent = reflectConfRange.value + "%"; });
+    document.getElementById("reflect-save")?.addEventListener("click", () => {
+      const learned = document.getElementById("reflect-learned")?.value.trim() || "";
+      const stuck = document.getElementById("reflect-stuck")?.value.trim() || "";
+      const confidence = parseInt(reflectConfRange?.value || "50", 10);
+      if (!learned && !stuck) { alert("מלא לפחות שדה אחד."); return; }
+      saveReflectionRecord({ date: new Date().toISOString(), learned, stuck, confidence });
+      document.getElementById("reflect-learned").value = "";
+      document.getElementById("reflect-stuck").value = "";
+      renderReflectionHistory();
+      alert("✅ נשמר!");
+    });
+    document.getElementById("reflection-close")?.addEventListener("click", () => reflectModal?.setAttribute("hidden", ""));
+    reflectModal?.addEventListener("click", (e) => { if (e.target === reflectModal) reflectModal.setAttribute("hidden", ""); });
+    document.getElementById("vm-open-reflection")?.addEventListener("click", openReflection);
+
+    // ----- 🔀 Reverse Q&A — given definition, pick concept name -----
+    const reverseModal = document.getElementById("reverse-modal");
+    const reverseBody = document.getElementById("reverse-body");
+    function shuffleArr(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    function pickReverseQuestion() {
+      const lessons = window.LESSONS_DATA || [];
+      const allConcepts = [];
+      lessons.forEach((L) => (L.concepts || []).forEach((c) => {
+        if (c.levels && c.levels[0]) allConcepts.push({ lesson: L, concept: c });
+      }));
+      if (allConcepts.length < 4) return null;
+      const target = allConcepts[Math.floor(Math.random() * allConcepts.length)];
+      // Distractors: 3 random concepts from same lesson if possible, else any
+      const sameLesson = allConcepts.filter((p) => p.lesson.id === target.lesson.id && p.concept.conceptName !== target.concept.conceptName);
+      const otherLesson = allConcepts.filter((p) => p.concept.conceptName !== target.concept.conceptName);
+      let distractorPool = sameLesson.length >= 3 ? sameLesson : otherLesson;
+      const distractors = shuffleArr(distractorPool).slice(0, 3);
+      const optionsConcepts = shuffleArr([target, ...distractors]);
+      const correctIdx = optionsConcepts.findIndex((p) => p.concept.conceptName === target.concept.conceptName);
+      // Use level-1 (grandma) or level-3 explanation as the prompt
+      const definition = target.concept.levels?.[2] || target.concept.levels?.[0] || target.concept.levels?.[1] || "";
+      return { target, options: optionsConcepts, correctIdx, definition };
+    }
+    function renderReverseQuestion() {
+      const q = pickReverseQuestion();
+      if (!q || !reverseBody) {
+        if (reverseBody) reverseBody.innerHTML = '<div class="rev-empty">אין מספיק מושגים. ודא שהמודולים נטענו.</div>';
+        return;
+      }
+      reverseBody.innerHTML = `
+        <div class="rev-intro">קרא את ההסבר. לאיזה מושג הוא מתייחס?</div>
+        <div class="rev-definition">${esc(q.definition)}</div>
+        <div class="rev-options">
+          ${q.options.map((p, i) => `
+            <button class="rev-option" data-rev-idx="${i}">${esc(p.concept.conceptName)} <span class="rev-lesson">(${esc(p.lesson.title)})</span></button>
+          `).join("")}
+        </div>
+        <div class="rev-feedback" id="rev-feedback" hidden></div>
+        <div class="rev-actions" hidden id="rev-actions">
+          <button class="km-btn-mini primary" id="rev-next">▶ שאלה חדשה</button>
+        </div>`;
+      reverseBody.querySelectorAll(".rev-option").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.dataset.revIdx, 10);
+          const correct = idx === q.correctIdx;
+          reverseBody.querySelectorAll(".rev-option").forEach((b, i) => {
+            b.disabled = true;
+            if (i === q.correctIdx) b.classList.add("rev-correct");
+            else if (i === idx && !correct) b.classList.add("rev-wrong");
+          });
+          const fb = document.getElementById("rev-feedback");
+          fb.hidden = false;
+          fb.className = "rev-feedback " + (correct ? "rev-fb-correct" : "rev-fb-wrong");
+          fb.innerHTML = correct
+            ? `✅ נכון! המושג <strong>${esc(q.target.concept.conceptName)}</strong> מתואר באחת מ-7 הרמות שלו.`
+            : `❌ לא מדויק. ההגדרה היא של <strong>${esc(q.target.concept.conceptName)}</strong> (${esc(q.target.lesson.title)}).`;
+          document.getElementById("rev-actions").hidden = false;
+          document.getElementById("rev-next")?.addEventListener("click", renderReverseQuestion);
+        });
+      });
+    }
+    document.getElementById("vm-open-reverse")?.addEventListener("click", () => {
+      reverseModal?.removeAttribute("hidden");
+      panel.setAttribute("hidden", "");
+      fab.setAttribute("aria-expanded", "false");
+      renderReverseQuestion();
+    });
+    document.getElementById("reverse-close")?.addEventListener("click", () => reverseModal?.setAttribute("hidden", ""));
+    reverseModal?.addEventListener("click", (e) => { if (e.target === reverseModal) reverseModal.setAttribute("hidden", ""); });
+
+    // ----- "⏰ היסטוריית מבחנים" — quick-jump to Mock Exam history -----
+    document.getElementById("vm-open-history")?.addEventListener("click", () => {
+      panel.setAttribute("hidden", "");
+      fab.setAttribute("aria-expanded", "false");
+      if (typeof openMockExam === "function") openMockExam();
+      // Scroll to history block
+      setTimeout(() => {
+        document.querySelector(".mx-history-block")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 300);
+    });
+
     // Expose for outside callers (when lesson changes, refresh jumper)
     window.viewModeRefreshJumper = rebuildJumper;
   })();
@@ -2215,10 +2429,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Build a unified post-answer feedback message based on the level/advance result
-  function buildAnswerFeedback(correct, kind, levelBefore, result, concept, question) {
+  function buildAnswerFeedback(correct, kind, levelBefore, result, concept, question, selectedIdx) {
     const sc = getScore(trainerCurrent.lesson.id, concept.conceptName);
     const verdict = correct ? "✅ נכון!" : "❌ לא מדויק";
     const slotLabel = kind === "mc" ? "🅰️ שאלה אמריקנית" : "✍️ השלמת קוד";
+
+    // P1.5.2 — Per-Distractor Feedback: prefer specific feedback over generic explanation
+    let distractorFeedback = "";
+    if (kind === "mc" && !correct && typeof selectedIdx === "number") {
+      const fbMap = typeof OPTION_FEEDBACK !== "undefined" ? OPTION_FEEDBACK : (window.OPTION_FEEDBACK || {});
+      const fbArr = (question.optionFeedback) || (question.id && fbMap[question.id]);
+      if (Array.isArray(fbArr) && fbArr[selectedIdx]) {
+        distractorFeedback = fbArr[selectedIdx];
+      }
+    }
 
     let progressLine = "";
     if (correct) {
@@ -2242,10 +2466,16 @@ document.addEventListener("DOMContentLoaded", () => {
         ? ` — התשובה הנכונה: <code>${esc(question.answer || "")}</code>`
         : "";
 
+    // If we have specific distractor feedback, show it FIRST (more actionable than generic explanation)
+    const explanationBlock = distractorFeedback
+      ? `<div class="tq-distractor-feedback">${esc(distractorFeedback)}</div>
+         <div class="tq-explanation-secondary">📚 הסבר כללי: ${esc(question.explanation || "")}</div>`
+      : `<div>${esc(question.explanation || "")}</div>`;
+
     return `
       <div class="tq-feedback ${correct ? "correct" : "wrong"}">
         <div class="verdict">${verdict}${wrongAns}<span class="delta">${correct ? "+1" : "0"}</span></div>
-        <div>${esc(question.explanation || "")}</div>
+        ${explanationBlock}
         <div style="margin-top:0.5rem; font-size:0.92rem; color: var(--text-main);">
           ${progressLine}
         </div>
@@ -2325,7 +2555,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("tq-feedback-slot").innerHTML = buildAnswerFeedback(
-      correct, "mc", levelBefore, result, concept, question,
+      correct, "mc", levelBefore, result, concept, question, selectedIdx,
     );
     attachPostAnswerActions(lesson, concept);
 
@@ -5253,6 +5483,7 @@ document.addEventListener("DOMContentLoaded", () => {
               : ""
           }
           <button class="concept-btn pocket-add" data-action="pocket-toggle" data-pocket-key="${esc(lesson.id + "::" + concept.conceptName)}" aria-label="שמור את המושג ${esc(concept.conceptName)} לכיס" title="שמור לכיס לחזרה מהירה — הכפתור הצף 📌 בפינה שמאלית עליונה">📌 שמור לכיס</button>
+          <button class="concept-btn eli5" data-action="eli5" aria-label="הסבר את ${esc(concept.conceptName)} כמו שמסבירים לילד בן 5" title="ELI5 — Explain Like I'm 5 — תצוגה ברמת סבתא+אנלוגיות בלבד">🧒 כמו לבן 5</button>
           ${
             isOverride
               ? `<button class="concept-btn ghost" data-action="reset-view">👁️ חזור לרמה האישית</button>`
@@ -5898,6 +6129,26 @@ document.addEventListener("DOMContentLoaded", () => {
               tag.className = "bh-status bh-status-correct";
               tag.textContent = "✅ נכון!";
               optionsBox?.appendChild(tag);
+            }
+          } else if (action === "eli5") {
+            // ELI5 — show the simplest explanation (level 1 / grandma) inline
+            const expEl = card.querySelector(".concept-explanation");
+            const eli5Box = card.querySelector(".eli5-overlay");
+            const grandma = (concept.levels && concept.levels[0]) || "";
+            const analogy = (concept.analogies && concept.analogies[0]) || concept.analogy || "";
+            if (eli5Box) {
+              // Toggle off
+              eli5Box.remove();
+              btn.textContent = "🧒 כמו לבן 5";
+            } else if (expEl) {
+              const overlay = document.createElement("div");
+              overlay.className = "eli5-overlay";
+              overlay.innerHTML = `
+                <div class="eli5-head">🧒 כמו שמסבירים לילד בן 5:</div>
+                <div class="eli5-body">${esc(grandma || "אין הסבר ברמת סבתא למושג זה.")}</div>
+                ${analogy ? `<div class="eli5-analogy"><strong>🌍 אנלוגיה:</strong> ${esc(typeof analogy === "string" ? analogy : (analogy.text || ""))}</div>` : ""}`;
+              expEl.parentNode.insertBefore(overlay, expEl.nextSibling);
+              btn.textContent = "✕ הסתר ELI5";
             }
           } else if (action === "pocket-toggle") {
             // Pocket Concept Card: toggle save

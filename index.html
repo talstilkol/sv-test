@@ -58,6 +58,40 @@
         <span class="emoji" aria-hidden="true">📄</span><span class="lbl">PDF</span>
       </button>
 
+      <!-- 📖 Glossary modal -->
+      <div class="modal-overlay" id="glossary-modal" hidden>
+        <div class="modal-card">
+          <div class="modal-head">
+            <strong>📖 מילון מונחים</strong>
+            <button class="modal-close" id="glossary-close" aria-label="סגור">✕</button>
+          </div>
+          <input type="text" class="modal-search" id="glossary-search" placeholder="🔍 חפש מונח (use, async, JSX, סטייט...)" />
+          <div class="modal-body" id="glossary-list"></div>
+        </div>
+      </div>
+
+      <!-- 📅 Daily Reflection modal -->
+      <div class="modal-overlay" id="reflection-modal" hidden>
+        <div class="modal-card">
+          <div class="modal-head">
+            <strong>📅 רפלקציה יומית</strong>
+            <button class="modal-close" id="reflection-close" aria-label="סגור">✕</button>
+          </div>
+          <div class="modal-body">
+            <p>סכם את הלמידה שלך היום בכמה שורות. זה עוזר לזיכרון ארוך-טווח.</p>
+            <label class="reflect-label">📚 מה למדתי היום?</label>
+            <textarea id="reflect-learned" rows="3" placeholder="לדוגמה: הבנתי איך useEffect עובד עם deps array..."></textarea>
+            <label class="reflect-label">🤔 מה היה קשה?</label>
+            <textarea id="reflect-stuck" rows="2" placeholder="באיזה מושג נתקעת הכי הרבה?"></textarea>
+            <label class="reflect-label">📊 רמת ביטחון (0-100%)</label>
+            <input type="range" id="reflect-confidence" min="0" max="100" value="50" />
+            <div class="reflect-confidence-out" id="reflect-confidence-out">50%</div>
+            <button class="km-btn-mini primary" id="reflect-save">💾 שמור</button>
+            <div class="reflect-history" id="reflect-history"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- Pocket Concept Card — floating saved concepts panel -->
       <button class="pocket-fab" id="pocket-fab" aria-label="פתח/סגור Pocket Concept Card" aria-expanded="false" title="📌 הכיס שלך — מושגים שסימנת לחזרה מהירה">
         <span aria-hidden="true">📌</span>
@@ -113,6 +147,35 @@
             <button class="vm-toggle" data-vm="mnemonic" aria-pressed="true">🧠 מנמוניקה</button>
             <button class="vm-toggle" data-vm="comparisons" aria-pressed="true">⚖️ השוואות</button>
             <button class="vm-toggle" data-vm="actions" aria-pressed="true">✓ כפתורי פעולה</button>
+          </div>
+        </div>
+        <div class="vm-section">
+          <div class="vm-label">📖 כלים נוספים</div>
+          <div class="vm-toggles">
+            <button class="vm-tool-btn" id="vm-open-glossary">📖 מילון מונחים (Hebrew/English)</button>
+            <button class="vm-tool-btn" id="vm-open-reflection">📅 רפלקציה יומית</button>
+            <button class="vm-tool-btn" id="vm-open-history">⏰ היסטוריית מבחנים</button>
+            <button class="vm-tool-btn" id="vm-open-reverse">🔀 שאלה הפוכה — תזהה מושג מההגדרה</button>
+          </div>
+        </div>
+
+        <!-- Reverse Q&A modal -->
+        <div class="modal-overlay" id="reverse-modal" hidden style="z-index:701">
+          <div class="modal-card">
+            <div class="modal-head">
+              <strong>🔀 שאלה הפוכה</strong>
+              <button class="modal-close" id="reverse-close" aria-label="סגור">✕</button>
+            </div>
+            <div class="modal-body" id="reverse-body"></div>
+          </div>
+        </div>
+        <div class="vm-section">
+          <div class="vm-label">♿ נגישות</div>
+          <div class="vm-toggles">
+            <button class="vm-a11y-toggle" data-a11y="dyslexia-font" aria-pressed="false">🔠 גופן לדיסלקטיים (OpenDyslexic)</button>
+            <button class="vm-a11y-toggle" data-a11y="reduce-motion" aria-pressed="false">🎚️ הפחת אנימציות</button>
+            <button class="vm-a11y-toggle" data-a11y="high-contrast" aria-pressed="false">🌗 ניגודיות גבוהה</button>
+            <button class="vm-a11y-toggle" data-a11y="large-text" aria-pressed="false">🔍 טקסט גדול (+15%)</button>
           </div>
         </div>
       </div>
@@ -544,6 +607,8 @@
     <script src="data/animations.js"></script>
     <!-- Sprint 3 — What-If Simulator -->
     <script src="data/what_if.js"></script>
+    <!-- P1.5.2 — Per-Distractor Feedback -->
+    <script src="data/option_feedback.js"></script>
     <script src="data/quick_guide.js"></script>
     <script src="data/code_blocks.js"></script>
     <script src="data/glossary.js"></script>

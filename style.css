@@ -1539,6 +1539,25 @@ body {
 .tq-feedback.correct { border-right-color: var(--success); background: rgba(16,185,129,0.06); }
 .tq-feedback.wrong { border-right-color: var(--error); background: rgba(239,68,68,0.06); }
 
+/* P1.5.2 — Per-Distractor Feedback */
+.tq-distractor-feedback {
+  background: rgba(245, 158, 11, 0.1);
+  border-right: 3px solid #f59e0b;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  margin: 0.4rem 0;
+  font-weight: 600;
+  color: #fcd34d;
+  line-height: 1.55;
+}
+.tq-explanation-secondary {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  border-top: 1px dashed rgba(255,255,255,0.08);
+  padding-top: 0.4rem;
+  margin-top: 0.4rem;
+}
+
 .tq-feedback .verdict {
   font-size: 1.1rem;
   font-weight: 800;
@@ -5236,6 +5255,321 @@ body.view-hide-actions .concept-actions { display: none !important; }
 
 /* Smooth scroll for jumper */
 html { scroll-behavior: smooth; }
+
+/* ============================================================ */
+/* Modals — generic overlay for Glossary / Reflection           */
+/* ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal-overlay[hidden] { display: none; }
+.modal-card {
+  background: rgba(15, 18, 35, 0.98);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Heebo", sans-serif;
+  direction: rtl;
+}
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.modal-close:hover { background: rgba(239, 68, 68, 0.18); color: #fca5a5; }
+.modal-search {
+  margin: 0.7rem 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-bright);
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  font-family: inherit;
+}
+.modal-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 0.5rem 1rem 1rem;
+}
+
+/* Glossary entries */
+.glossary-empty { color: var(--text-muted); padding: 1rem; font-style: italic; }
+.glossary-entry {
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  margin-bottom: 0.4rem;
+}
+.glossary-entry summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  flex-wrap: wrap;
+}
+.glossary-entry summary::-webkit-details-marker { display: none; }
+.glossary-entry summary::before {
+  content: "▶";
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-left: 0.3rem;
+  transition: transform 0.15s;
+}
+.glossary-entry[open] summary::before { transform: rotate(90deg); }
+.glossary-term {
+  font-family: "Fira Code", monospace;
+  font-weight: 700;
+  color: #c7d2fe;
+}
+.glossary-he {
+  color: var(--text-bright);
+  font-size: 0.92rem;
+}
+.glossary-cat {
+  margin-right: auto;
+  font-size: 0.72rem;
+  background: rgba(99, 102, 241, 0.18);
+  color: #c7d2fe;
+  padding: 1px 8px;
+  border-radius: 999px;
+}
+.glossary-body { padding: 0.4rem 0.8rem 0.7rem; }
+.glossary-short {
+  background: rgba(99, 102, 241, 0.08);
+  border-right: 3px solid #6366f1;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  margin-bottom: 0.4rem;
+  font-size: 0.92rem;
+}
+.glossary-long {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-bottom: 0.4rem;
+}
+.glossary-example pre {
+  direction: ltr;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  font-family: "Fira Code", monospace;
+  font-size: 0.82rem;
+  white-space: pre;
+  overflow-x: auto;
+  border-left: 3px solid #22c55e;
+}
+
+/* Reflection modal */
+.reflect-label {
+  display: block;
+  margin-top: 0.6rem;
+  margin-bottom: 0.2rem;
+  color: var(--text-bright);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+#reflection-modal textarea,
+#reflection-modal input[type="range"] {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-bright);
+  padding: 0.5rem 0.7rem;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+.reflect-confidence-out { text-align: center; color: #c7d2fe; font-weight: 700; margin: 0.3rem 0 0.6rem; }
+.reflect-history { margin-top: 1rem; }
+.reflect-history-empty { color: var(--text-muted); font-style: italic; }
+.reflect-row {
+  background: rgba(15, 23, 42, 0.55);
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 0.3rem;
+}
+.reflect-row-meta { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+.reflect-row-text { font-size: 0.88rem; line-height: 1.4; margin-bottom: 0.2rem; }
+
+/* ELI5 overlay — simple-language explanation */
+.eli5-overlay {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  margin: 0.6rem 0;
+}
+.eli5-head { font-weight: 700; color: #fbbf24; margin-bottom: 0.4rem; font-size: 0.95rem; }
+.eli5-body { color: var(--text-bright); line-height: 1.55; margin-bottom: 0.4rem; }
+.eli5-analogy {
+  background: rgba(99, 102, 241, 0.08);
+  border-right: 3px solid #6366f1;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+/* Reverse Q&A modal */
+.rev-empty { color: var(--text-muted); font-style: italic; padding: 1rem; }
+.rev-intro { font-weight: 600; color: #c7d2fe; margin-bottom: 0.5rem; }
+.rev-definition {
+  background: rgba(99, 102, 241, 0.1);
+  border-right: 3px solid #6366f1;
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-bright);
+}
+.rev-options { display: flex; flex-direction: column; gap: 0.4rem; }
+.rev-option {
+  text-align: right;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-bright);
+  padding: 0.55rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.92rem;
+}
+.rev-option:hover:not(:disabled) { background: rgba(99, 102, 241, 0.12); }
+.rev-option:disabled { cursor: default; opacity: 0.7; }
+.rev-option.rev-correct {
+  background: rgba(34, 197, 94, 0.18) !important;
+  border-color: #22c55e !important;
+  color: #bbf7d0 !important;
+  opacity: 1 !important;
+}
+.rev-option.rev-wrong {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+}
+.rev-lesson { font-size: 0.78rem; color: var(--text-muted); }
+.rev-feedback {
+  margin-top: 0.7rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  line-height: 1.5;
+}
+.rev-fb-correct { background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; color: #bbf7d0; }
+.rev-fb-wrong { background: rgba(239, 68, 68, 0.12); border: 1px solid #ef4444; color: #fca5a5; }
+.rev-actions { margin-top: 0.6rem; display: flex; gap: 0.5rem; }
+
+/* View Mode tool buttons */
+.vm-tool-btn {
+  display: block;
+  width: 100%;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: #c7d2fe;
+  padding: 0.45rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  text-align: right;
+  margin-bottom: 0.3rem;
+  transition: background 0.15s;
+}
+.vm-tool-btn:hover { background: rgba(99, 102, 241, 0.22); }
+
+/* ============================================================ */
+/* A11y toggles — dyslexia font, reduce motion, contrast, size  */
+/* ============================================================ */
+.vm-a11y-toggle {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-bright);
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  text-align: right;
+  transition: background 0.15s;
+}
+.vm-a11y-toggle:hover { background: rgba(99, 102, 241, 0.12); }
+.vm-a11y-toggle[aria-pressed="true"] {
+  background: rgba(34, 197, 94, 0.18);
+  border-color: #22c55e;
+  color: #bbf7d0;
+}
+
+/* Body-class effects */
+body.a11y-dyslexia-font {
+  font-family: "OpenDyslexic", "Comic Sans MS", "Heebo", sans-serif !important;
+  letter-spacing: 0.04em;
+  word-spacing: 0.18em;
+  line-height: 1.7;
+}
+body.a11y-dyslexia-font * { font-family: inherit !important; }
+body.a11y-dyslexia-font code,
+body.a11y-dyslexia-font pre,
+body.a11y-dyslexia-font .code-anatomy-code {
+  font-family: "Fira Code", "Courier New", monospace !important;
+}
+
+body.a11y-reduce-motion *,
+body.a11y-reduce-motion *::before,
+body.a11y-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+body.a11y-high-contrast {
+  --text-bright: #ffffff;
+  --text-main: #f5f5f5;
+  --text-muted: #d4d4d8;
+}
+body.a11y-high-contrast .glass-panel,
+body.a11y-high-contrast .concept-card,
+body.a11y-high-contrast .km-topic-group,
+body.a11y-high-contrast .anatomy-lesson-block {
+  border-width: 2px;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: #0a0e1c !important;
+}
+
+body.a11y-large-text {
+  font-size: 115%;
+}
+body.a11y-large-text code,
+body.a11y-large-text pre {
+  font-size: 1rem;
+}
 
 @keyframes conceptFlash {
   0%   { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
