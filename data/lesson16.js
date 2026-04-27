@@ -10,6 +10,7 @@ var LESSON_16 = {
     // 1. Node.js
     {
       conceptName: "Node.js",
+      difficulty: 5,
       levels: {
         grandma:
           "במקום להכין אוכל רק במטבח של הדפדפן להצגה על המסך, Node מאפשר לנו לבשל ברמה התעשייתית במפעל, איפה שיש גישה למנועים גדולים ולחסן רציני.",
@@ -39,6 +40,7 @@ var LESSON_16 = {
     // 2. V8
     {
       conceptName: "V8",
+      difficulty: 5,
       levels: {
         grandma:
           "המנוע שמתחת למכסה המנוע. את זורקת פנימה חומרי גלם (שפה), והוא טוחן את זה בפנים בקצב מהיר כדי שהמכונה תבין ותיסע.",
@@ -70,6 +72,7 @@ var LESSON_16 = {
     // 3. CLI
     {
       conceptName: "CLI",
+      difficulty: 5,
       levels: {
         grandma:
           "כמו לדבר במורס. אין מסך מגע ואין תמונות, יש רק שורת פקודה חשוכה שאת כותבת פנימה בקשות למערכת.",
@@ -101,6 +104,7 @@ var LESSON_16 = {
     // 4. Command Line Interface
     {
       conceptName: "Command Line Interface",
+      difficulty: 5,
       levels: {
         grandma:
           "זו מילה ארוכה ל'מסך השחור'. מקלדים פקודה באנגלית מקוצרת והמחשב מציית מיד, בלי להזיז חלונות קטנים.",
@@ -131,6 +135,7 @@ var LESSON_16 = {
     // 5. node file.js
     {
       conceptName: "node file.js",
+      difficulty: 5,
       levels: {
         grandma:
           "זה השלט הקטן שאומר למנוע של המכונה: 'קח את הדף (קובץ) הזה עכשיו ותתחיל לבצע כל מה שכתוב בו ללא איחור'.",
@@ -165,6 +170,7 @@ var LESSON_16 = {
     // 6. npm
     {
       conceptName: "npm",
+      difficulty: 4,
       levels: {
         grandma:
           "זוהי 'חוברת התפריטים של הטייק-אווי'. במקום להכין בסיס עוגיה מאפס, את מבקשת מהמאגר הזה בצק מוכן שמישהו אחר כבר הכין בצורה מושלמת בעולם, ומקבלת הביתה חינם.",
@@ -193,6 +199,7 @@ var LESSON_16 = {
     // 7. npm init
     {
       conceptName: "npm init",
+      difficulty: 5,
       levels: {
         grandma:
           "תיכנס להקים עסק, 'npm init' זו הנפקת תעודת רישום לעסק. פותחים תיק רשמי, עונים על כמה שאלות מי הבעלים — ומקבלים אישור שמוסדרים לעסקים חדשים.",
@@ -224,6 +231,7 @@ var LESSON_16 = {
     // 8. npm install
     {
       conceptName: "npm install",
+      difficulty: 5,
       levels: {
         grandma:
           "זו פעולת הקניה מהחנות. מצאת משהו שטעים בקורס — האמירה 'תביא לי את זה ותכניס לי למזווה בבקשה' זה npm install.",
@@ -254,6 +262,7 @@ var LESSON_16 = {
     // 9. npm start
     {
       conceptName: "npm start",
+      difficulty: 5,
       levels: {
         grandma:
           "זו לחיצה על כפתור הפעלה שמדליק את כל המפעל יחד בצורה שכתובה מראש. כפתור קיצור ירוק שעושה את כל העבודות השחורות בבוקר.",
@@ -287,6 +296,7 @@ var LESSON_16 = {
     // 10. package.json
     {
       conceptName: "package.json",
+      difficulty: 4,
       levels: {
         grandma:
           "היומן של הפרויקט. מי הקים אותו, מה הטלפון, ובעיקר: רשימת קניות מפורטת של כל מה שצריך כדי שהתבשיל יצליח בהעברה כיוון שהמתכון פה מדויק.",
@@ -321,6 +331,7 @@ var LESSON_16 = {
     // 11. dependencies
     {
       conceptName: "dependencies",
+      difficulty: 5,
       levels: {
         grandma:
           "תלויות, או 'המצרכים הדרושים'. אי אפשר לעשות עוגת מנגו בלי מנגו (העוגה תלויה במנגו). זה פשוט הרובריקה שאוהבת לרכז הכל כדי ללכת לשוק המרכזי לקנות לפי הכנת המתכון.",
@@ -353,6 +364,7 @@ var LESSON_16 = {
     // 12. module
     {
       conceptName: "module",
+      difficulty: 5,
       levels: {
         grandma:
           "מודול זה קופסת כלים סגורה שפותרת בעיה אחת. קופסה עם מברג ושמן (מודול) לתיקון הדלת, במקום לזרוק הכל במגירה גדולה עמוסה ומבולגנת אחת בבית.",
@@ -385,6 +397,7 @@ var LESSON_16 = {
     // 13. require
     {
       conceptName: "require",
+      difficulty: 5,
       levels: {
         grandma:
           "להביא ציוד מהשכן. את מכינה עוגה, חסר לך ביצים? תדרשי (require) מהשכנה שתתן, ואת יכולה להשתמש בהן מיד בבלילה.",
@@ -416,6 +429,7 @@ var LESSON_16 = {
     // 14. module.exports
     {
       conceptName: "module.exports",
+      difficulty: 5,
       levels: {
         grandma:
           "לתת לחבילה שנשלחה לדואר יציאה. אם יצרת עוגייות במדויק אבל תשארי אותן בבית הן לא יגיעו. שימתן בסל ה-exports היא הבטחה לשילוח ברור החוצה מהמודול.",
@@ -448,6 +462,7 @@ var LESSON_16 = {
     // 15. JSON
     {
       conceptName: "JSON",
+      difficulty: 4,
       levels: {
         grandma:
           "זוהי שפה מוסכמת בינלאומית שפחות עשירה מנאום. במקום לשלוח לחו\"ל חבילה עם תכולה מפוזרת, כותבים בדיוק וביבשושיות: 'שם:דויד, גיל:50' — כדי שכל שפה תבין בלי להתבלבל.",
@@ -481,6 +496,7 @@ var LESSON_16 = {
     // 16. dir
     {
       conceptName: "dir",
+      difficulty: 5,
       levels: {
         grandma:
           "להדליק אור בחדר. הפקודה dir מוציאה בקול רם רשימה של 'מה יש פה מסביב במחסן כרגע' בסל הפקודות החושפות.",
@@ -511,6 +527,7 @@ var LESSON_16 = {
     // 17. cd
     {
       conceptName: "cd",
+      difficulty: 5,
       levels: {
         grandma:
           "לרדת במדרגות. הפקודה cd לוקחת אותך מהחדר הנוכחי בו את נמצאת במסדרון לעבר החדר הבא (שינוי מיקום עכשיו).",
@@ -542,6 +559,7 @@ var LESSON_16 = {
     // 18. mkdir
     {
       conceptName: "mkdir",
+      difficulty: 5,
       levels: {
         grandma:
           "Make Directory. במקום ללחוץ בקלק ימני 'צור תיקייה חדשה' ולקרוא לה 'מתכונים', לוחצים פה מיד ומכניסים את השם בכוח מחשבתי עצים ליצירת אירגון.",
@@ -570,6 +588,7 @@ var LESSON_16 = {
     // 19. type nul
     {
       conceptName: "type nul",
+      difficulty: 5,
       levels: {
         grandma:
           "זוהי תרופת סבתא לחלונות כדי לייצר פתק ריק לחלוטין שאחר כך ניתן לכתוב עליו מתכון. את דורשת 'הדפס כלום לתוך קובץ'.",
@@ -601,6 +620,7 @@ var LESSON_16 = {
     // 20. fs
     {
       conceptName: "fs",
+      difficulty: 5,
       levels: {
         grandma:
           "זו קיצור של File System. תיקייה מיוחדת בחנות הכלים שמכילה את כל מה שצריך כדי לגעת בקבצים עצמם — לפתוח אותם, לכתוב בהם ולגזור אותם.",
@@ -630,6 +650,7 @@ var LESSON_16 = {
     // 21. fs.open
     {
       conceptName: "fs.open",
+      difficulty: 5,
       levels: {
         grandma:
           "זו רק פעולת הפתיחה. לפני שאת מתחילה לאפות בסיר את צריכה להוציא אותו מהארון ולהוריד לו את המכסה (open). ורק אז לבשל.",
@@ -658,6 +679,7 @@ var LESSON_16 = {
     // 22. fs.writeFile
     {
       conceptName: "fs.writeFile",
+      difficulty: 5,
       levels: {
         grandma:
           "כתיבת מסר חדש לחלוטין ולזרוק את הישן. אם כתבתי מתכון במחברת ושתלתי מחדש — הדף נמחק ורק החדש מופיע. (מתאים להשמדה והתחלה מוחלטת).",
@@ -688,6 +710,7 @@ var LESSON_16 = {
     // 23. fs.appendFile
     {
       conceptName: "fs.appendFile",
+      difficulty: 5,
       levels: {
         grandma:
           "להוסיף הערות בתחתית הדף במחברת החיים שלך. אף מילה קודמת לא נזרקת לפח. כל זיכרון מתועד במקומו ומוסיפים עוד סיפור קטן בקרקעית.",
@@ -718,6 +741,7 @@ var LESSON_16 = {
     // 24. fs.readFile
     {
       conceptName: "fs.readFile",
+      difficulty: 5,
       levels: {
         grandma:
           "הפעלת הרדיו על הודעה רצויה והאזנה לקולה הרם. את לא כותבת, אלא דואגת שמישהו בפנים יקריא עבורך מסמך ארוך שנמצא מתחת למצרכים.",
@@ -748,6 +772,7 @@ var LESSON_16 = {
     // 25. fs.unlink
     {
       conceptName: "fs.unlink",
+      difficulty: 5,
       levels: {
         grandma:
           "להכנס למחברת ולגרוס לחלוטין עם המספריים דף שמעולם לא אהבת או סתם מתכון שיצא גרוע כהשמדה כללית מחייך.",
@@ -778,6 +803,7 @@ var LESSON_16 = {
     // 26. fs.rename
     {
       conceptName: "fs.rename",
+      difficulty: 5,
       levels: {
         grandma:
           "פעולת שינוי שם פשוטה. אם כתבתי לצנצנת 'מלח' והתברר שזה סוכר — אני רק שמה לה מדבקה חדשה מעל ולא שופכת את כל הקופסה לחדשה.",
@@ -808,6 +834,7 @@ var LESSON_16 = {
     // 27. File System
     {
       conceptName: "File System",
+      difficulty: 5,
       levels: {
         grandma:
           "זוהי המזווה הכללי של המחשב שמחזיק בכל הצנצנות בצורה מסודרת — כל משפחה נמצאת במדף שלה. ללא המדף, כל הצנצנות היו נופלות אלינו ללגו ענק ומועך.",
