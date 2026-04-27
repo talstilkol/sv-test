@@ -1,8 +1,13 @@
 // Content Loader — Assembles all lesson data modules into window.LESSONS_DATA
 (function () {
   const modules = [
-    typeof LESSON_01 !== "undefined" ? LESSON_01 : null,  // HTML basics (Phase 0)
-    typeof LESSON_09 !== "undefined" ? LESSON_09 : null,  // Auth + JWT (Phase 0)
+    typeof LESSON_01 !== "undefined" ? LESSON_01 : null,  // HTML basics
+    typeof LESSON_03 !== "undefined" ? LESSON_03 : null,  // CSS Responsive
+    typeof LESSON_04 !== "undefined" ? LESSON_04 : null,  // CSS Grid + Flexbox
+    typeof LESSON_05 !== "undefined" ? LESSON_05 : null,  // DOM + Events
+    typeof LESSON_07 !== "undefined" ? LESSON_07 : null,  // Git + ESLint + Prettier
+    typeof LESSON_08 !== "undefined" ? LESSON_08 : null,  // PostgreSQL + Drizzle/Prisma
+    typeof LESSON_09 !== "undefined" ? LESSON_09 : null,  // Auth + JWT
     typeof LESSON_11 !== "undefined" ? LESSON_11 : null,
     typeof LESSON_12 !== "undefined" ? LESSON_12 : null,
     typeof LESSON_13 !== "undefined" ? LESSON_13 : null,
@@ -19,7 +24,8 @@
     typeof LESSON_25 !== "undefined" ? LESSON_25 : null,
     typeof LESSON_26 !== "undefined" ? LESSON_26 : null,
     typeof LESSON_27 !== "undefined" ? LESSON_27 : null,
-    typeof LESSON_37 !== "undefined" ? LESSON_37 : null,  // AI Engineering (Phase 0)
+    typeof LESSON_31 !== "undefined" ? LESSON_31 : null,  // Next.js (App Router)
+    typeof LESSON_37 !== "undefined" ? LESSON_37 : null,  // AI Engineering
     typeof WORKBOOK_TASKMANAGER !== "undefined" ? WORKBOOK_TASKMANAGER : null,
     typeof AI_DEVELOPMENT !== "undefined" ? AI_DEVELOPMENT : null,
     typeof REACT_BLUEPRINT !== "undefined" ? REACT_BLUEPRINT : null,
