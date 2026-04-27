@@ -128,10 +128,70 @@ document.addEventListener("DOMContentLoaded", () => {
     return { total: concepts.length, v, x, pending: concepts.length - v - x };
   }
 
+  // =========== P1.3 — PWA: Register Service Worker ===========
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("service-worker.js", { scope: "/" })
+        .then((reg) => {
+          console.log("[LumenPortal] 🛡️ SW registered:", reg.scope);
+        })
+        .catch((err) => {
+          console.warn("[LumenPortal] SW registration failed:", err);
+        });
+    });
+  }
+
   // =========== MOBILE MENU ===========
   if (mobileToggle) {
     mobileToggle.addEventListener("click", () => {
       sidebar.classList.toggle("open");
+      mobileToggle.setAttribute(
+        "aria-expanded",
+        sidebar.classList.contains("open") ? "true" : "false",
+      );
+    });
+  }
+
+  // =========== P1.2.4 — Theme Toggle (Light / Dark / Auto) ===========
+  const THEME_KEY = "lumenportal:theme:v1";
+  const themeToggle = document.getElementById("theme-toggle");
+  const themeStates = ["auto", "light", "dark"]; // cycle order
+  const themeIcons = { auto: "🌗", light: "☀️", dark: "🌙" };
+
+  function applyTheme(theme) {
+    document.documentElement.classList.remove("theme-light", "theme-dark");
+    if (theme === "light") document.documentElement.classList.add("theme-light");
+    if (theme === "dark") document.documentElement.classList.add("theme-dark");
+    if (themeToggle) {
+      themeToggle.querySelector("span").textContent = themeIcons[theme] || "🌗";
+      themeToggle.setAttribute(
+        "aria-label",
+        theme === "auto"
+          ? "מצב תצוגה: אוטומטי (לחץ למעבר לבהיר)"
+          : theme === "light"
+            ? "מצב תצוגה: בהיר (לחץ למעבר לכהה)"
+            : "מצב תצוגה: כהה (לחץ למעבר לאוטומטי)",
+      );
+    }
+  }
+
+  // Init from localStorage or auto
+  let currentTheme = "auto";
+  try {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved && themeStates.includes(saved)) currentTheme = saved;
+  } catch (_) {}
+  applyTheme(currentTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const idx = themeStates.indexOf(currentTheme);
+      currentTheme = themeStates[(idx + 1) % themeStates.length];
+      try {
+        localStorage.setItem(THEME_KEY, currentTheme);
+      } catch (_) {}
+      applyTheme(currentTheme);
     });
   }
 
@@ -329,7 +389,12 @@ document.addEventListener("DOMContentLoaded", () => {
       "המערכת תלמד אותך את החומר במושגים שסימנת כחלשים (X).";
     studyModeView.style.display = "block";
     openStudyModeBtn?.classList.add("active");
-    startStudySession();
+    // Lazy-load seeded bank (Study Mode also benefits)
+    if (typeof window.ensureSeededBank === "function") {
+      window.ensureSeededBank().then(() => startStudySession());
+    } else {
+      startStudySession();
+    }
     scrollToTop();
     sidebar.classList.remove("open");
   }
@@ -2068,8 +2133,16 @@ document.addEventListener("DOMContentLoaded", () => {
     trainerView.style.display = "block";
     openTrainerBtn?.classList.add("active");
     trainerStats = { asked: 0, correct: 0, wrong: 0 };
-    nextQuestion();
-    renderTrainerReport();
+    // Lazy-load the seeded bank (1.4MB) on first Trainer open.
+    if (typeof window.ensureSeededBank === "function") {
+      window.ensureSeededBank().then(() => {
+        nextQuestion();
+        renderTrainerReport();
+      });
+    } else {
+      nextQuestion();
+      renderTrainerReport();
+    }
     scrollToTop();
     sidebar.classList.remove("open");
   }
@@ -4065,6 +4138,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ${renderDeepDivePanel(concept)}
         ${renderExtendedExplanationPanel(concept)}
         ${renderExtrasPanel(concept, sc, diff)}
+        ${renderMnemonicPanel(concept)}
+        ${renderAntiPatternsPanel(concept)}
 
         <div class="concept-actions">
           ${
@@ -4079,12 +4154,12 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           ${
             canV
-              ? `<button class="concept-btn mark-v" data-action="mark-v" title="המושג הזה ברור לי — סמן כידוע ועבור הלאה">✓ ברור לי — סמן כידוע</button>`
+              ? `<button class="concept-btn mark-v" data-action="mark-v" aria-label="סמן את המושג ${esc(concept.conceptName)} כידוע" title="המושג הזה ברור לי — סמן כידוע ועבור הלאה">✓ ברור לי — סמן כידוע</button>`
               : ""
           }
           ${
             actualLevel < 7 && !sc.markedKnown
-              ? `<button class="concept-btn report-weak" data-action="report-weak" title="המאמן יציג את המושג לעיתים תכופות יותר ויפתח עוד הסברים, שאלות ודוגמאות קוד">🆘 אני חלש בזה — תן לי עוד</button>`
+              ? `<button class="concept-btn report-weak" data-action="report-weak" aria-label="דווח שאני חלש במושג ${esc(concept.conceptName)}" title="המאמן יציג את המושג לעיתים תכופות יותר ויפתח עוד הסברים, שאלות ודוגמאות קוד">🆘 אני חלש בזה — תן לי עוד</button>`
               : ""
           }
           ${
@@ -4162,6 +4237,59 @@ document.addEventListener("DOMContentLoaded", () => {
           ${(pitfalls || cmList) ? `<div class="extras-section"><h5>⚠️ טעויות נפוצות</h5>${pitfalls}${cmList}</div>` : ""}
           ${practice ? `<div class="extras-section"><h5>❓ שאלות תרגול נוספות</h5>${practice}</div>` : ""}
         </div>
+      </details>`;
+  }
+
+  // P2.S1.2 — Mnemonic Panel (Hebrew acronym + rhyme + visual hook)
+  function renderMnemonicPanel(concept) {
+    const m = concept.mnemonic;
+    if (!m) return "";
+    return `
+      <details class="mnemonic-panel">
+        <summary>🧠 לזכירה — ${esc(m.acronym || "")} ${m.visualHook || ""}</summary>
+        <div class="mnemonic-body">
+          ${m.expansion ? `<div class="mnemonic-expansion"><strong>הרחבה:</strong> ${esc(m.expansion)}</div>` : ""}
+          ${m.rhyme ? `<pre class="mnemonic-rhyme">${esc(m.rhyme)}</pre>` : ""}
+          ${m.why ? `<div class="mnemonic-why">${esc(m.why)}</div>` : ""}
+        </div>
+      </details>`;
+  }
+
+  // P2.S1.1 — Anti-Patterns Gallery (bad code → damage → good code)
+  function renderAntiPatternsPanel(concept) {
+    const aps = concept.antiPatterns;
+    if (!Array.isArray(aps) || aps.length === 0) return "";
+    const items = aps
+      .map((ap, i) => {
+        const sevClass = ap.severity === "P0" ? "ap-sev-p0" : "ap-sev-p1";
+        return `
+        <div class="anti-pattern-card ${sevClass}">
+          <div class="ap-head">
+            <span class="ap-num">#${i + 1}</span>
+            <span class="ap-title">${esc(ap.title || "")}</span>
+            ${ap.severity ? `<span class="ap-sev">${esc(ap.severity)}</span>` : ""}
+          </div>
+          <div class="ap-bad">
+            <div class="ap-label-bad">❌ פגום</div>
+            <pre><code>${esc(ap.bad?.code || "")}</code></pre>
+          </div>
+          ${ap.damage ? `<div class="ap-damage"><strong>נזק:</strong> ${esc(ap.damage)}</div>` : ""}
+          <div class="ap-good">
+            <div class="ap-label-good">✅ תקין</div>
+            <pre><code>${esc(ap.good?.code || "")}</code></pre>
+          </div>
+          ${
+            Array.isArray(ap.diff) && ap.diff.length
+              ? `<div class="ap-diff"><strong>השינוי:</strong> ${ap.diff.map((d) => `<code>${esc(d)}</code>`).join(", ")}</div>`
+              : ""
+          }
+        </div>`;
+      })
+      .join("");
+    return `
+      <details class="anti-patterns-panel">
+        <summary>🔁 דפוסי-נגד (${aps.length} מקרים)</summary>
+        <div class="ap-body">${items}</div>
       </details>`;
   }
 
@@ -4244,6 +4372,46 @@ document.addEventListener("DOMContentLoaded", () => {
     </details>`;
   }
 
+  // P1.1.2 — Per-card refresh helper.
+  // Replaces only the targeted concept-card in DOM instead of full renderContent().
+  // Falls back to full re-render if the card isn't currently visible.
+  function refreshConceptCard(conceptName) {
+    const lesson = (window.LESSONS_DATA || []).find(
+      (l) => l.id === currentLessonId,
+    );
+    if (!lesson) {
+      renderContent();
+      return;
+    }
+    const concept = (lesson.concepts || []).find(
+      (c) => c.conceptName === conceptName,
+    );
+    if (!concept) {
+      renderContent();
+      return;
+    }
+    const idx = (lesson.concepts || []).indexOf(concept);
+    const oldCard = document.querySelector(
+      `.concept-card.adaptive[data-concept="${cssEscape(conceptName)}"]`,
+    );
+    if (!oldCard) {
+      renderContent();
+      return;
+    }
+    const tmp = document.createElement("div");
+    tmp.innerHTML = renderConceptCard(lesson, concept, idx);
+    const newCard = tmp.firstElementChild;
+    if (!newCard) {
+      renderContent();
+      return;
+    }
+    oldCard.replaceWith(newCard);
+    // Re-wire handlers only on this card by re-using existing wireConceptCardHandlers
+    // (it queries all .concept-card.adaptive but new cards are idempotent: each
+    // listener was just bound to this freshly inserted card).
+    wireConceptCardHandlers(lesson);
+  }
+
   function wireConceptCardHandlers(lesson) {
     document.querySelectorAll(".concept-card.adaptive").forEach((card) => {
       const conceptName = card.dataset.concept;
@@ -4263,10 +4431,10 @@ document.addEventListener("DOMContentLoaded", () => {
               Math.min(6, Math.max(1, getScore(lesson.id, conceptName).level));
             const next = Math.max(1, cur - 1);
             conceptViewOverride[k] = next;
-            renderContent();
+            refreshConceptCard(conceptName); // P1.1.2 — per-card refresh
           } else if (action === "reset-view") {
             delete conceptViewOverride[k];
-            renderContent();
+            refreshConceptCard(conceptName); // P1.1.2
           } else if (action === "toggle-illustration") {
             const ill = card.querySelector(".concept-illustration");
             if (ill) ill.style.display = ill.style.display === "none" ? "block" : "none";
@@ -4289,12 +4457,12 @@ document.addEventListener("DOMContentLoaded", () => {
             // Confirm shortcut, then mark and re-render
             if (confirm(`לסמן את "${concept.conceptName}" כמושג ידוע? המאמן לא יציג אותו יותר.`)) {
               markAsKnown(lesson.id, concept.conceptName);
-              renderContent();
+              refreshConceptCard(concept.conceptName); // P1.1.2 — per-card
             }
           } else if (action === "report-weak") {
             reportWeak(lesson.id, concept.conceptName);
-            // Open the extras panel automatically + re-render to show new badge/extras
-            renderContent();
+            // Open the extras panel automatically + per-card refresh to show new badge/extras
+            refreshConceptCard(concept.conceptName); // P1.1.2
             setTimeout(() => {
               const newCard = document.querySelector(
                 `.concept-card.adaptive[data-concept="${cssEscape(concept.conceptName)}"]`

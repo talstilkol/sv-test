@@ -4202,3 +4202,255 @@ body {
   margin-bottom: 0.5rem;
 }
 .trace-explanation { color: var(--text-main); line-height: 1.55; font-size: 0.93rem; }
+
+/* ============================================================ */
+/* P1.2.3 — prefers-reduced-motion (a11y)                       */
+/* P1.2.4 — Light mode + prefers-color-scheme                   */
+/* ============================================================ */
+
+/* === Reduced Motion === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Manual toggle (in case user wants override) */
+.reduced-motion *, .reduced-motion *::before, .reduced-motion *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* === Light Theme === */
+:root.theme-light {
+  --bg-dark: #f7f8fa;
+  --bg-panel: rgba(255, 255, 255, 0.92);
+  --bg-card: rgba(248, 249, 252, 0.95);
+  --border-glass: rgba(0, 0, 0, 0.08);
+  --border-accent: rgba(99, 102, 241, 0.4);
+  --text-main: #1a1d24;
+  --text-muted: #4a5266;
+  --text-bright: #0a0b10;
+  --primary: #5856e6;
+  --primary-glow: rgba(99, 102, 241, 0.18);
+  --accent: #0891b2;
+  --accent-glow: rgba(34, 211, 238, 0.15);
+  --gradient-bg: linear-gradient(135deg, #f7f8fa 0%, #eef0f5 50%, #f1f3f7 100%);
+  --shadow-lg: 0 8px 24px rgba(20, 23, 33, 0.12);
+  --shadow-glow: 0 0 24px rgba(99, 102, 241, 0.12);
+}
+
+/* Auto: follow OS preference unless user explicitly chose */
+@media (prefers-color-scheme: light) {
+  :root:not(.theme-dark):not(.theme-light) {
+    --bg-dark: #f7f8fa;
+    --bg-panel: rgba(255, 255, 255, 0.92);
+    --bg-card: rgba(248, 249, 252, 0.95);
+    --border-glass: rgba(0, 0, 0, 0.08);
+    --text-main: #1a1d24;
+    --text-muted: #4a5266;
+    --text-bright: #0a0b10;
+    --shadow-lg: 0 8px 24px rgba(20, 23, 33, 0.12);
+  }
+}
+
+/* Settings panel — theme toggle */
+.theme-toggle-btn {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 200;
+  background: var(--bg-panel);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  color: var(--text-main);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition);
+}
+.theme-toggle-btn:hover {
+  transform: scale(1.05);
+  border-color: var(--border-accent);
+}
+.theme-toggle-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* === Focus rings — keyboard a11y === */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ============================================================ */
+/* Sprint 1 — Anti-Patterns Gallery + Mnemonic Lab styles      */
+/* ============================================================ */
+
+/* Mnemonic panel */
+.mnemonic-panel {
+  margin: 0.8rem 0;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  background: rgba(99, 102, 241, 0.04);
+  padding: 0;
+}
+.mnemonic-panel > summary {
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-bright);
+  list-style: none;
+}
+.mnemonic-panel > summary::-webkit-details-marker { display: none; }
+.mnemonic-panel[open] > summary {
+  border-bottom: 1px solid var(--border-glass);
+}
+.mnemonic-body { padding: 0.8rem 1rem; }
+.mnemonic-expansion {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+.mnemonic-rhyme {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1rem;
+  font-family: "Heebo", sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-main);
+  white-space: pre-wrap;
+  margin: 0.5rem 0;
+}
+.mnemonic-why {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+/* Anti-Patterns panel */
+.anti-patterns-panel {
+  margin: 0.8rem 0;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  background: rgba(239, 68, 68, 0.04);
+}
+.anti-patterns-panel > summary {
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-bright);
+  list-style: none;
+}
+.anti-patterns-panel > summary::-webkit-details-marker { display: none; }
+.anti-patterns-panel[open] > summary {
+  border-bottom: 1px solid var(--border-glass);
+}
+.ap-body {
+  padding: 0.8rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.anti-pattern-card {
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1rem;
+  background: var(--bg-card);
+}
+.anti-pattern-card.ap-sev-p0 { border-left: 4px solid #ef4444; }
+.anti-pattern-card.ap-sev-p1 { border-left: 4px solid #f59e0b; }
+.ap-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  color: var(--text-bright);
+}
+.ap-num {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.ap-title { flex: 1; }
+.ap-sev {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.ap-bad, .ap-good {
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.8rem;
+  margin: 0.5rem 0;
+}
+.ap-bad {
+  background: rgba(239, 68, 68, 0.07);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+.ap-good {
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+.ap-label-bad { color: #ef4444; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.3rem; }
+.ap-label-good { color: #22c55e; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.3rem; }
+.ap-bad pre, .ap-good pre {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem;
+  font-family: "Fira Code", monospace;
+  font-size: 0.85rem;
+  margin: 0;
+  overflow-x: auto;
+  direction: ltr;
+  text-align: left;
+}
+.ap-damage {
+  background: rgba(239, 68, 68, 0.05);
+  border-right: 3px solid #ef4444;
+  padding: 0.5rem 0.8rem;
+  margin: 0.5rem 0;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+.ap-diff {
+  background: rgba(34, 211, 238, 0.05);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+  margin-top: 0.5rem;
+  color: var(--text-main);
+}
+.ap-diff code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: "Fira Code", monospace;
+  direction: ltr;
+  display: inline-block;
+}

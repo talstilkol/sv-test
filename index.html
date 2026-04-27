@@ -10,6 +10,12 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <!-- P1.3 — PWA -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="LumenPortal" />
   </head>
   <body>
     <div class="app-container">
@@ -40,39 +46,44 @@
       </nav>
 
       <!-- Mobile Menu Toggle -->
-      <button class="mobile-menu-toggle" id="mobile-toggle">☰</button>
+      <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="פתח/סגור תפריט שיעורים" aria-expanded="false">☰</button>
+
+      <!-- P1.2.4 — Theme toggle (Light/Dark/Auto) -->
+      <button class="theme-toggle-btn" id="theme-toggle" aria-label="החלף בין מצב כהה לבהיר" title="החלף תצוגה (כהה/בהיר/אוטומטי)">
+        <span aria-hidden="true">🌗</span>
+      </button>
 
       <!-- Global Print-to-PDF (works in every view) -->
-      <button class="global-print-btn" id="global-print-btn" title="שמור את הדף הנוכחי כ-PDF צבעוני (Ctrl+P) — כל יחידת תוכן בעמוד נפרד">
-        <span class="emoji">📄</span><span class="lbl">PDF</span>
+      <button class="global-print-btn" id="global-print-btn" aria-label="שמור את הדף כ-PDF" title="שמור את הדף הנוכחי כ-PDF צבעוני (Ctrl+P) — כל יחידת תוכן בעמוד נפרד">
+        <span class="emoji" aria-hidden="true">📄</span><span class="lbl">PDF</span>
       </button>
 
       <!-- Main Content Area -->
       <main class="main-content">
         <nav class="top-tabs-bar" id="top-tabs-bar">
-          <button class="top-tab" id="open-guide" data-tab="guide">
-            <span class="emoji">📖</span><span>מדריך מקוצר</span>
+          <button class="top-tab" id="open-guide" data-tab="guide" aria-label="פתח מדריך מקוצר">
+            <span class="emoji" aria-hidden="true">📖</span><span>מדריך מקוצר</span>
           </button>
-          <button class="top-tab" id="open-codeblocks" data-tab="codeblocks">
-            <span class="emoji">💻</span><span>בלוקי קוד</span>
+          <button class="top-tab" id="open-codeblocks" data-tab="codeblocks" aria-label="פתח בלוקי קוד">
+            <span class="emoji" aria-hidden="true">💻</span><span>בלוקי קוד</span>
           </button>
-          <button class="top-tab" id="open-trace" data-tab="trace">
-            <span class="emoji">🔬</span><span>Code Trace</span>
+          <button class="top-tab" id="open-trace" data-tab="trace" aria-label="פתח Code Trace — חיזוי פלט קוד">
+            <span class="emoji" aria-hidden="true">🔬</span><span>Code Trace</span>
           </button>
-          <button class="top-tab" id="open-trainer" data-tab="trainer">
-            <span class="emoji">🧠</span><span>מאמן ידע + דוח</span>
+          <button class="top-tab" id="open-trainer" data-tab="trainer" aria-label="פתח מאמן ידע + דוח">
+            <span class="emoji" aria-hidden="true">🧠</span><span>מאמן ידע + דוח</span>
           </button>
-          <button class="top-tab" id="open-study-mode" data-tab="study">
-            <span class="emoji">🎯</span><span>לימוד מותאם</span>
+          <button class="top-tab" id="open-study-mode" data-tab="study" aria-label="פתח מצב לימוד מותאם">
+            <span class="emoji" aria-hidden="true">🎯</span><span>לימוד מותאם</span>
           </button>
-          <button class="top-tab" id="open-knowledge-map" data-tab="km">
-            <span class="emoji">🗺️</span><span>מפת ידע</span>
+          <button class="top-tab" id="open-knowledge-map" data-tab="km" aria-label="פתח מפת ידע">
+            <span class="emoji" aria-hidden="true">🗺️</span><span>מפת ידע</span>
           </button>
-          <button class="top-tab" id="open-code-anatomy" data-tab="anatomy">
-            <span class="emoji">📐</span><span>פירוק קוד</span>
+          <button class="top-tab" id="open-code-anatomy" data-tab="anatomy" aria-label="פתח פירוק קוד">
+            <span class="emoji" aria-hidden="true">📐</span><span>פירוק קוד</span>
           </button>
-          <button class="top-tab top-tab-home" id="open-home" data-tab="home">
-            <span class="emoji">🏠</span><span>שיעורים</span>
+          <button class="top-tab top-tab-home" id="open-home" data-tab="home" aria-label="חזרה לעמוד הבית — רשימת שיעורים">
+            <span class="emoji" aria-hidden="true">🏠</span><span>שיעורים</span>
           </button>
         </nav>
 
@@ -388,13 +399,16 @@
     <script src="data/ai_development.js"></script>
     <script src="data/react_blueprint.js"></script>
     <script src="data/questions_bank.js"></script>
-    <script src="data/questions_bank_seeded.js"></script>
+    <!-- questions_bank_seeded.js (1.4MB) is loaded LAZILY by content-loader on demand -->
     <script src="data/concept_enrichment.js"></script>
     <script src="data/extended_explanations.js"></script>
     <script src="data/questions_trace.js"></script>
     <script src="data/quick_guide.js"></script>
     <script src="data/code_blocks.js"></script>
     <script src="data/glossary.js"></script>
+    <!-- Sprint 1 — Creative Methods (P2.S1) -->
+    <script src="data/anti_patterns.js"></script>
+    <script src="data/mnemonics.js"></script>
     <script src="content-loader.js"></script>
     <!-- Track A — Foundation libs (must load before app.js) -->
     <script src="lib/rng.js"></script>

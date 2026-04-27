@@ -29,8 +29,13 @@
   // matching key exists. Performed once at load. Mutates the concept objects.
   const enrichment = typeof CONCEPT_ENRICHMENT !== "undefined" ? CONCEPT_ENRICHMENT : {};
   const extended = typeof EXTENDED_EXPLANATIONS !== "undefined" ? EXTENDED_EXPLANATIONS : {};
+  // Sprint 1 — Creative Methods data (lazy-merged the same way)
+  const antiPatterns = typeof ANTI_PATTERNS !== "undefined" ? ANTI_PATTERNS : {};
+  const mnemonics = typeof MNEMONICS !== "undefined" ? MNEMONICS : {};
   let enrichedCount = 0;
   let extendedCount = 0;
+  let antiPatternsCount = 0;
+  let mnemonicsCount = 0;
   window.LESSONS_DATA.forEach((lesson) => {
     (lesson.concepts || []).forEach((c) => {
       const key = `${lesson.id}::${c.conceptName}`;
@@ -44,31 +49,85 @@
         c.extendedTab = extended[key].extendedTab;
         extendedCount++;
       }
+      // Sprint 1: Anti-Patterns Gallery + Mnemonics Lab
+      if (antiPatterns[key]) {
+        c.antiPatterns = antiPatterns[key];
+        antiPatternsCount++;
+      }
+      if (mnemonics[key]) {
+        c.mnemonic = mnemonics[key];
+        mnemonicsCount++;
+      }
     });
   });
 
-  // Merge hand-curated bank with auto-seeded bank (if exists)
+  // Initial bank — curated only (seeded loaded lazily on demand)
   const primary = typeof QUESTIONS_BANK !== "undefined" ? QUESTIONS_BANK : { mc: [], fill: [] };
-  const seeded = typeof QUESTIONS_BANK_SEEDED !== "undefined" ? QUESTIONS_BANK_SEEDED : { mc: [], fill: [] };
   const traceList = typeof QUESTIONS_TRACE !== "undefined" ? QUESTIONS_TRACE : [];
   window.QUESTIONS_BANK = {
-    mc: [...(primary.mc || []), ...(seeded.mc || [])],
-    fill: [...(primary.fill || []), ...(seeded.fill || [])],
+    mc: [...(primary.mc || [])],
+    fill: [...(primary.fill || [])],
     trace: [...traceList],
   };
   window.QUICK_GUIDE = typeof QUICK_GUIDE !== "undefined" ? QUICK_GUIDE : { topics: [] };
 
+  // Lazy loader for the heavy seeded bank (1.4MB).
+  // Loaded on demand when user opens Trainer / Study Mode.
+  // Idempotent — safe to call multiple times.
+  let seededLoadPromise = null;
+  window.ensureSeededBank = function ensureSeededBank() {
+    if (seededLoadPromise) return seededLoadPromise;
+    if (typeof window.QUESTIONS_BANK_SEEDED !== "undefined") {
+      // Already loaded
+      mergeSeededIntoBank();
+      return Promise.resolve(window.QUESTIONS_BANK);
+    }
+    seededLoadPromise = new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = "data/questions_bank_seeded.js";
+      s.async = true;
+      s.onload = () => {
+        mergeSeededIntoBank();
+        console.log(
+          `[LumenPortal] 🪶 Lazy-loaded seeded bank — ` +
+            `+${(window.QUESTIONS_BANK_SEEDED.mc || []).length} MC, ` +
+            `+${(window.QUESTIONS_BANK_SEEDED.fill || []).length} Fill`,
+        );
+        resolve(window.QUESTIONS_BANK);
+      };
+      s.onerror = (e) => {
+        console.error("[LumenPortal] Failed to load seeded bank:", e);
+        reject(e);
+      };
+      document.head.appendChild(s);
+    });
+    return seededLoadPromise;
+  };
+
+  function mergeSeededIntoBank() {
+    const seeded = window.QUESTIONS_BANK_SEEDED || { mc: [], fill: [] };
+    // Avoid double-merge by checking marker
+    if (window.QUESTIONS_BANK._seededMerged) return;
+    window.QUESTIONS_BANK.mc = [
+      ...(primary.mc || []),
+      ...(seeded.mc || []),
+    ];
+    window.QUESTIONS_BANK.fill = [
+      ...(primary.fill || []),
+      ...(seeded.fill || []),
+    ];
+    window.QUESTIONS_BANK._seededMerged = true;
+  }
+
   const handMC = (primary.mc || []).length;
   const handFill = (primary.fill || []).length;
-  const seedMC = (seeded.mc || []).length;
-  const seedFill = (seeded.fill || []).length;
   console.log(
     `[LumenPortal] Loaded ${window.LESSONS_DATA.length} lessons · ` +
-    `Bank: ${handMC + seedMC} MC (${handMC} curated + ${seedMC} seeded) · ` +
-    `${handFill + seedFill} Fill (${handFill} curated + ${seedFill} seeded) · ` +
-    `${traceList.length} Trace · ` +
-    `${(window.QUICK_GUIDE.topics || []).length} guide topics · ` +
-    `${enrichedCount} concepts enriched (deepDive + analogies) · ` +
-    `${extendedCount} extended explanations.`
+      `Bank (curated only — seeded lazy): ${handMC} MC + ${handFill} Fill · ` +
+      `${traceList.length} Trace · ` +
+      `${(window.QUICK_GUIDE.topics || []).length} guide topics · ` +
+      `${enrichedCount} concepts enriched · ` +
+      `${extendedCount} extended explanations · ` +
+      `${antiPatternsCount} anti-patterns · ${mnemonicsCount} mnemonics.`,
   );
 })();
