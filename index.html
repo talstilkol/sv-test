@@ -115,6 +115,9 @@
           <button class="top-tab" id="open-trace" data-tab="trace" aria-label="פתח Code Trace — חיזוי פלט קוד">
             <span class="emoji" aria-hidden="true">🔬</span><span>Code Trace</span>
           </button>
+          <button class="top-tab" id="open-mock-exam" data-tab="mock-exam" aria-label="פתח מבחן מדומה — Mock Exam עם טיימר">
+            <span class="emoji" aria-hidden="true">📝</span><span>מבחן מדומה</span>
+          </button>
           <button class="top-tab" id="open-trainer" data-tab="trainer" aria-label="פתח מאמן ידע + דוח">
             <span class="emoji" aria-hidden="true">🧠</span><span>מאמן ידע + דוח</span>
           </button>
@@ -404,6 +407,40 @@
             <div class="trace-list" id="trace-list"></div>
             <!-- Active trace player (hidden until user picks one) -->
             <div class="trace-player glass-panel" id="trace-player" style="display:none"></div>
+          </div>
+
+          <!-- P1.5.1 — Mock Exam View -->
+          <div class="mock-exam-view" id="mock-exam-view" style="display:none">
+            <!-- Settings (template picker) -->
+            <div class="mx-settings glass-panel" id="mx-settings">
+              <h2>📝 מבחן מדומה</h2>
+              <p>בחר תבנית מבחן. במהלך המבחן — אין רמזים, אין AI, יש טיימר. בסוף — ציון + פירוק חולשות.</p>
+              <div class="mx-templates" id="mx-templates"></div>
+              <div class="mx-history-block">
+                <h3>📊 היסטוריית מבחנים</h3>
+                <div id="mx-history"></div>
+              </div>
+            </div>
+
+            <!-- Active exam runner -->
+            <div class="mx-runner glass-panel" id="mx-runner" style="display:none">
+              <div class="mx-runner-head">
+                <div class="mx-progress" id="mx-progress"></div>
+                <div class="mx-timer" id="mx-timer">⏱️ 00:00</div>
+                <button class="km-btn-mini danger" id="mx-quit">❌ עצור</button>
+              </div>
+              <div class="mx-question" id="mx-question"></div>
+              <div class="mx-runner-foot">
+                <button class="km-btn-mini" id="mx-prev">▶ הקודמת</button>
+                <button class="km-btn-mini" id="mx-skip">⏭ דלג</button>
+                <button class="km-btn-mini" id="mx-next">הבאה ◀</button>
+                <button class="km-btn-mini primary" id="mx-submit">📤 הגש מבחן</button>
+              </div>
+              <div class="mx-question-nav" id="mx-question-nav"></div>
+            </div>
+
+            <!-- Result screen -->
+            <div class="mx-result glass-panel" id="mx-result" style="display:none"></div>
           </div>
 
           <!-- Code Blocks View -->

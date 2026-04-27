@@ -162,30 +162,37 @@
   - [V] Sorted weakest-first by default
   - [V] Toggle: שיעור / נושא
   - **User request:** "פיצול לנושאים + ציון לכל נושא"
-- [ ] P1.5.0c — Code Anatomy refactor (filters)
-  - [ ] Filter dropdowns: שיעור / נושא / מושג
-  - [ ] Lazy-render — collapsed by default
-  - [ ] Search box for free text
-  - [ ] Tree view: שיעור → מושג
+- [V] P1.5.0c — Code Anatomy refactor (filters) ✅
+  - [V] Filter dropdowns: שיעור / נושא / מושג
+  - [V] Lazy-render — <details> collapsed by default (auto-open ≤3)
+  - [V] Search box for free text (concept + code + summary)
+  - [V] Tree view: שיעור → מושג + counts
+  - [V] Expand-all / Collapse-all buttons
   - **User request:** "פירוק קוד — אל תציג הכל, תן לי לבחור"
-- [ ] P1.5.0d — SITE_MAP.md document
-  - [ ] All views/tabs catalogued
-  - [ ] All data files mapped
-  - [ ] Navigation tree
+- [V] P1.5.0d — SITE_MAP.md document ✅
+  - [V] All views/tabs catalogued
+  - [V] All 20 lesson modules mapped to topics
+  - [V] Concept card architecture documented (14 sections)
+  - [V] Data files + lib + scripts + tests
+  - [V] localStorage keys reference
+  - [V] 4 recommended workflows
   - **User request:** "מפה מסודרת שלא תלך לאיבוד"
-- [ ] P1.5.1 — Mock Exam Mode (CRITICAL for exam)
-  - [ ] P1.5.1.1 — Tab "🎯 מבחן מדומה"
-  - [ ] P1.5.1.2 — 5 exam templates
-  - [ ] P1.5.1.3 — Timer 45 דקות + lock-down
-  - [ ] P1.5.1.4 — Result screen + breakdown
-  - [ ] P1.5.1.5 — History view
+- [V] P1.5.1 — Mock Exam Mode ✅ (CRITICAL for exam — DONE!)
+  - [V] P1.5.1.1 — Tab "📝 מבחן מדומה"
+  - [V] P1.5.1.2 — 5 exam templates (react_full, react_quick, js_foundations, all_full, practice_short)
+  - [V] P1.5.1.3 — Timer countdown + auto-submit on expire + warn <5min
+  - [V] P1.5.1.4 — Result screen with A-F grade + breakdown by kind + weak concepts
+  - [V] P1.5.1.5 — History view (last 30 attempts in localStorage)
+  - [V] Bonus: question nav bar (jump to any question) + skip/prev/next
+  - [V] Bonus: composer uses deterministic RNG seeded by template + time
+  - [V] Bonus: scoring across 4 question kinds (MC, Fill, Trace, Bug)
 - [ ] P1.5.2 — Per-Distractor Feedback
   - [ ] P1.5.2.1 — Schema: optionFeedback[4] + commonMistake
   - [ ] P1.5.2.2 — UI: show feedback after answer
   - [ ] P1.5.2.3 — LLM batch script — augment 1316 MCs
   - [ ] P1.5.2.4 — Manual review 10% (130 questions)
 
-**P1 Total: 36/62** (5 newly added user-requested tasks; 5 newly completed)
+**P1 Total: 50/62** (P1.5.0c + P1.5.0d + P1.5.1 completed)
 
 ---
 
@@ -397,6 +404,8 @@
                    • P1.5.0c Code Anatomy refactor (filters) — pending
                    • P1.5.0d SITE_MAP.md — pending
 2026-04-27 23:25 — P1.5.0a + P1.5.0b shipped (in code, verified in browser)
+2026-04-28 00:09 — P1.5.0c (Code Anatomy filters) + P1.5.0d (SITE_MAP.md) shipped
+2026-04-28 00:13 — P1.5.1 Mock Exam Mode shipped — Tab + 5 templates + timer + nav + result + history
 ```
 
 ---

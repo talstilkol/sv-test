@@ -457,6 +457,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (_anatomyView) _anatomyView.style.display = "none";
     if (codeblocksView) codeblocksView.style.display = "none";
     if (traceView) traceView.style.display = "none";
+    const _mxView = document.getElementById("mock-exam-view");
+    if (_mxView) _mxView.style.display = "none";
     document
       .querySelectorAll(".top-tab")
       .forEach((b) => b.classList.remove("active"));
@@ -2809,6 +2811,472 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 500);
     }, 100);
   });
+
+  // =========== P1.5.1 — Mock Exam Mode ===========
+  const MX_HISTORY_KEY = "lumenportal:examHistory:v1";
+  const EXAM_TEMPLATES = [
+    {
+      id: "react_full",
+      name: "⚛️ React מלא",
+      desc: "30 שאלות מ-lessons 21-27 (45 דקות)",
+      durationMin: 45,
+      distribution: { mc: 18, fill: 7, trace: 4, bug: 1 },
+      filter: (k) => /^lesson_(2[1-7]|closures)::/.test(k),
+    },
+    {
+      id: "react_quick",
+      name: "⚡ React מהיר",
+      desc: "15 שאלות (20 דקות)",
+      durationMin: 20,
+      distribution: { mc: 10, fill: 4, trace: 1, bug: 0 },
+      filter: (k) => /^lesson_(2[1-7])::/.test(k),
+    },
+    {
+      id: "js_foundations",
+      name: "🟦 JavaScript Foundations",
+      desc: "20 שאלות מ-lessons 11,12,13,15,19 (30 דקות)",
+      durationMin: 30,
+      distribution: { mc: 14, fill: 5, trace: 1, bug: 0 },
+      filter: (k) => /^(lesson_(1[1-3]|15|19)|workbook_taskmanager)::/.test(k),
+    },
+    {
+      id: "all_full",
+      name: "🌐 הכל - מבחן מלא",
+      desc: "40 שאלות (60 דקות)",
+      durationMin: 60,
+      distribution: { mc: 24, fill: 10, trace: 4, bug: 2 },
+      filter: () => true,
+    },
+    {
+      id: "practice_short",
+      name: "🥕 תרגול קצר",
+      desc: "10 שאלות (15 דקות)",
+      durationMin: 15,
+      distribution: { mc: 7, fill: 2, trace: 1, bug: 0 },
+      filter: () => true,
+    },
+  ];
+
+  const mxState = {
+    template: null,
+    questions: [],   // [{id, kind, q}] uniform format
+    answers: {},     // qid → answer
+    currentIdx: 0,
+    startTime: 0,
+    deadline: 0,
+    timerId: null,
+  };
+
+  function loadExamHistory() {
+    try {
+      return JSON.parse(localStorage.getItem(MX_HISTORY_KEY) || "[]");
+    } catch (_) {
+      return [];
+    }
+  }
+  function saveExamToHistory(record) {
+    const list = loadExamHistory();
+    list.unshift(record);
+    // Keep last 30
+    list.length = Math.min(list.length, 30);
+    try { localStorage.setItem(MX_HISTORY_KEY, JSON.stringify(list)); } catch (_) {}
+  }
+
+  function composeMockExam(template) {
+    // Use deterministic RNG (seeded by Date.now() + template id)
+    const seed = (window.RNG && window.RNG.seedFromString)
+      ? window.RNG.seedFromString(template.id + ":" + Date.now())
+      : Date.now() & 0x7fffffff;
+    const rng = window.RNG ? window.RNG.create(seed) : { pick: (arr) => arr[Math.floor(Math.random()*arr.length)], shuffle: (a) => a.slice().sort(() => Math.random() - 0.5) };
+
+    const sourceMC = (window.QUESTIONS_BANK?.mc || []).filter((q) => template.filter(q.conceptKey || ""));
+    const sourceFill = (window.QUESTIONS_BANK?.fill || []).filter((q) => template.filter(q.conceptKey || ""));
+    const sourceTrace = (window.QUESTIONS_BANK?.trace || []).filter((q) => template.filter(q.conceptKey || ""));
+    const sourceBug = (window.QUESTIONS_BANK?.bug || []).filter((q) => template.filter(q.conceptKey || ""));
+
+    function sample(arr, n) {
+      if (!arr || !arr.length) return [];
+      const shuffled = rng.shuffle ? rng.shuffle(arr) : arr.slice().sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, Math.min(n, shuffled.length));
+    }
+
+    const picked = [
+      ...sample(sourceMC, template.distribution.mc).map((q) => ({ kind: "mc", q })),
+      ...sample(sourceFill, template.distribution.fill).map((q) => ({ kind: "fill", q })),
+      ...sample(sourceTrace, template.distribution.trace).map((q) => ({ kind: "trace", q })),
+      ...sample(sourceBug, template.distribution.bug).map((q) => ({ kind: "bug", q })),
+    ];
+
+    return rng.shuffle ? rng.shuffle(picked) : picked.sort(() => Math.random() - 0.5);
+  }
+
+  function startMockExam(template) {
+    const questions = composeMockExam(template);
+    if (!questions.length) {
+      alert("לא נמצאו שאלות לתבנית זו. ייתכן שהמאגר עדיין ריק.");
+      return;
+    }
+    // Lazy-load seeded bank if needed
+    if (window.ensureSeededBank) window.ensureSeededBank();
+
+    mxState.template = template;
+    mxState.questions = questions;
+    mxState.answers = {};
+    mxState.currentIdx = 0;
+    mxState.startTime = Date.now();
+    mxState.deadline = Date.now() + template.durationMin * 60 * 1000;
+
+    document.getElementById("mx-settings").style.display = "none";
+    document.getElementById("mx-result").style.display = "none";
+    document.getElementById("mx-runner").style.display = "block";
+
+    renderMxQuestion();
+    startMxTimer();
+  }
+
+  function startMxTimer() {
+    stopMxTimer();
+    mxState.timerId = setInterval(() => {
+      const remaining = mxState.deadline - Date.now();
+      const elTimer = document.getElementById("mx-timer");
+      if (!elTimer) return;
+      if (remaining <= 0) {
+        elTimer.textContent = "⏱️ 00:00";
+        stopMxTimer();
+        submitMockExam(true);
+        return;
+      }
+      const min = Math.floor(remaining / 60000);
+      const sec = Math.floor((remaining % 60000) / 1000);
+      elTimer.textContent = `⏱️ ${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+      elTimer.classList.toggle("mx-timer-warn", min < 5);
+    }, 500);
+  }
+  function stopMxTimer() {
+    if (mxState.timerId) {
+      clearInterval(mxState.timerId);
+      mxState.timerId = null;
+    }
+  }
+
+  function renderMxQuestion() {
+    const idx = mxState.currentIdx;
+    const total = mxState.questions.length;
+    const item = mxState.questions[idx];
+    if (!item) return;
+    const { kind, q } = item;
+    const qid = `${kind}:${q.id}`;
+    document.getElementById("mx-progress").innerHTML =
+      `שאלה ${idx + 1} / ${total} <span class="mx-progress-kind">${
+        kind === "mc" ? "📝 רב-ברירה" :
+        kind === "fill" ? "✍️ השלם" :
+        kind === "trace" ? "🔬 חיזוי פלט" :
+        "🐛 ציד באג"
+      }</span>`;
+
+    let body = "";
+    const userAns = mxState.answers[qid];
+
+    if (kind === "mc") {
+      body = `
+        <div class="mx-q-text">${esc(q.question || "")}</div>
+        <div class="mx-q-options">
+          ${(q.options || []).map((opt, i) => `
+            <label class="mx-q-option ${userAns === i ? 'is-selected' : ''}">
+              <input type="radio" name="mx-mc" value="${i}" ${userAns === i ? "checked" : ""} />
+              <span>${esc(opt)}</span>
+            </label>`).join("")}
+        </div>`;
+    } else if (kind === "fill") {
+      body = `
+        <div class="mx-q-text">השלם את החסר ב-____ — נסה להקליד את התשובה הנכונה</div>
+        <pre class="mx-q-code"><code>${esc(q.code || "")}</code></pre>
+        <input class="mx-q-fill" id="mx-q-fill-input" type="text" value="${esc(userAns || "")}" placeholder="התשובה שלך כאן..." dir="ltr" />`;
+    } else if (kind === "trace") {
+      const code = q.code || "";
+      const stepsDone = userAns?.steps?.length || 0;
+      body = `
+        <div class="mx-q-text">${esc(q.title || "חיזוי פלט")} — ${(q.steps || []).length} שלבים</div>
+        <pre class="mx-q-code"><code>${esc(code)}</code></pre>
+        ${(q.steps || []).map((s, i) => `
+          <div class="mx-q-trace-step">
+            <div class="mx-q-trace-prompt">שלב ${i+1} (שורה ${s.line}): ${esc(s.prompt)}</div>
+            <input class="mx-q-fill" data-step="${i}" type="text" value="${esc((userAns?.steps||[])[i] || "")}" placeholder="תשובה לשלב ${i+1}" dir="ltr" />
+          </div>`).join("")}`;
+    } else if (kind === "bug") {
+      body = `
+        <div class="mx-q-text">${esc(q.title || "מצא את הבאג")}${q.hint ? ` — ${esc(q.hint)}` : ""}</div>
+        <pre class="mx-q-code"><code>${esc(q.brokenCode || "")}</code></pre>
+        <div class="mx-q-options">
+          ${(q.options || []).map((opt, i) => `
+            <label class="mx-q-option ${userAns === i ? 'is-selected' : ''}">
+              <input type="radio" name="mx-bug" value="${i}" ${userAns === i ? "checked" : ""} />
+              <span>${esc(opt)}</span>
+            </label>`).join("")}
+        </div>`;
+    }
+
+    const container = document.getElementById("mx-question");
+    container.innerHTML = body;
+
+    // Wire input handlers
+    if (kind === "mc") {
+      container.querySelectorAll('input[name="mx-mc"]').forEach((r) => {
+        r.addEventListener("change", (e) => {
+          mxState.answers[qid] = parseInt(e.target.value, 10);
+          rebuildMxNav();
+        });
+      });
+    } else if (kind === "bug") {
+      container.querySelectorAll('input[name="mx-bug"]').forEach((r) => {
+        r.addEventListener("change", (e) => {
+          mxState.answers[qid] = parseInt(e.target.value, 10);
+          rebuildMxNav();
+        });
+      });
+    } else if (kind === "fill") {
+      container.querySelector("#mx-q-fill-input")?.addEventListener("input", (e) => {
+        mxState.answers[qid] = e.target.value;
+        rebuildMxNav();
+      });
+    } else if (kind === "trace") {
+      container.querySelectorAll(".mx-q-fill[data-step]").forEach((inp) => {
+        inp.addEventListener("input", (e) => {
+          const stepIdx = parseInt(e.target.dataset.step, 10);
+          if (!mxState.answers[qid]) mxState.answers[qid] = { steps: [] };
+          mxState.answers[qid].steps[stepIdx] = e.target.value;
+          rebuildMxNav();
+        });
+      });
+    }
+
+    rebuildMxNav();
+  }
+
+  function rebuildMxNav() {
+    const nav = document.getElementById("mx-question-nav");
+    if (!nav) return;
+    nav.innerHTML = mxState.questions
+      .map((item, i) => {
+        const qid = `${item.kind}:${item.q.id}`;
+        const ans = mxState.answers[qid];
+        const isAnswered = ans !== undefined && ans !== "" && (typeof ans !== "object" || (ans.steps && ans.steps.some((s) => s)));
+        const isCurrent = i === mxState.currentIdx;
+        return `<button class="mx-nav-btn ${isAnswered ? "is-answered" : ""} ${isCurrent ? "is-current" : ""}" data-idx="${i}" aria-label="עבור לשאלה ${i+1}">${i+1}</button>`;
+      })
+      .join("");
+    nav.querySelectorAll(".mx-nav-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        mxState.currentIdx = parseInt(btn.dataset.idx, 10);
+        renderMxQuestion();
+      });
+    });
+  }
+
+  function gotoNextMxQuestion() {
+    if (mxState.currentIdx < mxState.questions.length - 1) {
+      mxState.currentIdx++;
+      renderMxQuestion();
+    }
+  }
+  function gotoPrevMxQuestion() {
+    if (mxState.currentIdx > 0) {
+      mxState.currentIdx--;
+      renderMxQuestion();
+    }
+  }
+
+  function submitMockExam(autoTimeout) {
+    if (!autoTimeout && !confirm(`להגיש את המבחן? ענית על ${countMxAnswered()}/${mxState.questions.length} שאלות.`))
+      return;
+
+    stopMxTimer();
+    // Score the exam
+    const breakdown = { mc: { right: 0, total: 0 }, fill: { right: 0, total: 0 }, trace: { right: 0, total: 0 }, bug: { right: 0, total: 0 } };
+    const wrongConcepts = new Set();
+
+    mxState.questions.forEach((item) => {
+      const { kind, q } = item;
+      const qid = `${kind}:${q.id}`;
+      const ans = mxState.answers[qid];
+      breakdown[kind].total++;
+      let correct = false;
+
+      if (kind === "mc") {
+        correct = ans === q.correctIndex;
+      } else if (kind === "bug") {
+        correct = ans === q.correctIndex;
+      } else if (kind === "fill") {
+        const norm = (s) => String(s || "").trim().toLowerCase().replace(/\s+/g, " ");
+        correct = norm(ans) === norm(q.answer);
+      } else if (kind === "trace") {
+        // All steps must be correct
+        if (ans && ans.steps) {
+          const norm = (s) => String(s || "").trim().toLowerCase().replace(/\s+/g, " ");
+          correct = (q.steps || []).every((s, i) => {
+            const userVal = norm(ans.steps[i]);
+            if (norm(s.answer) === userVal) return true;
+            return Array.isArray(s.acceptable) && s.acceptable.some((a) => norm(a) === userVal);
+          });
+        }
+      }
+      if (correct) breakdown[kind].right++;
+      else if (q.conceptKey) wrongConcepts.add(q.conceptKey);
+    });
+
+    const totalRight = Object.values(breakdown).reduce((s, b) => s + b.right, 0);
+    const totalQs = Object.values(breakdown).reduce((s, b) => s + b.total, 0);
+    const score = totalQs ? Math.round((totalRight / totalQs) * 100) : 0;
+    const durationSec = Math.round((Date.now() - mxState.startTime) / 1000);
+
+    // Save to history
+    const record = {
+      templateId: mxState.template.id,
+      templateName: mxState.template.name,
+      date: new Date().toISOString(),
+      score, totalRight, totalQs,
+      breakdown,
+      durationSec,
+      autoTimeout: !!autoTimeout,
+    };
+    saveExamToHistory(record);
+
+    renderMxResult(record, [...wrongConcepts]);
+  }
+
+  function countMxAnswered() {
+    return mxState.questions.filter((item) => {
+      const ans = mxState.answers[`${item.kind}:${item.q.id}`];
+      return ans !== undefined && ans !== "" && (typeof ans !== "object" || (ans.steps && ans.steps.some((s) => s)));
+    }).length;
+  }
+
+  function renderMxResult(record, wrongConcepts) {
+    document.getElementById("mx-runner").style.display = "none";
+    const result = document.getElementById("mx-result");
+    result.style.display = "block";
+
+    const grade = record.score >= 90 ? "A" : record.score >= 80 ? "B" : record.score >= 70 ? "C" : record.score >= 60 ? "D" : "F";
+    const gradeCls = "topic-grade-" + grade.toLowerCase();
+    const min = Math.floor(record.durationSec / 60);
+    const sec = record.durationSec % 60;
+
+    const breakdownHtml = Object.entries(record.breakdown)
+      .filter(([, b]) => b.total > 0)
+      .map(([k, b]) => {
+        const label = k === "mc" ? "📝 רב-ברירה" : k === "fill" ? "✍️ השלמה" : k === "trace" ? "🔬 חיזוי פלט" : "🐛 ציד באג";
+        const pct = Math.round((b.right / b.total) * 100);
+        return `<div class="mx-result-row"><span>${label}</span><span class="mx-result-row-score">${b.right}/${b.total} (${pct}%)</span></div>`;
+      }).join("");
+
+    const weakHtml = wrongConcepts.length
+      ? `<div class="mx-result-weak">
+           <h4>📚 מושגים לחיזוק</h4>
+           <ul>${wrongConcepts.slice(0, 12).map((k) => `<li><code>${esc(k)}</code></li>`).join("")}</ul>
+         </div>`
+      : `<div class="mx-result-weak"><p>🏆 מצוין — כל השאלות נכונות!</p></div>`;
+
+    result.innerHTML = `
+      <div class="mx-result-head">
+        <div class="mx-result-grade ${gradeCls}">${grade}</div>
+        <div class="mx-result-title">
+          <h2>${record.templateName} — ${record.score}%</h2>
+          <p>${record.totalRight} מתוך ${record.totalQs} שאלות נכונות${record.autoTimeout ? " · ⏱️ הזמן נגמר" : ""} · משך: ${min}:${String(sec).padStart(2, "0")}</p>
+        </div>
+      </div>
+      <div class="mx-result-breakdown">
+        <h4>פירוק לפי סוג שאלה</h4>
+        ${breakdownHtml}
+      </div>
+      ${weakHtml}
+      <div class="mx-result-actions">
+        <button class="km-btn-mini primary" id="mx-result-new">📝 מבחן חדש</button>
+        <button class="km-btn-mini" id="mx-result-trainer">🧠 לאימון במאמן</button>
+      </div>`;
+
+    document.getElementById("mx-result-new")?.addEventListener("click", openMockExam);
+    document.getElementById("mx-result-trainer")?.addEventListener("click", () => {
+      if (typeof openTrainer === "function") openTrainer();
+    });
+  }
+
+  function renderExamSettings() {
+    const container = document.getElementById("mx-templates");
+    if (!container) return;
+    container.innerHTML = EXAM_TEMPLATES
+      .map((t) => `
+        <button class="mx-template-card" data-tid="${t.id}">
+          <div class="mx-template-name">${esc(t.name)}</div>
+          <div class="mx-template-desc">${esc(t.desc)}</div>
+          <div class="mx-template-dist">📝 ${t.distribution.mc} · ✍️ ${t.distribution.fill} · 🔬 ${t.distribution.trace} · 🐛 ${t.distribution.bug}</div>
+        </button>`)
+      .join("");
+    container.querySelectorAll(".mx-template-card").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tpl = EXAM_TEMPLATES.find((t) => t.id === btn.dataset.tid);
+        if (tpl && confirm(`להתחיל את "${tpl.name}"?\n${tpl.desc}\n\nאזהרה: יש טיימר. אין רמזים. אין AI.`)) {
+          startMockExam(tpl);
+        }
+      });
+    });
+    renderExamHistory();
+  }
+
+  function renderExamHistory() {
+    const container = document.getElementById("mx-history");
+    if (!container) return;
+    const list = loadExamHistory();
+    if (!list.length) {
+      container.innerHTML = '<p class="mx-history-empty">אין עדיין מבחנים בהיסטוריה. עשה מבחן ראשון!</p>';
+      return;
+    }
+    container.innerHTML = list.slice(0, 10)
+      .map((r) => {
+        const grade = r.score >= 90 ? "A" : r.score >= 80 ? "B" : r.score >= 70 ? "C" : r.score >= 60 ? "D" : "F";
+        const gradeCls = "topic-grade-" + grade.toLowerCase();
+        const date = new Date(r.date);
+        const dateStr = `${date.getDate()}/${date.getMonth() + 1} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+        return `<div class="mx-history-row">
+          <span class="mx-history-grade ${gradeCls}">${grade}</span>
+          <span class="mx-history-name">${esc(r.templateName)}</span>
+          <span class="mx-history-score">${r.score}%</span>
+          <span class="mx-history-meta">${r.totalRight}/${r.totalQs}${r.autoTimeout ? " · ⏱️" : ""}</span>
+          <span class="mx-history-date">${dateStr}</span>
+        </div>`;
+      })
+      .join("");
+  }
+
+  function openMockExam() {
+    hideAllViews();
+    currentLessonId = null;
+    currentLessonTitle.textContent = "📝 מבחן מדומה";
+    currentLessonDesc.textContent = "בחר תבנית. הטיימר מתחיל ברגע שלוחצים. בסוף — ציון + פירוק.";
+    const view = document.getElementById("mock-exam-view");
+    if (!view) return;
+    view.style.display = "block";
+    document.getElementById("mx-runner").style.display = "none";
+    document.getElementById("mx-result").style.display = "none";
+    document.getElementById("mx-settings").style.display = "block";
+    document.getElementById("open-mock-exam")?.classList.add("active");
+    renderExamSettings();
+    if (window.ensureSeededBank) window.ensureSeededBank();
+    scrollToTop();
+    sidebar.classList.remove("open");
+  }
+
+  // Wire mock exam controls (idempotent — safe even if not in DOM)
+  document.getElementById("open-mock-exam")?.addEventListener("click", openMockExam);
+  document.getElementById("mx-quit")?.addEventListener("click", () => {
+    if (confirm("לעצור את המבחן? ההתקדמות לא תישמר.")) {
+      stopMxTimer();
+      openMockExam();
+    }
+  });
+  document.getElementById("mx-prev")?.addEventListener("click", gotoPrevMxQuestion);
+  document.getElementById("mx-next")?.addEventListener("click", gotoNextMxQuestion);
+  document.getElementById("mx-skip")?.addEventListener("click", gotoNextMxQuestion);
+  document.getElementById("mx-submit")?.addEventListener("click", () => submitMockExam(false));
 
   // =========== OPEN CODE ANATOMY (read-only token-by-token breakdown page) ===========
   function openCodeAnatomy() {
