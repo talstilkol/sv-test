@@ -72,11 +72,14 @@ Branch: feature/track-f-traces
 מקור פרטים: data/questions_trace.js (קיים, 35 traces ל-lessons 21-27)
 
 🎯 משימות:
-1. לכל lesson ב-{11, 12, 13, 15, 16, 17, 18, 19, 20}:
-   - 5 trace questions (סה"כ 50)
-   - שילוב conceptKey ספציפי בכל trace
+1. לכל lesson ב-{11, 12, 13, 15, 16, 17, 18, 19, 20} — סה"כ 9 שיעורים (lesson 14 לא קיים):
+   - 5 trace questions לכל אחד (סה"כ 9 × 5 = 45)
+   - conceptKey: בדיוק `lesson_<id>::<conceptName>` כפי שמופיע בקובץ data/lesson{N}.js
+   - בחר 5 concepts מגוונים לכל lesson — עדיפות difficulty 4-6
    - level 4-6 (לא קל מדי, לא מתקדם מדי)
-   - מבנה: { id, conceptKey, level, code, steps[{line, prompt, answer, hint, acceptable[]}], explanation, teachingPoint }
+   - IDs בפורמט `trace_<lesson>_<NN>` (למשל trace_11_01..trace_11_05)
+   - מבנה: { id, conceptKey, level, title, code, steps[{line, prompt, answer, hint, acceptable[]}], explanation }
+   - append בסוף ה-array QUESTIONS_TRACE עם section headers לכל lesson (כמו lessons 21-27 הקיימים)
 
 2. 5 traces ל-lesson_closures:
    - closure execution flow
@@ -96,12 +99,13 @@ Branch: feature/track-f-traces
 - אל תיצור קובץ חדש
 
 ✓ DoD:
-- 50+ traces חדשים ב-questions_trace.js
-- בכל lesson 11-20 יש לפחות 5 traces
+- 50 traces חדשים ב-questions_trace.js (45 בlessons + 5 closures)
+- בכל lesson מ-{11,12,13,15,16,17,18,19,20} יש 5 traces
+- 5 traces חדשים ל-lesson_closures
 - validate_bank --strict עובר
 
 📤 git push -u origin feature/track-f-traces
-gh pr create --title "Track F: 55 new code traces (lessons 11-20 + closures)"
+gh pr create --title "Track F: 50 new code traces (lessons 11-20 + closures)"
 ```
 
 ---
