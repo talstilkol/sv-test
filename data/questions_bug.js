@@ -285,7 +285,7 @@ function addTodo(text) {
 
   {
     id: "bug_24_02",
-    conceptKey: "lesson_24::useEffect",
+    conceptKey: "lesson_24::cleanup",
     level: 5,
     title: "Memory leak — חסר cleanup",
     brokenCode:

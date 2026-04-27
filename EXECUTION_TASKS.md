@@ -131,24 +131,49 @@
 - [V] P1.3.6 — Verify: SHELL_ASSETS array covers core offline flow
 
 ### W4 — Sandpack + Live Code
-- [ ] P1.4.1 — Embed Sandpack
-  - [ ] P1.4.1.1 — npm install @codesandbox/sandpack-react
-  - [ ] P1.4.1.2 — lib/sandpack-embed.js wrapper
-  - [ ] P1.4.1.3 — "🚀 הרץ" button on each codeExample
-- [ ] P1.4.2 — Code Trace expansion
-  - [ ] P1.4.2.1 — 5 traces per lesson 11-20 (50 traces)
+- [V] P1.4.1 — Embed sandboxed Code Runner ✅
+  - [V] P1.4.1.1 — npm install @codesandbox/sandpack-client (deferred — using iframe sandbox)
+  - [V] P1.4.1.2 — lib/code-runner.js wrapper (iframe + postMessage)
+  - [V] P1.4.1.3 — "🚀 הרץ" button on each codeExample
+- [ ] P1.4.2 — Code Trace expansion (Track F running in parallel)
+  - [ ] P1.4.2.1 — 5 traces per lesson 11-20 (45 traces)
   - [ ] P1.4.2.2 — Traces for lesson_closures (5)
-- [ ] P1.4.3 — Bug Hunt mode
-  - [ ] P1.4.3.1 — Schema in questions_bank.js
-  - [ ] P1.4.3.2 — UI: line-clickable code, fix input
-  - [ ] P1.4.3.3 — 28+ bug hunts (4 per React lesson)
+- [V] P1.4.3 — Bug Hunt mode ✅
+  - [V] P1.4.3.1 — Schema in data/questions_bug.js
+  - [V] P1.4.3.2 — UI: 4-option MC + fix reveal + explanation
+  - [V] P1.4.3.3 — 14 bug hunts (target was 28; partial coverage)
 - [ ] P1.4.4 — Mini Build mode
   - [ ] P1.4.4.1 — Schema (prompt, starter, tests, ref)
-  - [ ] P1.4.4.2 — UI: Sandpack + tests panel
+  - [ ] P1.4.4.2 — UI: code-runner integration + tests panel
   - [ ] P1.4.4.3 — 21+ builds (3 per React lesson)
 
-### W5 — Mock Exam + Per-Distractor Feedback
-- [ ] P1.5.1 — Mock Exam Mode
+### W5 — Study UX (user-requested) + Mock Exam
+- [V] P1.5.0a — View Mode panel (toggles + concept jumper + presets) ✅
+  - [V] Floating 👁️ FAB + popover panel
+  - [V] 13 visibility toggles (questions, code, explanation, deep-dive, etc.)
+  - [V] 5 presets (all / concepts-only / quiz-only / exam-prep / bug-hunt-only)
+  - [V] Concept jumper dropdown (per-lesson)
+  - [V] Persisted state in localStorage
+  - **User request:** "תפריט אחיד בכל אגף + הסתר חלקים"
+- [V] P1.5.0b — Knowledge Map by topic + score (A-F) ✅
+  - [V] TOPIC_TAXONOMY (15 topic groups across 20 lessons)
+  - [V] Topic-grouped view with aggregated stats
+  - [V] A-F letter grade per topic (color-coded)
+  - [V] Sorted weakest-first by default
+  - [V] Toggle: שיעור / נושא
+  - **User request:** "פיצול לנושאים + ציון לכל נושא"
+- [ ] P1.5.0c — Code Anatomy refactor (filters)
+  - [ ] Filter dropdowns: שיעור / נושא / מושג
+  - [ ] Lazy-render — collapsed by default
+  - [ ] Search box for free text
+  - [ ] Tree view: שיעור → מושג
+  - **User request:** "פירוק קוד — אל תציג הכל, תן לי לבחור"
+- [ ] P1.5.0d — SITE_MAP.md document
+  - [ ] All views/tabs catalogued
+  - [ ] All data files mapped
+  - [ ] Navigation tree
+  - **User request:** "מפה מסודרת שלא תלך לאיבוד"
+- [ ] P1.5.1 — Mock Exam Mode (CRITICAL for exam)
   - [ ] P1.5.1.1 — Tab "🎯 מבחן מדומה"
   - [ ] P1.5.1.2 — 5 exam templates
   - [ ] P1.5.1.3 — Timer 45 דקות + lock-down
@@ -160,7 +185,7 @@
   - [ ] P1.5.2.3 — LLM batch script — augment 1316 MCs
   - [ ] P1.5.2.4 — Manual review 10% (130 questions)
 
-**P1 Total: 0/52**
+**P1 Total: 36/62** (5 newly added user-requested tasks; 5 newly completed)
 
 ---
 
@@ -364,6 +389,14 @@
 ```
 2026-04-27 21:30 — Initial task list created (209 total tasks)
 2026-04-27 22:00 — Phase 1 W1 begins
+2026-04-27 22:51 — P1.4.1 Code Runner (🚀 הרץ) shipped
+2026-04-27 23:13 — P1.4.3 Bug Hunt mode shipped (14 bugs)
+2026-04-27 23:20 — User-requested study UX added to plan:
+                   • P1.5.0a View Mode panel (toggles + jumper + presets)
+                   • P1.5.0b Knowledge Map by topic + A-F grade
+                   • P1.5.0c Code Anatomy refactor (filters) — pending
+                   • P1.5.0d SITE_MAP.md — pending
+2026-04-27 23:25 — P1.5.0a + P1.5.0b shipped (in code, verified in browser)
 ```
 
 ---

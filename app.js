@@ -195,6 +195,143 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // =========== P1.5.0 — View Mode (visibility toggles + concept jumper) ===========
+  (function initViewMode() {
+    const VM_KEY = "lumenportal:viewMode:v1";
+    const fab = document.getElementById("view-mode-fab");
+    const panel = document.getElementById("view-mode-panel");
+    const closeBtn = document.getElementById("vm-close");
+    const jumper = document.getElementById("vm-concept-jumper");
+    if (!fab || !panel) return;
+
+    // All toggle keys
+    const TOGGLES = [
+      "quiz", "code", "code-explanation", "explanation", "deep-dive",
+      "extended", "extras", "anti-patterns", "bug-hunt", "war-stories",
+      "mnemonic", "comparisons", "actions",
+    ];
+
+    // Presets — array of toggles to KEEP visible (others hidden)
+    const PRESETS = {
+      "all": TOGGLES,
+      "concepts-only": ["explanation", "code", "code-explanation", "deep-dive", "extras", "extended", "mnemonic"],
+      "quiz-only": ["quiz", "actions"],
+      "exam-prep": ["explanation", "mnemonic", "comparisons", "anti-patterns"],
+      "bug-hunt-only": ["bug-hunt", "code"],
+    };
+
+    // Load saved state — default everything visible
+    let state = Object.fromEntries(TOGGLES.map((k) => [k, true]));
+    try {
+      const saved = JSON.parse(localStorage.getItem(VM_KEY) || "null");
+      if (saved && typeof saved === "object") {
+        TOGGLES.forEach((k) => {
+          if (typeof saved[k] === "boolean") state[k] = saved[k];
+        });
+      }
+    } catch (_) {}
+
+    function applyState() {
+      TOGGLES.forEach((k) => {
+        document.body.classList.toggle(`view-hide-${k}`, !state[k]);
+        const btn = panel.querySelector(`.vm-toggle[data-vm="${k}"]`);
+        if (btn) btn.setAttribute("aria-pressed", state[k] ? "true" : "false");
+      });
+      try { localStorage.setItem(VM_KEY, JSON.stringify(state)); } catch (_) {}
+    }
+
+    function applyPreset(preset) {
+      const keep = new Set(PRESETS[preset] || TOGGLES);
+      TOGGLES.forEach((k) => { state[k] = keep.has(k); });
+      applyState();
+      panel.querySelectorAll(".vm-preset").forEach((b) => {
+        b.classList.toggle("vm-preset-active", b.dataset.preset === preset);
+      });
+    }
+
+    // Wire toggles
+    panel.querySelectorAll(".vm-toggle").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const k = btn.dataset.vm;
+        state[k] = !state[k];
+        applyState();
+        // Clear preset highlight when manually toggling
+        panel.querySelectorAll(".vm-preset").forEach((b) => b.classList.remove("vm-preset-active"));
+      });
+    });
+
+    // Wire presets
+    panel.querySelectorAll(".vm-preset").forEach((btn) => {
+      btn.addEventListener("click", () => applyPreset(btn.dataset.preset));
+    });
+
+    // Wire concept jumper
+    jumper?.addEventListener("change", (e) => {
+      const target = e.target.value;
+      if (!target) return;
+      const el = document.querySelector(`[data-concept="${cssEscape(target)}"]`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.classList.add("concept-flash");
+        setTimeout(() => el.classList.remove("concept-flash"), 1200);
+      }
+      e.target.value = ""; // reset
+    });
+
+    // FAB toggle
+    fab.addEventListener("click", () => {
+      const open = panel.hasAttribute("hidden");
+      if (open) {
+        panel.removeAttribute("hidden");
+        fab.setAttribute("aria-expanded", "true");
+        rebuildJumper();
+      } else {
+        panel.setAttribute("hidden", "");
+        fab.setAttribute("aria-expanded", "false");
+      }
+    });
+    closeBtn?.addEventListener("click", () => {
+      panel.setAttribute("hidden", "");
+      fab.setAttribute("aria-expanded", "false");
+    });
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !panel.hasAttribute("hidden")) {
+        panel.setAttribute("hidden", "");
+        fab.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Concept jumper — populated from currently visible concept cards
+    function rebuildJumper() {
+      if (!jumper) return;
+      jumper.innerHTML = '<option value="">בחר מושג...</option>';
+      const cards = document.querySelectorAll(".concept-card[data-concept]");
+      const seen = new Set();
+      cards.forEach((card) => {
+        const name = card.dataset.concept;
+        if (!name || seen.has(name)) return;
+        seen.add(name);
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        jumper.appendChild(opt);
+      });
+      if (seen.size === 0) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "(אין מושגים בתצוגה הנוכחית)";
+        opt.disabled = true;
+        jumper.appendChild(opt);
+      }
+    }
+
+    applyState();
+
+    // Expose for outside callers (when lesson changes, refresh jumper)
+    window.viewModeRefreshJumper = rebuildJumper;
+  })();
+
   // =========== INIT SIDEBAR ===========
   function initSidebar() {
     if (!window.LESSONS_DATA) return;
@@ -364,6 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderContent();
     renderQuiz();
     scrollToTop();
+    if (typeof window.viewModeRefreshJumper === "function") window.viewModeRefreshJumper();
   }
 
   // =========== OPEN KNOWLEDGE MAP ===========
@@ -402,6 +540,35 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========== KNOWLEDGE MAP RENDER ===========
   let kmFilter = "all";
   let kmQuery = "";
+
+  // P1.5.0 — Topic taxonomy (lesson → topic group + sub-topic) for KM topic view
+  const TOPIC_TAXONOMY = {
+    "lesson_11":            { topic: "JavaScript Foundations",  emoji: "🟦", subtopic: "Arrays, Functions, Scope" },
+    "lesson_12":            { topic: "JavaScript Foundations",  emoji: "🟦", subtopic: "Array Methods (map/filter/reduce)" },
+    "lesson_13":            { topic: "JavaScript + DOM",        emoji: "🟪", subtopic: "Objects, DOM, Classes" },
+    "lesson_15":            { topic: "JavaScript Advanced",     emoji: "🧠", subtopic: "Errors, Closures, Async" },
+    "lesson_16":            { topic: "Backend (Node.js)",       emoji: "🟫", subtopic: "Node.js, npm, Modules" },
+    "lesson_17":            { topic: "Backend (Express/REST)",  emoji: "🟫", subtopic: "HTTP, REST API" },
+    "lesson_18":            { topic: "Backend (Express/REST)",  emoji: "🟫", subtopic: "Forms, Validation, Storage" },
+    "lesson_19":            { topic: "JavaScript Foundations",  emoji: "🟦", subtopic: "חזרה וסיכום JS" },
+    "lesson_20":            { topic: "Database (Mongo)",        emoji: "🟧", subtopic: "MongoDB, Mongoose" },
+    "lesson_21":            { topic: "React Basics",            emoji: "⚛️", subtopic: "Components, JSX, Props" },
+    "lesson_22":            { topic: "React State",             emoji: "⚛️", subtopic: "useState, Immutable State" },
+    "lesson_23":            { topic: "React Routing + Context", emoji: "⚛️", subtopic: "Router, Context API" },
+    "lesson_24":            { topic: "React Hooks",             emoji: "🪝", subtopic: "useEffect, useMemo, useRef" },
+    "lesson_25":            { topic: "React Styling",           emoji: "🎨", subtopic: "Tailwind CSS + Project" },
+    "lesson_26":            { topic: "TypeScript",              emoji: "🔷", subtopic: "Basics + Types" },
+    "lesson_27":            { topic: "TypeScript",              emoji: "🔷", subtopic: "Advanced (Union, Narrowing)" },
+    "lesson_closures":      { topic: "JavaScript Advanced",     emoji: "🧠", subtopic: "Closures (deep dive)" },
+    "workbook_taskmanager": { topic: "JavaScript Practice",     emoji: "📝", subtopic: "Task Manager Workbook" },
+    "ai_development":       { topic: "AI Development",          emoji: "🤖", subtopic: "Practical AI Coding" },
+    "react_blueprint":      { topic: "React Architecture",      emoji: "⚛️", subtopic: "Patterns + Best Practices" },
+  };
+  function getTopicForLesson(lessonId) {
+    return TOPIC_TAXONOMY[lessonId] || { topic: "אחר", emoji: "📂", subtopic: "" };
+  }
+
+  let kmGroupBy = "topic"; // "topic" | "lesson"
 
   function renderKnowledgeMap() {
     const container = document.getElementById("km-lessons-container");
@@ -445,7 +612,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "at-risk": "⚠️ בסיכון",
       mastered: "🏆 מאסטר",
     };
-    const html = window.LESSONS_DATA
+    // Build per-lesson HTML, then optionally re-group into topics
+    const lessonBlocks = window.LESSONS_DATA
       .map((lesson) => {
         const concepts = (lesson.concepts || []).filter((c) => {
           const sc = getScore(lesson.id, c.conceptName);
@@ -535,8 +703,8 @@ document.addEventListener("DOMContentLoaded", () => {
           })
           .join("");
 
-        return `
-          <div class="km-lesson-group">
+        const inner = `
+          <div class="km-lesson-group" data-lesson-block="${esc(lesson.id)}">
             <div class="km-lesson-header">
               <h4>${esc(lesson.title)}</h4>
               <div class="km-lesson-meta">
@@ -548,8 +716,69 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="km-concepts-grid">${rows}</div>
           </div>`;
+        return {
+          lessonId: lesson.id,
+          html: inner,
+          stats: { lessonMaster, lessonWeak, lessonTotal, lessonAvg },
+        };
       })
-      .join("");
+      .filter((b) => b && b.html);
+
+    let html = "";
+    if (kmGroupBy === "topic") {
+      // Group lesson blocks by topic, compute aggregated topic stats
+      const topicGroups = {};
+      lessonBlocks.forEach((b) => {
+        const tx = getTopicForLesson(b.lessonId);
+        const key = tx.topic;
+        if (!topicGroups[key]) {
+          topicGroups[key] = { meta: tx, blocks: [], total: 0, master: 0, weak: 0, levelSum: 0 };
+        }
+        topicGroups[key].blocks.push(b);
+        topicGroups[key].total += b.stats.lessonTotal;
+        topicGroups[key].master += b.stats.lessonMaster;
+        topicGroups[key].weak += b.stats.lessonWeak;
+        topicGroups[key].levelSum += b.stats.lessonAvg * b.stats.lessonTotal;
+      });
+      // Render topics in a stable, intuitive order — weakest first when grouping by topic
+      const ordered = Object.entries(topicGroups).sort((a, b) => {
+        const avgA = a[1].total ? a[1].levelSum / a[1].total : 1;
+        const avgB = b[1].total ? b[1].levelSum / b[1].total : 1;
+        return avgA - avgB; // weakest topic first
+      });
+      html = ordered
+        .map(([topicName, g]) => {
+          const avg = g.total ? g.levelSum / g.total : 1;
+          const pct = Math.round(((avg - 1) / 6) * 100);
+          const grade =
+            pct >= 80 ? { letter: "A", cls: "topic-grade-a" } :
+            pct >= 60 ? { letter: "B", cls: "topic-grade-b" } :
+            pct >= 40 ? { letter: "C", cls: "topic-grade-c" } :
+            pct >= 20 ? { letter: "D", cls: "topic-grade-d" } :
+                        { letter: "F", cls: "topic-grade-f" };
+          return `
+            <details class="km-topic-group" open>
+              <summary class="km-topic-summary">
+                <span class="km-topic-name">${g.meta.emoji} ${esc(topicName)}</span>
+                <span class="km-topic-grade ${grade.cls}" title="ציון מצרפי לנושא">${grade.letter}</span>
+                <span class="km-topic-pct">${pct}%</span>
+                <span class="km-topic-counters">
+                  <span class="pill v" title="מאסטר (רמה 7)">🏆 ${g.master}</span>
+                  <span class="pill x" title="חלשים (רמה 1-2)">⚠️ ${g.weak}</span>
+                  <span class="pill" title="סך מושגים בנושא">${g.master}/${g.total}</span>
+                </span>
+                <span class="km-topic-bar"><span class="km-topic-bar-fill" style="width:${pct}%"></span></span>
+              </summary>
+              <div class="km-topic-body">
+                ${g.blocks.map((b) => b.html).join("")}
+              </div>
+            </details>`;
+        })
+        .join("");
+    } else {
+      // Group by lesson — original behavior
+      html = lessonBlocks.map((b) => b.html).join("");
+    }
 
     container.innerHTML =
       html ||
@@ -591,6 +820,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   document.getElementById("km-filter")?.addEventListener("change", (e) => {
     kmFilter = e.target.value;
+    renderKnowledgeMap();
+  });
+  // Init kmGroupBy from localStorage + listen
+  try {
+    const savedGB = localStorage.getItem("lumenportal:kmGroupBy:v1");
+    if (savedGB === "topic" || savedGB === "lesson") kmGroupBy = savedGB;
+  } catch (_) {}
+  const kmGroupBySel = document.getElementById("km-groupby");
+  if (kmGroupBySel) kmGroupBySel.value = kmGroupBy;
+  kmGroupBySel?.addEventListener("change", (e) => {
+    kmGroupBy = e.target.value === "lesson" ? "lesson" : "topic";
+    try { localStorage.setItem("lumenportal:kmGroupBy:v1", kmGroupBy); } catch (_) {}
     renderKnowledgeMap();
   });
   document.getElementById("km-go-trainer")?.addEventListener("click", () => {

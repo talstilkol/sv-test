@@ -58,6 +58,51 @@
         <span class="emoji" aria-hidden="true">📄</span><span class="lbl">PDF</span>
       </button>
 
+      <!-- P1.5.0 — View Mode (toggles + concept jumper + presets) -->
+      <button class="view-mode-fab" id="view-mode-fab" aria-label="פתח/סגור תפריט תצוגה" aria-expanded="false" title="מצב תצוגה — הצג/הסתר חלקים + קפוץ למושג">
+        <span aria-hidden="true">👁️</span>
+      </button>
+      <div class="view-mode-panel" id="view-mode-panel" hidden>
+        <div class="vm-head">
+          <strong>👁️ מצב תצוגה</strong>
+          <button class="vm-close" id="vm-close" aria-label="סגור">✕</button>
+        </div>
+        <div class="vm-section">
+          <div class="vm-label">📍 קפוץ למושג</div>
+          <select class="vm-jumper" id="vm-concept-jumper" aria-label="קפוץ למושג בשיעור הנוכחי">
+            <option value="">בחר מושג...</option>
+          </select>
+        </div>
+        <div class="vm-section">
+          <div class="vm-label">🎬 מצבים מהירים</div>
+          <div class="vm-presets">
+            <button class="vm-preset" data-preset="all">🔍 הכל</button>
+            <button class="vm-preset" data-preset="concepts-only">📚 רק מושגים</button>
+            <button class="vm-preset" data-preset="quiz-only">📝 רק שאלות</button>
+            <button class="vm-preset" data-preset="exam-prep">🎯 חזרה לבחינה</button>
+            <button class="vm-preset" data-preset="bug-hunt-only">🐛 רק ציד באגים</button>
+          </div>
+        </div>
+        <div class="vm-section">
+          <div class="vm-label">⚙️ הצג / הסתר חלקים</div>
+          <div class="vm-toggles">
+            <button class="vm-toggle" data-vm="quiz" aria-pressed="true">📝 שאלון בסוף שיעור</button>
+            <button class="vm-toggle" data-vm="code" aria-pressed="true">💻 קוד</button>
+            <button class="vm-toggle" data-vm="code-explanation" aria-pressed="true">📝 הערות לקוד</button>
+            <button class="vm-toggle" data-vm="explanation" aria-pressed="true">📖 הסבר רגיל</button>
+            <button class="vm-toggle" data-vm="deep-dive" aria-pressed="true">🌊 Deep Dive</button>
+            <button class="vm-toggle" data-vm="extended" aria-pressed="true">📚 הסבר מורחב</button>
+            <button class="vm-toggle" data-vm="extras" aria-pressed="true">🎁 Extras / אנלוגיות</button>
+            <button class="vm-toggle" data-vm="anti-patterns" aria-pressed="true">🔁 דפוסי-נגד</button>
+            <button class="vm-toggle" data-vm="bug-hunt" aria-pressed="true">🐛 ציד באגים</button>
+            <button class="vm-toggle" data-vm="war-stories" aria-pressed="true">📚 סיפורי שטח</button>
+            <button class="vm-toggle" data-vm="mnemonic" aria-pressed="true">🧠 מנמוניקה</button>
+            <button class="vm-toggle" data-vm="comparisons" aria-pressed="true">⚖️ השוואות</button>
+            <button class="vm-toggle" data-vm="actions" aria-pressed="true">✓ כפתורי פעולה</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Main Content Area -->
       <main class="main-content">
         <nav class="top-tabs-bar" id="top-tabs-bar">
@@ -195,6 +240,10 @@
                   <option value="unknown">רק חלשים (רמה 1-2)</option>
                   <option value="known">רק מאסטר (רמה 7)</option>
                   <option value="pending">רק לא נבחנו</option>
+                </select>
+                <select id="km-groupby" title="קבץ את המפה לפי שיעור או נושא">
+                  <option value="topic">📂 קבץ לפי נושא</option>
+                  <option value="lesson">📚 קבץ לפי שיעור</option>
                 </select>
                 <button class="km-btn-mini" id="km-go-trainer">🧠 לאימון במאמן הידע</button>
                 <button class="km-btn-mini danger" id="km-reset">🔄 איפוס מלא (ציונים + סטטוסים)</button>
