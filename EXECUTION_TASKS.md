@@ -415,6 +415,9 @@
 2026-04-28 00:13 — P1.5.1 Mock Exam Mode shipped — Tab + 5 templates + timer + nav + result + history
 2026-04-28 00:24 — P1.4.4 Mini Build shipped — 8 builds + regex tests + UI on concept card
 2026-04-28 00:30 — Sprint 2 Mental Model Animator shipped — 6 concepts × 3-4 frames + stepper UI
+2026-04-28 00:34 — Sprint 3 Side-by-Side Comparator dedicated tab shipped (6 pairs)
+2026-04-28 00:38 — Sprint 3 What-If Simulator shipped — 5 concepts × 3 scenarios + interactive knobs
+2026-04-28 00:41 — Pocket Concept Card shipped — floating panel + per-concept save button
 ```
 
 ---
