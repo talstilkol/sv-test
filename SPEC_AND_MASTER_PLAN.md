@@ -444,6 +444,386 @@ pathways: {
 
 ---
 
+### 4.15 Creative Methods for Hard Concepts (12 שיטות יצירתיות)
+
+**Context:** המערכת היום עומדת על 6 רמות הסבר טקסטואליות + ASCII illustrations + line annotations + codeExample. זה מעולה לרוב המושגים, אבל **8 המושגים הקשים ביותר** (difficulty 8-9, כולם React state/effects) דורשים מודלים מנטליים שטקסט לבדו לא מקרין:
+- `re-render`, `array reference`, `object reference`, `passing function as prop` (lesson_22)
+- `useEffect`, `dependency array`, `infinite loop`, `cleanup` (lesson_24)
+
+**עקרון עיקרי:** שיטה חדשה לא מחליפה את הקיים — מוסיפה שכבה. **לא ממציאים תוכן מאפס** — מעמיקים על-בסיס `commonMistakes`, `junior` stories, `illustration` הקיימים.
+
+#### 4.15.1 — 🎬 Mental Model Animator (סימולטור הרצה ויזואלי)
+
+**הבעיה:** useEffect lifecycle (mount → render → effect → cleanup → unmount) קשה לדמיין מטקסט.
+
+**פתרון:** SVG/Mermaid stepper עם state diff בכל צעד. Next/Prev/Auto-play.
+
+**Schema:**
+```js
+animations: {
+  "lesson_24::useEffect": {
+    frames: [
+      { phase: "Mount", state: { count: 0 }, dom: "<button>0</button>", note: "useEffect מתוזמן..." },
+      { phase: "Effect runs", state: { count: 0 }, log: "effect ran, n=0", note: "ה-callback רץ" }
+    ]
+  }
+}
+```
+
+**השפעה:** 🔥🔥🔥🔥 · **מאמץ:** M (1 שבוע)
+
+#### 4.15.2 — 🔁 Anti-Pattern Gallery
+
+**הבעיה:** "infinite loop" קשה להבין בלי לראות את ה-loop בפעולה.
+
+**פתרון:** 3-5 דפוסי-נגד פר מושג. כל פריט: קוד שבור (אדום) + תיאור הנזק + קוד תקין (ירוק) + diff מודגש.
+
+**Schema:**
+```js
+antiPatterns: {
+  "lesson_24::infinite loop": [
+    {
+      title: "useEffect ללא deps + setState בתוכו",
+      bad: "useEffect(() => { setN(n+1); });",
+      damage: "כל render → setState → render → effect → setState → ∞",
+      good: "useEffect(() => { setN(n+1); }, []);",
+      diff: ["+ , []"],
+      severity: "P0"
+    }
+  ]
+}
+```
+
+**מקור התוכן:** `concept.commonMistakes` הקיימים — הרחבה שלהם.
+
+**השפעה:** 🔥🔥🔥🔥 · **מאמץ:** S (3-4 ימים)
+
+#### 4.15.3 — ⚖️ Side-by-Side Comparator
+
+**הבעיה:** useState vs useReducer, useMemo vs useCallback — קל לבלבל.
+
+**פתרון:** טבלה אינטראקטיבית עם 2 עמודות. שורות: מטרה, syntax, מתי, performance.
+
+**Schema:**
+```js
+comparisons: {
+  "useState_vs_useReducer": {
+    a: { name: "useState", icon: "🪝" },
+    b: { name: "useReducer", icon: "🎛️" },
+    rows: [
+      { dim: "מטרה", a: "state פשוט", b: "state מורכב + actions" },
+      { dim: "API", a: "[val, setVal]", b: "[state, dispatch]" },
+      { dim: "מתי", a: "1-3 שדות", b: "5+ שדות / logic מורכב" }
+    ]
+  }
+}
+```
+
+**יעד:** 8-10 השוואות ליבה (useState/useReducer, props/Context, useMemo/useCallback, map/filter/reduce, async/await/Promise...).
+
+**השפעה:** 🔥🔥🔥 · **מאמץ:** S (3-4 ימים)
+
+#### 4.15.4 — 🧠 Mnemonics Lab (מנמוניקה בעברית)
+
+**הבעיה:** לזכור 4 שלבי useEffect lifecycle / סדר deps.
+
+**פתרון:** ראשי-תיבות + חרוזים בעברית פר-מושג קשה.
+
+**דוגמאות:**
+- **useEffect**: "מ.ר.ע.נ" = מאונט → רינדור → אפקט → ניקוי
+- **deps array**: "אם זה משתנה — תוסיף. אם לא — תשאיר ריק. אם לא דוקרת — דע שזה bug."
+- **stale closure**: "כל setX(prev=>...) חוסך באג. כל setX(x+1) — תיגרר בתעודת ברגע."
+
+**Schema:**
+```js
+mnemonics: {
+  "lesson_24::useEffect": {
+    acronym: "מ.ר.ע.נ",
+    expansion: "מאונט → רינדור → אפקט → ניקוי",
+    rhyme: "אם רינדור התרחש, ה-effect ירשה,\nאחרי כל deps שינוי — אפקט חדש מסתבר.",
+    visualHook: "🪜"
+  }
+}
+```
+
+**השפעה:** 🔥🔥🔥 · **מאמץ:** S (תוכן בלבד, 2-3 ימים)
+
+#### 4.15.5 — 📺 Time Machine ("ב-2015 vs ב-2026")
+
+**הבעיה:** למה בכלל יש Hooks? למה useState ולא class?
+
+**פתרון:** Tab "🕰️ אז ועכשיו" — same problem, 3 דורות:
+- 2015 (callbacks + jQuery)
+- 2018 (Class + setState)
+- 2026 (Hooks)
+
+**Schema:**
+```js
+timeMachine: {
+  "lesson_22::useState": {
+    eras: [
+      { year: 2015, tech: "jQuery", code: "let count = 0; $('#btn').click(() => { count++; $('#out').text(count); });" },
+      { year: 2018, tech: "React Class", code: "class Counter extends React.Component { state={count:0}; ... }" },
+      { year: 2026, tech: "Hooks", code: "function Counter() { const [count, setCount] = useState(0); ... }" }
+    ],
+    insight: "פעם DOM ידני. אז state מפורק בין constructor/setState/render. היום: Hook אחד."
+  }
+}
+```
+
+**יעד:** 6 מושגים מרכזיים (useState, useEffect, props, components, JSX, Hooks).
+
+**השפעה:** 🔥🔥🔥 · **מאמץ:** M (1 שבוע)
+
+#### 4.15.6 — 📚 War Stories Library (סיפורי שטח מרובים)
+
+**הבעיה:** רמת junior נותנת רק סיפור אחד. למושג קשה — 3-5 סיפורים יחזקו.
+
+**פתרון:** ספריית `warStories` — לכל מושג, מערך של incidents.
+
+**Schema:**
+```js
+warStories: {
+  "lesson_24::dependency array": [
+    {
+      title: "ה-fetch שרץ אינסוף פעמים",
+      context: "אפליקציית CRM, useEffect שמושך נתוני לקוח",
+      bug: "useEffect(() => { fetch(); }); — אין deps",
+      diagnosis: "Network tab → 1000+ בקשות/שניה → useEffect ללא deps",
+      fix: "+ , [customerId]",
+      lesson: "תמיד deps array. ESLint react-hooks/exhaustive-deps תופס.",
+      severity: "P0",
+      hours: "4 שעות לדיבוג + 5 דקות תיקון"
+    }
+  ]
+}
+```
+
+**מקור התוכן:** `concept.junior` הקיימים — מרחיבים מ-1 ל-3-5.
+
+**יעד:** 3-5 סיפורים פר 8 מושגים קשים = ~30 סיפורים.
+
+**השפעה:** 🔥🔥🔥🔥 · **מאמץ:** M (תוכן יד-ביד, 1 שבוע)
+
+#### 4.15.7 — 🎯 What-If Simulator
+
+**הבעיה:** "מה יקרה אם אוסיף count ל-deps?" — עדיף לראות מאשר לקרוא.
+
+**פתרון:** כפתורי toggle לפרמטרים. מציג output שונה לכל קומבינציה.
+
+**Schema:**
+```js
+whatIf: {
+  "lesson_24::useEffect": {
+    code: "useEffect(() => { console.log('n=', n); }, DEPS);",
+    knobs: [
+      { name: "DEPS", options: ["[]", "[n]", "(none)"] }
+    ],
+    outcomes: {
+      "[]": "רק ב-mount — n תמיד 0 (closure)",
+      "[n]": "בכל שינוי n — log טרי",
+      "(none)": "כל רינדור — לולאה אם setState בתוך"
+    }
+  }
+}
+```
+
+**השפעה:** 🔥🔥🔥🔥 · **מאמץ:** M (1 שבוע)
+
+#### 4.15.8 — 🃏 Spaced Repetition Flashcards
+
+**הבעיה:** מושגים קשים נשכחים תוך שבועיים. SRS פותר את "עקומת השכחה".
+
+**פתרון:** Tab "🃏 כרטיסיות" עם FSRS-4.
+- Front: שאלה
+- Back: תשובה + הסבר
+- דירוג Easy/Good/Hard/Again → מעדכן interval
+
+**שימוש קיים:** `lib/srs.js` נוצר ב-Phase 0 (Track A). צריך להוסיף UI + תוכן flashcards.
+
+**Schema:**
+```js
+flashcards: {
+  "lesson_24::useEffect": [
+    { front: "מה רץ ב-useEffect עם deps=[]?", back: "פעם אחת בלבד ב-mount." },
+    { front: "מה ה-cleanup function?", back: "ה-return — רץ ב-unmount או לפני re-run." }
+  ]
+}
+```
+
+**השפעה:** 🔥🔥🔥🔥🔥 · **מאמץ:** M (1 שבוע, רוב הזמן UI)
+
+#### 4.15.9 — 🎤 Audio Mode (TTS)
+
+**הבעיה:** תלמיד בנהיגה / ריצה — לא יכול לקרוא.
+
+**פתרון:** כפתור "🎤 הקרא" על כל רמת הסבר. Web Speech API (`speechSynthesis`) עם voice עברית.
+
+**אין צורך בנתונים חדשים** — קורא מ-`concept.levels[currentLevel]`.
+
+**הקשר:** כבר בתוכנית כ-Track D Quick Win (D1 — Read Aloud).
+
+**השפעה:** 🔥🔥 · **מאמץ:** S (1-2 ימים)
+
+#### 4.15.10 — 🎭 Concept Comic (סיפור 4 פאנלים)
+
+**הבעיה:** סיפור ויזואלי שגרר זיכרון רגשי.
+
+**פתרון:** 4-6 פאנלים לכל מושג קשה. תיאור טקסטואלי + ASCII או SVG.
+
+**Schema:**
+```js
+comics: {
+  "lesson_24::cleanup": {
+    title: "🧹 ה-Cleanup הקטן",
+    panels: [
+      { caption: "useEffect מתחיל interval", art: "⏱️→📅" },
+      { caption: "המשתמש עוזב את הדף", art: "🚪→👋" },
+      { caption: "ללא cleanup — ה-interval ממשיך!", art: "⏱️.....⏱️ (memory leak)" },
+      { caption: "עם cleanup — clearInterval מבטל", art: "⏱️→❌ ✓ נקי" }
+    ]
+  }
+}
+```
+
+**מקור התוכן:** `concept.illustration` הקיים — להעמיק ל-4 פאנלים.
+
+**יעד:** 8 מושגים קשים = 32-48 פאנלים.
+
+**השפעה:** 🔥🔥🔥 · **מאמץ:** M (יד-ביד, יצירתי, 1 שבוע)
+
+#### 4.15.11 — 📊 Concept Map (גרף ויזואלי)
+
+**הבעיה:** useState → setState → re-render → useEffect → cleanup — שרשרת קשה לראות מטקסט ליניארי.
+
+**פתרון:** גרף ויזואלי (D3.js force layout או SVG static) — node = concept, edge = relationship. קליק → פותח שיעור.
+
+**Schema:**
+```js
+conceptGraph: {
+  nodes: [
+    { id: "useState", lesson: "lesson_22", difficulty: 6 },
+    { id: "re-render", lesson: "lesson_22", difficulty: 8 },
+    { id: "useEffect", lesson: "lesson_24", difficulty: 8 }
+  ],
+  edges: [
+    { from: "useState", to: "re-render", label: "triggers" },
+    { from: "re-render", to: "useEffect", label: "may run if deps changed" }
+  ]
+}
+```
+
+**ספריות:** D3.js / vis-network / SVG static.
+
+**השפעה:** 🔥🔥🔥 · **מאמץ:** L (2 שבועות)
+
+#### 4.15.12 — 🤔 Reverse Q&A (Jeopardy Mode)
+
+**הבעיה:** שאלה רגילה = LLM-style. Reverse = יותר משמעותי קוגניטיבית.
+
+**פתרון:** "תשובה: useState(0) רץ פעם אחת ב-mount. שאלה?" → המשתמש מנסח את השאלה.
+
+**Schema:**
+```js
+reverseQA: {
+  "lesson_22::useState": [
+    { answer: "פעם אחת ב-mount", expectedQuestion: ["מתי", "useState", "init"] }
+  ]
+}
+```
+
+**השפעה:** 🔥🔥 · **מאמץ:** M (1 שבוע)
+
+---
+
+### 4.15.13 — מטריצת השפעה × מאמץ
+
+| # | שיטה | השפעה | מאמץ | עדיפות |
+|:-:|---|:-:|:-:|:-:|
+| 4.15.8 | Flashcards (SRS) | 🔥🔥🔥🔥🔥 | M | **#1** |
+| 4.15.1 | Mental Model Animator | 🔥🔥🔥🔥 | M | **#2** |
+| 4.15.2 | Anti-Pattern Gallery | 🔥🔥🔥🔥 | S | **#3** |
+| 4.15.6 | War Stories Library | 🔥🔥🔥🔥 | M | **#4** |
+| 4.15.7 | What-If Simulator | 🔥🔥🔥🔥 | M | **#5** |
+| 4.15.3 | Side-by-Side | 🔥🔥🔥 | S | #6 |
+| 4.15.4 | Mnemonics | 🔥🔥🔥 | S | #7 |
+| 4.15.5 | Time Machine | 🔥🔥🔥 | M | #8 |
+| 4.15.10 | Concept Comic | 🔥🔥🔥 | M | #9 |
+| 4.15.11 | Concept Map | 🔥🔥🔥 | L | #10 |
+| 4.15.9 | Audio Mode | 🔥🔥 | S | #11 |
+| 4.15.12 | Reverse Q&A | 🔥🔥 | M | #12 |
+
+### 4.15.14 — קבצי נתונים חדשים (אינטגרציה)
+
+לכל שיטה — קובץ data נפרד. ה-content-loader.js ממזג ל-concepts לפי conceptKey:
+
+```
+data/anti_patterns.js     // var ANTI_PATTERNS  = { conceptKey: [...] }
+data/mnemonics.js         // var MNEMONICS      = { conceptKey: {...} }
+data/war_stories.js       // var WAR_STORIES    = { conceptKey: [...] }
+data/comparisons.js       // var COMPARISONS    = { pairKey: {...} }
+data/animations.js        // var ANIMATIONS     = { conceptKey: { frames } }
+data/comics.js            // var COMICS         = { conceptKey: { panels } }
+data/time_machine.js      // var TIME_MACHINE   = { conceptKey: { eras } }
+data/what_if.js           // var WHAT_IF        = { conceptKey: { knobs, outcomes } }
+data/flashcards.js        // var FLASHCARDS     = { conceptKey: [...] }
+data/concept_graph.js     // var CONCEPT_GRAPH  = { nodes, edges }
+data/reverse_qa.js        // var REVERSE_QA     = { conceptKey: [...] }
+```
+
+**content-loader.js** (תוסף):
+```js
+const sources = {
+  ANTI_PATTERNS: 'antiPatterns',
+  MNEMONICS:     'mnemonic',
+  WAR_STORIES:   'warStories',
+  ANIMATIONS:    'animation',
+  COMICS:        'comic',
+  TIME_MACHINE:  'timeMachine',
+  WHAT_IF:       'whatIf',
+  FLASHCARDS:    'flashcards',
+  REVERSE_QA:    'reverseQA',
+};
+window.LESSONS_DATA.forEach(lesson => {
+  (lesson.concepts || []).forEach(c => {
+    const key = `${lesson.id}::${c.conceptName}`;
+    Object.entries(sources).forEach(([globalName, fieldName]) => {
+      const data = window[globalName] || {};
+      if (data[key]) c[fieldName] = data[key];
+    });
+  });
+});
+```
+
+### 4.15.15 — UI Pattern (Collapsible Sections)
+
+ב-`renderConceptCard()` — להוסיף sections פתיחה לכל שיטה זמינה:
+
+```
+📖 הסבר ברמתך       ← כבר קיים
+🃏 כרטיסיות         ← אם concept.flashcards
+🎬 הדמיה חיה        ← אם concept.animation
+🔁 דפוסי-נגד        ← אם concept.antiPatterns
+⚖️ השוואה            ← אם קשור ל-comparison
+🧠 לזכירה            ← אם concept.mnemonic
+📚 סיפורי שטח        ← אם concept.warStories
+🎯 מה אם...          ← אם concept.whatIf
+🕰️ אז ועכשיו         ← אם concept.timeMachine
+🎭 קומיקס            ← אם concept.comic
+🤔 הפוך              ← אם concept.reverseQA
+```
+
+Pattern: Accordion עם closed-by-default (למניעת הצפה).
+
+### 4.15.16 — Tabs ייעודיים (לחלק מהשיטות)
+
+חלק מהשיטות שווה Tab עליון נפרד (לא רק section):
+- **🃏 כרטיסיות** — SRS view (Flashcards)
+- **🗺️ מפת מושגים** — Concept Map (אינטראקטיבי, מסך מלא)
+- האחרים נטמעים ב-"שיעורים" כסקציות.
+
+---
+
 ## 5. דרישות לא-פונקציונליות (NFR)
 
 ### 5.1 Performance
@@ -622,6 +1002,113 @@ GLOSSARY = {
   "Hook": { he: "חיבור", definition: "...", category: "react" },
   // ...
 }
+```
+
+### 6.5.1 Creative Methods Data Files (סעיף 4.15)
+
+**11 קבצי נתונים חדשים** למודלים מנטליים מתקדמים — כולם ממוזגים ב-content-loader.js לפי `conceptKey`:
+
+```js
+// data/anti_patterns.js
+ANTI_PATTERNS = {
+  "lesson_X::Concept": [
+    { title, bad: { code, lang }, damage, good: { code, lang }, diff: [], severity }
+  ]
+}
+
+// data/mnemonics.js
+MNEMONICS = {
+  "lesson_X::Concept": { acronym, expansion, rhyme, visualHook }
+}
+
+// data/war_stories.js
+WAR_STORIES = {
+  "lesson_X::Concept": [
+    { title, context, bug, diagnosis, fix, lesson, severity, hours }
+  ]
+}
+
+// data/comparisons.js
+COMPARISONS = {
+  "useState_vs_useReducer": {
+    a: { name, icon }, b: { name, icon },
+    rows: [{ dim, a, b }]
+  }
+}
+
+// data/animations.js
+ANIMATIONS = {
+  "lesson_X::Concept": {
+    frames: [{ phase, state, dom, log, note }]
+  }
+}
+
+// data/comics.js
+COMICS = {
+  "lesson_X::Concept": {
+    title, panels: [{ caption, art }]
+  }
+}
+
+// data/time_machine.js
+TIME_MACHINE = {
+  "lesson_X::Concept": {
+    eras: [{ year, tech, code }],
+    insight: string
+  }
+}
+
+// data/what_if.js
+WHAT_IF = {
+  "lesson_X::Concept": {
+    code: string, // עם placeholders
+    knobs: [{ name, options }],
+    outcomes: { [option]: outcome }
+  }
+}
+
+// data/flashcards.js
+FLASHCARDS = {
+  "lesson_X::Concept": [{ front, back }]
+}
+
+// data/concept_graph.js
+CONCEPT_GRAPH = {
+  nodes: [{ id, lesson, difficulty }],
+  edges: [{ from, to, label }]
+}
+
+// data/reverse_qa.js
+REVERSE_QA = {
+  "lesson_X::Concept": [
+    { answer, expectedQuestion: string[] }
+  ]
+}
+```
+
+**מיזוג ב-content-loader.js:**
+```js
+const CREATIVE_SOURCES = {
+  ANTI_PATTERNS: 'antiPatterns',
+  MNEMONICS:     'mnemonic',
+  WAR_STORIES:   'warStories',
+  ANIMATIONS:    'animation',
+  COMICS:        'comic',
+  TIME_MACHINE:  'timeMachine',
+  WHAT_IF:       'whatIf',
+  FLASHCARDS:    'flashcards',
+  REVERSE_QA:    'reverseQA',
+};
+window.LESSONS_DATA.forEach(lesson => {
+  (lesson.concepts || []).forEach(c => {
+    const key = `${lesson.id}::${c.conceptName}`;
+    Object.entries(CREATIVE_SOURCES).forEach(([globalName, fieldName]) => {
+      const data = window[globalName] || {};
+      if (data[key]) c[fieldName] = data[key];
+    });
+  });
+});
+// CONCEPT_GRAPH ו-COMPARISONS לא לפי conceptKey — נטענים ל-window בנפרד
 ```
 
 ### 6.6 localStorage Keys (גרסה כעת)
@@ -1633,6 +2120,82 @@ window.addEventListener('visibilitychange', () => {
 
 **מאמץ:** 4 ימים
 
+### 12.6 — Sprint Plan לשיטות יצירתיות (סעיף 4.15)
+
+**מסלול מומלץ — 3 sprints של שבועיים** (משולב לתוך Phase 1+2):
+
+#### 🚀 Sprint 1 (שבועיים) — "Quick Pedagogical Wins"
+**הרכב:** Anti-Pattern Gallery (S) + Mnemonics Lab (S) + Flashcards UI (M)
+
+**משימות:**
+1. **Anti-Patterns** (3-4 ימים)
+   - צור `data/anti_patterns.js` (8 מושגים × 3-5 דפוסים = ~30 רשומות)
+   - תוכן: הרחב את `concept.commonMistakes` הקיימים לפורמט bad/damage/good/diff
+   - UI: section חדש ב-`renderConceptCard` עם accordion (אדום/ירוק)
+   - CSS: `.anti-pattern-card`, `.bad-code`, `.good-code`, `.code-diff`
+2. **Mnemonics** (2-3 ימים)
+   - צור `data/mnemonics.js` (8 מושגים קשים)
+   - תוכן: ראשי-תיבות + חרוזים עבריים
+   - UI: section עם acronym חתוך + expansion + rhyme
+3. **Flashcards UI** (1 שבוע)
+   - הסתמכות על `lib/srs.js` הקיים (Track A — FSRS-4 כ-evolution של SM-2)
+   - Tab חדש "🃏 כרטיסיות"
+   - יצירת `data/flashcards.js` (5-10 כרטיסיות פר מושג)
+   - UI: front/back flip, דירוג Easy/Good/Hard/Again
+
+**DoD Sprint 1:**
+- 3 קבצי data חדשים נטענים ב-content-loader
+- `node scripts/validate_bank.js --strict` עובר
+- בדיקה ידנית: 1 מושג קשה (useEffect) — אנטי-פטרן + מנמוניקה + פלאשקארט מוצגים
+
+#### 🎬 Sprint 2 (שבועיים) — "Visual Mental Models"
+**הרכב:** Mental Model Animator (M) + War Stories Library (M)
+
+**משימות:**
+1. **Mental Model Animator** (1 שבוע)
+   - צור `data/animations.js` (5-6 מושגים: useEffect, re-render, dependency array, infinite loop, stale closure, useState batching)
+   - UI: SVG/HTML stepper עם Next/Prev/Auto-play
+   - frames: phase, state diff, dom snippet, log, note
+   - השתמש ב-CSS transitions (לא צריך GSAP בשלב זה)
+2. **War Stories** (1 שבוע)
+   - צור `data/war_stories.js` (8 מושגים × 3-5 סיפורים = ~30 incidents)
+   - תוכן: הרחב מ-`concept.junior` הקיים (יש 1 סיפור) ל-3-5
+   - שדות: title, context, bug, diagnosis, fix, lesson, severity, hours
+   - UI: רשימת cards עם פתיחה/סגירה. סינון לפי severity (P0/P1)
+
+**DoD Sprint 2:**
+- ANIMATIONS + WAR_STORIES נטענים
+- 1 מושג קשה (useEffect) עם animator + 5 war stories עובד
+- Mobile (≤768px) — animator מותאם
+
+#### 🎯 Sprint 3 (שבועיים) — "Comparative Learning"
+**הרכב:** Side-by-Side Comparator (S) + What-If Simulator (M)
+
+**משימות:**
+1. **Side-by-Side Comparator** (3-4 ימים)
+   - צור `data/comparisons.js` (8-10 השוואות: useState/useReducer, useMemo/useCallback, props/Context, map/filter/reduce, async/await/Promise, var/let/const, == /===, function/arrow, class/function components, REST/GraphQL)
+   - UI: טבלה responsive עם 2 עמודות + שורות (מטרה, syntax, מתי, performance)
+   - Tab/section ייעודי "⚖️ השוואות"
+2. **What-If Simulator** (1 שבוע)
+   - צור `data/what_if.js` (5-6 מושגים)
+   - שדות: code template עם placeholders, knobs (toggles), outcomes
+   - UI: כפתורי toggle → מחליף את הקוד וה-output במציאות
+   - השתמש ב-Sandpack (Phase 1 W4) להרצה אמיתית, או mock outcomes
+
+**DoD Sprint 3:**
+- COMPARISONS + WHAT_IF נטענים
+- 1 השוואה (useState/useReducer) עובדת אינטראקטיבית
+- 1 what-if (useEffect deps) משנה outcome בזמן אמת
+
+#### 🎨 Phase 2 Extended (אופציונלי, אחרי Sprint 1-3)
+- **Time Machine** (M) — 6 מושגים מרכזיים
+- **Concept Comic** (M) — 8 מושגים × 4-6 פאנלים
+- **Audio Mode** (S) — כבר ב-Track D D1, יבוצע שם
+- **Concept Map** (L) — Tab ייעודי מסך מלא, D3.js
+- **Reverse Q&A** (M) — Jeopardy mode
+
+**זמן משוער כולל ל-12 השיטות:** ~10-12 שבועות (משולב ב-Phase 1-3 הראשי).
+
 ---
 
 ## 13. Phase 3 — אינטליגנציה + Sync (6 שבועות)
@@ -1913,6 +2476,9 @@ export default {
 - [ ] Misconception detector active
 - [ ] "Explain Like I'm 5" works
 - [ ] Cross-device sync: Supabase auth + progress sync
+- [ ] **Creative Methods Sprint 1** done: Anti-Patterns (~30) + Mnemonics (8) + Flashcards UI
+- [ ] **Creative Methods Sprint 2** done: Animator (5-6 concepts) + War Stories (~30 incidents)
+- [ ] **Creative Methods Sprint 3** done: Side-by-Side (8-10 comparisons) + What-If (5-6 simulators)
 
 ### Phase 3 DoD
 - [ ] Themed Scenarios: 150 scenarios
@@ -1924,6 +2490,7 @@ export default {
 - [ ] Vite migration done
 - [ ] App.js modularized
 - [ ] TypeScript on core/ modules
+- [ ] **Creative Methods Phase 2 Extended:** Time Machine (6) + Comics (8) + Concept Map + Reverse Q&A
 
 ### Phase 4 DoD
 - [ ] Teacher Dashboard live
