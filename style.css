@@ -4454,3 +4454,58 @@ textarea:focus-visible,
   direction: ltr;
   display: inline-block;
 }
+
+/* ============================================================ */
+/* P1.4.1 — Code Runner output                                  */
+/* ============================================================ */
+.code-runner-output {
+  margin-top: 0.6rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+  font-family: "Fira Code", monospace;
+  font-size: 0.84rem;
+  direction: ltr;
+  text-align: left;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.runner-status {
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: "Heebo", sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+.runner-section {
+  color: var(--text-bright);
+  margin: 0.5rem 0 0.3rem;
+  font-family: "Heebo", sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+.runner-log {
+  padding: 2px 6px;
+  border-left: 2px solid rgba(99, 102, 241, 0.4);
+  margin: 2px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.runner-log-error, .runner-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  border-left-color: #ef4444;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 2px 0;
+}
+.runner-log-warn { color: #fcd34d; border-left-color: #f59e0b; }
+.runner-log-info { color: #93c5fd; border-left-color: #3b82f6; }
+.code-tool-btn.run-btn {
+  background: rgba(34, 211, 238, 0.1);
+  border-color: rgba(34, 211, 238, 0.3);
+}
+.code-tool-btn.run-btn:hover {
+  background: rgba(34, 211, 238, 0.2);
+}

@@ -4124,8 +4124,10 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="code-box">
           <div class="code-toolbar">
             <button class="code-tool-btn" data-action="toggle-comments" data-card-cid="${idx}" title="הוסף הערות בעברית לכל שורה">💬 הערות בעברית</button>
+            <button class="code-tool-btn run-btn" data-action="run-code" data-card-cid="${idx}" aria-label="הרץ את הקוד בסביבה מבודדת" title="הרץ את הקוד בסביבה מבודדת — תראה את ה-console.log">🚀 הרץ</button>
           </div>
           <pre data-code-original="${esc(concept.codeExample)}"><code>${esc(concept.codeExample)}</code></pre>
+          <div class="code-runner-output" data-runner-output="${idx}" style="display:none;"></div>
           ${
             concept.codeExplanation
               ? `<div class="code-explanation"><strong>💡 פינת הקוד:</strong> ${esc(concept.codeExplanation)}</div>`
@@ -4453,6 +4455,54 @@ document.addEventListener("DOMContentLoaded", () => {
               btn.classList.add("active");
               btn.textContent = "🔙 הסר הערות";
             }
+          } else if (action === "run-code") {
+            // P1.4.1 — execute codeExample in a sandboxed iframe and show output.
+            const pre = card.querySelector(".code-box pre");
+            const out = card.querySelector(`[data-runner-output="${btn.dataset.cardCid}"]`);
+            if (!pre || !out || typeof window.CodeRunner !== "function") return;
+            const code = pre.dataset.codeOriginal || pre.textContent || "";
+            btn.disabled = true;
+            btn.textContent = "⏳ רץ...";
+            out.style.display = "block";
+            out.innerHTML = '<div class="runner-status">⏳ מריץ...</div>';
+            const runner = new window.CodeRunner(out);
+            runner
+              .run(code)
+              .then((result) => {
+                btn.disabled = false;
+                btn.textContent = "🚀 הרץ שוב";
+                const lines = [];
+                if (result.logs && result.logs.length) {
+                  lines.push(
+                    '<div class="runner-section"><strong>📤 פלט (console):</strong></div>',
+                  );
+                  result.logs.forEach((log) => {
+                    lines.push(
+                      `<div class="runner-log runner-log-${log.level}">${esc(log.text)}</div>`,
+                    );
+                  });
+                } else {
+                  lines.push(
+                    '<div class="runner-status">✓ הרץ ללא פלט (אין console.log)</div>',
+                  );
+                }
+                if (result.errors && result.errors.length) {
+                  lines.push(
+                    '<div class="runner-section"><strong>❌ שגיאות:</strong></div>',
+                  );
+                  result.errors.forEach((err) => {
+                    lines.push(
+                      `<div class="runner-error">${esc(err.message)}${err.line ? ` (line ${err.line})` : ""}</div>`,
+                    );
+                  });
+                }
+                out.innerHTML = lines.join("");
+              })
+              .catch((err) => {
+                btn.disabled = false;
+                btn.textContent = "🚀 הרץ שוב";
+                out.innerHTML = `<div class="runner-error">שגיאה: ${esc(err.message || err)}</div>`;
+              });
           } else if (action === "mark-v") {
             // Confirm shortcut, then mark and re-render
             if (confirm(`לסמן את "${concept.conceptName}" כמושג ידוע? המאמן לא יציג אותו יותר.`)) {
