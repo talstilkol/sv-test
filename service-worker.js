@@ -2,7 +2,7 @@
 // Caches the app shell + primary lessons for offline use.
 // Cache strategy: cache-first for static assets, network-first for HTML.
 
-const CACHE_VERSION = "lumen-v1.7.0";
+const CACHE_VERSION = "lumen-v1.8.0";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 // Resources that MUST be available offline (the App Shell + core data)
@@ -23,6 +23,7 @@ const SHELL_ASSETS = [
   "/data/questions_bug.js",
   "/data/questions_build.js",
   "/data/animations.js",
+  "/data/what_if.js",
   "/data/quick_guide.js",
   "/data/code_blocks.js",
   "/data/glossary.js",

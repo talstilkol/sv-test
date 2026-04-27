@@ -51,6 +51,8 @@
   }, {});
   // Sprint 2 §4.15.6 — Mental Model Animator (ANIMATIONS keyed by conceptKey)
   const animations = typeof ANIMATIONS !== "undefined" ? ANIMATIONS : {};
+  // Sprint 3 §4.15.7 — What-If Simulator (WHAT_IF keyed by conceptKey)
+  const whatIf = typeof WHAT_IF !== "undefined" ? WHAT_IF : {};
   let enrichedCount = 0;
   let extendedCount = 0;
   let antiPatternsCount = 0;
@@ -103,6 +105,10 @@
       // Sprint 2 §4.15.6 — Mental Model Animator
       if (animations[key]) {
         c.animation = animations[key];
+      }
+      // Sprint 3 §4.15.7 — What-If Simulator
+      if (whatIf[key]) {
+        c.whatIf = whatIf[key];
       }
     });
   });

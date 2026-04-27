@@ -5207,6 +5207,86 @@ html { scroll-behavior: smooth; }
 }
 
 /* ============================================================ */
+/* Sprint 3 §4.15.7 — What-If Simulator                         */
+/* ============================================================ */
+.whatif-panel {
+  margin-top: 0.6rem;
+  background: rgba(34, 197, 94, 0.05);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem;
+}
+.whatif-panel > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #86efac;
+  font-size: 0.95rem;
+}
+.wif-body { margin-top: 0.6rem; }
+.wif-title {
+  font-weight: 700;
+  color: #bbf7d0;
+  margin-bottom: 0.3rem;
+}
+.wif-intro {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.5;
+}
+.wif-knob-label {
+  font-size: 0.85rem;
+  color: var(--text-bright);
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+.wif-knob-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.6rem;
+}
+.wif-knob-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-bright);
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: background 0.15s;
+}
+.wif-knob-btn:hover { background: rgba(34, 197, 94, 0.15); }
+.wif-knob-btn.is-active {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: #22c55e;
+  color: #bbf7d0;
+}
+.wif-code {
+  direction: ltr;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  font-family: "Fira Code", monospace;
+  font-size: 0.85rem;
+  margin: 0.4rem 0;
+  white-space: pre;
+  overflow-x: auto;
+  border-left: 3px solid #22c55e;
+}
+.wif-outcome {
+  background: rgba(99, 102, 241, 0.08);
+  border-right: 3px solid #6366f1;
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* ============================================================ */
 /* Sprint 2 §4.15.6 — Mental Model Animator                     */
 /* ============================================================ */
 .animator-panel {

@@ -5101,6 +5101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${renderMnemonicPanel(concept)}
         ${renderAntiPatternsPanel(concept)}
         ${renderAnimatorPanel(concept)}
+        ${renderWhatIfPanel(concept)}
         ${renderBugHuntPanel(concept)}
         ${renderMiniBuildPanel(concept)}
         ${renderWarStoriesPanel(concept)}
@@ -5333,6 +5334,31 @@ document.addEventListener("DOMContentLoaded", () => {
             <button class="km-btn-mini primary" data-action="anim-next" data-anim-concept="${esc(concept.conceptName)}">הבא ◀</button>
             <button class="km-btn-mini" data-action="anim-reset" data-anim-concept="${esc(concept.conceptName)}">🔄 איפוס</button>
           </div>
+        </div>
+      </details>`;
+  }
+
+  // Sprint 3 §4.15.7 — What-If Simulator panel
+  function renderWhatIfPanel(concept) {
+    const wif = concept.whatIf;
+    if (!wif || !wif.knob || !Array.isArray(wif.knob.options) || wif.knob.options.length === 0) return "";
+    const opts = wif.knob.options;
+    const opt0 = opts[0];
+    const code0 = (wif.codeTemplate || "").replace(/\{\{knob\}\}/g, opt0.insert || "");
+    return `
+      <details class="whatif-panel" data-wif-concept="${esc(concept.conceptName)}">
+        <summary>❓ מה אם...? (${opts.length} תרחישים)</summary>
+        <div class="wif-body">
+          <div class="wif-title">${esc(wif.title || "")}</div>
+          ${wif.intro ? `<div class="wif-intro">${esc(wif.intro)}</div>` : ""}
+          <div class="wif-knob-label">${esc(wif.knob.name || "תרחיש")}:</div>
+          <div class="wif-knob-buttons">
+            ${opts.map((o, i) => `
+              <button class="wif-knob-btn ${i === 0 ? 'is-active' : ''}" data-action="wif-pick" data-wif-concept="${esc(concept.conceptName)}" data-wif-idx="${i}">${esc(o.label)}</button>
+            `).join("")}
+          </div>
+          <pre class="wif-code" data-wif-code="${esc(concept.conceptName)}"><code>${esc(code0)}</code></pre>
+          <div class="wif-outcome" data-wif-outcome="${esc(concept.conceptName)}">${esc(opt0.outcome || "")}</div>
         </div>
       </details>`;
   }
@@ -5749,6 +5775,20 @@ document.addEventListener("DOMContentLoaded", () => {
               tag.textContent = "✅ נכון!";
               optionsBox?.appendChild(tag);
             }
+          } else if (action === "wif-pick") {
+            // Sprint 3 — What-If Simulator: switch knob option
+            const wif = concept.whatIf;
+            if (!wif) return;
+            const idx = parseInt(btn.dataset.wifIdx, 10);
+            const opt = wif.knob.options[idx];
+            if (!opt) return;
+            const cn = concept.conceptName;
+            const codeEl = document.querySelector(`[data-wif-code="${cssEscape(cn)}"] code`);
+            const outEl = document.querySelector(`[data-wif-outcome="${cssEscape(cn)}"]`);
+            if (codeEl) codeEl.textContent = (wif.codeTemplate || "").replace(/\{\{knob\}\}/g, opt.insert || "");
+            if (outEl) outEl.textContent = opt.outcome || "";
+            // Toggle active state on knob buttons
+            btn.parentElement?.querySelectorAll(".wif-knob-btn").forEach((b) => b.classList.toggle("is-active", b === btn));
           } else if (action === "anim-next" || action === "anim-prev" || action === "anim-auto" || action === "anim-reset") {
             // Sprint 2 — Mental Model Animator controls
             if (!concept.animation) return;
