@@ -195,6 +195,124 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // =========== Pocket Concept Card — saved concepts panel ===========
+  (function initPocket() {
+    const POCKET_KEY = "lumenportal:pocket:v1";
+    const fab = document.getElementById("pocket-fab");
+    const panel = document.getElementById("pocket-panel");
+    const closeBtn = document.getElementById("pocket-close");
+    const list = document.getElementById("pocket-list");
+    const empty = document.getElementById("pocket-empty");
+    const countEl = document.getElementById("pocket-count");
+    if (!fab || !panel) return;
+
+    function load() {
+      try { return JSON.parse(localStorage.getItem(POCKET_KEY) || "[]"); } catch (_) { return []; }
+    }
+    function save(arr) {
+      try { localStorage.setItem(POCKET_KEY, JSON.stringify(arr)); } catch (_) {}
+    }
+    function refresh() {
+      const items = load();
+      countEl.textContent = items.length;
+      countEl.style.display = items.length ? "flex" : "none";
+      if (items.length === 0) {
+        empty.style.display = "block";
+        list.innerHTML = "";
+      } else {
+        empty.style.display = "none";
+        list.innerHTML = items.map((entry) => {
+          const [lessonId, conceptName] = entry.split("::");
+          const lesson = (window.LESSONS_DATA || []).find((l) => l.id === lessonId);
+          const concept = lesson?.concepts.find((c) => c.conceptName === conceptName);
+          if (!concept) return "";
+          const explainer = (concept.levels?.[0] || concept.levels?.[1] || "").slice(0, 140);
+          return `
+            <div class="pocket-card">
+              <div class="pocket-card-head">
+                <span class="pocket-card-name">${esc(conceptName)}</span>
+                <span class="pocket-card-lesson">${esc(lesson.title)}</span>
+                <button class="pocket-remove" data-pocket-remove="${esc(entry)}" aria-label="הסר מהכיס">✕</button>
+              </div>
+              <div class="pocket-card-body">${esc(explainer)}${explainer.length === 140 ? "..." : ""}</div>
+              <button class="pocket-goto" data-pocket-goto="${esc(entry)}">🔍 פתח מושג</button>
+            </div>`;
+        }).join("");
+        // Wire removal
+        list.querySelectorAll("[data-pocket-remove]").forEach((b) => {
+          b.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const key = b.dataset.pocketRemove;
+            const next = load().filter((x) => x !== key);
+            save(next);
+            refresh();
+            // Update mark on any visible button
+            document.querySelectorAll(`[data-pocket-key="${cssEscape(key)}"]`).forEach((bt) => bt.classList.remove("is-pocketed"));
+          });
+        });
+        list.querySelectorAll("[data-pocket-goto]").forEach((b) => {
+          b.addEventListener("click", () => {
+            const key = b.dataset.pocketGoto;
+            const [lessonId, conceptName] = key.split("::");
+            if (typeof openLesson === "function") openLesson(lessonId);
+            // Mark which concept to scroll to
+            selectedConceptByLesson[lessonId] = conceptName;
+            setTimeout(() => {
+              const el = document.querySelector(`.concept-card[data-concept="${cssEscape(conceptName)}"]`);
+              el?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 300);
+            panel.setAttribute("hidden", "");
+            fab.setAttribute("aria-expanded", "false");
+          });
+        });
+      }
+      // Mark active pocket buttons across the page
+      document.querySelectorAll("[data-pocket-key]").forEach((b) => {
+        const key = b.dataset.pocketKey;
+        b.classList.toggle("is-pocketed", load().includes(key));
+      });
+    }
+
+    fab.addEventListener("click", () => {
+      const open = panel.hasAttribute("hidden");
+      if (open) {
+        panel.removeAttribute("hidden");
+        fab.setAttribute("aria-expanded", "true");
+        refresh();
+      } else {
+        panel.setAttribute("hidden", "");
+        fab.setAttribute("aria-expanded", "false");
+      }
+    });
+    closeBtn?.addEventListener("click", () => {
+      panel.setAttribute("hidden", "");
+      fab.setAttribute("aria-expanded", "false");
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !panel.hasAttribute("hidden")) {
+        panel.setAttribute("hidden", "");
+        fab.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Expose API for action handler
+    window.pocketToggle = function (key) {
+      const items = load();
+      const idx = items.indexOf(key);
+      if (idx === -1) items.push(key);
+      else items.splice(idx, 1);
+      save(items);
+      refresh();
+    };
+    window.pocketIsHidden = function (hidden) {
+      // Allow Mock Exam to hide the FAB during exam
+      fab.style.display = hidden ? "none" : "";
+    };
+
+    // Initial render
+    refresh();
+  })();
+
   // =========== P1.5.0 — View Mode (visibility toggles + concept jumper) ===========
   (function initViewMode() {
     const VM_KEY = "lumenportal:viewMode:v1";
@@ -2932,6 +3050,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("mx-result").style.display = "none";
     document.getElementById("mx-runner").style.display = "block";
 
+    // Hide Pocket FAB during exam (no cheating with saved concepts)
+    if (typeof window.pocketIsHidden === "function") window.pocketIsHidden(true);
+
     renderMxQuestion();
     startMxTimer();
   }
@@ -3093,6 +3214,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
 
     stopMxTimer();
+    // Restore Pocket FAB after exam
+    if (typeof window.pocketIsHidden === "function") window.pocketIsHidden(false);
     // Score the exam
     const breakdown = { mc: { right: 0, total: 0 }, fill: { right: 0, total: 0 }, trace: { right: 0, total: 0 }, bug: { right: 0, total: 0 } };
     const wrongConcepts = new Set();
@@ -5129,6 +5252,7 @@ document.addEventListener("DOMContentLoaded", () => {
               ? `<button class="concept-btn report-weak" data-action="report-weak" aria-label="דווח שאני חלש במושג ${esc(concept.conceptName)}" title="המאמן יציג את המושג לעיתים תכופות יותר ויפתח עוד הסברים, שאלות ודוגמאות קוד">🆘 אני חלש בזה — תן לי עוד</button>`
               : ""
           }
+          <button class="concept-btn pocket-add" data-action="pocket-toggle" data-pocket-key="${esc(lesson.id + "::" + concept.conceptName)}" aria-label="שמור את המושג ${esc(concept.conceptName)} לכיס" title="שמור לכיס לחזרה מהירה — הכפתור הצף 📌 בפינה שמאלית עליונה">📌 שמור לכיס</button>
           ${
             isOverride
               ? `<button class="concept-btn ghost" data-action="reset-view">👁️ חזור לרמה האישית</button>`
@@ -5774,6 +5898,16 @@ document.addEventListener("DOMContentLoaded", () => {
               tag.className = "bh-status bh-status-correct";
               tag.textContent = "✅ נכון!";
               optionsBox?.appendChild(tag);
+            }
+          } else if (action === "pocket-toggle") {
+            // Pocket Concept Card: toggle save
+            const key = btn.dataset.pocketKey;
+            if (key && typeof window.pocketToggle === "function") {
+              window.pocketToggle(key);
+              btn.textContent = btn.classList.contains("is-pocketed")
+                ? "📌 שמור לכיס"
+                : "✅ נשמר לכיס";
+              setTimeout(() => { if (btn.classList.contains("is-pocketed")) btn.textContent = "📌 בכיס — לחץ להסיר"; else btn.textContent = "📌 שמור לכיס"; }, 1200);
             }
           } else if (action === "wif-pick") {
             // Sprint 3 — What-If Simulator: switch knob option

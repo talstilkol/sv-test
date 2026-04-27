@@ -58,6 +58,20 @@
         <span class="emoji" aria-hidden="true">📄</span><span class="lbl">PDF</span>
       </button>
 
+      <!-- Pocket Concept Card — floating saved concepts panel -->
+      <button class="pocket-fab" id="pocket-fab" aria-label="פתח/סגור Pocket Concept Card" aria-expanded="false" title="📌 הכיס שלך — מושגים שסימנת לחזרה מהירה">
+        <span aria-hidden="true">📌</span>
+        <span class="pocket-count" id="pocket-count">0</span>
+      </button>
+      <div class="pocket-panel" id="pocket-panel" hidden>
+        <div class="pocket-head">
+          <strong>📌 הכיס שלך</strong>
+          <button class="pocket-close" id="pocket-close" aria-label="סגור">✕</button>
+        </div>
+        <p class="pocket-empty" id="pocket-empty">עוד לא שמרת מושגים. לחץ 📌 על כל מושג כדי לשמור לכיס.</p>
+        <div class="pocket-list" id="pocket-list"></div>
+      </div>
+
       <!-- P1.5.0 — View Mode (toggles + concept jumper + presets) -->
       <button class="view-mode-fab" id="view-mode-fab" aria-label="פתח/סגור תפריט תצוגה" aria-expanded="false" title="מצב תצוגה — הצג/הסתר חלקים + קפוץ למושג">
         <span aria-hidden="true">👁️</span>

@@ -4947,6 +4947,130 @@ textarea:focus-visible,
 }
 
 /* ============================================================ */
+/* Pocket Concept Card — floating saved-concepts panel          */
+/* ============================================================ */
+.pocket-fab {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(245, 158, 11, 0.18);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+}
+.pocket-fab:hover { background: rgba(245, 158, 11, 0.32); }
+.pocket-fab[aria-expanded="true"] { background: #f59e0b; color: white; }
+.pocket-count {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-base, #0b1023);
+}
+.pocket-panel {
+  position: fixed;
+  bottom: 5rem;
+  left: 1rem;
+  width: 340px;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
+  background: rgba(15, 18, 35, 0.97);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  padding: 0.9rem 1rem;
+  z-index: 599;
+  font-family: "Heebo", sans-serif;
+  direction: rtl;
+}
+.pocket-panel[hidden] { display: none; }
+.pocket-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+}
+.pocket-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.pocket-close:hover { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+.pocket-empty { color: var(--text-muted); font-size: 0.88rem; font-style: italic; }
+.pocket-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.pocket-card {
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 8px;
+  padding: 0.6rem 0.7rem;
+}
+.pocket-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+.pocket-card-name { font-weight: 700; color: #fbbf24; }
+.pocket-card-lesson { font-size: 0.78rem; color: var(--text-muted); margin-right: auto; }
+.pocket-remove {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.pocket-remove:hover { background: rgba(239, 68, 68, 0.18); color: #fca5a5; }
+.pocket-card-body {
+  font-size: 0.85rem;
+  color: var(--text-bright);
+  line-height: 1.5;
+  margin-bottom: 0.4rem;
+}
+.pocket-goto {
+  background: rgba(99, 102, 241, 0.18);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  color: #c7d2fe;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-family: inherit;
+}
+.pocket-goto:hover { background: rgba(99, 102, 241, 0.3); }
+
+.concept-btn.pocket-add.is-pocketed {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #f59e0b;
+  color: #fbbf24;
+}
+
+/* ============================================================ */
 /* P1.5.0 — View Mode (visibility toggles + concept jumper)    */
 /* ============================================================ */
 .view-mode-fab {
