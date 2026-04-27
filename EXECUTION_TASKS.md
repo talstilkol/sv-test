@@ -419,7 +419,63 @@
 2026-04-28 00:38 — Sprint 3 What-If Simulator shipped — 5 concepts × 3 scenarios + interactive knobs
 2026-04-28 00:41 — Pocket Concept Card shipped — floating panel + per-concept save button
 2026-04-28 01:05 — Final wave: P1.5.2 distractor feedback + a11y + glossary + reflection + reverse + ELI5
+2026-04-28 01:35 — 🔍 AUDIT performed (AUDIT_2026-04-28.md):
+                   - Found 2 broken features (Reverse Q&A + ELI5) — fixed in 12be94a
+                   - Found 4 inflated counts (anti-patterns 14/22, war stories 18/30,
+                     mini builds 8/21, distractor feedback 14/1316)
+                   - 31 AUDIT-FIX tasks added below
 ```
+
+---
+
+## 🔍 AUDIT-FIX Tasks (from AUDIT_2026-04-28.md)
+
+> Honest backlog of inflated/missing items found during audit.
+> Each task closes a gap between claim and reality.
+
+### Content gaps (close inflated counts)
+- [ ] AUDIT-FIX-1 — Add 8 more anti-patterns to reach 22 target (currently 14)
+- [ ] AUDIT-FIX-2 — Add 12 more war stories to reach 30 target (currently 18)
+- [ ] AUDIT-FIX-3 — Add 13 more Mini Builds to reach 21 target (currently 8)
+- [ ] AUDIT-FIX-4 — Code Trace for lessons 11-20 (50 traces) — Track F deliverable
+- [ ] AUDIT-FIX-5 — Add option-feedback to top 50 most-used MCs (currently 14/1316)
+
+### Verification debt
+- [ ] AUDIT-FIX-6 — Re-verify all "Verified in browser" claims with explicit tests
+  - per-card refresh (P1.1.2.3)
+  - aria-labels rendered (P1.2.1.8)
+  - theme cycles (P1.2.4.4)
+
+### Partial features → make complete
+- [ ] AUDIT-FIX-7 — Time Machine full review experience (not just history-jump button)
+
+### Major features NOT DONE (12 Creative Methods + spec ideas)
+- [ ] AUDIT-FIX-8 — Concept Comic system (visual storytelling)
+- [ ] AUDIT-FIX-9 — Stage-Zero broken examples (broken-first-then-fix flow)
+- [ ] AUDIT-FIX-10 — 250 metaphors (5 × 50 core concepts)
+- [ ] AUDIT-FIX-11 — Concept-as-Place memory palace (SVG rooms)
+- [ ] AUDIT-FIX-12 — Problem-First Discovery (broken-app templates)
+- [ ] AUDIT-FIX-13 — 10 Animated Concept videos (Motion Canvas / GSAP)
+- [ ] AUDIT-FIX-14 — Real-Object Visual Aids (50 Unsplash images)
+- [ ] AUDIT-FIX-15 — Bug Hunt Quests (5 quests × 5-8 bugs narrative)
+- [ ] AUDIT-FIX-16 — Themed Scenarios (kitchen/shop/classroom)
+- [ ] AUDIT-FIX-17 — Counterfactual examples (30 concepts)
+- [ ] AUDIT-FIX-18 — Streaks tracking + 🔥 widget
+- [ ] AUDIT-FIX-19 — 60-second wrap-up at lesson end
+- [ ] AUDIT-FIX-20 — Achievements + XP system (30 initial)
+- [ ] AUDIT-FIX-21 — Pair-Match drag-and-drop game
+- [ ] AUDIT-FIX-22 — Prerequisite Graph
+- [ ] AUDIT-FIX-23 — Pathways toggle (grandma/parent/technical)
+- [ ] AUDIT-FIX-24 — Gap Matrix dashboard tab
+- [ ] AUDIT-FIX-25 — Upgrade SM-2 → FSRS-4
+- [ ] AUDIT-FIX-26 — AI Tutor (Claude API + Supabase edge function)
+- [ ] AUDIT-FIX-27 — Cross-device Sync (Supabase auth + tables)
+- [ ] AUDIT-FIX-28 — Vite migration
+- [ ] AUDIT-FIX-29 — TypeScript migration
+- [ ] AUDIT-FIX-30 — SRS Flashcards UI tab
+- [ ] AUDIT-FIX-31 — Concept Map graph visualization (D3.js)
+
+**AUDIT-FIX Total: 0/31** — honest backlog representing real gaps
 
 ---
 
