@@ -56,6 +56,9 @@
           <button class="top-tab" id="open-codeblocks" data-tab="codeblocks">
             <span class="emoji">💻</span><span>בלוקי קוד</span>
           </button>
+          <button class="top-tab" id="open-trace" data-tab="trace">
+            <span class="emoji">🔬</span><span>Code Trace</span>
+          </button>
           <button class="top-tab" id="open-trainer" data-tab="trainer">
             <span class="emoji">🧠</span><span>מאמן ידע + דוח</span>
           </button>
@@ -303,6 +306,30 @@
             <div id="code-anatomy-content"></div>
           </div>
 
+          <!-- Code Trace View -->
+          <div class="trace-view" id="trace-view" style="display:none">
+            <div class="trace-header glass-panel">
+              <h2>🔬 Code Trace — חיזוי פלט שורה אחר שורה</h2>
+              <p>קרא את הקוד, חזה את הפלט בכל שלב. כל תשובה נכונה מעלה את הניקוד למושג המקושר.</p>
+              <div class="trace-toolbar">
+                <select id="trace-filter-lesson" class="cb-select">
+                  <option value="all">כל השיעורים</option>
+                </select>
+                <select id="trace-filter-level" class="cb-select">
+                  <option value="all">כל הרמות</option>
+                  <option value="1">רמה 1-2 (קל)</option>
+                  <option value="3">רמה 3-4 (בינוני)</option>
+                  <option value="5">רמה 5-6 (מתקדם)</option>
+                </select>
+                <button class="km-btn-mini" id="trace-random">🎲 Trace אקראי</button>
+              </div>
+            </div>
+            <!-- List of traces (when no active session) -->
+            <div class="trace-list" id="trace-list"></div>
+            <!-- Active trace player (hidden until user picks one) -->
+            <div class="trace-player glass-panel" id="trace-player" style="display:none"></div>
+          </div>
+
           <!-- Code Blocks View -->
           <div class="codeblocks-view" id="codeblocks-view" style="display:none">
             <div class="cb-header glass-panel">
@@ -363,6 +390,7 @@
     <script src="data/questions_bank_seeded.js"></script>
     <script src="data/concept_enrichment.js"></script>
     <script src="data/extended_explanations.js"></script>
+    <script src="data/questions_trace.js"></script>
     <script src="data/quick_guide.js"></script>
     <script src="data/code_blocks.js"></script>
     <script src="content-loader.js"></script>
