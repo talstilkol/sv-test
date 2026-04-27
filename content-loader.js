@@ -29,9 +29,16 @@
     typeof LESSON_27 !== "undefined" ? LESSON_27 : null,
     typeof LESSON_28 !== "undefined" ? LESSON_28 : null,  // Forms (RHF + zod)
     typeof LESSON_29 !== "undefined" ? LESSON_29 : null,  // Vercel + Docker
+    typeof LESSON_30 !== "undefined" ? LESSON_30 : null,  // Clean BE + Tests
     typeof LESSON_31 !== "undefined" ? LESSON_31 : null,  // Next.js (App Router)
     typeof LESSON_32 !== "undefined" ? LESSON_32 : null,  // Next.js Advanced (API/SEO)
+    typeof LESSON_33 !== "undefined" ? LESSON_33 : null,  // shadcn/UI
+    typeof LESSON_34 !== "undefined" ? LESSON_34 : null,  // Nest.js
+    typeof LESSON_35 !== "undefined" ? LESSON_35 : null,  // Cursor + Windsurf
+    typeof LESSON_36 !== "undefined" ? LESSON_36 : null,  // Bolt + AI helpers
     typeof LESSON_37 !== "undefined" ? LESSON_37 : null,  // AI Engineering
+    typeof LESSON_38 !== "undefined" ? LESSON_38 : null,  // LangChain + RAG
+    typeof LESSON_39 !== "undefined" ? LESSON_39 : null,  // Agents + Fine-tuning
     typeof WORKBOOK_TASKMANAGER !== "undefined" ? WORKBOOK_TASKMANAGER : null,
     typeof AI_DEVELOPMENT !== "undefined" ? AI_DEVELOPMENT : null,
     typeof REACT_BLUEPRINT !== "undefined" ? REACT_BLUEPRINT : null,
