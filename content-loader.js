@@ -17,6 +17,7 @@
     typeof LESSON_25 !== "undefined" ? LESSON_25 : null,
     typeof LESSON_26 !== "undefined" ? LESSON_26 : null,
     typeof LESSON_27 !== "undefined" ? LESSON_27 : null,
+    typeof LESSON_CLOSURES !== "undefined" ? LESSON_CLOSURES : null,
     typeof WORKBOOK_TASKMANAGER !== "undefined" ? WORKBOOK_TASKMANAGER : null,
     typeof AI_DEVELOPMENT !== "undefined" ? AI_DEVELOPMENT : null,
     typeof REACT_BLUEPRINT !== "undefined" ? REACT_BLUEPRINT : null,

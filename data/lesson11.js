@@ -8,6 +8,7 @@ var LESSON_11 = {
     // 1. Array
     {
       conceptName: "Array",
+      difficulty: 3,
       levels: {
         grandma:
           "במקום לכתוב פתק נפרד לכל מוצר בסופר, מערך זה בעצם קבלה אחת ארוכה שיש בה שורה אחרי שורה של כל הדברים שאת צריכה לקנות.",
@@ -37,6 +38,7 @@ var LESSON_11 = {
     // 2. Index
     {
       conceptName: "Index",
+      difficulty: 3,
       levels: {
         grandma:
           "מספר הבית ברחוב הארוך. כשהדוור מחפש אותך הוא בודק 'איפה תיבה 0? איפה תיבה 1?', ומוצא אותך בקלות פנימה.",
@@ -67,6 +69,7 @@ var LESSON_11 = {
     // 3. By Value
     {
       conceptName: "By Value",
+      difficulty: 6,
       levels: {
         grandma:
           "כמו מתכון שאת מעתיקה לחברה על דף נפרד. אם היא בבית שופכת שמן בטעות על הפתק שלה, הפתק שלך אצלך נשאר נקי ויפה לגמרי.",
@@ -96,6 +99,7 @@ var LESSON_11 = {
     // 4. By Reference
     {
       conceptName: "By Reference",
+      difficulty: 7,
       levels: {
         grandma:
           "חשבון בנק משותף. אם הסבא מושך את כל הכסף בכספומט באילת, במקביל בכספומט של סבתא בתל אביב - גם היא מיד נשארת בלי שקל.",
@@ -126,6 +130,7 @@ var LESSON_11 = {
     // 5. Pointer
     {
       conceptName: "Pointer",
+      difficulty: 6,
       levels: {
         grandma:
           "במקום לתת לך את הדירה כמתנה פיזית שאקרא איתך ויביא לך הביתה - אני נותנת לך מפתח. כך את מקבלת גישה מלאה אל הדירה מאחורה.",
@@ -153,6 +158,7 @@ var LESSON_11 = {
     // 6. undefined
     {
       conceptName: "undefined",
+      difficulty: 2,
       levels: {
         grandma:
           "כשקונים קופסת מתנה ופותחים אותה למצוא ש—כלום לא בפנים עדיין. הקופסה עצמה קיימת, עטופה למשעי, אבל אין לה אף ערך פנימי כרגע.",
@@ -182,6 +188,7 @@ var LESSON_11 = {
     // 7. boolean
     {
       conceptName: "boolean",
+      difficulty: 2,
       levels: {
         grandma:
           "זה פשוט מתג של אור בסלון: הוא יכול להיות אך ורק או דלוק או כבוי. אין מצב של 'חצי דלוק'.",
@@ -209,6 +216,7 @@ var LESSON_11 = {
     // 8. number
     {
       conceptName: "number",
+      difficulty: 2,
       levels: {
         grandma:
           "מספרים רגילים שאת משתמשת בהם לפריטת כסף במכולת למשל, מאה, חמישים או שבר שלקח 2.5 מצרכים.",
@@ -237,6 +245,7 @@ var LESSON_11 = {
     // 9. string
     {
       conceptName: "string",
+      difficulty: 2,
       levels: {
         grandma:
           "חוט שזור של אותיות, זו פשוט מילה או משפט רגיל בספר שקריא לבני אדם כמו 'שלום'.",
@@ -265,6 +274,7 @@ var LESSON_11 = {
     // 10. function
     {
       conceptName: "function",
+      difficulty: 4,
       levels: {
         grandma:
           "מכונת הכביסה של הקוד. במקום לכבס דברים נפרדים בידיים כל פעם, בנית מכונה. עכשיו פשוט לוחצים 'הפעל' והיא עושה את העבודה הקבועה מחדש.",
@@ -296,6 +306,7 @@ var LESSON_11 = {
     // 11. object
     {
       conceptName: "object",
+      difficulty: 5,
       levels: {
         grandma:
           "תיבת תכשיטים מסודרת. יש לה מגירות עם שמות ברורים: 'טבעות', 'שרשראות', 'שעונים'. זה הכל אוגדן של רכוש רלוונטי.",
@@ -326,6 +337,7 @@ var LESSON_11 = {
     // 12. let
     {
       conceptName: "let",
+      difficulty: 3,
       levels: {
         grandma:
           "קופסת אוכל של נכד אחד שיכולה בכל יום להתמלא במשהו אחר. היום שמתי בה תפוח, מחר אוציא אותו ואשים שם כריך ריבה.",
@@ -355,6 +367,7 @@ var LESSON_11 = {
     // 13. var
     {
       conceptName: "var",
+      difficulty: 3,
       levels: {
         grandma:
           "קופסה ישנה ושבירה בארון. פעם כולם היו משתמשים רק בה והיא הייתה עושה הרבה טעויות כשזרקו עליה דברים חדשים בלי לשים לב.",
@@ -384,6 +397,7 @@ var LESSON_11 = {
     // 14. scope
     {
       conceptName: "scope",
+      difficulty: 5,
       levels: {
         grandma:
           "גדרות של בתים. מה שנמצא בחצר שלנו הוא שלנו (בני הבית יכולים לגעת). מה שטמון בבית של השכן לא רלוונטי אליי.",
@@ -414,6 +428,7 @@ var LESSON_11 = {
     // 15. arrow function
     {
       conceptName: "arrow function",
+      difficulty: 5,
       levels: {
         grandma:
           "פתיחת דלת בלי כל שלבי המפתח הארוכים. קיבצנו עשר פעולות שצריך לכתוב ארוך למראה קצר יותר. חץ שמקצר את עוגמת הכתיבה.",
@@ -442,6 +457,7 @@ var LESSON_11 = {
     // 16. forEach
     {
       conceptName: "forEach",
+      difficulty: 3,
       levels: {
         grandma:
           "לשטוף כלים - את לוקחת את הערימה, מרימה תבנית אחת, שוטפת. מרימה תבנית שניה, שוטפת. וככה לכל (for each) תבנית בערימה במעבר אחד.",
@@ -470,6 +486,7 @@ var LESSON_11 = {
     // 17. filter
     {
       conceptName: "filter",
+      difficulty: 4,
       levels: {
         grandma:
           "ניפוי קמח במסננת רשת. כל מה שטוב עובר ויורד למטה לקערה הנקייה, וכל פירור גס פשוט נתקע ונזרק לפח של ההיסטוריה.",
@@ -498,6 +515,7 @@ var LESSON_11 = {
     // 18. map
     {
       conceptName: "map",
+      difficulty: 4,
       levels: {
         grandma:
           "להפוך מרכיב למרכיב שעבר דרג. למשל, את מעבירה כל חתיכת לחם למצנם ומקבלת בכל עמדה בדיוק חתיכת צנים מקבילה חדשה מוכנה בצלחת אחרת.",
@@ -526,6 +544,7 @@ var LESSON_11 = {
     // 19. find
     {
       conceptName: "find",
+      difficulty: 4,
       conceptTopic: "מתודות מערך",
       levels: {
         grandma: "לחפש את המשקפיים שלך בסלון. ברגע שהיד מסיירת על השולחן ונוגעת במסגרת - את מיד מפסיקה לחפש ולוקחת אותם. לא תמשיכי לסייר מתחת לספה. מצאת - לקחת.",
@@ -547,6 +566,7 @@ var LESSON_11 = {
     // 20. reduce
     {
       conceptName: "reduce",
+      difficulty: 6,
       conceptTopic: "מתודות מערך",
       levels: {
         grandma: "להכין קציצה מכל המצרכים. יש לך קערה גדולה עם מלח, בשר וביצה, ואת פשוט לשם הכל, לשה ולשה עד שנשארת ביד אחת עם קציצה אחת ענקית ומרוכזת משכולם.",
@@ -570,6 +590,7 @@ var LESSON_11 = {
     // 21. spread
     {
       conceptName: "spread",
+      difficulty: 5,
       conceptTopic: "מתודות מערך",
       levels: {
         grandma: "להוציא את כל הפירות מהשקית ולפזר אותם על שולחן השבת. במקום להביא שקית סגורה לשולחן, את פורטת אותם להיות גלויים למה שמרכיב אותם.",
@@ -593,6 +614,7 @@ var LESSON_11 = {
     // 22. push
     {
       conceptName: "push",
+      difficulty: 3,
       conceptTopic: "מתודות מערך",
       levels: {
         grandma: "לרשום עוד מוצר ששכחת בתחתית רשימת החנויות הישנה. הרשימה המקורית פשוט מקבלת עכשיו שורה נוספת בקצהה.",
@@ -615,6 +637,7 @@ var LESSON_11 = {
     // 23. pop
     {
       conceptName: "pop",
+      difficulty: 3,
       conceptTopic: "מתודות מערך",
       levels: {
         grandma: "להוציא את הספר האחרון בערמה כי החלטת בסוף לא לקנות אותו שניה לפני שהגעת לקופה. הספר התחתון עף.",
@@ -637,6 +660,7 @@ var LESSON_11 = {
     // 24. shift
     {
       conceptName: "shift",
+      difficulty: 3,
       conceptTopic: "מתודות מערך",
       levels: {
         grandma: "הלוקח הראשון בתור אצל הרופא נכנס פנימה ומסיים. כל התור הארוך מאחוריו נאלץ לזוז (Shift) כיסא אחד קדימה כעת.",
@@ -659,6 +683,7 @@ var LESSON_11 = {
     // 25. unshift
     {
       conceptName: "unshift",
+      difficulty: 3,
       conceptTopic: "מתודות מערך",
       levels: {
         grandma: "להכניס מישהו חשוב מאוד לתחילת התור כי הוא פנסיונר מיוחד. כולם זזים אחורה בצעצוע כי הוא נידחף לראשונה בכבוד.",
@@ -681,6 +706,7 @@ var LESSON_11 = {
     // 26. sort
     {
       conceptName: "sort",
+      difficulty: 4,
       conceptTopic: "מתודות מערך",
       levels: {
         grandma: "לספק מילון ארוך. למיין את הספרים בארון בסדר הא'-ב'. ככה כשיבקשו ממצת את הספר 'גנן', את יודעת בדיוק לפנות למדף השלישי שם נמצאים הגימלים.",
@@ -703,6 +729,7 @@ var LESSON_11 = {
     // 27. splice
     {
       conceptName: "splice",
+      difficulty: 3,
       conceptTopic: "מתודות מערך",
       levels: {
         grandma: "להוציא כפתור ספציפי מהמעיל בדיוק מהאמצע ולתפור חדש באותו מקום במקום החור שנשאר.",
@@ -727,6 +754,7 @@ var LESSON_11 = {
     // 28. toString
     {
       conceptName: "toString",
+      difficulty: 4,
       conceptTopic: "מתודות מערך",
       levels: {
         grandma: "להקריא רשימה שלמה מתוך פתק אבל כולו ברצף אחד כמו תפילה ארוכה, ללא עצירות וללא מחיצות בין הדפים או ההפרדות.",

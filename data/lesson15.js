@@ -10,6 +10,7 @@ var LESSON_15 = {
     // 1. Error
     {
       conceptName: "Error",
+      difficulty: 6,
       levels: {
         grandma:
           "שגיאה (Error) זה כמו נורה אדומה שנדלקת באוטו כשיש בעיה. המחשב עוצר ואומר: 'רגע, משהו פה לא תקין, אי אפשר להמשיך נסיעה'.",
@@ -42,6 +43,7 @@ var LESSON_15 = {
     // 2. Exception
     {
       conceptName: "Exception",
+      difficulty: 6,
       levels: {
         grandma:
           "חריגה (Exception) זה מקרה יוצא דופן. נניח שאני אופה עוגה ובטעות שמתי מלח במקום סוכר — זו חריגה שצריך לזרוק לפח או לתקן.",
@@ -75,6 +77,7 @@ var LESSON_15 = {
     // 3. try
     {
       conceptName: "try",
+      difficulty: 7,
       levels: {
         grandma:
           "בלוק try זה כמו לנסות לאפות מתכון חדש. אנחנו עושים ניסיון באזור מגודר ואומרים: 'בואו ננסה לעשות את זה, נראה אם נצליח בלי לשרוף כלום'.",
@@ -106,6 +109,7 @@ var LESSON_15 = {
     // 4. catch
     {
       conceptName: "catch",
+      difficulty: 7,
       levels: {
         grandma:
           "catch זה לתפוס את התבנית אם היא נופלת. אם ניסינו (try) לאפות ונשרף — ה-catch זה הפח שקולט את הפאדיחה והזמנת פיצה במקום.",
@@ -140,6 +144,7 @@ var LESSON_15 = {
     // 5. throw
     {
       conceptName: "throw",
+      difficulty: 6,
       levels: {
         grandma:
           "throw זה כמו להרים דגל אדום ענק ולצעוק 'עצור, יש בעיה!'. אם אני רואה שפג תוקפו של הקמח, אני זורקת (throw) אותו ומודיעה שאי אפשר לאפות.",
@@ -172,6 +177,7 @@ var LESSON_15 = {
     // 6. Error Object
     {
       conceptName: "Error Object",
+      difficulty: 5,
       levels: {
         grandma:
           "תיכנס שגיאה הוא כמו פתק של הרופא — כתוב בו מה בדיוק כואב, איזה שם יש למחלה ואיפה זה התחיל. זה מאפשר להבים איך לטפל.",
@@ -205,6 +211,7 @@ var LESSON_15 = {
     // 7. Closure
     {
       conceptName: "Closure",
+      difficulty: 8,
       levels: {
         grandma:
           "זה כמו עוגיה בתוך הכיס. סבתא מאכסנת לך עוגיה מיוחדת בכיס הסודי (קלוז'ר), וגם אחרי שסבתא הולכת וכבר אין סבתא, העוגיה עדיין אצלך בכיס ואפשר להוציא אותה.",
@@ -239,6 +246,7 @@ var LESSON_15 = {
     // 8. Scope
     {
       conceptName: "Scope",
+      difficulty: 5,
       levels: {
         grandma:
           "סקופ הוא היקף הראייה שלנו. משקפי קריאה רואים רק מקרוב (מקומי), ומשתנים קטנים בתוך חדר לא רואים בחוץ, בעוד השמש (גלובלי) נראית מכל מקום.",
@@ -274,6 +282,7 @@ var LESSON_15 = {
     // 9. Synchronous
     {
       conceptName: "Synchronous",
+      difficulty: 7,
       levels: {
         grandma:
           "סינכרוני זה ללכת לבנק לתור רגיל, אי אפשר ללכת לקנות מצרכים עד שהפקיד לא מסיים לטפל בכם ומחזיר לכם את המזומן. אתם מקורקעים לתור.",
@@ -305,6 +314,7 @@ var LESSON_15 = {
     // 10. Asynchronous
     {
       conceptName: "Asynchronous",
+      difficulty: 7,
       levels: {
         grandma:
           "גישה אסינכרונית זה לשים מכונת כביסה לפעול וללכת בינתיים להכין קפה. כשהכביסה תסיים, תשמע ציפצוף. במקום לעמוד ולבהות במכונה עד סופה, מנצלים את הזמן.",
@@ -339,6 +349,7 @@ var LESSON_15 = {
     // 11. setTimeout
     {
       conceptName: "setTimeout",
+      difficulty: 7,
       levels: {
         grandma:
           "פשוט טיימר להפעלה בעתיד — דמיין לתקוע פוסטר למכונת אספרסו: 'בבקשה תכין קפה בעוד 5 משניות (אלפיות שנייה).' הוא זוכר לבד.",
@@ -371,6 +382,7 @@ var LESSON_15 = {
     // 12. anonymous function
     {
       conceptName: "anonymous function",
+      difficulty: 7,
       levels: {
         grandma:
           "פונקציה אלמונית זה מכתב באנונימוס — לא כתבו מי הכותב ואין לה שם כותרת בספר. זו בקשה חד פעמית שלא כדאי לתייק אותה סתם בספר החוקים באגרון.",
@@ -404,6 +416,7 @@ var LESSON_15 = {
     // 13. Promise
     {
       conceptName: "Promise",
+      difficulty: 7,
       levels: {
         grandma:
           "פרומיס זה כמו הבטחה שאני מבטיחה לאפות לך עוגה. כרגע אין לך עוגה, יש לך את הפתק שלי שהבטחתי (הבטחה רוטטת). בעתיד או שאני אלד עוגה מענגת (הצלחה) או שהתנור ישבר (כישלון).",
@@ -436,6 +449,7 @@ var LESSON_15 = {
     // 14. resolve
     {
       conceptName: "resolve",
+      difficulty: 7,
       levels: {
         grandma:
           "להשלים הבטחה (resolve) זה הצלצול בפעמון בתנור. העוגה שהבטחה לצאת, בוצעה, ואני מגישה לכם אותה חמה וטובה.",
@@ -468,6 +482,7 @@ var LESSON_15 = {
     // 15. reject
     {
       conceptName: "reject",
+      difficulty: 7,
       levels: {
         grandma:
           "לפסול (reject) זה לשרוף את העוגה במקום להביא אותה. הבטחתי... אבל לא יכולתי כי לא שמתי לב שהתנור חם מדי. עכשיו אצא להביא משהו חלופי וליידע אותך.",
@@ -500,6 +515,7 @@ var LESSON_15 = {
     // 16. fetch
     {
       conceptName: "fetch",
+      difficulty: 6,
       levels: {
         grandma:
           "fetch (תפוס/הבא) כמו לשלוח מברק. כותבים את הפניה לאן זה מופנה (כתובת נרשמת לאתר אחר), משלחים בדואר (API) וממתינים כמה רגעים כדי לקבל ארגז עם המידע.",
@@ -533,6 +549,7 @@ var LESSON_15 = {
     // 17. then
     {
       conceptName: "then",
+      difficulty: 7,
       levels: {
         grandma:
           "אם הפרומיס זה השובר מהלחם במכולת — then משמעו המילה 'ואז...'. 'אני משאיר לך לחם במכולת ואז (then) כשתקבל ותדע בוודאות אלך למרוח באדום עם גבינה בחזזרה'.",
@@ -566,6 +583,7 @@ var LESSON_15 = {
     // 18. catch (Promise)
     {
       conceptName: "catch (Promise)",
+      difficulty: 7,
       levels: {
         grandma:
           "אותו רעיון ממקודם, אבל ספציפית בעולם המאפיות וההבטחות — כישלון של דואר שחזר או הבטחה שנכשלה. מה עושים? catch ברצף של then כדי לתפוס בעיה ברצף ההבטחות הכללי.",
