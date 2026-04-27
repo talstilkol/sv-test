@@ -1000,3 +1000,12 @@ var QUESTIONS_TRACE = [
   },
 
 ];
+
+// Browser bridge: expose under QUESTIONS_BANK.trace so the trainer's
+// pickTraceForConcept and the trace tab both find traces via window.QUESTIONS_BANK.trace.
+if (typeof window !== "undefined") {
+  window.QUESTIONS_TRACE = QUESTIONS_TRACE;
+  if (window.QUESTIONS_BANK) {
+    window.QUESTIONS_BANK.trace = QUESTIONS_TRACE;
+  }
+}
