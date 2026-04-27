@@ -8,6 +8,7 @@ var LESSON_18 = {
     // 1. Node.js (חזרה בהקשר מעשי)
     {
       conceptName: "Node.js",
+      difficulty: 6,
       levels: {
         grandma:
           "המנוע שמריץ את הקוד שלנו מחוץ לדפדפן. כמו מפעל שמייצר תשובות — המחשב שלנו הופך לשרת פעיל.",
@@ -38,6 +39,7 @@ var LESSON_18 = {
     // 2. Express
     {
       conceptName: "Express",
+      difficulty: 6,
       levels: {
         grandma:
           "המלצר החכם שמקבל הזמנות (בקשות) ומנתב אותן למטבח הנכון (פונקציה נכונה).",
@@ -65,6 +67,7 @@ var LESSON_18 = {
     // 3. server
     {
       conceptName: "server",
+      difficulty: 6,
       levels: {
         grandma:
           "המחשב שמחכה שמישהו יבקש ממנו משהו ואז עונה. כמו מרכזנית בטלפון.",
@@ -93,6 +96,7 @@ var LESSON_18 = {
     // 4. route
     {
       conceptName: "route",
+      difficulty: 6,
       levels: {
         grandma: "שלט ניווט שאומר: 'בקשות מסוג כזה — טפלו ככה'.",
         child: "מסלול! כל בקשה הולכת במסלול שלה לתחנה הנכונה.",
@@ -118,6 +122,7 @@ var LESSON_18 = {
     // 5. GET
     {
       conceptName: "GET",
+      difficulty: 6,
       levels: {
         grandma: "בקשה לראות. כמו להסתכל על תפריט בלי להזמין.",
         child: "כפתור 'הראה לי'! GET רק מביא — לא שולח, לא מוחק.",
@@ -140,6 +145,7 @@ var LESSON_18 = {
     // 6. POST
     {
       conceptName: "POST",
+      difficulty: 6,
       levels: {
         grandma: "שליחת טופס מלא. כמו להגיש טופס הרשמה עם כל הפרטים.",
         child: "כפתור 'שלח'! POST לוקח את מה שמילאת ושולח לשרת.",
@@ -162,6 +168,7 @@ var LESSON_18 = {
     // 7. form
     {
       conceptName: "form",
+      difficulty: 6,
       levels: {
         grandma: "טופס שממלאים ומגישים. שם, מייל, סיסמה — ולוחצים 'שלח'.",
         child: "דף עם שדות למילוי כמו מבחן! ממלאים ולוחצים 'הרשמה'.",
@@ -184,6 +191,7 @@ var LESSON_18 = {
     // 8. validation
     {
       conceptName: "validation",
+      difficulty: 6,
       levels: {
         grandma:
           "לבדוק שהמצרכים טריים לפני שמתחילים לבשל. אם חסר ביצה או שהחלב מקולקל — לא מתחילים!",
@@ -207,6 +215,7 @@ var LESSON_18 = {
     // 9. username
     {
       conceptName: "username",
+      difficulty: 6,
       levels: {
         grandma:
           "השם שבוחרים לעצמנו באתר. כמו כינוי — לא השם האמיתי, אלא איך שאנחנו רוצים שיקראו לנו.",
@@ -230,6 +239,7 @@ var LESSON_18 = {
     // 10. email
     {
       conceptName: "email",
+      difficulty: 6,
       levels: {
         grandma:
           "כתובת הדואר האלקטרוני. כמו כתובת דואר — חייבת להיות עם @ ונקודה.",
@@ -255,6 +265,7 @@ var LESSON_18 = {
     // 11. password
     {
       conceptName: "password",
+      difficulty: 6,
       levels: {
         grandma:
           "המנעול על הדלת. סיסמה טובה היא כמו מנעול חזק — ארוכה ומורכבת.",
@@ -279,6 +290,7 @@ var LESSON_18 = {
     // 12. server-side storage
     {
       conceptName: "server-side storage",
+      difficulty: 6,
       levels: {
         grandma:
           "להכניס את הכרטיסיות למגירה. אחרי שמילאו טופס — שומרים את הפרטים במקום בטוח בשרת.",

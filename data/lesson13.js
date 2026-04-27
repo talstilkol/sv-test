@@ -10,6 +10,7 @@ var LESSON_13 = {
     // 1. Object
     {
       conceptName: "Object",
+      difficulty: 2,
       levels: {
         grandma:
           "אובייקט זה כמו הארון היפה במסדרון. יש לו מגירות, דלתות ומדפים, וכל מקום מכיל פריטים משלו הקשורים יחד לארון אחד שלם.",
@@ -40,6 +41,7 @@ var LESSON_13 = {
     // 2. Property
     {
       conceptName: "Property",
+      difficulty: 4,
       levels: {
         grandma:
           "תווית המדבקה על המגירה. למשל 'המשקפיים של סבא', שדרכה נדע מה נמצא בפנים מבלי לפתוח קודם.",
@@ -69,6 +71,7 @@ var LESSON_13 = {
     // 3. Value
     {
       conceptName: "Value",
+      difficulty: 4,
       levels: {
         grandma:
           "מה שבאמת יושב בתוך המגירה. אם המדבקה משקפיים (property), הזוג עצמו מפלסטיק הוא הערך האמיתי (value).",
@@ -98,6 +101,7 @@ var LESSON_13 = {
     // 4. Method
     {
       conceptName: "Method",
+      difficulty: 4,
       levels: {
         grandma:
           "אם האובייקט הוא האוטו שיש לו צבע שחור, אז ה'רדיו' או ה'גז' אלה מערכות פעילות. המתודה היא פקודת ההפעלה ('לנסוע!', 'להשמיע שיר!').",
@@ -131,6 +135,7 @@ var LESSON_13 = {
     // 5. DOM
     {
       conceptName: "DOM",
+      difficulty: 4,
       levels: {
         grandma:
           "בובת השלד בחנות שמעליה הלבישו את כל הבגדים. כל תזוזה במפרק בשלד תגרום לשינוי באופן שהבגד עומד ונראה על החלון.",
@@ -160,6 +165,7 @@ var LESSON_13 = {
     // 6. Document Object Model
     {
       conceptName: "Document Object Model",
+      difficulty: 7,
       levels: {
         grandma:
           "ראשי התיבות של שורש העץ, מילולית: 'מודל שמייצג את המסמך בעזרת אובייקטים שאפשר לזהות אחד-אחד ולגעת בהם'.",
@@ -194,6 +200,7 @@ var LESSON_13 = {
     // 7. document
     {
       conceptName: "document",
+      difficulty: 4,
       levels: {
         grandma:
           "מנהל העבודה שנמצא בכניסה לבניין. אם את רוצה שהעץ יניב משהו במרפסת — את צריכה לפנות ל'המנהל' הראשי שהוא בעל הגן (document).",
@@ -223,6 +230,7 @@ var LESSON_13 = {
     // 8. getElementById
     {
       conceptName: "getElementById",
+      difficulty: 4,
       levels: {
         grandma:
           "זוהי תעודת זהות בחקירת משטרה: מחפשים פה פושע אחד בלבד שיש לו את מספר תעודת הזהות הספציפי שדיברנו עליו (ID).",
@@ -252,6 +260,7 @@ var LESSON_13 = {
     // 9. getElementsByTagName
     {
       conceptName: "getElementsByTagName",
+      difficulty: 4,
       levels: {
         grandma:
           "קריאה של מורה בחצר בית הספר: 'שכל הבנות יבואו לפה'. היא אוספת קבוצה שלמה רק לפי הזהות הכללית הברורה לעין שלהם בבית הספר.",
@@ -284,6 +293,7 @@ var LESSON_13 = {
     // 10. getElementsByClassName
     {
       conceptName: "getElementsByClassName",
+      difficulty: 5,
       levels: {
         grandma:
           "כמו לפנות ל'צוות המנקות'. הפנייה שואבת את כל מי שלובשת את החולצה שמייצגת את הקבוצה 'מנקות' ולא את העובר אורח הבודד.",
@@ -316,6 +326,7 @@ var LESSON_13 = {
     // 11. innerHTML
     {
       conceptName: "innerHTML",
+      difficulty: 4,
       levels: {
         grandma:
           "זו מילת הקסם של מחיקת הפתק הכתוב בשידה והפנקת דף חדש וכתוב במקומו. רק שכאן אפשר אפילו לצייר במסמך החדש והוא ייקרא כאמיתי.",
@@ -348,6 +359,7 @@ var LESSON_13 = {
     // 12. attribute
     {
       conceptName: "attribute",
+      difficulty: 4,
       levels: {
         grandma:
           "כל הכפתורים והכורסאות באוטו מגיעים עם מתגים מיוחדים: מתג שעושה שהכיסא יזוז, כפתור שמדליק אור. התכונות האלו הן פשוט המאפיינים הפיזיים החדים שלהם.",
@@ -377,6 +389,7 @@ var LESSON_13 = {
     // 13. setAttribute
     {
       conceptName: "setAttribute",
+      difficulty: 4,
       levels: {
         grandma:
           "להדביק מדבקה חדשה על קופסה קיימת. אם לקופסת סוכר לא היה שם, אנחנו לוקחים טוש וכותבים עליו כדי כולם יראו.",
@@ -408,6 +421,7 @@ var LESSON_13 = {
     // 14. style
     {
       conceptName: "style",
+      difficulty: 4,
       levels: {
         grandma:
           "ארון הבגדים של הדף. אפשר להורות לבובה 'לבשי חולצה אדומה עכשיו' רק דרך ציור צבעים ולבישת מעילים.",
@@ -438,6 +452,7 @@ var LESSON_13 = {
     // 15. createElement
     {
       conceptName: "createElement",
+      difficulty: 4,
       levels: {
         grandma:
           "להוציא כוס חדשה מהארון שמעולם לא הייתה על השולחן לפני כן! הרגע יצרת בעצמך משהו מחומר אפס כדי שיוגש בהמשך לאורחים.",
@@ -467,6 +482,7 @@ var LESSON_13 = {
     // 16. appendChild
     {
       conceptName: "appendChild",
+      difficulty: 4,
       levels: {
         grandma:
           "כדי להושיב אורח חדש לשולחן צריך למשוך כיסא ולהניח אותו בקצה. פעולה זו לוקחת את העוגה שהכנתי ומניחה אותה על השולחן כדי שכולם יאכלו.",
@@ -497,6 +513,7 @@ var LESSON_13 = {
     // 17. removeChild
     {
       conceptName: "removeChild",
+      difficulty: 4,
       levels: {
         grandma:
           "פינוי הכוסות מהשולחן כשהן מלוכלכות למדי. להסיר בעדינות חפץ כדי שלא יתפוס מקום מיותר.",
@@ -528,6 +545,7 @@ var LESSON_13 = {
     // 18. replaceChild
     {
       conceptName: "replaceChild",
+      difficulty: 4,
       levels: {
         grandma:
           "לקחת כוס קפה שהתקררה ולהניח שם אותה כוס אבל עם מים שרתחו לרווחה באותה הפינה ממש על התחתית הריחנית בדיוק תחתיה.",
@@ -560,6 +578,7 @@ var LESSON_13 = {
     // 19. class
     {
       conceptName: "class",
+      difficulty: 5,
       levels: {
         grandma:
           "תבנית האפייה שחותכת עוגיות. את לא אוכלת את תבנית הברזל, היא רק התכנית שיודעת שוב ושוב לייצר עוגיות עגולות עם שוקולד-צ'יפס בדיוק באותו גודל.",
@@ -592,6 +611,7 @@ var LESSON_13 = {
     // 20. constructor
     {
       conceptName: "constructor",
+      difficulty: 5,
       levels: {
         grandma:
           "אחראי חומרי הגלם במפעל. ברגע שלוחצים על כפתור 'קמח', הוא לוקח אותו מהצינור ומכניס בול למקום הדרוש במתכון הייסוד למשפך.",
@@ -624,6 +644,7 @@ var LESSON_13 = {
     // 21. instance
     {
       conceptName: "instance",
+      difficulty: 4,
       levels: {
         grandma:
           "אם הפנקס הוא תבנית האפייה של הכעך, מופע הוא עוגיה ממשית וטעימה שאפשר בקלות למרוח בריבה ומתנהגת במחזור נחמד.",
@@ -654,6 +675,7 @@ var LESSON_13 = {
     // 22. new
     {
       conceptName: "new",
+      difficulty: 5,
       levels: {
         grandma:
           "מילת קסם של 'הוקוס פוקוס!' ברגע שאומרת אותה ליד תבנית ריקה, בוקעת פתאום מציאות מלאה ומעשיה אל כף ידינו.",
@@ -682,6 +704,7 @@ var LESSON_13 = {
     // 23. method (in Classes)
     {
       conceptName: "method",
+      difficulty: 4,
       levels: {
         grandma:
           "בדיוק כמו באובייקט הקודם רדיו של אוטו שמשמיע שירים. בתוך התבנית של המפעל אפשר ללמד אוטומטית שכל הרובוטים ידעו לשיר, וזה מוכנס לתבנית פעם אחת בלבד.",
@@ -713,6 +736,7 @@ var LESSON_13 = {
     // 24. inheritance
     {
       conceptName: "inheritance",
+      difficulty: 4,
       levels: {
         grandma:
           "ירושה מאבא לבנו. אם לאבא יש אופניים ולחן יש גישה אליהן, אז גם חן נהנה מהיכולת לרכוב כחלק משייכות משפחתית.",
@@ -744,6 +768,7 @@ var LESSON_13 = {
     // 25. extends
     {
       conceptName: "extends",
+      difficulty: 5,
       levels: {
         grandma:
           "החוזה שמעיד שהנכד קיבל את הנדל\"ן. את אומרת ברור לפקיד בבנק: 'גיא ממשיך (extends) את חשבון ההורים'.",
@@ -774,6 +799,7 @@ var LESSON_13 = {
     // 26. super
     {
       conceptName: "super",
+      difficulty: 4,
       levels: {
         grandma:
           "הכפתור האדום שמתקשר ישירות לאבא. אם הבן נמצא במפעל וקורא בכפתור 'אבא, שלח את כספי הירושה לפה', הוא מבקש ישירות מבעל הסמכות.",
@@ -806,6 +832,7 @@ var LESSON_13 = {
     // 27. localStorage
     {
       conceptName: "localStorage",
+      difficulty: 4,
       levels: {
         grandma:
           "תיבת הדואר החכמה שלך שנמצאת מול הבית. גם אם תלכי ותחזרי, המכתבים שלך מחכים רק לך בפנים והם לא נמחקים עד שתזרקי אותם לבד.",
@@ -834,6 +861,7 @@ var LESSON_13 = {
     // 28. sessionStorage
     {
       conceptName: "sessionStorage",
+      difficulty: 6,
       levels: {
         grandma:
           "פנקס זמני שמשאבי העבודה נמחקים ברגע שאת נועלת את החנות וסוגרת את הדלת שלקראת הצהריים. מחר זה היה פנקס חדש ונקי.",
@@ -862,6 +890,7 @@ var LESSON_13 = {
     // 29. setItem
     {
       conceptName: "setItem",
+      difficulty: 4,
       levels: {
         grandma:
           "לרשום מתכון עם תווית ברורה בשם שלו ולהניח בתיבה. לתייג: 'מתכון לעוגה' ולהכניס לתוכו את הרכיבים.",
@@ -891,6 +920,7 @@ var LESSON_13 = {
     // 30. getItem
     {
       conceptName: "getItem",
+      difficulty: 4,
       levels: {
         grandma:
           "חיפוש לפי תווית! כשאני באה לתיבה בשבת, אני מחפשת בדיוק איפה המדבקה של 'מתכון לעוגה' ושולפת את התוכן החוצה לאור כדי להשתמש בזה.",
@@ -920,6 +950,7 @@ var LESSON_13 = {
     // 31. querySelector
     {
       conceptName: "querySelector",
+      difficulty: 4,
       levels: {
         grandma:
           "במקום לחפש בכוח בכל האלפים, אתה מגיש מגדף אחד כמו 'השאר רק את זה' — והוא מוצא בדיוק את הפריט הראשון שמתאים.",
@@ -948,6 +979,7 @@ var LESSON_13 = {
     // 32. querySelectorAll
     {
       conceptName: "querySelectorAll",
+      difficulty: 4,
       levels: {
         grandma:
           "כשצריך 'כל הבובות האדומות' ולא רק אחת, querySelectorAll מחזיר לך את כל המתאימים לרצף שלם.",

@@ -1,6 +1,8 @@
 // Content Loader — Assembles all lesson data modules into window.LESSONS_DATA
 (function () {
   const modules = [
+    typeof LESSON_01 !== "undefined" ? LESSON_01 : null,  // HTML basics (Phase 0)
+    typeof LESSON_09 !== "undefined" ? LESSON_09 : null,  // Auth + JWT (Phase 0)
     typeof LESSON_11 !== "undefined" ? LESSON_11 : null,
     typeof LESSON_12 !== "undefined" ? LESSON_12 : null,
     typeof LESSON_13 !== "undefined" ? LESSON_13 : null,
@@ -17,6 +19,7 @@
     typeof LESSON_25 !== "undefined" ? LESSON_25 : null,
     typeof LESSON_26 !== "undefined" ? LESSON_26 : null,
     typeof LESSON_27 !== "undefined" ? LESSON_27 : null,
+    typeof LESSON_37 !== "undefined" ? LESSON_37 : null,  // AI Engineering (Phase 0)
     typeof WORKBOOK_TASKMANAGER !== "undefined" ? WORKBOOK_TASKMANAGER : null,
     typeof AI_DEVELOPMENT !== "undefined" ? AI_DEVELOPMENT : null,
     typeof REACT_BLUEPRINT !== "undefined" ? REACT_BLUEPRINT : null,

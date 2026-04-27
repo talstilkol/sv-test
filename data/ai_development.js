@@ -5,6 +5,7 @@ var AI_DEVELOPMENT = {
   "concepts": [
     {
       "conceptName": "AI",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, AI עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (1/12).",
         "child": "דמיין מיני־תרגיל שבו AI מסדר את כל הצעדים בצורה ברורה.\n",
@@ -18,6 +19,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "Cursor",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Cursor עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (2/12).",
         "child": "דמיין מיני־תרגיל שבו Cursor מסדר את כל הצעדים בצורה ברורה.\n",
@@ -31,6 +33,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "Windsurf",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Windsurf עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (3/12).",
         "child": "דמיין מיני־תרגיל שבו Windsurf מסדר את כל הצעדים בצורה ברורה.\n",
@@ -44,6 +47,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "Claude Code",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Claude Code עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (4/12).",
         "child": "דמיין מיני־תרגיל שבו Claude Code מסדר את כל הצעדים בצורה ברורה.\n",
@@ -57,6 +61,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "V0",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, V0 עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (5/12).",
         "child": "דמיין מיני־תרגיל שבו V0 מסדר את כל הצעדים בצורה ברורה.\n",
@@ -70,6 +75,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "Bolt.new",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Bolt.new עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (6/12).",
         "child": "דמיין מיני־תרגיל שבו Bolt.new מסדר את כל הצעדים בצורה ברורה.\n",
@@ -83,6 +89,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "Version Management",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Version Management עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (7/12).",
         "child": "דמיין מיני־תרגיל שבו Version Management מסדר את כל הצעדים בצורה ברורה.\n",
@@ -96,6 +103,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "Code Verification",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Code Verification עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (8/12).",
         "child": "דמיין מיני־תרגיל שבו Code Verification מסדר את כל הצעדים בצורה ברורה.\n",
@@ -109,6 +117,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "Prompting",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Prompting עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (9/12).",
         "child": "דמיין מיני־תרגיל שבו Prompting מסדר את כל הצעדים בצורה ברורה.\n",
@@ -122,6 +131,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "GitHub",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, GitHub עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (10/12).",
         "child": "דמיין מיני־תרגיל שבו GitHub מסדר את כל הצעדים בצורה ברורה.\n",
@@ -135,6 +145,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "Vercel",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Vercel עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (11/12).",
         "child": "דמיין מיני־תרגיל שבו Vercel מסדר את כל הצעדים בצורה ברורה.\n",
@@ -148,6 +159,7 @@ var AI_DEVELOPMENT = {
     },
     {
       "conceptName": "Human-in-the-loop",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Human-in-the-loop עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (12/12).",
         "child": "דמיין מיני־תרגיל שבו Human-in-the-loop מסדר את כל הצעדים בצורה ברורה.\n",

@@ -1,0 +1,46 @@
+name: CI — validate content + syntax
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Syntax-check all data files
+        run: |
+          set -e
+          for f in data/*.js; do
+            echo "  → $f"
+            node --check "$f"
+          done
+          echo "  → app.js"
+          node --check app.js
+
+      - name: Run validate_bank.js
+        run: node scripts/validate_bank.js
+
+      - name: Block boilerplate (informational; warns only)
+        run: |
+          # Boilerplate cleanup is tracked in MASTER_PLAN_V4 Phase 0.
+          # Once D0.2 is done, change `|| true` to fail the build.
+          node scripts/validate_bank.js 2>&1 | grep -q "✅ No boilerplate detected" || echo "::warning::Boilerplate concepts still detected (Phase 0 D0.2 pending)"
+
+      - name: Block missing difficulty (FAIL)
+        run: |
+          # As of Phase 0 D0.1, all concepts have difficulty.
+          # Any new concept added without it should fail the build.
+          if node scripts/validate_bank.js 2>&1 | grep -q "Missing difficulty"; then
+            echo "::error::Concept(s) added without difficulty (1-10). Run scripts/add_difficulty.js or set manually."
+            exit 1
+          fi

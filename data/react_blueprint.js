@@ -5,6 +5,7 @@ var REACT_BLUEPRINT = {
   "concepts": [
     {
       "conceptName": "ארכיטקטורת React",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, ארכיטקטורת React עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (1/10).",
         "child": "דמיין מיני־תרגיל שבו ארכיטקטורת React מסדר את כל הצעדים בצורה ברורה.\n",
@@ -18,6 +19,7 @@ var REACT_BLUEPRINT = {
     },
     {
       "conceptName": "Router",
+      difficulty: 6,
       "levels": {
         "grandma": "בפשטות, Router עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (2/10).",
         "child": "דמיין מיני־תרגיל שבו Router מסדר את כל הצעדים בצורה ברורה.\n",
@@ -31,6 +33,7 @@ var REACT_BLUEPRINT = {
     },
     {
       "conceptName": "State",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, State עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (3/10).",
         "child": "דמיין מיני־תרגיל שבו State מסדר את כל הצעדים בצורה ברורה.\n",
@@ -44,6 +47,7 @@ var REACT_BLUEPRINT = {
     },
     {
       "conceptName": "Immutability",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Immutability עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (4/10).",
         "child": "דמיין מיני־תרגיל שבו Immutability מסדר את כל הצעדים בצורה ברורה.\n",
@@ -57,6 +61,7 @@ var REACT_BLUEPRINT = {
     },
     {
       "conceptName": "Prop Drilling",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Prop Drilling עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (5/10).",
         "child": "דמיין מיני־תרגיל שבו Prop Drilling מסדר את כל הצעדים בצורה ברורה.\n",
@@ -70,6 +75,7 @@ var REACT_BLUEPRINT = {
     },
     {
       "conceptName": "Context API",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Context API עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (6/10).",
         "child": "דמיין מיני־תרגיל שבו Context API מסדר את כל הצעדים בצורה ברורה.\n",
@@ -83,6 +89,7 @@ var REACT_BLUEPRINT = {
     },
     {
       "conceptName": "useEffect",
+      difficulty: 6,
       "levels": {
         "grandma": "בפשטות, useEffect עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (7/10).",
         "child": "דמיין מיני־תרגיל שבו useEffect מסדר את כל הצעדים בצורה ברורה.\n",
@@ -96,6 +103,7 @@ var REACT_BLUEPRINT = {
     },
     {
       "conceptName": "useMemo",
+      difficulty: 7,
       "levels": {
         "grandma": "בפשטות, useMemo עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (8/10).",
         "child": "דמיין מיני־תרגיל שבו useMemo מסדר את כל הצעדים בצורה ברורה.\n",
@@ -109,6 +117,7 @@ var REACT_BLUEPRINT = {
     },
     {
       "conceptName": "useRef",
+      difficulty: 7,
       "levels": {
         "grandma": "בפשטות, useRef עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (9/10).",
         "child": "דמיין מיני־תרגיל שבו useRef מסדר את כל הצעדים בצורה ברורה.\n",
@@ -122,6 +131,7 @@ var REACT_BLUEPRINT = {
     },
     {
       "conceptName": "בחירת Hooks",
+      difficulty: 6,
       "levels": {
         "grandma": "בפשטות, בחירת Hooks עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (10/10).",
         "child": "דמיין מיני־תרגיל שבו בחירת Hooks מסדר את כל הצעדים בצורה ברורה.\n",

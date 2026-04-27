@@ -5,6 +5,7 @@ var WORKBOOK_TASKMANAGER = {
   "concepts": [
     {
       "conceptName": "Task Manager",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, Task Manager עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (1/12).",
         "child": "דמיין מיני־תרגיל שבו Task Manager מסדר את כל הצעדים בצורה ברורה.\n",
@@ -18,6 +19,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "variables",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, variables עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (2/12).",
         "child": "דמיין מיני־תרגיל שבו variables מסדר את כל הצעדים בצורה ברורה.\n",
@@ -31,6 +33,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "conditions",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, conditions עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (3/12).",
         "child": "דמיין מיני־תרגיל שבו conditions מסדר את כל הצעדים בצורה ברורה.\n",
@@ -44,6 +47,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "arrays",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, arrays עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (4/12).",
         "child": "דמיין מיני־תרגיל שבו arrays מסדר את כל הצעדים בצורה ברורה.\n",
@@ -57,6 +61,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "objects",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, objects עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (5/12).",
         "child": "דמיין מיני־תרגיל שבו objects מסדר את כל הצעדים בצורה ברורה.\n",
@@ -70,6 +75,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "functions",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, functions עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (6/12).",
         "child": "דמיין מיני־תרגיל שבו functions מסדר את כל הצעדים בצורה ברורה.\n",
@@ -83,6 +89,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "DOM",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, DOM עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (7/12).",
         "child": "דמיין מיני־תרגיל שבו DOM מסדר את כל הצעדים בצורה ברורה.\n",
@@ -96,6 +103,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "events",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, events עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (8/12).",
         "child": "דמיין מיני־תרגיל שבו events מסדר את כל הצעדים בצורה ברורה.\n",
@@ -109,6 +117,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "localStorage",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, localStorage עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (9/12).",
         "child": "דמיין מיני־תרגיל שבו localStorage מסדר את כל הצעדים בצורה ברורה.\n",
@@ -122,6 +131,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "try/catch",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, try/catch עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (10/12).",
         "child": "דמיין מיני־תרגיל שבו try/catch מסדר את כל הצעדים בצורה ברורה.\n",
@@ -135,6 +145,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "fetch",
+      difficulty: 5,
       "levels": {
         "grandma": "בפשטות, fetch עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (11/12).",
         "child": "דמיין מיני־תרגיל שבו fetch מסדר את כל הצעדים בצורה ברורה.\n",
@@ -148,6 +159,7 @@ var WORKBOOK_TASKMANAGER = {
     },
     {
       "conceptName": "async/await",
+      difficulty: 6,
       "levels": {
         "grandma": "בפשטות, async/await עוזר להבין את הרעיון המרכזי ולהחזיר אותו להתנהגות יומיומית (12/12).",
         "child": "דמיין מיני־תרגיל שבו async/await מסדר את כל הצעדים בצורה ברורה.\n",
