@@ -1168,6 +1168,362 @@ var CONCEPT_ENRICHMENT = {
       professor: "Subtype polymorphism עם variance rules. Duck typing בזמן compile.",
     },
   },
+
+  // ===================== AI Development (Track B) =====================
+  "lesson_ai_development::AI": {
+    deepDive: {
+      purpose: "AI (LLM) מאפשר לתרגם כוונה במילים לקוד/טקסט. הוא מאיץ משימות שיש בהן patterns ומסיר חיכוך משימות שגרתיות.",
+      problem: "כתיבת boilerplate, חיפוש בתיעוד, הסבר קוד זר — צריכת זמן עצומה. AI מצמצם זאת ל-30%-50%.",
+      withoutIt: "שעה של חיפוש ב-Stack Overflow לכל פיצ'ר חדש. עומס קוגניטיבי על משימות לא-יצירתיות.",
+      useWhen: "boilerplate, refactor, הסברי קוד, ניסוח docs/PRs, ובכל מקום שיש pattern שחוזר על עצמו ב-corpus.",
+    },
+    analogies: {
+      grandma: "כמו רדיו שלמד לדבר — אומר לך מילים בסבירות, אבל לא מבדיל בין נכון לשגוי.",
+      child: "כמו תוכי שלמד 1000 ספרים. הוא יכול לחקות משפטים יפים, אבל לא יודע לבדוק אם זה אמת.",
+      soldier: "כלי כמו GPS — נותן הוראות, אבל אתה האחראי הסופי. אם תיקח אותך לתעלה — באחריותך.",
+      student: "Statistical pattern completion על learned representation. תוצאה: סבירות גבוהה אך לא ערובה.",
+      junior: "מאיץ workflow: boilerplate -> AI, עיון בתיעוד -> AI. הזמן שלי הולך ל-architecture ו-tests.",
+      professor: "Foundational generalist model that performs few-shot tasks via in-context learning over a learned distribution.",
+    },
+  },
+  "lesson_ai_development::Cursor": {
+    deepDive: {
+      purpose: "Cursor משלב AI ב-IDE — refactor רב-קבצי, autocomplete חכם, וצ'אט עם הקוד. מאיץ פיתוח ב-30-50%.",
+      problem: "ChatGPT/Copilot לא מבינים את הריפו שלך כיחידה. כל edit דורש copy-paste בין IDE לדפדפן.",
+      withoutIt: "מתכנת מחזיק 10 tabs פתוחים, מעתיק בין IDE ל-LLM. context loss בכל refactor.",
+      useWhen: "refactor רב-קבצי, יישום ספציפי לסטנדרטים של הצוות (.cursorrules), ועזרה תוך כדי כתיבה.",
+    },
+    analogies: {
+      grandma: "כמו עוזר אישי שיושב לידך עם כל הספרים פתוחים. שואלת — הוא עונה במקום.",
+      child: "כמו מורה פרטי שכבר קרא את כל המחברת שלך. שאלה -> תשובה במשפט אחד.",
+      soldier: "כלי שדה שכבר 'מכיר' את היחידה — הוראות עם context מלא בלי לחזור על הכל.",
+      student: "RAG-augmented IDE: indexing local repo + ranking by similarity for context window.",
+      junior: "Cmd+K מהיר עריכה. Cmd+I לעבודה מורכבת. שלוש שעות חוסכות 30 דקות בכל פיצ'ר.",
+      professor: "Semantic retrieval over an embedded codebase combined with agentic edit loops; HITL approval at write boundaries.",
+    },
+  },
+  "lesson_ai_development::Windsurf": {
+    deepDive: {
+      purpose: "Windsurf מציע agent autonomy — לא רק עוזר, אלא מבצע sequence של פעולות (edit + run + retry).",
+      problem: "Cursor/Copilot עוצרים אחרי edit. אבל ב-real workflow צריך לבדוק שזה עובד, לתקן בעיות, ו-iterate.",
+      withoutIt: "כל סיבוב של 'תקן' דורש manual edit + run + paste error + ask again. 5-10 cycles.",
+      useWhen: "משימות מורכבות שדורשות 5+ צעדים: refactor רב-קבצי, מיגרציה, debug עומק, deployment.",
+    },
+    analogies: {
+      grandma: "כמו עוזרת בית שלא רק מנקה — היא גם הולכת לקנות, מחזירה, וסוגרת הכל בעצמה. אתה מאשר בסוף.",
+      child: "כמו רובוט שהולך, מנסה, חוזר אם נשבר, מנסה שוב. אתה רק מסתכל ומאשר.",
+      soldier: "מפקד צוות אוטונומי — מקבל משימה, מבצע צעדים בעצמו, מדווח ב-checkpoints.",
+      student: "ReAct loop (reason + act): plan -> tool invocation -> observation -> re-plan, עד success/failure.",
+      junior: "אצלי: 'הוסף i18n לכל הקומפוננטות' -> Cascade עובר 30 קבצים, מריץ tests, ואני סוקר בסוף.",
+      professor: "Agentic planning with tool-augmented execution; persistent memory and explicit checkpointing for long-horizon tasks.",
+    },
+  },
+  "lesson_ai_development::Claude Code": {
+    deepDive: {
+      purpose: "Claude Code מביא AI agent ל-terminal — מתאים לאוטומציות, CI, ועבודה ללא GUI.",
+      problem: "IDE עוזר אישי. אבל למשימות אוטומציה (build, deploy, mass refactor) צריך headless agent.",
+      withoutIt: "כל משימה דורשת לפתוח IDE. אין דרך טובה לשלב AI ב-cron/CI/scripts.",
+      useWhen: "CI runners, scripts ארוכי-טווח, batch processing, ופתרונות שדורשים composability עם shell.",
+    },
+    analogies: {
+      grandma: "כמו עוזר שמדבר רק ברדיו — בלי תמונה, רק טקסט, אבל מבצע את כל הפקודות.",
+      child: "כמו צ'אט עם רובוט במשחק. רק הקלדה — אבל הרובוט באמת עושה דברים.",
+      soldier: "כלי field-ready — בלי GUI, פועל ב-bash, אינטגרציה מלאה עם kit הקיים.",
+      student: "Headless LLM agent עם tool-use API; ניתן לקרוא לו מ-script או pipeline.",
+      junior: "claude -p '...' --allowedTools 'Read,Bash' = AI step ב-pipeline שלי. CI בודק וגם מתקן.",
+      professor: "Composable Unix-philosophy AI agent; integrates with shells, tmux, and CI through stdin/stdout streams.",
+    },
+  },
+  "lesson_ai_development::ChatGPT": {
+    deepDive: {
+      purpose: "ChatGPT הוא הממשק הנגיש ביותר ל-LLM — צ'אט גנרי, ללא צורך ב-IDE או setup.",
+      problem: "לא תמיד יש את ה-codebase פתוח, לא תמיד יש זמן ל-context full. צריך כלי 'fast question'.",
+      withoutIt: "הסברי קוד דורשים חיפושים ארוכים. ניסוחי docs/PRs לוקחים שעה במקום 5 דקות.",
+      useWhen: "שאלות one-off, brainstorming, debugging של קוד קצר, הסבר error messages, ניסוח טקסטים.",
+    },
+    analogies: {
+      grandma: "כמו whatsapp עם מורה — שולחים שאלה מתי שצריך, מקבלים תשובה.",
+      child: "כמו לשאול חבר חכם בכיתה — בלי לזוז ממקום.",
+      soldier: "כלי radio: מרים, שואל, מקבל תשובה. בלי תיקיות ובלי setup.",
+      student: "Stateless conversational LLM via web; context לא נשמר בין sessions אלא דרך Memory feature.",
+      junior: "אצלי: בודק error, מבקש 3 חשדות אפשריים. תהליך debug שמהיר ב-3 פעם מ-google.",
+      professor: "Reference UX for foundational LLMs; demonstrates few-shot prompting and the Memory primitive.",
+    },
+  },
+  "lesson_ai_development::Copilot": {
+    deepDive: {
+      purpose: "Copilot מספק inline completion מהיר ב-IDE — ידע 'מה השורה הבאה', בלי להפסיק לשאול.",
+      problem: "סגירת חלון הצ'אט בכל שאלה שובר ריכוז. רוב הפעמים אנחנו צריכים השלמה קצרה, לא דיון.",
+      withoutIt: "כל פונקציה דורשת חיפוש דוגמה. boilerplate נכתב ידנית.",
+      useWhen: "כל פיתוח פעיל ב-IDE. במיוחד boilerplate, tests, ושמות משתנים.",
+    },
+    analogies: {
+      grandma: "כמו תזכורות אוטומטיות בנייד — לפני שסיימת לכתוב, הוא מציע איך להמשיך.",
+      child: "כמו מורה שלוחש לך את הסוף של המשפט בזמן שאתה כותב.",
+      soldier: "Co-pilot באמת — לא מטיס במקום הטייס, רק לוחש קוד הבא.",
+      student: "Low-latency token-completion model integrated via LSP-like extension.",
+      junior: "בעיקר ל-tests ושמות. Cmd+K עדיף ל-edits מורכבים.",
+      professor: "Optimized for inline acceptance metrics; balances completion latency against suggestion quality.",
+    },
+  },
+  "lesson_ai_development::Prompt Engineering": {
+    deepDive: {
+      purpose: "Prompt Engineering = מיומנות לכתוב הוראות שמובילות LLM לפלט הרצוי.",
+      problem: "בלי prompt טוב, גם המודל הטוב ביותר נותן פלט גנרי או שגוי.",
+      withoutIt: "10 iterations של 'לא, אחרת' עד שמקבלים מה שרצינו. בזבוז tokens, זמן, ו-tokens.",
+      useWhen: "כל אינטראקציה עם LLM שלא טריוויאלית. pipelines אוטומטיים — חובה.",
+    },
+    analogies: {
+      grandma: "כמו לבקש ילד לעשות שיעורי בית: 'תכין' לא יעבוד. 'תפתור 5 תרגילים בעמ 12' יעבוד.",
+      child: "כמו במשחק 'שמע פקודה' — ככל שההוראה ברורה, הביצוע מדויק.",
+      soldier: "פקודת מבצע: 5W (who, what, where, when, why). אם חסר אחד מהם — סיכוי לכישלון.",
+      student: "Information-theoretic optimization — להעביר maximal signal ב-minimal tokens.",
+      junior: "אצלי: prompt לא עובד? לא מוסיף סתם — חושב מה חסר במבנה (ROLE? FORMAT? EXAMPLES?).",
+      professor: "Eliciting model behavior through explicit constraints, exemplars, and output schemas.",
+    },
+  },
+  "lesson_ai_development::AI Pair Programming": {
+    deepDive: {
+      purpose: "AI Pair Programming = workflow מוגדר של שיתוף עבודה עם AI כ-pair מקצועי.",
+      problem: "סתם שימוש ב-AI מוביל ל-'ship without read'. צריך structure ל-review וביקורת.",
+      withoutIt: "באגים שמגיעים ל-prod כי 'AI כתב, נראה תקין, merge'. חוב טכני שמצטבר.",
+      useWhen: "כל workflow פיתוח. במיוחד למשימות שאתה עוטף בלי ידע מלא.",
+    },
+    analogies: {
+      grandma: "כמו לבשל עם חבר: אחד פותר, השני בודק. מתחלפים בתפקידים.",
+      child: "כמו עבודה בצמדים בכיתה — אחד כותב, השני קורא ומתקן.",
+      soldier: "Buddy system — אף פעם לא לבד. תמיד יש מבקר.",
+      student: "Distributed cognition — חלוקת עומס מנטלי בין שני 'מוחות'.",
+      junior: "Driver ↔ Navigator. אני נווט (architecture) — AI הוא driver (typing).",
+      professor: "Cognitive load distribution with tight feedback loops; humans retain authority on architecture and merge decisions.",
+    },
+  },
+  "lesson_ai_development::AI Code Review": {
+    deepDive: {
+      purpose: "AI Code Review = first-pass linter סמנטי לכל PR — מזהה bugs, security, code smells.",
+      problem: "Reviews ידניים איטיים, ובד\"כ מוגבלים ב-3-4 reviewers. ה-AI מספק review ב-30 שניות.",
+      withoutIt: "PRs מצטברים, reviews שטחיים, באגים שעוברים merge.",
+      useWhen: "כל PR בייחוד נסיוני, large diffs, או PRs של מפתחים juniors.",
+    },
+    analogies: {
+      grandma: "כמו מורה שעוברת על שיעור הבית עם עט אדום — מהר וצמוד.",
+      child: "כמו לקבל ציון ראשון לפני להגיש למורה. סיכוי לתקן לפני.",
+      soldier: "Pre-mission inspection — לפני שיוצאים לשטח, מנהלים סיקור.",
+      student: "Pattern-matching reviewer — חזק ב-syntax/security, חלש ב-domain logic.",
+      junior: "30% רעיונות טובים, 60% noise. אני סינון אנושי. תמיד יחד עם review אנושי.",
+      professor: "Augments human review by surfacing pattern-level defects; ineffective on architectural and domain-specific concerns.",
+    },
+  },
+  "lesson_ai_development::AI Limitations": {
+    deepDive: {
+      purpose: "להכיר מגבלות AI = למנוע disappointments ו-bugs. כלי חזק רק כשמשתמשים בו נכון.",
+      problem: "מפתחים מאמינים ל-AI יותר מדי. תוצאה: imports שלא קיימים, גרסאות מומצאות, חישובים שגויים.",
+      withoutIt: "באגים ב-prod, חוסר אמון בצוות, חזרות מיותרות.",
+      useWhen: "תמיד. רשימת 'הכוחות' ו'החולשות' ליד המסך.",
+    },
+    analogies: {
+      grandma: "כמו חבר שלמד הרבה אבל לא יצא מהחדר. יודע ספרים, לא יודע מה השעה עכשיו.",
+      child: "כמו ילד שמשלים סיפור בנחושה — יוצא יפה, אבל לא בהכרח אמיתי.",
+      soldier: "כלי שדה: יש מצבים שעובד מצוין, ויש שלא. תכיר את שניהם.",
+      student: "Strengths: pattern completion. Weaknesses: novel reasoning, fresh data, complex math.",
+      junior: "Verify-before-trust — תמיד לבדוק imports, גרסאות, ו-API calls ש-AI מציע.",
+      professor: "Distribution shift, knowledge cutoff, lack of grounding, and miscalibration of confidence.",
+    },
+  },
+  "lesson_ai_development::Hallucinations": {
+    deepDive: {
+      purpose: "להבין hallucinations = להבין שLLM 'בטוח' לא שווה 'נכון'. עיקרון מפתח לכל מי שמשתמש ב-AI.",
+      problem: "LLMs לא מסמנים אי-וודאות. כשאינם יודעים, הם ממציאים בנחושה — וזה עובר ל-prod.",
+      withoutIt: "import { magicalHelper } from 'lodash' (לא קיים) -> 30 דקות debug. במצטבר: שעות בכל שבוע.",
+      useWhen: "כל interaction עם AI שמייצר facts: imports, גרסאות, ציטוטים, links.",
+    },
+    analogies: {
+      grandma: "כמו ילד שמשלים סיפור גם כשלא ראה את ההמשך. לא משקר — פשוט ממלא חללים.",
+      child: "כמו לנחש תשובה בבחינה כי לא ידעת — וכותב אותה בביטחון.",
+      soldier: "מודיעין ש'משלים' פערים ללא מקור — מסוכן.",
+      student: "Autoregressive generation prefers fluency over uncertainty signals.",
+      junior: "אצלי: כל import חדש -> npm view. כל URL -> open. כל גרסה -> ratify.",
+      professor: "Calibration failure: model assigns high probability to plausible-but-false continuations.",
+    },
+  },
+  "lesson_ai_development::Context Window": {
+    deepDive: {
+      purpose: "Context Window = ה'זיכרון העובד' של ה-LLM. הבנתו = שליטה ב-limits של מה שאפשר להעביר.",
+      problem: "Context גדול מדי -> truncation או 'lost in the middle'. קטן מדי -> חוסר מידע.",
+      withoutIt: "תשובות נחתכות באמצע, מודל מתעלם מ-instructions, ו-API calls נכשלים.",
+      useWhen: "כל פעם ששולחים prompt גדול, או workflow רב-tokens (chats ארוכים, multi-doc tasks).",
+    },
+    analogies: {
+      grandma: "כמו לוח כיתה: יש לו גודל מוגבל. כותבים יותר -> מוחקים מההתחלה.",
+      child: "כמו זיכרון של דייג: זוכר את 5 הדגים האחרונים, את ה-1000 שלפני שכח.",
+      soldier: "תקציב סוללה: הכל עולה — היסטוריה, עזרים, פלט. תכין budget.",
+      student: "Fixed-length attention buffer; quality degrades at >90% utilization.",
+      junior: "תמיד משאיר 20% חופשי ל-output. למשימות ארוכות -> hierarchical summarization.",
+      professor: "Limited working memory with attention bottlenecks; lost-in-the-middle and degraded fidelity at high utilization.",
+    },
+  },
+
+  // ===================== React Architect Blueprint (Track B) =====================
+  "lesson_react_blueprint::Component Architecture": {
+    deepDive: {
+      purpose: "ארכיטקטורת קומפוננטות = החלוקה ההגיונית של UI ל-units. בסיס לכל maintainability.",
+      problem: "App של קומפוננטה אחת ענקית = unmaintainable. אבל יותר מדי קומפוננטות קטנות = boilerplate.",
+      withoutIt: "1000 שורות במקום אחד; tests בלתי-אפשריים; כל שינוי קטן שובר 5 מקומות.",
+      useWhen: "מהקומפוננטה הראשונה. שאלה תמיד: 'מה ה-responsibility של זה'?",
+    },
+    analogies: {
+      grandma: "כמו לבנות עם LEGO — חלקים קטנים שמתחברים יחד.",
+      child: "כמו מערכת חוגים בבית — כל חדר עם תפקיד, ומסדרון מחבר ביניהם.",
+      soldier: "פלוגות עם תפקידים ברורים — כל אחת מומחית ל-domain שלה.",
+      student: "Atomic Design (atoms/molecules/organisms) + Conway's Law (architecture mirrors team).",
+      junior: "אצלי: feature folders, 50-150 שורות לקומפוננטה, ועומק עץ עד 5 רמות.",
+      professor: "Hierarchical decomposition with explicit interface contracts (props) and bounded ownership.",
+    },
+  },
+  "lesson_react_blueprint::State Management": {
+    deepDive: {
+      purpose: "ניהול state = החלטה היכן וכיצד לאחסן 'מה משתנה'. בסיס לביצועים, לוגיקה, ו-UX.",
+      problem: "State במקום הלא נכון = re-renders מיותרים, prop drilling, או נתונים out-of-sync.",
+      withoutIt: "האפליקציה אטית, באגים סינכרון, וקושי ב-debugging.",
+      useWhen: "כל state חדש שאתה מוסיף — שאל: מי קורא? מי כותב? כמה רחוק?",
+    },
+    analogies: {
+      grandma: "כמו לבחור איפה לשים מפתחות בבית. כל בחירה משפיעה על נגישות.",
+      child: "במשחק לוח: יש לוח (גלובלי), יש קלפים בידיים (פנימי). ההבחנה קריטית.",
+      soldier: "ניהול ציוד: רובה (אישי), טאקטית (כיתה), אסטרטגי (פלוגה). היררכיה לפי scope.",
+      student: "State locality principle — co-locate state with its readers.",
+      junior: "Local first. Lift only when shared. Context for tree-wide. Store for global.",
+      professor: "Hierarchical state ownership with clear separation between client UI state and server-cached data.",
+    },
+  },
+  "lesson_react_blueprint::Data Flow": {
+    deepDive: {
+      purpose: "Data Flow ב-React = unidirectional. מקור אמת אחד, props down, callbacks up.",
+      problem: "Two-way binding = loops סבוכים, debugging קשה, וקוד שקשה לעקוב אחריו.",
+      withoutIt: "באגים שאי-אפשר לאתר — איפה הערך השתנה? מה שינה אותו?",
+      useWhen: "כל component, תמיד. עיקרון של React.",
+    },
+    analogies: {
+      grandma: "כמו מים בנהר — זורמים בכיוון אחד. לא יכולים למעלה בלי משאבה.",
+      child: "כמו לזרוק כדור: ההורה זורק לילד. הילד מבקש בעזרת קריאה (callback), לא זורק חזרה.",
+      soldier: "שרשרת פיקוד: פקודות מלמעלה למטה, דיווח מלמטה למעלה. סדר ברור.",
+      student: "Unidirectional data flow with referential integrity at the owner.",
+      junior: "Props read-only. הילד לא משנה — קורא ל-callback של ההורה.",
+      professor: "One-way data binding ensures predictable rendering and a single source of truth.",
+    },
+  },
+  "lesson_react_blueprint::Composition vs Inheritance": {
+    deepDive: {
+      purpose: "Composition over Inheritance = להעדיף 'has-a' על 'is-a'. עיקרון יסוד ב-OOD ו-React.",
+      problem: "Inheritance מדולל reusability — Tight coupling ושינוי בבסיס משפיע על כל היורשים.",
+      withoutIt: "10 קומפוננטות שיורשות מ-Modal -> שינוי קטן ב-Modal -> 10 רגרסיות.",
+      useWhen: "תמיד ב-React. לחלוקת UI -> children + props. לחלוקת logic -> custom hooks.",
+    },
+    analogies: {
+      grandma: "כמו פיצה: composition זה לבחור topping. inheritance זה 'ירשת פיצה גבינה'.",
+      child: "כמו LEGO: composition = מרכיבים. inheritance = חייבים את הבסיס.",
+      soldier: "Modular kit > fixed configuration. כל יחידה מורכבת מציוד שעובד יחד.",
+      student: "Has-a > is-a. Composition reduces coupling and increases flexibility.",
+      junior: "Modal עם children, לא class FormModal extends Modal. Custom hooks > HOCs.",
+      professor: "Favor composition (Gang of Four). React enforces functional composition by design.",
+    },
+  },
+  "lesson_react_blueprint::Container vs Presentational": {
+    deepDive: {
+      purpose: "הפרדה בין 'מי' מביא נתונים (container) ל'איך נראה' (presentational). מקלה testing ו-storybook.",
+      problem: "כל קומפוננטה עם useEffect+fetch -> mock-hell ב-tests, ו-Storybook עם 5 providers.",
+      withoutIt: "Tests דורשים QueryClient, Router, AuthProvider — boilerplate בכל test.",
+      useWhen: "כל page -> container. כל card/list/widget -> presentational.",
+    },
+    analogies: {
+      grandma: "מנהל (container) מחליט. שחקן (presentational) מציג. הפרדת תפקידים.",
+      child: "במשרד: מנכ\"ל מחליט, דובר מציג. שניים, לא אחד שעושה הכל.",
+      soldier: "מפקד (container) מחזיק תוכנית. חיילים (presentational) מבצעים.",
+      student: "Separation of impure (data acquisition) from pure (data rendering).",
+      junior: "ProductsPage = useQuery + Spinner + ProductsList. ProductsList = pure props -> JSX.",
+      professor: "Functional core, imperative shell — render layer is pure, side-effects isolated.",
+    },
+  },
+  "lesson_react_blueprint::Lifting State Up": {
+    deepDive: {
+      purpose: "Lifting State Up = להזיז state להורה משותף ל-2+ צרכנים. מקור אמת יחיד.",
+      problem: "שני components מנסים לתחזק 'אותו' ערך עצמאית -> out-of-sync.",
+      withoutIt: "Search לא מוצא ב-Results, או Filter לא מתעדכן ב-List.",
+      useWhen: "מיד כש-2+ components צריכים לחלוק ערך. זיהוי: 'המידע צריך להיות משותף'.",
+    },
+    analogies: {
+      grandma: "כמו לשים שלט TV על שולחן משותף — כולם מגיעים, אחד לוקח בכל פעם.",
+      child: "אחים רבים על השלט -> אבא לוקח. כל אחד מבקש דרכו.",
+      soldier: "מפת מצב במפקדה — כל יחידה רואה את אותו מידע.",
+      student: "Lift state to lowest common ancestor (LCA).",
+      junior: "Search bar + Results -> state ב-App. שניהם מקבלים ב-props.",
+      professor: "Single source of truth at the LCA prevents synchronization drift.",
+    },
+  },
+  "lesson_react_blueprint::Code Splitting": {
+    deepDive: {
+      purpose: "Code Splitting = פיצול הbundle ל-chunks שנטענים on-demand. מקטין First Paint דרמטית.",
+      problem: "Bundle ענק (2MB) = First Paint 4 שניות. רוב הקוד לא נצרך בעמוד הראשון.",
+      withoutIt: "משתמשים על mobile/3G נוטשים. SEO נפגע, conversion יורדת.",
+      useWhen: "Routes שלא כולם רואים, ספריות כבדות (charts, editors), features behind feature-flag.",
+    },
+    analogies: {
+      grandma: "כמו ספר עם פרקים — לא קוראים את כולו לפני שמתחילים.",
+      child: "במשחק: שלב 1 בלבד נטען בהתחלה. שלב 2 כשמגיעים אליו.",
+      soldier: "ציוד שיוצא לשטח רק כשנדרש — פלוגת חבישה לא יוצאת לכל מבצע.",
+      student: "Dynamic imports + bundler chunking + lazy + Suspense.",
+      junior: "אצלי: 4 routes lazy -> 55% שיפור ב-First Paint. בלי לשנות לוגיקה.",
+      professor: "Defers non-critical code via dynamic imports; modern bundlers leverage HTTP/2 multiplexing.",
+    },
+  },
+  "lesson_react_blueprint::Performance Optimization": {
+    deepDive: {
+      purpose: "Performance Optimization = לזהות ולתקן bottlenecks. אבל אסור 'אופטימיזציה מוקדמת'.",
+      problem: "אופט' בלי profile = קוד מסובך בלי שיפור, ולפעמים יותר גרוע.",
+      withoutIt: "Apps איטיים, FID גבוה, משתמשים נוטשים.",
+      useWhen: "אחרי profile שמראה bottleneck. לא לפני.",
+    },
+    analogies: {
+      grandma: "כמו לבדוק ברז דולף לפני שקונים מים מינרליים. תמיד diagnose first.",
+      child: "כמו לבדוק למה אופניים לא נוסעים — אחרי בדיקה, לא לפני.",
+      soldier: "מבצע: מודיעין לפני, לא ירייה עיוורת.",
+      student: "Profile -> identify -> targeted fix. Avoid premature optimization (Knuth).",
+      junior: "אצלי: React DevTools Profiler -> bottleneck = re-render של 1000 cards -> React.memo + useCallback.",
+      professor: "Performance is contextual; optimizations must be guided by measurements within the target environment.",
+    },
+  },
+  "lesson_react_blueprint::Error Boundaries": {
+    deepDive: {
+      purpose: "Error Boundaries = רשת ביטחון ל-render errors. מונעים crash מלא של האפליקציה.",
+      problem: "שגיאה ב-component אחד -> white screen לכל המשתמשים. UX איום.",
+      withoutIt: "באג ב-widget של ספק שלישי -> כל ה-app נופל. אובדן conversions.",
+      useWhen: "EB top-level (לאסון), per route (להפסד מקומי), סביב widgets שלישיים (להגנה).",
+    },
+    analogies: {
+      grandma: "כמו פיוז בחשמל — מקצר רק חלק מהבית, לא הכל.",
+      child: "כמו דלת אש בבית — שריפה בחדר 1 לא עוברת לכל הבית.",
+      soldier: "Containment — אם יחידה נפגעה, השאר ממשיכים.",
+      student: "Fail-soft semantics — partial degradation > catastrophic crash.",
+      junior: "אצלי: 3 רמות EB. גלובלי -> route -> widget. כל אחד עם logging.",
+      professor: "Localized fault isolation in component trees; preserves global liveness under partial failures.",
+    },
+  },
+  "lesson_react_blueprint::Testing Strategies": {
+    deepDive: {
+      purpose: "Testing Strategies = איזון בין coverage, מהירות, ועלות תחזוקה.",
+      problem: "100% E2E -> איטי ושביר. 100% unit -> מפספס integration bugs.",
+      withoutIt: "באגים ב-prod, regressions בכל deploy, ופחד לעשות refactor.",
+      useWhen: "כל קוד שמגיע ל-prod. לפי הפירמידה: הרבה unit, פחות integration, מעט E2E.",
+    },
+    analogies: {
+      grandma: "כמו לטעום מרק במהלך הבישול — קצת בכל שלב, לא רק בסוף.",
+      child: "כמו לבדוק שיעורי בית: שאלה אחת מהר (unit), כמה יחד (integration), כל הדף (E2E).",
+      soldier: "Field test pyramid — בדיקות יחידה, פלוגה, גדוד. רוב הזמן ביחידות.",
+      student: "Test pyramid (Cohn): cost-feedback tradeoffs at each layer.",
+      junior: "אצלי: 200 unit (3s), 30 integration (15s), 5 E2E (2min). E2E ב-CI על PR.",
+      professor: "Optimal coverage strategy minimizes total cost (writing+maintenance+latency) per defect prevented.",
+    },
+  },
 };
 
 // Export for browser

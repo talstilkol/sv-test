@@ -1006,7 +1006,7 @@ var QUESTIONS_BANK = {
     },
     {
       id: "fill_exp_002", topicId: "topic_express", level: 4,
-      code: "app.use(express.____());\n// מאפשר לקרוא req.body כ-JSON",
+      code: "app.use(express.____());\n// מאפשר לקרוא את גוף הבקשה",
       answer: "json",
       hint: "Middleware שמפענח גוף בקשת JSON.",
       explanation: "express.json() מוסיף parsing אוטומטי של גוף JSON ל-req.body.",
@@ -1015,7 +1015,7 @@ var QUESTIONS_BANK = {
     // ===== React Basics =====
     {
       id: "fill_react_001", topicId: "topic_react", level: 2,
-      code: "function Header(____) {\n  return <h1>{props.title}</h1>;\n}",
+      code: "function Header(____) {\n  return <h1>שלום</h1>;\n}",
       answer: "props",
       hint: "האובייקט שמכיל את כל ה-props שהועברו לקומפוננטה.",
       explanation: "פונקציית קומפוננטה מקבלת props כפרמטר יחיד.",
@@ -1024,14 +1024,14 @@ var QUESTIONS_BANK = {
     // ===== Hooks =====
     {
       id: "fill_hook_001", topicId: "topic_state", conceptKey: "lesson_22::useState", level: 3,
-      code: "import { useState } from 'react';\nconst [count, setCount] = ____(0);",
+      code: "// (יש לייבא מ-react)\nconst [count, setCount] = ____(0);",
       answer: "useState",
       hint: "Hook שמחזיר [value, setter].",
       explanation: "useState יוצר state בקומפוננטה פונקציונלית; setter מחליף את הערך.",
     },
     {
       id: "fill_hook_002", topicId: "topic_effects", level: 4,
-      code: "import { useEffect } from 'react';\n____(() => {\n  console.log('mounted');\n}, []);",
+      code: "// (יש לייבא מ-react)\n____(() => {\n  console.log('mounted');\n}, []);",
       answer: "useEffect",
       hint: "Hook לפעולות צד (fetch, טיימרים).",
       explanation: "מערך תלויות ריק [] — רץ פעם אחת אחרי הרינדור הראשון.",
@@ -1047,7 +1047,7 @@ var QUESTIONS_BANK = {
     // ===== Router =====
     {
       id: "fill_router_001", topicId: "topic_router", level: 3,
-      code: "import { ____, Routes, Route } from 'react-router-dom';\n<BrowserRouter>...</BrowserRouter>",
+      code: "import { ____, Routes, Route } from 'react-router-dom';\n// עוטפים את האפליקציה ברכיב הזה",
       answer: "BrowserRouter",
       hint: "הקומפוננטה העוטפת שמפעילה את ניהול ההיסטוריה.",
       explanation: "BrowserRouter משתמש ב-History API. עוטפים בה את כל האפליקציה.",
@@ -1063,9 +1063,9 @@ var QUESTIONS_BANK = {
     // ===== TypeScript =====
     {
       id: "fill_ts_001", topicId: "topic_typescript", level: 3,
-      code: "function sum(a: number, b: number): ____ {\n  return a + b;\n}",
-      answer: "number",
-      hint: "טיפוס ההחזרה — שניהם מספרים, גם הסכום.",
+      code: "function isAdmin(): ____ {\n  return false;\n}",
+      answer: "boolean",
+      hint: "טיפוס ההחזרה של פונקציה שמחזירה true/false.",
       explanation: "ב-TS אפשר/כדאי לציין את טיפוס ההחזרה במפורש.",
     },
     {
@@ -1100,7 +1100,7 @@ var QUESTIONS_BANK = {
     },
     {
       id: "fill_arr_009", topicId: "topic_arrays", level: 4,
-      code: "const total = [10, 20, 30].reduce((sum, n) => sum + n, ____);\nconsole.log(total); // 60",
+      code: "const total = [4, 5, 6].reduce((sum, n) => sum + n, ____);\nconsole.log(total); // 15",
       answer: "0",
       hint: "ערך התחלתי לסכום.",
       explanation: "הפרמטר השני של reduce הוא הערך ההתחלתי של ה-accumulator.",
@@ -1155,7 +1155,7 @@ var QUESTIONS_BANK = {
     },
     {
       id: "fill_async_004", topicId: "topic_async", level: 5,
-      code: "const result = await new Promise((resolve, reject) => {\n  setTimeout(() => ____('done'), 1000);\n});",
+      code: "new Promise((____, reject) => {\n  // הקריאה לפונקציה הזו מסמנת הצלחה\n}).then(value => console.log(value));",
       answer: "resolve",
       hint: "פונקציה שפותרת את ה-Promise בהצלחה.",
       explanation: "resolve(value) הופך את ה-Promise ל-fulfilled עם הערך. reject משמש לדחייה (כישלון).",
@@ -1164,7 +1164,7 @@ var QUESTIONS_BANK = {
     // ===== Express / Mongo =====
     {
       id: "fill_exp_003", topicId: "topic_express", level: 4,
-      code: "app.____('/api/users/:id', (req, res) => {\n  const id = req.params.id;\n  res.json(getUser(id));\n});",
+      code: "app.____('/api/users/:id', (req, res) => {\n  const id = req.params.id;\n  res.json(findUser(id));\n});",
       answer: "get",
       hint: "method ל-Read.",
       explanation: "GET /api/users/:id — קורא משאב לפי id דינמי. req.params מכיל את הפרמטרים.",
@@ -1178,7 +1178,7 @@ var QUESTIONS_BANK = {
     },
     {
       id: "fill_mongo_002", topicId: "topic_mongo", level: 4,
-      code: "const ProductSchema = new mongoose.____({\n  name: String,\n  price: Number\n});",
+      code: "const product = new mongoose.____({\n  name: String,\n  price: Number\n});",
       answer: "Schema",
       hint: "מבנה הנתונים של Mongoose.",
       explanation: "mongoose.Schema מגדיר את צורת המסמך — שדות, טיפוסים, ולידציות.",
@@ -1210,10 +1210,10 @@ var QUESTIONS_BANK = {
     },
     {
       id: "fill_ts_004", topicId: "topic_typescript", level: 5,
-      code: "interface Greeter {\n  greet(name: string): ____;\n}",
-      answer: "string",
-      hint: "טיפוס ההחזרה — פונקציית greet מחזירה ברכה.",
-      explanation: "greet מחזירה string (לדוגמה 'Hello, ' + name). ה-interface מחייב את החתימה.",
+      code: "interface Counter {\n  count(items: any[]): ____;\n}",
+      answer: "number",
+      hint: "טיפוס ההחזרה — פונקציה שסופרת איברים מחזירה כמות מספרית.",
+      explanation: "count(items) מחזירה את כמות הפריטים — number. ה-interface מחייב את החתימה.",
     },
   ],
 };
