@@ -4596,3 +4596,941 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("open-home")?.classList.add("active");
   }, 150);
 });
+/* ============================================================
+ * TRACK D — UX QUICK WINS (D1-D6)
+ * Self-contained module. Append-only. Does not touch app.js logic.
+ *   D1  Read-aloud TTS button (🔊)
+ *   D2  Glossary HE/EN tooltip + modal
+ *   D3  Pocket concept card (📌) panel
+ *   D4  Daily reflection (Friday 18:00)
+ *   D5  Settings: dyslexia font + reduced motion
+ *   D6  60-second lesson wrap-up modal
+ *
+ * All data in localStorage under the "lumenportal:..." namespace.
+ * ============================================================ */
+(function trackD_UXQuickWins() {
+  "use strict";
+
+  // ---------- Storage keys ----------
+  const KEYS = {
+    pocket:      "lumenportal:pocket:v1",
+    reflections: "lumenportal:reflections:v1",
+    reflectShown:"lumenportal:reflection-shown-week:v1",
+    settings:    "lumenportal:settings:v1",
+    wrapups:     "lumenportal:wrapups:v1",
+    wrapShown:   "lumenportal:wrapup-shown:v1",
+  };
+
+  // ---------- tiny utils ----------
+  function readJSON(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw == null ? fallback : JSON.parse(raw);
+    } catch (_) { return fallback; }
+  }
+  function writeJSON(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (_) {}
+  }
+  function escD(str) {
+    return String(str == null ? "" : str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+  function on(el, ev, fn, opts) {
+    if (el) el.addEventListener(ev, fn, opts);
+  }
+  function ready(fn) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", fn);
+    } else {
+      fn();
+    }
+  }
+
+  // Run once DOM is ready (we're already at end of <script> but be safe).
+  ready(init);
+
+  function init() {
+    applySettings();              // D5 — apply saved settings ASAP
+    setupSettingsButton();        // D5 — inject ⚙️ button
+    setupGlossaryWalker();        // D2 — wrap glossary terms
+    setupTtsButtonInjector();     // D1 — inject 🔊 buttons
+    setupPocketButtons();         // D3 — inject 📌 buttons + panel
+    setupReflectionTrigger();     // D4 — Friday 18:00 modal
+    setupWrapUpWatcher();         // D6 — lesson-completion modal
+  }
+
+  // =========================================================
+  // D1 — Read-aloud TTS button
+  // =========================================================
+  const TTS = {
+    current: null,   // current SpeechSynthesisUtterance
+    btn: null,       // button currently playing
+    available: typeof window.speechSynthesis !== "undefined" &&
+               typeof window.SpeechSynthesisUtterance !== "undefined",
+  };
+
+  function ttsStop() {
+    if (!TTS.available) return;
+    try { window.speechSynthesis.cancel(); } catch (_) {}
+    if (TTS.btn) TTS.btn.classList.remove("td-tts-playing");
+    TTS.current = null;
+    TTS.btn = null;
+  }
+
+  function ttsSpeak(text, btn) {
+    if (!TTS.available || !text) return;
+    // If clicking the same button while playing → stop
+    if (TTS.btn === btn) {
+      ttsStop();
+      return;
+    }
+    ttsStop(); // stop any previous
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "he-IL";
+    u.rate = 0.9;
+    u.pitch = 1;
+    u.onend = () => {
+      if (TTS.current === u) ttsStop();
+    };
+    u.onerror = () => {
+      if (TTS.current === u) ttsStop();
+    };
+    TTS.current = u;
+    TTS.btn = btn;
+    btn.classList.add("td-tts-playing");
+    try { window.speechSynthesis.speak(u); }
+    catch (_) { ttsStop(); }
+  }
+
+  function setupTtsButtonInjector() {
+    if (!TTS.available) return; // Browser doesn't support — skip silently
+
+    function decorate(root) {
+      const targets = root.querySelectorAll(
+        ".concept-explanation:not([data-td-tts]), .code-explanation:not([data-td-tts])",
+      );
+      targets.forEach((el) => {
+        el.setAttribute("data-td-tts", "1");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "td-tts-btn";
+        btn.title = "הקרא בקול (עברית)";
+        btn.setAttribute("aria-label", "הקרא בקול");
+        btn.innerHTML = "<span class=\"td-tts-icon\">🔊</span>";
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          // Pull plain text without the button or any nested glossary tooltip wrappers
+          const clone = el.cloneNode(true);
+          clone.querySelectorAll(".td-tts-btn").forEach((n) => n.remove());
+          const text = (clone.textContent || "").trim();
+          ttsSpeak(text, btn);
+        });
+        // Keep button visually inside the block (top-left for RTL).
+        el.appendChild(btn);
+      });
+    }
+
+    decorate(document.body);
+    const obs = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        m.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) decorate(node);
+        });
+      }
+    });
+    obs.observe(document.body, { childList: true, subtree: true });
+
+    // Stop speaking when navigating away or pressing Escape.
+    on(document, "keydown", (e) => { if (e.key === "Escape") ttsStop(); });
+    on(window, "beforeunload", ttsStop);
+  }
+
+  // =========================================================
+  // D2 — Glossary HE/EN tooltip + modal
+  // =========================================================
+  function setupGlossaryWalker() {
+    const G = window.GLOSSARY;
+    if (!G || typeof G !== "object") return;
+
+    // Build sorted-by-length list (longest first → 'controlled component' wins over 'component')
+    const terms = Object.keys(G).sort((a, b) => b.length - a.length);
+    if (terms.length === 0) return;
+
+    // Word-boundary regex: case-sensitive (so 'Hook' matches but 'hook' in Hebrew text does not).
+    // Use lookbehind/lookahead with non-letter to support multi-word keys.
+    const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern = new RegExp(
+      "(?<![A-Za-z0-9_])(" +
+        terms.map(escRe).join("|") +
+      ")(?![A-Za-z0-9_])",
+    );
+
+    const SCAN_SELECTOR =
+      ".concept-explanation, .code-explanation, .lvl-explanation, " +
+      ".guide-topic-explanation, .guide-topic p, .study-card p, " +
+      ".trace-explanation";
+    const SKIP_TAGS = new Set([
+      "SCRIPT", "STYLE", "PRE", "CODE", "TEXTAREA", "INPUT", "BUTTON",
+    ]);
+
+    function wrapInTextNode(textNode) {
+      const text = textNode.nodeValue;
+      if (!text || !pattern.test(text)) return;
+      const frag = document.createDocumentFragment();
+      let lastIdx = 0;
+      // Use global regex on a string copy
+      const re = new RegExp(pattern.source, "g");
+      let match;
+      while ((match = re.exec(text)) !== null) {
+        const start = match.index;
+        const end = start + match[0].length;
+        if (start > lastIdx) {
+          frag.appendChild(document.createTextNode(text.slice(lastIdx, start)));
+        }
+        const span = document.createElement("span");
+        span.className = "td-gloss-term";
+        span.setAttribute("data-td-term", match[0]);
+        span.setAttribute("tabindex", "0");
+        span.setAttribute("role", "button");
+        span.setAttribute("aria-label", "הצג הסבר על " + match[0]);
+        span.textContent = match[0];
+        frag.appendChild(span);
+        lastIdx = end;
+      }
+      if (lastIdx < text.length) {
+        frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+      }
+      textNode.parentNode.replaceChild(frag, textNode);
+    }
+
+    function walk(node) {
+      if (!node || node.nodeType !== 1) return;
+      if (node.hasAttribute && node.hasAttribute("data-td-gloss-done")) return;
+
+      // For each candidate container in the subtree, walk text nodes.
+      const candidates = node.matches && node.matches(SCAN_SELECTOR)
+        ? [node]
+        : Array.from(node.querySelectorAll(SCAN_SELECTOR));
+      candidates.forEach((c) => {
+        if (c.hasAttribute("data-td-gloss-done")) return;
+        c.setAttribute("data-td-gloss-done", "1");
+        // Walk text nodes
+        const walker = document.createTreeWalker(c, NodeFilter.SHOW_TEXT, {
+          acceptNode(tn) {
+            const p = tn.parentNode;
+            if (!p) return NodeFilter.FILTER_REJECT;
+            if (SKIP_TAGS.has(p.tagName)) return NodeFilter.FILTER_REJECT;
+            if (p.classList && p.classList.contains("td-gloss-term"))
+              return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+          },
+        });
+        const nodes = [];
+        let n;
+        while ((n = walker.nextNode())) nodes.push(n);
+        nodes.forEach(wrapInTextNode);
+      });
+    }
+
+    walk(document.body);
+    const obs = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        m.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) walk(node);
+        });
+      }
+    });
+    obs.observe(document.body, { childList: true, subtree: true });
+
+    // ---------- Tooltip on hover ----------
+    let tooltipEl = null;
+    function showTooltip(targetEl) {
+      const term = targetEl.getAttribute("data-td-term");
+      if (!term || !G[term]) return;
+      const entry = G[term];
+      if (!tooltipEl) {
+        tooltipEl = document.createElement("div");
+        tooltipEl.className = "td-gloss-tooltip";
+        document.body.appendChild(tooltipEl);
+      }
+      tooltipEl.innerHTML =
+        '<div class="td-gloss-tip-he">' + escD(entry.he) + '</div>' +
+        '<div class="td-gloss-tip-short">' + escD(entry.short || "") + '</div>' +
+        '<div class="td-gloss-tip-hint">לחץ להסבר מורחב</div>';
+      const r = targetEl.getBoundingClientRect();
+      tooltipEl.style.display = "block";
+      // Position below by default
+      const top = r.bottom + window.scrollY + 6;
+      // Try to align to the right edge of the term (RTL layout).
+      const rightFromViewport = window.innerWidth - r.right;
+      tooltipEl.style.top = top + "px";
+      tooltipEl.style.right = Math.max(8, rightFromViewport) + "px";
+      tooltipEl.style.left = "auto";
+    }
+    function hideTooltip() {
+      if (tooltipEl) tooltipEl.style.display = "none";
+    }
+    document.addEventListener("mouseover", (e) => {
+      const t = e.target.closest && e.target.closest(".td-gloss-term");
+      if (t) showTooltip(t);
+    });
+    document.addEventListener("mouseout", (e) => {
+      const t = e.target.closest && e.target.closest(".td-gloss-term");
+      if (t) hideTooltip();
+    });
+    document.addEventListener("focusin", (e) => {
+      const t = e.target.closest && e.target.closest(".td-gloss-term");
+      if (t) showTooltip(t);
+    });
+    document.addEventListener("focusout", (e) => {
+      const t = e.target.closest && e.target.closest(".td-gloss-term");
+      if (t) hideTooltip();
+    });
+
+    // ---------- Modal on click ----------
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest && e.target.closest(".td-gloss-term");
+      if (!t) return;
+      e.preventDefault();
+      e.stopPropagation();
+      hideTooltip();
+      const term = t.getAttribute("data-td-term");
+      if (!term || !G[term]) return;
+      openGlossaryModal(term, G[term]);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const t = document.activeElement;
+      if (!t || !t.classList || !t.classList.contains("td-gloss-term")) return;
+      e.preventDefault();
+      const term = t.getAttribute("data-td-term");
+      if (term && G[term]) openGlossaryModal(term, G[term]);
+    });
+  }
+
+  function openGlossaryModal(term, entry) {
+    closeAllTdModals();
+    const overlay = document.createElement("div");
+    overlay.className = "td-modal-overlay";
+    overlay.innerHTML = '' +
+      '<div class="td-modal td-gloss-modal" role="dialog" aria-modal="true">' +
+        '<button type="button" class="td-modal-close" aria-label="סגור">×</button>' +
+        '<div class="td-gloss-modal-head">' +
+          '<div class="td-gloss-modal-en">' + escD(term) + '</div>' +
+          '<div class="td-gloss-modal-he">' + escD(entry.he) + '</div>' +
+          (entry.category ? '<div class="td-gloss-modal-cat td-cat-' + escD(entry.category) + '">' + escD(entry.category) + '</div>' : '') +
+        '</div>' +
+        '<div class="td-gloss-modal-body">' +
+          '<p class="td-gloss-modal-long">' + escD(entry.long || entry.short || "") + '</p>' +
+          (entry.example ? '<pre class="td-gloss-modal-example"><code>' + escD(entry.example) + '</code></pre>' : '') +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(overlay);
+    on(overlay.querySelector(".td-modal-close"), "click", () => overlay.remove());
+    on(overlay, "click", (ev) => {
+      if (ev.target === overlay) overlay.remove();
+    });
+    on(document, "keydown", function escClose(ev) {
+      if (ev.key === "Escape") {
+        overlay.remove();
+        document.removeEventListener("keydown", escClose);
+      }
+    });
+  }
+
+  function closeAllTdModals() {
+    document.querySelectorAll(".td-modal-overlay").forEach((o) => o.remove());
+  }
+
+  // =========================================================
+  // D3 — Pocket Concept Card (📌)
+  // =========================================================
+  let pocketKeys = readJSON(KEYS.pocket, []);
+  if (!Array.isArray(pocketKeys)) pocketKeys = [];
+
+  function pocketAdd(key) {
+    if (!key) return;
+    if (pocketKeys.indexOf(key) === -1) pocketKeys.push(key);
+    writeJSON(KEYS.pocket, pocketKeys);
+    renderPocketPanel();
+  }
+  function pocketRemove(key) {
+    pocketKeys = pocketKeys.filter((k) => k !== key);
+    writeJSON(KEYS.pocket, pocketKeys);
+    renderPocketPanel();
+  }
+  function pocketHas(key) { return pocketKeys.indexOf(key) !== -1; }
+
+  function isMockExamMode() {
+    // Hook for future Mock Exam mode (Track C-2). When that mode is active,
+    // it should set body[data-mock-exam="1"]. Until then, always false.
+    return document.body.getAttribute("data-mock-exam") === "1";
+  }
+
+  function setupPocketButtons() {
+    // Build / mount panel
+    ensurePocketPanel();
+    renderPocketPanel();
+
+    function decorate(root) {
+      const cards = root.querySelectorAll(".concept-card:not([data-td-pocket])");
+      cards.forEach((card) => {
+        card.setAttribute("data-td-pocket", "1");
+        const heading = card.querySelector("h4, h3");
+        if (!heading) return;
+        const conceptName = heading.textContent.trim();
+        if (!conceptName) return;
+        // Try to find lessonId from the active lesson nav button.
+        const activeBtn = document.querySelector(".lesson-nav-btn.active[data-id]");
+        const lessonId = activeBtn ? activeBtn.getAttribute("data-id") : "";
+        const key = lessonId ? (lessonId + "::" + conceptName) : ("__::" + conceptName);
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "td-pocket-btn";
+        if (pocketHas(key)) btn.classList.add("td-pocket-on");
+        btn.title = "שמור מושג בכיס";
+        btn.setAttribute("aria-label", "שמור מושג בכיס");
+        btn.setAttribute("data-td-key", key);
+        btn.setAttribute("data-td-name", conceptName);
+        btn.setAttribute("data-td-lesson", lessonId);
+        btn.innerHTML = "📌";
+        if (isMockExamMode()) {
+          btn.disabled = true;
+          btn.title = "מצב מבחן — לא ניתן לערוך כיס";
+          btn.classList.add("td-pocket-disabled");
+        }
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (isMockExamMode()) return;
+          if (pocketHas(key)) {
+            pocketRemove(key);
+            btn.classList.remove("td-pocket-on");
+          } else {
+            pocketAdd(key);
+            btn.classList.add("td-pocket-on");
+          }
+        });
+        // Place at top of card (before heading) so it doesn't disturb existing layout.
+        card.insertBefore(btn, card.firstChild);
+      });
+    }
+
+    decorate(document.body);
+    const obs = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        m.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) decorate(node);
+        });
+      }
+    });
+    obs.observe(document.body, { childList: true, subtree: true });
+  }
+
+  function ensurePocketPanel() {
+    if (document.getElementById("td-pocket-panel")) return;
+    const panel = document.createElement("div");
+    panel.id = "td-pocket-panel";
+    panel.className = "td-pocket-panel td-pocket-collapsed";
+    panel.innerHTML = '' +
+      '<button type="button" class="td-pocket-toggle" aria-expanded="false">' +
+        '<span class="td-pocket-icon">📌</span>' +
+        '<span class="td-pocket-count">0</span>' +
+        '<span class="td-pocket-label">בכיס</span>' +
+      '</button>' +
+      '<div class="td-pocket-body">' +
+        '<div class="td-pocket-head">' +
+          '<strong>📌 הכיס שלי</strong>' +
+          '<button type="button" class="td-pocket-clear" title="נקה הכל">🗑️</button>' +
+        '</div>' +
+        '<ul class="td-pocket-list"></ul>' +
+        '<div class="td-pocket-empty">אין מושגים בכיס. לחץ על 📌 ליד כרטיס מושג כדי להוסיף.</div>' +
+      '</div>';
+    document.body.appendChild(panel);
+
+    on(panel.querySelector(".td-pocket-toggle"), "click", () => {
+      const collapsed = panel.classList.toggle("td-pocket-collapsed");
+      panel.querySelector(".td-pocket-toggle").setAttribute("aria-expanded", String(!collapsed));
+    });
+    on(panel.querySelector(".td-pocket-clear"), "click", () => {
+      if (!pocketKeys.length) return;
+      if (confirm("לנקות את כל המושגים בכיס?")) {
+        pocketKeys = [];
+        writeJSON(KEYS.pocket, pocketKeys);
+        renderPocketPanel();
+        // Also flip off existing 📌 buttons in DOM
+        document.querySelectorAll(".td-pocket-btn.td-pocket-on")
+          .forEach((b) => b.classList.remove("td-pocket-on"));
+      }
+    });
+  }
+
+  function renderPocketPanel() {
+    const panel = document.getElementById("td-pocket-panel");
+    if (!panel) return;
+    const count = pocketKeys.length;
+    panel.querySelector(".td-pocket-count").textContent = String(count);
+    const list = panel.querySelector(".td-pocket-list");
+    const empty = panel.querySelector(".td-pocket-empty");
+    list.innerHTML = "";
+    if (count === 0) {
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+    pocketKeys.forEach((key) => {
+      const [lessonId, ...rest] = key.split("::");
+      const conceptName = rest.join("::");
+      const li = document.createElement("li");
+      li.className = "td-pocket-item";
+      li.innerHTML =
+        '<button type="button" class="td-pocket-go" title="פתח את המושג">' +
+          '<span class="td-pocket-name">' + escD(conceptName) + '</span>' +
+          (lessonId && lessonId !== "__"
+            ? '<span class="td-pocket-lesson">' + escD(lessonId) + '</span>'
+            : '') +
+        '</button>' +
+        '<button type="button" class="td-pocket-del" title="הסר מהכיס">×</button>';
+      on(li.querySelector(".td-pocket-go"), "click", () => goToConcept(lessonId, conceptName));
+      on(li.querySelector(".td-pocket-del"), "click", () => {
+        pocketRemove(key);
+        // Sync any 📌 button on screen
+        document.querySelectorAll(`.td-pocket-btn[data-td-key="${CSS.escape(key)}"]`)
+          .forEach((b) => b.classList.remove("td-pocket-on"));
+      });
+      list.appendChild(li);
+    });
+  }
+
+  function goToConcept(lessonId, conceptName) {
+    if (lessonId && lessonId !== "__") {
+      const navBtn = document.querySelector(`.lesson-nav-btn[data-id="${CSS.escape(lessonId)}"]`);
+      if (navBtn) {
+        navBtn.click();
+      }
+    }
+    // After view loads, scroll to matching concept card.
+    setTimeout(() => {
+      const cards = document.querySelectorAll(".concept-card h4, .concept-card h3");
+      for (const h of cards) {
+        if (h.textContent.trim() === conceptName) {
+          const card = h.closest(".concept-card");
+          if (card) {
+            card.scrollIntoView({ behavior: "smooth", block: "center" });
+            card.classList.add("td-flash");
+            setTimeout(() => card.classList.remove("td-flash"), 1500);
+          }
+          break;
+        }
+      }
+    }, 200);
+  }
+
+  // =========================================================
+  // D4 — Daily Reflection (Friday after 18:00)
+  // =========================================================
+  function setupReflectionTrigger() {
+    // Inject "📅 ההיסטוריה שלי" link into the welcome screen if present.
+    injectReflectionHistoryLink();
+
+    // Check trigger conditions.
+    const now = new Date();
+    const isFriday = now.getDay() === 5;            // Sunday=0 ... Friday=5
+    const isAfter18 = now.getHours() >= 18;
+    const weekKey = isoWeekKey(now);
+    const lastShown = readJSON(KEYS.reflectShown, "");
+
+    if (isFriday && isAfter18 && lastShown !== weekKey) {
+      // Slight delay so it lands after the welcome animations.
+      setTimeout(() => openReflectionModal(weekKey), 1500);
+    }
+  }
+
+  function isoWeekKey(d) {
+    // Returns 'YYYY-Www' (ISO 8601). Stable across the week.
+    const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const dayNum = (date.getUTCDay() + 6) % 7; // Mon=0...Sun=6
+    date.setUTCDate(date.getUTCDate() - dayNum + 3);
+    const firstThursday = new Date(Date.UTC(date.getUTCFullYear(), 0, 4));
+    const week = 1 + Math.round(
+      ((date - firstThursday) / 86400000 - 3 + ((firstThursday.getUTCDay() + 6) % 7)) / 7,
+    );
+    return date.getUTCFullYear() + "-W" + String(week).padStart(2, "0");
+  }
+
+  function openReflectionModal(weekKey) {
+    closeAllTdModals();
+    const overlay = document.createElement("div");
+    overlay.className = "td-modal-overlay";
+    overlay.innerHTML = '' +
+      '<div class="td-modal td-reflect-modal" role="dialog" aria-modal="true">' +
+        '<button type="button" class="td-modal-close" aria-label="סגור">×</button>' +
+        '<h2 class="td-modal-title">📅 הרהור שבועי</h2>' +
+        '<p class="td-modal-subtitle">כמה דקות לסכם את השבוע. הנתונים נשמרים מקומית בלבד.</p>' +
+        '<form class="td-reflect-form">' +
+          '<label class="td-field">' +
+            '<span>1. באיזה מושג נתקעת?</span>' +
+            '<textarea name="stuck" rows="3" placeholder="לדוגמה: useEffect dependencies, closures..."></textarea>' +
+          '</label>' +
+          '<label class="td-field">' +
+            '<span>2. כמה שעות למדת השבוע?</span>' +
+            '<input type="number" name="hours" min="0" max="80" step="0.5" placeholder="0" />' +
+          '</label>' +
+          '<label class="td-field">' +
+            '<span>3. מה תרצה ללמוד בשבוע הבא?</span>' +
+            '<textarea name="next" rows="3" placeholder="לדוגמה: לעמיק ב-Context, לתרגל TypeScript..."></textarea>' +
+          '</label>' +
+          '<div class="td-modal-actions">' +
+            '<button type="button" class="td-btn-secondary td-reflect-skip">דלג השבוע</button>' +
+            '<button type="submit" class="td-btn-primary">💾 שמור</button>' +
+          '</div>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    function dismiss(saveWeek) {
+      if (saveWeek) writeJSON(KEYS.reflectShown, weekKey);
+      overlay.remove();
+    }
+
+    on(overlay.querySelector(".td-modal-close"), "click", () => dismiss(false));
+    on(overlay.querySelector(".td-reflect-skip"), "click", () => dismiss(true));
+    on(overlay, "click", (ev) => {
+      if (ev.target === overlay) dismiss(false);
+    });
+
+    on(overlay.querySelector(".td-reflect-form"), "submit", (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const entry = {
+        weekKey,
+        date: new Date().toISOString(),
+        stuck: (form.elements.stuck.value || "").trim(),
+        hours: parseFloat(form.elements.hours.value || "0") || 0,
+        next: (form.elements.next.value || "").trim(),
+      };
+      const all = readJSON(KEYS.reflections, []);
+      all.push(entry);
+      writeJSON(KEYS.reflections, all);
+      writeJSON(KEYS.reflectShown, weekKey);
+      overlay.remove();
+      // Quick toast.
+      showToast("שמור! תודה על הרהור 🙏");
+    });
+  }
+
+  function injectReflectionHistoryLink() {
+    // Add a small button near the welcome screen so users can browse history any time.
+    const tour = document.querySelector(".onboarding-tour");
+    if (!tour || tour.querySelector(".td-reflect-history-btn")) return;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "td-reflect-history-btn";
+    btn.innerHTML = "📅 ההיסטוריה שלי";
+    btn.title = "צפה בהרהורים שמילאת";
+    btn.addEventListener("click", openReflectionHistory);
+    tour.appendChild(btn);
+  }
+
+  function openReflectionHistory() {
+    closeAllTdModals();
+    const all = readJSON(KEYS.reflections, []);
+    const overlay = document.createElement("div");
+    overlay.className = "td-modal-overlay";
+    let listHtml = "";
+    if (!all.length) {
+      listHtml = '<p class="td-empty">עדיין אין הרהורים. ביום שישי בערב תקבל תזכורת.</p>';
+    } else {
+      const rows = all.slice().reverse().map((r) => '' +
+        '<div class="td-reflect-row">' +
+          '<div class="td-reflect-row-head">' +
+            '<strong>' + escD(r.weekKey || "") + '</strong>' +
+            '<span class="td-reflect-row-date">' + escD(formatDate(r.date)) + '</span>' +
+            '<span class="td-reflect-row-hours">' + escD(String(r.hours || 0)) + ' ש׳ למידה</span>' +
+          '</div>' +
+          (r.stuck ? '<div class="td-reflect-row-q"><b>נתקע ב:</b> ' + escD(r.stuck) + '</div>' : '') +
+          (r.next ? '<div class="td-reflect-row-q"><b>בשבוע הבא:</b> ' + escD(r.next) + '</div>' : '') +
+        '</div>',
+      ).join("");
+      listHtml = '<div class="td-reflect-history">' + rows + '</div>';
+    }
+    overlay.innerHTML = '' +
+      '<div class="td-modal td-reflect-history-modal" role="dialog" aria-modal="true">' +
+        '<button type="button" class="td-modal-close" aria-label="סגור">×</button>' +
+        '<h2 class="td-modal-title">📅 ההיסטוריה שלי — הרהורים שבועיים</h2>' +
+        listHtml +
+      '</div>';
+    document.body.appendChild(overlay);
+    on(overlay.querySelector(".td-modal-close"), "click", () => overlay.remove());
+    on(overlay, "click", (ev) => {
+      if (ev.target === overlay) overlay.remove();
+    });
+  }
+
+  function formatDate(iso) {
+    if (!iso) return "";
+    try {
+      const d = new Date(iso);
+      return d.toLocaleDateString("he-IL", { day: "2-digit", month: "2-digit", year: "numeric" });
+    } catch (_) { return iso; }
+  }
+
+  // =========================================================
+  // D5 — Settings: Dyslexia font + Reduced motion
+  // =========================================================
+  function getSettings() {
+    const s = readJSON(KEYS.settings, {});
+    return {
+      dyslexia: !!(s && s.dyslexia),
+      reducedMotion: !!(s && s.reducedMotion),
+    };
+  }
+  function saveSettings(s) { writeJSON(KEYS.settings, s); }
+
+  function applySettings() {
+    const s = getSettings();
+    document.body.classList.toggle("td-dyslexia-font", s.dyslexia);
+    document.body.classList.toggle("td-reduced-motion", s.reducedMotion);
+    if (s.dyslexia) ensureDyslexiaFontCss();
+  }
+
+  function ensureDyslexiaFontCss() {
+    if (document.getElementById("td-dyslexia-font-link")) return;
+    const link = document.createElement("link");
+    link.id = "td-dyslexia-font-link";
+    link.rel = "stylesheet";
+    link.href = "https://fonts.cdnfonts.com/css/opendyslexic";
+    document.head.appendChild(link);
+  }
+
+  function setupSettingsButton() {
+    // Inject ⚙️ button into the top tabs bar (additive — does not modify existing tabs).
+    const bar = document.getElementById("top-tabs-bar");
+    if (!bar || bar.querySelector(".td-settings-btn")) return;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "td-settings-btn top-tab";
+    btn.title = "הגדרות נגישות";
+    btn.setAttribute("aria-label", "הגדרות נגישות");
+    btn.innerHTML = '<span class="emoji">⚙️</span><span>הגדרות</span>';
+    btn.addEventListener("click", openSettingsModal);
+    bar.appendChild(btn);
+  }
+
+  function openSettingsModal() {
+    closeAllTdModals();
+    const s = getSettings();
+    const overlay = document.createElement("div");
+    overlay.className = "td-modal-overlay";
+    overlay.innerHTML = '' +
+      '<div class="td-modal td-settings-modal" role="dialog" aria-modal="true">' +
+        '<button type="button" class="td-modal-close" aria-label="סגור">×</button>' +
+        '<h2 class="td-modal-title">⚙️ הגדרות נגישות</h2>' +
+        '<p class="td-modal-subtitle">העדפות אישיות שמיושמות בכל המערכת.</p>' +
+        '<div class="td-settings-list">' +
+          '<label class="td-toggle-row">' +
+            '<div class="td-toggle-info">' +
+              '<div class="td-toggle-title">📖 גופן ידידותי לדיסלקטיים</div>' +
+              '<div class="td-toggle-desc">החלף את הגופן הראשי ל-OpenDyslexic — נטען מ-CDN.</div>' +
+            '</div>' +
+            '<input type="checkbox" name="dyslexia"' + (s.dyslexia ? ' checked' : '') + ' />' +
+          '</label>' +
+          '<label class="td-toggle-row">' +
+            '<div class="td-toggle-info">' +
+              '<div class="td-toggle-title">🎬 הפחתת תנועה</div>' +
+              '<div class="td-toggle-desc">בטל אנימציות וטרנזישנים — שימושי לרגישות לתנועה.</div>' +
+            '</div>' +
+            '<input type="checkbox" name="reducedMotion"' + (s.reducedMotion ? ' checked' : '') + ' />' +
+          '</label>' +
+        '</div>' +
+        '<div class="td-modal-actions">' +
+          '<button type="button" class="td-btn-secondary" data-td-act="reset">איפוס</button>' +
+          '<button type="button" class="td-btn-primary" data-td-act="save">💾 שמור</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    on(overlay.querySelector(".td-modal-close"), "click", () => overlay.remove());
+    on(overlay, "click", (ev) => {
+      if (ev.target === overlay) overlay.remove();
+    });
+    on(overlay.querySelector('[data-td-act="reset"]'), "click", () => {
+      saveSettings({});
+      applySettings();
+      overlay.remove();
+      showToast("ההגדרות אופסו");
+    });
+    on(overlay.querySelector('[data-td-act="save"]'), "click", () => {
+      const dys = overlay.querySelector('[name="dyslexia"]').checked;
+      const rm = overlay.querySelector('[name="reducedMotion"]').checked;
+      saveSettings({ dyslexia: dys, reducedMotion: rm });
+      applySettings();
+      overlay.remove();
+      showToast("ההגדרות נשמרו ✓");
+    });
+  }
+
+  // =========================================================
+  // D6 — 60-Second Wrap-Up Modal
+  // =========================================================
+  function setupWrapUpWatcher() {
+    // Poll every 4s for a freshly-completed lesson.
+    const POLL_MS = 4000;
+    let lastChecked = "";
+
+    function check() {
+      try {
+        const lessonId = currentLessonIdFromDom();
+        if (!lessonId || lessonId === lastChecked) return;
+        lastChecked = lessonId;
+        if (isLessonCompletedFromScores(lessonId)) {
+          maybeShowWrapUp(lessonId);
+        }
+      } catch (_) {}
+    }
+
+    // Run after lessons render.
+    setInterval(check, POLL_MS);
+    setTimeout(check, 2000);
+    // Also check whenever a lesson nav button is clicked.
+    on(document, "click", (e) => {
+      const t = e.target.closest && e.target.closest(".lesson-nav-btn[data-id]");
+      if (t) setTimeout(() => { lastChecked = ""; check(); }, 600);
+    });
+  }
+
+  function currentLessonIdFromDom() {
+    const active = document.querySelector(".lesson-nav-btn.active[data-id]");
+    return active ? active.getAttribute("data-id") : "";
+  }
+
+  function isLessonCompletedFromScores(lessonId) {
+    const lessons = window.LESSONS_DATA || [];
+    const lesson = lessons.find((l) => l.id === lessonId);
+    if (!lesson || !Array.isArray(lesson.concepts) || !lesson.concepts.length) {
+      return false;
+    }
+    const scores = readJSON("lumenportal:scores:v1", {});
+    const proficiency = readJSON("lumenportal:proficiency:v1", {});
+    let allDone = true;
+    for (const c of lesson.concepts) {
+      const k = lessonId + "::" + c.conceptName;
+      const sc = scores[k];
+      const profV = proficiency[k] === "v";
+      const level = sc && typeof sc.level === "number" ? sc.level : 1;
+      if (!profV && level < 4) { allDone = false; break; }
+    }
+    return allDone;
+  }
+
+  function maybeShowWrapUp(lessonId) {
+    const shownMap = readJSON(KEYS.wrapShown, {});
+    const todayKey = todayDateKey();
+    if (shownMap[lessonId] === todayKey) return; // already shown today
+    shownMap[lessonId] = todayKey;
+    writeJSON(KEYS.wrapShown, shownMap);
+    openWrapUpModal(lessonId);
+  }
+
+  function todayDateKey() {
+    const d = new Date();
+    return d.getFullYear() + "-" +
+      String(d.getMonth() + 1).padStart(2, "0") + "-" +
+      String(d.getDate()).padStart(2, "0");
+  }
+
+  function openWrapUpModal(lessonId) {
+    closeAllTdModals();
+    const lessons = window.LESSONS_DATA || [];
+    const lesson = lessons.find((l) => l.id === lessonId);
+    const lessonTitle = lesson ? (lesson.title || lessonId) : lessonId;
+
+    const overlay = document.createElement("div");
+    overlay.className = "td-modal-overlay";
+    overlay.innerHTML = '' +
+      '<div class="td-modal td-wrap-modal" role="dialog" aria-modal="true">' +
+        '<button type="button" class="td-modal-close" aria-label="סגור">×</button>' +
+        '<div class="td-wrap-badge">🎉 60 שניות סיכום</div>' +
+        '<h2 class="td-modal-title">סיימת: ' + escD(lessonTitle) + '</h2>' +
+        '<p class="td-modal-subtitle">לפני שאתה ממשיך — סיכום מהיר של 60 שניות יעזור לך לזכור פי 3.</p>' +
+        '<form class="td-wrap-form">' +
+          '<label class="td-field">' +
+            '<span>1. סכם את השיעור ב-3 שורות</span>' +
+            '<textarea name="summary" rows="3" placeholder="מה הכי חשוב לזכור?"></textarea>' +
+          '</label>' +
+          '<label class="td-field">' +
+            '<span>2. כמה אתה בטוח? <span class="td-confidence-val">50</span>%</span>' +
+            '<input type="range" name="confidence" min="0" max="100" step="5" value="50" />' +
+          '</label>' +
+          '<label class="td-field">' +
+            '<span>3. מה היה הכי קשה?</span>' +
+            '<textarea name="hardest" rows="2" placeholder="הקטע שגרם לך לעצור..."></textarea>' +
+          '</label>' +
+          '<div class="td-modal-actions">' +
+            '<button type="button" class="td-btn-secondary td-wrap-skip">דלג</button>' +
+            '<button type="submit" class="td-btn-primary">💾 שמור סיכום</button>' +
+          '</div>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    const range = overlay.querySelector('[name="confidence"]');
+    const valSpan = overlay.querySelector(".td-confidence-val");
+    if (range && valSpan) {
+      range.addEventListener("input", () => { valSpan.textContent = range.value; });
+    }
+
+    on(overlay.querySelector(".td-modal-close"), "click", () => overlay.remove());
+    on(overlay.querySelector(".td-wrap-skip"), "click", () => overlay.remove());
+    on(overlay, "click", (ev) => {
+      if (ev.target === overlay) overlay.remove();
+    });
+    on(overlay.querySelector(".td-wrap-form"), "submit", (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const entry = {
+        lessonId,
+        lessonTitle,
+        date: new Date().toISOString(),
+        summary: (form.elements.summary.value || "").trim(),
+        confidence: parseInt(form.elements.confidence.value, 10) || 0,
+        hardest: (form.elements.hardest.value || "").trim(),
+      };
+      const all = readJSON(KEYS.wrapups, []);
+      all.push(entry);
+      writeJSON(KEYS.wrapups, all);
+      overlay.remove();
+      showToast("סיכום נשמר ✓ ביטחון: " + entry.confidence + "%");
+    });
+  }
+
+  // =========================================================
+  // Tiny toast helper
+  // =========================================================
+  function showToast(message) {
+    const el = document.createElement("div");
+    el.className = "td-toast";
+    el.textContent = message;
+    document.body.appendChild(el);
+    // force reflow then animate-in
+    void el.offsetWidth;
+    el.classList.add("td-toast-in");
+    setTimeout(() => {
+      el.classList.remove("td-toast-in");
+      setTimeout(() => el.remove(), 400);
+    }, 2400);
+  }
+
+  // Expose minimal API for debugging / future Tracks (read-only intent).
+  window.TrackD = {
+    version: "track-d-v1",
+    openSettings: openSettingsModal,
+    openReflectionHistory: openReflectionHistory,
+    getPocket: () => pocketKeys.slice(),
+  };
+})();
