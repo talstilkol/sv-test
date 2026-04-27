@@ -5112,6 +5112,100 @@ html { scroll-behavior: smooth; }
 }
 
 /* ============================================================ */
+/* Sprint 2 §4.15.6 — Mental Model Animator                     */
+/* ============================================================ */
+.animator-panel {
+  margin-top: 0.6rem;
+  background: rgba(168, 85, 247, 0.06);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem;
+}
+.animator-panel > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #c4b5fd;
+  font-size: 0.95rem;
+}
+.anim-body { margin-top: 0.6rem; }
+.anim-title {
+  font-weight: 700;
+  color: #ddd6fe;
+  margin-bottom: 0.3rem;
+}
+.anim-intro {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 0.7rem;
+  line-height: 1.5;
+}
+.anim-stage {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.anim-frame-num {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: left;
+  direction: ltr;
+}
+.anim-frame-phase {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #c4b5fd;
+  margin: 0.4rem 0 0.6rem;
+}
+.anim-frame-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 700px) {
+  .anim-frame-grid { grid-template-columns: 1fr; }
+}
+.anim-cell {
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  min-height: 70px;
+}
+.anim-cell-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+.anim-cell-content {
+  margin: 0;
+  font-family: "Fira Code", monospace;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: var(--text-bright);
+  direction: ltr;
+  text-align: left;
+}
+.anim-frame-note {
+  background: rgba(99, 102, 241, 0.1);
+  border-right: 3px solid #6366f1;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-bright);
+}
+.anim-controls {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* ============================================================ */
 /* P1.4.4 — Mini Build panel (write code → regex tests)        */
 /* ============================================================ */
 .mini-build-panel {

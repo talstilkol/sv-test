@@ -5024,6 +5024,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${renderExtrasPanel(concept, sc, diff)}
         ${renderMnemonicPanel(concept)}
         ${renderAntiPatternsPanel(concept)}
+        ${renderAnimatorPanel(concept)}
         ${renderBugHuntPanel(concept)}
         ${renderMiniBuildPanel(concept)}
         ${renderWarStoriesPanel(concept)}
@@ -5226,6 +5227,68 @@ document.addEventListener("DOMContentLoaded", () => {
         <summary>🐛 ציד באגים (${bugs.length} מקרים)</summary>
         <div class="bh-body">${items}</div>
       </details>`;
+  }
+
+  // Sprint 2 §4.15.6 — Mental Model Animator panel
+  function renderAnimatorPanel(concept) {
+    const anim = concept.animation;
+    if (!anim || !Array.isArray(anim.frames) || anim.frames.length === 0) return "";
+    const frames = anim.frames;
+    const f0 = frames[0];
+    return `
+      <details class="animator-panel" data-anim-concept="${esc(concept.conceptName)}">
+        <summary>🎬 הדמיה חיה (${frames.length} פריימים)</summary>
+        <div class="anim-body">
+          <div class="anim-title">${esc(anim.title || "")}</div>
+          ${anim.intro ? `<div class="anim-intro">${esc(anim.intro)}</div>` : ""}
+          <div class="anim-stage" data-anim-stage="${esc(concept.conceptName)}">
+            <div class="anim-frame-num">פריים 1 / ${frames.length}</div>
+            <div class="anim-frame-phase">${esc(f0.phase || "")}</div>
+            <div class="anim-frame-grid">
+              <div class="anim-cell"><span class="anim-cell-label">📦 State</span><pre class="anim-cell-content anim-state">${esc(String(f0.state || ""))}</pre></div>
+              <div class="anim-cell"><span class="anim-cell-label">🖥️ DOM</span><pre class="anim-cell-content anim-dom">${esc(String(f0.dom || ""))}</pre></div>
+              <div class="anim-cell"><span class="anim-cell-label">📤 Console</span><pre class="anim-cell-content anim-log">${esc(String(f0.log || ""))}</pre></div>
+            </div>
+            <div class="anim-frame-note">${esc(f0.note || "")}</div>
+          </div>
+          <div class="anim-controls">
+            <button class="km-btn-mini" data-action="anim-prev" data-anim-concept="${esc(concept.conceptName)}">▶ הקודם</button>
+            <button class="km-btn-mini" data-action="anim-auto" data-anim-concept="${esc(concept.conceptName)}">⏯ הפעל אוטו</button>
+            <button class="km-btn-mini primary" data-action="anim-next" data-anim-concept="${esc(concept.conceptName)}">הבא ◀</button>
+            <button class="km-btn-mini" data-action="anim-reset" data-anim-concept="${esc(concept.conceptName)}">🔄 איפוס</button>
+          </div>
+        </div>
+      </details>`;
+  }
+
+  // Animator runtime state (per-concept). Map of conceptName → {idx, autoTimer}
+  const animState = new Map();
+
+  function showAnimatorFrame(concept, idx) {
+    const frames = concept.animation?.frames || [];
+    if (!frames.length) return;
+    if (idx < 0) idx = 0;
+    if (idx >= frames.length) idx = frames.length - 1;
+    const f = frames[idx];
+    const stageQuery = `[data-anim-stage="${cssEscape(concept.conceptName)}"]`;
+    const stage = document.querySelector(stageQuery);
+    if (!stage) return;
+    stage.querySelector(".anim-frame-num").textContent = `פריים ${idx + 1} / ${frames.length}`;
+    stage.querySelector(".anim-frame-phase").textContent = f.phase || "";
+    stage.querySelector(".anim-state").textContent = String(f.state || "");
+    stage.querySelector(".anim-dom").textContent = String(f.dom || "");
+    stage.querySelector(".anim-log").textContent = String(f.log || "");
+    stage.querySelector(".anim-frame-note").textContent = f.note || "";
+    if (!animState.has(concept.conceptName)) animState.set(concept.conceptName, { idx: 0, autoTimer: null });
+    animState.get(concept.conceptName).idx = idx;
+  }
+
+  function stopAnimAuto(conceptName) {
+    const s = animState.get(conceptName);
+    if (s?.autoTimer) {
+      clearInterval(s.autoTimer);
+      s.autoTimer = null;
+    }
   }
 
   // P1.4.4 — Mini Build panel (write code → regex tests)
@@ -5609,6 +5672,38 @@ document.addEventListener("DOMContentLoaded", () => {
               tag.className = "bh-status bh-status-correct";
               tag.textContent = "✅ נכון!";
               optionsBox?.appendChild(tag);
+            }
+          } else if (action === "anim-next" || action === "anim-prev" || action === "anim-auto" || action === "anim-reset") {
+            // Sprint 2 — Mental Model Animator controls
+            if (!concept.animation) return;
+            const total = concept.animation.frames.length;
+            const cn = concept.conceptName;
+            if (!animState.has(cn)) animState.set(cn, { idx: 0, autoTimer: null });
+            const s = animState.get(cn);
+            if (action === "anim-next") {
+              stopAnimAuto(cn);
+              showAnimatorFrame(concept, Math.min(s.idx + 1, total - 1));
+            } else if (action === "anim-prev") {
+              stopAnimAuto(cn);
+              showAnimatorFrame(concept, Math.max(s.idx - 1, 0));
+            } else if (action === "anim-reset") {
+              stopAnimAuto(cn);
+              showAnimatorFrame(concept, 0);
+            } else if (action === "anim-auto") {
+              if (s.autoTimer) {
+                stopAnimAuto(cn);
+                btn.textContent = "⏯ הפעל אוטו";
+              } else {
+                btn.textContent = "⏸ עצור";
+                s.autoTimer = setInterval(() => {
+                  if (s.idx >= total - 1) {
+                    stopAnimAuto(cn);
+                    btn.textContent = "⏯ הפעל אוטו";
+                    return;
+                  }
+                  showAnimatorFrame(concept, s.idx + 1);
+                }, 2500);
+              }
             }
           } else if (action === "mb-check" || action === "mb-reset" || action === "mb-show-ref" || action === "mb-show-hint") {
             // P1.4.4 — Mini Build actions

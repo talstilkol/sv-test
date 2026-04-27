@@ -49,6 +49,8 @@
     (acc[b.conceptKey] = acc[b.conceptKey] || []).push(b);
     return acc;
   }, {});
+  // Sprint 2 §4.15.6 — Mental Model Animator (ANIMATIONS keyed by conceptKey)
+  const animations = typeof ANIMATIONS !== "undefined" ? ANIMATIONS : {};
   let enrichedCount = 0;
   let extendedCount = 0;
   let antiPatternsCount = 0;
@@ -97,6 +99,10 @@
       // P1.4.4 — Mini Builds
       if (buildsByKey[key] && buildsByKey[key].length > 0) {
         c.miniBuilds = buildsByKey[key];
+      }
+      // Sprint 2 §4.15.6 — Mental Model Animator
+      if (animations[key]) {
+        c.animation = animations[key];
       }
     });
   });

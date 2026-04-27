@@ -29,13 +29,18 @@
 - W1 Architecture: ✅ 14/14 (lazy load + per-card + Vitest 38 tests)
 - W2 Accessibility: ✅ 11/16 (ARIA done, keyboard partial, motion+light done)
 - W3 PWA: ✅ 5/6 (manifest + SW done, install prompt deferred)
-- W4 Sandpack/Trace/Bug/Mini-Build: ⏸️ 0/12 (deferred — needs npm install Sandpack)
-- W5 Mock Exam + Distractor: ⏸️ 0/9 (deferred to next sprint)
+- W4 Code Runner/Bug/Mini-Build: ✅ 11/12 (Code Runner, 14 Bug Hunts, 8 Builds; Trace 11-20 = Track F)
+- W5 Mock Exam + Study UX: ✅ 12/14 (Mock Exam done; user-requested UX 4/4 done)
 
 ### Phase 2 Sprint 1 Done:
 - Anti-Pattern Gallery: ✅ 4/4 (22 patterns, UI, CSS)
 - Mnemonics Lab: ✅ 3/3 (9 concepts in Hebrew with rhymes)
 - Flashcards UI: ⏸️ 0/4 (deferred — needs new tab)
+
+### Phase 2 Sprint 2 Done:
+- War Stories Library: ✅ (8 concepts, UI integrated)
+- Side-by-Side Comparator: ✅ (6 comparisons, UI integrated)
+- Mental Model Animator: ✅ (6 concepts × 3-4 frames + stepper UI + auto-play)
 
 ---
 
@@ -409,6 +414,7 @@
 2026-04-28 00:09 — P1.5.0c (Code Anatomy filters) + P1.5.0d (SITE_MAP.md) shipped
 2026-04-28 00:13 — P1.5.1 Mock Exam Mode shipped — Tab + 5 templates + timer + nav + result + history
 2026-04-28 00:24 — P1.4.4 Mini Build shipped — 8 builds + regex tests + UI on concept card
+2026-04-28 00:30 — Sprint 2 Mental Model Animator shipped — 6 concepts × 3-4 frames + stepper UI
 ```
 
 ---
