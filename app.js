@@ -372,10 +372,17 @@ document.addEventListener("DOMContentLoaded", () => {
       .map((lesson) => {
         const concepts = (lesson.concepts || []).filter((c) => {
           const sc = getScore(lesson.id, c.conceptName);
-          if (kmFilter === "known" && sc.level < 7) return false;
-          if (kmFilter === "unknown" && sc.level > 2) return false;
-          if (kmFilter === "pending" && !(sc.attempts === 0 && sc.level === 1))
+          // Track A — A5: filter by mastery state (5 buckets) instead of raw level.
+          // Existing dropdown values are mapped: "known" → mastered,
+          // "unknown" → learning OR at-risk, "pending" → new.
+          const state = getMasteryState(sc);
+          if (kmFilter === "known" && state !== "mastered") return false;
+          if (
+            kmFilter === "unknown" &&
+            !(state === "learning" || state === "at-risk")
+          )
             return false;
+          if (kmFilter === "pending" && state !== "new") return false;
           if (q && !c.conceptName.toLowerCase().includes(q)) return false;
           return true;
         });
@@ -392,12 +399,26 @@ document.addEventListener("DOMContentLoaded", () => {
           : 1;
         const lessonPct = Math.round(((lessonAvg - 1) / 6) * 100);
 
+        const MASTERY_LABEL = {
+          new: "🆕 חדש",
+          learning: "📘 בלימוד",
+          review: "📗 בחזרה",
+          "at-risk": "⚠️ בסיכון",
+          mastered: "🏆 מאסטר",
+        };
+
         const rows = concepts
           .map((c) => {
             const sc = getScore(lesson.id, c.conceptName);
             const lvl = LEVEL_INFO[sc.level];
-            const rowCls =
-              sc.level >= 7 ? "is-known" : sc.level <= 2 ? "is-unknown" : "";
+            const state = getMasteryState(sc);
+            const due = isSrsDue(sc) && state !== "new";
+            const rowCls = [
+              sc.level >= 7 ? "is-known" : sc.level <= 2 ? "is-unknown" : "",
+              due ? "is-due" : "",
+            ]
+              .filter(Boolean)
+              .join(" ");
             const stages =
               sc.level < 7
                 ? `<span class="km-stages" title="שלבים שנדרשים לקידום">${sc.passedMC ? "🅰️✅" : "🅰️◯"}${needsCodeFill(c) ? (sc.passedFill ? " ✍️✅" : " ✍️◯") : ""}</span>`
@@ -408,9 +429,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span class="km-bank-counter ${bank.mc > 0 ? "has" : ""}">🅰️ ${bank.mc}</span>
                 <span class="km-bank-counter ${bank.fill > 0 ? "has" : ""}">✍️ ${bank.fill}</span>
               </span>`;
+            const masteryBadge = `<span class="km-mastery-badge km-mastery-${state}" title="מצב שליטה">${MASTERY_LABEL[state] || state}</span>`;
+            const dueBadge = due
+              ? `<span class="km-due-badge" title="חזרה לפי SRS — הגיע מועד">🔁 חזרה מומלצת</span>`
+              : "";
             return `
               <div class="km-concept-row ${rowCls}" data-lesson="${esc(lesson.id)}" data-concept="${esc(c.conceptName)}">
                 <div class="km-concept-name" title="פתח את המושג בשיעור">${esc(c.conceptName)}</div>
+                ${masteryBadge}
+                ${dueBadge}
                 ${bankBadges}
                 ${stages}
                 <span class="km-status km-level ${lvl.cssClass}" title="רמה נעולה — מתעדכנת על ידי המאמן 🔒">${lvl.icon} ${sc.level}/7 ${esc(lvl.label)}</span>
@@ -500,11 +527,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ({ lesson, concept }) =>
         getProficiency(lesson.id, concept.conceptName) === "x",
     );
-    // Shuffle
-    for (let i = studyQueue.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [studyQueue[i], studyQueue[j]] = [studyQueue[j], studyQueue[i]];
-    }
+    // Shuffle (seeded PRNG via lib/rng.js)
+    studyQueue = window.RNG.shuffle(studyQueue);
     studyIndex = 0;
     renderStudyCard();
   }
@@ -749,20 +773,76 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+  function defaultSrsState() {
+    if (window.SRS && typeof window.SRS.createState === "function") {
+      return window.SRS.createState();
+    }
+    // Conservative fallback if lib/srs.js failed to load.
+    return {
+      ease: 2.5,
+      interval: 0,
+      due: Date.now(),
+      repetitions: 0,
+      lapses: 0,
+      lastReviewed: null,
+    };
+  }
+
   function ensureScore(lessonId, conceptName) {
     const k = conceptKey(lessonId, conceptName);
     if (!scores[k]) {
       scores[k] = {
         level: 1, passedMC: false, passedFill: false, attempts: 0, correct: 0,
         markedKnown: false, weakReports: 0, correctRunCount: 0,
+        srsState: defaultSrsState(),
       };
     } else {
       // Lazy migration — fill new fields on existing records
       if (scores[k].markedKnown === undefined) scores[k].markedKnown = false;
       if (scores[k].weakReports === undefined) scores[k].weakReports = 0;
       if (scores[k].correctRunCount === undefined) scores[k].correctRunCount = 0;
+      if (!scores[k].srsState || typeof scores[k].srsState !== "object") {
+        scores[k].srsState = defaultSrsState();
+      }
     }
     return scores[k];
+  }
+
+  // One-time migration pass: every score that pre-existed before SRS landed
+  // gets a default srsState so weightFor / KM badge logic can rely on it.
+  (function migrateSrsState() {
+    let touched = false;
+    Object.keys(scores).forEach((k) => {
+      const s = scores[k];
+      if (s && (!s.srsState || typeof s.srsState !== "object")) {
+        s.srsState = defaultSrsState();
+        touched = true;
+      }
+    });
+    if (touched) saveScores();
+  })();
+
+  // Mastery states (Track A — A5). Five buckets used by the Knowledge Map
+  // filter and by the per-concept badge.
+  //   new       — never attempted
+  //   learning  — still in early levels (≤3)
+  //   review    — progressing (4–6)
+  //   at-risk   — high level but SRS overdue → forgetting
+  //   mastered  — reached level 7
+  function getMasteryState(sc) {
+    if (!sc || sc.attempts === 0) return "new";
+    if (sc.level >= 7) return "mastered";
+    const due = sc.srsState && sc.srsState.due;
+    if (typeof due === "number" && due <= Date.now() && sc.level >= 6) {
+      return "at-risk";
+    }
+    if (sc.level <= 3) return "learning";
+    return "review";
+  }
+
+  function isSrsDue(sc) {
+    if (!sc || !sc.srsState || typeof sc.srsState.due !== "number") return false;
+    return sc.srsState.due <= Date.now();
   }
 
   // === Difficulty-aware helpers ===
@@ -882,7 +962,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const pool = (window.QUESTIONS_BANK && window.QUESTIONS_BANK.trace) || [];
     const candidates = pool.filter((t) => t.conceptKey === conceptKey);
     if (!candidates.length) return null;
-    return candidates[Math.floor(Math.random() * candidates.length)];
+    return candidates[window.RNG.int(candidates.length)];
   }
 
   // Concepts that have an explanation (junior or student)
@@ -1094,6 +1174,12 @@ document.addEventListener("DOMContentLoaded", () => {
       w *= Math.min(4, 1 + sc.weakReports);
     }
 
+    // SRS due boost: concepts whose next review is due/overdue get a ×3 boost
+    // so the trainer brings them back into rotation (Track A — A4).
+    if (isSrsDue(sc)) {
+      w *= 3;
+    }
+
     return Math.max(0.2, w);
   }
 
@@ -1114,7 +1200,7 @@ document.addEventListener("DOMContentLoaded", () => {
       weightFor(lesson.id, concept.conceptName),
     );
     const total = weights.reduce((a, b) => a + b, 0);
-    let r = Math.random() * total;
+    let r = window.RNG.next() * total;
     for (let i = 0; i < filtered.length; i++) {
       r -= weights[i];
       if (r <= 0) return filtered[i];
@@ -1166,7 +1252,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tokens = code.match(/[A-Za-z_$][A-Za-z0-9_$]+/g) || [];
     const priorityHits = tokens.filter((t) => FILL_PRIORITY.has(t));
     if (priorityHits.length > 0) {
-      const chosen = priorityHits[Math.floor(Math.random() * priorityHits.length)];
+      const chosen = priorityHits[window.RNG.int(priorityHits.length)];
       const idx = code.indexOf(chosen);
       if (idx !== -1) {
         const blanked =
@@ -1184,7 +1270,7 @@ document.addEventListener("DOMContentLoaded", () => {
       (t) => !skip.has(t) && t.length >= 4 && t.length <= 18,
     );
     if (candidates.length === 0) return null;
-    const chosen = candidates[Math.floor(Math.random() * candidates.length)];
+    const chosen = candidates[window.RNG.int(candidates.length)];
     const idx = code.indexOf(chosen);
     if (idx === -1) return null;
     const blanked =
@@ -1207,18 +1293,13 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     function shuffle(arr) {
-      const a = arr.slice();
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
+      return window.RNG.shuffle(arr);
     }
 
     // --- Code Trace (curated, multi-step) — preferred occasionally for the MC stage ---
     // We only offer trace as an alternative to MC, never instead of fill.
     // Triggered when: need === "mc", level >= 3, and a curated trace exists for this concept.
-    if (need === "mc" && sc.level >= 3 && Math.random() < 0.45) {
+    if (need === "mc" && sc.level >= 3 && window.RNG.next() < 0.45) {
       const conceptKey = `${lesson.id}::${concept.conceptName}`;
       const trace = pickTraceForConcept(conceptKey);
       if (trace) {
@@ -1261,11 +1342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function pickDistractors(n, accessor) {
-      const arr = pool.slice();
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
+      const arr = window.RNG.shuffle(pool);
       const seen = new Set([accessor(concept)]);
       const out = [];
       for (const item of arr) {
@@ -1279,7 +1356,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Pick one of two MC sub-types: "describe" (concept → explanation) or "name-match" (explanation → concept)
-    const subType = Math.random() < 0.5 ? "describe" : "name-match";
+    const subType = window.RNG.next() < 0.5 ? "describe" : "name-match";
 
     if (subType === "describe") {
       const distractors = pickDistractors(3, distractorAt);
@@ -2551,7 +2628,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("trace-random")?.addEventListener("click", () => {
       const all = filteredTraces();
       if (!all.length) return;
-      const t = all[Math.floor(Math.random() * all.length)];
+      const t = all[window.RNG.int(all.length)];
       startTraceSession(t);
     });
   }
@@ -3443,7 +3520,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return p.answered < p.total;
     });
     const pool = incomplete.length ? incomplete : blocks;
-    const pick = pool[Math.floor(Math.random() * pool.length)];
+    const pick = pool[window.RNG.int(pool.length)];
     cbOpenStates = { [pick.id]: true };
     renderCodeblocks();
     setTimeout(() => {
@@ -4310,12 +4387,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // 3. Seeded, same level
       // 4. Any seeded
       const curatedSame = bank.mc.filter((q) => !q._seeded && q.level === sc.level);
-      if (curatedSame.length) return curatedSame[Math.floor(Math.random() * curatedSame.length)];
+      if (curatedSame.length) return curatedSame[window.RNG.int(curatedSame.length)];
       const curatedAny = bank.mc.filter((q) => !q._seeded);
-      if (curatedAny.length) return curatedAny[Math.floor(Math.random() * curatedAny.length)];
+      if (curatedAny.length) return curatedAny[window.RNG.int(curatedAny.length)];
       const seededSame = bank.mc.filter((q) => q.level === sc.level);
-      if (seededSame.length) return seededSame[Math.floor(Math.random() * seededSame.length)];
-      return bank.mc[Math.floor(Math.random() * bank.mc.length)];
+      if (seededSame.length) return seededSame[window.RNG.int(seededSame.length)];
+      return bank.mc[window.RNG.int(bank.mc.length)];
     }
     const auto = buildQuestion({ lesson, concept });
     if (auto && auto.kind === "mc") return auto;
@@ -4570,12 +4647,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Hook progress update to score changes — wrap the original applyAnswer so any
-  // call site (trainer, guide, lesson inline quiz) refreshes the global progress bar.
+  // Hook progress update + SRS scheduling to score changes — wrap the original
+  // applyAnswer so any call site (trainer, guide, lesson inline quiz) refreshes
+  // the global progress bar AND advances the SRS interval/ease for the concept.
   const _origApplyAnswer = applyAnswer;
   applyAnswer = function (lessonId, conceptName, concept, kind, correct) {
     const r = _origApplyAnswer(lessonId, conceptName, concept, kind, correct);
     try { updateProgress(); } catch (_) {}
+    try {
+      if (window.SRS && typeof window.SRS.update === "function") {
+        const sc = ensureScore(lessonId, conceptName);
+        window.SRS.update(sc.srsState, !!correct, getDifficulty(concept));
+        saveScores();
+      }
+    } catch (_) {}
     return r;
   };
 
@@ -4588,6 +4673,72 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
   }
+
+  // =========== BANK VERSIONING (Track A — A2) ===========
+  // The bank declares its version + lastUpdate + changelog at the top of
+  // data/questions_bank.js (preserved as window.QUESTIONS_BANK_VERSION etc.
+  // because content-loader.js reshapes window.QUESTIONS_BANK).
+  // Behaviour:
+  //   1. Always console.log the active version on boot.
+  //   2. If the user has a stored version that no longer matches AND they
+  //      have any saved scores/proficiency, offer to refresh local progress.
+  (function bankVersionCheck() {
+    const version =
+      (typeof window.QUESTIONS_BANK_VERSION === "string" && window.QUESTIONS_BANK_VERSION) ||
+      (window.QUESTIONS_BANK && window.QUESTIONS_BANK._version) ||
+      "unknown";
+    const lastUpdate =
+      (typeof window.QUESTIONS_BANK_LAST_UPDATE === "string" && window.QUESTIONS_BANK_LAST_UPDATE) ||
+      (window.QUESTIONS_BANK && window.QUESTIONS_BANK._lastUpdate) ||
+      "";
+    console.log(
+      `[LumenPortal] Bank v${version}` + (lastUpdate ? ` (${lastUpdate})` : ""),
+    );
+
+    const VERSION_KEY = "lumenportal:bankVersion:v1";
+    let stored = null;
+    try { stored = localStorage.getItem(VERSION_KEY); } catch (_) {}
+
+    if (stored && stored !== version) {
+      const hasProgress =
+        Object.keys(scores).length > 0 || Object.keys(proficiency).length > 0;
+      if (hasProgress) {
+        const ok = confirm(
+          `\ud83d\udd04 \u05de\u05d0\u05d2\u05e8 \u05d4\u05e9\u05d0\u05dc\u05d5\u05ea \u05e2\u05d5\u05d3\u05db\u05df \u05de\u05d2\u05e8\u05e1\u05d4 ${stored} \u2192 ${version}.\n` +
+            `\u05d4\u05d0\u05dd \u05dc\u05e8\u05e2\u05e0\u05df \u05d0\u05ea \u05d4\u05d4\u05ea\u05e7\u05d3\u05de\u05d5\u05ea \u05d4\u05de\u05e7\u05d5\u05de\u05d9\u05ea? (\u05d6\u05d4 \u05d9\u05d0\u05e4\u05e1 \u05d8\u05d1\u05dc\u05d0\u05ea \u05e6\u05d9\u05d5\u05e0\u05d9\u05dd \u05d5-SRS)`
+        );
+        if (ok) {
+          scores = {};
+          proficiency = {};
+          saveScores();
+          saveProficiency();
+        }
+      }
+    }
+
+    try { localStorage.setItem(VERSION_KEY, version); } catch (_) {}
+  })();
+
+  // =========== MASTERY STATES CSS (Track A — A5) ===========
+  // Append a small style block (gray / blue / yellow / orange / green) so the
+  // Knowledge Map can show the 5 buckets without touching style.css.
+  (function injectMasteryStyles() {
+    if (document.getElementById("track-a-mastery-styles")) return;
+    const css = `
+      .km-mastery-badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:0.78em; font-weight:700; margin-right:6px; }
+      .km-mastery-new      { background:#e0e0e0; color:#444; }
+      .km-mastery-learning { background:#cfe3ff; color:#0b3a82; }
+      .km-mastery-review   { background:#fff3b5; color:#7a5b00; }
+      .km-mastery-at-risk  { background:#ffd8a8; color:#7a3d00; }
+      .km-mastery-mastered { background:#c8f5d0; color:#0e5a25; }
+      .km-due-badge { display:inline-block; padding:2px 6px; border-radius:6px; background:#ffd8a8; color:#7a3d00; font-size:0.78em; font-weight:700; margin-right:6px; }
+      .km-concept-row.is-due { box-shadow: inset 3px 0 0 0 #ff8c1a; }
+    `;
+    const style = document.createElement("style");
+    style.id = "track-a-mastery-styles";
+    style.textContent = css;
+    document.head.appendChild(style);
+  })();
 
   // =========== BOOT ===========
   setTimeout(() => {

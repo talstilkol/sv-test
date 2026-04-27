@@ -1,0 +1,84 @@
+name: CI — validate content + syntax
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Syntax-check all data + lib + app files
+        run: |
+          set -e
+          for f in data/*.js; do
+            echo "  → $f"
+            node --check "$f"
+          done
+          echo "  → app.js"
+          node --check app.js
+          echo "  → lib/rng.js"
+          node --check lib/rng.js
+          echo "  → lib/srs.js"
+          node --check lib/srs.js
+
+      - name: Run validate_bank.js (informational summary)
+        run: node scripts/validate_bank.js
+
+      # Track A — A3: hard gate for every PR.
+      # Strict mode treats warnings, boilerplate matches, and missing-difficulty
+      # as build-failing errors. PRs shipping boilerplate / ambiguous fills /
+      # concepts without difficulty turn this step (and the PR check) red.
+      - name: Strict bank validation (--strict)
+        run: node scripts/validate_bank.js --strict
+
+      # PRNG determinism — same seed → same sequence (Track A — A1).
+      - name: PRNG determinism test
+        run: |
+          node -e "
+            const RNG = require('./lib/rng.js');
+            const a = RNG.create(42), b = RNG.create(42);
+            const seqA = [a.next(), a.int(100), a.pick([1,2,3,4,5])];
+            const seqB = [b.next(), b.int(100), b.pick([1,2,3,4,5])];
+            if (JSON.stringify(seqA) !== JSON.stringify(seqB)) {
+              console.error('PRNG NOT deterministic:', seqA, seqB);
+              process.exit(1);
+            }
+            console.log('✅ RNG determinism OK');
+          "
+
+      # SRS scheduler — pass intervals 1 → 6 → 15, lapse resets repetitions (Track A — A4).
+      - name: SRS scheduler test
+        run: |
+          node -e "
+            const SRS = require('./lib/srs.js');
+            let s = SRS.createState();
+            s = SRS.update(s, true, 5);
+            if (s.interval !== 1 || s.repetitions !== 1) { console.error('first pass fail', s); process.exit(1); }
+            s = SRS.update(s, true, 5);
+            if (s.interval !== 6 || s.repetitions !== 2) { console.error('second pass fail', s); process.exit(1); }
+            s = SRS.update(s, false, 8);
+            if (s.repetitions !== 0 || s.lapses !== 1) { console.error('lapse fail', s); process.exit(1); }
+            console.log('✅ SRS scheduler OK');
+          "
+
+      # No Math.random outside data/lesson21.js (educational content) — Track A DoD.
+      - name: No-Math.random gate
+        run: |
+          set -e
+          MATCHES=$(grep -rn 'Math\.random(' --include="*.js" . | grep -v 'data/lesson21.js' || true)
+          if [ -n "$MATCHES" ]; then
+            echo "::error::Math.random() found outside data/lesson21.js:"
+            echo "$MATCHES"
+            exit 1
+          fi
+          echo "✅ Math.random scope clean (only data/lesson21.js)"

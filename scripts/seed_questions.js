@@ -14,6 +14,15 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const RNG_LIB = require("../lib/rng.js");
+
+// Allow deterministic re-runs:  node scripts/seed_questions.js --seed 42
+const SEED_FLAG_IDX = process.argv.indexOf("--seed");
+const SEED =
+  SEED_FLAG_IDX !== -1 && process.argv[SEED_FLAG_IDX + 1] !== undefined
+    ? process.argv[SEED_FLAG_IDX + 1]
+    : `seed-questions:${Date.now()}`;
+const RNG = RNG_LIB.create(SEED);
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
@@ -66,12 +75,7 @@ function bestExplanation(concept) {
 }
 
 function shuffle(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
+  return RNG.shuffle(arr);
 }
 
 function escapeRegex(s) {
@@ -115,7 +119,7 @@ function makeCodeFill(concept) {
   const tokens = code.match(/[A-Za-z_$][A-Za-z0-9_$]+/g) || [];
   const priorityHits = tokens.filter((t) => FILL_PRIORITY.has(t));
   if (priorityHits.length > 0) {
-    const chosen = priorityHits[Math.floor(Math.random() * priorityHits.length)];
+    const chosen = priorityHits[RNG.int(priorityHits.length)];
     const idx = code.indexOf(chosen);
     if (idx !== -1) {
       const blanked = code.substring(0, idx) + "____" + code.substring(idx + chosen.length);
@@ -126,7 +130,7 @@ function makeCodeFill(concept) {
   const skip = new Set(["console", "log", "document", "window", "true", "false", "null", "undefined", "if", "else", "for", "while"]);
   const candidates = tokens.filter((t) => !skip.has(t) && t.length >= 4 && t.length <= 18);
   if (candidates.length === 0) return null;
-  const chosen = candidates[Math.floor(Math.random() * candidates.length)];
+  const chosen = candidates[RNG.int(candidates.length)];
   const idx = code.indexOf(chosen);
   if (idx === -1) return null;
   const blanked = code.substring(0, idx) + "____" + code.substring(idx + chosen.length);
