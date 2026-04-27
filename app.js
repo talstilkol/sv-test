@@ -4142,6 +4142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${renderExtrasPanel(concept, sc, diff)}
         ${renderMnemonicPanel(concept)}
         ${renderAntiPatternsPanel(concept)}
+        ${renderBugHuntPanel(concept)}
         ${renderWarStoriesPanel(concept)}
         ${renderComparisonsPanel(concept)}
         ${renderAudioModeButton(concept, explanation)}
@@ -4295,6 +4296,52 @@ document.addEventListener("DOMContentLoaded", () => {
       <details class="anti-patterns-panel">
         <summary>🔁 דפוסי-נגד (${aps.length} מקרים)</summary>
         <div class="ap-body">${items}</div>
+      </details>`;
+  }
+
+  // P1.4.3 — Bug Hunt panel (broken code → identify → fix)
+  function renderBugHuntPanel(concept) {
+    const bugs = concept.bugHunts;
+    if (!Array.isArray(bugs) || bugs.length === 0) return "";
+    const items = bugs
+      .map((b, i) => {
+        const optionsHtml = (b.options || [])
+          .map(
+            (opt, oi) =>
+              `<button class="bug-option" data-action="bug-answer" data-bug-id="${esc(b.id)}" data-bug-idx="${oi}">${esc(opt)}</button>`,
+          )
+          .join("");
+        return `
+        <div class="bug-hunt-card" data-bug-card="${esc(b.id)}">
+          <div class="bh-head">
+            <span class="bh-num">🐛 #${i + 1}</span>
+            <span class="bh-title">${esc(b.title || "")}</span>
+            ${typeof b.level === "number" ? `<span class="bh-level">רמה ${b.level}</span>` : ""}
+          </div>
+          <div class="bh-broken">
+            <div class="bh-label-bad">❌ קוד שבור</div>
+            <pre><code>${esc(b.brokenCode || "")}</code></pre>
+            ${typeof b.bugLine === "number" ? `<div class="bh-hint-line">💡 רמז: הבאג בשורה ${b.bugLine}</div>` : ""}
+          </div>
+          ${b.hint ? `<div class="bh-hint">🔎 ${esc(b.hint)}</div>` : ""}
+          <div class="bh-options" data-bug-options="${esc(b.id)}">
+            <div class="bh-options-prompt">מה הבעיה?</div>
+            ${optionsHtml}
+          </div>
+          <div class="bh-result" data-bug-result="${esc(b.id)}" hidden>
+            <div class="bh-fix">
+              <div class="bh-label-good">✅ פתרון</div>
+              <pre><code>${esc(b.fix || "")}</code></pre>
+            </div>
+            ${b.explanation ? `<div class="bh-explanation"><strong>📚 הסבר:</strong> ${esc(b.explanation)}</div>` : ""}
+          </div>
+        </div>`;
+      })
+      .join("");
+    return `
+      <details class="bug-hunt-panel">
+        <summary>🐛 ציד באגים (${bugs.length} מקרים)</summary>
+        <div class="bh-body">${items}</div>
       </details>`;
   }
 
@@ -4600,6 +4647,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 btn.textContent = "🚀 הרץ שוב";
                 out.innerHTML = `<div class="runner-error">שגיאה: ${esc(err.message || err)}</div>`;
               });
+          } else if (action === "bug-answer") {
+            // P1.4.3 — user picked an option in the Bug Hunt
+            const bugId = btn.dataset.bugId;
+            const pickedIdx = parseInt(btn.dataset.bugIdx, 10);
+            const card = btn.closest(".bug-hunt-card");
+            if (!card) return;
+            const bugList = concept.bugHunts || [];
+            const bug = bugList.find((b) => b.id === bugId);
+            if (!bug) return;
+            const optionsBox = card.querySelector(`[data-bug-options="${cssEscape(bugId)}"]`);
+            const resultBox = card.querySelector(`[data-bug-result="${cssEscape(bugId)}"]`);
+            const isCorrect = pickedIdx === bug.correctIndex;
+            // Mark all options as disabled, highlight correct + chosen
+            if (optionsBox) {
+              optionsBox.querySelectorAll(".bug-option").forEach((b, i) => {
+                b.disabled = true;
+                if (i === bug.correctIndex) b.classList.add("bug-option-correct");
+                if (i === pickedIdx && !isCorrect) b.classList.add("bug-option-wrong");
+              });
+            }
+            if (resultBox) resultBox.hidden = false;
+            // Per-distractor feedback for wrong choices: subtle status tag
+            if (!isCorrect) {
+              const tag = document.createElement("div");
+              tag.className = "bh-status bh-status-wrong";
+              tag.textContent = "❌ לא בדיוק. ראה את ההסבר למטה.";
+              optionsBox?.appendChild(tag);
+            } else {
+              const tag = document.createElement("div");
+              tag.className = "bh-status bh-status-correct";
+              tag.textContent = "✅ נכון!";
+              optionsBox?.appendChild(tag);
+            }
           } else if (action === "mark-v") {
             // Confirm shortcut, then mark and re-render
             if (confirm(`לסמן את "${concept.conceptName}" כמושג ידוע? המאמן לא יציג אותו יותר.`)) {

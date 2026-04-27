@@ -54,16 +54,20 @@ function loadDataFiles() {
       lessons.push(v);
     }
   }
-  // QUESTIONS_TRACE lives in its own file; merge into bank.trace so the
-  // existing trace-validation block in validate() picks it up.
+  // QUESTIONS_TRACE / QUESTIONS_BUG live in their own files; merge into bank
+  // so the validation blocks in validate() pick them up.
   const baseBank = sandbox.QUESTIONS_BANK || { mc: [], fill: [] };
   const traceList = Array.isArray(sandbox.QUESTIONS_TRACE)
     ? sandbox.QUESTIONS_TRACE
+    : [];
+  const bugList = Array.isArray(sandbox.QUESTIONS_BUG)
+    ? sandbox.QUESTIONS_BUG
     : [];
   const bank = Object.assign({}, baseBank, {
     mc: baseBank.mc || [],
     fill: baseBank.fill || [],
     trace: traceList,
+    bug: bugList,
   });
   return {
     lessons,
@@ -194,6 +198,43 @@ function validate({ lessons, bank, seededBank, guide }) {
     if (!q.explanation) warnings.push(`[${q.id}] missing explanation (final summary)`);
   }
 
+  // -------- Bug Hunt validation (P1.4.3) --------
+  for (const q of bank.bug || []) {
+    if (!q.id) errors.push(`Bug missing id: ${JSON.stringify(q).slice(0, 80)}`);
+    if (q.id && !q.id.startsWith("bug_"))
+      warnings.push(`[${q.id}] bug IDs should start with "bug_"`);
+    if (q.id && seenIds.has(q.id)) errors.push(`Duplicate bug id: ${q.id}`);
+    seenIds.add(q.id);
+    if (!q.brokenCode || typeof q.brokenCode !== "string")
+      errors.push(`[${q.id}] bug must have brokenCode (string)`);
+    if (!Array.isArray(q.options) || q.options.length !== 4)
+      errors.push(`[${q.id}] bug must have exactly 4 options (got ${q.options?.length})`);
+    if (
+      typeof q.correctIndex !== "number" ||
+      q.correctIndex < 0 ||
+      q.correctIndex > 3
+    )
+      errors.push(`[${q.id}] correctIndex must be 0..3 (got ${q.correctIndex})`);
+    if (q.options) {
+      const set = new Set(q.options);
+      if (set.size !== q.options.length)
+        errors.push(`[${q.id}] duplicate options`);
+    }
+    if (q.brokenCode && typeof q.bugLine === "number") {
+      const totalLines = q.brokenCode.split("\n").length;
+      if (q.bugLine < 1 || q.bugLine > totalLines)
+        errors.push(
+          `[${q.id}] bugLine=${q.bugLine} out of range (1..${totalLines})`,
+        );
+    }
+    if (q.level && (q.level < 1 || q.level > 6))
+      warnings.push(`[${q.id}] level should be 1..6 (got ${q.level})`);
+    if (q.conceptKey && !validKeys.has(q.conceptKey))
+      errors.push(`[${q.id}] conceptKey not found: "${q.conceptKey}"`);
+    if (!q.explanation) warnings.push(`[${q.id}] missing explanation`);
+    if (!q.fix) warnings.push(`[${q.id}] missing fix (corrected code)`);
+  }
+
   // -------- Coverage report (combined: curated + seeded) --------
   const coverage = [];
   for (const [key, ref] of conceptByKey) {
@@ -252,6 +293,7 @@ function validate({ lessons, bank, seededBank, guide }) {
     missingDifficulty,
     totalConcepts: conceptByKey.size,
     curatedTrace: (bank.trace || []).length,
+    curatedBug: (bank.bug || []).length,
     curatedMC: (bank.mc || []).length,
     curatedFill: (bank.fill || []).length,
     seededMC: (seededBank.mc || []).length,
@@ -267,7 +309,7 @@ function main() {
   const data = loadDataFiles();
   console.log(
     `   ${data.lessons.length} lessons · ` +
-      `Curated bank: ${(data.bank.mc || []).length} MC + ${(data.bank.fill || []).length} Fill + ${(data.bank.trace || []).length} Trace · ` +
+      `Curated bank: ${(data.bank.mc || []).length} MC + ${(data.bank.fill || []).length} Fill + ${(data.bank.trace || []).length} Trace + ${(data.bank.bug || []).length} Bug · ` +
       `Seeded: ${(data.seededBank.mc || []).length} MC + ${(data.seededBank.fill || []).length} Fill · ` +
       `${(data.guide.topics || []).length} guide topics.`,
   );

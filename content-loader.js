@@ -35,11 +35,19 @@
   // Sprint 2 — Creative Methods (war stories + comparisons)
   const warStories = typeof WAR_STORIES !== "undefined" ? WAR_STORIES : {};
   const comparisons = typeof COMPARISONS !== "undefined" ? COMPARISONS : {};
+  // P1.4.3 — Bug Hunt questions grouped by conceptKey
+  const bugList = typeof QUESTIONS_BUG !== "undefined" ? QUESTIONS_BUG : [];
+  const bugsByKey = bugList.reduce((acc, b) => {
+    if (!b.conceptKey) return acc;
+    (acc[b.conceptKey] = acc[b.conceptKey] || []).push(b);
+    return acc;
+  }, {});
   let enrichedCount = 0;
   let extendedCount = 0;
   let antiPatternsCount = 0;
   let mnemonicsCount = 0;
   let warStoriesCount = 0;
+  let bugsCount = 0;
   window.LESSONS_DATA.forEach((lesson) => {
     (lesson.concepts || []).forEach((c) => {
       const key = `${lesson.id}::${c.conceptName}`;
@@ -74,6 +82,11 @@
       if (matchingComparisons.length > 0) {
         c.comparisons = matchingComparisons;
       }
+      // P1.4.3 — Bug Hunts (one or more per concept)
+      if (bugsByKey[key] && bugsByKey[key].length > 0) {
+        c.bugHunts = bugsByKey[key];
+        bugsCount += bugsByKey[key].length;
+      }
     });
   });
 
@@ -84,6 +97,7 @@
     mc: [...(primary.mc || [])],
     fill: [...(primary.fill || [])],
     trace: [...traceList],
+    bug: [...bugList],
   };
   window.QUICK_GUIDE = typeof QUICK_GUIDE !== "undefined" ? QUICK_GUIDE : { topics: [] };
 

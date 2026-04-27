@@ -4511,6 +4511,162 @@ textarea:focus-visible,
 }
 
 /* ============================================================ */
+/* P1.4.3 — Bug Hunt panel                                     */
+/* ============================================================ */
+.bug-hunt-panel {
+  margin-top: 0.6rem;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem;
+}
+.bug-hunt-panel > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #fbbf24;
+  font-size: 0.95rem;
+}
+.bh-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 0.6rem;
+}
+.bug-hunt-card {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+}
+.bh-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+.bh-num {
+  font-weight: 700;
+  color: #fbbf24;
+}
+.bh-title {
+  font-weight: 600;
+  color: var(--text-bright);
+}
+.bh-level {
+  font-size: 0.78rem;
+  background: rgba(99, 102, 241, 0.2);
+  color: #c7d2fe;
+  padding: 1px 8px;
+  border-radius: 999px;
+}
+.bh-broken pre,
+.bh-fix pre {
+  direction: ltr;
+  text-align: left;
+  font-family: "Fira Code", monospace;
+  font-size: 0.85rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  overflow-x: auto;
+  white-space: pre;
+  margin: 0.3rem 0;
+}
+.bh-broken pre {
+  border-left: 3px solid #ef4444;
+}
+.bh-fix pre {
+  border-left: 3px solid #22c55e;
+}
+.bh-label-bad {
+  color: #fca5a5;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.bh-label-good {
+  color: #86efac;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.bh-hint-line {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+}
+.bh-hint {
+  background: rgba(99, 102, 241, 0.08);
+  border-right: 3px solid #6366f1;
+  padding: 0.4rem 0.7rem;
+  margin-top: 0.4rem;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  color: var(--text-bright);
+}
+.bh-options {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.bh-options-prompt {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.bug-option {
+  text-align: right;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-bright);
+  padding: 0.55rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.92rem;
+  transition: background 0.15s;
+}
+.bug-option:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.12);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+.bug-option:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+.bug-option-correct {
+  background: rgba(34, 197, 94, 0.18) !important;
+  border-color: #22c55e !important;
+  color: #bbf7d0 !important;
+  opacity: 1 !important;
+}
+.bug-option-wrong {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+}
+.bh-status {
+  margin-top: 0.4rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.bh-status-correct { color: #86efac; }
+.bh-status-wrong   { color: #fca5a5; }
+.bh-result {
+  margin-top: 0.7rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+.bh-explanation {
+  margin-top: 0.4rem;
+  background: rgba(99, 102, 241, 0.08);
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  border-right: 3px solid #6366f1;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* ============================================================ */
 /* === War Stories Library (Sprint 2) ========================= */
 /* ============================================================ */
 
