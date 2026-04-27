@@ -361,8 +361,24 @@
           <div class="anatomy-page glass-panel" id="code-anatomy-view" style="display:none">
             <h2>📐 פירוק קוד — מה התפקיד של כל רכיב?</h2>
             <p class="anatomy-page-intro">
-              דף זה מציג קטעי קוד מהשיעורים, ומסביר מה התפקיד של כל מילה / סימן / משתנה — בלי שאלות, בלי בחנים, רק קריאה והבנה.
+              קטעי קוד מהשיעורים עם הסבר על תפקיד כל מילה / סימן / משתנה. <strong>בחר מה להציג</strong> — אל תיכשל בעומס.
             </p>
+            <!-- P1.5.0c — Filters toolbar -->
+            <div class="anatomy-toolbar">
+              <input type="text" id="anatomy-search" placeholder="🔍 חיפוש מושג / קוד..." />
+              <select id="anatomy-lesson-filter" aria-label="סנן לפי שיעור">
+                <option value="">📚 כל השיעורים</option>
+              </select>
+              <select id="anatomy-topic-filter" aria-label="סנן לפי נושא">
+                <option value="">📂 כל הנושאים</option>
+              </select>
+              <select id="anatomy-concept-filter" aria-label="סנן לפי מושג">
+                <option value="">🎯 כל המושגים</option>
+              </select>
+              <button class="km-btn-mini" id="anatomy-expand-all">⬇️ פתח הכל</button>
+              <button class="km-btn-mini" id="anatomy-collapse-all">⬆️ סגור הכל</button>
+              <span class="anatomy-stats" id="anatomy-stats" aria-live="polite"></span>
+            </div>
             <div id="code-anatomy-content"></div>
           </div>
 

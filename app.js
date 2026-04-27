@@ -2825,39 +2825,212 @@ document.addEventListener("DOMContentLoaded", () => {
     sidebar.classList.remove("open");
   }
 
-  function renderCodeAnatomyPage() {
-    const container = document.getElementById("code-anatomy-content");
-    if (!container) return;
-    const lessons = (window.LESSONS_DATA || []).filter((l) =>
-      (l.concepts || []).some(
-        (c) =>
+  // P1.5.0c — Code Anatomy filter state
+  const anatomyState = {
+    search: "",
+    lessonId: "",
+    topic: "",
+    conceptName: "",
+    initialized: false,
+  };
+
+  // Build flat catalog of all available {lesson, concept, breakdowns} once
+  function getAnatomyCatalog() {
+    const out = [];
+    (window.LESSONS_DATA || []).forEach((lesson) => {
+      (lesson.concepts || []).forEach((c) => {
+        if (
           c.extendedTab &&
           Array.isArray(c.extendedTab.codeBreakdowns) &&
-          c.extendedTab.codeBreakdowns.length,
-      ),
-    );
-    if (!lessons.length) {
+          c.extendedTab.codeBreakdowns.length
+        ) {
+          out.push({ lesson, concept: c });
+        }
+      });
+    });
+    return out;
+  }
+
+  function initAnatomyToolbar() {
+    if (anatomyState.initialized) return;
+    anatomyState.initialized = true;
+    const catalog = getAnatomyCatalog();
+
+    // Populate lesson dropdown — only lessons that HAVE code anatomy
+    const lessonSel = document.getElementById("anatomy-lesson-filter");
+    const seenL = new Set();
+    catalog.forEach(({ lesson }) => {
+      if (seenL.has(lesson.id)) return;
+      seenL.add(lesson.id);
+      const opt = document.createElement("option");
+      opt.value = lesson.id;
+      opt.textContent = lesson.title;
+      lessonSel?.appendChild(opt);
+    });
+
+    // Populate topic dropdown
+    const topicSel = document.getElementById("anatomy-topic-filter");
+    const topicsSeen = new Set();
+    catalog.forEach(({ lesson }) => {
+      const tx = getTopicForLesson(lesson.id);
+      if (topicsSeen.has(tx.topic)) return;
+      topicsSeen.add(tx.topic);
+      const opt = document.createElement("option");
+      opt.value = tx.topic;
+      opt.textContent = `${tx.emoji} ${tx.topic}`;
+      topicSel?.appendChild(opt);
+    });
+
+    function rebuildConceptDropdown() {
+      const conceptSel = document.getElementById("anatomy-concept-filter");
+      if (!conceptSel) return;
+      const cur = conceptSel.value;
+      conceptSel.innerHTML = '<option value="">🎯 כל המושגים</option>';
+      const seen = new Set();
+      catalog.forEach(({ lesson, concept }) => {
+        if (anatomyState.lessonId && lesson.id !== anatomyState.lessonId) return;
+        if (anatomyState.topic) {
+          const tx = getTopicForLesson(lesson.id);
+          if (tx.topic !== anatomyState.topic) return;
+        }
+        if (seen.has(concept.conceptName)) return;
+        seen.add(concept.conceptName);
+        const opt = document.createElement("option");
+        opt.value = concept.conceptName;
+        opt.textContent = concept.conceptName;
+        conceptSel.appendChild(opt);
+      });
+      // Preserve current selection if still valid
+      if (cur && seen.has(cur)) conceptSel.value = cur;
+    }
+    rebuildConceptDropdown();
+
+    // Wire filters
+    lessonSel?.addEventListener("change", (e) => {
+      anatomyState.lessonId = e.target.value;
+      rebuildConceptDropdown();
+      renderCodeAnatomyPage();
+    });
+    topicSel?.addEventListener("change", (e) => {
+      anatomyState.topic = e.target.value;
+      rebuildConceptDropdown();
+      renderCodeAnatomyPage();
+    });
+    document
+      .getElementById("anatomy-concept-filter")
+      ?.addEventListener("change", (e) => {
+        anatomyState.conceptName = e.target.value;
+        renderCodeAnatomyPage();
+      });
+    document
+      .getElementById("anatomy-search")
+      ?.addEventListener("input", (e) => {
+        anatomyState.search = e.target.value;
+        renderCodeAnatomyPage();
+      });
+    document
+      .getElementById("anatomy-expand-all")
+      ?.addEventListener("click", () => {
+        document
+          .querySelectorAll("#code-anatomy-content details")
+          .forEach((d) => d.setAttribute("open", ""));
+      });
+    document
+      .getElementById("anatomy-collapse-all")
+      ?.addEventListener("click", () => {
+        document
+          .querySelectorAll("#code-anatomy-content details")
+          .forEach((d) => d.removeAttribute("open"));
+      });
+  }
+
+  function renderCodeAnatomyPage() {
+    initAnatomyToolbar();
+    const container = document.getElementById("code-anatomy-content");
+    if (!container) return;
+    const catalog = getAnatomyCatalog();
+    if (!catalog.length) {
       container.innerHTML =
         '<div class="anatomy-empty">אין עדיין פירוקי קוד. הם יתווספו בהדרגה לשיעורים 21–27.</div>';
       return;
     }
-    container.innerHTML = lessons
-      .map(
-        (lesson) => `
-        <section class="anatomy-lesson-block">
-          <h3>${esc(lesson.title)}</h3>
-          ${(lesson.concepts || [])
-            .filter((c) => c.extendedTab && Array.isArray(c.extendedTab.codeBreakdowns) && c.extendedTab.codeBreakdowns.length)
-            .map(
-              (c) => `
-              <div class="anatomy-concept-block">
-                <h4>${esc(c.conceptName)}</h4>
-                ${c.extendedTab.codeBreakdowns.map(renderCodeAnatomyBlock).join("")}
-              </div>`,
-            )
-            .join("")}
-        </section>`,
-      )
+    // Apply filters
+    const q = anatomyState.search.trim().toLowerCase();
+    const filtered = catalog.filter(({ lesson, concept }) => {
+      if (anatomyState.lessonId && lesson.id !== anatomyState.lessonId) return false;
+      if (anatomyState.topic) {
+        const tx = getTopicForLesson(lesson.id);
+        if (tx.topic !== anatomyState.topic) return false;
+      }
+      if (anatomyState.conceptName && concept.conceptName !== anatomyState.conceptName) return false;
+      if (q) {
+        const blob = (
+          concept.conceptName +
+          " " +
+          (concept.extendedTab.codeBreakdowns || [])
+            .map((b) => (b.code || "") + " " + (b.summary || ""))
+            .join(" ")
+        ).toLowerCase();
+        if (!blob.includes(q)) return false;
+      }
+      return true;
+    });
+
+    // Update stats line
+    const codeBlockCount = filtered.reduce(
+      (n, { concept }) => n + concept.extendedTab.codeBreakdowns.length,
+      0,
+    );
+    const lessonCount = new Set(filtered.map((x) => x.lesson.id)).size;
+    const stats = document.getElementById("anatomy-stats");
+    if (stats) {
+      stats.textContent = filtered.length
+        ? `📊 ${lessonCount} שיעורים · ${filtered.length} מושגים · ${codeBlockCount} קטעי קוד`
+        : "🔍 לא נמצאו תוצאות לסינון";
+    }
+
+    if (!filtered.length) {
+      container.innerHTML =
+        '<div class="anatomy-empty">🔍 לא נמצא דבר. נסה לשנות את הסינון.</div>';
+      return;
+    }
+
+    // Group by lesson, render each as <details> for lazy expand
+    const byLesson = {};
+    filtered.forEach(({ lesson, concept }) => {
+      if (!byLesson[lesson.id]) byLesson[lesson.id] = { lesson, concepts: [] };
+      byLesson[lesson.id].concepts.push(concept);
+    });
+    // If only ONE filtered result, auto-expand by default
+    const autoOpen = filtered.length <= 3;
+
+    container.innerHTML = Object.values(byLesson)
+      .map(({ lesson, concepts }) => {
+        const tx = getTopicForLesson(lesson.id);
+        const innerConcepts = concepts
+          .map(
+            (c) => `
+              <details class="anatomy-concept-block" ${autoOpen || anatomyState.conceptName === c.conceptName ? "open" : ""}>
+                <summary class="anatomy-concept-summary">
+                  <span class="anatomy-concept-name">${esc(c.conceptName)}</span>
+                  <span class="anatomy-concept-count">${c.extendedTab.codeBreakdowns.length} קטעים</span>
+                </summary>
+                <div class="anatomy-concept-body">
+                  ${c.extendedTab.codeBreakdowns.map(renderCodeAnatomyBlock).join("")}
+                </div>
+              </details>`,
+          )
+          .join("");
+        return `
+        <details class="anatomy-lesson-block" ${autoOpen ? "open" : ""}>
+          <summary class="anatomy-lesson-summary">
+            <span class="anatomy-lesson-topic">${tx.emoji} ${esc(tx.topic)}</span>
+            <h3>${esc(lesson.title)}</h3>
+            <span class="anatomy-lesson-count">${concepts.length} מושגים</span>
+          </summary>
+          <div class="anatomy-lesson-body">${innerConcepts}</div>
+        </details>`;
+      })
       .join("");
   }
 
