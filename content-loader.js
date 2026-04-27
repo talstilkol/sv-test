@@ -32,10 +32,14 @@
   // Sprint 1 — Creative Methods data (lazy-merged the same way)
   const antiPatterns = typeof ANTI_PATTERNS !== "undefined" ? ANTI_PATTERNS : {};
   const mnemonics = typeof MNEMONICS !== "undefined" ? MNEMONICS : {};
+  // Sprint 2 — Creative Methods (war stories + comparisons)
+  const warStories = typeof WAR_STORIES !== "undefined" ? WAR_STORIES : {};
+  const comparisons = typeof COMPARISONS !== "undefined" ? COMPARISONS : {};
   let enrichedCount = 0;
   let extendedCount = 0;
   let antiPatternsCount = 0;
   let mnemonicsCount = 0;
+  let warStoriesCount = 0;
   window.LESSONS_DATA.forEach((lesson) => {
     (lesson.concepts || []).forEach((c) => {
       const key = `${lesson.id}::${c.conceptName}`;
@@ -57,6 +61,18 @@
       if (mnemonics[key]) {
         c.mnemonic = mnemonics[key];
         mnemonicsCount++;
+      }
+      // Sprint 2: War Stories (multi-incident library) + Comparisons (lookup)
+      if (warStories[key]) {
+        c.warStories = warStories[key];
+        warStoriesCount++;
+      }
+      // Comparisons: find any pair where this concept is referenced
+      const matchingComparisons = Object.values(comparisons).filter(
+        (cmp) => Array.isArray(cmp.relatedConcepts) && cmp.relatedConcepts.includes(key),
+      );
+      if (matchingComparisons.length > 0) {
+        c.comparisons = matchingComparisons;
       }
     });
   });

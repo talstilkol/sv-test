@@ -4142,6 +4142,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ${renderExtrasPanel(concept, sc, diff)}
         ${renderMnemonicPanel(concept)}
         ${renderAntiPatternsPanel(concept)}
+        ${renderWarStoriesPanel(concept)}
+        ${renderComparisonsPanel(concept)}
+        ${renderAudioModeButton(concept, explanation)}
 
         <div class="concept-actions">
           ${
@@ -4293,6 +4296,100 @@ document.addEventListener("DOMContentLoaded", () => {
         <summary>🔁 דפוסי-נגד (${aps.length} מקרים)</summary>
         <div class="ap-body">${items}</div>
       </details>`;
+  }
+
+  // P2.S2.1 — War Stories Library (real production incidents)
+  function renderWarStoriesPanel(concept) {
+    const stories = concept.warStories;
+    if (!Array.isArray(stories) || stories.length === 0) return "";
+    const items = stories
+      .map((s, i) => {
+        const sevClass =
+          s.severity === "P0" ? "ws-sev-p0" : s.severity === "P1" ? "ws-sev-p1" : "ws-sev-p2";
+        return `
+        <div class="war-story-card ${sevClass}">
+          <div class="ws-head">
+            <span class="ws-num">📍 #${i + 1}</span>
+            <span class="ws-title">${esc(s.title || "")}</span>
+            ${s.severity ? `<span class="ws-sev">${esc(s.severity)}</span>` : ""}
+            ${s.hours ? `<span class="ws-hours" title="זמן שהושקע בדיבוג">⏱️ ${esc(s.hours)}</span>` : ""}
+          </div>
+          ${s.context ? `<div class="ws-row"><strong>הקונטקסט:</strong> ${esc(s.context)}</div>` : ""}
+          ${s.bug ? `<div class="ws-row ws-bug"><strong>הבאג:</strong> <code>${esc(s.bug)}</code></div>` : ""}
+          ${s.diagnosis ? `<div class="ws-row"><strong>אבחנה:</strong> ${esc(s.diagnosis)}</div>` : ""}
+          ${s.fix ? `<div class="ws-row ws-fix"><strong>תיקון:</strong> <code>${esc(s.fix)}</code></div>` : ""}
+          ${s.lesson ? `<div class="ws-row ws-lesson"><strong>📚 לקח:</strong> ${esc(s.lesson)}</div>` : ""}
+        </div>`;
+      })
+      .join("");
+    return `
+      <details class="war-stories-panel">
+        <summary>📚 סיפורי שטח — ${stories.length} מקרים אמיתיים מייצור</summary>
+        <div class="ws-body">${items}</div>
+      </details>`;
+  }
+
+  // P2.S2.2 — Side-by-Side Comparator (X vs Y)
+  function renderComparisonsPanel(concept) {
+    const cmps = concept.comparisons;
+    if (!Array.isArray(cmps) || cmps.length === 0) return "";
+    const items = cmps
+      .map((cmp) => {
+        const rows = (cmp.rows || [])
+          .map(
+            (r) => `
+          <tr>
+            <td class="cmp-dim">${esc(r.dim || "")}</td>
+            <td class="cmp-cell-a">${esc(r.a || "")}</td>
+            <td class="cmp-cell-b">${esc(r.b || "")}</td>
+          </tr>`,
+          )
+          .join("");
+        return `
+        <div class="comparison-card">
+          <div class="cmp-head">
+            <div class="cmp-side cmp-side-a">
+              <span class="cmp-icon">${esc(cmp.a?.icon || "")}</span>
+              <span class="cmp-name">${esc(cmp.a?.name || "A")}</span>
+              ${cmp.a?.tagline ? `<span class="cmp-tag">${esc(cmp.a.tagline)}</span>` : ""}
+            </div>
+            <div class="cmp-vs">VS</div>
+            <div class="cmp-side cmp-side-b">
+              <span class="cmp-icon">${esc(cmp.b?.icon || "")}</span>
+              <span class="cmp-name">${esc(cmp.b?.name || "B")}</span>
+              ${cmp.b?.tagline ? `<span class="cmp-tag">${esc(cmp.b.tagline)}</span>` : ""}
+            </div>
+          </div>
+          <table class="cmp-table">
+            <thead>
+              <tr>
+                <th class="cmp-dim-head">ממד</th>
+                <th>${esc(cmp.a?.name || "A")}</th>
+                <th>${esc(cmp.b?.name || "B")}</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+          ${cmp.when ? `<div class="cmp-when"><strong>💡 מתי:</strong> ${esc(cmp.when)}</div>` : ""}
+        </div>`;
+      })
+      .join("");
+    return `
+      <details class="comparisons-panel">
+        <summary>⚖️ השוואה — ${cmps.length === 1 ? cmps[0].a.name + " vs " + cmps[0].b.name : cmps.length + " השוואות"}</summary>
+        <div class="cmp-body">${items}</div>
+      </details>`;
+  }
+
+  // P2.S2.3 — Audio Mode (Web Speech API TTS)
+  function renderAudioModeButton(concept, levelText) {
+    if (typeof window === "undefined" || typeof window.speechSynthesis === "undefined") return "";
+    if (!levelText || levelText.length < 10) return "";
+    return `
+      <button class="audio-mode-btn" data-action="audio-read" data-text="${esc(levelText)}"
+              aria-label="הקרא את ההסבר בקול" title="הקרא בקול (Web Speech)">
+        🎤 הקרא בקול
+      </button>`;
   }
 
   // Renders an "analogy from daily life" callout for the level being displayed.
@@ -4525,6 +4622,37 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 100);
           } else if (action === "quiz") {
             startConceptInlineQuiz(card, lesson, concept);
+          } else if (action === "audio-read") {
+            // P2.S2.3 — Speak the explanation in Hebrew via Web Speech API
+            const text = btn.dataset.text || "";
+            if (!text || typeof window.speechSynthesis === "undefined") return;
+            // Cancel any current speech first
+            window.speechSynthesis.cancel();
+            const utter = new window.SpeechSynthesisUtterance(text);
+            utter.lang = "he-IL";
+            utter.rate = 0.95;
+            utter.pitch = 1.0;
+            // Try to pick a Hebrew voice if available
+            const voices = window.speechSynthesis.getVoices();
+            const heVoice = voices.find((v) => v.lang && v.lang.startsWith("he"));
+            if (heVoice) utter.voice = heVoice;
+            const wasReading = btn.classList.contains("audio-reading");
+            if (wasReading) {
+              btn.classList.remove("audio-reading");
+              btn.textContent = "🎤 הקרא בקול";
+              return;
+            }
+            btn.classList.add("audio-reading");
+            btn.textContent = "⏹️ עצור";
+            utter.onend = () => {
+              btn.classList.remove("audio-reading");
+              btn.textContent = "🎤 הקרא בקול";
+            };
+            utter.onerror = () => {
+              btn.classList.remove("audio-reading");
+              btn.textContent = "🎤 הקרא בקול";
+            };
+            window.speechSynthesis.speak(utter);
           }
         });
       });
