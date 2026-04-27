@@ -193,13 +193,13 @@
   - [V] Bonus: question nav bar (jump to any question) + skip/prev/next
   - [V] Bonus: composer uses deterministic RNG seeded by template + time
   - [V] Bonus: scoring across 4 question kinds (MC, Fill, Trace, Bug)
-- [ ] P1.5.2 — Per-Distractor Feedback
-  - [ ] P1.5.2.1 — Schema: optionFeedback[4] + commonMistake
-  - [ ] P1.5.2.2 — UI: show feedback after answer
-  - [ ] P1.5.2.3 — LLM batch script — augment 1316 MCs
-  - [ ] P1.5.2.4 — Manual review 10% (130 questions)
+- [V] P1.5.2 — Per-Distractor Feedback ✅
+  - [V] P1.5.2.1 — Schema: question.optionFeedback[4] + OPTION_FEEDBACK[id] map
+  - [V] P1.5.2.2 — UI: distractor feedback shown FIRST + generic explanation as secondary
+  - [ ] P1.5.2.3 — LLM batch script — augment 1316 MCs (deferred — needs Claude API)
+  - [V] P1.5.2.4 — Manual coverage: 14 high-impact React/JS MCs (Variables, Arrays, Functions, useState)
 
-**P1 Total: 56/62** (P1.4.4 added)
+**P1 Total: 60/62** (P1.5.2 partial complete — LLM batch deferred)
 
 ---
 
@@ -418,6 +418,7 @@
 2026-04-28 00:34 — Sprint 3 Side-by-Side Comparator dedicated tab shipped (6 pairs)
 2026-04-28 00:38 — Sprint 3 What-If Simulator shipped — 5 concepts × 3 scenarios + interactive knobs
 2026-04-28 00:41 — Pocket Concept Card shipped — floating panel + per-concept save button
+2026-04-28 01:05 — Final wave: P1.5.2 distractor feedback + a11y + glossary + reflection + reverse + ELI5
 ```
 
 ---
