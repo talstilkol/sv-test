@@ -62,6 +62,9 @@
           <button class="top-tab" id="open-trainer" data-tab="trainer">
             <span class="emoji">🧠</span><span>מאמן ידע + דוח</span>
           </button>
+          <button class="top-tab" id="open-mock-exam" data-tab="mock-exam">
+            <span class="emoji">🎯</span><span>מבחן מדומה</span>
+          </button>
           <button class="top-tab" id="open-study-mode" data-tab="study">
             <span class="emoji">🎯</span><span>לימוד מותאם</span>
           </button>
@@ -328,6 +331,59 @@
             <div class="trace-list" id="trace-list"></div>
             <!-- Active trace player (hidden until user picks one) -->
             <div class="trace-player glass-panel" id="trace-player" style="display:none"></div>
+          </div>
+
+          <!-- Mock Exam View -->
+          <div class="mock-exam-view" id="mock-exam-view" style="display:none">
+            <!-- Intro screen (before exam starts) -->
+            <div class="me-intro glass-panel" id="me-intro">
+              <h2>🎯 מבחן מדומה — תרגול לתנאי מבחן</h2>
+              <p>30 שאלות (15 MC + 10 השלמת קוד + 5 Code Trace) · 45 דקות · ללא משוב במהלך המבחן.</p>
+              <div class="me-rules">
+                <h3>📋 כללי המבחן</h3>
+                <ul>
+                  <li>⏱️ <strong>45 דקות</strong> שעון יורד</li>
+                  <li>🚫 <strong>ללא רמזים</strong> או הסברי מושג במהלך המבחן</li>
+                  <li>📝 ניתן לדלג על שאלה ולחזור אליה</li>
+                  <li>📊 התוצאה תוצג בסוף עם פירוט לכל שאלה + ההסבר</li>
+                  <li>💯 ציון 90+ = "מוכן למבחן האמיתי"</li>
+                  <li>🎯 הניקוד למושגים מתעדכן רק אחרי הגשה</li>
+                </ul>
+              </div>
+              <div class="me-actions">
+                <button class="me-btn me-btn-primary" id="me-start">▶️ התחל מבחן</button>
+                <button class="me-btn me-btn-secondary" id="me-show-history">📜 היסטוריית מבחנים</button>
+              </div>
+              <div class="me-history" id="me-history" style="display:none"></div>
+            </div>
+
+            <!-- Live exam screen -->
+            <div class="me-exam glass-panel" id="me-exam" style="display:none">
+              <div class="me-header">
+                <div class="me-progress">
+                  <span id="me-q-counter">שאלה 1/30</span>
+                  <div class="me-progress-track"><div class="me-progress-fill" id="me-progress-fill"></div></div>
+                </div>
+                <div class="me-timer" id="me-timer">⏱️ 45:00</div>
+                <button class="me-btn me-btn-danger" id="me-submit-now">🏁 הגש מוקדם</button>
+              </div>
+              <div class="me-q-grid" id="me-q-grid">
+                <!-- Question dots — clickable -->
+              </div>
+              <div class="me-question-area" id="me-question-area">
+                <!-- Active question rendered here -->
+              </div>
+              <div class="me-nav">
+                <button class="me-btn me-btn-secondary" id="me-prev">← הקודמת</button>
+                <button class="me-btn me-btn-secondary" id="me-flag">🚩 סמן לחזרה</button>
+                <button class="me-btn me-btn-primary" id="me-next">הבאה →</button>
+              </div>
+            </div>
+
+            <!-- Results screen -->
+            <div class="me-results glass-panel" id="me-results" style="display:none">
+              <!-- Filled by renderResults -->
+            </div>
           </div>
 
           <!-- Code Blocks View -->

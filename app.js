@@ -260,6 +260,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (_anatomyView) _anatomyView.style.display = "none";
     if (codeblocksView) codeblocksView.style.display = "none";
     if (traceView) traceView.style.display = "none";
+    const _meView = document.getElementById("mock-exam-view");
+    if (_meView) _meView.style.display = "none";
     document
       .querySelectorAll(".top-tab")
       .forEach((b) => b.classList.remove("active"));
@@ -2360,6 +2362,528 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("open-code-anatomy")?.addEventListener("click", openCodeAnatomy);
   openCodeblocksBtn?.addEventListener("click", openCodeblocks);
   openTraceBtn?.addEventListener("click", openTracePage);
+
+  // ============================================================
+  // === Mock Exam Mode (Phase 1 — M2) ==========================
+  // 30 questions: 15 MC + 10 Fill + 5 Trace · 45 min · lockdown
+  // ============================================================
+  const ME_HISTORY_KEY = "lumenportal:mockExamHistory:v1";
+  const ME_DURATION_MS = 45 * 60 * 1000; // 45 minutes
+  const ME_COMPOSITION = { mc: 15, fill: 10, trace: 5 };
+
+  let meState = null; // { questions, answers, flags, currentIdx, startTime, endTime, timerId }
+
+  document
+    .getElementById("open-mock-exam")
+    ?.addEventListener("click", openMockExam);
+
+  function openMockExam() {
+    hideAllViews();
+    currentLessonId = null;
+    currentLessonTitle.textContent = "🎯 מבחן מדומה";
+    currentLessonDesc.textContent =
+      "תרגול בתנאי מבחן: 30 שאלות, 45 דקות, ללא משוב.";
+    const view = document.getElementById("mock-exam-view");
+    if (view) view.style.display = "block";
+    document.getElementById("open-mock-exam")?.classList.add("active");
+    // Reset to intro screen if no exam in progress
+    if (!meState || meState.status !== "in-progress") {
+      document.getElementById("me-intro").style.display = "block";
+      document.getElementById("me-exam").style.display = "none";
+      document.getElementById("me-results").style.display = "none";
+    }
+    scrollToTop();
+    sidebar.classList.remove("open");
+  }
+
+  // Compose 30 questions from QUESTIONS_BANK
+  function composeMockExam() {
+    const bank = window.QUESTIONS_BANK || { mc: [], fill: [], trace: [] };
+    function pickN(arr, n) {
+      const shuffled = [...arr].sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, n);
+    }
+    // MC at levels 4-6 (mid-to-hard)
+    const mcPool = (bank.mc || []).filter((q) => q.level >= 4 && q.level <= 6);
+    const mc = pickN(mcPool, ME_COMPOSITION.mc).map((q) => ({
+      kind: "mc",
+      ref: q,
+    }));
+    // Fill at levels 3-5
+    const fillPool = (bank.fill || []).filter(
+      (q) => q.level >= 3 && q.level <= 5,
+    );
+    const fill = pickN(fillPool, ME_COMPOSITION.fill).map((q) => ({
+      kind: "fill",
+      ref: q,
+    }));
+    // Trace any level
+    const trace = pickN(bank.trace || [], ME_COMPOSITION.trace).map((q) => ({
+      kind: "trace",
+      ref: q,
+    }));
+    // Mix it up but keep order: MC first, fill, trace
+    return [...mc, ...fill, ...trace];
+  }
+
+  function startMockExam() {
+    const questions = composeMockExam();
+    if (questions.length < 20) {
+      alert(
+        `אין מספיק שאלות במאגר (${questions.length}). יש להעמיק את המאגר.`,
+      );
+      return;
+    }
+    meState = {
+      questions,
+      answers: {}, // { idx: userAnswer }
+      flags: {}, // { idx: true }
+      currentIdx: 0,
+      startTime: Date.now(),
+      endTime: Date.now() + ME_DURATION_MS,
+      status: "in-progress",
+      timerId: null,
+    };
+    document.getElementById("me-intro").style.display = "none";
+    document.getElementById("me-results").style.display = "none";
+    document.getElementById("me-exam").style.display = "block";
+    renderExamGrid();
+    renderCurrentQuestion();
+    startTimer();
+  }
+
+  function startTimer() {
+    if (meState.timerId) clearInterval(meState.timerId);
+    function tick() {
+      const remaining = Math.max(0, meState.endTime - Date.now());
+      const min = Math.floor(remaining / 60000);
+      const sec = Math.floor((remaining % 60000) / 1000);
+      const timerEl = document.getElementById("me-timer");
+      if (timerEl) {
+        timerEl.textContent = `⏱️ ${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+        if (remaining <= 5 * 60 * 1000) timerEl.classList.add("me-timer-low");
+        if (remaining <= 60 * 1000) timerEl.classList.add("me-timer-critical");
+      }
+      if (remaining <= 0) {
+        clearInterval(meState.timerId);
+        submitMockExam(true);
+      }
+    }
+    tick();
+    meState.timerId = setInterval(tick, 1000);
+  }
+
+  function renderExamGrid() {
+    const grid = document.getElementById("me-q-grid");
+    if (!grid) return;
+    grid.innerHTML = meState.questions
+      .map((q, i) => {
+        const answered = meState.answers[i] !== undefined;
+        const flagged = meState.flags[i];
+        const current = i === meState.currentIdx;
+        return `<button class="me-q-dot ${answered ? "answered" : ""} ${flagged ? "flagged" : ""} ${current ? "current" : ""}" data-idx="${i}">${i + 1}</button>`;
+      })
+      .join("");
+    grid.querySelectorAll(".me-q-dot").forEach((dot) => {
+      dot.addEventListener("click", () => {
+        meState.currentIdx = parseInt(dot.dataset.idx, 10);
+        renderCurrentQuestion();
+      });
+    });
+  }
+
+  function renderCurrentQuestion() {
+    const idx = meState.currentIdx;
+    const q = meState.questions[idx];
+    const area = document.getElementById("me-question-area");
+    const counter = document.getElementById("me-q-counter");
+    const fill = document.getElementById("me-progress-fill");
+    if (!area || !q) return;
+
+    counter.textContent = `שאלה ${idx + 1} / ${meState.questions.length}`;
+    fill.style.width = `${((idx + 1) / meState.questions.length) * 100}%`;
+
+    const userAns = meState.answers[idx];
+    const kindBadge = {
+      mc: "🅰️ שאלה אמריקנית",
+      fill: "✍️ השלמת קוד",
+      trace: "🔬 Code Trace",
+    }[q.kind];
+
+    let bodyHTML = "";
+    if (q.kind === "mc") {
+      const r = q.ref;
+      bodyHTML = `
+        <div class="me-q-text">${esc(r.question || "").replace(/\n/g, "<br>")}</div>
+        <div class="me-options">
+          ${(r.options || [])
+            .map(
+              (opt, i) =>
+                `<button class="me-option ${userAns === i ? "selected" : ""}" data-i="${i}">${esc(opt)}</button>`,
+            )
+            .join("")}
+        </div>`;
+    } else if (q.kind === "fill") {
+      const r = q.ref;
+      bodyHTML = `
+        <div class="me-q-text">${esc(r.hint || "השלם את הטוקן החסר")}</div>
+        <div class="me-code"><pre><code>${esc(r.code || "")}</code></pre></div>
+        <input type="text" class="me-fill-input" id="me-fill-input"
+          value="${esc(userAns || "")}"
+          placeholder="הקלד את הטוקן החסר..." dir="ltr" autocomplete="off" spellcheck="false" />`;
+    } else if (q.kind === "trace") {
+      const r = q.ref;
+      const stepIdx = userAns?.stepIdx ?? 0;
+      const step = r.steps?.[stepIdx];
+      const codeLines = (r.code || "").split("\n");
+      bodyHTML = `
+        <div class="me-q-text">${esc(r.title || "Code Trace")}</div>
+        <div class="me-trace-code">
+          ${codeLines
+            .map((line, i) => {
+              const lineNum = i + 1;
+              const active = step && step.line === lineNum;
+              return `<div class="me-trace-line ${active ? "active" : ""}"><span class="me-trace-num">${lineNum}</span><code>${esc(line) || "&nbsp;"}</code></div>`;
+            })
+            .join("")}
+        </div>
+        <div class="me-trace-step">
+          <strong>שלב ${stepIdx + 1}/${r.steps.length}:</strong>
+          ${esc(step?.prompt || "")}
+        </div>
+        <input type="text" class="me-fill-input" id="me-trace-input"
+          value="${esc(userAns?.steps?.[stepIdx] || "")}"
+          placeholder="התשובה לשלב הזה..." dir="ltr" autocomplete="off" spellcheck="false" />
+        <div class="me-trace-nav">
+          ${stepIdx > 0 ? `<button class="me-btn me-btn-secondary" id="me-trace-prev-step">← שלב קודם</button>` : ""}
+          ${stepIdx < r.steps.length - 1 ? `<button class="me-btn me-btn-primary" id="me-trace-next-step">שלב הבא →</button>` : ""}
+        </div>`;
+    }
+
+    area.innerHTML = `
+      <div class="me-q-meta">
+        <span class="me-q-kind">${kindBadge}</span>
+        ${meState.flags[idx] ? '<span class="me-flagged-mark">🚩 מסומן</span>' : ""}
+      </div>
+      ${bodyHTML}`;
+
+    // Wire interactions
+    if (q.kind === "mc") {
+      area.querySelectorAll(".me-option").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          meState.answers[idx] = parseInt(btn.dataset.i, 10);
+          renderExamGrid();
+          area
+            .querySelectorAll(".me-option")
+            .forEach((o) => o.classList.remove("selected"));
+          btn.classList.add("selected");
+        });
+      });
+    } else if (q.kind === "fill") {
+      const input = document.getElementById("me-fill-input");
+      input?.focus();
+      input?.addEventListener("input", () => {
+        meState.answers[idx] = input.value;
+        renderExamGrid();
+      });
+    } else if (q.kind === "trace") {
+      const input = document.getElementById("me-trace-input");
+      const stepIdx = meState.answers[idx]?.stepIdx ?? 0;
+      input?.focus();
+      input?.addEventListener("input", () => {
+        const cur = meState.answers[idx] ?? { stepIdx: 0, steps: {} };
+        cur.steps[stepIdx] = input.value;
+        meState.answers[idx] = cur;
+        renderExamGrid();
+      });
+      document
+        .getElementById("me-trace-prev-step")
+        ?.addEventListener("click", () => {
+          const cur = meState.answers[idx] ?? { stepIdx: 0, steps: {} };
+          cur.stepIdx = Math.max(0, (cur.stepIdx || 0) - 1);
+          meState.answers[idx] = cur;
+          renderCurrentQuestion();
+        });
+      document
+        .getElementById("me-trace-next-step")
+        ?.addEventListener("click", () => {
+          const cur = meState.answers[idx] ?? { stepIdx: 0, steps: {} };
+          cur.stepIdx = Math.min(
+            q.ref.steps.length - 1,
+            (cur.stepIdx || 0) + 1,
+          );
+          meState.answers[idx] = cur;
+          renderCurrentQuestion();
+        });
+    }
+  }
+
+  // Wire navigation buttons
+  document.getElementById("me-start")?.addEventListener("click", startMockExam);
+  document
+    .getElementById("me-show-history")
+    ?.addEventListener("click", toggleHistoryView);
+  document.getElementById("me-prev")?.addEventListener("click", () => {
+    if (!meState) return;
+    meState.currentIdx = Math.max(0, meState.currentIdx - 1);
+    renderCurrentQuestion();
+    renderExamGrid();
+  });
+  document.getElementById("me-next")?.addEventListener("click", () => {
+    if (!meState) return;
+    meState.currentIdx = Math.min(
+      meState.questions.length - 1,
+      meState.currentIdx + 1,
+    );
+    renderCurrentQuestion();
+    renderExamGrid();
+  });
+  document.getElementById("me-flag")?.addEventListener("click", () => {
+    if (!meState) return;
+    const idx = meState.currentIdx;
+    meState.flags[idx] = !meState.flags[idx];
+    renderCurrentQuestion();
+    renderExamGrid();
+  });
+  document
+    .getElementById("me-submit-now")
+    ?.addEventListener("click", () => {
+      if (!confirm("להגיש את המבחן עכשיו? לא ניתן יהיה להמשיך.")) return;
+      submitMockExam(false);
+    });
+
+  function gradeAnswer(q, userAns) {
+    if (userAns === undefined || userAns === null) return false;
+    if (q.kind === "mc") {
+      return userAns === q.ref.correctIndex;
+    }
+    if (q.kind === "fill") {
+      const expected = String(q.ref.answer || "")
+        .trim()
+        .toLowerCase();
+      const actual = String(userAns).trim().toLowerCase();
+      return actual === expected;
+    }
+    if (q.kind === "trace") {
+      // All steps must be correct (fully)
+      const steps = q.ref.steps || [];
+      const userSteps = userAns?.steps || {};
+      return steps.every((step, i) => {
+        const ans = String(userSteps[i] || "")
+          .trim()
+          .toLowerCase();
+        if (!ans) return false;
+        const expected = String(step.answer || "")
+          .trim()
+          .toLowerCase();
+        const acceptable = (step.acceptable || []).map((a) =>
+          a.trim().toLowerCase(),
+        );
+        return ans === expected || acceptable.includes(ans);
+      });
+    }
+    return false;
+  }
+
+  function submitMockExam(byTimer) {
+    if (!meState) return;
+    if (meState.timerId) clearInterval(meState.timerId);
+    meState.status = "submitted";
+    meState.finishedAt = Date.now();
+
+    // Grade
+    const results = meState.questions.map((q, i) => {
+      const correct = gradeAnswer(q, meState.answers[i]);
+      // Update concept score via existing applyAnswer if conceptKey exists
+      const conceptKey = q.ref.conceptKey;
+      if (conceptKey) {
+        const ref = findConceptByKey(conceptKey);
+        if (ref) {
+          applyAnswer(
+            ref.lesson.id,
+            ref.concept.conceptName,
+            ref.concept,
+            q.kind === "fill" ? "fill" : "mc",
+            correct,
+          );
+        }
+      }
+      return { idx: i, kind: q.kind, correct, q: q.ref, userAnswer: meState.answers[i] };
+    });
+    const total = results.length;
+    const score = results.filter((r) => r.correct).length;
+    const pct = Math.round((score / total) * 100);
+    const durationMs = meState.finishedAt - meState.startTime;
+
+    // Save history
+    const history = loadHistory();
+    history.push({
+      id: meState.startTime,
+      startedAt: meState.startTime,
+      finishedAt: meState.finishedAt,
+      durationMs,
+      score,
+      total,
+      pct,
+      byTimer,
+      breakdown: {
+        mc: { correct: results.filter((r) => r.kind === "mc" && r.correct).length, total: results.filter((r) => r.kind === "mc").length },
+        fill: { correct: results.filter((r) => r.kind === "fill" && r.correct).length, total: results.filter((r) => r.kind === "fill").length },
+        trace: { correct: results.filter((r) => r.kind === "trace" && r.correct).length, total: results.filter((r) => r.kind === "trace").length },
+      },
+    });
+    saveHistory(history);
+
+    renderResults(results, score, total, pct, durationMs, byTimer);
+  }
+
+  function renderResults(results, score, total, pct, durationMs, byTimer) {
+    document.getElementById("me-exam").style.display = "none";
+    const resultsEl = document.getElementById("me-results");
+    if (!resultsEl) return;
+
+    const grade =
+      pct >= 90
+        ? { emoji: "🏆", label: "מצוין — מוכן למבחן!", cls: "me-grade-excellent" }
+        : pct >= 75
+          ? { emoji: "🎯", label: "טוב — תרגול נוסף ימקסם", cls: "me-grade-good" }
+          : pct >= 60
+            ? { emoji: "📚", label: "סביר — לחזור על חולשות", cls: "me-grade-ok" }
+            : { emoji: "🔄", label: "צריך עוד תרגול", cls: "me-grade-low" };
+    const minutes = Math.floor(durationMs / 60000);
+    const seconds = Math.floor((durationMs % 60000) / 1000);
+
+    const wrongResults = results.filter((r) => !r.correct);
+    const breakdown = {
+      mc: results.filter((r) => r.kind === "mc"),
+      fill: results.filter((r) => r.kind === "fill"),
+      trace: results.filter((r) => r.kind === "trace"),
+    };
+
+    resultsEl.innerHTML = `
+      <div class="me-results-head ${grade.cls}">
+        <div class="me-grade-icon">${grade.emoji}</div>
+        <h2>${grade.label}</h2>
+        <div class="me-score">${score}/${total} <span class="me-pct">(${pct}%)</span></div>
+        ${byTimer ? '<div class="me-timer-warn">⏱️ הזמן הסתיים</div>' : ""}
+        <div class="me-duration">⏱️ זמן: ${minutes}:${String(seconds).padStart(2, "0")}</div>
+      </div>
+
+      <div class="me-breakdown">
+        <h3>📊 פירוט לפי סוג</h3>
+        <div class="me-breakdown-grid">
+          <div class="me-breakdown-item">
+            <span class="n">${breakdown.mc.filter((r) => r.correct).length}/${breakdown.mc.length}</span>
+            <span>🅰️ אמריקני</span>
+          </div>
+          <div class="me-breakdown-item">
+            <span class="n">${breakdown.fill.filter((r) => r.correct).length}/${breakdown.fill.length}</span>
+            <span>✍️ השלמת קוד</span>
+          </div>
+          <div class="me-breakdown-item">
+            <span class="n">${breakdown.trace.filter((r) => r.correct).length}/${breakdown.trace.length}</span>
+            <span>🔬 Code Trace</span>
+          </div>
+        </div>
+      </div>
+
+      ${wrongResults.length ? `
+      <div class="me-wrong-list">
+        <h3>❌ שאלות ששגית בהן (${wrongResults.length})</h3>
+        ${wrongResults
+          .map((r) => {
+            const q = r.q;
+            const explanation = q.explanation || "";
+            const expected =
+              r.kind === "mc"
+                ? esc(q.options?.[q.correctIndex] || "")
+                : r.kind === "fill"
+                  ? esc(q.answer || "")
+                  : "ראה ה-trace";
+            return `
+              <div class="me-wrong-item">
+                <div class="me-wrong-meta">
+                  <span class="me-q-kind">${r.kind === "mc" ? "🅰️" : r.kind === "fill" ? "✍️" : "🔬"}</span>
+                  ${q.conceptKey ? `<span class="pill-mini">📌 ${esc(q.conceptKey.split("::")[1] || q.conceptKey)}</span>` : ""}
+                </div>
+                <div class="me-wrong-q">${esc(q.question || q.title || q.hint || "")}</div>
+                <div class="me-wrong-correct"><strong>תשובה נכונה:</strong> ${expected}</div>
+                ${explanation ? `<div class="me-wrong-expl"><strong>הסבר:</strong> ${esc(explanation)}</div>` : ""}
+              </div>`;
+          })
+          .join("")}
+      </div>` : '<div class="me-perfect">🎉 ענית נכון על כל השאלות!</div>'}
+
+      <div class="me-actions">
+        <button class="me-btn me-btn-primary" id="me-restart">▶️ מבחן חדש</button>
+        <button class="me-btn me-btn-secondary" id="me-back-intro">📋 חזרה לתפריט</button>
+      </div>`;
+    resultsEl.style.display = "block";
+
+    document.getElementById("me-restart")?.addEventListener("click", () => {
+      meState = null;
+      startMockExam();
+    });
+    document.getElementById("me-back-intro")?.addEventListener("click", () => {
+      meState = null;
+      document.getElementById("me-results").style.display = "none";
+      document.getElementById("me-intro").style.display = "block";
+    });
+
+    // Reset critical timer state
+    if (knowledgeMapView && knowledgeMapView.style.display === "block") {
+      renderKnowledgeMap();
+    }
+  }
+
+  function loadHistory() {
+    try {
+      return JSON.parse(localStorage.getItem(ME_HISTORY_KEY) || "[]");
+    } catch (_) {
+      return [];
+    }
+  }
+  function saveHistory(h) {
+    try {
+      localStorage.setItem(ME_HISTORY_KEY, JSON.stringify(h));
+    } catch (_) {}
+  }
+
+  function toggleHistoryView() {
+    const hist = document.getElementById("me-history");
+    if (!hist) return;
+    if (hist.style.display === "block") {
+      hist.style.display = "none";
+      return;
+    }
+    const records = loadHistory().slice().reverse();
+    if (!records.length) {
+      hist.innerHTML = '<p style="color:var(--text-muted)">לא ביצעת מבחנים עדיין.</p>';
+    } else {
+      hist.innerHTML = `
+        <h3>📜 היסטוריית מבחנים (${records.length})</h3>
+        <div class="me-history-list">
+          ${records
+            .slice(0, 10)
+            .map((r) => {
+              const date = new Date(r.startedAt).toLocaleString("he-IL");
+              const min = Math.floor(r.durationMs / 60000);
+              return `
+                <div class="me-history-item">
+                  <div class="me-history-score">${r.pct}% (${r.score}/${r.total})</div>
+                  <div class="me-history-meta">
+                    ${date} · ${min} דקות
+                    · 🅰️ ${r.breakdown.mc.correct}/${r.breakdown.mc.total}
+                    · ✍️ ${r.breakdown.fill.correct}/${r.breakdown.fill.total}
+                    · 🔬 ${r.breakdown.trace.correct}/${r.breakdown.trace.total}
+                  </div>
+                </div>`;
+            })
+            .join("")}
+        </div>`;
+    }
+    hist.style.display = "block";
+  }
 
   // Global Print-to-PDF — works on every view. Sets a body class to mark
   // which view is "active" (so @media print can isolate it), triggers
