@@ -4202,3 +4202,558 @@ body {
   margin-bottom: 0.5rem;
 }
 .trace-explanation { color: var(--text-main); line-height: 1.55; font-size: 0.93rem; }
+
+/* ============================================================
+ * TRACK D — UX QUICK WINS (CSS)
+ * Append-only. Does not touch any existing classes.
+ * Scoped: every Track D class is prefixed with "td-".
+ * ============================================================ */
+
+/* ---------- D5: Dyslexia font + Reduced motion ---------- */
+body.td-dyslexia-font,
+body.td-dyslexia-font * {
+  font-family: 'OpenDyslexic', 'Heebo', sans-serif !important;
+  letter-spacing: 0.02em;
+}
+body.td-reduced-motion *,
+body.td-reduced-motion *::before,
+body.td-reduced-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* ---------- D1: Read-aloud TTS button ---------- */
+.td-tts-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-inline-start: 8px;
+  padding: 0;
+  background: rgba(34, 211, 238, 0.10);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  border-radius: 50%;
+  color: #22d3ee;
+  font-size: 0.85rem;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: transform 0.15s ease, background 0.15s ease;
+  float: left;          /* RTL → button visually on the LEFT of the explanation block */
+  margin-top: -2px;
+}
+.td-tts-btn:hover {
+  background: rgba(34, 211, 238, 0.22);
+  transform: scale(1.06);
+}
+.td-tts-btn:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
+.td-tts-btn.td-tts-playing {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.6);
+  color: #34d399;
+  animation: td-tts-pulse 1s ease-in-out infinite;
+}
+@keyframes td-tts-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  50%      { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+}
+
+/* ---------- D2: Glossary tooltip + modal ---------- */
+.td-gloss-term {
+  border-bottom: 1px dashed rgba(34, 211, 238, 0.55);
+  cursor: help;
+  color: inherit;
+  background: rgba(34, 211, 238, 0.05);
+  padding: 0 2px;
+  border-radius: 3px;
+  transition: background 0.15s ease;
+}
+.td-gloss-term:hover,
+.td-gloss-term:focus-visible {
+  background: rgba(34, 211, 238, 0.18);
+  outline: none;
+}
+
+.td-gloss-tooltip {
+  position: absolute;
+  z-index: 9000;
+  display: none;
+  max-width: 320px;
+  padding: 0.7rem 0.9rem;
+  background: rgba(15, 23, 42, 0.97);
+  color: #f1f5f9;
+  border: 1px solid rgba(34, 211, 238, 0.4);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  pointer-events: none;
+  text-align: right;
+  direction: rtl;
+}
+.td-gloss-tip-he {
+  font-weight: 700;
+  color: #22d3ee;
+  margin-bottom: 4px;
+}
+.td-gloss-tip-short { color: #e2e8f0; }
+.td-gloss-tip-hint {
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* ---------- D3: Pocket panel ---------- */
+.td-pocket-btn {
+  position: relative;
+  float: left;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #94a3b8;
+  margin: 0 0 8px 8px;
+  transition: transform 0.15s ease, background 0.15s ease;
+  line-height: 1;
+  padding: 0;
+}
+.td-pocket-btn:hover {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.45);
+  color: #fbbf24;
+  transform: scale(1.08);
+}
+.td-pocket-btn.td-pocket-on {
+  background: rgba(245, 158, 11, 0.25);
+  border-color: rgba(245, 158, 11, 0.7);
+  color: #fbbf24;
+}
+.td-pocket-btn.td-pocket-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.td-pocket-panel {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 8500;
+  font-family: 'Heebo', sans-serif;
+}
+.td-pocket-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #1e293b;
+  border: none;
+  border-radius: 24px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+.td-pocket-toggle:hover { transform: translateY(-1px); }
+.td-pocket-icon { font-size: 1.05rem; }
+.td-pocket-count {
+  display: inline-block;
+  min-width: 20px;
+  padding: 0 6px;
+  background: #1e293b;
+  color: #fbbf24;
+  border-radius: 10px;
+  font-size: 0.78rem;
+}
+.td-pocket-body {
+  display: none;
+  margin-top: 8px;
+  width: 320px;
+  max-height: 60vh;
+  overflow-y: auto;
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  color: #f1f5f9;
+  direction: rtl;
+}
+.td-pocket-panel:not(.td-pocket-collapsed) .td-pocket-body { display: block; }
+.td-pocket-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  color: #fbbf24;
+}
+.td-pocket-clear {
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.td-pocket-clear:hover { background: rgba(239, 68, 68, 0.15); }
+.td-pocket-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.td-pocket-item {
+  display: flex;
+  gap: 6px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+.td-pocket-item:last-child { border-bottom: none; }
+.td-pocket-go {
+  flex: 1;
+  text-align: right;
+  background: transparent;
+  border: none;
+  color: #f1f5f9;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.td-pocket-go:hover { background: rgba(255, 255, 255, 0.06); }
+.td-pocket-name { display: block; font-weight: 600; }
+.td-pocket-lesson {
+  display: block;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+.td-pocket-del {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 6px;
+}
+.td-pocket-del:hover { color: #fca5a5; }
+.td-pocket-empty {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 12px 4px;
+}
+
+/* Highlight flash when scrolling-to a concept from the pocket panel. */
+.concept-card.td-flash {
+  animation: td-flash-anim 1.5s ease-out;
+}
+@keyframes td-flash-anim {
+  0%   { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); }
+  50%  { box-shadow: 0 0 0 16px rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+/* ---------- D4-D6: Generic modal ---------- */
+.td-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  background: rgba(2, 6, 23, 0.78);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: td-fade-in 0.18s ease-out;
+}
+@keyframes td-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.td-modal {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 86vh;
+  overflow-y: auto;
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem 1.2rem 1.5rem;
+  color: #f1f5f9;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  direction: rtl;
+  text-align: right;
+}
+.td-modal-close {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+.td-modal-close:hover { color: #f1f5f9; }
+.td-modal-title {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.3rem;
+  color: #22d3ee;
+}
+.td-modal-subtitle {
+  margin: 0 0 1.1rem 0;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+.td-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 1rem;
+}
+.td-btn-primary,
+.td-btn-secondary {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.td-btn-primary {
+  background: linear-gradient(135deg, #22d3ee 0%, #0891b2 100%);
+  color: #04212a;
+}
+.td-btn-primary:hover { filter: brightness(1.1); }
+.td-btn-secondary {
+  background: transparent;
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+.td-btn-secondary:hover { background: rgba(148, 163, 184, 0.12); color: #f1f5f9; }
+
+.td-field {
+  display: block;
+  margin-bottom: 0.9rem;
+}
+.td-field > span {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-bottom: 4px;
+}
+.td-field textarea,
+.td-field input[type="number"],
+.td-field input[type="range"] {
+  width: 100%;
+  background: rgba(2, 6, 23, 0.6);
+  color: #f1f5f9;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  resize: vertical;
+}
+.td-field textarea:focus,
+.td-field input:focus {
+  outline: none;
+  border-color: rgba(34, 211, 238, 0.6);
+  box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.18);
+}
+
+/* ---------- D2: glossary modal ---------- */
+.td-gloss-modal-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.7rem;
+}
+.td-gloss-modal-en {
+  font-family: 'Fira Code', monospace;
+  font-size: 1.3rem;
+  color: #22d3ee;
+  font-weight: 700;
+  direction: ltr;
+}
+.td-gloss-modal-he { color: #f1f5f9; font-size: 1.05rem; font-weight: 600; }
+.td-gloss-modal-cat {
+  font-size: 0.7rem;
+  background: rgba(34, 211, 238, 0.18);
+  color: #67e8f9;
+  border-radius: 999px;
+  padding: 2px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.td-cat-react   { background: rgba(34, 211, 238, 0.18); color: #67e8f9; }
+.td-cat-js      { background: rgba(245, 158, 11, 0.18); color: #fbbf24; }
+.td-cat-ts      { background: rgba(99, 102, 241, 0.22); color: #c7d2fe; }
+.td-cat-web     { background: rgba(16, 185, 129, 0.20); color: #6ee7b7; }
+.td-cat-tooling { background: rgba(168, 85, 247, 0.20); color: #d8b4fe; }
+.td-gloss-modal-long {
+  margin: 0 0 0.8rem 0;
+  line-height: 1.65;
+  color: #e2e8f0;
+}
+.td-gloss-modal-example {
+  background: rgba(2, 6, 23, 0.7);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: #67e8f9;
+  direction: ltr;
+  text-align: left;
+  overflow-x: auto;
+}
+
+/* ---------- D4: Reflection modal + history ---------- */
+.td-reflect-history-btn {
+  margin-top: 1rem;
+  background: rgba(34, 211, 238, 0.12);
+  color: #67e8f9;
+  border: 1px solid rgba(34, 211, 238, 0.4);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+.td-reflect-history-btn:hover { background: rgba(34, 211, 238, 0.22); }
+
+.td-reflect-history { max-height: 60vh; overflow-y: auto; }
+.td-reflect-row {
+  background: rgba(2, 6, 23, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.td-reflect-row-head {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+  color: #22d3ee;
+}
+.td-reflect-row-date { color: #94a3b8; font-size: 0.85rem; }
+.td-reflect-row-hours {
+  color: #fbbf24;
+  font-size: 0.82rem;
+  background: rgba(245, 158, 11, 0.15);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.td-reflect-row-q {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+.td-reflect-row-q b { color: #67e8f9; }
+.td-empty { color: #94a3b8; text-align: center; padding: 1rem; }
+
+/* ---------- D5: Settings toggles ---------- */
+.td-settings-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 0.4rem; }
+.td-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(2, 6, 23, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+.td-toggle-row:hover { background: rgba(2, 6, 23, 0.6); }
+.td-toggle-info { flex: 1; }
+.td-toggle-title { font-weight: 700; color: #f1f5f9; margin-bottom: 2px; }
+.td-toggle-desc { font-size: 0.83rem; color: #94a3b8; }
+.td-toggle-row input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  accent-color: #22d3ee;
+  cursor: pointer;
+}
+
+/* ---------- D6: Wrap-up modal ---------- */
+.td-wrap-modal { max-width: 560px; }
+.td-wrap-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #22d3ee 0%, #10b981 100%);
+  color: #04212a;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+.td-confidence-val {
+  display: inline-block;
+  min-width: 32px;
+  text-align: center;
+  background: rgba(34, 211, 238, 0.15);
+  color: #67e8f9;
+  border-radius: 4px;
+  padding: 0 6px;
+  font-weight: 700;
+  font-family: 'Fira Code', monospace;
+}
+
+/* ---------- toast ---------- */
+.td-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9800;
+  background: rgba(2, 6, 23, 0.95);
+  color: #f1f5f9;
+  border: 1px solid rgba(34, 211, 238, 0.5);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.92rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  direction: rtl;
+}
+.td-toast.td-toast-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Settings tab in top bar (matches existing top-tab visual) ---------- */
+/* .td-settings-btn inherits .top-tab styling — no own rules needed */
+
+/* ---------- Print-mode visibility ---------- */
+@media print {
+  .td-tts-btn,
+  .td-pocket-btn,
+  .td-pocket-panel,
+  .td-modal-overlay,
+  .td-toast,
+  .td-settings-btn,
+  .td-reflect-history-btn { display: none !important; }
+  .td-gloss-term { border-bottom: none; background: transparent; }
+}
