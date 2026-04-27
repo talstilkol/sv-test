@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const openGuideBtn = document.getElementById("open-guide");
   const codeblocksView = document.getElementById("codeblocks-view");
   const openCodeblocksBtn = document.getElementById("open-codeblocks");
+  const traceView = document.getElementById("trace-view");
+  const openTraceBtn = document.getElementById("open-trace");
 
   let currentLessonId = null;
   let currentLevel = "grandma";
@@ -257,6 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const _anatomyView = document.getElementById("code-anatomy-view");
     if (_anatomyView) _anatomyView.style.display = "none";
     if (codeblocksView) codeblocksView.style.display = "none";
+    if (traceView) traceView.style.display = "none";
     document
       .querySelectorAll(".top-tab")
       .forEach((b) => b.classList.remove("active"));
@@ -858,6 +861,29 @@ document.addEventListener("DOMContentLoaded", () => {
   let trainerCurrent = null; // { lesson, concept, question }
   let trainerStats = { asked: 0, correct: 0, wrong: 0 };
   let trainerLastAnswered = false;
+  // Code-trace per-question state: tracks progress through steps[].
+  let traceState = null; // { stepIdx, attempts, hintShown }
+
+  // Normalize an answer for forgiving comparison (trim, lowercase, collapse whitespace).
+  function normalizeAnswer(s) {
+    return String(s || "").trim().toLowerCase().replace(/\s+/g, " ");
+  }
+  function isTraceAnswerCorrect(userInput, step) {
+    const u = normalizeAnswer(userInput);
+    if (!u) return false;
+    const correct = [step.answer, ...(step.acceptable || [])]
+      .filter(Boolean)
+      .map(normalizeAnswer);
+    return correct.includes(u);
+  }
+
+  // Pick a curated trace question for a concept, if any exist.
+  function pickTraceForConcept(conceptKey) {
+    const pool = (window.QUESTIONS_BANK && window.QUESTIONS_BANK.trace) || [];
+    const candidates = pool.filter((t) => t.conceptKey === conceptKey);
+    if (!candidates.length) return null;
+    return candidates[Math.floor(Math.random() * candidates.length)];
+  }
 
   // Concepts that have an explanation (junior or student)
   function trainableConcepts() {
@@ -1189,6 +1215,21 @@ document.addEventListener("DOMContentLoaded", () => {
       return a;
     }
 
+    // --- Code Trace (curated, multi-step) — preferred occasionally for the MC stage ---
+    // We only offer trace as an alternative to MC, never instead of fill.
+    // Triggered when: need === "mc", level >= 3, and a curated trace exists for this concept.
+    if (need === "mc" && sc.level >= 3 && Math.random() < 0.45) {
+      const conceptKey = `${lesson.id}::${concept.conceptName}`;
+      const trace = pickTraceForConcept(conceptKey);
+      if (trace) {
+        return {
+          kind: "trace",
+          level: sc.level,
+          trace, // full trace question object: { id, code, steps[], explanation }
+        };
+      }
+    }
+
     // --- Code-fill stage ---
     if (need === "fill") {
       const fill = makeCodeFill(concept);
@@ -1351,6 +1392,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const { lesson, concept, question } = trainerCurrent;
     const sc = getScore(lesson.id, concept.conceptName);
     const lvl = LEVEL_INFO[sc.level];
+
+    // Code Trace has its own render path — multi-step UI, separate flow.
+    if (question.kind === "trace") {
+      renderTraceQuestion(card, lesson, concept, question, sc, lvl);
+      return;
+    }
+
     const stageBadge = `${question.kind === "fill" ? "✍️ השלמת קוד" : "🅰️ שאלה אמריקנית"}`;
     const progressBadge = `שלבים ברמה ${sc.level}: ${sc.passedMC ? "🅰️✅" : "🅰️◯"} ${needsCodeFill(concept) ? (sc.passedFill ? "✍️✅" : "✍️◯") : ""}`.trim();
 
@@ -1431,6 +1479,200 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("tq-skip")?.addEventListener("click", () => {
       nextQuestion();
     });
+  }
+
+  // ============================================================================
+  // Code Trace renderer — multi-step UI with line highlighting + hint + progress
+  // ============================================================================
+  function renderTraceQuestion(card, lesson, concept, question, sc, lvl) {
+    // Reset trace state for a new trace question
+    if (!traceState || traceState.traceId !== question.trace.id) {
+      traceState = {
+        traceId: question.trace.id,
+        stepIdx: 0,
+        attempts: 0,
+        hintShown: false,
+        wrongOnAnyStep: false,
+      };
+    }
+    const t = question.trace;
+    const totalSteps = t.steps.length;
+    const stepIdx = traceState.stepIdx;
+    const completed = stepIdx >= totalSteps;
+    const step = completed ? null : t.steps[stepIdx];
+
+    const codeLines = String(t.code || "").split("\n");
+    const lineToHighlight = step && step.line ? step.line : -1;
+    const codeHTML = codeLines
+      .map((line, i) => {
+        const num = i + 1;
+        const isHighlighted = num === lineToHighlight;
+        return `<div class="trace-line${isHighlighted ? " trace-line-active" : ""}" data-line="${num}">
+          <span class="trace-line-num">${num}</span>
+          <span class="trace-line-code">${esc(line) || "&nbsp;"}</span>
+        </div>`;
+      })
+      .join("");
+
+    const progressPct = Math.round((stepIdx / totalSteps) * 100);
+    const progressHTML = `
+      <div class="trace-progress-row">
+        <span class="trace-progress-label">שלב ${Math.min(stepIdx + 1, totalSteps)} מתוך ${totalSteps}</span>
+        <div class="trace-progress-track"><div class="trace-progress-fill" style="width:${progressPct}%"></div></div>
+      </div>`;
+
+    const titleHTML = t.title
+      ? `<div class="trace-title">🔍 ${esc(t.title)}</div>`
+      : "";
+
+    let bodyHTML = "";
+    if (!completed) {
+      bodyHTML = `
+        <div class="trace-step">
+          <div class="trace-prompt">${esc(step.prompt).replace(/\n/g, "<br>")}</div>
+          <input type="text" class="trace-input" id="trace-input"
+            placeholder="הקלד את התשובה ולחץ Enter..." autocomplete="off" spellcheck="false" dir="ltr" />
+          <div class="trace-actions">
+            <button class="tq-btn primary" id="trace-submit">✅ בדוק</button>
+            <button class="tq-btn secondary" id="trace-hint">💡 רמז</button>
+            <button class="tq-btn secondary" id="trace-skip">⏭️ דלג בשלב</button>
+          </div>
+          <div class="trace-hint" id="trace-hint-slot" style="display:none"></div>
+          <div class="trace-feedback" id="trace-feedback-slot"></div>
+        </div>`;
+    } else {
+      // All steps completed — show explanation + score this trace as MC pass
+      bodyHTML = `
+        <div class="trace-complete">
+          <div class="trace-complete-headline">🎉 השלמת את כל השלבים!</div>
+          <div class="trace-explanation"><strong>סיכום:</strong> ${esc(t.explanation || "")}</div>
+        </div>`;
+    }
+
+    card.innerHTML = `
+      <div class="tq-context">
+        <span><span class="tq-lesson">${esc(lesson.title)}</span> · <strong>${esc(concept.conceptName)}</strong></span>
+        <span class="tq-level-pill ${lvl.cssClass}" title="הרמה הנוכחית של המושג">רמה ${sc.level}/7 · ${lvl.icon} ${esc(lvl.label)}</span>
+      </div>
+      <div class="tq-stage-row">
+        <span class="tq-stage-badge">🔍 מעקב קוד (Code Trace)</span>
+        <span class="tq-progress-badge">${sc.passedMC ? "🅰️✅" : "🅰️◯"} ${needsCodeFill(concept) ? (sc.passedFill ? "✍️✅" : "✍️◯") : ""}</span>
+      </div>
+      ${titleHTML}
+      ${progressHTML}
+      <div class="trace-code-block"><pre>${codeHTML}</pre></div>
+      ${bodyHTML}
+      <div id="tq-feedback-slot"></div>
+      <div class="tq-actions" id="tq-actions" style="display:none">
+        <button class="tq-btn primary" id="tq-next">➡️ שאלה הבאה</button>
+        <button class="tq-btn secondary" id="tq-open-lesson">📖 פתח את השיעור</button>
+        <button class="tq-btn secondary" id="tq-skip">⏭️ דלג</button>
+      </div>`;
+
+    if (!completed) {
+      const input = document.getElementById("trace-input");
+      input?.focus();
+      input?.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          onTraceSubmit(input.value);
+        }
+      });
+      document.getElementById("trace-submit")?.addEventListener("click", () => {
+        onTraceSubmit(document.getElementById("trace-input").value);
+      });
+      document.getElementById("trace-hint")?.addEventListener("click", () => {
+        traceState.hintShown = true;
+        const slot = document.getElementById("trace-hint-slot");
+        if (slot) {
+          slot.style.display = "block";
+          slot.innerHTML = `<strong>💡 רמז:</strong> ${esc(step.hint || "אין רמז זמין.")}`;
+        }
+      });
+      document.getElementById("trace-skip")?.addEventListener("click", () => {
+        // Reveal answer for this step and advance without credit
+        traceState.wrongOnAnyStep = true;
+        traceState.stepIdx++;
+        traceState.hintShown = false;
+        traceState.attempts = 0;
+        renderTraceQuestion(card, lesson, concept, question, sc, lvl);
+      });
+    } else {
+      // Auto-trigger MC stage scoring + show next-question controls
+      finalizeTraceQuestion(concept);
+    }
+
+    document.getElementById("tq-skip")?.addEventListener("click", () => {
+      traceState = null;
+      nextQuestion();
+    });
+  }
+
+  function onTraceSubmit(rawInput) {
+    if (!trainerCurrent || trainerCurrent.question.kind !== "trace") return;
+    const t = trainerCurrent.question.trace;
+    const step = t.steps[traceState.stepIdx];
+    if (!step) return;
+    const fbSlot = document.getElementById("trace-feedback-slot");
+    traceState.attempts++;
+    if (isTraceAnswerCorrect(rawInput, step)) {
+      if (fbSlot) {
+        fbSlot.innerHTML = `<div class="trace-fb-correct">✅ נכון! התשובה: <code>${esc(step.answer)}</code></div>`;
+      }
+      // Advance after a short delay so user reads the feedback
+      setTimeout(() => {
+        traceState.stepIdx++;
+        traceState.hintShown = false;
+        traceState.attempts = 0;
+        const card = document.getElementById("trainer-quiz-card");
+        if (card) renderTraceQuestion(card, trainerCurrent.lesson, trainerCurrent.concept, trainerCurrent.question, getScore(trainerCurrent.lesson.id, trainerCurrent.concept.conceptName), LEVEL_INFO[getScore(trainerCurrent.lesson.id, trainerCurrent.concept.conceptName).level]);
+      }, 700);
+    } else {
+      traceState.wrongOnAnyStep = true;
+      if (fbSlot) {
+        const showAnswer = traceState.attempts >= 2;
+        fbSlot.innerHTML = `<div class="trace-fb-wrong">❌ לא מדויק. ${showAnswer ? `התשובה: <code>${esc(step.answer)}</code> — נסה שלב הבא.` : "נסה שוב או לחץ '💡 רמז'."}</div>`;
+        if (showAnswer) {
+          // After 2 wrong attempts, auto-advance with no credit
+          setTimeout(() => {
+            traceState.stepIdx++;
+            traceState.hintShown = false;
+            traceState.attempts = 0;
+            const card = document.getElementById("trainer-quiz-card");
+            if (card) renderTraceQuestion(card, trainerCurrent.lesson, trainerCurrent.concept, trainerCurrent.question, getScore(trainerCurrent.lesson.id, trainerCurrent.concept.conceptName), LEVEL_INFO[getScore(trainerCurrent.lesson.id, trainerCurrent.concept.conceptName).level]);
+          }, 1400);
+        }
+      }
+    }
+  }
+
+  function finalizeTraceQuestion(concept) {
+    if (trainerLastAnswered) return;
+    trainerLastAnswered = true;
+    const correct = !traceState.wrongOnAnyStep;
+    const levelBefore = getScore(trainerCurrent.lesson.id, concept.conceptName).level;
+    // Treat trace as MC stage — pass-through to existing scoring
+    const result = applyAnswer(trainerCurrent.lesson.id, concept.conceptName, concept, "mc", correct);
+    if (correct) trainerStats.correct++; else trainerStats.wrong++;
+    trainerStats.asked++;
+    const fbSlot = document.getElementById("tq-feedback-slot");
+    if (fbSlot) {
+      const verdict = correct ? "✅ עברת את ה-Code Trace בלי טעויות!" : "📝 השלמת את ה-Trace, אך עם טעויות בדרך.";
+      fbSlot.innerHTML = `<div class="tq-feedback ${correct ? "ok" : "warn"}">
+        <strong>${verdict}</strong>
+        ${result.advanced ? `<div>⬆️ קודמת לרמה ${result.newLevel}!</div>` : ""}
+      </div>`;
+    }
+    const actions = document.getElementById("tq-actions");
+    if (actions) actions.style.display = "flex";
+    document.getElementById("tq-next")?.addEventListener("click", () => {
+      traceState = null;
+      nextQuestion();
+    });
+    document.getElementById("tq-open-lesson")?.addEventListener("click", () => {
+      openLesson(trainerCurrent.lesson.id);
+    });
+    updateTrainerHeader();
   }
 
   // Build a unified post-answer feedback message based on the level/advance result
@@ -2117,6 +2359,7 @@ document.addEventListener("DOMContentLoaded", () => {
   openGuideBtn?.addEventListener("click", openGuide);
   document.getElementById("open-code-anatomy")?.addEventListener("click", openCodeAnatomy);
   openCodeblocksBtn?.addEventListener("click", openCodeblocks);
+  openTraceBtn?.addEventListener("click", openTracePage);
 
   // Global Print-to-PDF — works on every view. Sets a body class to mark
   // which view is "active" (so @media print can isolate it), triggers
@@ -2254,6 +2497,162 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCodeblocks();
     scrollToTop();
     sidebar.classList.remove("open");
+  }
+
+  // ============================================================================
+  // Code Trace top-level page — list all curated traces, filter, and play
+  // ============================================================================
+  let traceFilterLesson = "all";
+  let traceFilterLevel = "all";
+  let activeTraceSession = null; // { trace, lesson, concept } when playing
+
+  function openTracePage() {
+    hideAllViews();
+    currentLessonId = null;
+    currentLessonTitle.textContent = "🔬 Code Trace";
+    currentLessonDesc.textContent =
+      "תרגל חיזוי פלט שורה אחר שורה. כל סשן מועלה את הניקוד למושג המקושר.";
+    if (traceView) traceView.style.display = "block";
+    openTraceBtn?.classList.add("active");
+    activeTraceSession = null;
+    populateTraceFilters();
+    renderTraceList();
+    scrollToTop();
+    sidebar.classList.remove("open");
+  }
+
+  function populateTraceFilters() {
+    const sel = document.getElementById("trace-filter-lesson");
+    if (!sel || sel.options.length > 1) {
+      // Already populated; just rewire change handlers below
+    } else {
+      // First time — fill lesson options
+      const lessons = (window.LESSONS_DATA || []).filter((l) =>
+        ((window.QUESTIONS_BANK && window.QUESTIONS_BANK.trace) || []).some(
+          (t) => t.conceptKey && t.conceptKey.startsWith(`${l.id}::`),
+        ),
+      );
+      lessons.forEach((l) => {
+        const opt = document.createElement("option");
+        opt.value = l.id;
+        opt.textContent = l.title;
+        sel.appendChild(opt);
+      });
+    }
+    // Always re-attach handlers (idempotent)
+    sel?.addEventListener("change", () => {
+      traceFilterLesson = sel.value;
+      renderTraceList();
+    });
+    document.getElementById("trace-filter-level")?.addEventListener("change", (ev) => {
+      traceFilterLevel = ev.target.value;
+      renderTraceList();
+    });
+    document.getElementById("trace-random")?.addEventListener("click", () => {
+      const all = filteredTraces();
+      if (!all.length) return;
+      const t = all[Math.floor(Math.random() * all.length)];
+      startTraceSession(t);
+    });
+  }
+
+  function filteredTraces() {
+    const all = (window.QUESTIONS_BANK && window.QUESTIONS_BANK.trace) || [];
+    return all.filter((t) => {
+      if (traceFilterLesson !== "all") {
+        if (!t.conceptKey || !t.conceptKey.startsWith(`${traceFilterLesson}::`)) {
+          return false;
+        }
+      }
+      if (traceFilterLevel !== "all") {
+        const min = parseInt(traceFilterLevel, 10);
+        const max = min + 1;
+        if (typeof t.level !== "number" || t.level < min || t.level > max) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }
+
+  function renderTraceList() {
+    const listEl = document.getElementById("trace-list");
+    const playerEl = document.getElementById("trace-player");
+    if (!listEl) return;
+    if (activeTraceSession) {
+      listEl.style.display = "none";
+      if (playerEl) playerEl.style.display = "block";
+      renderTraceSession();
+      return;
+    }
+    listEl.style.display = "block";
+    if (playerEl) playerEl.style.display = "none";
+    const traces = filteredTraces();
+    if (!traces.length) {
+      listEl.innerHTML = `<div class="anatomy-empty">אין traces זמינים בסינון הנוכחי.</div>`;
+      return;
+    }
+    listEl.innerHTML = traces
+      .map((t) => {
+        const concept = (t.conceptKey || "").split("::")[1] || "";
+        const lvl = LEVEL_INFO[t.level] || { icon: "❓", label: "לא מוגדר" };
+        return `
+          <div class="trace-card" data-trace-id="${esc(t.id)}">
+            <div class="trace-card-row">
+              <strong>${esc(t.title || t.id)}</strong>
+              <span class="tq-level-pill ${lvl.cssClass || ""}">רמה ${t.level || "?"} · ${lvl.icon} ${esc(lvl.label)}</span>
+            </div>
+            <div class="trace-card-meta">${esc(concept)} · ${t.steps.length} שלבים</div>
+          </div>`;
+      })
+      .join("");
+    listEl.querySelectorAll(".trace-card").forEach((el) => {
+      el.addEventListener("click", () => {
+        const tid = el.dataset.traceId;
+        const t = traces.find((x) => x.id === tid);
+        if (t) startTraceSession(t);
+      });
+    });
+  }
+
+  function startTraceSession(trace) {
+    // Find the lesson + concept that match this trace's conceptKey
+    const [lessonId, conceptName] = (trace.conceptKey || "").split("::");
+    const lesson = (window.LESSONS_DATA || []).find((l) => l.id === lessonId);
+    const concept = lesson?.concepts?.find((c) => c.conceptName === conceptName);
+    if (!lesson || !concept) {
+      console.warn("[trace] missing lesson/concept for", trace.conceptKey);
+      return;
+    }
+    // Reuse the trainer trace flow by setting trainerCurrent
+    trainerCurrent = {
+      lesson,
+      concept,
+      question: { kind: "trace", level: trace.level || 3, trace },
+    };
+    trainerLastAnswered = false;
+    traceState = null;
+    activeTraceSession = { trace, lesson, concept };
+    renderTraceList();
+  }
+
+  function renderTraceSession() {
+    const playerEl = document.getElementById("trace-player");
+    if (!playerEl || !activeTraceSession) return;
+    // Build a fake "trainer-quiz-card" inside the player + a back button
+    playerEl.innerHTML = `
+      <div class="trace-player-toolbar">
+        <button class="km-btn-mini" id="trace-back-to-list">⬅️ חזרה לרשימה</button>
+      </div>
+      <div id="trainer-quiz-card" class="tq-card"></div>`;
+    document.getElementById("trace-back-to-list")?.addEventListener("click", () => {
+      activeTraceSession = null;
+      trainerCurrent = null;
+      traceState = null;
+      renderTraceList();
+    });
+    // Render via the existing trainer-card pipeline
+    renderTrainerCard();
   }
 
   function updateCbStats() {

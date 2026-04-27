@@ -49,9 +49,20 @@ function loadDataFiles() {
       lessons.push(v);
     }
   }
+  // QUESTIONS_TRACE lives in its own file; merge into bank.trace so the
+  // existing trace-validation block in validate() picks it up.
+  const baseBank = sandbox.QUESTIONS_BANK || { mc: [], fill: [] };
+  const traceList = Array.isArray(sandbox.QUESTIONS_TRACE)
+    ? sandbox.QUESTIONS_TRACE
+    : [];
+  const bank = Object.assign({}, baseBank, {
+    mc: baseBank.mc || [],
+    fill: baseBank.fill || [],
+    trace: traceList,
+  });
   return {
     lessons,
-    bank: sandbox.QUESTIONS_BANK || { mc: [], fill: [] },
+    bank,
     seededBank: sandbox.QUESTIONS_BANK_SEEDED || { mc: [], fill: [] },
     guide: sandbox.QUICK_GUIDE || { topics: [] },
   };
@@ -141,6 +152,43 @@ function validate({ lessons, bank, seededBank, guide }) {
       errors.push(`[${q.id}] conceptKey not found: "${q.conceptKey}"`);
   }
 
+  // -------- Trace validation (Code Trace question type) --------
+  for (const q of bank.trace || []) {
+    if (!q.id) errors.push(`Trace missing id: ${JSON.stringify(q).slice(0, 80)}`);
+    if (q.id && !q.id.startsWith("trace_"))
+      warnings.push(`[${q.id}] trace IDs should start with "trace_"`);
+    if (q.id && seenIds.has(q.id)) errors.push(`Duplicate trace id: ${q.id}`);
+    seenIds.add(q.id);
+    if (!q.code || typeof q.code !== "string")
+      errors.push(`[${q.id}] trace must have a code (string)`);
+    if (!Array.isArray(q.steps) || q.steps.length === 0)
+      errors.push(`[${q.id}] trace must have at least one step`);
+    if (q.level && (q.level < 1 || q.level > 6))
+      warnings.push(`[${q.id}] level should be 1..6 (got ${q.level})`);
+    if (q.conceptKey && !validKeys.has(q.conceptKey))
+      errors.push(`[${q.id}] conceptKey not found: "${q.conceptKey}"`);
+
+    if (Array.isArray(q.steps)) {
+      const totalLines = (q.code || "").split("\n").length;
+      q.steps.forEach((s, i) => {
+        const tag = `[${q.id}].steps[${i}]`;
+        if (typeof s.line !== "number" || s.line < 1)
+          errors.push(`${tag} line must be a positive number`);
+        if (typeof s.line === "number" && s.line > totalLines)
+          errors.push(
+            `${tag} line=${s.line} exceeds code length (${totalLines})`,
+          );
+        if (!s.prompt || typeof s.prompt !== "string")
+          errors.push(`${tag} must have prompt (string)`);
+        if (typeof s.answer !== "string" || !s.answer)
+          errors.push(`${tag} must have answer (string)`);
+        if (s.acceptable && !Array.isArray(s.acceptable))
+          errors.push(`${tag} acceptable must be string[] (alternative answers)`);
+      });
+    }
+    if (!q.explanation) warnings.push(`[${q.id}] missing explanation (final summary)`);
+  }
+
   // -------- Coverage report (combined: curated + seeded) --------
   const coverage = [];
   for (const [key, ref] of conceptByKey) {
@@ -198,6 +246,7 @@ function validate({ lessons, bank, seededBank, guide }) {
     boilerplateMatches,
     missingDifficulty,
     totalConcepts: conceptByKey.size,
+    curatedTrace: (bank.trace || []).length,
     curatedMC: (bank.mc || []).length,
     curatedFill: (bank.fill || []).length,
     seededMC: (seededBank.mc || []).length,
@@ -210,7 +259,7 @@ function main() {
   const data = loadDataFiles();
   console.log(
     `   ${data.lessons.length} lessons · ` +
-      `Curated bank: ${(data.bank.mc || []).length} MC + ${(data.bank.fill || []).length} Fill · ` +
+      `Curated bank: ${(data.bank.mc || []).length} MC + ${(data.bank.fill || []).length} Fill + ${(data.bank.trace || []).length} Trace · ` +
       `Seeded: ${(data.seededBank.mc || []).length} MC + ${(data.seededBank.fill || []).length} Fill · ` +
       `${(data.guide.topics || []).length} guide topics.`,
   );

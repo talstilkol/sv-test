@@ -49,9 +49,11 @@
   // Merge hand-curated bank with auto-seeded bank (if exists)
   const primary = typeof QUESTIONS_BANK !== "undefined" ? QUESTIONS_BANK : { mc: [], fill: [] };
   const seeded = typeof QUESTIONS_BANK_SEEDED !== "undefined" ? QUESTIONS_BANK_SEEDED : { mc: [], fill: [] };
+  const traceList = typeof QUESTIONS_TRACE !== "undefined" ? QUESTIONS_TRACE : [];
   window.QUESTIONS_BANK = {
     mc: [...(primary.mc || []), ...(seeded.mc || [])],
     fill: [...(primary.fill || []), ...(seeded.fill || [])],
+    trace: [...traceList],
   };
   window.QUICK_GUIDE = typeof QUICK_GUIDE !== "undefined" ? QUICK_GUIDE : { topics: [] };
 
@@ -63,6 +65,7 @@
     `[LumenPortal] Loaded ${window.LESSONS_DATA.length} lessons · ` +
     `Bank: ${handMC + seedMC} MC (${handMC} curated + ${seedMC} seeded) · ` +
     `${handFill + seedFill} Fill (${handFill} curated + ${seedFill} seeded) · ` +
+    `${traceList.length} Trace · ` +
     `${(window.QUICK_GUIDE.topics || []).length} guide topics · ` +
     `${enrichedCount} concepts enriched (deepDive + analogies) · ` +
     `${extendedCount} extended explanations.`
