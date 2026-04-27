@@ -180,6 +180,14 @@
         </div>
       </div>
 
+      <!-- W12 — Streak + XP widgets (top bar) -->
+      <div class="w12-top-bar" id="w12-top-bar">
+        <span id="streak-widget" class="streak-widget" title="רצף לימוד" style="display:none">🔥 0</span>
+        <span id="xp-widget" class="xp-widget" title="נקודות ניסיון">⭐ 0 XP</span>
+        <button id="open-achievements" class="w12-btn" title="הישגים">🏆</button>
+        <button id="btn-open-reflection" class="w12-btn" title="רפלקציה יומית">📝</button>
+      </div>
+
       <!-- Main Content Area -->
       <main class="main-content">
         <nav class="top-tabs-bar" id="top-tabs-bar">
@@ -674,9 +682,14 @@
     <!-- Sprint 2 — Creative Methods (war stories + side-by-side comparator) -->
     <script src="data/war_stories.js"></script>
     <script src="data/comparisons.js"></script>
+    <!-- W14 — Prerequisite graph -->
+    <script src="data/prerequisites.js"></script>
     <!-- W7 — Metaphor Library + Learning Pathways -->
     <script src="data/metaphors.js"></script>
     <script src="data/pathways.js"></script>
+    <!-- W11 — Themed Scenarios + Counterfactuals -->
+    <script src="data/scenarios.js"></script>
+    <script src="data/counterfactuals.js"></script>
     <!-- W8 — Pair-Match games + Bug Hunt Quests -->
     <script src="data/pair_match.js"></script>
     <script src="data/bug_quests.js"></script>
@@ -689,6 +702,47 @@
     <!-- P1.4.1 — Sandboxed code runner -->
     <script src="lib/code-runner.js"></script>
     <script src="app.js"></script>
+
+    <!-- W12 — Achievements overlay -->
+    <div id="achievements-overlay" class="achievements-overlay" style="display:none" role="dialog" aria-modal="true">
+      <div class="achievements-modal glass-panel">
+        <div class="ach-modal-head">
+          <h3>🏆 הישגים</h3>
+          <button id="ach-close" class="ach-close-btn" aria-label="סגור">✕</button>
+        </div>
+        <div id="achievements-body" class="achievements-grid"></div>
+      </div>
+    </div>
+
+    <!-- W12 — Daily Reflection modal -->
+    <div id="reflection-overlay" class="reflection-overlay" style="display:none" role="dialog" aria-modal="true">
+      <div class="reflection-modal glass-panel">
+        <div class="refl-head">
+          <div>
+            <h3>📝 רפלקציה יומית</h3>
+            <div id="reflection-date" class="refl-date"></div>
+          </div>
+          <button id="reflection-close" class="refl-close" aria-label="סגור">✕</button>
+        </div>
+        <p class="refl-prompt">מה למדת היום? מה היה קשה? מה רצית לחזק?</p>
+        <textarea id="reflection-text" class="refl-textarea" rows="4" placeholder="כתוב כאן את המחשבות שלך..."></textarea>
+        <div class="refl-rating">
+          <span>איך הרגשת היום?</span>
+          <div class="refl-stars">
+            <button class="refl-star" data-star="1">😕</button>
+            <button class="refl-star" data-star="2">😐</button>
+            <button class="refl-star" data-star="3" >😊</button>
+            <button class="refl-star" data-star="4">😄</button>
+            <button class="refl-star" data-star="5">🤩</button>
+          </div>
+        </div>
+        <div class="refl-history-section">
+          <h4>📅 רפלקציות קודמות</h4>
+          <div id="reflection-history"></div>
+        </div>
+        <button id="reflection-save" class="refl-save-btn">שמור רפלקציה (+15 XP)</button>
+      </div>
+    </div>
 
     <!-- W9 — AI Tutor: FAB button + modal (rendered before closing body) -->
     <button id="ai-tutor-fab" class="ai-tutor-fab" aria-label="פתח מאמן AI" title="💬 מאמן AI — שאל שאלה, קבל הסבר, בדוק ידע">💬 מאמן</button>

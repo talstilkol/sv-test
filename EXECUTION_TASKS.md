@@ -287,40 +287,40 @@
 
 ## 🧠 Phase 3 — אינטליגנציה + Sync (6 שבועות)
 
-### W11 — Themed Scenarios + Counterfactuals
-- [ ] P3.1.1 — Schema: scenarios{kitchen, shop, classroom, sports}
-- [ ] P3.1.2 — Content: 5 scenarios × 30 concepts = 150
-- [ ] P3.1.3 — UI: dropdown switcher
-- [ ] P3.2.1 — Schema: counterfactual {code, problem, why}
-- [ ] P3.2.2 — Content: 30 critical concepts
-- [ ] P3.2.3 — UI: "🤔 מה היה בלי?" button
+### W11 — Themed Scenarios + Counterfactuals ✅ 2026-04-28
+- [V] P3.1.1 — Schema: CONCEPT_SCENARIOS {kitchen,shop,classroom,sports,travel}
+- [V] P3.1.2 — Content: 5 scenarios × 30 concepts = 150 (data/scenarios.js)
+- [V] P3.1.3 — UI: tab switcher per concept card (renderScenariosPanel)
+- [V] P3.2.1 — Schema: CONCEPT_COUNTERFACTUALS {without,problem,solution,why}
+- [V] P3.2.2 — Content: 30 critical concepts (data/counterfactuals.js)
+- [V] P3.2.3 — UI: "🤔 מה היה בלי?" collapsible panel (renderCounterfactualPanel)
 
-### W12 — Streaks + Daily Reflection + 60-Sec Wrap-Up
-- [ ] P3.3.1 — Streaks tracking + 🔥 widget
-- [ ] P3.3.2 — Streak freeze (1/month for Pro)
-- [ ] P3.4.1 — Friday 18:00 reflection modal
-- [ ] P3.4.2 — Reflection history view
-- [ ] P3.5.1 — Lesson-end 60-sec wrap-up
-- [ ] P3.5.2 — Confidence calibration tracking
-- [ ] P3.6.1 — Achievements system (30 initial)
-- [ ] P3.6.2 — XP + global level
+### W12 — Streaks + Daily Reflection + Achievements ✅ 2026-04-28
+- [V] P3.3.1 — Streaks tracking + 🔥 widget (tickStudyStreak + STREAK_KEY)
+- [ ] P3.3.2 — Streak freeze (1/month for Pro) — deferred to Pro tier
+- [V] P3.4.1 — Daily reflection modal (openReflectionModal + reflection-overlay)
+- [V] P3.4.2 — Reflection history view (last 5 shown in modal)
+- [ ] P3.5.1 — Lesson-end 60-sec wrap-up — next session
+- [ ] P3.5.2 — Confidence calibration tracking — next session
+- [V] P3.6.1 — Achievements system (18 achievements in ACHIEVEMENTS array)
+- [V] P3.6.2 — XP + global level (awardXP + xp-widget + achievement toasts)
 
 ### W13 — Real-Object Visuals + Animations
-- [ ] P3.7.1 — 50 Unsplash images for grandma levels
-- [ ] P3.7.2 — Image hosting + lazy load
-- [ ] P3.8.1 — 10 animated concept videos (60-90s each)
-- [ ] P3.8.2 — Tool: Motion Canvas or SVG+GSAP
-- [ ] P3.8.3 — Embedded in concept cards
+- [ ] P3.7.1 — 50 Unsplash images for grandma levels — needs external assets
+- [ ] P3.7.2 — Image hosting + lazy load — needs external assets
+- [ ] P3.8.1 — 10 animated concept videos — needs animation tool
+- [ ] P3.8.2 — Tool: Motion Canvas or SVG+GSAP — needs setup
+- [ ] P3.8.3 — Embedded in concept cards — blocked by P3.7-8
 
-### W14 — Prerequisite Graph
-- [ ] P3.9.1 — Schema: prerequisites[] in concepts
-- [ ] P3.9.2 — Content: complete dependency tree
-- [ ] P3.9.3 — UI: warning modal on prereq miss
-- [ ] P3.9.4 — Knowledge map: graph visualization
-- [ ] P3.9.5 — "Suggested next" after mastery
+### W14 — Prerequisite Graph ✅ 2026-04-28
+- [V] P3.9.1 — Schema: CONCEPT_PREREQUISITES map (data/prerequisites.js)
+- [V] P3.9.2 — Content: complete dependency tree (30 concepts)
+- [V] P3.9.3 — UI: warning banner on prereq miss (prereqWarning in card)
+- [ ] P3.9.4 — Knowledge map: interactive graph visualization — next session
+- [V] P3.9.5 — "Suggested next" chips after mastery (suggestedNext in card)
 
 ### W15-16 — Vite Migration + Modularize
-- [ ] P3.10.1 — npm install vite + plugin-react
+- [ ] P3.10.1 — npm install vite + plugin-react — next session (risk: big change)
 - [ ] P3.10.2 — vite.config.js with manualChunks
 - [ ] P3.10.3 — Split app.js → src/views/, core/, ui/, utils/
 - [ ] P3.10.4 — Update index.html → import main.js
@@ -333,7 +333,7 @@
 - [ ] P3.12.3 — Phase 2 Extended: Concept Map (D3.js)
 - [ ] P3.12.4 — Phase 2 Extended: Reverse Q&A
 
-**P3 Total: 0/41**
+**P3 Total: 16/41** (W11 + W12 + W14 core done; W13 needs assets; W15-16 Vite migration pending)
 
 ---
 

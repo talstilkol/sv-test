@@ -1631,12 +1631,22 @@ document.addEventListener("DOMContentLoaded", () => {
         sc.passedMC = false;
         sc.passedFill = false;
         saveScores();
+        tickStudyStreak();
+        awardXP(35);
+        checkAchievements({ lessonId, conceptName, correct: true, advanced: true, sc });
         return { advanced: true, newLevel: sc.level };
       }
     }
     // Wrong answers don't demote level or remove existing passes — they only deny progress.
     saveScores();
-    return { advanced: false, newLevel: sc.level };
+    const result = { advanced: false, newLevel: sc.level };
+    // W12 hooks — streak + XP + achievements
+    tickStudyStreak();
+    if (correct) awardXP(10);
+    if (result.advanced) awardXP(25);
+    checkAchievements({ lessonId, conceptName, correct, advanced: result.advanced, sc });
+    if (typeof window.reportMisconception === "function") window.reportMisconception(lessonId, conceptName, correct);
+    return result;
   }
 
   // Trainer state
@@ -5815,8 +5825,39 @@ document.addEventListener("DOMContentLoaded", () => {
         ? `<span class="srs-due-badge" title="מנגנון החזרה המרווחת מציע לחזור על מושג זה כעת">🔁 חזרה מומלצת</span>`
         : "";
 
+    // W14 — Prerequisite warning
+    const prereqWarning = (() => {
+      if (typeof CONCEPT_PREREQUISITES === "undefined") return "";
+      const prereqs = CONCEPT_PREREQUISITES[k] || [];
+      const missed = prereqs.filter((pk) => {
+        const [pLesson, ...pParts] = pk.split("::");
+        const pConcept = pParts.join("::");
+        const pSc = getScore(pLesson, pConcept);
+        return pSc.level < 3; // not yet learned
+      });
+      if (!missed.length) return "";
+      const names = missed.map((pk) => pk.split("::").slice(1).join("::")).join(", ");
+      return `<div class="prereq-warning">⚠️ מומלץ ללמוד קודם: <strong>${esc(names)}</strong></div>`;
+    })();
+
+    // W14 — Suggested next
+    const suggestedNext = (() => {
+      if (actualLevel < 7) return "";
+      if (typeof CONCEPT_SUGGESTED_NEXT === "undefined") return "";
+      const nexts = CONCEPT_SUGGESTED_NEXT[k] || [];
+      if (!nexts.length) return "";
+      const items = nexts.map((nk) => {
+        const [nLesson, ...nParts] = nk.split("::");
+        const nConcept = nParts.join("::");
+        const nSc = getScore(nLesson, nConcept);
+        return `<span class="suggested-chip" title="רמה ${nSc.level}/7">${esc(nConcept)}</span>`;
+      }).join("");
+      return `<div class="suggested-next"><strong>➡️ המשך לבדוק:</strong> ${items}</div>`;
+    })();
+
     return `
       <div class="concept-card adaptive" data-cid="${idx}" data-concept="${esc(concept.conceptName)}">
+        ${prereqWarning}
         <div class="concept-card-head">
           <h4>${esc(concept.conceptName)}</h4>
           <div class="concept-level-row">
@@ -5887,6 +5928,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ${renderWarStoriesPanel(concept)}
         ${renderComparisonsPanel(concept)}
         ${renderMetaphorCarousel(k)}
+        ${renderScenariosPanel(k)}
+        ${renderCounterfactualPanel(k)}
         ${renderAudioModeButton(concept, explanation)}
 
         <div class="concept-actions">
@@ -5919,6 +5962,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         </div>
 
+        ${suggestedNext}
         <div class="concept-quiz-slot"></div>
       </div>
     `;
@@ -6385,6 +6429,60 @@ document.addEventListener("DOMContentLoaded", () => {
       </details>`;
   }
 
+  // W11 — Themed Scenarios panel
+  const SCENARIO_LABELS = { kitchen: "🍳 מטבח", shop: "🛍️ חנות", classroom: "🏫 כיתה", sports: "⚽ ספורט", travel: "✈️ נסיעה" };
+  const SCENARIO_KEY = "lumenportal:scenario:v1";
+  let currentScenario = (() => { try { return localStorage.getItem(SCENARIO_KEY) || "kitchen"; } catch { return "kitchen"; } })();
+
+  function renderScenariosPanel(conceptKey) {
+    const scenarios = (typeof CONCEPT_SCENARIOS !== "undefined") ? CONCEPT_SCENARIOS[conceptKey] : null;
+    if (!scenarios) return "";
+    const text = scenarios[currentScenario] || "";
+    return `
+      <details class="scenarios-panel">
+        <summary>🌍 תרחישים מהחיים</summary>
+        <div class="scenario-container" data-scenario-key="${esc(conceptKey)}">
+          <div class="scenario-tabs">
+            ${Object.keys(SCENARIO_LABELS).map((k) =>
+              `<button class="scenario-tab${k === currentScenario ? ' active' : ''}" data-action="set-scenario" data-scenario="${k}">${SCENARIO_LABELS[k]}</button>`
+            ).join("")}
+          </div>
+          <p class="scenario-text" data-scenario-text="${esc(conceptKey)}">${esc(text)}</p>
+        </div>
+      </details>`;
+  }
+
+  function updateScenarioDisplay(scenario) {
+    currentScenario = scenario;
+    try { localStorage.setItem(SCENARIO_KEY, scenario); } catch {}
+    document.querySelectorAll(".scenario-container").forEach((el) => {
+      const cKey = el.dataset.scenarioKey;
+      const scenarios = (typeof CONCEPT_SCENARIOS !== "undefined") ? CONCEPT_SCENARIOS[cKey] : null;
+      if (!scenarios) return;
+      const textEl = el.querySelector("[data-scenario-text]");
+      if (textEl) textEl.textContent = scenarios[scenario] || "";
+      el.querySelectorAll(".scenario-tab").forEach((b) => b.classList.toggle("active", b.dataset.scenario === scenario));
+    });
+  }
+
+  // W11 — Counterfactual panel ("מה היה בלי?")
+  function renderCounterfactualPanel(conceptKey) {
+    const cf = (typeof CONCEPT_COUNTERFACTUALS !== "undefined") ? CONCEPT_COUNTERFACTUALS[conceptKey] : null;
+    if (!cf) return "";
+    return `
+      <details class="counterfactual-panel">
+        <summary>🤔 מה היה בלי זה?</summary>
+        <div class="cf-body">
+          <p class="cf-without">${esc(cf.without || "")}</p>
+          ${cf.problem ? `<div class="cf-code-row">
+            <div class="cf-code-block"><div class="cf-label">❌ בלי</div><pre><code>${esc(cf.problem)}</code></pre></div>
+            <div class="cf-code-block"><div class="cf-label">✅ עם</div><pre><code>${esc(cf.solution || "")}</code></pre></div>
+          </div>` : ""}
+          ${cf.why ? `<p class="cf-why"><strong>💡 למה:</strong> ${esc(cf.why)}</p>` : ""}
+        </div>
+      </details>`;
+  }
+
   // P2.S2.3 — Audio Mode (Web Speech API TTS)
   function renderAudioModeButton(concept, levelText) {
     if (typeof window === "undefined" || typeof window.speechSynthesis === "undefined") return "";
@@ -6677,6 +6775,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 : "✅ נשמר לכיס";
               setTimeout(() => { if (btn.classList.contains("is-pocketed")) btn.textContent = "📌 בכיס — לחץ להסיר"; else btn.textContent = "📌 שמור לכיס"; }, 1200);
             }
+          } else if (action === "set-scenario") {
+            updateScenarioDisplay(btn.dataset.scenario);
           } else if (action === "set-pathway") {
             setPathway(btn.dataset.pathway);
           } else if (action === "metaphor-prev") {
@@ -7330,6 +7430,204 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     sel.dataset.trackAExtended = "1";
   })();
+
+  // ===== W12 — Streaks, XP, Achievements, Reflection =====
+
+  // --- Streak tracking ---
+  const STREAK_KEY = "lumenportal:streak:v1";
+  function getStreak() {
+    try { return JSON.parse(localStorage.getItem(STREAK_KEY) || '{"count":0,"lastDate":""}'); }
+    catch { return { count: 0, lastDate: "" }; }
+  }
+  function saveStreak(s) { try { localStorage.setItem(STREAK_KEY, JSON.stringify(s)); } catch {} }
+  function tickStudyStreak() {
+    const today = new Date().toISOString().slice(0, 10);
+    const s = getStreak();
+    if (s.lastDate === today) return; // already counted today
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    s.count = (s.lastDate === yesterday) ? s.count + 1 : 1;
+    s.lastDate = today;
+    saveStreak(s);
+    updateStreakWidget();
+  }
+  function updateStreakWidget() {
+    const s = getStreak();
+    const el = document.getElementById("streak-widget");
+    if (el) {
+      el.textContent = `🔥 ${s.count}`;
+      el.title = `רצף לימוד: ${s.count} ימים ברציפות`;
+      el.style.display = s.count > 0 ? "" : "none";
+    }
+  }
+
+  // --- XP ---
+  const XP_KEY = "lumenportal:xp:v1";
+  function getXP() { try { return parseInt(localStorage.getItem(XP_KEY) || "0", 10); } catch { return 0; } }
+  function awardXP(amount) {
+    const newXP = getXP() + amount;
+    try { localStorage.setItem(XP_KEY, String(newXP)); } catch {}
+    updateXPWidget(newXP);
+  }
+  function updateXPWidget(xp) {
+    const el = document.getElementById("xp-widget");
+    if (el) el.textContent = `⭐ ${xp} XP`;
+  }
+
+  // --- Achievements ---
+  const ACH_KEY = "lumenportal:achievements:v1";
+  const ACHIEVEMENTS = [
+    { id: "first_answer",   title: "🎯 ראשית הדרך",   desc: "ענית על שאלה ראשונה",       check: (d) => d.sc.attempts >= 1 },
+    { id: "ten_correct",    title: "🔟 עשרה נכונות",   desc: "ענית נכון 10 פעמים",        check: (d, all) => all.totalCorrect >= 10 },
+    { id: "fifty_correct",  title: "5️⃣0️⃣ חמישים נכונות", desc: "ענית נכון 50 פעמים",      check: (d, all) => all.totalCorrect >= 50 },
+    { id: "first_level",    title: "📈 עלייה בדרגה",   desc: "עלית רמה לראשונה",          check: (d) => d.advanced },
+    { id: "level_5",        title: "🎓 מומחה",          desc: "הגעת לרמה 5 במושג כלשהו",   check: (d) => d.sc.level >= 5 },
+    { id: "mastered",       title: "🏆 מאסטר",          desc: "שלטת במושג לחלוטין (רמה 7)", check: (d) => d.sc.level >= 7 },
+    { id: "streak_3",       title: "🔥 שלושה ימים",     desc: "למדת 3 ימים ברציפות",       check: () => getStreak().count >= 3 },
+    { id: "streak_7",       title: "🔥🔥 שבוע שלם",    desc: "למדת 7 ימים ברציפות",       check: () => getStreak().count >= 7 },
+    { id: "streak_30",      title: "🔥🔥🔥 חודש מלא",  desc: "למדת 30 ימים ברציפות",      check: () => getStreak().count >= 30 },
+    { id: "xp_100",         title: "⭐ 100 XP",          desc: "הרווחת 100 נקודות ניסיון",   check: () => getXP() >= 100 },
+    { id: "xp_500",         title: "⭐⭐ 500 XP",        desc: "הרווחת 500 נקודות ניסיון",  check: () => getXP() >= 500 },
+    { id: "xp_1000",        title: "⭐⭐⭐ 1000 XP",    desc: "הרווחת 1000 נקודות ניסיון", check: () => getXP() >= 1000 },
+    { id: "bug_hunter",     title: "🐛 ציד באגים",      desc: "השלמת קווסט ראשון",         check: () => Object.values((() => { try { return JSON.parse(localStorage.getItem("lumenportal:bug_quests:v1") || "{}"); } catch { return {}; } })()).some((v) => v.completed) },
+    { id: "pair_master",    title: "🎯 מאסטר התאמות",   desc: "השלמת משחק התאמות ראשון",   check: () => Object.values((() => { try { return JSON.parse(localStorage.getItem("lumenportal:pair_match:v1") || "{}"); } catch { return {}; } })()).some((v) => v.completed) },
+    { id: "speed_5",        title: "⚡ מהיר",           desc: "ענית נכון 5 פעמים בשורה",   check: (d) => (d.sc.correctRunCount || 0) >= 5 },
+    { id: "polyglot",       title: "🌍 רב-תרבותי",     desc: "למדת 3 שיעורים שונים",      check: (d, all) => all.lessonsStudied >= 3 },
+    { id: "dedicated",      title: "💪 מסור",           desc: "ענית על 100 שאלות",         check: (d, all) => all.totalAttempts >= 100 },
+    { id: "perfectionist",  title: "✨ פרפקציוניסט",    desc: "השגת דיוק 90%+ (מינ׳ 20 שאלות)", check: (d, all) => all.totalAttempts >= 20 && all.totalCorrect / all.totalAttempts >= 0.9 },
+  ];
+
+  function getUnlockedAchievements() {
+    try { return JSON.parse(localStorage.getItem(ACH_KEY) || "[]"); }
+    catch { return []; }
+  }
+  function saveUnlockedAchievements(arr) {
+    try { localStorage.setItem(ACH_KEY, JSON.stringify(arr)); } catch {}
+  }
+
+  function getGlobalStats() {
+    let totalCorrect = 0, totalAttempts = 0;
+    const lessons = new Set();
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k?.startsWith("lumenportal:scores:")) continue;
+      try {
+        const scores = JSON.parse(localStorage.getItem(k));
+        Object.values(scores).forEach((sc) => {
+          totalCorrect += sc.correct || 0;
+          totalAttempts += sc.attempts || 0;
+          if (sc.attempts > 0) lessons.add(k.replace("lumenportal:scores:", ""));
+        });
+      } catch {}
+    }
+    return { totalCorrect, totalAttempts, lessonsStudied: lessons.size };
+  }
+
+  function checkAchievements(data) {
+    const unlocked = new Set(getUnlockedAchievements());
+    const all = getGlobalStats();
+    const newly = [];
+    ACHIEVEMENTS.forEach((ach) => {
+      if (unlocked.has(ach.id)) return;
+      try {
+        if (ach.check(data, all)) { unlocked.add(ach.id); newly.push(ach); }
+      } catch {}
+    });
+    if (newly.length) {
+      saveUnlockedAchievements([...unlocked]);
+      newly.forEach((ach) => showAchievementToast(ach));
+    }
+  }
+
+  function showAchievementToast(ach) {
+    const toast = document.createElement("div");
+    toast.className = "achievement-toast";
+    toast.innerHTML = `<div class="ach-toast-title">${ach.title}</div><div class="ach-toast-desc">${esc(ach.desc)}</div>`;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add("visible"));
+    setTimeout(() => { toast.classList.remove("visible"); setTimeout(() => toast.remove(), 400); }, 3500);
+  }
+
+  function openAchievementsPanel() {
+    const overlay = document.getElementById("achievements-overlay");
+    if (!overlay) return;
+    const unlocked = new Set(getUnlockedAchievements());
+    const body = document.getElementById("achievements-body");
+    if (body) {
+      body.innerHTML = ACHIEVEMENTS.map((ach) => {
+        const done = unlocked.has(ach.id);
+        return `<div class="ach-card ${done ? 'ach-unlocked' : 'ach-locked'}">
+          <div class="ach-icon">${done ? ach.title.split(" ")[0] : "🔒"}</div>
+          <div class="ach-info">
+            <div class="ach-name">${done ? ach.title : "???"}</div>
+            <div class="ach-desc">${done ? esc(ach.desc) : "הישג לא נחשף"}</div>
+          </div>
+        </div>`;
+      }).join("");
+    }
+    overlay.style.display = "";
+  }
+
+  document.getElementById("open-achievements")?.addEventListener("click", openAchievementsPanel);
+  document.getElementById("ach-close")?.addEventListener("click", () => {
+    const el = document.getElementById("achievements-overlay");
+    if (el) el.style.display = "none";
+  });
+
+  // --- Daily Reflection Modal ---
+  const REFLECTION_KEY = "lumenportal:reflections:v1";
+  function getReflections() { try { return JSON.parse(localStorage.getItem(REFLECTION_KEY) || "[]"); } catch { return []; } }
+  function saveReflection(text, rating) {
+    const arr = getReflections();
+    arr.unshift({ date: new Date().toISOString(), text, rating });
+    if (arr.length > 52) arr.length = 52; // keep ~1 year
+    try { localStorage.setItem(REFLECTION_KEY, JSON.stringify(arr)); } catch {}
+  }
+
+  function openReflectionModal() {
+    const overlay = document.getElementById("reflection-overlay");
+    if (!overlay) return;
+    const today = new Date().toLocaleDateString("he-IL", { weekday: "long", day: "numeric", month: "long" });
+    const titleEl = document.getElementById("reflection-date");
+    if (titleEl) titleEl.textContent = today;
+    const histEl = document.getElementById("reflection-history");
+    if (histEl) {
+      const arr = getReflections().slice(0, 5);
+      histEl.innerHTML = arr.length
+        ? arr.map((r) => `<div class="refl-hist-item"><span class="refl-hist-date">${new Date(r.date).toLocaleDateString("he-IL")}</span> ${"⭐".repeat(r.rating || 0)} <span class="refl-hist-text">${esc(r.text)}</span></div>`).join("")
+        : "<p class='refl-empty'>אין רשומות קודמות עדיין.</p>";
+    }
+    overlay.style.display = "";
+  }
+
+  document.getElementById("btn-open-reflection")?.addEventListener("click", openReflectionModal);
+  document.getElementById("reflection-close")?.addEventListener("click", () => {
+    const el = document.getElementById("reflection-overlay");
+    if (el) el.style.display = "none";
+  });
+  document.getElementById("reflection-save")?.addEventListener("click", () => {
+    const text = document.getElementById("reflection-text")?.value?.trim();
+    const rating = parseInt(document.querySelector(".refl-star.active")?.dataset.star || "3", 10);
+    if (!text) return;
+    saveReflection(text, rating);
+    awardXP(15);
+    document.getElementById("reflection-overlay").style.display = "none";
+    document.getElementById("reflection-text").value = "";
+    document.querySelectorAll(".refl-star").forEach((s) => s.classList.remove("active"));
+    showAchievementToast({ title: "📝 רפלקציה!", desc: "+15 XP על כתיבת רפלקציה" });
+  });
+  document.getElementById("reflection-overlay")?.addEventListener("click", (e) => {
+    const star = e.target.closest(".refl-star");
+    if (star) {
+      const val = parseInt(star.dataset.star, 10);
+      document.querySelectorAll(".refl-star").forEach((s) => s.classList.toggle("active", parseInt(s.dataset.star, 10) <= val));
+    }
+  });
+
+  // Bootstrap W12 widgets on page load
+  updateStreakWidget();
+  updateXPWidget(getXP());
+
+  // ===== end W12 =====
 
   // ===== W9 — AI Tutor =====
   const AI_USAGE_KEY = "lumenportal:ai_usage:v1";

@@ -218,6 +218,143 @@ var ANTI_PATTERNS = {
       severity: "P0",
     },
   ],
+  // ───────── Lesson 15 — Closures & Async ─────────
+  "lesson_15::Closure": [
+    {
+      title: "closure בלולאה — כולם מקבלים את הערך האחרון",
+      bad: {
+        code: "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1000);\n}",
+        lang: "js",
+      },
+      damage:
+        "var הוא function-scoped — כולם חולקים אותו i. אחרי הלולאה i=3. כל ה-callbacks מדפיסים 3, 3, 3.",
+      good: {
+        code: "for (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1000);\n}",
+        lang: "js",
+      },
+      diff: ["var → let (block-scoped closure per iteration)"],
+      severity: "P1",
+    },
+    {
+      title: "closure ישנה — counter שלא בונה",
+      bad: {
+        code: "function makeCounter() {\n  let n = 0;\n  return () => n;\n}",
+        lang: "js",
+      },
+      damage:
+        "החזרנו n במקום לבנות. כל קריאה תמיד תחזיר 0. הclosure נכון אבל שכחנו לעדכן.",
+      good: {
+        code: "function makeCounter() {\n  let n = 0;\n  return () => ++n;\n}",
+        lang: "js",
+      },
+      diff: ["n → ++n (mutate before return)"],
+      severity: "P2",
+    },
+  ],
+
+  "lesson_15::async/await": [
+    {
+      title: "await בתוך forEach — לא עובד",
+      bad: {
+        code: "async function run() {\n  urls.forEach(async (url) => {\n    const r = await fetch(url);\n    results.push(await r.json());\n  });\n  console.log(results); // תמיד ריק!\n}",
+        lang: "js",
+      },
+      damage:
+        "forEach לא awaitable. הפונקציות async בתוכו מתחילות אבל run() לא מחכה להן. console.log רץ לפני שכולם סיימו.",
+      good: {
+        code: "async function run() {\n  const data = await Promise.all(\n    urls.map(url => fetch(url).then(r => r.json()))\n  );\n  console.log(data); // ✅\n}",
+        lang: "js",
+      },
+      diff: ["forEach(async) → Promise.all(urls.map(...))"],
+      severity: "P0",
+    },
+    {
+      title: "await מחוץ ל-async function",
+      bad: {
+        code: "const data = await fetch('/api/users');\nconsole.log(data);",
+        lang: "js",
+      },
+      damage:
+        "SyntaxError: await חייב להיות בתוך async function (מחוץ ל-top-level module). הקוד לא ירוץ.",
+      good: {
+        code: "async function loadData() {\n  const data = await fetch('/api/users');\n  console.log(await data.json());\n}\nloadData();",
+        lang: "js",
+      },
+      diff: ["עטוף ב-async function"],
+      severity: "P0",
+    },
+  ],
+
+  // ───────── Lesson 12 — Array Methods ─────────
+  "lesson_12::map": [
+    {
+      title: "map ללא return — מערך של undefined",
+      bad: {
+        code: "const doubled = nums.map(n => {\n  n * 2; // שכחנו return!\n});",
+        lang: "js",
+      },
+      damage:
+        "Arrow function עם {} גוף — צריך return מפורש. ללא return, כל iteration מחזיר undefined. doubled = [undefined, undefined, ...].",
+      good: {
+        code: "const doubled = nums.map(n => n * 2);\n// או:\nconst doubled = nums.map(n => { return n * 2; });",
+        lang: "js",
+      },
+      diff: ["+ return, או הסר {} לarrow implicit return"],
+      severity: "P1",
+    },
+  ],
+
+  "lesson_12::filter": [
+    {
+      title: "filter עם side effect במקום map",
+      bad: {
+        code: "const names = [];\nusers.filter(u => {\n  names.push(u.name); // side effect בתוך filter\n  return u.active;\n});",
+        lang: "js",
+      },
+      damage:
+        "filter בוחר — לא אמור לעשות side effects. הקוד לא קולט את התוצאה, ובנוסף names מתמלא מכל המשתמשים (גם הלא-active).",
+      good: {
+        code: "const activeNames = users\n  .filter(u => u.active)\n  .map(u => u.name);",
+        lang: "js",
+      },
+      diff: ["פרד filter ו-map לשני שלבים"],
+      severity: "P2",
+    },
+  ],
+
+  // ───────── Lesson 11 — Scope & Variables ─────────
+  "lesson_11::Scope": [
+    {
+      title: "var בלולאה — נענע גלובלית",
+      bad: {
+        code: "for (var i = 0; i < 5; i++) { /* עושה משהו */ }\nconsole.log(i); // 5 — i נגיש מחוץ ללולאה!",
+        lang: "js",
+      },
+      damage:
+        "var מוגדר ב-function scope, לא ב-block scope. i 'דולף' לסביבה החיצונית וממשיך לחיות.",
+      good: {
+        code: "for (let i = 0; i < 5; i++) { /* עושה משהו */ }\n// console.log(i); → ReferenceError (נכון!)",
+        lang: "js",
+      },
+      diff: ["var → let (block-scoped)"],
+      severity: "P2",
+    },
+    {
+      title: "TDZ — שימוש ב-let לפני ההצהרה",
+      bad: {
+        code: "console.log(name); // ReferenceError!\nlet name = 'דן';",
+        lang: "js",
+      },
+      damage:
+        "let/const נמצאים ב-Temporal Dead Zone מתחילת ה-block עד שורת ההצהרה. גישה לפניה → ReferenceError.",
+      good: {
+        code: "let name = 'דן';\nconsole.log(name); // ✅ 'דן'",
+        lang: "js",
+      },
+      diff: ["הזז קריאה אחרי הצהרה"],
+      severity: "P1",
+    },
+  ],
 };
 
 if (typeof window !== "undefined") {
