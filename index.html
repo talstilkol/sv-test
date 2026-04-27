@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LumenPortal — סיכום חומרי הלימוד המלא ב-6 רמות</title>
+    <meta name="description" content="פורטל לימוד Full-Stack מלא: כל שיעור מוסבר ב-6 רמות — מסבתא ועד פרופסור, עם בלוקי קוד, הסברי עומק ושאלונים." />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar Navigation -->
+      <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h2>Lumen<span>Portal</span></h2>
+          <p>מאסטר בפיתוח Full-Stack</p>
+        </div>
+
+        <div class="sidebar-search">
+          <input type="text" id="search-input" placeholder="🔍 חיפוש מושג או שיעור..." />
+        </div>
+
+        <div class="lessons-list" id="lessons-nav">
+          <!-- Lessons will be dynamically injected here -->
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="progress-bar-container">
+            <div class="progress-label">התקדמות כללית</div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="global-progress"></div>
+            </div>
+            <div class="progress-text" id="progress-text">0 / 0 שאלונים הושלמו</div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" id="mobile-toggle">☰</button>
+
+      <!-- Global Print-to-PDF (works in every view) -->
+      <button class="global-print-btn" id="global-print-btn" title="שמור את הדף הנוכחי כ-PDF צבעוני (Ctrl+P) — כל יחידת תוכן בעמוד נפרד">
+        <span class="emoji">📄</span><span class="lbl">PDF</span>
+      </button>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <nav class="top-tabs-bar" id="top-tabs-bar">
+          <button class="top-tab" id="open-guide" data-tab="guide">
+            <span class="emoji">📖</span><span>מדריך מקוצר</span>
+          </button>
+          <button class="top-tab" id="open-codeblocks" data-tab="codeblocks">
+            <span class="emoji">💻</span><span>בלוקי קוד</span>
+          </button>
+          <button class="top-tab" id="open-trainer" data-tab="trainer">
+            <span class="emoji">🧠</span><span>מאמן ידע + דוח</span>
+          </button>
+          <button class="top-tab" id="open-study-mode" data-tab="study">
+            <span class="emoji">🎯</span><span>לימוד מותאם</span>
+          </button>
+          <button class="top-tab" id="open-knowledge-map" data-tab="km">
+            <span class="emoji">🗺️</span><span>מפת ידע</span>
+          </button>
+          <button class="top-tab" id="open-code-anatomy" data-tab="anatomy">
+            <span class="emoji">📐</span><span>פירוק קוד</span>
+          </button>
+          <button class="top-tab top-tab-home" id="open-home" data-tab="home">
+            <span class="emoji">🏠</span><span>שיעורים</span>
+          </button>
+        </nav>
+
+        <header class="top-nav">
+          <div class="lesson-title-area">
+            <h1 id="current-lesson-title">ברוכים הבאים לפורטל המומחים</h1>
+            <p id="current-lesson-desc">
+              בחרו שיעור מהתפריט כדי להתחיל ללמוד. כל מושג מוסבר ב-6 רמות שונות — מסבתא ועד פרופסור!
+            </p>
+          </div>
+        </header>
+
+        <div class="content-wrapper" id="content-container">
+          <!-- Welcome Screen -->
+          <div class="welcome-screen" id="welcome-screen">
+            <div class="welcome-card glass-panel">
+              <div class="welcome-icon">🚀</div>
+              <h3>ברוכים הבאים ל-LumenPortal</h3>
+              <p>
+                הפורטל מכיל את <strong>כל חומרי הקורס</strong> — שיעורים 11 עד 27 + חומרים רוחביים.
+                כל מושג מוסבר ב-7 רמות שונות: מסבתא 👵 ועד מאסטר 🏆.
+                המערכת לומדת אותך אדפטיבית — מתאימה הסברים ושאלות לרמה האישית שלך בכל מושג.
+              </p>
+              <div class="welcome-stats">
+                <div class="stat-item">
+                  <span class="stat-num" id="stat-lessons">0</span>
+                  <span class="stat-label">שיעורים</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-num" id="stat-concepts">0</span>
+                  <span class="stat-label">מושגים</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-num" id="stat-bank">0</span>
+                  <span class="stat-label">שאלות במאגר</span>
+                </div>
+              </div>
+              <div class="glow-orb"></div>
+              <div class="glow-orb glow-orb-2"></div>
+            </div>
+
+            <!-- Tour cards -->
+            <div class="onboarding-tour">
+              <h4 class="onboarding-title">🧭 איך עובדים בפורטל — הטאבים העליונים</h4>
+              <div class="onboarding-grid">
+                <div class="ob-card">
+                  <div class="ob-icon">📖</div>
+                  <h5>מדריך מקוצר</h5>
+                  <p>סיכום של 22 נושאים מרכזיים. שאלון משולב לכל נושא — תשובה נכונה מקדמת רמת מושג קשור.</p>
+                  <button class="ob-cta" data-tour-action="open-guide">פתח את המדריך</button>
+                </div>
+                <div class="ob-card">
+                  <div class="ob-icon">💻</div>
+                  <h5>בלוקי קוד</h5>
+                  <p>בלוקי קוד אמיתיים עם הסבר עברי לכל שורה + שאלות רב-ברירה לכל שורה. כל תשובה נכונה מעדכנת את ניקוד המושג הקשור.</p>
+                  <button class="ob-cta" data-tour-action="open-codeblocks">פתח בלוקי קוד</button>
+                </div>
+                <div class="ob-card highlight">
+                  <div class="ob-icon">🧠</div>
+                  <h5>מאמן הידע</h5>
+                  <p>שאלות אדפטיביות (אמריקני + השלמת קוד). כל תשובה מעדכנת רמה (1-7). דוח חי + רשימת חולשות.</p>
+                  <button class="ob-cta" data-tour-action="open-trainer">פתח את המאמן</button>
+                </div>
+                <div class="ob-card">
+                  <div class="ob-icon">🎯</div>
+                  <h5>לימוד מותאם</h5>
+                  <p>תור מושגים חלשים. עוברים אחד-אחד עד שכולם ברמה 4+. הקיצור הכי מהיר לחיזוק חולשות.</p>
+                  <button class="ob-cta" data-tour-action="open-study">פתח לימוד מותאם</button>
+                </div>
+                <div class="ob-card">
+                  <div class="ob-icon">🗺️</div>
+                  <h5>מפת ידע</h5>
+                  <p>תצוגה ויזואלית של כל המושגים, לפי שיעור ולפי רמה. סינון לפי "חלשים", "מאסטר", "לא נבחנו".</p>
+                  <button class="ob-cta" data-tour-action="open-map">פתח מפת ידע</button>
+                </div>
+                <div class="ob-card">
+                  <div class="ob-icon">🏠</div>
+                  <h5>שיעורים</h5>
+                  <p>הסרגל הצדדי: רשימת השיעורים. בכל שיעור — תפריט מושגים אופקי + הסבר ברמה האישית + 2 שאלות אוטומטיות.</p>
+                  <button class="ob-cta secondary" data-tour-action="dismiss-tour">הבנתי, נסגור את הסיור</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Knowledge Map View -->
+          <div class="knowledge-map" id="knowledge-map-view" style="display:none">
+            <div class="km-header glass-panel">
+              <div class="km-title">
+                <h2>🗺️ מפת הידע האישית שלך</h2>
+                <p>🔒 <strong>הרמות נעולות</strong> — לכל מושג ציון מ-1 עד 7. <strong>👵 רמה 1</strong> = ברירת מחדל, <strong>🧒 2</strong> = השלמת רמת סבתא, <strong>🪖 3</strong> = ילד, <strong>🎓 4</strong> = חייל, <strong>💻 5</strong> = סטודנט, <strong>🔬 6</strong> = ג'וניור, <strong class="km-v">🏆 7</strong> = פרופסור (מאסטר). כדי לעלות רמה — חובה לענות נכון על <strong>שאלה אמריקנית</strong> וגם על <strong>השלמת קוד</strong> ברמה הנוכחית.</p>
+              </div>
+              <div class="km-stats">
+                <div class="km-stat km-stat-total"><span class="n" id="km-total">0</span><span>סה"כ מושגים</span></div>
+                <div class="km-stat km-stat-v"><span class="n" id="km-known">0</span><span>🏆 מאסטר (רמה 7)</span></div>
+                <div class="km-stat km-stat-x"><span class="n" id="km-unknown">0</span><span>⚠️ חלשים (רמה 1-2)</span></div>
+                <div class="km-stat km-stat-pending"><span class="n" id="km-pending">0</span><span>❓ לא נבחנו</span></div>
+              </div>
+              <div class="km-mastery-bar">
+                <div class="km-mastery-track">
+                  <div class="km-mastery-fill" id="km-mastery-fill"></div>
+                </div>
+                <div class="km-mastery-text" id="km-mastery-text">רמת שליטה: 0%</div>
+              </div>
+              <div class="km-toolbar">
+                <input type="text" id="km-search" placeholder="🔍 חיפוש מושג..." />
+                <select id="km-filter">
+                  <option value="all">הצג הכל</option>
+                  <option value="unknown">רק חלשים (רמה 1-2)</option>
+                  <option value="known">רק מאסטר (רמה 7)</option>
+                  <option value="pending">רק לא נבחנו</option>
+                </select>
+                <button class="km-btn-mini" id="km-go-trainer">🧠 לאימון במאמן הידע</button>
+                <button class="km-btn-mini danger" id="km-reset">🔄 איפוס מלא (ציונים + סטטוסים)</button>
+              </div>
+            </div>
+            <div class="km-lessons" id="km-lessons-container"></div>
+          </div>
+
+          <!-- Study Mode View (Adaptive) -->
+          <div class="study-mode" id="study-mode-view" style="display:none">
+            <div class="study-header glass-panel">
+              <h2>🎯 לימוד מותאם — חיזוק החולשות שלך</h2>
+              <p id="study-subtitle">המערכת תעביר אותך על המושגים שסימנת כחלשים, אחד אחרי השני.</p>
+              <div class="study-progress-line">
+                <span id="study-progress-text">0 / 0</span>
+                <div class="study-progress-track"><div class="study-progress-fill" id="study-progress-fill"></div></div>
+              </div>
+            </div>
+            <div class="study-card-container glass-panel" id="study-card-container">
+              <!-- Active study card injected here -->
+            </div>
+          </div>
+
+          <!-- Trainer View (Adaptive Quiz + Live Scorecard) -->
+          <div class="trainer-view" id="trainer-view" style="display:none">
+            <div class="trainer-dashboard glass-panel">
+              <div class="trainer-dash-head">
+                <h2>🧠 מאמן הידע — דוח רמות חי</h2>
+                <p>לכל מושג רמה בין 1 ל-7. כדי לעלות רמה: ענה נכון על <strong>🅰️ שאלה אמריקנית</strong> וגם על <strong>✍️ השלמת קוד</strong> ברמה הנוכחית. רמות: 👵 1 → 🧒 2 → 🪖 3 → 🎓 4 → 💻 5 → 🔬 6 → 🏆 7.</p>
+              </div>
+              <div class="trainer-summary">
+                <div class="t-stat t-stat-asked"><span class="n" id="t-asked">0</span><span>שאלות שנענו</span></div>
+                <div class="t-stat t-stat-correct"><span class="n" id="t-correct">0</span><span>נכונות</span></div>
+                <div class="t-stat t-stat-wrong"><span class="n" id="t-wrong">0</span><span>שגויות</span></div>
+                <div class="t-stat t-stat-acc"><span class="n" id="t-accuracy">0%</span><span>דיוק</span></div>
+                <div class="t-stat t-stat-mastered"><span class="n" id="t-mastered">0</span><span>🏆 מאסטר (7)</span></div>
+                <div class="t-stat t-stat-weak"><span class="n" id="t-weak">0</span><span>⚠️ חלשים (1-2)</span></div>
+              </div>
+              <div class="trainer-mastery-bar">
+                <div class="km-mastery-track"><div class="km-mastery-fill" id="t-mastery-fill"></div></div>
+                <div class="km-mastery-text" id="t-mastery-text">שליטה כללית: 0%</div>
+              </div>
+              <div class="trainer-toolbar">
+                <button class="km-btn-mini" id="t-toggle-report">📊 הצג/הסתר דוח מלא</button>
+                <button class="km-btn-mini" id="t-focus-weak">🎯 הסתערות: רק חלשים</button>
+                <button class="km-btn-mini" id="t-mode-mixed">🔀 מצב מעורב</button>
+                <button class="km-btn-mini" id="t-export-csv">📥 ייצוא CSV</button>
+                <button class="km-btn-mini danger" id="t-reset-scores">🔄 איפוס ציונים</button>
+              </div>
+            </div>
+
+            <div class="trainer-quiz-card glass-panel" id="trainer-quiz-card">
+              <!-- Active question injected here -->
+            </div>
+
+            <div class="trainer-report glass-panel" id="trainer-report" style="display:none">
+              <h3>📊 דוח ציונים מלא — לפי שיעור</h3>
+              <div class="trainer-report-body" id="trainer-report-body"></div>
+            </div>
+          </div>
+
+          <!-- Quick Guide View -->
+          <div class="guide-view" id="guide-view" style="display:none">
+            <div class="guide-header glass-panel">
+              <h2 id="guide-title">📖 מדריך מקוצר — מפת החומר</h2>
+              <p id="guide-subtitle"></p>
+              <div class="guide-toolbar">
+                <input type="text" id="guide-search" placeholder="🔍 חיפוש בנושאים..." />
+                <button class="km-btn-mini" id="guide-expand-all">📂 פתח הכל</button>
+                <button class="km-btn-mini" id="guide-collapse-all">📁 כווץ הכל</button>
+              </div>
+            </div>
+            <div class="guide-topics" id="guide-topics-container"></div>
+          </div>
+
+          <!-- Active Lesson Content (Hidden until selected) -->
+          <div class="active-lesson" id="active-lesson" style="display: none">
+            <div class="lesson-banner glass-panel" id="lesson-banner">
+              <span class="lesson-banner-icon">🎯</span>
+              <div class="lesson-banner-text">
+                <strong>מצב למידה אדפטיבי:</strong>
+                כל מושג מוצג ברמה שלך עבורו. אם לא ברור — בקש רמה פשוטה יותר.
+                אם הבנת — לחץ "🎯 בחן אותי" כדי להתקדם רמה.
+              </div>
+            </div>
+
+            <!-- Article Body -->
+            <article class="lesson-article glass-panel">
+              <div class="article-inner" id="lesson-body">
+                <!-- Injected dynamically based on selected level -->
+              </div>
+            </article>
+
+            <!-- Quiz Section -->
+            <section class="quiz-section glass-panel" id="quiz-section" style="display:none">
+              <div class="quiz-header">
+                <h3>📝 שאלון — בדוק את הידע שלך!</h3>
+                <p class="quiz-subtitle">ענה על כל השאלות כדי לוודא שהבנת את החומר לעומקו</p>
+              </div>
+              <div class="quiz-body" id="quiz-body">
+                <!-- Quiz questions injected here -->
+              </div>
+              <div class="quiz-actions">
+                <button class="quiz-submit-btn" id="quiz-submit">✅ בדוק תשובות</button>
+                <button class="quiz-reset-btn" id="quiz-reset" style="display:none">🔄 נסה שוב</button>
+              </div>
+              <div class="quiz-results" id="quiz-results" style="display:none">
+                <div class="quiz-score" id="quiz-score"></div>
+                <div class="quiz-feedback" id="quiz-feedback"></div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Code Anatomy View -->
+          <div class="anatomy-page glass-panel" id="code-anatomy-view" style="display:none">
+            <h2>📐 פירוק קוד — מה התפקיד של כל רכיב?</h2>
+            <p class="anatomy-page-intro">
+              דף זה מציג קטעי קוד מהשיעורים, ומסביר מה התפקיד של כל מילה / סימן / משתנה — בלי שאלות, בלי בחנים, רק קריאה והבנה.
+            </p>
+            <div id="code-anatomy-content"></div>
+          </div>
+
+          <!-- Code Blocks View -->
+          <div class="codeblocks-view" id="codeblocks-view" style="display:none">
+            <div class="cb-header glass-panel">
+              <h2 id="cb-title">💻 למד בלוקי קוד</h2>
+              <p id="cb-subtitle">בלוקי קוד אמיתיים עם הסבר עברי לכל שורה. ענה על השאלות והעלה את הניקוד שלך לכל מושג.</p>
+              <div class="cb-stats" id="cb-stats">
+                <div class="cb-stat"><span class="n" id="cb-stat-total">0</span><span>בלוקים</span></div>
+                <div class="cb-stat"><span class="n" id="cb-stat-completed">0</span><span>הושלמו</span></div>
+                <div class="cb-stat"><span class="n" id="cb-stat-correct">0</span><span>תשובות נכונות</span></div>
+                <div class="cb-stat"><span class="n" id="cb-stat-mastered">0</span><span>🏆 מאסטר</span></div>
+                <div class="cb-stat"><span class="n" id="cb-stat-progress">0%</span><span>שליטה כללית</span></div>
+              </div>
+              <div class="cb-toolbar">
+                <input type="text" id="cb-search" placeholder="🔍 חיפוש בבלוקים..." />
+                <select id="cb-filter-lesson" class="cb-select">
+                  <option value="all">כל השיעורים</option>
+                </select>
+                <select id="cb-filter-difficulty" class="cb-select">
+                  <option value="all">כל הרמות</option>
+                  <option value="1">🟢 בסיסי</option>
+                  <option value="2">🟡 בינוני</option>
+                  <option value="3">🔴 מתקדם</option>
+                </select>
+                <button class="km-btn-mini" id="cb-expand-all">📂 פתח הכל</button>
+                <button class="km-btn-mini" id="cb-collapse-all">📁 כווץ הכל</button>
+                <button class="km-btn-mini" id="cb-random-block" title="פתח בלוק אקראי לתרגול מהיר">🎲 בלוק אקראי</button>
+                <button class="km-btn-mini" id="cb-export-pdf" title="ייצוא כל הבלוקים הנראים ל-PDF צבעוני, בלוק לכל עמוד">📄 PDF צבעוני</button>
+                <button class="km-btn-mini" id="cb-keys-help" title="הצג קיצורי מקלדת">⌨️ קיצורים</button>
+              </div>
+            </div>
+            <div class="cb-blocks" id="cb-blocks-container"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Data Files -->
+    <script src="data/lesson11.js"></script>
+    <script src="data/lesson12.js"></script>
+    <script src="data/lesson13.js"></script>
+    <script src="data/lesson15.js"></script>
+    <script src="data/lesson16.js"></script>
+    <script src="data/lesson17.js"></script>
+    <script src="data/lesson18.js"></script>
+    <script src="data/lesson19.js"></script>
+    <script src="data/lesson20.js"></script>
+    <script src="data/lesson21.js"></script>
+    <script src="data/lesson22.js"></script>
+    <script src="data/lesson23.js"></script>
+    <script src="data/lesson24.js"></script>
+    <script src="data/lesson25.js"></script>
+    <script src="data/lesson26.js"></script>
+    <script src="data/lesson27.js"></script>
+    <script src="data/workbook_taskmanager.js"></script>
+    <script src="data/ai_development.js"></script>
+    <script src="data/react_blueprint.js"></script>
+    <script src="data/questions_bank.js"></script>
+    <script src="data/questions_bank_seeded.js"></script>
+    <script src="data/concept_enrichment.js"></script>
+    <script src="data/extended_explanations.js"></script>
+    <script src="data/quick_guide.js"></script>
+    <script src="data/code_blocks.js"></script>
+    <script src="content-loader.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
