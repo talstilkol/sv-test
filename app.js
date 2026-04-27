@@ -586,20 +586,29 @@ document.addEventListener("DOMContentLoaded", () => {
     function pickReverseQuestion() {
       const lessons = window.LESSONS_DATA || [];
       const allConcepts = [];
+      // levels is an OBJECT keyed by audience (grandma/child/soldier/student/junior/professor)
+      const levelKeys = ["soldier", "student", "junior", "child", "grandma", "professor"];
+      function pickDefinition(c) {
+        if (!c.levels) return "";
+        if (Array.isArray(c.levels)) return c.levels[2] || c.levels[0] || "";
+        // Object form: prefer mid-level definition (soldier/student)
+        for (const k of levelKeys) {
+          if (c.levels[k]) return c.levels[k];
+        }
+        return "";
+      }
       lessons.forEach((L) => (L.concepts || []).forEach((c) => {
-        if (c.levels && c.levels[0]) allConcepts.push({ lesson: L, concept: c });
+        if (pickDefinition(c)) allConcepts.push({ lesson: L, concept: c });
       }));
       if (allConcepts.length < 4) return null;
       const target = allConcepts[Math.floor(Math.random() * allConcepts.length)];
-      // Distractors: 3 random concepts from same lesson if possible, else any
       const sameLesson = allConcepts.filter((p) => p.lesson.id === target.lesson.id && p.concept.conceptName !== target.concept.conceptName);
       const otherLesson = allConcepts.filter((p) => p.concept.conceptName !== target.concept.conceptName);
       let distractorPool = sameLesson.length >= 3 ? sameLesson : otherLesson;
       const distractors = shuffleArr(distractorPool).slice(0, 3);
       const optionsConcepts = shuffleArr([target, ...distractors]);
       const correctIdx = optionsConcepts.findIndex((p) => p.concept.conceptName === target.concept.conceptName);
-      // Use level-1 (grandma) or level-3 explanation as the prompt
-      const definition = target.concept.levels?.[2] || target.concept.levels?.[0] || target.concept.levels?.[1] || "";
+      const definition = pickDefinition(target.concept);
       return { target, options: optionsConcepts, correctIdx, definition };
     }
     function renderReverseQuestion() {
@@ -6131,11 +6140,21 @@ document.addEventListener("DOMContentLoaded", () => {
               optionsBox?.appendChild(tag);
             }
           } else if (action === "eli5") {
-            // ELI5 — show the simplest explanation (level 1 / grandma) inline
+            // ELI5 — show the simplest explanation (grandma) inline.
+            // levels can be an object {grandma,child,...} or array.
             const expEl = card.querySelector(".concept-explanation");
             const eli5Box = card.querySelector(".eli5-overlay");
-            const grandma = (concept.levels && concept.levels[0]) || "";
-            const analogy = (concept.analogies && concept.analogies[0]) || concept.analogy || "";
+            let grandma = "";
+            if (concept.levels) {
+              if (Array.isArray(concept.levels)) grandma = concept.levels[0] || "";
+              else grandma = concept.levels.grandma || concept.levels.child || "";
+            }
+            let analogy = "";
+            if (concept.analogies) {
+              if (Array.isArray(concept.analogies)) analogy = concept.analogies[0] || "";
+              else analogy = concept.analogies.grandma || concept.analogies.child || "";
+            }
+            if (!analogy && concept.analogy) analogy = concept.analogy;
             if (eli5Box) {
               // Toggle off
               eli5Box.remove();
