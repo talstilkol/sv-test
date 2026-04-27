@@ -63,11 +63,15 @@ function loadDataFiles() {
   const bugList = Array.isArray(sandbox.QUESTIONS_BUG)
     ? sandbox.QUESTIONS_BUG
     : [];
+  const buildList = Array.isArray(sandbox.QUESTIONS_BUILD)
+    ? sandbox.QUESTIONS_BUILD
+    : [];
   const bank = Object.assign({}, baseBank, {
     mc: baseBank.mc || [],
     fill: baseBank.fill || [],
     trace: traceList,
     bug: bugList,
+    build: buildList,
   });
   return {
     lessons,
@@ -235,6 +239,41 @@ function validate({ lessons, bank, seededBank, guide }) {
     if (!q.fix) warnings.push(`[${q.id}] missing fix (corrected code)`);
   }
 
+  // -------- Mini Build validation (P1.4.4) --------
+  for (const q of bank.build || []) {
+    if (!q.id) errors.push(`Build missing id: ${JSON.stringify(q).slice(0, 80)}`);
+    if (q.id && !q.id.startsWith("build_"))
+      warnings.push(`[${q.id}] build IDs should start with "build_"`);
+    if (q.id && seenIds.has(q.id)) errors.push(`Duplicate build id: ${q.id}`);
+    seenIds.add(q.id);
+    if (!q.prompt) errors.push(`[${q.id}] build must have prompt`);
+    if (!q.starter) warnings.push(`[${q.id}] build missing starter code`);
+    if (!Array.isArray(q.tests) || q.tests.length === 0)
+      errors.push(`[${q.id}] build must have at least one test`);
+    if (Array.isArray(q.tests)) {
+      q.tests.forEach((t, i) => {
+        if (!t.regex)
+          errors.push(`[${q.id}].tests[${i}] missing regex pattern`);
+        if (t.regex) {
+          try {
+            new RegExp(t.regex, t.flags || "");
+          } catch (e) {
+            errors.push(`[${q.id}].tests[${i}] invalid regex: ${e.message}`);
+          }
+        }
+        if (!t.description)
+          warnings.push(`[${q.id}].tests[${i}] missing description`);
+      });
+    }
+    if (!q.reference)
+      warnings.push(`[${q.id}] build missing reference solution`);
+    if (q.level && (q.level < 1 || q.level > 6))
+      warnings.push(`[${q.id}] level should be 1..6 (got ${q.level})`);
+    if (q.conceptKey && !validKeys.has(q.conceptKey))
+      errors.push(`[${q.id}] conceptKey not found: "${q.conceptKey}"`);
+    if (!q.explanation) warnings.push(`[${q.id}] missing explanation`);
+  }
+
   // -------- Coverage report (combined: curated + seeded) --------
   const coverage = [];
   for (const [key, ref] of conceptByKey) {
@@ -294,6 +333,7 @@ function validate({ lessons, bank, seededBank, guide }) {
     totalConcepts: conceptByKey.size,
     curatedTrace: (bank.trace || []).length,
     curatedBug: (bank.bug || []).length,
+    curatedBuild: (bank.build || []).length,
     curatedMC: (bank.mc || []).length,
     curatedFill: (bank.fill || []).length,
     seededMC: (seededBank.mc || []).length,
@@ -309,7 +349,7 @@ function main() {
   const data = loadDataFiles();
   console.log(
     `   ${data.lessons.length} lessons · ` +
-      `Curated bank: ${(data.bank.mc || []).length} MC + ${(data.bank.fill || []).length} Fill + ${(data.bank.trace || []).length} Trace + ${(data.bank.bug || []).length} Bug · ` +
+      `Curated bank: ${(data.bank.mc || []).length} MC + ${(data.bank.fill || []).length} Fill + ${(data.bank.trace || []).length} Trace + ${(data.bank.bug || []).length} Bug + ${(data.bank.build || []).length} Build · ` +
       `Seeded: ${(data.seededBank.mc || []).length} MC + ${(data.seededBank.fill || []).length} Fill · ` +
       `${(data.guide.topics || []).length} guide topics.`,
   );

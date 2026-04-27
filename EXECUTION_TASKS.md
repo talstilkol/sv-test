@@ -142,10 +142,12 @@
   - [V] P1.4.3.1 — Schema in data/questions_bug.js
   - [V] P1.4.3.2 — UI: 4-option MC + fix reveal + explanation
   - [V] P1.4.3.3 — 14 bug hunts (target was 28; partial coverage)
-- [ ] P1.4.4 — Mini Build mode
-  - [ ] P1.4.4.1 — Schema (prompt, starter, tests, ref)
-  - [ ] P1.4.4.2 — UI: code-runner integration + tests panel
-  - [ ] P1.4.4.3 — 21+ builds (3 per React lesson)
+- [V] P1.4.4 — Mini Build mode ✅
+  - [V] P1.4.4.1 — Schema in data/questions_build.js (prompt, starter, tests[], reference, hint, explanation)
+  - [V] P1.4.4.2 — UI: textarea + 🚀 בדוק + 💡 רמז + 👀 פתרון + 🔄 איפוס
+  - [V] P1.4.4.3 — 8 builds (target was 21; partial coverage of React 21-24 fundamentals)
+  - [V] regex-based tests with mustNotMatch flag for anti-patterns (.push)
+  - [V] auto-show reference + explanation on all-pass
 
 ### W5 — Study UX (user-requested) + Mock Exam
 - [V] P1.5.0a — View Mode panel (toggles + concept jumper + presets) ✅
@@ -192,7 +194,7 @@
   - [ ] P1.5.2.3 — LLM batch script — augment 1316 MCs
   - [ ] P1.5.2.4 — Manual review 10% (130 questions)
 
-**P1 Total: 50/62** (P1.5.0c + P1.5.0d + P1.5.1 completed)
+**P1 Total: 56/62** (P1.4.4 added)
 
 ---
 
@@ -406,6 +408,7 @@
 2026-04-27 23:25 — P1.5.0a + P1.5.0b shipped (in code, verified in browser)
 2026-04-28 00:09 — P1.5.0c (Code Anatomy filters) + P1.5.0d (SITE_MAP.md) shipped
 2026-04-28 00:13 — P1.5.1 Mock Exam Mode shipped — Tab + 5 templates + timer + nav + result + history
+2026-04-28 00:24 — P1.4.4 Mini Build shipped — 8 builds + regex tests + UI on concept card
 ```
 
 ---

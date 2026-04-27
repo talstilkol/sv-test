@@ -42,6 +42,13 @@
     (acc[b.conceptKey] = acc[b.conceptKey] || []).push(b);
     return acc;
   }, {});
+  // P1.4.4 — Mini Build questions grouped by conceptKey
+  const buildList = typeof QUESTIONS_BUILD !== "undefined" ? QUESTIONS_BUILD : [];
+  const buildsByKey = buildList.reduce((acc, b) => {
+    if (!b.conceptKey) return acc;
+    (acc[b.conceptKey] = acc[b.conceptKey] || []).push(b);
+    return acc;
+  }, {});
   let enrichedCount = 0;
   let extendedCount = 0;
   let antiPatternsCount = 0;
@@ -87,6 +94,10 @@
         c.bugHunts = bugsByKey[key];
         bugsCount += bugsByKey[key].length;
       }
+      // P1.4.4 — Mini Builds
+      if (buildsByKey[key] && buildsByKey[key].length > 0) {
+        c.miniBuilds = buildsByKey[key];
+      }
     });
   });
 
@@ -98,6 +109,7 @@
     fill: [...(primary.fill || [])],
     trace: [...traceList],
     bug: [...bugList],
+    build: [...buildList],
   };
   window.QUICK_GUIDE = typeof QUICK_GUIDE !== "undefined" ? QUICK_GUIDE : { topics: [] };
 

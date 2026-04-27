@@ -5025,6 +5025,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${renderMnemonicPanel(concept)}
         ${renderAntiPatternsPanel(concept)}
         ${renderBugHuntPanel(concept)}
+        ${renderMiniBuildPanel(concept)}
         ${renderWarStoriesPanel(concept)}
         ${renderComparisonsPanel(concept)}
         ${renderAudioModeButton(concept, explanation)}
@@ -5224,6 +5225,53 @@ document.addEventListener("DOMContentLoaded", () => {
       <details class="bug-hunt-panel">
         <summary>🐛 ציד באגים (${bugs.length} מקרים)</summary>
         <div class="bh-body">${items}</div>
+      </details>`;
+  }
+
+  // P1.4.4 — Mini Build panel (write code → regex tests)
+  function renderMiniBuildPanel(concept) {
+    const builds = concept.miniBuilds;
+    if (!Array.isArray(builds) || builds.length === 0) return "";
+    const items = builds
+      .map((b, i) => {
+        return `
+        <div class="mini-build-card" data-build-card="${esc(b.id)}">
+          <div class="mb-head">
+            <span class="mb-num">🛠️ #${i + 1}</span>
+            <span class="mb-title">${esc(b.title || "")}</span>
+            ${typeof b.level === "number" ? `<span class="mb-level">רמה ${b.level}</span>` : ""}
+          </div>
+          <div class="mb-prompt">${esc(b.prompt || "")}</div>
+          <textarea class="mb-editor" data-mb-id="${esc(b.id)}" spellcheck="false" dir="ltr" rows="8">${esc(b.starter || "")}</textarea>
+          <div class="mb-actions">
+            <button class="km-btn-mini primary" data-action="mb-check" data-mb-id="${esc(b.id)}">🚀 בדוק</button>
+            <button class="km-btn-mini" data-action="mb-reset" data-mb-id="${esc(b.id)}">🔄 איפוס</button>
+            <button class="km-btn-mini" data-action="mb-show-ref" data-mb-id="${esc(b.id)}">👀 הצג פתרון</button>
+            ${b.hint ? `<button class="km-btn-mini" data-action="mb-show-hint" data-mb-id="${esc(b.id)}">💡 רמז</button>` : ""}
+          </div>
+          <div class="mb-tests" data-mb-tests="${esc(b.id)}" hidden>
+            ${(b.tests || []).map((t, ti) => `
+              <div class="mb-test" data-mb-test-idx="${ti}">
+                <span class="mb-test-mark">⏳</span>
+                <span class="mb-test-desc">${esc(t.description || t.regex)}</span>
+              </div>
+            `).join("")}
+          </div>
+          <div class="mb-hint-box" data-mb-hint="${esc(b.id)}" hidden>
+            ${b.hint ? `<strong>💡 רמז:</strong> ${esc(b.hint)}` : ""}
+          </div>
+          <div class="mb-ref-box" data-mb-ref="${esc(b.id)}" hidden>
+            <div class="mb-ref-label">✅ פתרון לדוגמה</div>
+            <pre><code>${esc(b.reference || "")}</code></pre>
+            ${b.explanation ? `<div class="mb-explanation"><strong>📚 הסבר:</strong> ${esc(b.explanation)}</div>` : ""}
+          </div>
+        </div>`;
+      })
+      .join("");
+    return `
+      <details class="mini-build-panel">
+        <summary>🛠️ בנה את זה (${builds.length} תרגילים)</summary>
+        <div class="mb-body">${items}</div>
       </details>`;
   }
 
@@ -5562,6 +5610,67 @@ document.addEventListener("DOMContentLoaded", () => {
               tag.textContent = "✅ נכון!";
               optionsBox?.appendChild(tag);
             }
+          } else if (action === "mb-check" || action === "mb-reset" || action === "mb-show-ref" || action === "mb-show-hint") {
+            // P1.4.4 — Mini Build actions
+            const buildId = btn.dataset.mbId;
+            const list = concept.miniBuilds || [];
+            const build = list.find((b) => b.id === buildId);
+            if (!build) return;
+            const cardEl = btn.closest(".mini-build-card");
+            const editor = cardEl?.querySelector(`textarea[data-mb-id="${cssEscape(buildId)}"]`);
+            const testsBox = cardEl?.querySelector(`[data-mb-tests="${cssEscape(buildId)}"]`);
+            const refBox = cardEl?.querySelector(`[data-mb-ref="${cssEscape(buildId)}"]`);
+            const hintBox = cardEl?.querySelector(`[data-mb-hint="${cssEscape(buildId)}"]`);
+            if (!editor) return;
+
+            if (action === "mb-reset") {
+              editor.value = build.starter || "";
+              if (testsBox) testsBox.hidden = true;
+              if (refBox) refBox.hidden = true;
+              return;
+            }
+            if (action === "mb-show-ref") {
+              if (refBox) refBox.hidden = !refBox.hidden;
+              return;
+            }
+            if (action === "mb-show-hint") {
+              if (hintBox) hintBox.hidden = !hintBox.hidden;
+              return;
+            }
+            // action === "mb-check"
+            const code = editor.value || "";
+            if (testsBox) testsBox.hidden = false;
+            let allPass = true;
+            (build.tests || []).forEach((t, i) => {
+              const testEl = testsBox?.querySelector(`[data-mb-test-idx="${i}"]`);
+              if (!testEl) return;
+              let pass = false;
+              try {
+                const re = new RegExp(t.regex, t.flags || "");
+                const matched = re.test(code);
+                pass = t.mustNotMatch ? !matched : matched;
+              } catch (_) { pass = false; }
+              testEl.querySelector(".mb-test-mark").textContent = pass ? "✅" : "❌";
+              testEl.classList.toggle("mb-test-pass", pass);
+              testEl.classList.toggle("mb-test-fail", !pass);
+              if (!pass) allPass = false;
+            });
+            // Status banner
+            let banner = cardEl.querySelector(".mb-status");
+            if (!banner) {
+              banner = document.createElement("div");
+              banner.className = "mb-status";
+              testsBox.parentNode.insertBefore(banner, testsBox);
+            }
+            const total = (build.tests || []).length;
+            const passed = (build.tests || []).filter((t, i) => testsBox.querySelector(`[data-mb-test-idx="${i}"].mb-test-pass`)).length;
+            banner.classList.toggle("mb-status-pass", allPass);
+            banner.classList.toggle("mb-status-fail", !allPass);
+            banner.textContent = allPass
+              ? `🏆 כל ${total} ה-tests עברו! פתרון מצוין.`
+              : `📊 עברו ${passed} מתוך ${total} tests. תקן את השאר ולחץ "בדוק" שוב.`;
+            // If all pass, auto-show explanation
+            if (allPass && refBox) refBox.hidden = false;
           } else if (action === "mark-v") {
             // Confirm shortcut, then mark and re-render
             if (confirm(`לסמן את "${concept.conceptName}" כמושג ידוע? המאמן לא יציג אותו יותר.`)) {

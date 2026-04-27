@@ -5112,6 +5112,161 @@ html { scroll-behavior: smooth; }
 }
 
 /* ============================================================ */
+/* P1.4.4 — Mini Build panel (write code → regex tests)        */
+/* ============================================================ */
+.mini-build-panel {
+  margin-top: 0.6rem;
+  background: rgba(34, 211, 238, 0.05);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem;
+}
+.mini-build-panel > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #67e8f9;
+  font-size: 0.95rem;
+}
+.mb-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 0.6rem;
+}
+.mini-build-card {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+}
+.mb-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.4rem;
+}
+.mb-num { color: #67e8f9; font-weight: 700; }
+.mb-title { color: var(--text-bright); font-weight: 600; }
+.mb-level {
+  font-size: 0.78rem;
+  background: rgba(99, 102, 241, 0.2);
+  color: #c7d2fe;
+  padding: 1px 8px;
+  border-radius: 999px;
+}
+.mb-prompt {
+  background: rgba(99, 102, 241, 0.08);
+  border-right: 3px solid #6366f1;
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.92rem;
+  margin-bottom: 0.5rem;
+  white-space: pre-wrap;
+  line-height: 1.55;
+}
+.mb-editor {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-bright);
+  font-family: "Fira Code", monospace;
+  font-size: 0.88rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  direction: ltr;
+  text-align: left;
+  resize: vertical;
+  min-height: 150px;
+  line-height: 1.5;
+}
+.mb-editor:focus {
+  outline: 2px solid #22d3ee;
+  outline-offset: 1px;
+  border-color: #22d3ee;
+}
+.mb-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+.mb-tests {
+  margin-top: 0.6rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
+}
+.mb-test {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 0.88rem;
+}
+.mb-test.mb-test-pass { color: #86efac; }
+.mb-test.mb-test-fail { color: #fca5a5; }
+.mb-test-mark {
+  width: 22px;
+  display: inline-block;
+  text-align: center;
+}
+.mb-status {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.mb-status-pass {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  color: #86efac;
+}
+.mb-status-fail {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid #f59e0b;
+  color: #fcd34d;
+}
+.mb-hint-box {
+  margin-top: 0.5rem;
+  background: rgba(99, 102, 241, 0.08);
+  border-right: 3px solid #6366f1;
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.mb-ref-box {
+  margin-top: 0.6rem;
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+}
+.mb-ref-label {
+  font-weight: 700;
+  color: #86efac;
+  margin-bottom: 0.3rem;
+}
+.mb-ref-box pre {
+  direction: ltr;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  padding: 0.5rem 0.7rem;
+  font-family: "Fira Code", monospace;
+  font-size: 0.85rem;
+  margin: 0.3rem 0;
+  white-space: pre;
+  overflow-x: auto;
+}
+.mb-explanation {
+  margin-top: 0.5rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* ============================================================ */
 /* P1.4.3 — Bug Hunt panel                                     */
 /* ============================================================ */
 .bug-hunt-panel {
