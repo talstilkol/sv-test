@@ -10519,6 +10519,424 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>`;
   }
 
+  function compactMuseumList(items, separator = ", ") {
+    return (items || []).filter(Boolean).join(separator);
+  }
+
+  function compactMuseumPath(items) {
+    return compactMuseumList(items, " ← ");
+  }
+
+  function museumCategoryLines(categories) {
+    return (categories || []).map((category) => {
+      const items = compactMuseumList(category.items);
+      return items ? `${category.name}: ${items}` : category.name;
+    }).filter(Boolean);
+  }
+
+  function makeMuseumVideoEntry(config) {
+    const duration = config.duration || (config.kind === "track" ? "4-5 דקות" : "2-3 דקות");
+    const style = config.style || "הסבר ויזואלי לימודי בעברית";
+    const background = (config.background || []).filter(Boolean);
+    const script = [
+      {
+        title: "פתיחה",
+        text: `פתח בשאלה או בבעיה שהסרטון פותר: ${config.problem || config.goal}`,
+      },
+      {
+        title: "תצוגת מוזיאון",
+        text: `הצג את האולם כמרחב ויזואלי: ${config.visual || config.group}. השתמש בתרשים ${config.diagram || "פשוט וברור"} כדי להראות את המעבר בין החלקים.`,
+      },
+      {
+        title: "הסבר שכבות",
+        text: `הסבר מה נבנה ממה ומה התלמיד צריך להבין: ${config.solution || config.goal}`,
+      },
+      {
+        title: "חיבור לקוד ולקורס",
+        text: `חבר את הרעיון לקורס ולקוד: ${config.course || "הראה איפה המושג חוזר בשיעורים, בתרגול ובשאלות."}`,
+      },
+      {
+        title: "סגירה",
+        text: `סיים במשפט זכירה ובבדיקת הבנה: ${config.check || "מה הבעיה, מה הפתרון, ומה נשבר אם לא מבינים את השכבה."}`,
+      },
+    ];
+
+    return {
+      ...config,
+      duration,
+      style,
+      background,
+      script,
+      notebookChoices: [
+        "פתח מחברת NotebookLM ייעודית לסרטון או השתמש במחברת המוזיאון.",
+        "הוסף למחברת רק את חומר הרקע, הידע המקדים, הסקריפט והפרומפט של הסרטון הזה.",
+        "בחר יצירת Video Overview / וידאו מתוך אזור Studio או האפשרות המקבילה בממשק.",
+        "שפה: עברית.",
+        `אורך מומלץ: ${duration}.`,
+        `סגנון: ${style}.`,
+        "הדגש תמיד: בעיה, פתרון, איך זה נראה בקוד, ומה לזכור למבחן.",
+        "השתמש בפרומפט הייעודי כהנחיית Custom Instructions.",
+      ],
+    };
+  }
+
+  function getMuseumVideoEntries(activeLayerId = "") {
+    const entries = [];
+
+    PROGRAMMING_STACK_LAYER_MUSEUMS.forEach((layer) => {
+      layer.rooms.forEach((room) => {
+        entries.push(makeMuseumVideoEntry({
+          id: `stack-${layer.id}-${room.id}`,
+          kind: "room",
+          area: "מוזיאוני שכבות המחשב",
+          group: layer.title,
+          sourceTitle: room.title,
+          layerId: layer.id,
+          title: room.video.title,
+          goal: `להבין ${room.what} ולהראות איך זה מוביל אל ${room.evolvedTo}`,
+          problem: layer.inventedBecause,
+          solution: layer.solved,
+          visual: room.experience,
+          diagram: compactMuseumPath(room.diagram),
+          course: `לאן זה מתחבר: ${room.evolvedTo}`,
+          check: "איזה חלק בשכבה מסתיר פרטים נמוכים יותר ומה המחיר של ההסתרה?",
+          prerequisite: room.video.prerequisite,
+          prompt: room.video.prompt,
+          style: room.experience,
+          background: [
+            `אזור: ${layer.title}`,
+            `תזה: ${layer.thesis}`,
+            `למה השכבה נוצרה: ${layer.inventedBecause}`,
+            `מה היא פתרה: ${layer.solved}`,
+            `לאן היא התפתחה: ${layer.evolvedTo}`,
+            `מסלול התפתחות: ${compactMuseumPath(layer.pathway)}`,
+            `אולם: ${room.title}`,
+            `מה רואים בו: ${room.what}`,
+            `לאן האולם התפתח: ${room.evolvedTo}`,
+            `תרשים: ${compactMuseumPath(room.diagram)}`,
+            ...museumCategoryLines(room.categories),
+            `חוויה מתאימה: ${room.experience}`,
+          ],
+        }));
+      });
+    });
+
+    MUSEUM_CONCEPT_CONNECTIONS.forEach((card) => {
+      entries.push(makeMuseumVideoEntry({
+        id: `concept-${card.id}`,
+        kind: "concept",
+        area: "מערכת קשרי המושגים",
+        group: card.layer,
+        sourceTitle: card.title,
+        layerId: card.stackLayer,
+        relatedLayers: card.relatedLayers || [],
+        title: card.title,
+        goal: `לחבר את ${card.title} בין השכבות, הקורס והקוד.`,
+        problem: card.breaksWhen,
+        solution: card.solves,
+        visual: `מפת קשר: ${compactMuseumPath(card.builtFrom)} ← ${compactMuseumPath(card.leadsTo)}`,
+        diagram: compactMuseumPath([...(card.builtFrom || []), ...(card.leadsTo || [])]),
+        course: `איפה בפורטל: ${compactMuseumList(card.whereInCourse)}. איפה בקוד: ${compactMuseumList(card.whereInCode)}`,
+        check: card.question,
+        prerequisite: card.video.prerequisite,
+        prompt: card.video.prompt,
+        background: [
+          `מושג: ${card.title}`,
+          `שכבה: ${card.layer}`,
+          `נבנה מ: ${compactMuseumList(card.builtFrom)}`,
+          `מוביל אל: ${compactMuseumList(card.leadsTo)}`,
+          `מה הוא מסתיר: ${card.hides}`,
+          `מה הוא פותר: ${card.solves}`,
+          `נשבר כאשר: ${card.breaksWhen}`,
+          `איפה בקורס: ${compactMuseumList(card.whereInCourse)}`,
+          `איפה בקוד: ${compactMuseumList(card.whereInCode)}`,
+          `שאלת בדיקה: ${card.question}`,
+        ],
+      }));
+    });
+
+    MUSEUM_VIDEO_STUDIO_TRACKS.forEach((track, idx) => {
+      entries.push(makeMuseumVideoEntry({
+        id: `track-${idx + 1}-${slugifyId(track.title)}`,
+        kind: "track",
+        area: "מסלולי וידאו כלליים",
+        group: "Video Studio",
+        sourceTitle: `מסלול ${idx + 1}`,
+        title: track.title,
+        goal: "להציג מסלול מסכם שמחבר כמה שכבות סביב פעולה, מידע, טעות או חוזה.",
+        problem: "תלמידים רואים מושגים נפרדים ולא תמיד מבינים איך הם מתחברים למערכת אחת.",
+        solution: track.prompt,
+        visual: "מסלול מוזיאוני שעובר תחנה אחרי תחנה ומראה מה קורה בכל שכבה.",
+        diagram: "פעולה → שכבה → חוזה → שגיאה אפשרית → בדיקת הבנה",
+        course: "מתאים לפתיחה או סיכום של ביקור מודרך במוזיאון.",
+        check: track.checkQuestion,
+        prerequisite: track.prerequisite,
+        prompt: track.prompt,
+        duration: "4-5 דקות",
+        style: "מסלול מוזיאוני מסכם עם תרשים זרימה ברור",
+        background: [
+          `שם המסלול: ${track.title}`,
+          `ידע מקדים: ${track.prerequisite}`,
+          `מטרת המסלול: לחבר מושגים שנלמדים בנפרד למהלך אחד של מערכת.`,
+          `מה להראות: ${track.prompt}`,
+          `שאלת בדיקה: ${track.checkQuestion}`,
+          "הסרטון צריך להראות שכבות, גבולות, שגיאות וחוזים בלי להוסיף עובדות היסטוריות חדשות.",
+        ],
+      }));
+    });
+
+    FULL_STACK_MUSEUM_HALLS.forEach((hall) => {
+      const domain = FULL_STACK_DOMAIN_EXHIBITIONS[hall.id] || { profession: hall.layer, does: hall.summary, rooms: [] };
+      entries.push(makeMuseumVideoEntry({
+        id: `fullstack-hall-${hall.id}`,
+        kind: "fullstack-hall",
+        area: "מוזיאון Full Stack הראשי",
+        group: hall.layer,
+        sourceTitle: hall.title,
+        title: hall.video.title,
+        goal: `להסביר מה עושים ב-${hall.layer}, למה התחום נוצר ומה הוא פתר במוצר Full-Stack.`,
+        problem: hall.inventedBecause,
+        solution: hall.solved,
+        visual: hall.experience,
+        diagram: compactMuseumPath(hall.artifacts),
+        course: `${domain.profession}: ${domain.does}`,
+        check: "מה האחריות של התחום הזה בשרשרת Full-Stack?",
+        prerequisite: hall.video.prerequisite,
+        prompt: hall.video.prompt,
+        style: hall.experience,
+        background: [
+          `אולם: ${hall.title}`,
+          `שכבה מקצועית: ${hall.layer}`,
+          `תקציר: ${hall.summary}`,
+          `התפתח מ: ${hall.evolvedFrom}`,
+          `התפתח אל: ${hall.evolvedTo}`,
+          `למה הומצא: ${hall.inventedBecause}`,
+          `מה פתר: ${hall.solved}`,
+          `מוצגים: ${compactMuseumList(hall.artifacts)}`,
+          `חוויה: ${hall.experience}`,
+          `תחום מקצועי: ${domain.profession}`,
+          `מה עושים בו: ${domain.does}`,
+        ],
+      }));
+
+      (domain.rooms || []).forEach((room) => {
+        entries.push(makeMuseumVideoEntry({
+          id: `fullstack-room-${hall.id}-${room.id}`,
+          kind: "fullstack-room",
+          area: "תתי-מוזיאונים לכל תחום Full Stack",
+          group: `${hall.layer} · ${domain.profession}`,
+          sourceTitle: room.title,
+          title: room.video.title,
+          goal: `להסביר את ${room.title} בתוך תחום ${domain.profession}: ${room.what}`,
+          problem: hall.inventedBecause,
+          solution: hall.solved,
+          visual: room.experience,
+          diagram: compactMuseumPath(room.diagram),
+          course: `קטגוריות: ${museumCategoryLines(room.categories).join(" | ")}`,
+          check: "איזו אחריות החדר הזה לוקח בתוך מוצר Full-Stack?",
+          prerequisite: room.video.prerequisite,
+          prompt: room.video.prompt,
+          style: room.experience,
+          background: [
+            `אולם אב: ${hall.title}`,
+            `תחום מקצועי: ${domain.profession}`,
+            `מה עושים בתחום: ${domain.does}`,
+            `חדר: ${room.title}`,
+            `מה רואים בו: ${room.what}`,
+            `עיצוב תקופתי: ${FULL_STACK_ERA_LABELS[room.era] || room.era}`,
+            `תרשים: ${compactMuseumPath(room.diagram)}`,
+            ...museumCategoryLines(room.categories),
+            `חוויה: ${room.experience}`,
+            `למה התחום נוצר: ${hall.inventedBecause}`,
+            `מה התחום פתר: ${hall.solved}`,
+          ],
+        }));
+      });
+    });
+
+    if (!activeLayerId) return entries;
+    return entries.filter((entry) => (
+      entry.layerId === activeLayerId ||
+      (entry.relatedLayers || []).includes(activeLayerId) ||
+      entry.kind === "track"
+    ));
+  }
+
+  function renderMuseumVideoOpenButton(videoId, label = "פתח חומר מלא ל-NotebookLM") {
+    return `
+      <button class="museum-video-open-button" type="button" data-museum-video="${esc(videoId)}">
+        ${esc(label)}
+      </button>`;
+  }
+
+  function renderMuseumVideoStudioHub(entries, options = {}) {
+    const id = options.id || "programming-museum-video-studio";
+    const number = options.number || "05";
+    const title = options.title || "מסמך NotebookLM חי לכל סרטוני המוזיאון";
+    const intro = options.intro || "כל סרטון נפתח בחלון מלא עם חומר רקע, ידע מקדים, סקריפט, פרומפט והוראות בחירה ב-NotebookLM.";
+    const grouped = entries.reduce((acc, entry) => {
+      if (!acc.has(entry.area)) acc.set(entry.area, []);
+      acc.get(entry.area).push(entry);
+      return acc;
+    }, new Map());
+
+    return `
+      <section class="museum-section museum-video-studio-hub" id="${esc(id)}">
+        <div class="museum-section-head">
+          <span>${esc(number)}</span>
+          <div>
+            <h3>${esc(title)}</h3>
+            <p>${esc(intro)}</p>
+          </div>
+        </div>
+        <div class="museum-video-studio-summary">
+          <article>
+            <strong>${esc(entries.length)}</strong>
+            <span>סרטונים זמינים</span>
+          </article>
+          <article>
+            <strong>${esc(grouped.size)}</strong>
+            <span>אזורים במוזיאון</span>
+          </article>
+          <article>
+            <strong>7</strong>
+            <span>חלקים בכל חלון</span>
+          </article>
+        </div>
+        <div class="museum-video-area-grid">
+          ${Array.from(grouped.entries()).map(([area, areaEntries]) => `
+            <article class="museum-video-area-card">
+              <div class="museum-video-area-head">
+                <span>${esc(areaEntries.length)}</span>
+                <h4>${esc(area)}</h4>
+              </div>
+              <div class="museum-video-index-list">
+                ${areaEntries.map((entry) => `
+                  <button class="museum-video-index-button" type="button" data-museum-video="${esc(entry.id)}">
+                    <span>${esc(entry.group)}</span>
+                    <strong>${esc(entry.title)}</strong>
+                    <small>${esc(entry.sourceTitle)}</small>
+                  </button>
+                `).join("")}
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      </section>`;
+  }
+
+  function renderMuseumVideoModalShell() {
+    return `
+      <div class="museum-video-modal" id="museum-video-modal" role="dialog" aria-modal="true" aria-labelledby="museum-video-modal-title" hidden>
+        <div class="museum-video-modal-backdrop" data-museum-video-close></div>
+        <article class="museum-video-modal-card" tabindex="-1">
+          <header class="museum-video-modal-head">
+            <div>
+              <span id="museum-video-modal-subtitle">NotebookLM</span>
+              <h3 id="museum-video-modal-title">חומר לסרטון</h3>
+            </div>
+            <button class="museum-video-modal-close" type="button" data-museum-video-close aria-label="סגור חלון סרטון">סגור</button>
+          </header>
+          <div class="museum-video-modal-body" id="museum-video-modal-body"></div>
+        </article>
+      </div>`;
+  }
+
+  function renderMuseumVideoDocument(entry) {
+    return `
+      <div class="museum-video-document">
+        <div class="museum-video-doc-hero">
+          <span>${esc(entry.area)}</span>
+          <h4>${esc(entry.title)}</h4>
+          <p>${esc(entry.goal)}</p>
+        </div>
+        <section>
+          <h5>1. חומר רקע מלא לסרטון</h5>
+          <ul>
+            ${entry.background.map((line) => `<li>${esc(line)}</li>`).join("")}
+          </ul>
+        </section>
+        <section>
+          <h5>2. ידע מקדים להוסיף למחברת</h5>
+          <p>${esc(entry.prerequisite)}</p>
+        </section>
+        <section>
+          <h5>3. סקריפט לסרטון</h5>
+          <ol>
+            ${entry.script.map((scene) => `
+              <li>
+                <strong>${esc(scene.title)}</strong>
+                <p>${esc(scene.text)}</p>
+              </li>
+            `).join("")}
+          </ol>
+        </section>
+        <section>
+          <h5>4. פרומפט ל-NotebookLM</h5>
+          <pre><code>${esc(entry.prompt)}</code></pre>
+        </section>
+        <section>
+          <h5>5. במה לבחור ב-NotebookLM</h5>
+          <ul>
+            ${entry.notebookChoices.map((choice) => `<li>${esc(choice)}</li>`).join("")}
+          </ul>
+        </section>
+        <section>
+          <h5>6. בדיקת איכות לפני יצירת הסרטון</h5>
+          <ul>
+            <li>הסרטון נשען רק על חומר המוזיאון ולא מוסיף עובדות או תאריכים חדשים.</li>
+            <li>יש בעיה ברורה, פתרון ברור, חיבור לקוד ושאלת סיכום.</li>
+            <li>הקריינות בעברית, קצרה, ויזואלית ומתאימה לתלמידי Full-Stack.</li>
+          </ul>
+        </section>
+      </div>`;
+  }
+
+  function bindMuseumVideoStudio(container, entries) {
+    const modal = container.querySelector("#museum-video-modal");
+    const body = container.querySelector("#museum-video-modal-body");
+    const title = container.querySelector("#museum-video-modal-title");
+    const subtitle = container.querySelector("#museum-video-modal-subtitle");
+    const card = container.querySelector(".museum-video-modal-card");
+    if (!modal || !body || !title || !subtitle || !card) return;
+
+    const entryById = new Map(entries.map((entry) => [entry.id, entry]));
+    let returnFocus = null;
+
+    const closeModal = () => {
+      modal.hidden = true;
+      document.body.classList.remove("museum-video-modal-open");
+      if (returnFocus && typeof returnFocus.focus === "function") {
+        try { returnFocus.focus({ preventScroll: true }); } catch (_) {}
+      }
+      returnFocus = null;
+    };
+
+    const openModal = (videoId) => {
+      const entry = entryById.get(videoId);
+      if (!entry) return;
+      returnFocus = document.activeElement;
+      title.textContent = entry.title;
+      subtitle.textContent = `${entry.area} · ${entry.group}`;
+      body.innerHTML = renderMuseumVideoDocument(entry);
+      modal.hidden = false;
+      document.body.classList.add("museum-video-modal-open");
+      card.focus({ preventScroll: true });
+    };
+
+    container.querySelectorAll("[data-museum-video]").forEach((btn) => {
+      btn.addEventListener("click", () => openModal(btn.dataset.museumVideo));
+    });
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal || event.target.closest("[data-museum-video-close]")) closeModal();
+    });
+
+    modal.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeModal();
+    });
+  }
+
   function getMuseumStackLayerId() {
     try {
       return new URLSearchParams(window.location.search).get("stackLayer") || "";
@@ -10650,6 +11068,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <span>NotebookLM</span>
               <p><strong>ידע מקדים:</strong> ${esc(card.video.prerequisite)}</p>
               <p><strong>Prompt:</strong> ${esc(card.video.prompt)}</p>
+              ${renderMuseumVideoOpenButton(`concept-${card.id}`, "פתח חלון סרטון מלא")}
             </div>
           </article>
         `).join("")}
@@ -10806,12 +11225,13 @@ document.addEventListener("DOMContentLoaded", () => {
               <h4>NotebookLM Video Studio</h4>
             </div>
             <div class="museum-system-video-grid">
-              ${MUSEUM_VIDEO_STUDIO_TRACKS.map((track) => `
+              ${MUSEUM_VIDEO_STUDIO_TRACKS.map((track, trackIdx) => `
                 <div>
                   <strong>${esc(track.title)}</strong>
                   <p><span>ידע מקדים:</span> ${esc(track.prerequisite)}</p>
                   <p><span>Prompt:</span> ${esc(track.prompt)}</p>
                   <small>${esc(track.checkQuestion)}</small>
+                  ${renderMuseumVideoOpenButton(`track-${trackIdx + 1}-${slugifyId(track.title)}`, "פתח חלון מסלול מלא")}
                 </div>
               `).join("")}
             </div>
@@ -10971,6 +11391,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       <dd>${esc(room.video.prompt)}</dd>
                     </div>
                   </dl>
+                  ${renderMuseumVideoOpenButton(`stack-${layer.id}-${room.id}`)}
                 </div>
               </article>
             `).join("")}
@@ -10979,9 +11400,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ${renderMuseumConnectionHub(layer)}
 
+        ${renderMuseumVideoStudioHub(getMuseumVideoEntries(layer.id), {
+          id: "stack-layer-video-studio",
+          number: "05",
+          title: `מסמך NotebookLM חי של ${layer.title}`,
+          intro: "כל הסרטונים הרלוונטיים לשכבה הזו נפתחים בחלון מלא עם חומר רקע, סקריפט, פרומפט והוראות בחירה.",
+        })}
+
         <section class="museum-section stack-layer-section">
           <div class="museum-section-head">
-            <span>05</span>
+            <span>06</span>
             <div>
               <h3>מעבר בין מוזיאוני הבלוקים</h3>
               <p>אפשר לעבור לכל בלוק אחר בלי לחזור לתפריטי הפורטל.</p>
@@ -10991,6 +11419,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ${siblingLinks}
           </nav>
         </section>
+        ${renderMuseumVideoModalShell()}
       </section>`;
   }
 
@@ -11138,6 +11567,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const stackLayerId = getMuseumStackLayerId();
     const stackLayerMuseum = PROGRAMMING_STACK_LAYER_MUSEUMS.find((layer) => layer.id === stackLayerId);
+    const museumVideoEntries = getMuseumVideoEntries();
     if (stackLayerMuseum) {
       container.innerHTML = renderStackLayerMuseum(stackLayerMuseum);
       container.querySelectorAll("[data-stack-layer-room]").forEach((btn) => {
@@ -11145,6 +11575,7 @@ document.addEventListener("DOMContentLoaded", () => {
           scrollBasicsSection(`stack-layer-room-${btn.dataset.stackLayerRoom}`);
         });
       });
+      bindMuseumVideoStudio(container, museumVideoEntries);
       return;
     }
 
@@ -11204,7 +11635,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const museumStats = [
       { value: PROGRAMMING_LANGUAGE_MUSEUM_HALLS.length + FULL_STACK_MUSEUM_HALLS.length, label: "אולמות" },
       { value: exhibitCount + fullStackArtifactCount, label: "מוצגים" },
-      { value: fullStackVideoCount, label: "סרטוני Full-Stack" },
+      { value: museumVideoEntries.length, label: "סרטוני NotebookLM" },
       { value: MUSEUM_CONCEPT_CONNECTIONS.length, label: "כרטיסי קשר" },
       { value: PROGRAMMING_LANGUAGE_LINEAGES.length, label: "שושלות" },
     ];
@@ -11310,9 +11741,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       ${renderMuseumConnectionHub()}
 
+      ${renderMuseumVideoStudioHub(museumVideoEntries, {
+        id: "programming-museum-video-studio",
+        number: "05",
+        title: "מסמך NotebookLM חי לכל סרטוני המוזיאון",
+        intro: "כל 63 הסרטונים נפתחים בחלון מלא בתוך דף המוזיאון: חומר רקע, ידע מקדים, סקריפט, פרומפט והוראות בחירה ב-NotebookLM.",
+      })}
+
       <section class="museum-section fullstack-museum-wing" id="fullstack-museum-wing">
         <div class="museum-section-head">
-          <span>05</span>
+          <span>06</span>
           <div>
             <h3>מוזיאון Full-Stack: ממסך חי למערכת שעובדת באמת</h3>
             <p>אגף ייחודי שמראה למה כל שכבה נולדה, מה היא פתרה, ולאן היא התפתחה בתוך מוצר אמיתי.</p>
@@ -11410,6 +11848,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <dd>${esc(room.video.prompt)}</dd>
                           </div>
                         </dl>
+                        ${renderMuseumVideoOpenButton(`fullstack-room-${hall.id}-${room.id}`)}
                       </div>
                     </article>
                   `).join("")}
@@ -11444,6 +11883,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <dd>${esc(hall.video.prompt)}</dd>
                   </div>
                 </dl>
+                ${renderMuseumVideoOpenButton(`fullstack-hall-${hall.id}`)}
               </div>
             </article>
           `;
@@ -11453,7 +11893,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <section class="museum-section" id="programming-museum-halls">
         <div class="museum-section-head">
-          <span>06</span>
+          <span>07</span>
           <div>
             <h3>אולמות המוזיאון</h3>
             <p>כל אולם הוא תחנת למידה: פריצת דרך, אבני בניין, והחיבור לשאלות שהתלמיד יפגוש בפורטל.</p>
@@ -11525,7 +11965,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <section class="museum-section" id="programming-museum-value-map">
         <div class="museum-section-head">
-          <span>07</span>
+          <span>08</span>
           <div>
             <h3>מפת ערך: מה כל משפחת שפות קונה ומה היא עולה</h3>
             <p>המפה מחברת אולמות לפשרה המרכזית שלהם: שליטה, קריאות, בטיחות, ניידות או מהירות פיתוח.</p>
@@ -11549,7 +11989,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <section class="museum-section" id="programming-museum-lineages">
         <div class="museum-section-head">
-          <span>08</span>
+          <span>09</span>
           <div>
             <h3>שושלות רעיונות</h3>
             <p>אותו רעיון עובר בין שפות, מחליף שם, ומשנה פשרה. זה החיבור שמונע לימוד מנותק של טכנולוגיות.</p>
@@ -11569,7 +12009,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <section class="museum-section" id="programming-museum-quests">
         <div class="museum-section-head">
-          <span>09</span>
+          <span>10</span>
           <div>
             <h3>משימות ביקור לתלמיד</h3>
             <p>החוויה לא נועדה רק לצפייה. היא מכוונת את התלמיד לחבר היסטוריה, יעילות וקוד בפועל.</p>
@@ -11586,7 +12026,9 @@ document.addEventListener("DOMContentLoaded", () => {
             </article>
           `).join("")}
         </div>
-      </section>`;
+      </section>
+
+      ${renderMuseumVideoModalShell()}`;
 
     container.querySelectorAll("[data-programming-museum-target]").forEach((btn) => {
       btn.addEventListener("click", () => {
