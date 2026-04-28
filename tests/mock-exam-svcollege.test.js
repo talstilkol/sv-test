@@ -28,6 +28,8 @@ describe("SVCollege mock exam integration", () => {
     expect(app).toContain("/^lesson_nextjs::/i.test(k)");
     expect(app).toContain("/^lesson_nestjs::/i.test(k)");
     expect(app).toContain("/^lesson_devops_deploy::/i.test(k)");
+    expect(app).toContain("/^lesson_ai_engineering::/i.test(k)");
+    expect(app).toContain("lesson_design_systems::");
   });
 
   it("loads the seeded bank before composing an exam", () => {

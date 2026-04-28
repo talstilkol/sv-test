@@ -2,7 +2,7 @@
 // Caches the app shell + primary lessons for offline use.
 // Cache strategy: cache-first for static assets, network-first for HTML.
 
-const CACHE_VERSION = "lumen-v2.4.20";
+const CACHE_VERSION = "lumen-v2.4.25";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 // Resources that MUST be available offline (the App Shell + core data)
@@ -38,6 +38,8 @@ const SHELL_ASSETS = [
   "/data/svcollege_questions_nextjs.js",
   "/data/svcollege_questions_nestjs.js",
   "/data/svcollege_questions_devops.js",
+  "/data/svcollege_questions_ai_engineering.js",
+  "/data/svcollege_questions_design_systems.js",
   "/data/concept_enrichment.js",
   "/data/extended_explanations.js",
   "/data/questions_trace.js",
@@ -46,13 +48,20 @@ const SHELL_ASSETS = [
   "/data/svcollege_traces_nextjs.js",
   "/data/svcollege_traces_nestjs.js",
   "/data/svcollege_traces_devops.js",
+  "/data/svcollege_traces_ai_engineering.js",
+  "/data/svcollege_traces_design_systems.js",
+  "/data/svcollege_traces_bridge.js",
   "/data/questions_bug.js",
+  "/data/svcollege_questions_bridge.js",
   "/data/questions_build.js",
   "/data/svcollege_builds_sql_orm.js",
   "/data/svcollege_builds_auth.js",
   "/data/svcollege_builds_nextjs.js",
   "/data/svcollege_builds_nestjs.js",
   "/data/svcollege_builds_devops.js",
+  "/data/svcollege_builds_ai_engineering.js",
+  "/data/svcollege_builds_design_systems.js",
+  "/data/svcollege_builds_bridge.js",
   "/data/lesson_quiz_keys.js",
   "/data/animations.js",
   "/data/what_if.js",
@@ -66,7 +75,9 @@ const SHELL_ASSETS = [
   "/data/grandma_knowledge.js",
   "/data/grandma_visuals.js",
   "/data/code_blocks.js",
+  "/data/svcollege_code_blocks.js",
   "/data/glossary.js",
+  "/data/concise_definitions.js",
   "/data/anti_patterns.js",
   "/data/mnemonics.js",
   "/data/flashcards.js",
@@ -77,6 +88,8 @@ const SHELL_ASSETS = [
   "/data/svcollege_prerequisites_nextjs.js",
   "/data/svcollege_prerequisites_nestjs.js",
   "/data/svcollege_prerequisites_devops.js",
+  "/data/svcollege_prerequisites_ai_engineering.js",
+  "/data/svcollege_prerequisites_design_systems.js",
   // Lessons 11-27 + new
   "/data/lesson11.js",
   "/data/lesson12.js",
@@ -94,6 +107,8 @@ const SHELL_ASSETS = [
   "/data/lesson_nextjs.js",
   "/data/lesson_nestjs.js",
   "/data/lesson_devops_deploy.js",
+  "/data/lesson_ai_engineering.js",
+  "/data/lesson_design_systems.js",
   "/data/lesson21.js",
   "/data/lesson22.js",
   "/data/lesson23.js",

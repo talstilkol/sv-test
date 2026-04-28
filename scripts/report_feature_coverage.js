@@ -298,7 +298,7 @@ function buildCoverage() {
     metric("glossary", "Hebrew/English Glossary", countGlossaryEntries(), 200, "entries", [
       "data/glossary.js",
     ]),
-    metric("capstones", "Capstone Project Track", countCompleteCapstones(capstones), 5, "projects", [
+    metric("capstones", "Capstone Project Track", countCompleteCapstones(capstones), 6, "projects", [
       "data/capstones.js",
     ], {
       details: {

@@ -8,6 +8,15 @@ const LESSON_FILES = [
   ["lesson_17", "data/lesson17.js", "LESSON_17"],
   ["lesson_18", "data/lesson18.js", "LESSON_18"],
   ["lesson_20", "data/lesson20.js", "LESSON_20"],
+  ["lesson_html_css_foundations", "data/lesson_html_css_foundations.js", "LESSON_HTML_CSS_FOUNDATIONS"],
+  ["lesson_tooling_git", "data/lesson_tooling_git.js", "LESSON_TOOLING_GIT"],
+  ["lesson_sql_orm", "data/lesson_sql_orm.js", "LESSON_SQL_ORM"],
+  ["lesson_auth_security", "data/lesson_auth_security.js", "LESSON_AUTH_SECURITY"],
+  ["lesson_nextjs", "data/lesson_nextjs.js", "LESSON_NEXTJS"],
+  ["lesson_nestjs", "data/lesson_nestjs.js", "LESSON_NESTJS"],
+  ["lesson_devops_deploy", "data/lesson_devops_deploy.js", "LESSON_DEVOPS_DEPLOY"],
+  ["lesson_ai_engineering", "data/lesson_ai_engineering.js", "LESSON_AI_ENGINEERING"],
+  ["lesson_design_systems", "data/lesson_design_systems.js", "LESSON_DESIGN_SYSTEMS"],
   ["lesson_21", "data/lesson21.js", "LESSON_21"],
   ["lesson_22", "data/lesson22.js", "LESSON_22"],
   ["lesson_23", "data/lesson23.js", "LESSON_23"],
@@ -51,13 +60,14 @@ function loadLessonMap() {
 describe("capstone project track", () => {
   const capstones = loadCapstones();
 
-  it("ships the five planned capstone briefs", () => {
+  it("ships the planned capstone briefs", () => {
     expect(capstones.map((item) => item.id)).toEqual([
       "capstone_task_manager",
       "capstone_movie_app",
       "capstone_budget_manager",
       "capstone_auth_crud",
       "capstone_dashboard",
+      "capstone_svcollege_ai_saas",
     ]);
   });
 

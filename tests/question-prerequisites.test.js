@@ -1,8 +1,13 @@
 import {
+  analyzeQuestionPrerequisiteAid,
   choosePrerequisiteRewind,
+  hasComplexConcept,
   inferGlossaryTerms,
   inferQuestionConceptKeys,
+  isHardQuestion,
   questionTextBlob,
+  resolveSideExplanationSource,
+  stableList,
   uniqueStable,
 } from "../src/core/question-prerequisites.js";
 
@@ -88,7 +93,55 @@ describe("question prerequisite inference", () => {
 
   it("keeps stable unique ordering", () => {
     expect(uniqueStable(["a", "b", "a", "c"])).toEqual(["a", "b", "c"]);
+    expect(stableList([" a ", "", "a", "b"])).toEqual(["a", "b"]);
     expect(questionTextBlob({ question: "A", options: ["B"] })).toContain("A B");
+  });
+
+  it("identifies hard and complex questions that require prerequisite aid", () => {
+    const question = {
+      conceptKey: "lesson_ai_engineering::RAG",
+      level: 5,
+      requiredConcepts: ["lesson_ai_engineering::vector store"],
+      requiredTerms: ["RAG", "retrieval"],
+      sideExplanation: "RAG combines retrieval with generation so the answer can cite relevant context.",
+    };
+
+    expect(isHardQuestion(question)).toBe(true);
+    expect(hasComplexConcept(question)).toBe(true);
+    expect(resolveSideExplanationSource(question)).toBe("question.sideExplanation");
+    expect(analyzeQuestionPrerequisiteAid({
+      question,
+      glossary: {
+        RAG: { he: "שליפה והפקה" },
+        retrieval: { he: "שליפה" },
+      },
+    })).toMatchObject({
+      requiresAid: true,
+      hardQuestion: true,
+      complexConcept: true,
+      resolvedRequiredConcepts: ["lesson_ai_engineering::vector store"],
+      requiredTerms: ["RAG", "retrieval"],
+      sideExplanationSource: "question.sideExplanation",
+      issues: [],
+    });
+  });
+
+  it("reports missing prerequisite aid contract gaps without inventing data", () => {
+    const analysis = analyzeQuestionPrerequisiteAid({
+      question: {
+        conceptKey: "lesson_auth_security::JWT",
+        level: 4,
+        question: "איפה נכון לאמת JWT?",
+      },
+      conceptPrerequisites: {},
+      glossary: {},
+    });
+
+    expect(analysis.issues.map((issue) => issue.code)).toEqual([
+      "missingPrerequisites",
+      "missingGlossaryTerms",
+      "hardQuestionWithoutAid",
+    ]);
   });
 
   it("does not treat inherited Object properties as alias lists", () => {

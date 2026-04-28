@@ -19,6 +19,8 @@ const LESSON_FILES = [
   ["lesson_nextjs", "data/lesson_nextjs.js", "LESSON_NEXTJS"],
   ["lesson_nestjs", "data/lesson_nestjs.js", "LESSON_NESTJS"],
   ["lesson_devops_deploy", "data/lesson_devops_deploy.js", "LESSON_DEVOPS_DEPLOY"],
+  ["lesson_ai_engineering", "data/lesson_ai_engineering.js", "LESSON_AI_ENGINEERING"],
+  ["lesson_design_systems", "data/lesson_design_systems.js", "LESSON_DESIGN_SYSTEMS"],
   ["lesson_21", "data/lesson21.js", "LESSON_21"],
   ["lesson_22", "data/lesson22.js", "LESSON_22"],
   ["lesson_23", "data/lesson23.js", "LESSON_23"],

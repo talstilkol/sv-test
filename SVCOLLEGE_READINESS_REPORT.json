@@ -4,22 +4,19 @@
   "source": "data/course_blueprints.js#svcollege_fullstack_ai",
   "summary": {
     "modules": 15,
-    "covered": 13,
-    "partial": 1,
-    "gap": 1,
-    "green": 13,
-    "amber": 1,
-    "red": 1,
-    "averageReadiness": 92.7,
-    "finishLineReady": false
+    "covered": 15,
+    "partial": 0,
+    "gap": 0,
+    "green": 15,
+    "amber": 0,
+    "red": 0,
+    "averageReadiness": 100,
+    "finishLineReady": true
   },
   "validation": {
     "failures": []
   },
-  "releaseBlockers": [
-    "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI (partial, 90%)",
-    "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning (gap, 0%)"
-  ],
+  "releaseBlockers": [],
   "modules": [
     {
       "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
@@ -63,10 +60,10 @@
         "mc": 50,
         "fill": 27,
         "trace": 7,
-        "miniBuild": 1,
+        "miniBuild": 2,
         "bugHunt": 1,
         "pairMatchPairs": 0,
-        "capstone": 1,
+        "capstone": 2,
         "generatedFlashcards": 7
       },
       "nextAction": "Maintain practice, mock-exam coverage and tab health."
@@ -107,7 +104,7 @@
         "mc": 42,
         "fill": 21,
         "trace": 5,
-        "miniBuild": 0,
+        "miniBuild": 1,
         "bugHunt": 1,
         "pairMatchPairs": 0,
         "capstone": 1,
@@ -152,7 +149,7 @@
         "fill": 97,
         "trace": 15,
         "miniBuild": 4,
-        "bugHunt": 0,
+        "bugHunt": 1,
         "pairMatchPairs": 24,
         "capstone": 1,
         "generatedFlashcards": 3
@@ -216,9 +213,9 @@
         "fill": 77,
         "trace": 13,
         "miniBuild": 5,
-        "bugHunt": 0,
+        "bugHunt": 1,
         "pairMatchPairs": 23,
-        "capstone": 2,
+        "capstone": 3,
         "generatedFlashcards": 12
       },
       "nextAction": "Maintain practice, mock-exam coverage and tab health."
@@ -262,7 +259,7 @@
         "fill": 85,
         "trace": 15,
         "miniBuild": 3,
-        "bugHunt": 0,
+        "bugHunt": 1,
         "pairMatchPairs": 32,
         "capstone": 1,
         "generatedFlashcards": 4
@@ -338,7 +335,7 @@
         "miniBuild": 3,
         "bugHunt": 2,
         "pairMatchPairs": 8,
-        "capstone": 1,
+        "capstone": 2,
         "generatedFlashcards": 19
       },
       "nextAction": "Maintain practice, mock-exam coverage and tab health."
@@ -410,7 +407,7 @@
         "miniBuild": 3,
         "bugHunt": 3,
         "pairMatchPairs": 0,
-        "capstone": 0,
+        "capstone": 1,
         "generatedFlashcards": 19
       },
       "nextAction": "Maintain practice, mock-exam coverage and tab health."
@@ -459,7 +456,7 @@
         "mc": 276,
         "fill": 123,
         "trace": 25,
-        "miniBuild": 13,
+        "miniBuild": 14,
         "bugHunt": 11,
         "pairMatchPairs": 23,
         "capstone": 3,
@@ -503,53 +500,79 @@
         "mc": 150,
         "fill": 55,
         "trace": 10,
-        "miniBuild": 0,
+        "miniBuild": 1,
         "bugHunt": 2,
         "pairMatchPairs": 8,
-        "capstone": 1,
+        "capstone": 2,
         "generatedFlashcards": 4
       },
       "nextAction": "Maintain practice, mock-exam coverage and tab health."
     },
     {
       "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
-      "status": "partial",
-      "readiness": 90,
-      "level": "amber",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
       "lessonIds": [
         "lesson_25",
-        "react_blueprint"
+        "react_blueprint",
+        "lesson_design_systems"
       ],
       "existingLessons": [
         "lesson_25",
-        "react_blueprint"
+        "react_blueprint",
+        "lesson_design_systems"
       ],
       "conceptKeys": [
         "lesson_25::Tailwind CSS",
-        "react_blueprint::Component Architecture"
+        "react_blueprint::Component Architecture",
+        "lesson_design_systems::shadcn/UI",
+        "lesson_design_systems::Radix primitives",
+        "lesson_design_systems::accessible primitive",
+        "lesson_design_systems::design tokens",
+        "lesson_design_systems::component variants",
+        "lesson_design_systems::cn helper",
+        "lesson_design_systems::cva",
+        "lesson_design_systems::asChild slot",
+        "lesson_design_systems::form field composition",
+        "lesson_design_systems::theme tokens",
+        "lesson_design_systems::component registry",
+        "lesson_design_systems::design system testing"
       ],
       "existingConcepts": [
         "lesson_25::Tailwind CSS",
-        "react_blueprint::Component Architecture"
+        "react_blueprint::Component Architecture",
+        "lesson_design_systems::shadcn/UI",
+        "lesson_design_systems::Radix primitives",
+        "lesson_design_systems::accessible primitive",
+        "lesson_design_systems::design tokens",
+        "lesson_design_systems::component variants",
+        "lesson_design_systems::cn helper",
+        "lesson_design_systems::cva",
+        "lesson_design_systems::asChild slot",
+        "lesson_design_systems::form field composition",
+        "lesson_design_systems::theme tokens",
+        "lesson_design_systems::component registry",
+        "lesson_design_systems::design system testing"
       ],
       "dimensions": {
-        "declaredStatus": 50,
+        "declaredStatus": 100,
         "lessonCoverage": 100,
         "conceptCoverage": 100,
         "questionCoverage": 100,
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 72,
-        "fill": 33,
-        "trace": 5,
-        "miniBuild": 0,
-        "bugHunt": 1,
+        "mc": 90,
+        "fill": 41,
+        "trace": 7,
+        "miniBuild": 3,
+        "bugHunt": 3,
         "pairMatchPairs": 0,
-        "capstone": 2,
-        "generatedFlashcards": 2
+        "capstone": 3,
+        "generatedFlashcards": 14
       },
-      "nextAction": "להוסיף shadcn/UI ו-design system guided build."
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
     },
     {
       "title": "פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO",
@@ -616,7 +639,7 @@
         "miniBuild": 3,
         "bugHunt": 3,
         "pairMatchPairs": 0,
-        "capstone": 0,
+        "capstone": 1,
         "generatedFlashcards": 18
       },
       "nextAction": "Maintain practice, mock-exam coverage and tab health."
@@ -688,7 +711,7 @@
         "miniBuild": 3,
         "bugHunt": 3,
         "pairMatchPairs": 0,
-        "capstone": 1,
+        "capstone": 2,
         "generatedFlashcards": 18
       },
       "nextAction": "Maintain practice, mock-exam coverage and tab health."
@@ -754,7 +777,7 @@
         "miniBuild": 3,
         "bugHunt": 3,
         "pairMatchPairs": 0,
-        "capstone": 0,
+        "capstone": 1,
         "generatedFlashcards": 16
       },
       "nextAction": "Maintain practice, mock-exam coverage and tab health."
@@ -792,9 +815,9 @@
       "counts": {
         "mc": 36,
         "fill": 17,
-        "trace": 0,
-        "miniBuild": 0,
-        "bugHunt": 0,
+        "trace": 1,
+        "miniBuild": 1,
+        "bugHunt": 1,
         "pairMatchPairs": 0,
         "capstone": 1,
         "generatedFlashcards": 4
@@ -803,31 +826,75 @@
     },
     {
       "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
-      "status": "gap",
-      "readiness": 0,
-      "level": "red",
-      "lessonIds": [],
-      "existingLessons": [],
-      "conceptKeys": [],
-      "existingConcepts": [],
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_ai_engineering"
+      ],
+      "existingLessons": [
+        "lesson_ai_engineering"
+      ],
+      "conceptKeys": [
+        "lesson_ai_engineering::OpenAI API",
+        "lesson_ai_engineering::Vercel AI SDK",
+        "lesson_ai_engineering::LangChain",
+        "lesson_ai_engineering::model selection",
+        "lesson_ai_engineering::prompt messages",
+        "lesson_ai_engineering::structured output",
+        "lesson_ai_engineering::streaming response",
+        "lesson_ai_engineering::token budget",
+        "lesson_ai_engineering::embeddings",
+        "lesson_ai_engineering::vector store",
+        "lesson_ai_engineering::RAG",
+        "lesson_ai_engineering::chunking",
+        "lesson_ai_engineering::retrieval ranking",
+        "lesson_ai_engineering::tool calling",
+        "lesson_ai_engineering::agent loop",
+        "lesson_ai_engineering::guardrails",
+        "lesson_ai_engineering::hallucination check",
+        "lesson_ai_engineering::evaluation",
+        "lesson_ai_engineering::fine-tuning boundary"
+      ],
+      "existingConcepts": [
+        "lesson_ai_engineering::OpenAI API",
+        "lesson_ai_engineering::Vercel AI SDK",
+        "lesson_ai_engineering::LangChain",
+        "lesson_ai_engineering::model selection",
+        "lesson_ai_engineering::prompt messages",
+        "lesson_ai_engineering::structured output",
+        "lesson_ai_engineering::streaming response",
+        "lesson_ai_engineering::token budget",
+        "lesson_ai_engineering::embeddings",
+        "lesson_ai_engineering::vector store",
+        "lesson_ai_engineering::RAG",
+        "lesson_ai_engineering::chunking",
+        "lesson_ai_engineering::retrieval ranking",
+        "lesson_ai_engineering::tool calling",
+        "lesson_ai_engineering::agent loop",
+        "lesson_ai_engineering::guardrails",
+        "lesson_ai_engineering::hallucination check",
+        "lesson_ai_engineering::evaluation",
+        "lesson_ai_engineering::fine-tuning boundary"
+      ],
       "dimensions": {
-        "declaredStatus": 0,
-        "lessonCoverage": 0,
-        "conceptCoverage": 0,
-        "questionCoverage": 0,
-        "activityCoverage": 0
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
       },
       "counts": {
-        "mc": 0,
-        "fill": 0,
-        "trace": 0,
-        "miniBuild": 0,
-        "bugHunt": 0,
+        "mc": 28,
+        "fill": 10,
+        "trace": 3,
+        "miniBuild": 3,
+        "bugHunt": 3,
         "pairMatchPairs": 0,
-        "capstone": 0,
-        "generatedFlashcards": 0
+        "capstone": 1,
+        "generatedFlashcards": 19
       },
-      "nextAction": "להוסיף AI Engineering track: OpenAI/Vercel AI SDK, embeddings, RAG, tool calling, agents וגבולות fine-tuning."
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
     }
   ]
 }

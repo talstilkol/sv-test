@@ -1,0 +1,1839 @@
+{
+  "reportVersion": "svcollege-tab-matrix-v1",
+  "date": "2026-04-28",
+  "target": "SVCollege AI & Full Stack only",
+  "strictTabs": [
+    {
+      "id": "lessons",
+      "label": "שיעורים"
+    },
+    {
+      "id": "rightTree",
+      "label": "עץ צד"
+    },
+    {
+      "id": "knowledgeMap",
+      "label": "מפת ידע"
+    },
+    {
+      "id": "gapMatrix",
+      "label": "פערים"
+    },
+    {
+      "id": "studyMode",
+      "label": "לימוד מותאם"
+    },
+    {
+      "id": "trainer",
+      "label": "מאמן"
+    },
+    {
+      "id": "flashcards",
+      "label": "כרטיסיות"
+    },
+    {
+      "id": "mockExam",
+      "label": "מבחן"
+    },
+    {
+      "id": "codeTrace",
+      "label": "Code Trace"
+    },
+    {
+      "id": "bugHunt",
+      "label": "Bug Hunt"
+    },
+    {
+      "id": "miniBuild",
+      "label": "Mini Build"
+    },
+    {
+      "id": "codeBlocks",
+      "label": "בלוקי קוד"
+    },
+    {
+      "id": "capstones",
+      "label": "פרויקטים"
+    },
+    {
+      "id": "prerequisites",
+      "label": "דרישות קדם"
+    },
+    {
+      "id": "blueprints",
+      "label": "יישור SVCollege"
+    }
+  ],
+  "summary": {
+    "modules": 15,
+    "strictTabs": 15,
+    "strictCells": 225,
+    "passedCells": 225,
+    "strictCoverage": 100,
+    "strictGaps": 0,
+    "supportTabs": 7,
+    "supportPassed": 7,
+    "supportGaps": 0,
+    "ready": true
+  },
+  "strictGaps": [],
+  "supportGaps": [],
+  "supportTabs": [
+    {
+      "id": "guide",
+      "label": "מדריך מקוצר",
+      "passed": true,
+      "marker": "function setGuideContextTree"
+    },
+    {
+      "id": "grandma",
+      "label": "ידע מורחב",
+      "passed": true,
+      "marker": "function setGrandmaContextTree"
+    },
+    {
+      "id": "programmingBasics",
+      "label": "אבני בסיס",
+      "passed": true,
+      "marker": "function setProgrammingBasicsContextTree"
+    },
+    {
+      "id": "programmingPrinciples",
+      "label": "עקרונות יסוד",
+      "passed": true,
+      "marker": "function setProgrammingPrinciplesContextTree"
+    },
+    {
+      "id": "programmingMuseum",
+      "label": "מוזיאון",
+      "passed": true,
+      "marker": "function setProgrammingMuseumContextTree"
+    },
+    {
+      "id": "learningEvidence",
+      "label": "ראיות למידה",
+      "passed": true,
+      "marker": "function setLearningEvidenceContextTree"
+    },
+    {
+      "id": "comparator",
+      "label": "השוואות",
+      "passed": true,
+      "marker": "function setComparatorContextTree"
+    }
+  ],
+  "modules": [
+    {
+      "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_html_css_foundations",
+        "lesson_25"
+      ],
+      "counts": {
+        "lessons": 2,
+        "concepts": 7,
+        "mc": 50,
+        "fill": 27,
+        "trace": 7,
+        "bug": 1,
+        "build": 2,
+        "codeBlock": 2,
+        "capstone": 2,
+        "prereq": 7
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 77
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 77
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 7
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 2
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 2
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 2
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 7
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "עיצוב רספונסיבי ו-CSS מתקדם",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_25"
+      ],
+      "counts": {
+        "lessons": 1,
+        "concepts": 5,
+        "mc": 42,
+        "fill": 21,
+        "trace": 5,
+        "bug": 1,
+        "build": 1,
+        "codeBlock": 1,
+        "capstone": 1,
+        "prereq": 5
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 63
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 63
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 5
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 5
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_11",
+        "lesson_12",
+        "lesson_13"
+      ],
+      "counts": {
+        "lessons": 3,
+        "concepts": 3,
+        "mc": 216,
+        "fill": 97,
+        "trace": 15,
+        "bug": 1,
+        "build": 4,
+        "codeBlock": 8,
+        "capstone": 1,
+        "prereq": 3
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 313
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 313
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 15
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 4
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 8
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_tooling_git",
+        "lesson_11",
+        "lesson_15",
+        "react_blueprint"
+      ],
+      "counts": {
+        "lessons": 4,
+        "concepts": 12,
+        "mc": 177,
+        "fill": 77,
+        "trace": 13,
+        "bug": 1,
+        "build": 5,
+        "codeBlock": 14,
+        "capstone": 3,
+        "prereq": 12
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "4/4"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "4/4"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "4/4"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 254
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "4/4"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 254
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 13
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 5
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 14
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 12
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_16",
+        "lesson_17",
+        "lesson_18"
+      ],
+      "counts": {
+        "lessons": 3,
+        "concepts": 4,
+        "mc": 231,
+        "fill": 85,
+        "trace": 15,
+        "bug": 1,
+        "build": 3,
+        "codeBlock": 1,
+        "capstone": 1,
+        "prereq": 4
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 316
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 316
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 15
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 4
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_20",
+        "lesson_sql_orm"
+      ],
+      "counts": {
+        "lessons": 2,
+        "concepts": 19,
+        "mc": 108,
+        "fill": 41,
+        "trace": 8,
+        "bug": 2,
+        "build": 3,
+        "codeBlock": 2,
+        "capstone": 2,
+        "prereq": 19
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 149
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 149
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 8
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 2
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 2
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 2
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 19
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_auth_security"
+      ],
+      "counts": {
+        "lessons": 1,
+        "concepts": 19,
+        "mc": 28,
+        "fill": 10,
+        "trace": 3,
+        "bug": 3,
+        "build": 3,
+        "codeBlock": 1,
+        "capstone": 1,
+        "prereq": 19
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 38
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 38
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 19
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "React ופיתוח Frontend מתקדם",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_21",
+        "lesson_22",
+        "lesson_23",
+        "lesson_24",
+        "lesson_25"
+      ],
+      "counts": {
+        "lessons": 5,
+        "concepts": 5,
+        "mc": 276,
+        "fill": 123,
+        "trace": 25,
+        "bug": 11,
+        "build": 14,
+        "codeBlock": 4,
+        "capstone": 3,
+        "prereq": 5
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "5/5"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "5/5"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "5/5"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 399
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "5/5"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 399
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 25
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 11
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 14
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 4
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 5
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "TypeScript ופטרנים מתקדמים ב-React",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_26",
+        "lesson_27"
+      ],
+      "counts": {
+        "lessons": 2,
+        "concepts": 4,
+        "mc": 150,
+        "fill": 55,
+        "trace": 10,
+        "bug": 2,
+        "build": 1,
+        "codeBlock": 1,
+        "capstone": 2,
+        "prereq": 4
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 205
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 205
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 10
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 2
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 2
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 4
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_25",
+        "react_blueprint",
+        "lesson_design_systems"
+      ],
+      "counts": {
+        "lessons": 3,
+        "concepts": 14,
+        "mc": 90,
+        "fill": 41,
+        "trace": 7,
+        "bug": 3,
+        "build": 3,
+        "codeBlock": 2,
+        "capstone": 3,
+        "prereq": 14
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 131
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "3/3"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 131
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 7
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 2
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 14
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_nextjs"
+      ],
+      "counts": {
+        "lessons": 1,
+        "concepts": 18,
+        "mc": 28,
+        "fill": 10,
+        "trace": 3,
+        "bug": 3,
+        "build": 3,
+        "codeBlock": 1,
+        "capstone": 1,
+        "prereq": 18
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 38
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 38
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 18
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_devops_deploy",
+        "react_blueprint"
+      ],
+      "counts": {
+        "lessons": 2,
+        "concepts": 18,
+        "mc": 54,
+        "fill": 22,
+        "trace": 3,
+        "bug": 3,
+        "build": 3,
+        "codeBlock": 1,
+        "capstone": 2,
+        "prereq": 18
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 76
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "2/2"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 76
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 2
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 18
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "Frameworks צד-שרת — Nest.js modules + dependency injection",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_nestjs"
+      ],
+      "counts": {
+        "lessons": 1,
+        "concepts": 16,
+        "mc": 24,
+        "fill": 10,
+        "trace": 3,
+        "bug": 3,
+        "build": 3,
+        "codeBlock": 1,
+        "capstone": 1,
+        "prereq": 16
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 34
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 34
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 16
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+      "status": "covered",
+      "lessonIds": [
+        "ai_development"
+      ],
+      "counts": {
+        "lessons": 1,
+        "concepts": 4,
+        "mc": 36,
+        "fill": 17,
+        "trace": 1,
+        "bug": 1,
+        "build": 1,
+        "codeBlock": 1,
+        "capstone": 1,
+        "prereq": 4
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 53
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 53
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 4
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    },
+    {
+      "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
+      "status": "covered",
+      "lessonIds": [
+        "lesson_ai_engineering"
+      ],
+      "counts": {
+        "lessons": 1,
+        "concepts": 19,
+        "mc": 28,
+        "fill": 10,
+        "trace": 3,
+        "bug": 3,
+        "build": 3,
+        "codeBlock": 1,
+        "capstone": 1,
+        "prereq": 19
+      },
+      "cells": [
+        {
+          "id": "lessons",
+          "label": "שיעורים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "rightTree",
+          "label": "עץ צד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "knowledgeMap",
+          "label": "מפת ידע",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "gapMatrix",
+          "label": "פערים",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "studyMode",
+          "label": "לימוד מותאם",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "trainer",
+          "label": "מאמן",
+          "passed": true,
+          "metric": 38
+        },
+        {
+          "id": "flashcards",
+          "label": "כרטיסיות",
+          "passed": true,
+          "metric": "1/1"
+        },
+        {
+          "id": "mockExam",
+          "label": "מבחן",
+          "passed": true,
+          "metric": 38
+        },
+        {
+          "id": "codeTrace",
+          "label": "Code Trace",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "bugHunt",
+          "label": "Bug Hunt",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "miniBuild",
+          "label": "Mini Build",
+          "passed": true,
+          "metric": 3
+        },
+        {
+          "id": "codeBlocks",
+          "label": "בלוקי קוד",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "capstones",
+          "label": "פרויקטים",
+          "passed": true,
+          "metric": 1
+        },
+        {
+          "id": "prerequisites",
+          "label": "דרישות קדם",
+          "passed": true,
+          "metric": 19
+        },
+        {
+          "id": "blueprints",
+          "label": "יישור SVCollege",
+          "passed": true,
+          "metric": 1
+        }
+      ],
+      "coverage": 100,
+      "gaps": []
+    }
+  ]
+}

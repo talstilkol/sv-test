@@ -6,15 +6,170 @@
 
 ---
 
+## Current Operating Mode — 2 Independent Repair Sessions
+
+> עדכון 2026-04-29: מותר לפתוח רק שני סשני תיקון קלים יחסית, שאינם תלויים זה בזה ואינם נוגעים ב-`app.js`. המטרה היא לסגור בעיות אמיתיות סביב מושגים/הסברים ודרישות קדם לשאלות, בלי לפתוח שוב רכבת מיזוג רחבה.
+
+### תרשים זרימה — מתי כל אחד עובד
+
+```mermaid
+flowchart TD
+  A["Current Codex: ממשיך Finish Line 1 / אינטגרציה / בדיקות"] --> B["פתח Session A: Term Clarity"]
+  A --> C["פתח Session B: Prereq Gates"]
+
+  B --> B1["עובד רק על glossary + concise definitions + tests"]
+  C --> C1["עובד רק על question-prerequisites + QA checklist + tests"]
+
+  B1 --> D{"שני הסשנים סיימו Final Report?"}
+  C1 --> D
+  D -- "לא" --> E["לא משלבים. ממשיכים לבדוק רק את תחום הבעלות של כל סשן"]
+  D -- "כן" --> F["Coordinator סוקר diffs בנפרד"]
+  F --> G["מריצים tests/build/validate"]
+  G --> H{"ירוק?"}
+  H -- "לא" --> I["מחזירים רק לסשן שגרם לכשל"]
+  H -- "כן" --> J["אפשר לשלב לקו Finish Line 1"]
+```
+
+### Session A — Term Clarity + Floating Glossary Coverage
+
+| Field | Value |
+|---|---|
+| Branch | `codex/svcollege-term-clarity` |
+| Model | GPT-5.4 / GPT-5.5 |
+| Intelligence | Medium-High |
+| Difficulty | קל-בינוני |
+| Ownership | `data/glossary.js`, `data/concise_definitions.js`, `tests/glossary.test.js`, `tests/concise-definitions.test.js` |
+| אסור לערוך | `app.js`, `style.css`, `content-loader.js`, `index.html`, reports מרכזיים |
+
+#### Prompt להעתקה
+
+```text
+יעד: Finish Line 1 — תיקון בעיות שפה, מונחים וחלונות הסבר בלי לגעת ב-app.js.
+
+Repo: /Users/tal/Desktop/חומרים לשיעור
+AGENTS rule: אסור להשתמש ב-Math.random בשום קוד. אין fake data/placeholders.
+
+אתה לא לבד בקודבייס: יש עבודה מקבילה. אסור להחזיר/לדרוס שינויים של אחרים.
+
+Branch מוצע: codex/svcollege-term-clarity
+Model/Intelligence: GPT-5.4 או GPT-5.5, Medium-High.
+
+בעלות קבצים מותרת:
+- data/glossary.js
+- data/concise_definitions.js
+- tests/glossary.test.js
+- tests/concise-definitions.test.js
+- אופציונלי: docs/session-integration/term-clarity.md
+
+משימה:
+1. בדוק מונחי SVCollege שמופיעים בתוך דרישות קדם ושאלות, במיוחד:
+   primitive, value, byte, bit, key, variable, array, function, object, class,
+   stack, heap, reference, scope, callback, promise, async, await, component,
+   prop, state, hook, route, middleware, token, cookie, session, SQL, ORM,
+   migration, transaction, SSR, API route, DI, Docker, CI/CD, RAG.
+2. ודא שלכל מונח יש entry מלא ב-data/glossary.js עם he/short/long/category.
+3. short חייב להיות משפט אחד קצר ותכלסי: "מה זה", בלי מילים מיותרות.
+4. הרחב data/concise_definitions.js רק למושגים שבהם ההסבר עדיין לא אומר בשורה אחת מה זה.
+5. עדכן בדיקות שמוודאות שמונחי חובה קיימים וש-short לא ריק ולא ארוך מדי.
+
+כללים:
+- אסור Math.random.
+- אסור fake data או placeholders.
+- אל תייבא ספריות.
+- אל תשנה UI או wiring.
+- אם מונח לא ברור כחלק מהקורס, כתוב unknown/unavailable במסמך אינטגרציה במקום להמציא.
+
+חובה להריץ:
+- node --check data/glossary.js
+- node --check data/concise_definitions.js
+- npm test -- --run tests/glossary.test.js tests/concise-definitions.test.js tests/no-native-random.test.js
+- npm run build
+
+בסיום דווח:
+- קבצים ששונו
+- כמה מונחים נוספו/תוקנו
+- 5 דוגמאות ל-short definitions הכי חשובים
+- בדיקות שעברו
+- מה נשאר חסום, אם יש
+```
+
+### Session B — Question Prerequisite Gates + QA Checklist
+
+| Field | Value |
+|---|---|
+| Branch | `codex/svcollege-prereq-gates` |
+| Model | GPT-5.4 |
+| Intelligence | High |
+| Difficulty | בינוני |
+| Ownership | `src/core/question-prerequisites.js`, `tests/question-prerequisites.test.js`, `scripts/build_question_qa_checklist.js`, `QUESTION_QA_CHECKLIST.md`, `QUESTION_QA_CHECKLIST.json` |
+| אסור לערוך | `app.js`, `style.css`, `content-loader.js`, `index.html`, `data/glossary.js`, `data/concise_definitions.js` |
+
+#### Prompt להעתקה
+
+```text
+יעד: Finish Line 1 — QA קל/בינוני לדרישות קדם ושערי מוכנות, בלי לגעת ב-app.js.
+
+Repo: /Users/tal/Desktop/חומרים לשיעור
+AGENTS rule: אסור להשתמש ב-Math.random בשום קוד. אין fake data/placeholders.
+
+אתה לא לבד בקודבייס: יש עבודה מקבילה. אסור להחזיר/לדרוס שינויים של אחרים.
+
+Branch מוצע: codex/svcollege-prereq-gates
+Model/Intelligence: GPT-5.4, High.
+
+בעלות קבצים מותרת:
+- src/core/question-prerequisites.js
+- tests/question-prerequisites.test.js
+- scripts/build_question_qa_checklist.js
+- QUESTION_QA_CHECKLIST.md
+- QUESTION_QA_CHECKLIST.json
+- אופציונלי: docs/session-integration/prereq-gates.md
+
+משימה:
+1. בדוק את מנגנון דרישות הקדם לשאלות: כל שאלה קשה או מושג מורכב צריכים להחזיר required concepts + required terms + side explanation source.
+2. הוסף quality gate דטרמיניסטי שמאתר שאלות SVCollege ללא דרישות קדם ברורות.
+3. אם כבר קיים checklist, הרחב אותו במקום ליצור מערכת חדשה.
+4. התמקד בדברים קלים יחסית: בדיקות, דוח, contract ברור. אל תבנה UI חדש.
+5. ודא שהדוח מבליט בעיות אמיתיות:
+   missingPrerequisites, missingGlossaryTerms, hardQuestionWithoutAid, repeatedLowSignalExplanation.
+6. אם יש פערים שלא ניתן לתקן בלי עריכת בנק שאלות ענק, תעד אותם ב-QUESTION_QA_CHECKLIST.md כמשימות סגירה, לא כפתרון מזויף.
+
+כללים:
+- אסור Math.random.
+- אסור fake data או invented sources.
+- אל תייבא ספריות.
+- אל תשנה UI/wiring.
+- אל תדרוס reports שלא יצרת אם הם השתנו; עבוד עם השינויים הקיימים.
+
+חובה להריץ:
+- node --check src/core/question-prerequisites.js
+- node --check scripts/build_question_qa_checklist.js
+- npm test -- --run tests/question-prerequisites.test.js tests/question-qa-checklist.test.js tests/no-native-random.test.js
+- npm run build
+
+בסיום דווח:
+- קבצים ששונו
+- אילו gates נוספו
+- מספר בעיות שנמצאו בדוח, אם יש
+- בדיקות שעברו
+- מה נשאר חסום, אם יש
+```
+
+### כלל שילוב
+
+- לא משלבים אף אחד מהסשנים לפני ששניהם מסרו Final Report.
+- אם רק אחד סיים, מותר לסקור אותו, אבל לא למזג בלי בדיקות מול הענף הנוכחי.
+- אם יש conflict בקובץ שאינו בבעלות הסשן, לא מתקנים שם בתוך הסשן. מחזירים ל-Coordinator.
+
 ## Current Operating Mode — Limited Parallel
 
-> סטטוס עדכני: **מוותרים כרגע על רכבת המיזוג המלאה**. SQL/ORM, Auth/Security, Next.js, המוזיאון, Nest.js ו-DevOps מוזגו/חוברו ל-Finish Line 1. שאר הסשנים במסמך נשארים כתוכנית ייחוס בלבד, ולא פותחים אותם בלי הוראה חדשה.
+> סטטוס עדכני: **מוותרים כרגע על רכבת המיזוג המלאה**. SQL/ORM, Auth/Security, Next.js, המוזיאון, Nest.js, DevOps, AI Engineering ו-Design Systems מוזגו/חוברו ל-Finish Line 1. שאר הסשנים במסמך נשארים כתוכנית ייחוס בלבד, ולא פותחים אותם בלי הוראה חדשה.
 
 ### מי עובד עכשיו
 
 | Active work | Branch | Ownership | אסור לסשנים אחרים לערוך |
 |---|---|---|---|
-| Current Codex session | `codex/svcollege-backend-prod-coverage-20260428` | Finish Line 1 module coverage, governance, reports, readiness gates, quality gates and validators | Do not reopen the full merge train without explicit user instruction |
+| Current Codex session | `codex/unified-context-tree-tabs-20260428` | Finish Line 1 browser smoke, question-depth hardening, prerequisite/question feedback, reports, readiness gates, quality gates and validators | Do not reopen the full merge train without explicit user instruction |
 
 ### Completed work in limited mode
 
@@ -26,6 +181,9 @@
 | Museum | `codex/finish-line1-museum-integration-20260428` | Integrated without tracking MP4 assets | Only contextual video embedding; no MP4 upload |
 | Nest.js | `codex/svcollege-backend-prod-coverage-20260428` | Integrated into index, content loader, service worker, readiness, command center and SVCollege blueprint | Only regression fixes; no new Nest scope without a new task |
 | DevOps | `codex/svcollege-backend-prod-coverage-20260428` | Integrated into index, content loader, service worker, readiness, command center and SVCollege blueprint | Only regression fixes; no new DevOps scope without a new task |
+| AI Engineering | `codex/unified-context-tree-tabs-20260428` | Integrated into index, content loader, service worker, readiness, command center and SVCollege blueprint | Only regression fixes; no new AI Engineering scope without a new task |
+| Design Systems | `codex/unified-context-tree-tabs-20260428` | Integrated into index, content loader, service worker, readiness, command center and SVCollege blueprint | Only regression fixes; no new design-system scope without a new task |
+| Module × Tab Matrix | `codex/unified-context-tree-tabs-20260428` | `225/225` strict cells, `0` tab gaps, `7/7` support tabs wired | Keep `npm run svcollege:tab-matrix:strict` green |
 
 ### תרשים זרימה פעיל — Limited Parallel
 
@@ -33,14 +191,14 @@
 
 ```mermaid
 flowchart TD
-  A["מצב נוכחי: Limited Parallel"] --> B["SQL/ORM, Auth, Next.js, Museum, Nest ו-DevOps חוברו"]
-  A --> D["Current Codex עובד על מודול Finish Line 1 אחד בכל פעם"]
+  A["מצב נוכחי: Limited Parallel"] --> B["SQL/ORM, Auth, Next.js, Museum, Nest, DevOps, AI ו-Design Systems חוברו"]
+  A --> D["Current Codex עובד על QA/Health של Finish Line 1"]
 
-  B --> E["DB, Auth, Next.js, Nest ו-DevOps עכשיו covered ב-readiness"]
-  D --> G["לא פותחים AI/QA בלי הוראה מפורשת"]
+  B --> E["כל 15 מודולי SVCollege עכשיו covered ב-readiness"]
+  D --> G["לא פותחים רכבת מלאה בלי הוראה מפורשת"]
   E --> H{"מה החסם הבא?"}
-  H -- "AI Engineering gap" --> I2["פותחים/מבצעים AI Engineering רק אם המשתמש מאשר"]
-  H -- "shadcn partial" --> I3["פותחים/מבצעים Design System רק אחרי AI או defer מפורש"]
+  H -- "All Tabs QA" --> I2["בודקים desktop/mobile smoke לכל טאב"]
+  H -- "Question depth" --> I3["מגדילים תרגול במושגים ש-validate:strict מסמן"]
   I2 --> J
   I3 --> J
   J["מריצים build/tests/readiness/browser smoke"]
@@ -51,7 +209,7 @@ flowchart TD
 
 ### מתי לפתוח Session חדש במצב הנוכחי
 
-- לא פותחים Session חדש ל-Auth, Next.js, DevOps, Nest.js, AI Engineering, Question Quality או All Tabs QA בלי הוראה מפורשת.
+- לא פותחים Session חדש ל-Auth, Next.js, DevOps, Nest.js, AI Engineering, Design Systems, Question Quality או All Tabs QA בלי הוראה מפורשת.
 - מותר לפתוח Session המשך ל-SQL רק אם הוא נשאר בתוך קבצי SQL-owned.
 - מותר לפתוח Session המשך למוזיאון רק להטמעה הקשרית של סרטון/נכס רלוונטי, בלי העלאת MP4.
 - מותר לפתוח Coordinator Integration רק אחרי שמודול יחיד סיים Final Report או שהמשתמש מבטל אותו.
@@ -62,7 +220,7 @@ flowchart TD
 - Do **not** open Sessions 2-8 from the full train.
 - Do **not** merge branches automatically.
 - Museum is integrated; do not upload MP4 assets.
-- This session may continue only on one Finish Line 1 module at a time: command center, reports, readiness scripts, quality gates, task planning, and SVCollege content.
+- This session may continue only on Finish Line 1 health work: all-tabs QA, question-depth hardening, prerequisite/question feedback, command center, reports, readiness scripts, quality gates, task planning, and SVCollege content.
 - When any new module finishes, Coordinator reviews only the changed ownership scope for that module.
 
 ---
