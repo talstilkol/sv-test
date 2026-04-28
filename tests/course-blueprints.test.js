@@ -17,6 +17,8 @@ const LESSON_FILES = [
   ["lesson_sql_orm", "data/lesson_sql_orm.js", "LESSON_SQL_ORM"],
   ["lesson_auth_security", "data/lesson_auth_security.js", "LESSON_AUTH_SECURITY"],
   ["lesson_nextjs", "data/lesson_nextjs.js", "LESSON_NEXTJS"],
+  ["lesson_nestjs", "data/lesson_nestjs.js", "LESSON_NESTJS"],
+  ["lesson_devops_deploy", "data/lesson_devops_deploy.js", "LESSON_DEVOPS_DEPLOY"],
   ["lesson_21", "data/lesson21.js", "LESSON_21"],
   ["lesson_22", "data/lesson22.js", "LESSON_22"],
   ["lesson_23", "data/lesson23.js", "LESSON_23"],

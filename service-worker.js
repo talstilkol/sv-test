@@ -2,7 +2,7 @@
 // Caches the app shell + primary lessons for offline use.
 // Cache strategy: cache-first for static assets, network-first for HTML.
 
-const CACHE_VERSION = "lumen-v2.4.18";
+const CACHE_VERSION = "lumen-v2.4.20";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 // Resources that MUST be available offline (the App Shell + core data)
@@ -36,17 +36,23 @@ const SHELL_ASSETS = [
   "/data/svcollege_questions_sql_orm.js",
   "/data/svcollege_questions_auth.js",
   "/data/svcollege_questions_nextjs.js",
+  "/data/svcollege_questions_nestjs.js",
+  "/data/svcollege_questions_devops.js",
   "/data/concept_enrichment.js",
   "/data/extended_explanations.js",
   "/data/questions_trace.js",
   "/data/svcollege_traces_sql_orm.js",
   "/data/svcollege_traces_auth.js",
   "/data/svcollege_traces_nextjs.js",
+  "/data/svcollege_traces_nestjs.js",
+  "/data/svcollege_traces_devops.js",
   "/data/questions_bug.js",
   "/data/questions_build.js",
   "/data/svcollege_builds_sql_orm.js",
   "/data/svcollege_builds_auth.js",
   "/data/svcollege_builds_nextjs.js",
+  "/data/svcollege_builds_nestjs.js",
+  "/data/svcollege_builds_devops.js",
   "/data/lesson_quiz_keys.js",
   "/data/animations.js",
   "/data/what_if.js",
@@ -69,6 +75,8 @@ const SHELL_ASSETS = [
   "/data/svcollege_prerequisites_sql_orm.js",
   "/data/svcollege_prerequisites_auth.js",
   "/data/svcollege_prerequisites_nextjs.js",
+  "/data/svcollege_prerequisites_nestjs.js",
+  "/data/svcollege_prerequisites_devops.js",
   // Lessons 11-27 + new
   "/data/lesson11.js",
   "/data/lesson12.js",
@@ -84,6 +92,8 @@ const SHELL_ASSETS = [
   "/data/lesson_sql_orm.js",
   "/data/lesson_auth_security.js",
   "/data/lesson_nextjs.js",
+  "/data/lesson_nestjs.js",
+  "/data/lesson_devops_deploy.js",
   "/data/lesson21.js",
   "/data/lesson22.js",
   "/data/lesson23.js",

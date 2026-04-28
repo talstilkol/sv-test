@@ -29,6 +29,8 @@ const LESSON_FILE_BY_ID = Object.freeze({
   lesson_sql_orm: "data/lesson_sql_orm.js",
   lesson_auth_security: "data/lesson_auth_security.js",
   lesson_nextjs: "data/lesson_nextjs.js",
+  lesson_nestjs: "data/lesson_nestjs.js",
+  lesson_devops_deploy: "data/lesson_devops_deploy.js",
   lesson_21: "data/lesson21.js",
   lesson_22: "data/lesson22.js",
   lesson_23: "data/lesson23.js",
@@ -48,6 +50,8 @@ const QUESTION_EVIDENCE_FILES = Object.freeze([
   "data/svcollege_questions_sql_orm.js",
   "data/svcollege_questions_auth.js",
   "data/svcollege_questions_nextjs.js",
+  "data/svcollege_questions_nestjs.js",
+  "data/svcollege_questions_devops.js",
 ]);
 
 const ACTIVITY_EVIDENCE_FILES = Object.freeze([
@@ -55,10 +59,14 @@ const ACTIVITY_EVIDENCE_FILES = Object.freeze([
   "data/svcollege_traces_sql_orm.js",
   "data/svcollege_traces_auth.js",
   "data/svcollege_traces_nextjs.js",
+  "data/svcollege_traces_nestjs.js",
+  "data/svcollege_traces_devops.js",
   "data/questions_build.js",
   "data/svcollege_builds_sql_orm.js",
   "data/svcollege_builds_auth.js",
   "data/svcollege_builds_nextjs.js",
+  "data/svcollege_builds_nestjs.js",
+  "data/svcollege_builds_devops.js",
   "data/questions_bug.js",
   "data/pair_match.js",
   "data/capstones.js",
@@ -73,6 +81,8 @@ const TEST_EVIDENCE_FILES = Object.freeze([
   "tests/svcollege-sql-orm-content.test.js",
   "tests/svcollege-auth-content.test.js",
   "tests/svcollege-nextjs-content.test.js",
+  "tests/svcollege-nestjs-content.test.js",
+  "tests/svcollege-devops-content.test.js",
 ]);
 
 const TAB_EVIDENCE_FILES = Object.freeze([
@@ -85,21 +95,9 @@ const TAB_EVIDENCE_FILES = Object.freeze([
 ]);
 
 const ACTIVE_PARALLEL_MODE = Object.freeze({
-  status: "limited-parallel-museum-only-after-sql-auth-nextjs-integration",
-  note: "Full merge train is paused. SQL/ORM, Auth/Security and Next.js are integrated; only the Museum session remains active in parallel.",
-  activeExternalSessions: Object.freeze([
-    Object.freeze({
-      id: "museum",
-      branch: "codex/museum",
-      owner: "external Museum session",
-      scope: Object.freeze([
-        "museum.html",
-        "museum-specific sections in app.js",
-        "museum-specific CSS",
-        "museum docs/prompts/assets",
-      ]),
-    }),
-  ]),
+  status: "single-session-finish-line-after-sql-auth-nextjs-museum-nestjs-devops",
+  note: "Full merge train is paused. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js and DevOps are integrated; current work continues one Finish Line 1 module at a time.",
+  activeExternalSessions: Object.freeze([]),
   completedExternalSessions: Object.freeze([
     Object.freeze({
       id: "sql-orm",
@@ -119,10 +117,26 @@ const ACTIVE_PARALLEL_MODE = Object.freeze({
       status: "integrated",
       result: "Next.js module covered: lesson_nextjs + Next.js practice + readiness evidence.",
     }),
+    Object.freeze({
+      id: "museum",
+      branch: "codex/finish-line1-museum-integration-20260428",
+      status: "integrated",
+      result: "Museum plan and experience shell merged without tracking MP4 assets.",
+    }),
+    Object.freeze({
+      id: "nestjs",
+      branch: "codex/svcollege-backend-prod-coverage-20260428",
+      status: "integrated",
+      result: "Nest.js module covered: lesson_nestjs + Nest.js practice + readiness evidence.",
+    }),
+    Object.freeze({
+      id: "devops",
+      branch: "codex/svcollege-backend-prod-coverage-20260428",
+      status: "integrated",
+      result: "DevOps module covered: lesson_devops_deploy + deploy/Docker/CI practice + readiness evidence.",
+    }),
   ]),
   pausedSessions: Object.freeze([
-    "DevOps",
-    "Nest.js",
     "AI Engineering",
     "Question Quality",
     "All Tabs QA",
@@ -131,7 +145,7 @@ const ACTIVE_PARALLEL_MODE = Object.freeze({
     "SVCollege governance docs",
     "Command Center reports",
     "readiness scripts",
-    "post-SQL/Auth/Next.js integration quality gates",
+    "post-SQL/Auth/Next.js/Museum integration quality gates",
     "non-museum planning documents",
   ]),
 });
@@ -354,7 +368,7 @@ function buildReport() {
       total: sessions.length,
       sessions,
       nextOpenRule:
-        "Limited mode active: do not open the full train. SQL/ORM, Auth/Security and Next.js are integrated; only Museum remains active until the user re-enables wider merging.",
+        "Limited mode active: do not open the full train. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js and DevOps are integrated; open one Finish Line 1 module at a time unless the user re-enables wider merging.",
     },
     docs: buildDocsStatus(),
     commands: [
@@ -519,7 +533,7 @@ function toMarkdown(report) {
     lines.push("## Root Asset Violations", "", ...report.sourceAssets.rootAssetNames.map((name) => `- ${name}`), "");
   }
 
-  return `${lines.join("\n")}\n`;
+  return `${lines.join("\n").replace(/\n+$/, "")}\n`;
 }
 
 function run(argv = process.argv.slice(2)) {

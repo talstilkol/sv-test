@@ -4,13 +4,13 @@
   "source": "data/course_blueprints.js#svcollege_fullstack_ai",
   "summary": {
     "modules": 15,
-    "covered": 11,
-    "partial": 2,
-    "gap": 2,
-    "green": 11,
-    "amber": 2,
-    "red": 2,
-    "averageReadiness": 85.3,
+    "covered": 13,
+    "partial": 1,
+    "gap": 1,
+    "green": 13,
+    "amber": 1,
+    "red": 1,
+    "averageReadiness": 92.7,
     "finishLineReady": false
   },
   "validation": {
@@ -18,8 +18,6 @@
   },
   "releaseBlockers": [
     "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI (partial, 90%)",
-    "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing (partial, 90%)",
-    "Frameworks צד-שרת — Nest.js modules + dependency injection (gap, 0%)",
     "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning (gap, 0%)"
   ],
   "modules": [
@@ -625,67 +623,141 @@
     },
     {
       "title": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
-      "status": "partial",
-      "readiness": 90,
-      "level": "amber",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
       "lessonIds": [
+        "lesson_devops_deploy",
         "react_blueprint"
       ],
       "existingLessons": [
+        "lesson_devops_deploy",
         "react_blueprint"
       ],
       "conceptKeys": [
+        "lesson_devops_deploy::production readiness",
+        "lesson_devops_deploy::environment variables",
+        "lesson_devops_deploy::Vercel deploy",
+        "lesson_devops_deploy::preview deployment",
+        "lesson_devops_deploy::build command",
+        "lesson_devops_deploy::Docker",
+        "lesson_devops_deploy::Dockerfile",
+        "lesson_devops_deploy::image",
+        "lesson_devops_deploy::container",
+        "lesson_devops_deploy::Docker Compose",
+        "lesson_devops_deploy::service",
+        "lesson_devops_deploy::volume",
+        "lesson_devops_deploy::health check",
+        "lesson_devops_deploy::CI",
+        "lesson_devops_deploy::CD",
+        "lesson_devops_deploy::smoke test",
+        "lesson_devops_deploy::release checklist",
         "react_blueprint::Testing Strategies"
       ],
       "existingConcepts": [
+        "lesson_devops_deploy::production readiness",
+        "lesson_devops_deploy::environment variables",
+        "lesson_devops_deploy::Vercel deploy",
+        "lesson_devops_deploy::preview deployment",
+        "lesson_devops_deploy::build command",
+        "lesson_devops_deploy::Docker",
+        "lesson_devops_deploy::Dockerfile",
+        "lesson_devops_deploy::image",
+        "lesson_devops_deploy::container",
+        "lesson_devops_deploy::Docker Compose",
+        "lesson_devops_deploy::service",
+        "lesson_devops_deploy::volume",
+        "lesson_devops_deploy::health check",
+        "lesson_devops_deploy::CI",
+        "lesson_devops_deploy::CD",
+        "lesson_devops_deploy::smoke test",
+        "lesson_devops_deploy::release checklist",
         "react_blueprint::Testing Strategies"
       ],
       "dimensions": {
-        "declaredStatus": 50,
+        "declaredStatus": 100,
         "lessonCoverage": 100,
         "conceptCoverage": 100,
         "questionCoverage": 100,
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 30,
-        "fill": 12,
-        "trace": 0,
-        "miniBuild": 0,
-        "bugHunt": 0,
+        "mc": 54,
+        "fill": 22,
+        "trace": 3,
+        "miniBuild": 3,
+        "bugHunt": 3,
         "pairMatchPairs": 0,
         "capstone": 1,
-        "generatedFlashcards": 1
+        "generatedFlashcards": 18
       },
-      "nextAction": "להוסיף DevOps Foundations + deploy checklist + Docker mini-build."
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
     },
     {
       "title": "Frameworks צד-שרת — Nest.js modules + dependency injection",
-      "status": "gap",
-      "readiness": 0,
-      "level": "red",
-      "lessonIds": [],
-      "existingLessons": [],
-      "conceptKeys": [],
-      "existingConcepts": [],
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_nestjs"
+      ],
+      "existingLessons": [
+        "lesson_nestjs"
+      ],
+      "conceptKeys": [
+        "lesson_nestjs::Nest.js",
+        "lesson_nestjs::module",
+        "lesson_nestjs::controller",
+        "lesson_nestjs::provider",
+        "lesson_nestjs::service",
+        "lesson_nestjs::dependency injection",
+        "lesson_nestjs::decorator",
+        "lesson_nestjs::DTO",
+        "lesson_nestjs::validation pipe",
+        "lesson_nestjs::guard",
+        "lesson_nestjs::pipe",
+        "lesson_nestjs::middleware",
+        "lesson_nestjs::interceptor",
+        "lesson_nestjs::exception filter",
+        "lesson_nestjs::repository pattern",
+        "lesson_nestjs::testing module"
+      ],
+      "existingConcepts": [
+        "lesson_nestjs::Nest.js",
+        "lesson_nestjs::module",
+        "lesson_nestjs::controller",
+        "lesson_nestjs::provider",
+        "lesson_nestjs::service",
+        "lesson_nestjs::dependency injection",
+        "lesson_nestjs::decorator",
+        "lesson_nestjs::DTO",
+        "lesson_nestjs::validation pipe",
+        "lesson_nestjs::guard",
+        "lesson_nestjs::pipe",
+        "lesson_nestjs::middleware",
+        "lesson_nestjs::interceptor",
+        "lesson_nestjs::exception filter",
+        "lesson_nestjs::repository pattern",
+        "lesson_nestjs::testing module"
+      ],
       "dimensions": {
-        "declaredStatus": 0,
-        "lessonCoverage": 0,
-        "conceptCoverage": 0,
-        "questionCoverage": 0,
-        "activityCoverage": 0
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
       },
       "counts": {
-        "mc": 0,
-        "fill": 0,
-        "trace": 0,
-        "miniBuild": 0,
-        "bugHunt": 0,
+        "mc": 24,
+        "fill": 10,
+        "trace": 3,
+        "miniBuild": 3,
+        "bugHunt": 3,
         "pairMatchPairs": 0,
         "capstone": 0,
-        "generatedFlashcards": 0
+        "generatedFlashcards": 16
       },
-      "nextAction": "להוסיף Nest.js bridge אחרי Express: controllers, providers, modules, DI ו-validation pipe."
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
     },
     {
       "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",

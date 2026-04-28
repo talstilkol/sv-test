@@ -51,7 +51,7 @@
 1. **SVCollege curriculum coverage** — כל מודול ציבורי של SVCollege חייב להיות ממופה ל-lesson / practice / mock exam / gap task.
 2. **Site health** — כל טאב, תת-תפריט, מודל, מצב תרגול ומסך תוצאה חייב להיפתח בלי שגיאת runtime.
 3. **Assessment readiness** — מבחן מדומה ייעודי ל-SVCollege חייב לדגום את כל המודולים, לא רק JS/React/Node.
-4. **Content before expansion** — לא מוסיפים פיצ'רי הרחבה משמעותיים עד שסוגרים את פערי DevOps, Nest.js ו-AI Engineering, ומקשיחים את ה-partials שנותרו.
+4. **Content before expansion** — לא מוסיפים פיצ'רי הרחבה משמעותיים עד שסוגרים את פער AI Engineering, ומקשיחים את ה-partials שנותרו.
 
 ## 0.2 מיפוי SVCollege נוכחי
 
@@ -60,8 +60,10 @@
 סטטוס תמציתי:
 
 - Covered: HTML/CSS foundations, Git/tooling, JavaScript basics, DOM, React, TypeScript, Node/Express/REST, Tailwind responsive, DB including SQL/ORM, Auth/Security, Next.js, AI coding tools.
-- Partial: shadcn/UI, DevOps.
-- Gap: Nest.js, AI Engineering with Vercel AI/OpenAI/LangChain/RAG/Agents/Fine-tuning.
+- Partial: shadcn/UI.
+- Gap: AI Engineering with Vercel AI/OpenAI/LangChain/RAG/Agents/Fine-tuning.
+- Covered update: Nest.js bridge now covers modules, controllers, providers/services, dependency injection, DTO, validation pipe, guards, pipes, middleware, interceptors, exception filters, repository pattern and testing module.
+- Covered update: DevOps bridge now covers production readiness, env vars, Vercel deploy/preview, build command, Docker/Dockerfile/image/container, Docker Compose, services/volumes, health checks, CI/CD, smoke tests and release checklist.
 
 ## 0.3 Definition Of Done לפני הרחבות
 

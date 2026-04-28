@@ -18634,12 +18634,12 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       id: "database",
       label: "Database",
-      filter: (k) => /^lesson_20::/i.test(k),
+      filter: (k) => /^lesson_(20|sql_orm)::/i.test(k),
     },
     {
       id: "auth",
       label: "Auth + Security",
-      filter: () => false,
+      filter: (k) => /^lesson_auth_security::/i.test(k),
     },
     {
       id: "react_frontend",
@@ -18659,17 +18659,17 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       id: "nextjs",
       label: "Next.js",
-      filter: () => false,
+      filter: (k) => /^lesson_nextjs::/i.test(k),
     },
     {
       id: "devops",
       label: "DevOps + CI/CD",
-      filter: (k) => /^react_blueprint::Testing Strategies$/i.test(k),
+      filter: (k) => /^lesson_devops_deploy::/i.test(k) || /^react_blueprint::Testing Strategies$/i.test(k),
     },
     {
       id: "nestjs",
       label: "Nest.js",
-      filter: () => false,
+      filter: (k) => /^lesson_nestjs::/i.test(k),
     },
     {
       id: "ai_tools",

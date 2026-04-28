@@ -18,7 +18,7 @@
 
 | Phase | בוצע / סך | אחוז |
 |---|:-:|:-:|
-| Finish Line 1: SVCollege Full Portal Coverage | 31/73 | **42%** 🚨 |
+| Finish Line 1: SVCollege Full Portal Coverage | 33/73 | **45%** 🚨 |
 | Phase 0: Status (DONE) | 25/25 | 100% ✅ |
 | Phase 1: Foundation | 60/62 | **97%** 🚧 |
 | Phase 2: Core Learning | 68/70 | **97%** 🚧 |
@@ -27,7 +27,7 @@
 | Phase 5: Quality Governance + Rebaseline | 22/39 | **56%** 🚧 |
 | Phase 6: Learning Evidence + Productization | 19/36 | **53%** 🚧 |
 | Phase 7: Learning OS + Outcome Scale | 0/48 | 0% |
-| **TOTAL** | **262/422** | **62%** |
+| **TOTAL** | **264/422** | **63%** |
 
 ### Finish Line 1 Override — 2026-04-28
 
@@ -35,7 +35,7 @@
 
 ### Parallel Work Mode — 2026-04-28
 
-רכבת המיזוג המלאה מוקפאת כרגע. **SQL/ORM, Auth/Security ו-Next.js כבר חוברו ל-Finish Line 1**, ורק **המוזיאון** נשאר פעיל במקביל. העבודה השוטפת כאן מוגבלת למשימות לא מתנגשות עם קבצי המוזיאון: דוחות, readiness, quality gates, תכנון, ותוכן SVCollege שנמצא מחוץ לבעלות המוזיאון.
+רכבת המיזוג המלאה מוקפאת כרגע. **SQL/ORM, Auth/Security, Next.js והמוזיאון כבר מוזגו**, והעבודה ממשיכה במודול Finish Line 1 אחד בכל פעם כדי למנוע דריסות. העבודה השוטפת כאן מתמקדת בתוכן SVCollege, readiness, quality gates, תכנון ובדיקות חיבור.
 
 ### Phase 1 Detailed:
 - W1 Architecture: ✅ 14/14 (lazy load + per-card + Vitest baseline; current suite 127 tests)
@@ -103,8 +103,8 @@
 - [V] P-1.2.4 — Add PostgreSQL + ORM lesson: schema, relations, migrations, Prisma/Drizzle CRUD
 - [V] P-1.2.5 — Add Auth lesson: JWT, cookies, sessions, provider auth, security boundaries
 - [V] P-1.2.6 — Add Next.js lesson: routing, layouts, server/client components, API routes, SEO, deploy
-- [ ] P-1.2.7 — Add DevOps lesson: Vercel, Docker, Docker Compose, CI/CD, testing workflow
-- [ ] P-1.2.8 — Add Nest.js bridge lesson: modules, controllers, providers, dependency injection
+- [V] P-1.2.7 — Add DevOps lesson: Vercel, Docker, Docker Compose, CI/CD, testing workflow
+- [V] P-1.2.8 — Add Nest.js bridge lesson: modules, controllers, providers, dependency injection
 - [ ] P-1.2.9 — Add AI Engineering lesson: Vercel AI SDK, OpenAI API, LangChain, RAG, Agents, Fine-tuning boundaries
 - [ ] P-1.2.10 — Add prerequisites, glossary entries, 7-level explanations and code examples to every new SVCollege lesson
 
@@ -187,7 +187,7 @@
 - [ ] P-1.11.4 — Add teacher-facing weekly SVCollege progress export before building any broad teacher dashboard
 - [ ] P-1.11.5 — Define promotion rule: a module is "ready for students" only after content, practice, smoke and first-user feedback pass
 
-**Finish Line 1 Total: 31/73 🚨**
+**Finish Line 1 Total: 33/73 🚨**
 
 ---
 
@@ -1106,6 +1106,19 @@
                    - Next.js module moved from Gap to Covered
                    - SVCollege readiness now 85.3%, 11/15 covered, 4 release blockers
                    - Marked P-1.2.6 done; Finish Line 1 now 31/73
+2026-04-28 latest — Nest.js integrated into SVCollege Finish Line:
+                   - Added `lesson_nestjs` for modules, controllers, providers/services, DI, decorators, DTO, validation pipe, guards, pipes, middleware, interceptors, exception filters, repository pattern and testing module
+                   - Nest.js practice now includes 24 MC, 10 Fill, 3 Trace, 3 Mini Build, 3 Bug Hunt and prerequisites
+                   - Nest.js module moved from Gap to Covered
+                   - Fixed existing Auth prerequisite cycle between OAuth and provider auth
+                   - SVCollege readiness now 92%, 12/15 covered, 3 release blockers
+                   - Marked P-1.2.8 done; Finish Line 1 now 32/73
+2026-04-28 latest — DevOps integrated into SVCollege Finish Line:
+                   - Added `lesson_devops_deploy` for production readiness, env vars, Vercel deploy/preview, build commands, Docker/Dockerfile/image/container, Docker Compose services/volumes, health checks, CI/CD, smoke tests and release checklist
+                   - DevOps practice now includes 24 MC, 10 Fill, 3 Trace, 3 Mini Build, 3 Bug Hunt and prerequisites
+                   - DevOps module moved from Partial to Covered
+                   - SVCollege readiness now 92.7%, 13/15 covered, 2 release blockers
+                   - Marked P-1.2.7 done; Finish Line 1 now 33/73
 ```
 
 ---

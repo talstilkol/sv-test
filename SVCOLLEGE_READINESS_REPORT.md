@@ -6,9 +6,9 @@
 ## Summary
 
 - Modules: 15
-- Covered / Partial / Gap: 11/2/2
-- Green / Amber / Red: 11/2/2
-- Average readiness: 85.3%
+- Covered / Partial / Gap: 13/1/1
+- Green / Amber / Red: 13/1/1
+- Average readiness: 92.7%
 - Finish Line 1 ready: no
 
 ## Module Readiness
@@ -26,16 +26,14 @@
 | TypeScript ופטרנים מתקדמים ב-React | covered | 100% | green | 100% | 100% | 100% | 100% | Maintain practice, mock-exam coverage and tab health. |
 | מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI | partial | 90% | amber | 100% | 100% | 100% | 100% | להוסיף shadcn/UI ו-design system guided build. |
 | פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO | covered | 100% | green | 100% | 100% | 100% | 100% | Maintain practice, mock-exam coverage and tab health. |
-| תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing | partial | 90% | amber | 100% | 100% | 100% | 100% | להוסיף DevOps Foundations + deploy checklist + Docker mini-build. |
-| Frameworks צד-שרת — Nest.js modules + dependency injection | gap | 0% | red | 0% | 0% | 0% | 0% | להוסיף Nest.js bridge אחרי Express: controllers, providers, modules, DI ו-validation pipe. |
+| תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing | covered | 100% | green | 100% | 100% | 100% | 100% | Maintain practice, mock-exam coverage and tab health. |
+| Frameworks צד-שרת — Nest.js modules + dependency injection | covered | 100% | green | 100% | 100% | 100% | 100% | Maintain practice, mock-exam coverage and tab health. |
 | AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI | covered | 100% | green | 100% | 100% | 100% | 100% | Maintain practice, mock-exam coverage and tab health. |
 | הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning | gap | 0% | red | 0% | 0% | 0% | 0% | להוסיף AI Engineering track: OpenAI/Vercel AI SDK, embeddings, RAG, tool calling, agents וגבולות fine-tuning. |
 
 ## Release Blockers
 
 - מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI (partial, 90%)
-- תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing (partial, 90%)
-- Frameworks צד-שרת — Nest.js modules + dependency injection (gap, 0%)
 - הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning (gap, 0%)
 
 ## Validation

@@ -26,6 +26,8 @@ const LESSON_FILES = [
   ["lesson_sql_orm.js", "LESSON_SQL_ORM"],
   ["lesson_auth_security.js", "LESSON_AUTH_SECURITY"],
   ["lesson_nextjs.js", "LESSON_NEXTJS"],
+  ["lesson_nestjs.js", "LESSON_NESTJS"],
+  ["lesson_devops_deploy.js", "LESSON_DEVOPS_DEPLOY"],
   ["lesson21.js", "LESSON_21"],
   ["lesson22.js", "LESSON_22"],
   ["lesson23.js", "LESSON_23"],
@@ -112,6 +114,12 @@ function collectPractice() {
   const nextjsQuestions = readDataValue("svcollege_questions_nextjs.js", "SVCOLLEGE_NEXTJS_QUESTIONS") || {};
   const nextjsTraces = readDataValue("svcollege_traces_nextjs.js", "SVCOLLEGE_NEXTJS_TRACES") || [];
   const nextjsBuilds = readDataValue("svcollege_builds_nextjs.js", "SVCOLLEGE_NEXTJS_BUILDS") || [];
+  const nestjsQuestions = readDataValue("svcollege_questions_nestjs.js", "SVCOLLEGE_NESTJS_QUESTIONS") || {};
+  const nestjsTraces = readDataValue("svcollege_traces_nestjs.js", "SVCOLLEGE_NESTJS_TRACES") || [];
+  const nestjsBuilds = readDataValue("svcollege_builds_nestjs.js", "SVCOLLEGE_NESTJS_BUILDS") || [];
+  const devopsQuestions = readDataValue("svcollege_questions_devops.js", "SVCOLLEGE_DEVOPS_QUESTIONS") || {};
+  const devopsTraces = readDataValue("svcollege_traces_devops.js", "SVCOLLEGE_DEVOPS_TRACES") || [];
+  const devopsBuilds = readDataValue("svcollege_builds_devops.js", "SVCOLLEGE_DEVOPS_BUILDS") || [];
 
   return {
     mc: [
@@ -120,6 +128,8 @@ function collectPractice() {
       ...listQuestions(sqlOrmQuestions, "mc"),
       ...listQuestions(authQuestions, "mc"),
       ...listQuestions(nextjsQuestions, "mc"),
+      ...listQuestions(nestjsQuestions, "mc"),
+      ...listQuestions(devopsQuestions, "mc"),
     ],
     fill: [
       ...listQuestions(bank, "fill"),
@@ -127,14 +137,18 @@ function collectPractice() {
       ...listQuestions(sqlOrmQuestions, "fill"),
       ...listQuestions(authQuestions, "fill"),
       ...listQuestions(nextjsQuestions, "fill"),
+      ...listQuestions(nestjsQuestions, "fill"),
+      ...listQuestions(devopsQuestions, "fill"),
     ],
-    trace: [...(readDataValue("questions_trace.js", "QUESTIONS_TRACE") || []), ...sqlOrmTraces, ...authTraces, ...nextjsTraces],
-    builds: [...(readDataValue("questions_build.js", "QUESTIONS_BUILD") || []), ...sqlOrmBuilds, ...authBuilds, ...nextjsBuilds],
+    trace: [...(readDataValue("questions_trace.js", "QUESTIONS_TRACE") || []), ...sqlOrmTraces, ...authTraces, ...nextjsTraces, ...nestjsTraces, ...devopsTraces],
+    builds: [...(readDataValue("questions_build.js", "QUESTIONS_BUILD") || []), ...sqlOrmBuilds, ...authBuilds, ...nextjsBuilds, ...nestjsBuilds, ...devopsBuilds],
     bugs: [
       ...(readDataValue("questions_bug.js", "QUESTIONS_BUG") || []),
       ...listQuestions(sqlOrmQuestions, "bugHunt"),
       ...listQuestions(authQuestions, "bugHunt"),
       ...listQuestions(nextjsQuestions, "bugHunt"),
+      ...listQuestions(nestjsQuestions, "bugHunt"),
+      ...listQuestions(devopsQuestions, "bugHunt"),
     ],
     pairMatch: readDataValue("pair_match.js", "PAIR_MATCH_GAMES") || [],
     capstones: readDataValue("capstones.js", "CAPSTONE_PROJECTS") || [],
@@ -325,7 +339,7 @@ function toMarkdown(report) {
     ...(report.validation.failures.length ? report.validation.failures.map((item) => `- ${item}`) : ["- Blueprint metadata is valid."]),
     "",
   ];
-  return `${lines.join("\n")}\n`;
+  return `${lines.join("\n").replace(/\n+$/, "")}\n`;
 }
 
 function printSummary(report) {

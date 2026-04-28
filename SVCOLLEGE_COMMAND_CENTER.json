@@ -4,30 +4,14 @@
   "finishLine": {
     "target": "SVCollege AI & Full Stack only",
     "ready": false,
-    "readiness": 85.3,
-    "covered": 11,
-    "partial": 2,
-    "gap": 2,
+    "readiness": 92.7,
+    "covered": 13,
+    "partial": 1,
+    "gap": 1,
     "modules": 15,
-    "releaseBlockers": 4
+    "releaseBlockers": 2
   },
   "redFirstQueue": [
-    {
-      "title": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
-      "status": "partial",
-      "readiness": 90,
-      "level": "amber",
-      "nextAction": "להוסיף DevOps Foundations + deploy checklist + Docker mini-build.",
-      "priority": 4
-    },
-    {
-      "title": "Frameworks צד-שרת — Nest.js modules + dependency injection",
-      "status": "gap",
-      "readiness": 0,
-      "level": "red",
-      "nextAction": "להוסיף Nest.js bridge אחרי Express: controllers, providers, modules, DI ו-validation pipe.",
-      "priority": 5
-    },
     {
       "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
       "status": "gap",
@@ -84,6 +68,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -107,6 +99,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -120,6 +120,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -167,6 +175,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -238,6 +254,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -261,6 +285,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -274,6 +306,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -321,6 +361,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -402,6 +450,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -425,6 +481,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -438,6 +502,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -485,6 +557,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -571,6 +651,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -594,6 +682,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -607,6 +703,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -654,6 +758,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -735,6 +847,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -758,6 +878,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -771,6 +899,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -818,6 +954,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -894,6 +1038,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -917,6 +1069,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -930,6 +1090,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -977,6 +1145,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -1048,6 +1224,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -1071,6 +1255,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -1084,6 +1276,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -1131,6 +1331,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -1222,6 +1430,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -1245,6 +1461,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -1258,6 +1482,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -1305,6 +1537,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -1381,6 +1621,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -1404,6 +1652,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -1417,6 +1673,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -1464,6 +1728,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -1540,6 +1812,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -1563,6 +1843,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -1576,6 +1864,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -1623,6 +1919,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -1694,6 +1998,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -1717,6 +2029,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -1730,6 +2050,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -1777,6 +2105,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -1817,9 +2153,14 @@
     },
     {
       "title": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
-      "status": "partial",
-      "readiness": 90,
+      "status": "covered",
+      "readiness": 100,
       "lessonFiles": [
+        {
+          "lessonId": "lesson_devops_deploy",
+          "file": "data/lesson_devops_deploy.js",
+          "exists": true
+        },
         {
           "lessonId": "react_blueprint",
           "file": "data/react_blueprint.js",
@@ -1827,7 +2168,7 @@
         }
       ],
       "questions": {
-        "count": 42,
+        "count": 76,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -1848,11 +2189,19 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
       "activities": {
-        "count": 1,
+        "count": 10,
         "files": [
           {
             "file": "data/questions_trace.js",
@@ -1871,6 +2220,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -1884,6 +2241,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -1931,6 +2296,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -1971,11 +2344,17 @@
     },
     {
       "title": "Frameworks צד-שרת — Nest.js modules + dependency injection",
-      "status": "gap",
-      "readiness": 0,
-      "lessonFiles": [],
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_nestjs",
+          "file": "data/lesson_nestjs.js",
+          "exists": true
+        }
+      ],
       "questions": {
-        "count": 0,
+        "count": 34,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -1996,11 +2375,19 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
       "activities": {
-        "count": 0,
+        "count": 9,
         "files": [
           {
             "file": "data/questions_trace.js",
@@ -2019,6 +2406,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -2032,6 +2427,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -2079,6 +2482,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -2150,6 +2561,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -2173,6 +2592,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -2186,6 +2613,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -2233,6 +2668,14 @@
         },
         {
           "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
           "exists": true
         }
       ],
@@ -2298,6 +2741,14 @@
           {
             "file": "data/svcollege_questions_nextjs.js",
             "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
           }
         ]
       },
@@ -2321,6 +2772,14 @@
             "exists": true
           },
           {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
             "file": "data/questions_build.js",
             "exists": true
           },
@@ -2334,6 +2793,14 @@
           },
           {
             "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
             "exists": true
           },
           {
@@ -2382,6 +2849,14 @@
         {
           "file": "tests/svcollege-nextjs-content.test.js",
           "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
+          "exists": true
         }
       ],
       "tabEvidence": {
@@ -2422,7 +2897,7 @@
   ],
   "noEvidenceGate": {
     "status": "passed",
-    "checkedCoveredModules": 11,
+    "checkedCoveredModules": 13,
     "failures": [],
     "rule": "`covered` is forbidden without lesson + practice + tab + test evidence."
   },
@@ -2491,21 +2966,9 @@
     }
   },
   "activeParallelMode": {
-    "status": "limited-parallel-museum-only-after-sql-auth-nextjs-integration",
-    "note": "Full merge train is paused. SQL/ORM, Auth/Security and Next.js are integrated; only the Museum session remains active in parallel.",
-    "activeExternalSessions": [
-      {
-        "id": "museum",
-        "branch": "codex/museum",
-        "owner": "external Museum session",
-        "scope": [
-          "museum.html",
-          "museum-specific sections in app.js",
-          "museum-specific CSS",
-          "museum docs/prompts/assets"
-        ]
-      }
-    ],
+    "status": "single-session-finish-line-after-sql-auth-nextjs-museum-nestjs-devops",
+    "note": "Full merge train is paused. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js and DevOps are integrated; current work continues one Finish Line 1 module at a time.",
+    "activeExternalSessions": [],
     "completedExternalSessions": [
       {
         "id": "sql-orm",
@@ -2524,11 +2987,27 @@
         "branch": "current",
         "status": "integrated",
         "result": "Next.js module covered: lesson_nextjs + Next.js practice + readiness evidence."
+      },
+      {
+        "id": "museum",
+        "branch": "codex/finish-line1-museum-integration-20260428",
+        "status": "integrated",
+        "result": "Museum plan and experience shell merged without tracking MP4 assets."
+      },
+      {
+        "id": "nestjs",
+        "branch": "codex/svcollege-backend-prod-coverage-20260428",
+        "status": "integrated",
+        "result": "Nest.js module covered: lesson_nestjs + Nest.js practice + readiness evidence."
+      },
+      {
+        "id": "devops",
+        "branch": "codex/svcollege-backend-prod-coverage-20260428",
+        "status": "integrated",
+        "result": "DevOps module covered: lesson_devops_deploy + deploy/Docker/CI practice + readiness evidence."
       }
     ],
     "pausedSessions": [
-      "DevOps",
-      "Nest.js",
       "AI Engineering",
       "Question Quality",
       "All Tabs QA"
@@ -2537,7 +3016,7 @@
       "SVCollege governance docs",
       "Command Center reports",
       "readiness scripts",
-      "post-SQL/Auth/Next.js integration quality gates",
+      "post-SQL/Auth/Next.js/Museum integration quality gates",
       "non-museum planning documents"
     ]
   },
@@ -2617,7 +3096,7 @@
         "ownership": "smoke/e2e/tests + small fixes"
       }
     ],
-    "nextOpenRule": "Limited mode active: do not open the full train. SQL/ORM, Auth/Security and Next.js are integrated; only Museum remains active until the user re-enables wider merging."
+    "nextOpenRule": "Limited mode active: do not open the full train. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js and DevOps are integrated; open one Finish Line 1 module at a time unless the user re-enables wider merging."
   },
   "docs": [
     {

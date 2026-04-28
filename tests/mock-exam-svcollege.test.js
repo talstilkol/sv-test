@@ -23,6 +23,11 @@ describe("SVCollege mock exam integration", () => {
     expect(app).toContain("const moduleBreakdown = {}");
     expect(app).toContain("moduleBreakdown[moduleInfo.id]");
     expect(app).toContain("פירוק לפי מודולי SVCollege");
+    expect(app).toContain("/^lesson_(20|sql_orm)::/i.test(k)");
+    expect(app).toContain("/^lesson_auth_security::/i.test(k)");
+    expect(app).toContain("/^lesson_nextjs::/i.test(k)");
+    expect(app).toContain("/^lesson_nestjs::/i.test(k)");
+    expect(app).toContain("/^lesson_devops_deploy::/i.test(k)");
   });
 
   it("loads the seeded bank before composing an exam", () => {

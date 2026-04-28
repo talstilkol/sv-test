@@ -15,6 +15,8 @@
     typeof LESSON_SQL_ORM !== "undefined" ? LESSON_SQL_ORM : null,
     typeof LESSON_AUTH_SECURITY !== "undefined" ? LESSON_AUTH_SECURITY : null,
     typeof LESSON_NEXTJS !== "undefined" ? LESSON_NEXTJS : null,
+    typeof LESSON_NESTJS !== "undefined" ? LESSON_NESTJS : null,
+    typeof LESSON_DEVOPS_DEPLOY !== "undefined" ? LESSON_DEVOPS_DEPLOY : null,
     typeof LESSON_21 !== "undefined" ? LESSON_21 : null,
     typeof LESSON_22 !== "undefined" ? LESSON_22 : null,
     typeof LESSON_23 !== "undefined" ? LESSON_23 : null,
