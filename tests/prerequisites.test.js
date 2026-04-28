@@ -20,6 +20,8 @@ const DATA_FILES = [
   "data/lesson_nextjs.js",
   "data/lesson_nestjs.js",
   "data/lesson_devops_deploy.js",
+  "data/lesson_ai_engineering.js",
+  "data/lesson_design_systems.js",
   "data/lesson21.js",
   "data/lesson22.js",
   "data/lesson23.js",
@@ -38,6 +40,8 @@ const DATA_FILES = [
   "data/svcollege_prerequisites_nextjs.js",
   "data/svcollege_prerequisites_nestjs.js",
   "data/svcollege_prerequisites_devops.js",
+  "data/svcollege_prerequisites_ai_engineering.js",
+  "data/svcollege_prerequisites_design_systems.js",
 ];
 
 function loadCourseData() {

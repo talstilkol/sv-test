@@ -48,7 +48,7 @@
     {
       "id": "miniBuilds",
       "label": "Mini Build",
-      "implemented": 21,
+      "implemented": 23,
       "target": 21,
       "unit": "builds",
       "coverage": 100,
@@ -64,7 +64,7 @@
     {
       "id": "codeTrace",
       "label": "Code Trace",
-      "implemented": 85,
+      "implemented": 89,
       "target": 85,
       "unit": "traces",
       "coverage": 100,
@@ -81,7 +81,7 @@
       "id": "optionFeedback",
       "label": "Per-Distractor Feedback",
       "implemented": 50,
-      "target": 1340,
+      "target": 1357,
       "unit": "MC questions",
       "coverage": 3.7,
       "status": "Partial",
@@ -378,8 +378,8 @@
     {
       "id": "capstones",
       "label": "Capstone Project Track",
-      "implemented": 5,
-      "target": 5,
+      "implemented": 6,
+      "target": 6,
       "unit": "projects",
       "coverage": 100,
       "status": "Done",
@@ -390,16 +390,16 @@
       "enforceStrict": true,
       "enforceEvidenceGate": true,
       "details": {
-        "rubricItems": 100,
-        "conceptLinks": 26
+        "rubricItems": 124,
+        "conceptLinks": 43
       }
     },
     {
       "id": "courseBlueprints",
-      "label": "Course Blueprint Alignment",
-      "implemented": 4,
-      "target": 4,
-      "unit": "blueprints",
+      "label": "SVCollege Course Blueprint Alignment",
+      "implemented": 1,
+      "target": 1,
+      "unit": "active blueprint",
       "coverage": 100,
       "status": "Done",
       "evidence": [
@@ -409,8 +409,8 @@
       "enforceStrict": true,
       "enforceEvidenceGate": true,
       "details": {
-        "modules": 24,
-        "sources": 5
+        "modules": 15,
+        "sources": 1
       }
     }
   ]

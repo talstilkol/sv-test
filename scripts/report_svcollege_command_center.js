@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const readiness = require("./report_svcollege_readiness.js");
 const featureCoverage = require("./report_feature_coverage.js");
+const tabMatrix = require("./report_svcollege_tab_matrix.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_DATE = "2026-04-28";
@@ -31,6 +32,8 @@ const LESSON_FILE_BY_ID = Object.freeze({
   lesson_nextjs: "data/lesson_nextjs.js",
   lesson_nestjs: "data/lesson_nestjs.js",
   lesson_devops_deploy: "data/lesson_devops_deploy.js",
+  lesson_ai_engineering: "data/lesson_ai_engineering.js",
+  lesson_design_systems: "data/lesson_design_systems.js",
   lesson_21: "data/lesson21.js",
   lesson_22: "data/lesson22.js",
   lesson_23: "data/lesson23.js",
@@ -52,6 +55,9 @@ const QUESTION_EVIDENCE_FILES = Object.freeze([
   "data/svcollege_questions_nextjs.js",
   "data/svcollege_questions_nestjs.js",
   "data/svcollege_questions_devops.js",
+  "data/svcollege_questions_ai_engineering.js",
+  "data/svcollege_questions_design_systems.js",
+  "data/svcollege_questions_bridge.js",
 ]);
 
 const ACTIVITY_EVIDENCE_FILES = Object.freeze([
@@ -61,12 +67,18 @@ const ACTIVITY_EVIDENCE_FILES = Object.freeze([
   "data/svcollege_traces_nextjs.js",
   "data/svcollege_traces_nestjs.js",
   "data/svcollege_traces_devops.js",
+  "data/svcollege_traces_ai_engineering.js",
+  "data/svcollege_traces_design_systems.js",
+  "data/svcollege_traces_bridge.js",
   "data/questions_build.js",
   "data/svcollege_builds_sql_orm.js",
   "data/svcollege_builds_auth.js",
   "data/svcollege_builds_nextjs.js",
   "data/svcollege_builds_nestjs.js",
   "data/svcollege_builds_devops.js",
+  "data/svcollege_builds_ai_engineering.js",
+  "data/svcollege_builds_design_systems.js",
+  "data/svcollege_builds_bridge.js",
   "data/questions_bug.js",
   "data/pair_match.js",
   "data/capstones.js",
@@ -83,6 +95,8 @@ const TEST_EVIDENCE_FILES = Object.freeze([
   "tests/svcollege-nextjs-content.test.js",
   "tests/svcollege-nestjs-content.test.js",
   "tests/svcollege-devops-content.test.js",
+  "tests/svcollege-ai-engineering-content.test.js",
+  "tests/svcollege-design-systems-content.test.js",
 ]);
 
 const TAB_EVIDENCE_FILES = Object.freeze([
@@ -94,9 +108,15 @@ const TAB_EVIDENCE_FILES = Object.freeze([
   "tests/lesson-quiz-keys.test.js",
 ]);
 
+const BROWSER_SMOKE_EVIDENCE = Object.freeze({
+  desktop: "pass",
+  mobile: "pending",
+  report: "SVCOLLEGE_BROWSER_SMOKE.md",
+});
+
 const ACTIVE_PARALLEL_MODE = Object.freeze({
-  status: "single-session-finish-line-after-sql-auth-nextjs-museum-nestjs-devops",
-  note: "Full merge train is paused. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js and DevOps are integrated; current work continues one Finish Line 1 module at a time.",
+  status: "single-session-finish-line1-all-modules-covered",
+  note: "Full merge train is paused. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js, DevOps, AI Engineering and Design Systems are integrated. Desktop all-tabs smoke passed; current work focuses on mobile smoke, question depth and hard-question feedback.",
   activeExternalSessions: Object.freeze([]),
   completedExternalSessions: Object.freeze([
     Object.freeze({
@@ -135,17 +155,30 @@ const ACTIVE_PARALLEL_MODE = Object.freeze({
       status: "integrated",
       result: "DevOps module covered: lesson_devops_deploy + deploy/Docker/CI practice + readiness evidence.",
     }),
+    Object.freeze({
+      id: "ai-engineering",
+      branch: "codex/unified-context-tree-tabs-20260428",
+      status: "integrated",
+      result: "AI Engineering module covered: lesson_ai_engineering + OpenAI/Vercel AI SDK/RAG/Agents practice + readiness evidence.",
+    }),
+    Object.freeze({
+      id: "design-systems",
+      branch: "codex/unified-context-tree-tabs-20260428",
+      status: "integrated",
+      result: "Design Systems module covered: lesson_design_systems + shadcn/UI/Radix/variants/form practice + readiness evidence.",
+    }),
   ]),
   pausedSessions: Object.freeze([
-    "AI Engineering",
     "Question Quality",
-    "All Tabs QA",
+    "Mobile All Tabs QA",
   ]),
   currentSessionAllowedScope: Object.freeze([
     "SVCollege governance docs",
     "Command Center reports",
     "readiness scripts",
     "post-SQL/Auth/Next.js/Museum integration quality gates",
+    "mobile all-tabs smoke",
+    "SVCollege question-depth hardening",
     "non-museum planning documents",
   ]),
 });
@@ -225,6 +258,9 @@ function buildDocsStatus() {
     "SVCOLLEGE_COVERAGE_REPORT.md",
     "SVCOLLEGE_READINESS_REPORT.md",
     "SVCOLLEGE_READINESS_REPORT.json",
+    "SVCOLLEGE_TAB_MATRIX.md",
+    "SVCOLLEGE_TAB_MATRIX.json",
+    "SVCOLLEGE_BROWSER_SMOKE.md",
     "SVCOLLEGE_LESSON_INVENTORY.md",
     "SVCOLLEGE_PARALLEL_SESSION_PROMPTS.md",
     "lessons/manifest.json",
@@ -277,9 +313,10 @@ function buildModuleEvidence(readinessReport) {
         files: TAB_EVIDENCE_FILES.map(fileEvidence),
       },
       browserVerification: {
-        status: "pending-session-7",
-        owner: "codex/svcollege-tab-health",
-        note: "Session 7 owns desktop/mobile smoke evidence after content integration.",
+        status: "desktop-pass/mobile-pending",
+        owner: "current",
+        report: BROWSER_SMOKE_EVIDENCE.report,
+        note: "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending.",
       },
     };
   });
@@ -321,6 +358,7 @@ function buildNoEvidenceGate(moduleEvidence) {
 
 function buildReport() {
   const readinessReport = readiness.buildReport();
+  const tabMatrixReport = tabMatrix.buildReport();
   const coverageReport = featureCoverage.buildCoverage();
   const manifest = readJson(LESSONS_MANIFEST_PATH);
   const assets = Array.isArray(manifest.assets) ? manifest.assets : [];
@@ -342,9 +380,20 @@ function buildReport() {
       gap: readinessReport.summary.gap,
       modules: readinessReport.summary.modules,
       releaseBlockers: readinessReport.releaseBlockers.length,
+      tabMatrixGaps: tabMatrixReport.summary.strictGaps + tabMatrixReport.summary.supportGaps,
+      browserSmoke: BROWSER_SMOKE_EVIDENCE,
     },
     redFirstQueue: buildRedFirstQueue(readinessReport),
     moduleEvidence,
+    tabMatrix: {
+      ready: tabMatrixReport.summary.ready,
+      strictCoverage: tabMatrixReport.summary.strictCoverage,
+      strictCells: tabMatrixReport.summary.strictCells,
+      passedCells: tabMatrixReport.summary.passedCells,
+      strictGaps: tabMatrixReport.summary.strictGaps,
+      supportGaps: tabMatrixReport.summary.supportGaps,
+      report: "SVCOLLEGE_TAB_MATRIX.md",
+    },
     noEvidenceGate: buildNoEvidenceGate(moduleEvidence),
     sourceAssets: {
       total: assets.length,
@@ -368,11 +417,12 @@ function buildReport() {
       total: sessions.length,
       sessions,
       nextOpenRule:
-        "Limited mode active: do not open the full train. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js and DevOps are integrated; open one Finish Line 1 module at a time unless the user re-enables wider merging.",
+        "Limited mode active: do not open the full train. All 15 SVCollege modules are covered and desktop all-tabs smoke passed; continue only with mobile all-tabs QA, question-depth hardening, hard-question feedback, or regression fixes unless the user re-enables wider merging.",
     },
     docs: buildDocsStatus(),
     commands: [
       "npm run svcollege:readiness:write",
+      "npm run svcollege:tab-matrix:write",
       "npm run coverage:features:strict",
       "npm run lessons:assets",
       "npm test -- --run",
@@ -477,6 +527,9 @@ function toMarkdown(report) {
     `- Readiness: ${report.finishLine.readiness}%`,
     `- Covered / Partial / Gap: ${report.finishLine.covered}/${report.finishLine.partial}/${report.finishLine.gap}`,
     `- Release blockers: ${report.finishLine.releaseBlockers}`,
+    `- Tab matrix gaps: ${report.finishLine.tabMatrixGaps}`,
+    `- Desktop browser smoke: ${report.finishLine.browserSmoke.desktop} (${report.finishLine.browserSmoke.report})`,
+    `- Mobile browser smoke: ${report.finishLine.browserSmoke.mobile}`,
     "",
     "## Current Parallel Mode",
     "",
@@ -501,6 +554,7 @@ function toMarkdown(report) {
     `- Course blueprint: ${courseBlueprints ? `${courseBlueprints.implemented}/${courseBlueprints.target} ${courseBlueprints.unit}` : "missing"}`,
     `- Per-distractor feedback: ${optionFeedback ? `${optionFeedback.implemented}/${optionFeedback.target} ${optionFeedback.unit} (${optionFeedback.coverage}%)` : "missing"}`,
     `- No-evidence gate: ${report.noEvidenceGate.status} (${report.noEvidenceGate.failures.length} failures)`,
+    `- Module × tab matrix: ${report.tabMatrix.strictCoverage}% (${report.tabMatrix.strictGaps} strict gaps, ${report.tabMatrix.supportGaps} support gaps)`,
     "",
     "## No-Evidence Gate",
     "",
@@ -509,6 +563,14 @@ function toMarkdown(report) {
     "## Module Evidence Matrix",
     "",
     ...mdModuleEvidence(report.moduleEvidence),
+    "",
+    "## Module × Tab Matrix",
+    "",
+    `- Ready: ${statusIcon(report.tabMatrix.ready)}`,
+    `- Strict coverage: ${report.tabMatrix.passedCells}/${report.tabMatrix.strictCells} (${report.tabMatrix.strictCoverage}%)`,
+    `- Strict gaps: ${report.tabMatrix.strictGaps}`,
+    `- Support gaps: ${report.tabMatrix.supportGaps}`,
+    `- Report: \`${report.tabMatrix.report}\``,
     "",
     "## Parallel Sessions",
     "",
@@ -556,7 +618,12 @@ function run(argv = process.argv.slice(2)) {
 
   if (argv.includes("--strict")) {
     const missingDocs = report.docs.filter((doc) => !doc.exists);
-    if (missingDocs.length || report.sourceAssets.rootAssets > 0 || report.noEvidenceGate.failures.length) {
+    if (
+      missingDocs.length ||
+      report.sourceAssets.rootAssets > 0 ||
+      report.noEvidenceGate.failures.length ||
+      !report.tabMatrix.ready
+    ) {
       if (missingDocs.length) {
         console.error(`Missing command-center docs: ${missingDocs.map((doc) => doc.file).join(", ")}`);
       }
@@ -568,6 +635,11 @@ function run(argv = process.argv.slice(2)) {
           `Covered modules without evidence: ${report.noEvidenceGate.failures
             .map((failure) => `${failure.title} (${failure.missing.join(", ")})`)
             .join("; ")}`,
+        );
+      }
+      if (!report.tabMatrix.ready) {
+        console.error(
+          `SVCollege tab matrix not ready: ${report.tabMatrix.strictGaps} strict gaps, ${report.tabMatrix.supportGaps} support gaps`,
         );
       }
       process.exit(1);

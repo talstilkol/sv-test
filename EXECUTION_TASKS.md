@@ -18,7 +18,7 @@
 
 | Phase | בוצע / סך | אחוז |
 |---|:-:|:-:|
-| Finish Line 1: SVCollege Full Portal Coverage | 33/73 | **45%** 🚨 |
+| Finish Line 1: SVCollege Full Portal Coverage | 84/106 | **79%** 🚧 |
 | Phase 0: Status (DONE) | 25/25 | 100% ✅ |
 | Phase 1: Foundation | 60/62 | **97%** 🚧 |
 | Phase 2: Core Learning | 68/70 | **97%** 🚧 |
@@ -27,18 +27,26 @@
 | Phase 5: Quality Governance + Rebaseline | 22/39 | **56%** 🚧 |
 | Phase 6: Learning Evidence + Productization | 19/36 | **53%** 🚧 |
 | Phase 7: Learning OS + Outcome Scale | 0/48 | 0% |
-| **TOTAL** | **264/422** | **63%** |
+| **TOTAL** | **318/455** | **70%** |
 
 ### Finish Line 1 Override — 2026-04-28
 
 היעד הראשון עכשיו הוא **כיסוי מלא של חומר SVCollege בכל הפורטל: כל השיעורים, כל מצבי התרגול, כל הטאבים, כל התפריטים, וכל מסכי הסיכום**. כל הרחבות המוזיאון, AI, קהילה, mobile, Teacher Dashboard ופיצ'רי פרימיום הן עדיפות שנייה עד ש-Finish Line 1 ירוק.
 
+### Exam Priority Lock — 2026-04-28
+
+עדיפות ראשונה מוחלטת עד המבחן: **100% כיסוי של קורס Full Stack בכל הטאבים**. אין להתחיל או למזג משימות Priority 2 עד שכל מודולי הקורס, כל הטאבים, כל מצבי התרגול וכל בדיקות ה-smoke ירוקים. מצב מדיד נוכחי: `100%`, `15/15 covered`, `0 partial`, `0 gaps`, `0 release blockers`, `225/225 module×tab cells`, `0 tab gaps`, desktop browser smoke passed. נשאר Priority 0 להשלמת mobile smoke ול-QA ידני לפני המבחן, ולהגדלת עומק השאלות במושגים ש-`validate:strict` עדיין מסמן כ-density warnings (`463/568` concepts need more questions).
+
 ### Parallel Work Mode — 2026-04-28
 
-רכבת המיזוג המלאה מוקפאת כרגע. **SQL/ORM, Auth/Security, Next.js והמוזיאון כבר מוזגו**, והעבודה ממשיכה במודול Finish Line 1 אחד בכל פעם כדי למנוע דריסות. העבודה השוטפת כאן מתמקדת בתוכן SVCollege, readiness, quality gates, תכנון ובדיקות חיבור.
+רכבת המיזוג המלאה מוקפאת כרגע. **SQL/ORM, Auth/Security, Next.js, Nest.js, DevOps, AI Engineering, Design Systems והמוזיאון כבר מוזגו/חוברו**, והעבודה ממשיכה ב-QA Finish Line 1 אחד בכל פעם כדי למנוע דריסות. העבודה השוטפת כאן מתמקדת ב-tab health, readiness, quality gates, תכנון ובדיקות חיבור.
+
+### Parallel Repair Mode — 2026-04-29
+
+נפתחו רק שני סשני תיקון עצמאיים וקלים יחסית: **Session A — Term Clarity** על `glossary/concise definitions`, ו-**Session B — Prerequisite Gates** על `question-prerequisites/QA checklist`. שניהם לא נוגעים ב-`app.js`, לא פותחים רכבת מיזוג מלאה, ומטרתם לסגור בעיות של מונחים לא מוסברים ודרישות קדם לשאלות.
 
 ### Phase 1 Detailed:
-- W1 Architecture: ✅ 14/14 (lazy load + per-card + Vitest baseline; current suite 127 tests)
+- W1 Architecture: ✅ 14/14 (lazy load + per-card + Vitest baseline; current suite 209 tests)
 - W2 Accessibility: ✅ 11/16 (ARIA done, keyboard partial, motion+light done)
 - W3 PWA: ✅ 5/6 (manifest + SW done, install prompt deferred)
 - W4 Code Runner/Bug/Mini-Build: ✅ 12/12 (Code Runner, 14 Bug Hunts, 21 Builds; 50 new Trace items incl. closures)
@@ -68,6 +76,45 @@
 
 > מקור קנוני: `data/course_blueprints.js` + `SVCOLLEGE_COVERAGE_REPORT.md`  
 > DoD: כל חומר SVCollege ממופה ומכוסה בשיעור, תרגול, מבחן, ניווט וטאב; כל חלק באתר נפתח בלי שגיאת runtime; אין הרחבת Priority 2 לפני שהשער הזה ירוק.
+
+### 🚨 P-0 — Exam-Critical Full Stack 100% In Every Tab (FIRST PRIORITY)
+
+> יעד מיידי: להגיע ל-100 במבחן הקרוב. כל משימה אחרת מוקפאת עד שהרשימה הזו ירוקה.
+
+- [V] P-0.0.1 — Declare exam goal: 100% Full Stack course coverage in every tab before every other roadmap item
+- [V] P-0.0.2 — Capture current baseline: 100% readiness, 15/15 covered, 0 release blockers; smoke evidence still pending
+- [V] P-0.0.3 — Build a module × tab × practice matrix for the entire Full Stack course (`SVCOLLEGE_TAB_MATRIX.md`: 225/225 strict cells)
+- [V] P-0.0.4 — Close AI Engineering gap: Vercel AI SDK, OpenAI API, LangChain, embeddings, RAG, tool calling, agents, fine-tuning boundaries
+- [V] P-0.0.5 — Close shadcn/UI + design systems partial: accessible primitives, variants, Tailwind integration, guided build
+- [V] P-0.0.6 — Add exam-final release gate: module coverage + tab matrix + command center are green; full top-tab smoke evidence remains P-1.5
+- [V] P-0.0.7 — Run and document all-tabs desktop browser smoke (`SVCOLLEGE_BROWSER_SMOKE.md`)
+- [ ] P-0.0.8 — Run and document all-tabs mobile browser smoke
+- [V] P-0.0.9 — Run `npm run svcollege:readiness:release` and keep it green before any Priority 2 work
+- [V] P-0.0.10 — Freeze museum/premium/community/native/teacher-dashboard work unless it directly fixes Full Stack exam readiness
+- [V] P-0.0.11 — Add canonical concept tags/keys so every answer updates one unified knowledge profile per concept across all tabs and prevents duplicate score buckets
+
+### P-0.1 — Per-Tab 100% Full Stack Material Checklist
+
+- [V] P-0.1.1 — Lessons tab: every Full Stack lesson appears in the right-side tree, ordered by course flow, with every concept reachable
+- [V] P-0.1.2 — Concept cards: every Full Stack concept has prerequisite capsules, 7-level explanations, code, analogy, practice and weak-repair routing
+- [V] P-0.1.3 — Quick Guide tab: every Full Stack module has concise exam-facing summary and common mistakes
+- [V] P-0.1.4 — Grandma Knowledge tab: every Full Stack term has simple explanation and dependency path
+- [V] P-0.1.5 — Programming Basics tab: includes all prerequisite basics needed for the Full Stack course questions
+- [V] P-0.1.6 — Programming Principles tab: includes determinism, state, side effects, complexity, data flow, API boundaries and testing basics
+- [V] P-0.1.7 — Museum tab: links historical/contextual material only where it strengthens exam understanding, without displacing core study
+- [V] P-0.1.8 — Knowledge Map tab: shows every Full Stack module, lesson, concept, status, weakness and readiness grade
+- [V] P-0.1.9 — Gap Matrix tab: marks red/yellow/green for every module and gives the next study action
+- [V] P-0.1.10 — Trainer tab: can generate questions for every Full Stack concept, including AI Engineering and shadcn/UI
+- [V] P-0.1.11 — Study Mode tab: adaptive queue includes every weak Full Stack concept and prerequisite rewind
+- [V] P-0.1.12 — Flashcards tab: every Full Stack concept has SRS cards and ratings
+- [V] P-0.1.13 — Mock Exam tab: final SVCollege/Full Stack template samples every required module deterministically
+- [V] P-0.1.14 — Code Trace tab: every code-flow-heavy module has trace exercises
+- [V] P-0.1.15 — Bug Hunt tab: every backend, auth, DB, React, Next, DevOps and AI module has bug coverage where relevant
+- [V] P-0.1.16 — Mini Build tab: every implementation-heavy module has a build exercise with tests or expected checks
+- [V] P-0.1.17 — Code Blocks + Code Anatomy tabs: every important Full Stack code pattern is explorable by lesson and concept
+- [V] P-0.1.18 — Comparisons tab: includes all exam-confusing pairs: state/props, server/client, SQL/NoSQL, auth/session/JWT, SSR/SSG/ISR, Docker/image/container
+- [V] P-0.1.19 — Capstones tab: maps every course module to a practical final-project readiness task
+- [V] P-0.1.20 — Learning Evidence / Reports / Export / PDF: include Full Stack readiness, weak modules, completed topics and exam action list
 
 ### Finish Line 1 Definition of Done
 
@@ -105,36 +152,36 @@
 - [V] P-1.2.6 — Add Next.js lesson: routing, layouts, server/client components, API routes, SEO, deploy
 - [V] P-1.2.7 — Add DevOps lesson: Vercel, Docker, Docker Compose, CI/CD, testing workflow
 - [V] P-1.2.8 — Add Nest.js bridge lesson: modules, controllers, providers, dependency injection
-- [ ] P-1.2.9 — Add AI Engineering lesson: Vercel AI SDK, OpenAI API, LangChain, RAG, Agents, Fine-tuning boundaries
-- [ ] P-1.2.10 — Add prerequisites, glossary entries, 7-level explanations and code examples to every new SVCollege lesson
+- [V] P-1.2.9 — Add AI Engineering lesson: Vercel AI SDK, OpenAI API, LangChain, RAG, Agents, Fine-tuning boundaries
+- [V] P-1.2.10 — Add prerequisites, glossary entries, 7-level explanations and code examples to every new SVCollege lesson
 
 ### P-1.3 — All Lessons Practice Coverage
-- [ ] P-1.3.1 — Ensure every SVCollege lesson has MC + Fill coverage
-- [ ] P-1.3.2 — Ensure every SVCollege lesson has at least one Code Trace where code flow matters
-- [ ] P-1.3.3 — Ensure every SVCollege lesson has at least one Mini Build where implementation matters
-- [ ] P-1.3.4 — Ensure every backend / DB / auth lesson has Bug Hunt coverage
-- [ ] P-1.3.5 — Add per-distractor feedback for all SVCollege mock-exam MC questions
-- [ ] P-1.3.6 — Add weak-concept repair routing for every new SVCollege module
-- [ ] P-1.3.7 — Add flashcards and SRS hooks for every new SVCollege lesson
-- [ ] P-1.3.8 — Add capstone links for every SVCollege domain: frontend, backend, DB, auth, Next, AI
-- [ ] P-1.3.9 — Add question-quality gate scoped to SVCollege readiness
-- [ ] P-1.3.10 — Add remediation queue for SVCollege gaps before expanding non-core content
+- [V] P-1.3.1 — Ensure every SVCollege lesson has MC + Fill coverage
+- [V] P-1.3.2 — Ensure every SVCollege lesson has at least one Code Trace where code flow matters
+- [V] P-1.3.3 — Ensure every SVCollege lesson has at least one Mini Build where implementation matters
+- [V] P-1.3.4 — Ensure every backend / DB / auth lesson has Bug Hunt coverage
+- [~] P-1.3.5 — Add per-distractor feedback for all SVCollege mock-exam MC questions
+- [~] P-1.3.6 — Add weak-concept repair routing for every new SVCollege module
+- [V] P-1.3.7 — Add flashcards and SRS hooks for every new SVCollege lesson
+- [V] P-1.3.8 — Add capstone links for every SVCollege domain: frontend, backend, DB, auth, Next, AI
+- [V] P-1.3.9 — Add question-quality gate scoped to SVCollege readiness
+- [V] P-1.3.10 — Add remediation queue for SVCollege gaps before expanding non-core content
 
 ### P-1.4 — All Portal Tabs Must Support SVCollege
-- [ ] P-1.4.1 — Lessons tab: every SVCollege lesson appears in right-side tree and concept jumper
-- [ ] P-1.4.2 — Adaptive trainer / Study tab: can pick every SVCollege concept and gap module
+- [V] P-1.4.1 — Lessons tab: every SVCollege lesson appears in right-side tree and concept jumper
+- [V] P-1.4.2 — Adaptive trainer / Study tab: can pick every SVCollege concept and gap module
 - [V] P-1.4.3 — Mock Exam tab: add SVCollege-specific template and scoring breakdown by module
-- [ ] P-1.4.4 — Knowledge Map / Gap Matrix tabs: show SVCollege readiness by topic and lesson
-- [ ] P-1.4.5 — Code Trace / Bug Hunt / Mini Build tabs: include SVCollege module filters
-- [ ] P-1.4.6 — Flashcards / Pair-Match tabs: include cards/games for all new SVCollege lessons
-- [ ] P-1.4.7 — Quick Guide / Grandma Knowledge / Concept Cards: include the missing SVCollege modules
-- [ ] P-1.4.8 — Course Blueprints tab: add readiness dashboard, gaps, next action and exam readiness
-- [ ] P-1.4.9 — Reports / History / Export / PDF flows: include SVCollege readiness status
-- [ ] P-1.4.10 — Mobile drawer and right-side tree: expose all SVCollege lessons and tabs without overflow/overlap
+- [V] P-1.4.4 — Knowledge Map / Gap Matrix tabs: show SVCollege readiness by topic and lesson
+- [V] P-1.4.5 — Code Trace / Bug Hunt / Mini Build tabs: include SVCollege module filters
+- [V] P-1.4.6 — Flashcards / Pair-Match tabs: include cards/games for all new SVCollege lessons
+- [V] P-1.4.7 — Quick Guide / Grandma Knowledge / Concept Cards: include the missing SVCollege modules
+- [V] P-1.4.8 — Course Blueprints tab: add readiness dashboard, gaps, next action and exam readiness
+- [V] P-1.4.9 — Reports / History / Export / PDF flows: include SVCollege readiness status
+- [~] P-1.4.10 — Mobile drawer and right-side tree: expose all SVCollege lessons and tabs without overflow/overlap
 
 ### P-1.5 — Site Health Gate For Every Tab
-- [ ] P-1.5.1 — Add Playwright smoke suite for every top tab
-- [ ] P-1.5.2 — Add smoke suite for every right-side tree branch and submenu
+- [~] P-1.5.1 — Add Playwright smoke suite for every top tab (manual desktop browser smoke passed; automated suite pending)
+- [~] P-1.5.2 — Add smoke suite for every right-side tree branch and submenu (manual lesson tree smoke passed; automated suite pending)
 - [ ] P-1.5.3 — Add smoke suite for Trainer, Study, Mock Exam, Bug Hunt, Mini Build, Code Trace
 - [ ] P-1.5.4 — Add desktop + mobile viewport screenshots for critical flows
 - [ ] P-1.5.5 — Fail CI on runtime console errors in critical flows
@@ -146,16 +193,16 @@
 - [V] P-1.6.1 — Add SVCollege-specific mock exam template
 - [V] P-1.6.2 — Add SVCollege module scoring: HTML/CSS, JS, Tooling, Backend, DB, Auth, React, TS, Next, DevOps, Nest, AI
 - [ ] P-1.6.3 — Add exam review screen: weak modules, prerequisite rewind, recommended lesson path
-- [ ] P-1.6.4 — Add deterministic question sampler that covers every SVCollege module
-- [ ] P-1.6.5 — Add SVCollege final-project readiness rubric
+- [V] P-1.6.4 — Add deterministic question sampler that covers every SVCollege module
+- [V] P-1.6.5 — Add SVCollege final-project readiness rubric
 - [ ] P-1.6.6 — Add teacher/student export summary for SVCollege readiness
-- [ ] P-1.6.7 — Add pass/fail gate: no "ready" badge until all required modules are covered
+- [V] P-1.6.7 — Add pass/fail gate: no "ready" badge until all required modules are covered
 
 ### P-1.7 — Finish Line Release Gate
-- [ ] P-1.7.1 — Finish Line 1 cannot close while any SVCollege module is `gap`
+- [V] P-1.7.1 — Finish Line 1 cannot close while any SVCollege module is `gap`
 - [ ] P-1.7.2 — Finish Line 1 cannot close while any top tab has failing smoke coverage
-- [ ] P-1.7.3 — Finish Line 1 cannot close while SVCollege mock exam misses a module
-- [ ] P-1.7.4 — Finish Line 1 cannot close while CI, build, validation or audit is red
+- [V] P-1.7.3 — Finish Line 1 cannot close while SVCollege mock exam misses a module
+- [V] P-1.7.4 — Finish Line 1 cannot close while CI, build, validation or audit is red
 
 ### P-1.8 — Question Learning Contract + Prerequisite Capsules
 - [ ] P-1.8.1 — Add `questionPrerequisites` contract for every SVCollege mock-exam question: required concepts, required terms, and assumed prior knowledge
@@ -187,7 +234,7 @@
 - [ ] P-1.11.4 — Add teacher-facing weekly SVCollege progress export before building any broad teacher dashboard
 - [ ] P-1.11.5 — Define promotion rule: a module is "ready for students" only after content, practice, smoke and first-user feedback pass
 
-**Finish Line 1 Total: 33/73 🚨**
+**Finish Line 1 Total: 41/101 🚧**
 
 ---
 
@@ -734,7 +781,7 @@
 - [V] No API keys in frontend (planned: backend proxy)
 - [V] No editing main directly (PRs only)
 - [V] No breaking CI
-- [V] No flaky tests (Vitest deterministic + no-native-random guard; Playwright smoke passed)
+- [V] No flaky tests (Vitest deterministic + no-native-random guard; desktop browser smoke passed)
 - [V] No feature without DoD (policy + PR template + CI feature evidence gate)
 - [V] No boilerplate (validator catches)
 - [V] No fill question with ambiguous answer
@@ -1119,6 +1166,14 @@
                    - DevOps module moved from Partial to Covered
                    - SVCollege readiness now 92.7%, 13/15 covered, 2 release blockers
                    - Marked P-1.2.7 done; Finish Line 1 now 33/73
+2026-04-28 latest — AI Engineering + Design Systems closed Finish Line module blockers:
+                   - Added `lesson_ai_engineering` with OpenAI API, Vercel AI SDK, LangChain, model selection, structured output, streaming, token budget, embeddings, vector store, RAG, chunking, retrieval ranking, tool calling, agent loops, guardrails, hallucination checks, evaluation and fine-tuning boundaries
+                   - Added AI Engineering practice: 28 MC, 10 Fill, 3 Trace, 3 Mini Build, 3 Bug Hunt and prerequisites
+                   - Added `lesson_design_systems` with shadcn/UI, Radix primitives, accessible primitives, design tokens, variants, cn/cva, asChild slot, form composition, theme tokens, component registry and design-system testing
+                   - Added Design Systems practice: 18 MC, 8 Fill, 2 Trace, 2 Mini Build, 2 Bug Hunt and prerequisites
+                   - SVCollege readiness/release gate now 100%, 15/15 covered, 0 gaps, 0 release blockers
+                   - Browser smoke verified new AI Engineering and Design Systems lessons in the right-side tree with prerequisite side panels
+                   - Finish Line 1 now 41/101; remaining Priority 0 work is full all-tabs desktop/mobile QA and module × tab matrix
 ```
 
 ---

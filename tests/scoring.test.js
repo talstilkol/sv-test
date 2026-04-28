@@ -8,6 +8,11 @@ let isSrsDue;
 let needsCodeFill;
 let nextNeedFor;
 let masteryPercent;
+let hasMasteryProof;
+let isScoreMastered;
+let questionChallengeLevel;
+let masteryProofThreshold;
+let qualifiesForMasteryProof;
 
 beforeAll(async () => {
   ({
@@ -18,6 +23,11 @@ beforeAll(async () => {
     needsCodeFill,
     nextNeedFor,
     masteryPercent,
+    hasMasteryProof,
+    isScoreMastered,
+    questionChallengeLevel,
+    masteryProofThreshold,
+    qualifiesForMasteryProof,
   } = await import("../src/core/scoring.js"));
 });
 
@@ -117,8 +127,12 @@ describe("Mastery States — getMasteryState", () => {
     expect(getMasteryState({ attempts: 5, level: 6 })).toBe("review");
   });
 
-  it("level 7 → mastered", () => {
-    expect(getMasteryState({ attempts: 10, level: 7 })).toBe("mastered");
+  it("level 7 without proof → still review", () => {
+    expect(getMasteryState({ attempts: 10, level: 7 })).toBe("review");
+  });
+
+  it("level 7 with deep proof → mastered", () => {
+    expect(getMasteryState({ attempts: 10, level: 7, masteryProof: { passed: true } })).toBe("mastered");
   });
 
   it("level>=6 + SRS overdue → at-risk", () => {
@@ -154,14 +168,50 @@ describe("Concept next step helpers", () => {
     expect(nextNeedFor(concept, { level: 1, passedMC: false, passedFill: false })).toBe("mc");
     expect(nextNeedFor(concept, { level: 1, passedMC: true, passedFill: false })).toBe("fill");
     expect(nextNeedFor(concept, { level: 1, passedMC: true, passedFill: true })).toBe(null);
-    expect(nextNeedFor(concept, { level: 7, passedMC: false, passedFill: false })).toBe(null);
+    expect(nextNeedFor(concept, { level: 7, passedMC: false, passedFill: false })).toBe("mc");
+    expect(nextNeedFor(concept, { level: 7, passedMC: false, passedFill: false, masteryProof: { passed: true } })).toBe(null);
   });
 });
 
 describe("masteryPercent", () => {
-  it("clamps new progress above zero and mastered progress to 100", () => {
+  it("clamps new progress above zero and keeps unproven level 7 below 100", () => {
     expect(masteryPercent({ level: 1, attempts: 0, correct: 0 })).toBe(1);
-    expect(masteryPercent({ level: 7, attempts: 1, correct: 1 })).toBe(100);
+    expect(masteryPercent({ level: 7, attempts: 1, correct: 1 })).toBeLessThan(100);
+    expect(masteryPercent({ level: 7, attempts: 1, correct: 1, masteryProof: { passed: true } })).toBe(100);
     expect(masteryPercent({ level: 3, attempts: 4, correct: 3, passedMC: true, correctRunCount: 2 })).toBeGreaterThan(1);
+  });
+});
+
+describe("Mastery proof gate", () => {
+  it("requires explicit proof before a score is mastered", () => {
+    expect(hasMasteryProof({ level: 7 })).toBe(false);
+    expect(isScoreMastered({ level: 7 })).toBe(false);
+    expect(isScoreMastered({ level: 7, masteryProof: { passed: true } })).toBe(true);
+  });
+
+  it("derives question challenge level deterministically", () => {
+    expect(questionChallengeLevel({ level: 6 }, { difficulty: 2 }, "mc")).toBe(6);
+    expect(questionChallengeLevel({}, { difficulty: 8, codeExample: "const x = 1;" }, "fill")).toBe(4);
+    expect(questionChallengeLevel({}, { difficulty: 3 }, "mc")).toBe(2);
+  });
+
+  it("uses the hardest available level as the mastery threshold", () => {
+    expect(masteryProofThreshold({ difficulty: 7 }, [2, 4, 5])).toBe(5);
+    expect(masteryProofThreshold({ difficulty: 9 }, [])).toBe(6);
+    expect(masteryProofThreshold({ difficulty: 3 }, [])).toBe(3);
+  });
+
+  it("qualifies only answers at the concept's highest available challenge", () => {
+    const concept = { difficulty: 7 };
+    expect(qualifiesForMasteryProof({
+      question: { level: 5 },
+      concept,
+      availableLevels: [2, 5],
+    })).toBe(true);
+    expect(qualifiesForMasteryProof({
+      question: { level: 4 },
+      concept,
+      availableLevels: [2, 5],
+    })).toBe(false);
   });
 });

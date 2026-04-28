@@ -22,8 +22,8 @@ describe("Feature coverage report", () => {
     expect(byId.warStories.implemented).toBe(31);
     expect(byId.miniBuilds.implemented).toBe(23);
     expect(byId.codeTrace.implemented).toBe(89);
-    expect(byId.capstones.implemented).toBe(5);
-    expect(byId.capstones.target).toBe(5);
+    expect(byId.capstones.implemented).toBe(6);
+    expect(byId.capstones.target).toBe(6);
     expect(byId.capstones.status).toBe("Done");
     expect(byId.capstones.details.rubricItems).toBeGreaterThanOrEqual(100);
 

@@ -35,6 +35,9 @@
     "svcollege:readiness:write": "node scripts/report_svcollege_readiness.js --write --summary",
     "svcollege:readiness:strict": "node scripts/report_svcollege_readiness.js --strict --summary",
     "svcollege:readiness:release": "node scripts/report_svcollege_readiness.js --release-gate --summary",
+    "svcollege:tab-matrix": "node scripts/report_svcollege_tab_matrix.js --summary",
+    "svcollege:tab-matrix:write": "node scripts/report_svcollege_tab_matrix.js --write --summary",
+    "svcollege:tab-matrix:strict": "node scripts/report_svcollege_tab_matrix.js --strict --summary",
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:watch": "vitest"

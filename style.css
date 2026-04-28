@@ -203,6 +203,33 @@ body.standalone-museum-mode .programming-museum-view {
   border-bottom: 1px solid var(--border-glass);
 }
 
+.sidebar-brand-home {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: right;
+  display: inline-flex;
+  align-items: baseline;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.sidebar-brand-home:hover,
+.sidebar-brand-home:focus-visible {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 0 12px rgba(99,102,241,0.35));
+}
+
+.sidebar-brand-home:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+  border-radius: 8px;
+}
+
+.sidebar-brand-home .brand-main,
 .sidebar-header h2 {
   font-family: "Outfit", sans-serif;
   font-size: 1.8rem;
@@ -214,6 +241,7 @@ body.standalone-museum-mode .programming-museum-view {
   letter-spacing: -0.5px;
 }
 
+.sidebar-brand-home .brand-sub,
 .sidebar-header h2 span {
   -webkit-text-fill-color: var(--text-muted);
   font-weight: 400;
@@ -347,9 +375,11 @@ body.standalone-museum-mode .programming-museum-view {
 
 /* ========== CONTEXT TREE PANEL ========== */
 .context-tree-panel {
-  width: 260px;
-  min-width: 260px;
-  background: rgba(9, 11, 17, 0.92);
+  width: 292px;
+  min-width: 292px;
+  background:
+    linear-gradient(180deg, rgba(14, 16, 25, 0.96), rgba(5, 7, 12, 0.96)),
+    rgba(9, 11, 17, 0.92);
   border-left: 1px solid var(--border-glass);
   border-right: 1px solid rgba(255,255,255,0.035);
   display: flex;
@@ -359,7 +389,7 @@ body.standalone-museum-mode .programming-museum-view {
 }
 
 .context-tree-head {
-  padding: 1rem 1rem 0.75rem;
+  padding: 1.05rem 1rem 0.85rem;
   border-bottom: 1px solid var(--border-glass);
   display: flex;
   align-items: center;
@@ -369,7 +399,7 @@ body.standalone-museum-mode .programming-museum-view {
 
 .context-tree-head strong {
   color: var(--text-bright);
-  font-size: 0.96rem;
+  font-size: 1.06rem;
   line-height: 1.3;
 }
 
@@ -402,7 +432,31 @@ body.standalone-museum-mode .programming-museum-view {
 .context-tree-body {
   flex: 1;
   overflow-y: auto;
-  padding: 0 0.65rem 1rem;
+  padding: 0 0.7rem 1rem;
+}
+
+.ctx-map-head {
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.025);
+  padding: 0.82rem 0.85rem;
+  margin: 0 0 0.72rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ctx-map-head strong {
+  color: var(--text-bright);
+  font-size: 0.94rem;
+  line-height: 1.35;
+}
+
+.ctx-map-head span {
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.45;
 }
 
 .ctx-empty {
@@ -414,17 +468,20 @@ body.standalone-museum-mode .programming-museum-view {
 
 .ctx-branch {
   margin-bottom: 0.35rem;
+  position: relative;
 }
 
 .ctx-branch > summary {
   list-style: none;
   cursor: pointer;
+  border: 1px solid transparent;
   border-radius: 8px;
-  padding: 0.45rem 0.55rem;
+  padding: 0.5rem 0.55rem;
   background: rgba(255,255,255,0.035);
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
   color: var(--text-main);
   font-size: 0.83rem;
   font-weight: 800;
@@ -434,14 +491,14 @@ body.standalone-museum-mode .programming-museum-view {
 
 .ctx-branch > summary::before {
   content: "▶";
-  color: var(--text-muted);
+  color: #fbbf24;
   font-size: 0.68rem;
   transition: transform 0.16s;
   margin-left: 0.15rem;
 }
 
 .ctx-branch[open] > summary::before {
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
 }
 
 .ctx-branch > summary:hover,
@@ -450,17 +507,33 @@ body.standalone-museum-mode .programming-museum-view {
   color: var(--text-bright);
 }
 
+.ctx-branch.has-active > summary {
+  color: #fef3c7;
+  border: 1px solid rgba(251,191,36,0.18);
+  background: rgba(245,158,11,0.08);
+}
+
 .ctx-children {
-  border-right: 1px dashed rgba(255,255,255,0.08);
-  margin-right: 0.85rem;
-  padding: 0.35rem 0.55rem 0 0;
+  border-right: 1px solid rgba(245,158,11,0.2);
+  margin-right: 1rem;
+  padding: 0.38rem 0.6rem 0 0;
 }
 
 .ctx-label {
-  flex: 1;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ctx-number {
+  direction: ltr;
+  color: #fbbf24;
+  font-weight: 950;
+  font-size: 0.78rem;
+  min-width: 2.4rem;
+  text-align: right;
+  letter-spacing: 0;
   white-space: nowrap;
 }
 
@@ -481,10 +554,11 @@ body.standalone-museum-mode .programming-museum-view {
   background: transparent;
   color: #aab3c5;
   border-radius: 8px;
-  padding: 0.42rem 0.5rem;
-  display: flex;
+  padding: 0.46rem 0.5rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center;
-  gap: 0.42rem;
+  gap: 0.46rem;
   text-align: right;
   cursor: pointer;
   font: inherit;
@@ -497,7 +571,7 @@ body.standalone-museum-mode .programming-museum-view {
   color: #fff;
   border-color: rgba(34,211,238,0.45);
   background: rgba(34,211,238,0.13);
-  box-shadow: inset 3px 0 0 #22d3ee;
+  box-shadow: inset 3px 0 0 #22d3ee, inset -3px 0 0 rgba(251,191,36,0.32);
 }
 
 .ctx-leaf.is-weak { color: #fca5a5; }
@@ -1113,6 +1187,50 @@ body.standalone-museum-mode .programming-museum-view {
   font-size: 0.82rem;
 }
 
+.inline-gloss-term {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: #dbeafe;
+  background: rgba(96, 165, 250, 0.24);
+  border: 1px solid rgba(147, 197, 253, 0.42);
+  border-radius: 4px;
+  padding: 0 0.16rem;
+  font-weight: 900;
+  cursor: help;
+  outline: none;
+}
+
+.inline-gloss-term::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  z-index: 40;
+  right: 0;
+  bottom: calc(100% + 8px);
+  width: min(310px, 78vw);
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid rgba(103, 232, 249, 0.42);
+  background: rgba(3, 7, 18, 0.97);
+  color: #f8fafc;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.45);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  white-space: normal;
+  text-align: right;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.inline-gloss-term:hover::after,
+.inline-gloss-term:focus::after,
+.inline-gloss-term:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .q-prereq-terms {
   margin-top: 0.75rem;
   padding-top: 0.65rem;
@@ -1145,7 +1263,7 @@ body.standalone-museum-mode .programming-museum-view {
 .top-tabs-bar {
   display: flex;
   gap: 0.5rem;
-  padding: 0.9rem 2.5rem 0.6rem;
+  padding: 0.9rem 2.5rem 0.6rem 13.25rem;
   border-bottom: 1px solid rgba(255,255,255,0.04);
   background: linear-gradient(180deg, rgba(99,102,241,0.04) 0%, rgba(20,23,33,0) 100%);
   flex-wrap: wrap;
@@ -15560,6 +15678,7 @@ button.grandma-crumb:hover {
   .mobile-menu-toggle { display: flex; align-items: center; justify-content: center; }
   .top-nav { padding: 1.5rem 1.5rem 1rem; }
   .top-tabs-bar { padding: 0.7rem 1rem 0.5rem; padding-left: 4rem; gap: 0.35rem; }
+  .w12-top-bar { position: static; order: -1; flex: 0 0 auto; margin: 0 0 0.35rem; }
   .top-tab { padding: 0.45rem 0.8rem; font-size: 0.78rem; }
   .top-tab .emoji { font-size: 0.95rem; }
   .content-wrapper { padding: 1rem 1.2rem 2rem; }
@@ -19392,12 +19511,43 @@ body.a11y-large-text pre {
 }
 
 /* === W12 — Streaks, XP, Achievements, Reflection === */
-.w12-top-bar { display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem 1rem; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border-subtle); flex-wrap: wrap; }
-.streak-widget, .xp-widget { font-size: 0.88rem; font-weight: 700; color: #fcd34d; padding: 0.15rem 0.5rem; border-radius: 999px; background: rgba(251,191,36,0.1); }
+.w12-top-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  position: absolute;
+  left: 2.5rem;
+  top: 0.72rem;
+  z-index: 6;
+  padding: 0.25rem 0.35rem;
+  margin: 0;
+  background: rgba(255,255,255,0.035);
+  border: 1px solid var(--border-glass);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.streak-widget, .xp-widget { font-size: 0.82rem; font-weight: 800; color: #fcd34d; padding: 0.16rem 0.55rem; border-radius: 999px; background: rgba(251,191,36,0.1); white-space: nowrap; }
 .streak-widget.freeze-used { color: #bae6fd; background: rgba(56,189,248,0.12); }
 .xp-widget { color: #a5f3fc; background: rgba(6,182,212,0.1); }
-.w12-btn { background: rgba(255,255,255,0.06); border: 1px solid var(--border-subtle); color: var(--text-primary); border-radius: 6px; padding: 0.2rem 0.55rem; font-size: 1rem; cursor: pointer; transition: background 0.15s; }
-.w12-btn:hover { background: rgba(255,255,255,0.12); }
+.w12-btn {
+  width: 2rem;
+  height: 2rem;
+  display: inline-grid;
+  place-items: center;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  border-radius: 10px;
+  padding: 0;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+.w12-btn:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(34,211,238,0.28);
+  transform: translateY(-1px);
+}
 
 /* Achievement toast */
 .achievement-toast { position: fixed; bottom: 5rem; right: 1.5rem; z-index: 800; background: linear-gradient(135deg,rgba(99,102,241,0.95),rgba(139,92,246,0.95)); color: white; border-radius: 12px; padding: 0.75rem 1.25rem; max-width: 280px; box-shadow: 0 8px 30px rgba(0,0,0,0.4); transform: translateX(120%); transition: transform 0.35s cubic-bezier(.16,1,.3,1); }

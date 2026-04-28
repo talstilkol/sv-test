@@ -32,9 +32,63 @@ export function canMarkV(score, concept) {
   return (score.correctRunCount || 0) >= need;
 }
 
+export function hasMasteryProof(score) {
+  return Boolean(
+    score &&
+    (
+      score.masteryChallengePassed === true ||
+      score.deepProofPassed === true ||
+      score.masteryProof === true ||
+      (score.masteryProof && score.masteryProof.passed === true)
+    ),
+  );
+}
+
+export function isScoreMastered(score) {
+  const level = Math.max(1, Math.min(7, Number(score && score.level) || 1));
+  return level >= 7 && hasMasteryProof(score);
+}
+
+export function questionChallengeLevel(question = {}, concept = {}, kind = "mc") {
+  const direct = Number(question.challengeLevel ?? question.level ?? question.difficulty);
+  if (Number.isFinite(direct) && direct > 0) {
+    return Math.max(1, Math.min(6, Math.round(direct)));
+  }
+
+  const difficulty = getDifficulty(concept);
+  const derived = Math.ceil(difficulty / 2);
+  if (kind === "fill" && needsCodeFill(concept)) {
+    return Math.max(4, Math.min(6, derived));
+  }
+  return Math.max(1, Math.min(6, derived));
+}
+
+export function masteryProofThreshold(concept = {}, availableLevels = []) {
+  const levels = (availableLevels || [])
+    .map(Number)
+    .filter((level) => Number.isFinite(level) && level > 0)
+    .map((level) => Math.max(1, Math.min(6, Math.round(level))));
+  if (levels.length) return Math.max(...levels);
+
+  const difficulty = getDifficulty(concept);
+  if (difficulty >= 8) return 6;
+  if (difficulty >= 6) return 5;
+  if (difficulty >= 4) return 4;
+  return 3;
+}
+
+export function qualifiesForMasteryProof({
+  question = {},
+  concept = {},
+  kind = "mc",
+  availableLevels = [],
+} = {}) {
+  return questionChallengeLevel(question, concept, kind) >= masteryProofThreshold(concept, availableLevels);
+}
+
 export function getMasteryState(score, now = Date.now()) {
   if (!score || score.attempts === 0) return MASTERY_STATES.NEW;
-  if (score.level >= 7) return MASTERY_STATES.MASTERED;
+  if (isScoreMastered(score)) return MASTERY_STATES.MASTERED;
 
   const due = score.srsState && score.srsState.due;
   if (typeof due === "number" && due <= now && score.level >= 6) {
@@ -57,7 +111,7 @@ export function needsCodeFill(concept) {
 }
 
 export function nextNeedFor(concept, score) {
-  if (!score || score.level >= 7) return null;
+  if (!score || isScoreMastered(score)) return null;
   if (!score.passedMC) return "mc";
   if (needsCodeFill(concept) && !score.passedFill) return "fill";
   return null;
@@ -65,7 +119,7 @@ export function nextNeedFor(concept, score) {
 
 export function masteryPercent(score) {
   const level = Math.max(1, Math.min(7, Number(score && score.level) || 1));
-  if ((score && score.markedKnown) || level >= 7) return 100;
+  if (isScoreMastered(score)) return 100;
 
   const attempts = Math.max(0, Number(score && score.attempts) || 0);
   const correct = Math.max(0, Number(score && score.correct) || 0);
