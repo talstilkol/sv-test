@@ -26,7 +26,6 @@
 // All answers are normalized: trim + lowercase + collapse whitespace before compare.
 
 var QUESTIONS_TRACE = [
-
   // ============================================================================
   // Lesson 21 — React Basics, JSX, props, map (5 questions)
   // ============================================================================
@@ -999,6 +998,1266 @@ var QUESTIONS_TRACE = [
       "דפוס Update immutable: map עם ternary. כל פריט שמתאים לתנאי — נוצר עותק עם השינוי; השאר נשארים. items המקורי לא משתנה — חיוני ב-React state.",
   },
 
+  // ============================================================================
+  // Lesson 11 — Variables, Arrays, Scope, Functions (5 questions)
+  // ============================================================================
+
+  {
+    id: "trace_11_01",
+    conceptKey: "lesson_11::let",
+    level: 2,
+    title: "let vs const",
+    code: "let a = 5;\nconst b = 10;\na = 20;\nconsole.log(a, b);",
+    steps: [
+      {
+        line: 3,
+        prompt: "מה ערך a אחרי שורה 3?",
+        answer: "20",
+        hint: "let מתיר reassignment.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "20 10",
+        hint: "a=20 (עודכן), b=10 (const = לא ניתן לשינוי)",
+        acceptable: ["20, 10"],
+      },
+    ],
+    explanation:
+      "let = ניתן לassignment מחדש. const = הbinding קבוע (אסור =). שניהם block-scoped.",
+  },
+  {
+    id: "trace_11_02",
+    conceptKey: "lesson_11::By Reference",
+    level: 4,
+    title: "מערך By Reference",
+    code: "const arr1 = [1, 2, 3];\nconst arr2 = arr1;\narr2.push(4);\nconsole.log(arr1.length);\nconsole.log(arr1 === arr2);",
+    steps: [
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "4",
+        hint: "arr2 מפנה לאותו מערך. push(4) שינה את שניהם.",
+      },
+      {
+        line: 5,
+        prompt: "מה יודפס?",
+        answer: "true",
+        hint: "שניהם מצביעים לאותו אובייקט בזיכרון.",
+      },
+    ],
+    explanation:
+      "objects ו-arrays מועברים by reference. arr2 = arr1 לא מעתיק — רק יוצר הפניה נוספת לאותו מערך.",
+  },
+  {
+    id: "trace_11_03",
+    conceptKey: "lesson_11::scope",
+    level: 3,
+    title: "Block scope של let",
+    code: "let x = 'חיצוני';\nif (true) {\n  let x = 'פנימי';\n  console.log(x);\n}\nconsole.log(x);",
+    steps: [
+      {
+        line: 4,
+        prompt: "מה יודפס בשורה 4?",
+        answer: "פנימי",
+        hint: "let x פנימי מסתיר את x חיצוני בblock.",
+      },
+      {
+        line: 6,
+        prompt: "מה יודפס בשורה 6?",
+        answer: "חיצוני",
+        hint: "מחוץ לblock, x חיצוני שולט.",
+      },
+    ],
+    explanation:
+      "let הוא block-scoped. x פנימי חי רק בתוך ה-if. x חיצוני לא נפגע.",
+  },
+  {
+    id: "trace_11_04",
+    conceptKey: "lesson_11::Array",
+    level: 2,
+    title: "אינדקס מערך",
+    code: "const colors = ['red', 'green', 'blue'];\nconsole.log(colors[0]);\nconsole.log(colors[2]);\nconsole.log(colors.length);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה יודפס?",
+        answer: "red",
+        hint: "אינדקס 0 = פריט ראשון.",
+      },
+      {
+        line: 3,
+        prompt: "מה יודפס?",
+        answer: "blue",
+        hint: "אינדקס 2 = פריט שלישי (0,1,2).",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "3",
+        hint: "length = כמות הפריטים.",
+      },
+    ],
+    explanation: "מערכים ממוספרים מ-0. length מחזיר את כמות הפריטים.",
+  },
+  {
+    id: "trace_11_05",
+    conceptKey: "lesson_11::function",
+    level: 3,
+    title: "Arrow function עם implicit return",
+    code: "const double = x => x * 2;\nconst add = (a, b) => { return a + b; };\nconsole.log(double(5));\nconsole.log(add(3, 7));",
+    steps: [
+      {
+        line: 3,
+        prompt: "מה יודפס?",
+        answer: "10",
+        hint: "double(5) = 5 * 2 = 10. Arrow עם ביטוי = implicit return.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "10",
+        hint: "add(3,7) = 3 + 7 = 10. פה יש {} אז צריך return מפורש.",
+      },
+    ],
+    explanation:
+      "arrow function עם ביטוי בודד = implicit return. עם {} = חייב return מפורש.",
+  },
+
+  // ============================================================================
+  // Lesson 12 — Array Methods (5 questions)
+  // ============================================================================
+
+  {
+    id: "trace_12_01",
+    conceptKey: "lesson_12::map",
+    level: 3,
+    title: "map על מערך מספרים",
+    code: "const prices = [10, 20, 30];\nconst withTax = prices.map(p => p * 1.17);\nconsole.log(withTax);\nconsole.log(prices);",
+    steps: [
+      {
+        line: 3,
+        prompt: "מה יודפס (מספרים)?",
+        answer: "[11.7, 23.4, 35.1]",
+        acceptable: ["11.7,23.4,35.1"],
+        hint: "map מכפיל כל מחיר ב-1.17.",
+      },
+      {
+        line: 4,
+        prompt: "האם prices השתנה?",
+        answer: "לא",
+        acceptable: ["no", "[10,20,30]"],
+        hint: "map לא משנה את המקור.",
+      },
+    ],
+    explanation: "map יוצר מערך חדש. המקור לא נפגע — immutable by design.",
+  },
+  {
+    id: "trace_12_02",
+    conceptKey: "lesson_12::filter",
+    level: 3,
+    title: "filter — סינון לפי תנאי",
+    code: "const ages = [15, 22, 8, 30, 12];\nconst adults = ages.filter(a => a >= 18);\nconsole.log(adults);\nconsole.log(adults.length);",
+    steps: [
+      {
+        line: 3,
+        prompt: "מה יודפס?",
+        answer: "[22, 30]",
+        acceptable: ["22,30"],
+        hint: "רק 22 ו-30 >= 18.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "2",
+        hint: "שני איברים עברו את הפילטר.",
+      },
+    ],
+    explanation: "filter מחזיר מערך חדש עם הפריטים שעמדו בתנאי. הסדר נשמר.",
+  },
+  {
+    id: "trace_12_03",
+    conceptKey: "lesson_11::reduce",
+    level: 4,
+    title: "reduce — סכום",
+    code: "const nums = [1, 2, 3, 4, 5];\nconst sum = nums.reduce((acc, n) => acc + n, 0);\nconsole.log(sum);",
+    steps: [
+      {
+        line: 3,
+        prompt: "מה יודפס?",
+        answer: "15",
+        hint: "0+1+2+3+4+5 = 15. initialValue = 0.",
+      },
+    ],
+    explanation: "reduce צובר: acc=0+1=1, 1+2=3, 3+3=6, 6+4=10, 10+5=15.",
+  },
+  {
+    id: "trace_12_04",
+    conceptKey: "lesson_12::forEach",
+    level: 2,
+    title: "forEach לא מחזיר",
+    code: "const names = ['דן', 'רחל'];\nconst result = names.forEach(n => console.log(n));\nconsole.log('result:', result);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה יודפס ראשון?",
+        answer: "דן",
+        hint: "forEach עובר על כל אלמנט בסדר.",
+      },
+      {
+        line: 3,
+        prompt: "מה ערך result?",
+        answer: "undefined",
+        hint: "forEach תמיד מחזיר undefined.",
+      },
+    ],
+    explanation:
+      "forEach מבצע side-effects בלבד, לא מחזיר ערך. אם צריך תוצאה — השתמש ב-map.",
+  },
+  {
+    id: "trace_12_05",
+    conceptKey: "lesson_12::spread",
+    level: 4,
+    title: "spread copy vs reference",
+    code: "const orig = [1, 2, 3];\nconst copy = [...orig];\ncopy.push(4);\nconsole.log(orig.length);\nconsole.log(copy.length);",
+    steps: [
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "3",
+        hint: "spread יצר מערך חדש. orig לא נפגע.",
+      },
+      {
+        line: 5,
+        prompt: "מה יודפס?",
+        answer: "4",
+        hint: "push(4) הוסיף רק ל-copy.",
+      },
+    ],
+    explanation:
+      "spread יוצר shallow copy — מערך חדש עם אותם ערכים. שינויים ב-copy לא משפיעים על orig.",
+  },
+
+  // ============================================================================
+  // Lesson 13 — Objects, Classes, DOM (5 questions)
+  // ============================================================================
+
+  {
+    id: "trace_13_01",
+    conceptKey: "lesson_13::Object",
+    level: 2,
+    title: "גישה לשדות אובייקט",
+    code: "const user = { name: 'דני', age: 25 };\nconsole.log(user.name);\nconsole.log(user['age']);\nuser.age = 26;\nconsole.log(user.age);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה יודפס?",
+        answer: "דני",
+        hint: "dot notation — user.name",
+      },
+      {
+        line: 3,
+        prompt: "מה יודפס?",
+        answer: "25",
+        hint: "bracket notation — user['age']",
+      },
+      {
+        line: 5,
+        prompt: "מה יודפס אחרי העדכון?",
+        answer: "26",
+        hint: "const אוסר reassignment לuser, אבל שדות פנימיים ניתנים לשינוי.",
+      },
+    ],
+    explanation:
+      "const על אובייקט = הbinding קבוע. שדות פנימיים (properties) ניתנים לשינוי.",
+  },
+  {
+    id: "trace_13_02",
+    conceptKey: "lesson_13::class",
+    level: 3,
+    title: "Class עם constructor",
+    code: "class Dog {\n  constructor(name) {\n    this.name = name;\n  }\n  bark() { return this.name + ' אומר הב!'; }\n}\nconst d = new Dog('רקס');\nconsole.log(d.bark());",
+    steps: [
+      {
+        line: 7,
+        prompt: "מה ערך d.name?",
+        answer: "רקס",
+        hint: "constructor קיבל 'רקס' ושמר ב-this.name.",
+      },
+      {
+        line: 8,
+        prompt: "מה יודפס?",
+        answer: "רקס אומר הב!",
+        hint: "bark() מחרוזת this.name + טקסט.",
+      },
+    ],
+    explanation:
+      "new Dog('רקס') קורא ל-constructor עם name='רקס'. this.name נשמר על ה-instance. bark() גשה ל-this.name.",
+  },
+  {
+    id: "trace_13_03",
+    conceptKey: "lesson_13::method",
+    level: 5,
+    title: "this בmethod vs arrow",
+    code: "const obj = {\n  name: 'בית',\n  regular() { return this.name; },\n  arrow: () => typeof this,\n};\nconsole.log(obj.regular());\nconsole.log(obj.arrow());",
+    steps: [
+      {
+        line: 6,
+        prompt: "מה יודפס?",
+        answer: "בית",
+        hint: "regular() נקרא על obj → this = obj.",
+      },
+      {
+        line: 7,
+        prompt: "מה יודפס?",
+        answer: "undefined",
+        acceptable: ["object", "undefined"],
+        hint: "arrow function לא מקבלת this משלה — יורשת מ-global/module.",
+      },
+    ],
+    explanation:
+      "function declaration — this נקבע לפי מי קורא. arrow — this נקבע בזמן ההגדרה (lexical this). במודול/strict mode — this = undefined.",
+  },
+  {
+    id: "trace_13_04",
+    conceptKey: "lesson_13::Object",
+    level: 3,
+    title: "destructuring",
+    code: "const person = { name: 'דני', age: 25, city: 'ת\"א' };\nconst { name, ...rest } = person;\nconsole.log(name);\nconsole.log(rest);",
+    steps: [
+      {
+        line: 3,
+        prompt: "מה יודפס?",
+        answer: "דני",
+        hint: "destructuring שולף name מ-person.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "{ age: 25, city: 'ת\"א' }",
+        acceptable: ['{age:25,city:ת"א}'],
+        hint: "rest operator אוסף את כל מה שלא נשלף.",
+      },
+    ],
+    explanation:
+      "destructuring = שליפת שדות. ...rest = אוסף את השאר לאובייקט חדש.",
+  },
+  {
+    id: "trace_13_05",
+    conceptKey: "lesson_13::extends",
+    level: 4,
+    title: "Class extends",
+    code: "class Animal {\n  constructor(name) { this.name = name; }\n  speak() { return this.name + ' מדבר'; }\n}\nclass Dog extends Animal {\n  speak() { return this.name + ' נובח'; }\n}\nconst d = new Dog('רקס');\nconsole.log(d.speak());",
+    steps: [
+      {
+        line: 9,
+        prompt: "מה יודפס?",
+        answer: "רקס נובח",
+        hint: "Dog דורס את speak() של Animal. d הוא Dog → נובח.",
+      },
+    ],
+    explanation:
+      "extends = ירושה. Dog יורש מ-Animal. speak() ב-Dog דורס (override) את speak() של Animal.",
+  },
+
+  // ============================================================================
+  // Lesson 15 — Closures, Async, Promise (5 questions)
+  // ============================================================================
+
+  {
+    id: "trace_15_01",
+    conceptKey: "lesson_15::Closure",
+    level: 4,
+    title: "closure פשוט",
+    code: "function outer() {\n  let count = 0;\n  return function inner() {\n    count++;\n    return count;\n  };\n}\nconst fn = outer();\nconsole.log(fn());\nconsole.log(fn());\nconsole.log(fn());",
+    steps: [
+      {
+        line: 9,
+        prompt: "מה יודפס?",
+        answer: "1",
+        hint: "קריאה ראשונה: count 0→1.",
+      },
+      {
+        line: 10,
+        prompt: "מה יודפס?",
+        answer: "2",
+        hint: "count שמור ב-closure — ממשיך מ-1 ל-2.",
+      },
+      {
+        line: 11,
+        prompt: "מה יודפס?",
+        answer: "3",
+        hint: "count ממשיך לגדול — 2→3.",
+      },
+    ],
+    explanation:
+      "inner() שומרת reference ל-count דרך closure. כל קריאה ל-fn() מקדמת את אותו count.",
+  },
+  {
+    id: "trace_15_02",
+    conceptKey: "lesson_15::Promise",
+    level: 4,
+    title: "סדר ביצוע — sync vs Promise",
+    code: "console.log('A');\nPromise.resolve().then(() => console.log('B'));\nconsole.log('C');",
+    steps: [
+      {
+        line: 1,
+        prompt: "מה יודפס ראשון?",
+        answer: "A",
+        hint: "קוד סינכרוני רץ ראשון.",
+      },
+      {
+        line: 3,
+        prompt: "מה יודפס שני?",
+        answer: "C",
+        hint: "שורה 3 סינכרונית — רצה לפני ה-microtask.",
+      },
+      {
+        line: 2,
+        prompt: "מה יודפס שלישי?",
+        answer: "B",
+        hint: "then() הוא microtask — רץ אחרי שכל הsync נגמר.",
+      },
+    ],
+    explanation:
+      "סדר: sync code (A, C) → microtask queue (B). Promise.then רץ תמיד אחרי שכל הקוד הסינכרוני נגמר.",
+  },
+  {
+    id: "trace_15_03",
+    conceptKey: "lesson_15::Asynchronous",
+    level: 5,
+    title: "async/await סדר ביצוע",
+    code: "async function go() {\n  console.log('1');\n  await Promise.resolve();\n  console.log('2');\n}\nconsole.log('A');\ngo();\nconsole.log('B');",
+    steps: [
+      {
+        line: 6,
+        prompt: "מה יודפס ראשון?",
+        answer: "A",
+        hint: "sync — לפני go().",
+      },
+      {
+        line: 2,
+        prompt: "מה יודפס שני?",
+        answer: "1",
+        hint: "go() מתחיל — console.log('1') סינכרוני בתוך async.",
+      },
+      {
+        line: 8,
+        prompt: "מה יודפס שלישי?",
+        answer: "B",
+        hint: "await מפסיק את go(). הcontrol חוזר לcaller.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס אחרון?",
+        answer: "2",
+        hint: "אחרי שהsync נגמר, microtask ממשיך את go().",
+      },
+    ],
+    explanation:
+      "async function רצה סינכרונית עד await ראשון. await שולח continuation ל-microtask queue. הcaller ממשיך.",
+  },
+  {
+    id: "trace_15_04",
+    conceptKey: "lesson_15::try",
+    level: 3,
+    title: "try/catch/finally",
+    code: "try {\n  console.log('try');\n  throw new Error('בום');\n  console.log('אחרי throw');\n} catch (e) {\n  console.log('catch:', e.message);\n} finally {\n  console.log('finally');\n}",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה יודפס ראשון?",
+        answer: "try",
+        hint: "try רץ רגיל עד throw.",
+      },
+      {
+        line: 4,
+        prompt: "האם שורה 4 תרוץ?",
+        answer: "לא",
+        acceptable: ["no"],
+        hint: "throw קופץ מיד ל-catch.",
+      },
+      {
+        line: 6,
+        prompt: "מה יודפס?",
+        answer: "catch: בום",
+        acceptable: ["catch:בום"],
+        hint: "e.message = 'בום'.",
+      },
+      {
+        line: 8,
+        prompt: "מה יודפס?",
+        answer: "finally",
+        hint: "finally רץ תמיד — גם אם היה catch.",
+      },
+    ],
+    explanation:
+      "throw קופץ ישירות ל-catch. קוד אחרי throw ב-try לא מתבצע. finally רץ תמיד.",
+  },
+  {
+    id: "trace_15_05",
+    conceptKey: "lesson_15::Closure",
+    level: 5,
+    title: "var בלולאה — closure trap",
+    code: "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 100);\n}\n// מה יודפס אחרי 100ms?",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה יודפס אחרי 100ms?",
+        answer: "3 3 3",
+        acceptable: ["3,3,3", "333"],
+        hint: "var i = function-scoped. כל ה-callbacks חולקים אותו i, שבסוף = 3.",
+      },
+    ],
+    explanation:
+      "var i חי ב-function scope. אחרי הלולאה i=3. כל 3 ה-setTimeout-ים רואים את אותו i. הפתרון: let i (block-scoped).",
+  },
+
+  // ============================================================================
+  // Lesson 16 — Node.js (5 questions)
+  // ============================================================================
+
+  {
+    id: "trace_16_01",
+    conceptKey: "lesson_16::Node.js",
+    level: 3,
+    title: "require ו-module.exports",
+    code: "// math.js\nfunction add(a, b) { return a + b; }\nmodule.exports = { add };\n\n// app.js\nconst math = require('./math');\nconsole.log(math.add(3, 4));",
+    steps: [
+      {
+        line: 7,
+        prompt: "מה יודפס?",
+        answer: "7",
+        hint: "math.add(3,4) = 3 + 4 = 7.",
+      },
+    ],
+    explanation:
+      "module.exports מגדיר מה הmodule מייצא. require() מחזיר את מה שexports-ד.",
+  },
+  {
+    id: "trace_16_02",
+    conceptKey: "lesson_16::Node.js",
+    level: 4,
+    title: "process.argv",
+    code: "// נריץ: node script.js hello world\nconsole.log(process.argv[0]);\nconsole.log(process.argv[2]);\nconsole.log(process.argv.length);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה ב-argv[0]?",
+        answer: "node",
+        acceptable: ["/usr/bin/node", "node path"],
+        hint: "argv[0] = path ל-node executable.",
+      },
+      {
+        line: 3,
+        prompt: "מה ב-argv[2]?",
+        answer: "hello",
+        hint: "argv[0]=node, argv[1]=script.js, argv[2]=hello.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "4",
+        hint: "node, script.js, hello, world = 4 ארגומנטים.",
+      },
+    ],
+    explanation:
+      "process.argv: [node path, script path, ...user args]. ארגומנטים של המשתמש מתחילים ב-index 2.",
+  },
+  {
+    id: "trace_16_03",
+    conceptKey: "lesson_16::npm",
+    level: 3,
+    title: "package.json scripts",
+    code: '// package.json\n{\n  "scripts": {\n    "start": "node server.js",\n    "dev": "nodemon server.js"\n  }\n}\n// מה רץ כשנכתוב: npm run dev?',
+    steps: [
+      {
+        line: 5,
+        prompt: "איזו פקודה תרוץ?",
+        answer: "nodemon server.js",
+        hint: "npm run dev מחפש את key 'dev' ב-scripts.",
+      },
+    ],
+    explanation:
+      "npm run <name> מריץ את הפקודה המוגדרת ב-scripts.<name>. start מיוחד = npm start (ללא run).",
+  },
+  {
+    id: "trace_16_04",
+    conceptKey: "lesson_16::Node.js",
+    level: 4,
+    title: "Event loop — setTimeout(0)",
+    code: "console.log('1');\nsetTimeout(() => console.log('2'), 0);\nconsole.log('3');",
+    steps: [
+      { line: 1, prompt: "מה יודפס ראשון?", answer: "1", hint: "סינכרוני." },
+      {
+        line: 3,
+        prompt: "מה יודפס שני?",
+        answer: "3",
+        hint: "סינכרוני — רץ לפני setTimeout callback.",
+      },
+      {
+        line: 2,
+        prompt: "מה יודפס שלישי?",
+        answer: "2",
+        hint: "setTimeout(fn, 0) הולך ל-timer queue. רץ אחרי שכל הsync נגמר.",
+      },
+    ],
+    explanation:
+      "setTimeout(fn, 0) לא מיידי! ה-callback הולך ל-macrotask queue ורץ רק אחרי שכל הקוד הסינכרוני סיים.",
+  },
+  {
+    id: "trace_16_05",
+    conceptKey: "lesson_16::npm",
+    level: 3,
+    title: "semver — תאימות",
+    code: '// package.json\n"dependencies": {\n  "express": "^4.18.2"\n}\n// איזו גרסה תותקן?',
+    steps: [
+      {
+        line: 3,
+        prompt: "האם 4.19.0 מותרת?",
+        answer: "כן",
+        acceptable: ["yes"],
+        hint: "^ = minor+patch מותרים.",
+      },
+      {
+        line: 3,
+        prompt: "האם 5.0.0 מותרת?",
+        answer: "לא",
+        acceptable: ["no"],
+        hint: "^ = major חייב להישאר 4.",
+      },
+    ],
+    explanation:
+      "^4.18.2 = >=4.18.2 <5.0.0. minor ו-patch עולים, major לא. שומר על backward compatibility.",
+  },
+
+  // ============================================================================
+  // Lesson 17 — HTTP, REST API (5 questions)
+  // ============================================================================
+
+  {
+    id: "trace_17_01",
+    conceptKey: "lesson_17::HTTP",
+    level: 3,
+    title: "HTTP Status Codes",
+    code: "// שרת מחזיר:\nres.status(201).json({ id: 1, name: 'דני' });\n// מה הלקוח יקבל?",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה ה-status code?",
+        answer: "201",
+        hint: "201 = Created — משאב חדש נוצר.",
+      },
+      {
+        line: 2,
+        prompt: "מה ה-body?",
+        answer: '{"id":1,"name":"דני"}',
+        acceptable: ["{id:1,name:דני}"],
+        hint: ".json() שולח JSON.",
+      },
+    ],
+    explanation:
+      "201 Created = משאב חדש נוצר בהצלחה. .json() מגדיר Content-Type: application/json ומסדרל.",
+  },
+  {
+    id: "trace_17_02",
+    conceptKey: "lesson_17::REST API",
+    level: 3,
+    title: "CRUD ל-REST mapping",
+    code: "// GET    /users     = ?\n// POST   /users     = ?\n// PUT    /users/42  = ?\n// DELETE /users/42  = ?",
+    steps: [
+      {
+        line: 1,
+        prompt: "GET /users = איזו פעולה?",
+        answer: "קריאת כל המשתמשים",
+        acceptable: ["read all", "list"],
+      },
+      {
+        line: 2,
+        prompt: "POST /users = ?",
+        answer: "יצירת משתמש חדש",
+        acceptable: ["create"],
+      },
+      {
+        line: 3,
+        prompt: "PUT /users/42 = ?",
+        answer: "עדכון משתמש 42",
+        acceptable: ["update 42", "update"],
+      },
+      {
+        line: 4,
+        prompt: "DELETE /users/42 = ?",
+        answer: "מחיקת משתמש 42",
+        acceptable: ["delete 42", "delete"],
+      },
+    ],
+    explanation:
+      "REST: GET=Read, POST=Create, PUT/PATCH=Update, DELETE=Delete. URL = resource, method = action.",
+  },
+  {
+    id: "trace_17_03",
+    conceptKey: "lesson_17::HTTP",
+    level: 4,
+    title: "fetch עם async/await",
+    code: "async function getUser() {\n  const res = await fetch('/api/users/1');\n  const data = await res.json();\n  console.log(data.name);\n}\n// נניח שה-API מחזיר { name: 'דני', age: 25 }",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה res מכיל?",
+        answer: "Response object",
+        acceptable: ["response"],
+        hint: "fetch מחזיר Response — לא את הנתונים עצמם.",
+      },
+      {
+        line: 3,
+        prompt: "למה צריך עוד await?",
+        answer: "json() מחזיר Promise",
+        acceptable: ["promise"],
+        hint: ".json() גם אסינכרוני — צריך await נוסף.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "דני",
+        hint: "data = { name: 'דני', age: 25 }. data.name = 'דני'.",
+      },
+    ],
+    explanation:
+      "fetch → await → Response object. res.json() → await → parsed JS object. שני await במינימום.",
+  },
+  {
+    id: "trace_17_04",
+    conceptKey: "lesson_17::HTTP",
+    level: 3,
+    title: "query parameters",
+    code: "// URL: /api/search?q=react&page=2\n// Express handler:\napp.get('/api/search', (req, res) => {\n  console.log(req.query.q);\n  console.log(req.query.page);\n});",
+    steps: [
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "react",
+        hint: "req.query.q שולף את q מה-query string.",
+      },
+      {
+        line: 5,
+        prompt: "מה יודפס?",
+        answer: "2",
+        hint: "req.query.page = '2' (string!).",
+      },
+    ],
+    explanation:
+      "query params (?key=value&...) נגישים דרך req.query. כל הערכים הם strings.",
+  },
+  {
+    id: "trace_17_05",
+    conceptKey: "lesson_17::JSON",
+    level: 2,
+    title: "JSON.stringify/parse",
+    code: "const obj = { name: 'דני', age: 25 };\nconst json = JSON.stringify(obj);\nconst parsed = JSON.parse(json);\nconsole.log(typeof json);\nconsole.log(parsed.name);",
+    steps: [
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "string",
+        hint: "JSON.stringify מחזיר string.",
+      },
+      {
+        line: 5,
+        prompt: "מה יודפס?",
+        answer: "דני",
+        hint: "JSON.parse מחזיר אובייקט JS רגיל.",
+      },
+    ],
+    explanation:
+      "stringify: JS object → JSON string. parse: JSON string → JS object. הם הפוכים זה לזה.",
+  },
+
+  // ============================================================================
+  // Lesson 18 — Express Routes, Middleware (5 questions)
+  // ============================================================================
+
+  {
+    id: "trace_18_01",
+    conceptKey: "lesson_18::route",
+    level: 3,
+    title: "Express route handler",
+    code: "const users = [{ id: 1, name: 'דני' }];\napp.get('/users', (req, res) => {\n  res.json(users);\n});\n// GET /users",
+    steps: [
+      {
+        line: 3,
+        prompt: "מה יישלח ללקוח?",
+        answer: '[{"id":1,"name":"דני"}]',
+        acceptable: ["[{id:1,name:דני}]", "JSON array"],
+        hint: "res.json() מסדרל ושולח.",
+      },
+    ],
+    explanation:
+      "app.get() מגדיר handler ל-GET request. res.json() = Content-Type: application/json + body.",
+  },
+  {
+    id: "trace_18_02",
+    conceptKey: "lesson_18::Express",
+    level: 4,
+    title: "סדר middleware",
+    code: "app.use((req, res, next) => {\n  console.log('MW1');\n  next();\n});\napp.use((req, res, next) => {\n  console.log('MW2');\n  next();\n});\napp.get('/test', (req, res) => {\n  console.log('ROUTE');\n  res.send('ok');\n});\n// GET /test",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה יודפס ראשון?",
+        answer: "MW1",
+        hint: "middleware לפי סדר ההגדרה.",
+      },
+      {
+        line: 6,
+        prompt: "מה יודפס שני?",
+        answer: "MW2",
+        hint: "next() ב-MW1 מעביר ל-MW2.",
+      },
+      {
+        line: 10,
+        prompt: "מה יודפס שלישי?",
+        answer: "ROUTE",
+        hint: "next() ב-MW2 מעביר ל-route handler.",
+      },
+    ],
+    explanation:
+      "Express middleware chain: כל MW רץ בסדר שהוגדר. next() מעביר לבא בשרשרת. ללא next() — הבקשה תיתקע.",
+  },
+  {
+    id: "trace_18_03",
+    conceptKey: "lesson_18::POST",
+    level: 3,
+    title: "req.body ב-POST",
+    code: 'app.use(express.json());\napp.post(\'/users\', (req, res) => {\n  const { name, email } = req.body;\n  console.log(name, email);\n  res.status(201).json({ id: 1, name, email });\n});\n// POST /users body: {"name":"דני","email":"dan@x.com"}',
+    steps: [
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "דני dan@x.com",
+        acceptable: ["דני,dan@x.com"],
+        hint: "req.body = parsed JSON body.",
+      },
+      {
+        line: 5,
+        prompt: "מה ה-status code?",
+        answer: "201",
+        hint: ".status(201) = Created.",
+      },
+    ],
+    explanation:
+      "express.json() middleware פרסר את ה-body ושם אותו ב-req.body. חובה להגדיר לפני ה-routes.",
+  },
+  {
+    id: "trace_18_04",
+    conceptKey: "lesson_18::route",
+    level: 4,
+    title: "route params",
+    code: "app.get('/users/:id', (req, res) => {\n  console.log(req.params.id);\n  console.log(typeof req.params.id);\n});\n// GET /users/42",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה יודפס?",
+        answer: "42",
+        hint: ":id מתאים ל-42 ב-URL.",
+      },
+      {
+        line: 3,
+        prompt: "מה יודפס?",
+        answer: "string",
+        hint: "params תמיד strings! גם אם נראה כמו מספר.",
+      },
+    ],
+    explanation:
+      "route params (:id) נגישים דרך req.params. תמיד strings. צריך parseInt() אם רוצים number.",
+  },
+  {
+    id: "trace_18_05",
+    conceptKey: "lesson_18::Express",
+    level: 4,
+    title: "middleware ללא next()",
+    code: "app.use((req, res, next) => {\n  console.log('logger');\n  // שכחנו next()!\n});\napp.get('/test', (req, res) => {\n  res.send('ok');\n});\n// GET /test",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה יודפס?",
+        answer: "logger",
+        hint: "ה-MW קורא console.log.",
+      },
+      {
+        line: 5,
+        prompt: "האם ה-route handler יגיע?",
+        answer: "לא",
+        acceptable: ["no"],
+        hint: "אין next() → הבקשה תיתקע.",
+      },
+    ],
+    explanation:
+      "ללא next(), Express לא ממשיך בchain. הבקשה תיתקע. הלקוח יקבל timeout.",
+  },
+
+  // ============================================================================
+  // Lesson 19 — EJS / Templates (5 questions)
+  // ============================================================================
+
+  {
+    id: "trace_19_01",
+    conceptKey: "lesson_19::script",
+    level: 2,
+    title: "EJS template output",
+    code: "<h1><%= title %></h1>\n<p>שלום, <%= user.name %>!</p>\n// render data: { title: 'דף הבית', user: { name: 'דני' } }",
+    steps: [
+      {
+        line: 1,
+        prompt: "מה יוצג ב-h1?",
+        answer: "דף הבית",
+        hint: "<%= %> מציב את הערך.",
+      },
+      {
+        line: 2,
+        prompt: "מה יוצג ב-p?",
+        answer: "שלום, דני!",
+        hint: "<%= user.name %> = דני.",
+      },
+    ],
+    explanation:
+      "<%= expr %> ב-EJS מציב את ערך הביטוי ב-HTML. הdata מגיע מ-res.render(template, data).",
+  },
+  {
+    id: "trace_19_02",
+    conceptKey: "lesson_19::forEach",
+    level: 3,
+    title: "EJS loop",
+    code: "<ul>\n<% items.forEach(item => { %>\n  <li><%= item %></li>\n<% }) %>\n</ul>\n// data: { items: ['א', 'ב', 'ג'] }",
+    steps: [
+      {
+        line: 3,
+        prompt: "כמה li ייווצרו?",
+        answer: "3",
+        hint: "forEach על 3 פריטים.",
+      },
+      {
+        line: 3,
+        prompt: "מה ה-li הראשון?",
+        answer: "א",
+        hint: "item הראשון = 'א'.",
+      },
+    ],
+    explanation:
+      "<% %> מריץ JS (ללא פלט). <%= %> מציב ערך. forEach ב-<% %> יוצר HTML דינמי.",
+  },
+  {
+    id: "trace_19_03",
+    conceptKey: "lesson_19::if/else",
+    level: 3,
+    title: "EJS conditional",
+    code: "<% if (user.isAdmin) { %>\n  <button>מחק</button>\n<% } else { %>\n  <p>אין הרשאה</p>\n<% } %>\n// data: { user: { isAdmin: false } }",
+    steps: [
+      {
+        line: 2,
+        prompt: "האם button יוצג?",
+        answer: "לא",
+        acceptable: ["no"],
+        hint: "isAdmin = false → else.",
+      },
+      {
+        line: 4,
+        prompt: "מה יוצג?",
+        answer: "אין הרשאה",
+        hint: "ה-else מציג את האלמנט.",
+      },
+    ],
+    explanation:
+      "if/else ב-EJS שולט בתצוגה. רק הבלוק המתאים לתנאי מוזרק ל-HTML.",
+  },
+  {
+    id: "trace_19_04",
+    conceptKey: "lesson_19::function",
+    level: 3,
+    title: "res.render",
+    code: "app.set('view engine', 'ejs');\napp.get('/profile', (req, res) => {\n  res.render('profile', { name: 'דני', age: 25 });\n});\n// views/profile.ejs: <h1><%= name %></h1>",
+    steps: [
+      {
+        line: 3,
+        prompt: "איזה קובץ ייטען?",
+        answer: "views/profile.ejs",
+        acceptable: ["profile.ejs"],
+        hint: "Express מחפש ב-views/ לפי שם.",
+      },
+      {
+        line: 5,
+        prompt: "מה יוצג ב-h1?",
+        answer: "דני",
+        hint: "name = 'דני' מועבר דרך render.",
+      },
+    ],
+    explanation:
+      "res.render(view, data) = מצא את ה-template, הזרק data, ושלח HTML ללקוח.",
+  },
+  {
+    id: "trace_19_05",
+    conceptKey: "lesson_19::script",
+    level: 4,
+    title: "<%= vs <%- (escape)",
+    code: "// data: { html: '<b>מודגש</b>' }\n<p><%= html %></p>\n<p><%- html %></p>",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה יוצג עם <%=?",
+        answer: "&lt;b&gt;מודגש&lt;/b&gt;",
+        acceptable: ["escaped HTML", "טקסט רגיל"],
+        hint: "<%= escaped — ה-HTML מוצג כטקסט רגיל.",
+      },
+      {
+        line: 3,
+        prompt: "מה יוצג עם <%-?",
+        answer: "מודגש",
+        acceptable: ["bold text", "<b>מודגש</b>"],
+        hint: "<%- unescaped — ה-HTML מרונדר כ-HTML אמיתי.",
+      },
+    ],
+    explanation:
+      "<%= escaped (בטוח, מונע XSS). <%- unescaped (מסוכן אם מגיע מuser). תמיד העדף <%=.",
+  },
+
+  // ============================================================================
+  // Lesson 20 — MongoDB (5 questions)
+  // ============================================================================
+
+  {
+    id: "trace_20_01",
+    conceptKey: "lesson_20::MongoDB",
+    level: 3,
+    title: "find() — שליפת documents",
+    code: "// collection: users\n// { name: 'דני', age: 25 }, { name: 'רחל', age: 30 }, { name: 'אבי', age: 25 }\nconst result = await db.collection('users').find({ age: 25 }).toArray();\nconsole.log(result.length);",
+    steps: [
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "2",
+        hint: "שני documents עם age=25: דני ואבי.",
+      },
+    ],
+    explanation:
+      "find({ field: value }) מחזיר cursor. toArray() הופך למערך. filter לפי שדה = exact match.",
+  },
+  {
+    id: "trace_20_02",
+    conceptKey: "lesson_20::MongoDB",
+    level: 3,
+    title: "insertOne — הוספה",
+    code: "const result = await db.collection('users').insertOne({ name: 'דני', age: 25 });\nconsole.log(result.acknowledged);\nconsole.log(typeof result.insertedId);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה יודפס?",
+        answer: "true",
+        hint: "acknowledged = ההוספה הצליחה.",
+      },
+      {
+        line: 3,
+        prompt: "מה יודפס?",
+        answer: "object",
+        acceptable: ["ObjectId"],
+        hint: "insertedId הוא ObjectId — typeof = object.",
+      },
+    ],
+    explanation:
+      "insertOne מוסיף document ומחזיר { acknowledged, insertedId }. MongoDB מייצר _id אוטומטית.",
+  },
+  {
+    id: "trace_20_03",
+    conceptKey: "lesson_20::MongoDB",
+    level: 4,
+    title: "updateOne — עדכון",
+    code: "const result = await db.collection('users').updateOne(\n  { name: 'דני' },\n  { $set: { age: 26 } }\n);\nconsole.log(result.modifiedCount);",
+    steps: [
+      {
+        line: 5,
+        prompt: "מה יודפס?",
+        answer: "1",
+        hint: "מצא וירוני document אחד — modifiedCount=1.",
+      },
+    ],
+    explanation:
+      "updateOne(filter, update) — $set מעדכן שדות ספציפיים ללא מחיקת שאר השדות.",
+  },
+  {
+    id: "trace_20_04",
+    conceptKey: "lesson_20::MongoDB",
+    level: 3,
+    title: "deleteOne",
+    code: "// collection: users — 3 documents\nconst result = await db.collection('users').deleteOne({ name: 'דני' });\nconsole.log(result.deletedCount);\nconst all = await db.collection('users').find({}).toArray();\nconsole.log(all.length);",
+    steps: [
+      { line: 3, prompt: "מה יודפס?", answer: "1", hint: "מחק document אחד." },
+      {
+        line: 5,
+        prompt: "מה יודפס?",
+        answer: "2",
+        hint: "3 - 1 = 2 documents נותרו.",
+      },
+    ],
+    explanation:
+      "deleteOne(filter) מוחק את ה-document הראשון שמתאים. deletedCount אומר כמה נמחקו.",
+  },
+  {
+    id: "trace_20_05",
+    conceptKey: "lesson_20::Mongoose",
+    level: 4,
+    title: "Mongoose Schema",
+    code: "const userSchema = new Schema({\n  name: { type: String, required: true },\n  age: { type: Number, default: 18 },\n});\nconst User = model('User', userSchema);\nconst u = new User({ name: 'דני' });\nconsole.log(u.name);\nconsole.log(u.age);",
+    steps: [
+      {
+        line: 7,
+        prompt: "מה יודפס?",
+        answer: "דני",
+        hint: "name הועבר ב-constructor.",
+      },
+      {
+        line: 8,
+        prompt: "מה יודפס?",
+        answer: "18",
+        hint: "age לא הועבר → default: 18.",
+        acceptable: ["18"],
+      },
+    ],
+    explanation:
+      "Mongoose Schema מגדיר מבנה + validation + defaults. שדה עם default מקבל ערך אוטומטי כשלא מספקים.",
+  },
+
+  // ============================================================================
+  // Closures — scope chain, lexical scope, stale closures (5 questions)
+  // ============================================================================
+
+  {
+    id: "trace_closure_01",
+    conceptKey: "lesson_closures::scope chain",
+    level: 4,
+    title: "scope chain — חיפוש מבפנים החוצה",
+    code: "const globalName = 'Global';\nfunction outer() {\n  const outerName = 'Outer';\n  function inner() {\n    const innerName = 'Inner';\n    console.log(innerName);\n    console.log(outerName);\n    console.log(globalName);\n  }\n  inner();\n}\nouter();",
+    steps: [
+      {
+        line: 6,
+        prompt: "מה יודפס ראשון?",
+        answer: "Inner",
+        hint: "המשתנה נמצא בתוך inner — החיפוש נעצר שם.",
+      },
+      {
+        line: 7,
+        prompt: "מה יודפס שני?",
+        answer: "Outer",
+        hint: "outerName לא נמצא ב-inner, אז ה-scope chain עולה ל-outer.",
+      },
+      {
+        line: 8,
+        prompt: "מה יודפס שלישי?",
+        answer: "Global",
+        hint: "globalName נמצא רק ב-scope החיצוני ביותר.",
+      },
+    ],
+    explanation:
+      "Scope chain מחפש משתנים לפי סדר קבוע: scope פנימי, אחר כך scope אבא, ובסוף global. הוא לא מחפש לפי המקום שממנו קראו לפונקציה.",
+  },
+  {
+    id: "trace_closure_02",
+    conceptKey: "lesson_closures::lexical scope",
+    level: 5,
+    title: "lexical scope — איפה הפונקציה נכתבה",
+    code: "const name = 'גלובלי';\nfunction makePrinter() {\n  const name = 'פנימי';\n  return function printName() {\n    console.log(name);\n  };\n}\nconst printer = makePrinter();\nfunction run(fn) {\n  const name = 'מקומי';\n  fn();\n}\nrun(printer);",
+    steps: [
+      {
+        line: 11,
+        prompt: "איזה name הפונקציה printName תראה?",
+        answer: "פנימי",
+        hint: "הפונקציה הוגדרה בתוך makePrinter, לא בתוך run.",
+      },
+      {
+        line: 13,
+        prompt: "מה יודפס בסוף?",
+        answer: "פנימי",
+        hint: "lexical scope נקבע בזמן כתיבת הפונקציה.",
+      },
+    ],
+    explanation:
+      "Lexical scope אומר שפונקציה זוכרת את הסביבה שבה הוגדרה. הקריאה מתוך run לא מעניקה לה גישה ל-name המקומי של run.",
+  },
+  {
+    id: "trace_closure_03",
+    conceptKey: "lesson_closures::closure",
+    level: 5,
+    title: "closure — state פרטי שנשמר",
+    code: "function makeCounter() {\n  let count = 0;\n  return function inc() {\n    count += 1;\n    return count;\n  };\n}\nconst a = makeCounter();\nconst b = makeCounter();\nconsole.log(a());\nconsole.log(a());\nconsole.log(b());",
+    steps: [
+      {
+        line: 10,
+        prompt: "מה יודפס בקריאה הראשונה ל-a?",
+        answer: "1",
+        hint: "a מחזיק closure עם count פרטי שמתחיל ב-0.",
+      },
+      {
+        line: 11,
+        prompt: "מה יודפס בקריאה השנייה ל-a?",
+        answer: "2",
+        hint: "אותו closure של a זוכר את count מהקריאה הקודמת.",
+      },
+      {
+        line: 12,
+        prompt: "מה יודפס בקריאה הראשונה ל-b?",
+        answer: "1",
+        hint: "b נוצר מקריאה אחרת ל-makeCounter ולכן יש לו count נפרד.",
+      },
+    ],
+    explanation:
+      "כל קריאה ל-makeCounter יוצרת lexical environment חדש. a ו-b הם closures נפרדים, ולכן לכל אחד יש count עצמאי.",
+  },
+  {
+    id: "trace_closure_04",
+    conceptKey: "lesson_closures::closure in setTimeout",
+    level: 6,
+    title: "closure בלולאה — let מול var",
+    code: "for (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}\nfor (var j = 0; j < 3; j++) {\n  setTimeout(() => console.log(j), 0);\n}",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה ידפיסו שלושת ה-callbacks הראשונים עם let?",
+        answer: "0 1 2",
+        acceptable: ["0,1,2", "012"],
+        hint: "let יוצר binding חדש לכל איטרציה.",
+      },
+      {
+        line: 5,
+        prompt: "מה ידפיסו שלושת ה-callbacks השניים עם var?",
+        answer: "3 3 3",
+        acceptable: ["3,3,3", "333"],
+        hint: "var הוא function-scoped; כל callbacks חולקים את אותו j הסופי.",
+      },
+    ],
+    explanation:
+      "זה הבאג הקלאסי של closures בלולאות. let יוצר binding חדש בכל סיבוב; var יוצר binding אחד משותף לכל ה-callbacks.",
+  },
+  {
+    id: "trace_closure_05",
+    conceptKey: "lesson_closures::stale closure",
+    level: 6,
+    title: "stale closure — ערך ישן בתוך callback",
+    code: "function createLogger(count) {\n  return function logLater() {\n    console.log('count:', count);\n  };\n}\nlet count = 0;\nconst log = createLogger(count);\ncount = 5;\nlog();",
+    steps: [
+      {
+        line: 7,
+        prompt: "איזה ערך הועבר ל-createLogger?",
+        answer: "0",
+        hint: "בזמן הקריאה count עדיין היה 0.",
+      },
+      {
+        line: 9,
+        prompt: "מה יודפס?",
+        answer: "count: 0",
+        acceptable: ["0"],
+        hint: "ה-closure זוכר את הפרמטר count של createLogger, לא את המשתנה החיצוני שהתעדכן אחר כך.",
+      },
+    ],
+    explanation:
+      "Stale closure נוצר כש-callback מחזיק snapshot ישן של ערך. ב-React זה מופיע כש-effect או handler נסגר על state ישן בגלל deps חסרים או שימוש לא נכון.",
+  },
 ];
 
 // Browser bridge: expose under QUESTIONS_BANK.trace so the trainer's

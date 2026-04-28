@@ -1,34 +1,25 @@
-// tests/scoring.test.js — applyAnswer logic + V button rules + difficulty.
-// We replicate the pure logic of correctNeededForV / canMarkV from app.js
-// (since app.js is browser-bound, we duplicate the rules into a test-only module).
+// tests/scoring.test.js — core scoring rules used by the legacy app shell.
 // (describe/it/expect are global thanks to vitest.config { globals: true })
 
-// === Pure logic from app.js (mirrored for testability) ===
-function correctNeededForV(difficulty) {
-  if (difficulty >= 8) return Infinity; // hard concepts: never V
-  if (difficulty <= 2) return 1;
-  if (difficulty <= 4) return 2;
-  if (difficulty <= 6) return 3;
-  return 5; // difficulty 7
-}
+let correctNeededForV;
+let canMarkV;
+let getMasteryState;
+let isSrsDue;
+let needsCodeFill;
+let nextNeedFor;
+let masteryPercent;
 
-function canMarkV(score, concept) {
-  if (score.markedKnown) return false;
-  if (score.level >= 7) return false;
-  const need = correctNeededForV(concept.difficulty || 5);
-  if (!isFinite(need)) return false;
-  return score.correctRunCount >= need;
-}
-
-// 5 mastery states logic (mirrored)
-function getMasteryState(sc) {
-  if (sc.attempts === 0) return "new";
-  if (sc.level <= 3) return "learning";
-  if (sc.srsState && sc.srsState.due < Date.now() && sc.level >= 6)
-    return "at-risk";
-  if (sc.level <= 5) return "review";
-  return "mastered";
-}
+beforeAll(async () => {
+  ({
+    correctNeededForV,
+    canMarkV,
+    getMasteryState,
+    isSrsDue,
+    needsCodeFill,
+    nextNeedFor,
+    masteryPercent,
+  } = await import("../src/core/scoring.js"));
+});
 
 describe("Scoring — V Button Rules (correctNeededForV)", () => {
   it("difficulty 1 → 1 correct needed", () => {
@@ -120,22 +111,57 @@ describe("Mastery States — getMasteryState", () => {
     expect(getMasteryState({ attempts: 1, level: 3 })).toBe("learning");
   });
 
-  it("level 4-5 → review", () => {
+  it("level 4-6 → review when SRS is not overdue", () => {
     expect(getMasteryState({ attempts: 5, level: 4 })).toBe("review");
     expect(getMasteryState({ attempts: 5, level: 5 })).toBe("review");
+    expect(getMasteryState({ attempts: 5, level: 6 })).toBe("review");
   });
 
-  it("level >=6 → mastered (without overdue SRS)", () => {
-    expect(getMasteryState({ attempts: 10, level: 6 })).toBe("mastered");
+  it("level 7 → mastered", () => {
     expect(getMasteryState({ attempts: 10, level: 7 })).toBe("mastered");
   });
 
   it("level>=6 + SRS overdue → at-risk", () => {
+    const now = 1_700_000_000_000;
     const sc = {
       attempts: 10,
       level: 6,
-      srsState: { due: Date.now() - 86400000 }, // 1 day ago
+      srsState: { due: now - 86_400_000 },
     };
-    expect(getMasteryState(sc)).toBe("at-risk");
+    expect(getMasteryState(sc, now)).toBe("at-risk");
+  });
+});
+
+describe("SRS due helper", () => {
+  it("returns true only when due time has passed", () => {
+    const now = 1_700_000_000_000;
+
+    expect(isSrsDue({ srsState: { due: now - 1 } }, now)).toBe(true);
+    expect(isSrsDue({ srsState: { due: now + 1 } }, now)).toBe(false);
+    expect(isSrsDue({})).toBe(false);
+  });
+});
+
+describe("Concept next step helpers", () => {
+  it("requires fill only when a concept has a code example", () => {
+    expect(needsCodeFill({ codeExample: "const x = 1;" })).toBe(true);
+    expect(needsCodeFill({})).toBe(false);
+  });
+
+  it("returns the next needed trainer stage", () => {
+    const concept = { codeExample: "const x = 1;" };
+
+    expect(nextNeedFor(concept, { level: 1, passedMC: false, passedFill: false })).toBe("mc");
+    expect(nextNeedFor(concept, { level: 1, passedMC: true, passedFill: false })).toBe("fill");
+    expect(nextNeedFor(concept, { level: 1, passedMC: true, passedFill: true })).toBe(null);
+    expect(nextNeedFor(concept, { level: 7, passedMC: false, passedFill: false })).toBe(null);
+  });
+});
+
+describe("masteryPercent", () => {
+  it("clamps new progress above zero and mastered progress to 100", () => {
+    expect(masteryPercent({ level: 1, attempts: 0, correct: 0 })).toBe(1);
+    expect(masteryPercent({ level: 7, attempts: 1, correct: 1 })).toBe(100);
+    expect(masteryPercent({ level: 3, attempts: 4, correct: 3, passedMC: true, correctRunCount: 2 })).toBeGreaterThan(1);
   });
 });

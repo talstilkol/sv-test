@@ -6,8 +6,8 @@ scripts. Both expose **the same API in both runtimes** (browser globals
 
 | File | Purpose | Runtime |
 |---|---|---|
-| `lib/rng.js` | Seeded PRNG (mulberry32). Replaces every `Math.random` outside `data/lesson21.js`. | browser + Node |
-| `lib/srs.js` | Spaced-repetition scheduler (SuperMemo SM-2). Drives the `srsState` field on every concept score. | browser + Node |
+| `lib/rng.js` | Seeded PRNG (mulberry32). Central deterministic source for shuffled or sampled app flows. | browser + Node |
+| `lib/srs.js` | Spaced-repetition scheduler (FSRS-4 inspired). Drives the `srsState` field on every concept score. | browser + Node |
 
 ---
 
@@ -45,15 +45,14 @@ produces a reproducible sequence. CI asserts this on every PR.
 
 ```js
 const s = window.SRS.createState();
-//   { ease: 2.5, interval: 0, due: <now>, repetitions: 0, lapses: 0, lastReviewed: null }
+//   { stability: 1, difficulty: 0.3, reps: 0, lapses: 0, due: <now>, lastReviewed: null }
 
 window.SRS.update(s, /*correct*/ true,  /*difficulty 1-10*/ 5);
-//   first pass  → interval=1,  reps=1
-//   second pass → interval=6,  reps=2
-//   third pass  → interval≈15, reps=3 (cap: SRS.MAX_INTERVAL_DAYS = 365)
+//   first pass  → stability is initialized from difficulty, reps=1
+//   later pass  → stability grows based on difficulty and retrievability
 
 window.SRS.update(s, /*correct*/ false, 8);
-//   lapse → interval=1, reps=0, lapses+=1, ease drops (clamped ≥ MIN_EASE = 1.3)
+//   lapse → short relearn window, reps=0, lapses+=1
 
 window.SRS.isDue(s);                 // true if due ≤ now
 window.SRS.daysUntilDue(s);          // negative = overdue
@@ -64,12 +63,12 @@ State schema (one per concept score, attached as `score.srsState`):
 
 ```ts
 {
-  ease:         number   // 1.3 – 4.0
-  interval:     number   // days to next review (capped at 365)
-  due:          number   // unix-ms
-  repetitions:  number   // consecutive correct streak
-  lapses:       number   // total times forgotten
-  lastReviewed: number | null
+  stability:    number       // days until target retention
+  difficulty:   number       // 0.1 – 1.0
+  reps:         number       // consecutive successful reviews
+  lapses:       number       // total times forgotten
+  due:          number       // unix-ms
+  lastReviewed: number|null
 }
 ```
 

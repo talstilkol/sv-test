@@ -24,6 +24,21 @@
   ];
 
   window.LESSONS_DATA = modules.filter(Boolean);
+  const lessonQuizKeys = typeof LESSON_QUIZ_KEYS !== "undefined" ? LESSON_QUIZ_KEYS : {};
+  let lessonQuizKeyCount = 0;
+
+  window.LESSONS_DATA.forEach((lesson) => {
+    const mappings = lessonQuizKeys[lesson.id] || [];
+    (lesson.quiz || []).forEach((question, index) => {
+      const mappedKeys = Array.isArray(mappings[index]) ? mappings[index].filter(Boolean) : [];
+      if (!mappedKeys.length) return;
+      question.conceptKeys = mappedKeys;
+      if (!question.conceptKey && mappedKeys.length === 1) {
+        question.conceptKey = mappedKeys[0];
+      }
+      lessonQuizKeyCount++;
+    });
+  });
 
   // Merge concept enrichment (deepDive + analogies) into each concept where a
   // matching key exists. Performed once at load. Mutates the concept objects.
@@ -53,11 +68,22 @@
   const animations = typeof ANIMATIONS !== "undefined" ? ANIMATIONS : {};
   // Sprint 3 §4.15.7 — What-If Simulator (WHAT_IF keyed by conceptKey)
   const whatIf = typeof WHAT_IF !== "undefined" ? WHAT_IF : {};
+  // AUDIT-FIX Creative Methods — visual/diagnostic learning layers
+  const conceptComics = typeof CONCEPT_COMICS !== "undefined" ? CONCEPT_COMICS : {};
+  const stageZero = typeof STAGE_ZERO !== "undefined" ? STAGE_ZERO : {};
+  const memoryPalaces = typeof MEMORY_PALACES !== "undefined" ? MEMORY_PALACES : {};
+  const problemFirst = typeof PROBLEM_FIRST !== "undefined" ? PROBLEM_FIRST : {};
+  const conceptVideos = typeof CONCEPT_VIDEOS !== "undefined" ? CONCEPT_VIDEOS : {};
   let enrichedCount = 0;
   let extendedCount = 0;
   let antiPatternsCount = 0;
   let mnemonicsCount = 0;
   let warStoriesCount = 0;
+  let conceptComicsCount = 0;
+  let stageZeroCount = 0;
+  let memoryPalacesCount = 0;
+  let problemFirstCount = 0;
+  let conceptVideosCount = 0;
   let bugsCount = 0;
   window.LESSONS_DATA.forEach((lesson) => {
     (lesson.concepts || []).forEach((c) => {
@@ -109,6 +135,26 @@
       // Sprint 3 §4.15.7 — What-If Simulator
       if (whatIf[key]) {
         c.whatIf = whatIf[key];
+      }
+      if (conceptComics[key]) {
+        c.conceptComic = conceptComics[key];
+        conceptComicsCount++;
+      }
+      if (stageZero[key]) {
+        c.stageZero = stageZero[key];
+        stageZeroCount++;
+      }
+      if (memoryPalaces[key]) {
+        c.memoryPalace = memoryPalaces[key];
+        memoryPalacesCount++;
+      }
+      if (problemFirst[key]) {
+        c.problemFirst = problemFirst[key];
+        problemFirstCount++;
+      }
+      if (conceptVideos[key]) {
+        c.conceptVideo = conceptVideos[key];
+        conceptVideosCount++;
       }
     });
   });
@@ -182,6 +228,9 @@
       `${(window.QUICK_GUIDE.topics || []).length} guide topics · ` +
       `${enrichedCount} concepts enriched · ` +
       `${extendedCount} extended explanations · ` +
-      `${antiPatternsCount} anti-patterns · ${mnemonicsCount} mnemonics.`,
+      `${antiPatternsCount} anti-patterns · ${mnemonicsCount} mnemonics · ` +
+      `${conceptComicsCount} comics · ${stageZeroCount} stage-zero · ` +
+      `${memoryPalacesCount} memory palaces · ${problemFirstCount} problem-first · ` +
+      `${conceptVideosCount} concept clips · ${lessonQuizKeyCount} lesson quiz key maps.`,
   );
 })();

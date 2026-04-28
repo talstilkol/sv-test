@@ -19307,7 +19307,7 @@ var QUESTIONS_BANK_SEEDED = {
       "options": [
         "script",
         "closure",
-        "Closure",
+        "private state",
         "BrowserRouter"
       ],
       "correctIndex": 1,
@@ -20614,7 +20614,7 @@ var QUESTIONS_BANK_SEEDED = {
         "Object",
         "infinite loop",
         "async/await",
-        "object"
+        "Promise chaining"
       ],
       "correctIndex": 2,
       "explanation": "המושג: async/await.",

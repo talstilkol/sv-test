@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   push:
     branches: [ main ]
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
 
 jobs:
   validate:
@@ -41,6 +44,30 @@ jobs:
       - name: Strict bank validation (--strict)
         run: node scripts/validate_bank.js --strict
 
+      # Phase 5 — machine-readable feature coverage counters.
+      # Staged partials such as full-bank option feedback stay visible in the
+      # report. Done modules must also pass the Phase 6 evidence gate: outcome
+      # metric + repository evidence.
+      - name: Feature coverage gate
+        run: node scripts/report_feature_coverage.js --strict --json
+
+      # Phase 5 — full-bank question quality gate.
+      # Fails on blocker-level MC/Fill issues. Warnings stay visible in the
+      # generated report and remediation queue.
+      - name: Question quality gate
+        run: node scripts/report_question_quality.js --strict
+
+      # Phase 5 — deterministic remediation queue and 10% manual-QA sample.
+      # These checks keep the review batch stable across weekly runs and PRs.
+      - name: Question remediation queue gate
+        run: node scripts/build_question_remediation_queue.js --strict --summary
+
+      - name: Deterministic 10 percent QA sample gate
+        run: node scripts/build_question_qa_checklist.js --strict --summary
+
+      - name: Lesson quiz concept key gate
+        run: node scripts/report_lesson_quiz_keys.js --strict --summary
+
       # PRNG determinism — same seed → same sequence (Track A — A1).
       - name: PRNG determinism test
         run: |
@@ -71,17 +98,17 @@ jobs:
             console.log('✅ SRS scheduler OK');
           "
 
-      # No Math.random outside data/lesson21.js (educational content) — Track A DoD.
+      # No Math.random anywhere in authored JS — project-wide deterministic rule.
       - name: No-Math.random gate
         run: |
           set -e
-          MATCHES=$(grep -rn 'Math\.random(' --include="*.js" --exclude-dir=node_modules . | grep -v 'data/lesson21.js' || true)
+          MATCHES=$(grep -rn 'Math\.random(' --include="*.js" --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git . || true)
           if [ -n "$MATCHES" ]; then
-            echo "::error::Math.random() found outside data/lesson21.js:"
+            echo "::error::Math.random() found in authored JS:"
             echo "$MATCHES"
             exit 1
           fi
-          echo "✅ Math.random scope clean (only data/lesson21.js)"
+          echo "✅ Math.random absent from authored JS"
 
       # P1.1.3 — Vitest unit tests for lib/ + scoring rules.
       - name: Install dependencies

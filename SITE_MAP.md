@@ -11,6 +11,10 @@
 |---|:-:|---|---|
 | 🏠 שיעורים | בית | רשימת כל 20 השיעורים | [app.js:openLesson](app.js) |
 | 📖 מדריך מקוצר | book | 22 נושאים מרכזיים + שאלון משולב | `openGuide()` |
+| 🧱 אבני בסיס | bricks | תתי-טאבים: אבנים, חשמל→ערך + איך המחשב מבין, יעילות, בניית קוד, תפריטים, פטנטים, טכנולוגיות, שפות, היסטוריה, מוזיאון ו-React למה? | `openProgrammingBasics()` |
+| 🧭 עקרונות יסוד | compass | דטרמיניסטיות, קלט/פלט, pure functions, state, contracts, validation, errors, testing, security, accessibility ועוד | `openProgrammingPrinciples()` |
+| 🏛️ מוזיאון | museum | מסך עצמאי וחווייתי: אולמות היסטוריים, איורי SVG, תרשים שכבות, ציר זמן ושושלות שפות | `openProgrammingMuseum()` |
+| 📈 ראיות למידה | chart | מדדי למידה מקומיים: אירועי תשובה, תיקוני טעות, חזרות, מבחנים, funnel לפי מושג, ייצוא אנונימי ודוח שבועי ללא PII | `openLearningEvidence()` |
 | 💻 בלוקי קוד | laptop | קוד אמיתי + הסבר עברי לכל שורה + MC | `renderCodeBlocks()` |
 | 🔬 Code Trace | microscope | חיזוי פלט קוד צעד-צעד (35 שאלות) | `renderTracePage()` |
 | 🧠 מאמן ידע + דוח | brain | 1,894 שאלות אדפטיביות + דוח חי | `openTrainer()` |

@@ -1,6 +1,6 @@
 # LumenPortal — מסמך איפיון מלא + Master Plan לביצוע
 
-> תאריך: 2026-04-27 · גרסה: 5.0 · סטטוס: מסמך פעיל
+> תאריך: 2026-04-28 · גרסה: 5.4 · סטטוס: מסמך פעיל
 >
 > מסמך זה מאחד ומחליף את: PRODUCT_SPEC.md, MASTER_PLAN.md, MASTER_PLAN_V2.md, MASTER_PLAN_V3.md, COORDINATION.md.
 > מבוסס על: כל הסבבים של דיון, AUDITs, COMPETITIVE_ANALYSIS, ועבודת Tracks A-D.
@@ -29,7 +29,11 @@
 15. תהליכי עבודה (Work Cadence)
 16. תכנית בדיקות (QA Plan)
 17. Definition of Done לכל שלב
-18. נספח: כללי תיאום בין sessions
+18. Re-baseline 2026-04-28 — Quality Governance + 90-Day Roadmap
+19. נספח: כללי תיאום בין sessions
+20. נספח: מוזיאון היסטורי לשפות התכנות
+21. Phase 6 — Learning Evidence + Productization
+22. Phase 7 — Learning OS + Outcome Scale
 
 ---
 
@@ -1250,6 +1254,19 @@ window.LESSONS_DATA.forEach(lesson => {
 | Total users | 5,000 |
 | Paid subscribers | 200 |
 
+### 8.6 KPIs לממשל איכות
+
+| מדד | יעד |
+|---|:-:|
+| Feature Completion Accuracy | ≥ 95% מהסעיפים שסומנו Done מאומתים בקוד/בדיקה/UX |
+| Content Coverage Ratio | מדווח לכל מודול כ-implemented/target |
+| Question Quality Index | ≥ 90% שאלות ללא warning |
+| Status Drift | 0 סעיפי Done ללא evidence |
+| Wrong-answer capture coverage | 100% ממשטחי השאלה הפעילים רושמים concept/topic לחולשות |
+| D7/D30 retention before/after FSRS | נמדד לפני שינוי ואחרי 30 יום |
+| Stability KPI | ≤ 2 שגיאות פיצ'ר ל-1,000 sessions |
+| Weekly deterministic audit | 10% מבנק השאלות בכל שבוע או batch |
+
 ---
 
 ## 9. סיכוני מוצר ומיטיגציה
@@ -2193,8 +2210,9 @@ window.addEventListener('visibilitychange', () => {
 - **Audio Mode** (S) — כבר ב-Track D D1, יבוצע שם
 - **Concept Map** (L) — Tab ייעודי מסך מלא, D3.js
 - **Reverse Q&A** (M) — Jeopardy mode
+- **Programming Language Museum** (M) — מוזיאון היסטורי: חשמל → ביטים → קוד מכונה → שפות → React/Node/Next
 
-**זמן משוער כולל ל-12 השיטות:** ~10-12 שבועות (משולב ב-Phase 1-3 הראשי).
+**זמן משוער כולל לשיטות היצירתיות:** ~10-12 שבועות (משולב ב-Phase 1-3 הראשי).
 
 ---
 
@@ -2371,6 +2389,8 @@ export default {
 1. **🎯 יעד פונקציונלי** — משפט אחד: "תלמיד יוכל ל-X"
 2. **📊 פרמטר מדידה** — איך נדע שזה עובד? (KPI ברור)
 3. **🔙 נקודת ביטול (rollback)** — איך מבטלים אם נכשל?
+4. **📌 מדד כיסוי** — כמה מתוך היעד הושלם בפועל (`implemented/target`)
+5. **🧪 Evidence** — בדיקות, צילום/וידוא browser, או דוח audit שמוכיחים שהפיצ'ר עובד
 
 ### 15.3 — Pre-release Checklist (לפני merge ל-main)
 
@@ -2385,11 +2405,15 @@ export default {
 - [ ] CI ירוק
 - [ ] PR description עם DoD checklist
 
-### 15.4 — Sprint Cadence
+### 15.4 — Release Trains דו-שבועיים
 
-- **Sprint 1 שבוע** (week-by-week)
-- **Demo כל שבוע** — מה עובד עכשיו
-- **Retro כל 2 שבועות** — מה עבד, מה לא, מה לשפר
+- **רכבת כל 2 שבועות** — release קטן, מדיד, וניתן rollback.
+- **70% סגירת חוב / 30% יכולות חדשות** — עד ש-Question Quality, Sync, ו-coverage gates ירוקים.
+- **שבוע 1:** implementation + unit tests + content coverage counters.
+- **שבוע 2:** hardening + browser verification + QA reports + docs.
+- **Moonshots מוקפאים** אם יש סעיפי Done ללא evidence או Quality Index מתחת ליעד.
+- **Demo כל שבוע** — רק פיצ'רים עם metric/evidence מוצגים כ-Done.
+- **Retro כל 2 שבועות** — בודקים Status Drift, warnings חוזרים, ופריטי rollback.
 
 ---
 
@@ -2429,7 +2453,33 @@ export default {
 
 **Distractor Objectivity Audit:**
 - כל MC → distractors הם common mistakes (לא רנדומליים)
-- AI helper: בקש מ-Claude לסקור 50 random questions
+- AI helper: בקש מ-Claude לסקור 50 שאלות במדגם דטרמיניסטי קבוע
+
+**Question Quality Gates (חדש בעקבות ביקורת 2026-04-28):**
+- Similarity gate: חסימת distractors דומים מדי מעל סף שיוגדר ב-CI.
+- Length-cue gate: התרעה כאשר התשובה הנכונה בולטת באורך חריג.
+- Generic wording gate: התרעה על ניסוחים כלליים שמאפשרים ניחוש.
+- Fill ambiguity gate: חסימת תשובות Fill שיש להן כמה פתרונות סבירים או answer leakage מתוך הקוד.
+- `questionQuality` לכל פריט: difficulty + clarity + distractorQuality + warning count.
+- Weekly deterministic audit: 10% מבנק MC/Fill בדטרמיניזם מלא, עם remediation queue.
+- `npm run quality:questions` מציג דוח מלא לכל בנק MC/Fill.
+- `npm run quality:questions:write` כותב `QUESTION_QUALITY_REPORT.json` ו-`QUESTION_QUALITY_REPORT.md`.
+- `npm run quality:questions:strict` משמש כ-CI gate ונכשל על blocker-level בלבד.
+- `npm run quality:remediation` מציג תור תיקון דטרמיניסטי לשאלות עם warning/note.
+- `npm run quality:remediation:write` כותב `QUESTION_REMEDIATION_QUEUE.json` ו-`QUESTION_REMEDIATION_QUEUE.md`.
+- `npm run quality:remediation:strict` משמש כ-CI gate ונכשל אם נשאר blocker בתור.
+- `npm run qa:questions` מציג מדגם QA ידני דטרמיניסטי של 10% מהבנק.
+- `npm run qa:questions:write` כותב `QUESTION_QA_CHECKLIST.json` ו-`QUESTION_QA_CHECKLIST.md`.
+- `npm run qa:questions:strict` מאמת גודל מדגם וייחודיות ids ב-CI.
+- `npm run qa:lesson-quiz-keys` מאמת שלכל `lesson.quiz` יש concept routing מפורש.
+- `npm run qa:lesson-quiz-keys:write` כותב `LESSON_QUIZ_KEYS_REPORT.json` ו-`LESSON_QUIZ_KEYS_REPORT.md`.
+- `npm run qa:lesson-quiz-keys:strict` נכשל אם חסר מיפוי או אם מפתח לא קיים במושגי השיעור.
+
+**Feature Coverage Counters:**
+- `npm run coverage:features` מציג כיסוי מודולים מהקבצים עצמם.
+- `npm run coverage:features:write` כותב `FEATURE_COVERAGE_REPORT.json` ו-`FEATURE_COVERAGE_REPORT.md`.
+- `npm run coverage:features:strict` משמש כ-CI gate ליעדים שנאכפים כבר עכשיו, וגם חוסם מודול `Done` שאין לו `outcomeMetric` או evidence מהריפו.
+- הדוח נחשב מקור אמת לכיסוי תוכן; staged partials נשארים גלויים בלי לחסום CI עד שמוגדר להם threshold מחייב.
 
 ### 16.4 — Accessibility QA
 
@@ -2446,6 +2496,24 @@ export default {
 ---
 
 ## 17. Definition of Done לכל שלב
+
+### Global Done Policy
+
+סטטוס `Done` מותר רק כאשר קיימים כל אלה:
+
+1. קוד או תוכן הושלמו מול יעד מדיד.
+2. בדיקות רלוונטיות עברו (`validate_bank`, Vitest, Playwright, או QA ידני לפי סוג הפיצ'ר).
+3. בוצע וידוא UX/browser כאשר יש שינוי משתמשי.
+4. התיעוד ורשימת המשימות עודכנו.
+5. יש metric/evidence ברור: `implemented/target`, דוח audit, צילום/בדיקה, או KPI.
+6. קיימת נקודת rollback או דרך כיבוי לפיצ'ר מסוכן.
+7. PR משתמש בתבנית `.github/pull_request_template.md` ומצהיר goal, metric, evidence, rollback.
+
+סטטוסים מותרים:
+- `Done` — כל התנאים למעלה מולאו.
+- `Partial` — יש UX/קוד עובד, אבל חסר כיסוי יעד, אינטגרציה, deploy, או QA.
+- `Deferred` — נדחה במודע בגלל תלות או החלטת scope, עם סיבה מפורשת.
+- `Blocked` — אי אפשר להמשיך בלי קלט/גישה/תלות חיצונית.
 
 ### Phase 1 DoD
 - [x] 0 boilerplate (already done)
@@ -2499,11 +2567,74 @@ export default {
 - [ ] Mentor Matching
 - [ ] (Optional) Mobile Native
 
+### Phase 5 DoD — Quality Governance + Rebaseline
+- [x] Feature coverage counters קיימים לכל מודול תוכן מרכזי.
+- [x] Status accuracy report נוצר מהריפו, לא ידנית בלבד.
+- [x] Question Quality Pipeline פעיל: similarity, length-cue, generic wording, Fill ambiguity.
+- [x] Weekly deterministic 10% audit רץ ומייצר remediation queue.
+- [x] Wrong-answer weakness agent רושם אוטומטית מושג/נושא בכל טעות ומציג הסבר + אסוציאציה קיימת.
+- [ ] Playwright smoke מכסה את כל הטאבים המרכזיים עם console-error gate.
+- [ ] Schema contracts קיימים ל-Lesson/Concept/Question/Trace/Build.
+- [ ] 90-day roadmap waves נעולות למדדים ולא רק לרשימת פיצ'רים.
+
 ---
 
-## 18. נספח: כללי תיאום בין sessions
+## 18. Re-baseline 2026-04-28 — Quality Governance + 90-Day Roadmap
 
-### 18.1 — חוקי ברזל לעבודה מקבילית
+### 18.1 Evidence Reconciliation
+
+הביקורת מצביעה נכון על הסיכון המרכזי: סטטוס שמדווח כ-Done בלי כיסוי מדיד. יחד עם זאת, חלק מהמספרים בביקורת כבר לא משקפים את מצב הריפו לאחר סבבי תיקון:
+
+| תחום | מצב מאומת בריפו | סטטוס ניהולי |
+|---|---:|---|
+| Anti-Patterns | 22/22 patterns | Done |
+| War Stories | 31/30 incidents | Done |
+| Mini Builds | 21/21 builds | Done |
+| Option Feedback | 50 MC IDs / full MC bank | Partial |
+| Vitest | 106 tests passing | Done |
+| AI Tutor | UI + demo fallback + edge-function skeleton | Partial until production Alpha |
+| Cross-device Sync | Export/Import + Supabase table; no live sync | Partial |
+| Feature Coverage Counters + CI Gate | 22 modules tracked; 21 Done, 1 Partial; strict gate active | Done |
+| Question Quality Pipeline | 1,894 questions tracked; 0 blockers; QQI 88.2%; 683 remediation rows; 190-row 10% QA sample; weekly CI active | Done for blocker gate, remediation active |
+| Lesson Quiz Concept Keys | 133/133 lesson quiz items mapped; 0 invalid keys; strict CI active | Done |
+| Wrong-answer Weakness Agent | Trainer, guide, inline quizzes, code blocks, trace, mock exam, and bug quests record concept/topic weakness and show feedback | Done |
+
+### 18.2 14 הימים הקרובים
+
+1. להעלות Per-Distractor Feedback מ-top 50 ל-25% מבנק ה-MC.
+2. להרחיב thresholds ל-staged partials כאשר הם מגיעים ליעדי 25%/50%/100%.
+3. להעלות Question Quality Index מ-88.2% ל-90%+ על ידי סגירת near-duplicate ו-answer-visible warnings.
+4. להשתמש ב-PR/DoD template בכל שינוי: goal + metric + rollback + evidence.
+5. לסגור Status Drift: כל Done ללא evidence חוזר ל-Partial.
+
+### 18.3 30 הימים הקרובים
+
+1. לסגור remediation batch 1-4: להוסיף conceptKey חסר ולתקן fill leakage warnings.
+2. להמיר note/warning patterns חוזרים ל-thresholds מחמירים לאחר תיקון הבאטצ'ים הראשונים.
+3. להוסיף Playwright smoke לכל הטאבים המרכזיים.
+4. להגדיר schema contracts לתוכן ו-loader validation.
+5. למדוד baseline לשימור לפני/אחרי FSRS, Gap Matrix ו-Pathways.
+
+### 18.4 90 הימים הקרובים
+
+1. AI Tutor Alpha עם guardrails, rate limits, logging ו-coach mode שלא נותן תשובות ישירות.
+2. Cross-device Sync live: auth, progress sync, last-write-wins, sync indicator.
+3. Teacher Dashboard Lite: כיתה, רשימת תלמידים, heatmap התקדמות, risk alerts בסיסיים.
+4. Pair-Match ו-Bug Quests hardening מול QA אמיתי.
+5. Business/learning KPIs: D7/D30, mastery rate, exam pass rate, teacher adoption.
+
+### 18.5 Business Priority Order
+
+1. איכות ותוקף פדגוגי: Question/Distractor Quality.
+2. Personalization אמיתי: FSRS-4, Pathways, Gap Matrix, prerequisite support.
+3. סקייל תפעולי: AI Tutor, Sync, Teacher Dashboard Lite.
+4. חוויות פרימיום: visuals, comics, clips, moonshots.
+
+---
+
+## 19. נספח: כללי תיאום בין sessions
+
+### 19.1 — חוקי ברזל לעבודה מקבילית
 
 1. כל session ב-branch משלו
 2. אסור עבודה על main directly
@@ -2511,7 +2642,7 @@ export default {
 4. Code review מ-1 session אחר
 5. אם conflict בין tracks — מי שראשון פותר
 
-### 18.2 — חלוקת קבצים ל-tracks
+### 19.2 — חלוקת קבצים ל-tracks
 
 **Track A — Foundation (Owner: Session 1)**
 - `app.js` lines 1-1500 (logic, scoring, RNG)
@@ -2538,19 +2669,19 @@ export default {
 - `style.css` (append only)
 - `data/glossary.js`
 
-### 18.3 — Merge Order
+### 19.3 — Merge Order
 
 1. **Track A** ראשון (foundation — אחרים תלויים)
 2. **Tracks B + C** במקביל (לא חופפים)
 3. **Track D** אחרון (אינטגרציה)
 
-### 18.4 — Conflict Resolution
+### 19.4 — Conflict Resolution
 
 - אם conflict על `app.js`: A מתמזג ראשון, D pulls + resolves
 - אם conflict על `concept_enrichment.js`: כל section נפרד
 - אם conflict על `questions_bank.js`: A מוסיף header, B/C מוסיפים content
 
-### 18.5 — STATUS Section (יתעדכן)
+### 19.5 — STATUS Section (יתעדכן)
 
 ```
 Track A: ✅ Merged in PR #8 (Foundation done)
@@ -2563,6 +2694,374 @@ Next priorities:
 - Phase 1 W1.3 (Vitest) — Session 1
 - Phase 1 W2 (a11y) — Session 4 (after D resumes)
 ```
+
+---
+
+## 20. נספח: מוזיאון היסטורי לשפות התכנות
+
+### 20.1 מטרת הפרק
+
+המוזיאון ההיסטורי נועד לסגור פער עומק שחוזר אצל תלמידים: הם לומדים React/Node/TypeScript, אבל לא מבינים מאיפה נולדו הערכים, השפות, ה-runtime וה-frameworks. בלי הקשר היסטורי, כל טכנולוגיה חדשה נראית כמו “קסם חדש”. עם הקשר, התלמיד רואה רצף:
+
+**חשמל → טרנזיסטור → ביט → שער לוגי → קוד מכונה → Assembly → שפה גבוהה → runtime/framework → אפליקציה.**
+
+### 20.2 MVP שבוצע
+
+- תת-טאב `🏛️ מוזיאון` בתוך `🧱 אבני בסיס`.
+- 9 אולמות היסטוריים: חומרה, קוד מכונה, שפות גבוהות מוקדמות, structured programming, C/systems, OOP/VM/GC, Web, frameworks, עתיד.
+- 27 מוצגים עם שנה/טווח, ממה נבנה, מה פרץ דרך, ואיך זה מתחבר לקוד שהתלמיד כותב.
+- 5 שושלות רעיונות: חומרה, אובייקטים, web, מדע/AI, נתונים/עסקים.
+- רשימת הרחבות עתידיות: compiler lab, אותו תפריט ב-8 שפות, graph משפחות שפות, מעבדת JIT/interpreter, source cards.
+
+### 20.3 הרחבות מומלצות להשלמת הידע ההיסטורי
+
+1. **מעבדת Compiler/Interpreter/JIT:** תרשים אינטראקטיבי של parse → AST → bytecode/machine code → runtime.
+2. **אותו רעיון בשפות שונות:** לבנות משתנה, מערך, פונקציה ותפריט ב-C, Java, Python, JS, TS, React, Node, Next.
+3. **מפת משפחות שפות:** Graph של השפעות בין FORTRAN, Lisp, ALGOL, BCPL, B, C, C++, Java, C#, Python, JavaScript, TypeScript, Rust.
+4. **מעבדת ביצועים:** להסביר מהירות לפי שכבות: native compile, VM/JIT, interpreter, GC, C extensions, WebAssembly.
+5. **כרטיסי מקור היסטוריים:** לכל תחנה — מקור, תאריך, ומה בטוח/לא בטוח היסטורית.
+6. **Quests לתלמיד:** “מצא מי האבא של React”, “למה TypeScript לא מהירה יותר מ-JS?”, “למה C מסוכנת ומה Rust ניסתה לתקן?”.
+
+### 20.4 DoD מלא למוזיאון
+
+- [x] MVP: טאב עובד, RTL, responsive, עם תפריט צד ענפי.
+- [x] לפחות 9 אולמות ו-25+ מוצגים.
+- [x] לפחות 5 שושלות רעיונות שמחברות שפות לטכנולוגיות מודרניות.
+- [ ] לכל מוצג יש מקור היסטורי קצר ומאומת.
+- [ ] לפחות 20 שאלות/משימות קצרות שמוודאות שהתלמיד מבין “למה השפה נולדה”.
+- [ ] מעבדת compiler/JIT אינטראקטיבית.
+- [ ] Graph משפחות שפות עם קפיצה מהציר ההיסטורי לתרגול קוד.
+
+### 20.5 כללי אמינות
+
+- אין להוסיף תאריך היסטורי בלי מקור. אם יש מחלוקת, משתמשים בטווח.
+- לא מדרגים שפות כ"טובות/גרועות"; מדרגים התאמה למשימה, שכבות runtime, בטיחות, ביצועים, אקוסיסטם ועלות תחזוקה.
+- לא מציגים framework כתחליף לאבני בסיס. React/Next תמיד מוסברים כהמשך של arrays, objects, functions, state ו-DOM.
+- אין להציג AI כתחליף להבנה. AI הוא כלי עזר; הבנת השכבות היא מנגנון הבקרה.
+
+---
+
+## 21. Phase 6 — Learning Evidence + Productization
+
+### 21.1 למה להוסיף Phase 6
+
+אחרי Phase 5 המערכת כבר מחזיקה הרבה יכולות: שאלות, הסברים, עץ הקשרים, מוזיאון, מאמן, SRS, QA ותשתיות. הסיכון הבא אינו מחסור בפיצ'רים, אלא מחסור בהוכחה:
+
+- האם תלמידים באמת משתפרים לאורך זמן?
+- אילו פיצ'רים מעלים retention ואילו רק נראים מרשימים?
+- האם מורה יכול להכניס כיתה אמיתית בלי שנצטרך ללוות ידנית כל תלמיד?
+- האם התוכן עובר review וגרסאות כמו מוצר רציני?
+
+Phase 6 מוסיף שכבת evidence ו-productization: מדידת למידה אמיתית, מנוע תיקון שגיאות עמוק יותר, השלמת coverage קוריקולרי, workflow לתוכן, ומוכנות לפיילוטים.
+
+### 21.2 עקרונות Phase 6
+
+1. **Outcome לפני פיצ'ר:** כל capability חדש חייב להגדיר מה הוא משפר: ציון, retention, זמן לתיקון טעות, או ירידה בחולשות.
+2. **Local-first privacy:** מודדים התקדמות בלי PII כברירת מחדל; סנכרון וייצוא דורשים שקיפות.
+3. **Misconception-first:** לא מספיק לדעת שהתלמיד טעה ב-`useEffect`; צריך לדעת אם הטעות היא dependencies, cleanup, async או render cycle.
+4. **Coverage קשיח:** אין מושג "חשוב" בלי שאלות, תרגול, prerequisite aid, ודוגמה מעשית.
+5. **Content ops:** תוכן חייב לעבור סטטוסים: draft → reviewed → verified → needs-fix, עם גרסאות ותור תיקון.
+6. **Pilot readiness:** לפני scale לקהילה/מורים, מריצים פיילוט קטן עם baseline/final test ומדדים ברורים.
+
+### 21.3 W22 — Learning Evidence Loop
+
+**מטרה:** להפוך שימוש במערכת לנתוני למידה שמוכיחים שיפור, בלי לפגוע בפרטיות.
+
+Tasks:
+- להגדיר event schema אחיד: צפייה, תשובה, טעות, remediation, mastery change, exam attempt, clip view.
+- לבנות local-first analytics store עם deterministic session IDs וללא מידע מזהה.
+- להוסיף cohort dashboard: D1/D7/D30, mastery lift, completion, mock-exam improvement.
+- להוסיף funnel לכל מושג: explanation → answer → remediation → delayed retention.
+- להוסיף gate: פיצ'ר לא מתקדם ל-Done בלי metric.
+- לאפשר export אנונימי למחקר/מורה.
+- ליצור weekly learning-evidence report.
+
+DoD:
+- dashboard עובד על נתוני אמת מקומיים.
+- לפחות 5 funnels מרכזיים מוצגים.
+- אין שמירת PII בלי הסכמה מפורשת.
+
+סטטוס 2026-04-28:
+- MVP מקומי נשלח: schema, localStorage evidence store, deterministic install/session IDs, dashboard, funnels, ו-event hooks לתשובות/טעויות/כרטיסיות/מבחנים/סיכומי שיעור.
+- evidence-required gate נשלח: `FEATURE_COVERAGE_REPORT` v2 כולל `outcomeMetric`, ו-`coverage:features:strict` נכשל אם מודול `Done` חסר metric/evidence.
+- נוסף: anonymized JSON export למחקר/מורה ו-weekly Markdown report מנתוני שימוש אמיתיים מקומיים.
+- W22 הושלם; המשך Phase 6 עובר למנוע remediation v2.
+
+### 21.4 W23 — Adaptive Remediation Engine v2
+
+**מטרה:** כל טעות הופכת למסלול תיקון קצר, לא רק badge חולשה.
+
+Tasks:
+- לקבץ טעויות לפי misconception.
+- ליצור misconception cards: symptom, root cause, minimal example, repair drill.
+- להוסיף teach-back אחרי טעויות חוזרות.
+- להוסיף adaptive retest: טעות → הסבר → שאלה קרובה → חזרה מאוחרת.
+- להוסיף prerequisite rewind לשאלה מתקדמת שנכשלה.
+- למדוד confidence calibration לכל מושג.
+- להוסיף "אני עדיין לא מבין" שמוריד רמת הסבר ומתעד blocker.
+- להרחיב את ספריית ה-misconceptions ל-20 דפוסי טעות ממופים.
+
+DoD:
+- 20 misconceptions ראשונים ממופים למושגי React/JS קשים.
+- טעות חוזרת מייצרת מסלול remediation בן 3 צעדים.
+- weak reports מציגים לא רק מושג חלש אלא סוג טעות.
+
+סטטוס 2026-04-28:
+- נשלח MVP ראשון: `mistake-agent` מזהה misconception דטרמיניסטי מתוך טקסט השאלה/תשובה/הסבר ומקבץ טעויות לפי root cause.
+- נשלחו כרטיסי misconception מיידיים אחרי טעות: שורש הטעות, איך מתקנים, תרגיל קצר, ודימוי קל.
+- נוסף teach-back אחרי טעות חוזרת באותו misconception: התלמיד מנסח במילים שלו את התיקון, נשמר מקומית, ונרשם כ-review evidence.
+- נוסף adaptive retest queue: כל טעות מתזמנת שאלת תיקון קרובה וחזרה מאוחרת; המאמן מושך retests שהגיע זמנם לפני בחירה רגילה ומתעד outcome.
+- נוסף prerequisite rewind: טעות בשאלה מתקדמת בוחרת דטרמיניסטית את דרישת הקדם החלשה ביותר ומנתבת אליה לפני המשך אימון רגיל.
+- נוסף confidence calibration לפי מושג: המאמן מבקש ביטחון 1-5 לפני תשובה, שומר דיוק מול ביטחון ומסמן calibrated / overconfident / underconfident.
+- נוסף "אני עדיין לא מבין": כפתור מילוט אחרי טעות ששומר blocker, פותח רמת סבתא או מושג קדם פשוט יותר, ונרשם כ-review evidence.
+- ספריית ה-misconceptions הורחבה ל-20 דפוסי טעות ממופים ל-React/JS/TS/Node ועוד fallback כללי.
+- W23 הושלם; המשך Phase 6 עובר ל-W24: כיסוי קוריקולרי ופרויקטי capstone.
+
+### 21.5 W24 — Curriculum Coverage + Capstone Projects
+
+**מטרה:** להפוך את הפורטל ממאגר שיעורים למערכת שמכינה למבחן, פרויקט וראיון.
+
+Tasks:
+- כל concept מקבל ≥3 MC, ≥2 Fill/Code, ולפחות trace/build/bug כאשר רלוונטי.
+- מיפוי blueprint לקורסים ישראליים: svcollege, John Bryce, Sela, generic bootcamp.
+- מסלול capstone: Task Manager, Movie App, Budget Manager, Auth CRUD, Dashboard.
+- rubrics לפרויקטים: דרישות, edge cases, בדיקות, code review checklist.
+- guided builds מ-zero ל-feature ב-React, Node, Next, TypeScript.
+- interview-prep mode לשאלות Junior Frontend.
+- real exam blueprint alignment report.
+
+DoD:
+- coverage report מציג 100% למושגי core.
+- לפחות 5 capstones עם rubric מלא.
+- mock exams מתויגים לפי blueprint.
+
+סטטוס 2026-04-28:
+- נשלח טאב "פרויקטים" ייעודי עם ניווט עץ בצד: כל פרויקט כולל ענפים למושגים מקדימים, אבני דרך, דרישות, מקרי קצה, בדיקות ו-code review.
+- נוספו 5 capstones מדידים: Task Manager, Movie App, Budget Manager, Auth CRUD, Learning Dashboard.
+- כל capstone כולל goal, stack, מושגים מקושרים, milestones, requirements, edge cases, tests, review checklist, deliverables והרחבת MVP.
+- נוספו בדיקות Vitest שמוודאות את חמשת הפרויקטים, שלמות ה-rubric, וקישור כל conceptKey למושג אמיתי בשיעורים.
+- נשלח טאב "יישור קורסים" עם מיפוי לפי מקורות ציבוריים ל-SVCollege, John Bryce, Sela ו-generic bootcamp.
+- כל blueprint מציג מקורות, מודולים, שיעורים/מושגים מכוסים, פערים, capstones מתאימים, mock exam tags ו-next actions.
+- נוספו בדיקות Vitest שמוודאות שכל lessonId/conceptKey במיפוי קיים בפועל.
+- W24 עדיין פתוח לכיסוי שאלות מלא, guided builds ו-interview prep.
+
+### 21.6 W25 — Content Studio + Review Workflow
+
+**מטרה:** להפוך יצירת תוכן לתהליך מבוקר ולא לעריכה ידנית מפוזרת.
+
+Tasks:
+- לבנות content studio פנימי לעריכת שאלות והסברים.
+- להוסיף סטטוס item: draft / reviewed / verified / needs-fix.
+- ליצור IDs דטרמיניסטיים לפי hash יציב, בלי randomness.
+- לבנות review queue מאזהרות QA, טעויות תלמידים ומשוב מורים.
+- להוסיף diff בין גרסאות תוכן.
+- להוסיף source/evidence לשדות היסטוריים וטענות טכניות.
+- להוסיף tracker לקליפי NotebookLM: script, status, link, review, replacement date.
+
+DoD:
+- אפשר לתקן שאלה דרך workflow ולא בעריכת קובץ ישירה בלבד.
+- כל שינוי תוכן משאיר evidence וגרסה.
+- warning חוזר נכנס אוטומטית לתור review.
+
+### 21.7 W26 — Production Pilot Readiness
+
+**מטרה:** להכין את LumenPortal לפיילוט אמיתי של 10-30 תלמידים.
+
+Tasks:
+- תוכנית פיילוט: baseline test, שימוש 2 שבועות, final test.
+- Teacher onboarding kit: הקמת כיתה, משימות, פירוש heatmaps.
+- bug-report flow מתוך האפליקציה עם context.
+- מדיניות privacy/data retention.
+- performance budget: initial load, lazy load, offline cache, mobile CPU.
+- WCAG 2.1 AA audit.
+- release checklist: smoke tests, rollback, cache bump, QA evidence, docs.
+
+DoD:
+- ניתן להריץ פיילוט בלי ליווי יומי צמוד.
+- יש baseline/final report לכל פיילוט.
+- release לא יוצא בלי smoke + rollback + cache validation.
+
+### 21.8 KPIs חדשים ל-Phase 6
+
+| KPI | יעד |
+|---|---:|
+| Mastery Lift | +20% במושגי core אחרי 14 יום |
+| Delayed Retention | ≥75% על מושגים mastered אחרי 7-14 ימים |
+| Remediation Success | ≥60% שיפור בשאלה קרובה אחרי הסבר טעות |
+| Coverage Core | 100% למושגי core; ≥80% לכלל 431 המושגים |
+| Teacher Pilot Completion | ≥80% תלמידים משלימים baseline + final |
+| Content Review SLA | warning קריטי מתוקן תוך 7 ימים |
+| Performance Budget | initial interactive <3s במחשב סביר; mobile budget מוגדר ונמדד |
+
+### 21.9 עדיפות ביצוע
+
+1. W22 Evidence Loop — בלי מדידה לא נדע מה לשפר.
+2. W23 Remediation v2 — הכי קרוב לכאב התלמיד.
+3. W24 Coverage + Capstones — הכנה אמיתית למבחן/עבודה.
+4. W25 Content Studio — הכרחי לפני scale תוכן.
+5. W26 Pilot Readiness — הכרחי לפני teacher dashboard מלא וקהילה.
+
+---
+
+## 22. Phase 7 — Learning OS + Outcome Scale
+
+### 22.1 למה להוסיף Phase 7
+
+הפורטל כבר מתקדם מעבר ל-"מאגר שיעורים": יש עץ מושגים, שאלות, SRS, remediation, ראיות למידה, מוזיאון, פרויקטים ו-QA. השלב הבא צריך לפתור בעיה עמוקה יותר: **איך תלמיד יודע מה לעשות היום, איך מורה יודע מי תקוע, ואיך אנחנו מוכיחים שהמערכת באמת משפרת תוצאה לאורך זמן.**
+
+Phase 7 לא מחליף את Phase 6. הוא יתחיל רק אחרי ש-W24-W26 ירוקים: כיסוי קוריקולרי, workflow לתוכן, ופיילוט בסיסי. מטרת Phase 7 היא להפוך את LumenPortal ל-Learning OS:
+
+1. אבחון פתיחה שממקם תלמיד לפי מושגים ולא לפי שיעורים.
+2. תוכנית שבועית אדפטיבית שמחליטה מה ללמוד, מה לחזור, ומה לבנות.
+3. Project Studio שמחבר capstones לתיק עבודות אמיתי.
+4. Teacher/Cohort Lite שמאפשר פיילוטים בלי dashboard ענק מוקדם מדי.
+5. AI Tutor production עם guardrails ולא demo.
+6. Trust, accessibility ו-mobile hardening לפני scale.
+
+### 22.2 עקרונות Phase 7
+
+- **אבחון לפני תוכנית:** אין תוכנית לימוד בלי baseline.
+- **תכנון יומי קצר:** התלמיד צריך לדעת מה לעשות ב-15/30/60 דקות.
+- **פרויקט הוא evidence:** capstone אינו קישוט; הוא מדד מוכנות לעבודה.
+- **מורה מקבל החלטות, לא רעש:** dashboard מציג סיכון ופעולה מומלצת.
+- **AI Tutor לא עוקף למידה:** רמזים, שאלות מכוונות, ו-remediation לפני תשובה מלאה.
+- **אמון לפני scale:** פרטיות, נגישות, mobile וביצועים הם תנאי לשימוש אמיתי.
+
+### 22.3 W27 — Diagnostic Intake + Placement
+
+**מטרה:** להתחיל כל תלמיד ממפת ידע אמיתית ולא מהשיעור הראשון.
+
+Tasks:
+- לבנות pre-course diagnostic exam: JS foundations, DOM, async, React, TS, backend.
+- לנקד לפי prerequisite graph ולא רק לפי lesson.
+- למקם תלמיד per concept: skip / learn / review / remediate.
+- לייצר first-week plan מתוצאות האבחון.
+- למדוד confidence + answer latency כאותות אבחוניים.
+- להציג "why this path" לכל נושא מומלץ.
+- לתזמן retake אחרי 7-14 ימים.
+- לייצא diagnostic report לתלמיד/מורה.
+
+DoD:
+- תלמיד חדש מקבל מפת ידע ותוכנית שבועית תוך פחות מ-5 דקות.
+- כל המלצה מציגה נימוק גלוי: חולשה, prerequisite, או יעד מבחן/פרויקט.
+- אין שימוש בנתוני דמו; כל report מבוסס על תשובות אמיתיות.
+
+### 22.4 W28 — Adaptive Weekly Study Plan
+
+**מטרה:** להפוך "מה ללמוד עכשיו?" לתשובה אוטומטית ומדידה.
+
+Tasks:
+- Daily missions מתוך SRS due items, weak concepts, capstone needs ו-upcoming exam.
+- Time-boxed plans: 15 / 30 / 60 דקות.
+- איזון בין new learning, review, remediation ו-project work.
+- recovery plan כשמדלגים על ימים.
+- progress forecast: mastery expected by date.
+- "student agreement" בתחילת session.
+- end-of-day summary עם next best action.
+- בדיקות דטרמיניסטיות ל-plan generation.
+
+DoD:
+- אותו state מייצר אותה תוכנית.
+- התוכנית לא ממליצה על מושג מתקדם לפני prerequisite חסר.
+- יש מדד completion לכל daily mission.
+
+### 22.5 W29 — Project Studio + Portfolio Readiness
+
+**מטרה:** להפוך את capstones לתיק עבודות אמיתי ולא רק רשימת דרישות.
+
+Tasks:
+- milestone tracker מקומי לכל capstone.
+- אזור submission: paste/link/file metadata עם privacy warning.
+- rubric self-review: requirements, edge cases, tests, architecture.
+- anti-pattern review על notes/code snippets שהסטודנט מכניס.
+- Portfolio README generator מתוך התקדמות אמיתית.
+- Teacher/mentor review notes לכל milestone.
+- project health score: runnable / tested / documented / reviewed.
+- תבניות פרויקט דטרמיניסטיות וללא fake data.
+
+DoD:
+- כל פרויקט יכול להסתיים ב-README ותיק עבודות עם evidence.
+- תלמיד רואה מה חסר לפני שמגיש.
+- מורה יכול להשאיר feedback ממוקד על milestone, לא על כל הפרויקט בבת אחת.
+
+### 22.6 W30 — Teacher + Cohort Pilot Lite
+
+**מטרה:** לתת למורה מספיק מידע לפיילוט, בלי לבנות מערכת B2B מלאה מוקדם מדי.
+
+Tasks:
+- class pilot setup בלי PII מיותר.
+- cohort heatmap לפי concept/topic/mastery state.
+- assignment recipes: exam prep, project prep, remediation week.
+- risk alerts: inactive, overconfident, repeated blocker, low retention.
+- weekly teacher report מתוך anonymized learning evidence.
+- baseline vs final comparison בלי חשיפת תשובות פרטיות.
+- manual teacher feedback queue לתוך content review.
+- pilot SOP: setup, support, measurement, rollback.
+
+DoD:
+- מורה יודע תוך 10 דקות מי תקוע ובמה.
+- כל risk alert מציע פעולה אחת ברורה.
+- פיילוט יכול לרוץ עם 10-30 תלמידים בלי תמיכה יומית צמודה.
+
+### 22.7 W31 — AI Tutor Production Guardrails
+
+**מטרה:** להעביר את המאמן מ-demo ל-production בצורה מבוקרת ובטוחה.
+
+Tasks:
+- backend proxy אמיתי; אין API keys ב-frontend.
+- server-side rate limits לפי user/class/license.
+- coach-mode policy: רמזים לפני תשובות ישירות.
+- retrieval context מתוך current concept, prerequisites, mistake history ו-capstone.
+- misconception-aware prompt templates.
+- PII-safe logging ו-audit trail.
+- tutor evaluation set: repair איכותי, no answer leakage, Hebrew clarity.
+- fallback כאשר quota/network נכשל.
+
+DoD:
+- המאמן לא נותן פתרון מלא לפני ניסיון/רמז אלא אם מצב מוגדר מאפשר זאת.
+- כל תשובה ניתנת לשחזור לצורך QA בלי לשמור PII רגיש.
+- יש eval suite שמונעת regression באיכות ההסבר.
+
+### 22.8 W32 — Trust, Accessibility + Mobile Hardening
+
+**מטרה:** להסיר חסמי שימוש אמיתי לפני הרחבה.
+
+Tasks:
+- WCAG 2.1 AA screen-reader pass לכל הטאבים המרכזיים.
+- keyboard-only journey: lesson → question → remediation → review → project.
+- dyslexia / low-vision / reduced cognitive load modes.
+- mobile touch audit ל-trainer, flashcards, capstones, museum ו-context tree.
+- offline/conflict UX ל-local-first progress ו-sync עתידי.
+- performance lab: initial load, interaction latency, cache size, mobile CPU.
+- privacy center: מה נשמר, export/delete, teacher visibility.
+- trust page: no fake data, deterministic testing, content review policy.
+
+DoD:
+- תלמיד יכול להשלים session מרכזי במובייל בלי layout break.
+- screen reader יכול לנווט בשיעור, שאלה, remediation ופרויקט.
+- למשתמש יש דרך ברורה למחוק/לייצא נתונים מקומיים.
+
+### 22.9 KPIs ל-Phase 7
+
+| KPI | יעד |
+|---|---:|
+| Diagnostic Completion | ≥85% מתלמידים חדשים מסיימים אבחון ראשון |
+| Plan Completion | ≥70% daily missions מושלמות |
+| Time-to-First-Useful-Action | <5 דקות מהכניסה הראשונה |
+| Capstone Progress | ≥60% מהתלמידים בפיילוט משלימים milestone ראשון |
+| Teacher Actionability | ≥80% risk alerts כוללים פעולה מומלצת ונסגרים ידנית/אוטומטית |
+| Tutor Helpfulness | ≥75% thumbs-up על תשובות remediation |
+| Mobile Session Success | ≥90% sessions ללא שגיאת UI/console קריטית |
+| Trust Readiness | privacy/export/delete זמינים לפני pilot scale |
+
+### 22.10 סדר עדיפויות Phase 7
+
+1. W27 Diagnostic — בלי baseline אין personalization אמיתי.
+2. W28 Weekly Plan — בלי תוכנית יומית התלמיד הולך לאיבוד.
+3. W29 Project Studio — מוכיח מוכנות לעבודה.
+4. W30 Teacher Lite — מאפשר פיילוטים חוזרים.
+5. W31 AI Tutor Production — רק אחרי שיש guardrails ו-eval.
+6. W32 Trust/Mobile/A11y — חובה לפני scale רחב.
 
 ---
 
@@ -2579,4 +3078,4 @@ Next priorities:
 - טכנולוגיה משתנה (React 20, וכו׳) → update stack
 - משתמשים נותנים feedback קריטי → adjust priorities
 
-**גרסה הבאה** (V6.0): אחרי Phase 1 — עדכון לפי ביצועים בשטח.
+**גרסה הבאה** (V5.5): אחרי סגירת W24-W26 — עדכון לפי פיילוט ראשון ותוצאות diagnostic/retention בפועל.

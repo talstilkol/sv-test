@@ -21,7 +21,7 @@ const SEED_FLAG_IDX = process.argv.indexOf("--seed");
 const SEED =
   SEED_FLAG_IDX !== -1 && process.argv[SEED_FLAG_IDX + 1] !== undefined
     ? process.argv[SEED_FLAG_IDX + 1]
-    : `seed-questions:${Date.now()}`;
+    : "seed-questions:v2.0.0";
 const RNG = RNG_LIB.create(SEED);
 
 const ROOT = path.resolve(__dirname, "..");

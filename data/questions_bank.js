@@ -144,7 +144,7 @@ var QUESTIONS_BANK = {
     {
       id: "mc_arr_006", topicId: "topic_arrays", conceptKey: "lesson_11::spread", level: 4,
       question: "מה יודפס?\n\nconst a = [1, 2];\nconst b = [...a, 3];\nconsole.log(b);",
-      options: ["[1, 2]", "[1, 2, 3]", "[[1,2],3]", "שגיאה"],
+      options: ["[1, 2]", "[1, 2, 3]", "מערך שבו a נשאר איבר אחד ואז 3", "שגיאה"],
       correctIndex: 1,
       explanation: "spread (...) פורש את a לתוך b ויוצר מערך חדש [1, 2, 3].",
     },
@@ -855,8 +855,8 @@ var QUESTIONS_BANK = {
       options: [
         '<Route path="/user" />',
         '<Route path="/user/:userId" />',
-        '<Route path="user.userId" />',
-        '<Route path="/:user" />',
+        'נתיב קבוע: <Route path="/user/userId" />',
+        "קריאה ל-useParams('/user') במקום הגדרת Route",
       ],
       correctIndex: 1,
       explanation: ":userId הוא פרמטר דינמי. בקומפוננטה: const { userId } = useParams().",
@@ -893,9 +893,9 @@ var QUESTIONS_BANK = {
       id: "mc_union_001", topicId: "topic_typescript", level: 5,
       question: "איך מגדירים טיפוס שיכול להיות string או number?",
       options: [
-        "string && number",
-        "string | number",
-        "string || number",
+        "Intersection: string & number",
+        "Union: string | number",
+        "string || number — ביטוי לוגי בזמן ריצה",
         "Either<string, number>",
       ],
       correctIndex: 1,

@@ -366,6 +366,50 @@ var WAR_STORIES = {
       hours: "1 שעה + prod crash",
     },
   ],
+
+  // ───────── Lesson 16 — Node.js ─────────
+  "lesson_16::Node.js": [
+    {
+      title: "node_modules שהכתיב גרסה שגויה של Node",
+      context:
+        "Express app עובד לוקלית, נשבר ב-CI בגלל חוסר התאמה בין גרסאות Node.",
+      bug: "package.json: 'engines': { 'node': '>=18' } חסר. CI הריץ Node 14.",
+      diagnosis:
+        "optional chaining (?.) לא נתמך ב-Node 14. SyntaxError בייצור. לוקלי Node 20.",
+      fix: "הוסף engines.node >=18 ב-package.json. הוסף .nvmrc עם '20'.",
+      lesson:
+        "תמיד הגדר engines ב-package.json. השתמש ב-.nvmrc לסנכרון גרסה בצוות.",
+      severity: "P1",
+      hours: "2 שעות + CI אדום",
+    },
+    {
+      title: "שכחנו npm install אחרי pull — module not found",
+      context:
+        "עובד חדש, clone, npm start → Error: Cannot find module 'express'.",
+      bug: "git pull הוסיף 5 packages ל-package.json, node_modules לא עודכן.",
+      diagnosis: "npm install לא רץ אחרי pull. node_modules ישן.",
+      fix: "npm install. הרגל: תמיד npm install אחרי pull אם package.json השתנה.",
+      lesson:
+        "package.json = רשימת קניות. node_modules = הקניות. רשימה השתנתה → קנה שוב.",
+      severity: "P2",
+      hours: "30 דקות",
+    },
+  ],
+
+  // ───────── Lesson 11 — Variables & Scope ─────────
+  "lesson_11::By Reference": [
+    {
+      title: "sort() על state ב-React — UI לא התעדכן",
+      context: "טבלה ממוינת. לחיצה על header לא שינתה סדר.",
+      bug: "const sorted = data.sort(...); setState(sorted);",
+      diagnosis:
+        "sort() מוטטבי — sorted הוא אותו array reference → React bail-out.",
+      fix: "const sorted = [...data].sort(...); setState(sorted);",
+      lesson: "sort(), reverse(), splice() = מוטציה. תמיד [...arr] קודם.",
+      severity: "P0",
+      hours: "2.5 שעות",
+    },
+  ],
 };
 
 // Browser bridge

@@ -999,9 +999,9 @@ var LESSON_21 = {
             fix: "השתמש ב-id יציב. index בסדר רק לרשימה immutable.",
           },
           {
-            mistake: "key={Math.random()}",
-            why: "key חדש בכל רינדור → React מחזיר את הקומפוננטות מאפס → איבוד state, ביצועים גרועים.",
-            fix: "key חייב להיות יציב — id מהמידע, לא ערך אקראי.",
+            mistake: "key={Date.now()}",
+            why: "key שמתחלף בכל רינדור → React מחזיר את הקומפוננטות מאפס → איבוד state, ביצועים גרועים.",
+            fix: "key חייב להיות יציב — id מהמידע או hash דטרמיניסטי מהתוכן.",
           },
         ],
         practiceQuestions: [
