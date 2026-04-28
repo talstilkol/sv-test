@@ -4645,6 +4645,374 @@ body.standalone-museum-mode .programming-museum-view {
   line-height: 1.5;
 }
 
+.museum-video-open-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 2.15rem;
+  margin: 0.72rem 0.75rem 0.75rem;
+  padding: 0.42rem 0.8rem;
+  border: 1px solid rgba(251, 191, 36, 0.42);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(251, 191, 36, 0.22), rgba(34, 211, 238, 0.12)),
+    rgba(15, 23, 42, 0.78);
+  color: #fef3c7;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.museum-system-video-mini .museum-video-open-button,
+.museum-system-video-grid .museum-video-open-button,
+.fullstack-video-card .museum-video-open-button,
+.fullstack-room-video .museum-video-open-button {
+  margin-inline: 0;
+}
+
+.museum-video-open-button:hover,
+.museum-video-open-button:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(251, 191, 36, 0.72);
+  background:
+    linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(34, 211, 238, 0.18)),
+    rgba(15, 23, 42, 0.9);
+  box-shadow: 0 12px 28px rgba(251, 191, 36, 0.14);
+  outline: none;
+}
+
+.museum-video-studio-hub {
+  overflow: hidden;
+  border-color: rgba(251, 191, 36, 0.24);
+  background:
+    linear-gradient(135deg, rgba(251, 191, 36, 0.12), transparent 34%),
+    linear-gradient(315deg, rgba(34, 211, 238, 0.1), transparent 44%),
+    repeating-linear-gradient(90deg, rgba(251, 191, 36, 0.045) 0 1px, transparent 1px 44px),
+    rgba(2, 6, 23, 0.82);
+}
+
+.museum-video-studio-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.museum-video-studio-summary article {
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid rgba(251, 191, 36, 0.18);
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.62);
+}
+
+.museum-video-studio-summary strong,
+.museum-video-studio-summary span {
+  display: block;
+}
+
+.museum-video-studio-summary strong {
+  color: #fef3c7;
+  font-family: "Fira Code", monospace;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.museum-video-studio-summary span {
+  margin-top: 0.28rem;
+  color: #bae6fd;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.museum-video-area-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.85rem;
+}
+
+.museum-video-area-card {
+  min-width: 0;
+  padding: 0.9rem;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent),
+    rgba(15, 23, 42, 0.68);
+}
+
+.museum-video-area-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.7rem;
+}
+
+.museum-video-area-head span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(251, 191, 36, 0.34);
+  border-radius: 999px;
+  background: rgba(120, 53, 15, 0.18);
+  color: #fde68a;
+  font-family: "Fira Code", monospace;
+  font-weight: 900;
+}
+
+.museum-video-area-head h4 {
+  min-width: 0;
+  margin: 0;
+  color: #f8fafc;
+  overflow-wrap: anywhere;
+}
+
+.museum-video-index-list {
+  display: grid;
+  gap: 0.48rem;
+  max-height: 360px;
+  overflow: auto;
+  padding-inline-end: 0.2rem;
+}
+
+.museum-video-index-button {
+  display: grid;
+  gap: 0.18rem;
+  width: 100%;
+  min-width: 0;
+  padding: 0.62rem 0.7rem;
+  border: 1px solid rgba(34, 211, 238, 0.14);
+  border-radius: 8px;
+  background: rgba(2, 6, 23, 0.44);
+  color: #dbeafe;
+  font: inherit;
+  text-align: right;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.museum-video-index-button span,
+.museum-video-index-button strong,
+.museum-video-index-button small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.museum-video-index-button span {
+  color: #fde68a;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.museum-video-index-button strong {
+  color: #ffffff;
+  font-size: 0.92rem;
+}
+
+.museum-video-index-button small {
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+.museum-video-index-button:hover,
+.museum-video-index-button:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(34, 211, 238, 0.38);
+  background: rgba(8, 47, 73, 0.46);
+  outline: none;
+}
+
+body.museum-video-modal-open {
+  overflow: hidden;
+}
+
+.museum-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.museum-video-modal[hidden] {
+  display: none;
+}
+
+.museum-video-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 8%, rgba(34, 211, 238, 0.14), transparent 36%),
+    rgba(0, 0, 0, 0.76);
+  backdrop-filter: blur(8px);
+}
+
+.museum-video-modal-card {
+  position: relative;
+  z-index: 1;
+  width: min(980px, 100%);
+  max-height: min(88vh, 920px);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(251, 191, 36, 0.12), transparent 36%),
+    linear-gradient(315deg, rgba(34, 211, 238, 0.12), transparent 44%),
+    rgba(2, 6, 23, 0.96);
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.56);
+  outline: none;
+}
+
+.museum-video-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  background:
+    repeating-linear-gradient(90deg, rgba(34, 211, 238, 0.055) 0 1px, transparent 1px 34px),
+    rgba(15, 23, 42, 0.72);
+}
+
+.museum-video-modal-head span {
+  display: inline-flex;
+  margin-bottom: 0.32rem;
+  color: #fde68a;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.museum-video-modal-head h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  line-height: 1.18;
+}
+
+.museum-video-modal-close {
+  flex: 0 0 auto;
+  min-height: 2.2rem;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 8px;
+  background: rgba(127, 29, 29, 0.2);
+  color: #fecaca;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.museum-video-modal-close:hover,
+.museum-video-modal-close:focus-visible {
+  border-color: rgba(248, 113, 113, 0.62);
+  background: rgba(127, 29, 29, 0.36);
+  outline: none;
+}
+
+.museum-video-modal-body {
+  overflow: auto;
+  padding: 1rem;
+}
+
+.museum-video-document {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.museum-video-doc-hero,
+.museum-video-document section {
+  min-width: 0;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.62);
+  padding: 0.9rem;
+}
+
+.museum-video-doc-hero {
+  background:
+    linear-gradient(90deg, rgba(251, 191, 36, 0.12), rgba(34, 211, 238, 0.08)),
+    rgba(15, 23, 42, 0.72);
+}
+
+.museum-video-doc-hero span {
+  color: #fde68a;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.museum-video-doc-hero h4,
+.museum-video-document h5 {
+  margin: 0;
+  color: #f8fafc;
+}
+
+.museum-video-doc-hero h4 {
+  margin-top: 0.28rem;
+  font-size: 1.35rem;
+}
+
+.museum-video-doc-hero p,
+.museum-video-document p {
+  margin: 0.42rem 0 0;
+  color: #dbeafe;
+  line-height: 1.62;
+}
+
+.museum-video-document ul,
+.museum-video-document ol {
+  display: grid;
+  gap: 0.44rem;
+  margin: 0.62rem 0 0;
+  padding: 0 1.2rem 0 0;
+  color: #dbeafe;
+  line-height: 1.55;
+}
+
+.museum-video-document li::marker {
+  color: #fbbf24;
+  font-weight: 900;
+}
+
+.museum-video-document li strong {
+  color: #a5f3fc;
+}
+
+.museum-video-document pre {
+  margin: 0.65rem 0 0;
+  overflow: auto;
+  border: 1px solid rgba(34, 211, 238, 0.16);
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(90deg, rgba(34, 211, 238, 0.055) 0 1px, transparent 1px 24px),
+    rgba(2, 6, 23, 0.76);
+  padding: 0.85rem;
+  white-space: pre-wrap;
+}
+
+.museum-video-document code {
+  color: #e0f2fe;
+  font-family: "Fira Code", monospace;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 @keyframes museumLightSweep {
   0%, 100% { opacity: 0.55; transform: translateX(0); }
   50% { opacity: 0.92; transform: translateX(2%); }
@@ -4745,6 +5113,10 @@ body.standalone-museum-mode .programming-museum-view {
   .museum-hero-installation {
     min-height: 240px;
   }
+
+  .museum-video-modal-card {
+    max-height: 92vh;
+  }
 }
 
 @media (max-width: 640px) {
@@ -4784,8 +5156,29 @@ body.standalone-museum-mode .programming-museum-view {
   .stack-layer-why-grid,
   .stack-layer-category-grid,
   .stack-layer-video-card dl,
-  .fullstack-stat-grid {
+  .fullstack-stat-grid,
+  .museum-video-studio-summary {
     grid-template-columns: 1fr;
+  }
+
+  .museum-video-modal {
+    padding: 0;
+  }
+
+  .museum-video-modal-card {
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .museum-video-modal-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .museum-video-modal-close {
+    width: 100%;
   }
 
   .museum-route-path,
@@ -4857,7 +5250,11 @@ body.standalone-museum-mode .programming-museum-view {
   .fullstack-hall-card:hover,
   .fullstack-hall-card:focus-within,
   .fullstack-room-card:hover,
-  .fullstack-room-card:focus-within {
+  .fullstack-room-card:focus-within,
+  .museum-video-open-button:hover,
+  .museum-video-open-button:focus-visible,
+  .museum-video-index-button:hover,
+  .museum-video-index-button:focus-visible {
     transform: none;
   }
 }

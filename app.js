@@ -1993,7 +1993,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  const MUSEUM_STACK_LAYER_PAGE_VERSION = "museum-connection-system-v1";
+  const MUSEUM_STACK_LAYER_PAGE_VERSION = "museum-notebook-video-studio-v1";
 
   const PROGRAMMING_STACK_LAYER_MUSEUMS = [
     {
@@ -4422,6 +4422,11 @@ document.addEventListener("DOMContentLoaded", () => {
               label: "מערכת קשרים",
               action: () => scrollBasicsSection("stack-layer-connection-system"),
             },
+            {
+              id: "stack-layer-video-studio",
+              label: "סרטוני NotebookLM",
+              action: () => scrollBasicsSection("stack-layer-video-studio"),
+            },
           ],
         },
           {
@@ -4486,6 +4491,11 @@ document.addEventListener("DOMContentLoaded", () => {
               id: "museum-connection-system",
               label: "מערכת קשרים",
               action: () => scrollBasicsSection("programming-museum-connection-system"),
+            },
+            {
+              id: "museum-video-studio",
+              label: "סרטוני NotebookLM",
+              action: () => scrollBasicsSection("programming-museum-video-studio"),
             },
             {
               id: "fullstack-museum-wing",
@@ -12041,6 +12051,8 @@ document.addEventListener("DOMContentLoaded", () => {
         scrollBasicsSection(btn.dataset.programmingMuseumScroll);
       });
     });
+
+    bindMuseumVideoStudio(container, museumVideoEntries);
   }
 
   function openProgrammingBasics() {

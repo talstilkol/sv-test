@@ -9,7 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css?v=museum-connection-system-v1" />
+    <link rel="stylesheet" href="style.css?v=museum-notebook-video-studio-v1" />
   </head>
   <body class="museum-external-page">
     <div class="museum-external-shell">
@@ -27,7 +27,7 @@
           const params = new URLSearchParams(window.location.search);
           const frameParams = new URLSearchParams({
             standalone: "museum",
-            v: params.get("v") || "museum-connection-system-v1",
+            v: params.get("v") || "museum-notebook-video-studio-v1",
           });
           const stackLayer = params.get("stackLayer");
           if (stackLayer) frameParams.set("stackLayer", stackLayer);
