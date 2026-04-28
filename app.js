@@ -10810,7 +10810,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </article>
           <article>
             <strong>7</strong>
-            <span>חלקים בכל חלון</span>
+            <span>שדות חובה בכל חלון</span>
           </article>
         </div>
         <div class="museum-video-area-grid">
@@ -10858,20 +10858,28 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="museum-video-doc-hero">
           <span>${esc(entry.area)}</span>
           <h4>${esc(entry.title)}</h4>
-          <p>${esc(entry.goal)}</p>
+          <p>${esc(entry.group)} · ${esc(entry.sourceTitle)}</p>
         </div>
         <section>
-          <h5>1. חומר רקע מלא לסרטון</h5>
+          <h5>1. שם הסרטון</h5>
+          <p>${esc(entry.title)}</p>
+        </section>
+        <section>
+          <h5>2. מטרת הסרטון</h5>
+          <p>${esc(entry.goal)}</p>
+        </section>
+        <section>
+          <h5>3. חומר רקע מלא לסרטון</h5>
           <ul>
             ${entry.background.map((line) => `<li>${esc(line)}</li>`).join("")}
           </ul>
         </section>
         <section>
-          <h5>2. ידע מקדים להוסיף למחברת</h5>
+          <h5>4. ידע מקדים להוסיף למחברת</h5>
           <p>${esc(entry.prerequisite)}</p>
         </section>
         <section>
-          <h5>3. סקריפט לסרטון</h5>
+          <h5>5. סקריפט לסרטון</h5>
           <ol>
             ${entry.script.map((scene) => `
               <li>
@@ -10882,17 +10890,17 @@ document.addEventListener("DOMContentLoaded", () => {
           </ol>
         </section>
         <section>
-          <h5>4. פרומפט ל-NotebookLM</h5>
+          <h5>6. פרומפט ל-NotebookLM</h5>
           <pre><code>${esc(entry.prompt)}</code></pre>
         </section>
         <section>
-          <h5>5. במה לבחור ב-NotebookLM</h5>
+          <h5>7. במה לבחור ב-NotebookLM</h5>
           <ul>
             ${entry.notebookChoices.map((choice) => `<li>${esc(choice)}</li>`).join("")}
           </ul>
         </section>
-        <section>
-          <h5>6. בדיקת איכות לפני יצירת הסרטון</h5>
+        <section class="museum-video-quality-check">
+          <h5>בדיקת איכות לפני יצירת הסרטון</h5>
           <ul>
             <li>הסרטון נשען רק על חומר המוזיאון ולא מוסיף עובדות או תאריכים חדשים.</li>
             <li>יש בעיה ברורה, פתרון ברור, חיבור לקוד ושאלת סיכום.</li>
