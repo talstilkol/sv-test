@@ -1,0 +1,332 @@
+{
+  "schemaVersion": "svcollege-lessons-manifest-v1",
+  "updated": "2026-04-28",
+  "scope": "Raw SVCollege lesson/source assets moved out of the repository root.",
+  "rootPolicy": "No PDF, MP4, DOCX or PPTX lesson assets should live in the repo root.",
+  "assets": [
+    {
+      "filename": "Lesson 11.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "lessonId": "lesson_11",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson11.js", "data/questions_bank.js", "data/questions_trace.js"]
+    },
+    {
+      "filename": "שיעורי בית 11.docx.pdf",
+      "type": "pdf",
+      "sourceKind": "homework-export",
+      "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "lessonId": "lesson_11",
+      "importedStatus": "partially-imported",
+      "linkedDataFiles": ["data/lesson11.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "שיעורי בית 12.docx.pdf",
+      "type": "pdf",
+      "sourceKind": "homework-export",
+      "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "lessonId": "lesson_12",
+      "importedStatus": "partially-imported",
+      "linkedDataFiles": ["data/lesson12.js", "data/questions_bank.js"]
+    },
+    {
+      "filename": "Lesson 13.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "lessonId": "lesson_13",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson13.js", "data/questions_bank.js", "data/questions_trace.js"]
+    },
+    {
+      "filename": "שיעורי בית 13.docx.pdf",
+      "type": "pdf",
+      "sourceKind": "homework-export",
+      "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "lessonId": "lesson_13",
+      "importedStatus": "partially-imported",
+      "linkedDataFiles": ["data/lesson13.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "lesson 15.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "JavaScript מודרני / async",
+      "lessonId": "lesson_15",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson15.js", "data/questions_bank.js", "data/questions_trace.js"]
+    },
+    {
+      "filename": "Lesson 16.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "Node.js / Express / REST",
+      "lessonId": "lesson_16",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson16.js", "data/questions_trace.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "Lesson 17.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "Node.js / Express / REST",
+      "lessonId": "lesson_17",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson17.js", "data/questions_trace.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "שיעורי בית 18.docx.pdf",
+      "type": "pdf",
+      "sourceKind": "homework-export",
+      "svcollegeModule": "Node.js / Express / REST",
+      "lessonId": "lesson_18",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson18.js", "data/questions_bug.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "lesson 19.pdf",
+      "type": "pdf",
+      "sourceKind": "lesson-export",
+      "svcollegeModule": "Node.js / File System",
+      "lessonId": "lesson_19",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson19.js", "data/questions_trace.js"]
+    },
+    {
+      "filename": "Lesson 20.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "Database בסיסי",
+      "lessonId": "lesson_20",
+      "importedStatus": "partial-svcollege-gap",
+      "linkedDataFiles": ["data/lesson20.js", "data/course_blueprints.js"]
+    },
+    {
+      "filename": "Lesson 21.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "React Frontend",
+      "lessonId": "lesson_21",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson21.js", "data/questions_trace.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "Lesson 22.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "React Frontend",
+      "lessonId": "lesson_22",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson22.js", "data/questions_trace.js", "data/questions_bug.js"]
+    },
+    {
+      "filename": "שיעורי בית 22.docx.pdf",
+      "type": "pdf",
+      "sourceKind": "homework-export",
+      "svcollegeModule": "React Frontend",
+      "lessonId": "lesson_22",
+      "importedStatus": "partially-imported",
+      "linkedDataFiles": ["data/lesson22.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "LESSON 23.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "React Frontend",
+      "lessonId": "lesson_23",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson23.js", "data/questions_bank.js"]
+    },
+    {
+      "filename": "שיעורי בית 23.docx.pdf",
+      "type": "pdf",
+      "sourceKind": "homework-export",
+      "svcollegeModule": "React Frontend",
+      "lessonId": "lesson_23",
+      "importedStatus": "partially-imported",
+      "linkedDataFiles": ["data/lesson23.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "lesson24.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "React Frontend",
+      "lessonId": "lesson_24",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson24.js", "data/questions_trace.js", "data/questions_bug.js"]
+    },
+    {
+      "filename": "שיעורי בית 24.docx.pdf",
+      "type": "pdf",
+      "sourceKind": "homework-export",
+      "svcollegeModule": "React Frontend",
+      "lessonId": "lesson_24",
+      "importedStatus": "partially-imported",
+      "linkedDataFiles": ["data/lesson24.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "Lesson 25.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "Tailwind / responsive",
+      "lessonId": "lesson_25",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson25.js", "data/lesson_html_css_foundations.js", "data/questions_trace.js"]
+    },
+    {
+      "filename": "פרוייקט 25.docx.pdf",
+      "type": "pdf",
+      "sourceKind": "project-export",
+      "svcollegeModule": "Tailwind / responsive",
+      "lessonId": "lesson_25",
+      "importedStatus": "partially-imported",
+      "linkedDataFiles": ["data/lesson25.js", "data/capstones.js"]
+    },
+    {
+      "filename": "Lesson 26.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "TypeScript + React",
+      "lessonId": "lesson_26",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson26.js", "data/questions_trace.js", "data/questions_bug.js"]
+    },
+    {
+      "filename": "Lesson 26 part 2.pptx.pdf",
+      "type": "pdf",
+      "sourceKind": "slide-deck-export",
+      "svcollegeModule": "TypeScript + React",
+      "lessonId": "lesson_26",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson26.js", "data/questions_trace.js"]
+    },
+    {
+      "filename": "lesson 27_homwork.docx.pdf",
+      "type": "pdf",
+      "sourceKind": "homework-export",
+      "svcollegeModule": "TypeScript + React",
+      "lessonId": "lesson_27",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson27.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "שיעורי בת lesson 27_homwork.pdf",
+      "type": "pdf",
+      "sourceKind": "homework-export",
+      "svcollegeModule": "TypeScript + React",
+      "lessonId": "lesson_27",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/lesson27.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "חוברת תרגול JavaScript.pdf",
+      "type": "pdf",
+      "sourceKind": "workbook-export",
+      "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "lessonId": "workbook_taskmanager",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/workbook_taskmanager.js", "data/questions_build.js"]
+    },
+    {
+      "filename": "React_Architect_Blueprint.pdf",
+      "type": "pdf",
+      "sourceKind": "blueprint-export",
+      "svcollegeModule": "Architecture / Testing",
+      "lessonId": "react_blueprint",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/react_blueprint.js", "data/course_blueprints.js"]
+    },
+    {
+      "filename": "שימוש בAI בצורה נכונה בפיתוח.pdf",
+      "type": "pdf",
+      "sourceKind": "lesson-export",
+      "svcollegeModule": "AI למפתחים",
+      "lessonId": "ai_development",
+      "importedStatus": "imported",
+      "linkedDataFiles": ["data/ai_development.js", "data/course_blueprints.js"]
+    },
+    {
+      "filename": "svcollege_full_lesson_summaries.pdf",
+      "type": "pdf",
+      "sourceKind": "summary-export",
+      "svcollegeModule": "SVCollege full course summary",
+      "lessonId": "svcollege_fullstack_ai",
+      "importedStatus": "reference",
+      "linkedDataFiles": ["SVCOLLEGE_COVERAGE_REPORT.md", "SVCOLLEGE_LESSON_INVENTORY.md"]
+    },
+    {
+      "filename": "svcollege_full_lesson_summaries.docx",
+      "type": "docx",
+      "sourceKind": "summary-source",
+      "svcollegeModule": "SVCollege full course summary",
+      "lessonId": "svcollege_fullstack_ai",
+      "importedStatus": "reference",
+      "linkedDataFiles": ["SVCOLLEGE_COVERAGE_REPORT.md", "SVCOLLEGE_LESSON_INVENTORY.md"]
+    },
+    {
+      "filename": "מבוא_ל-JS__כל_הקורס_בדקות.mp4",
+      "type": "mp4",
+      "sourceKind": "video",
+      "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "lessonId": "lesson_11",
+      "importedStatus": "asset-only",
+      "linkedDataFiles": ["data/concept_videos.js", "NOTEBOOKLM_CONCEPT_CLIPS.md"]
+    },
+    {
+      "filename": "המסע_של_מפתח_JavaScript__מה_הלאה_.mp4",
+      "type": "mp4",
+      "sourceKind": "video",
+      "svcollegeModule": "JavaScript מודרני / async",
+      "lessonId": "lesson_15",
+      "importedStatus": "asset-only",
+      "linkedDataFiles": ["data/concept_videos.js", "NOTEBOOKLM_CONCEPT_CLIPS.md"]
+    },
+    {
+      "filename": "המסע_של_מפתחי_Node.mp4",
+      "type": "mp4",
+      "sourceKind": "video",
+      "svcollegeModule": "Node.js / Express / REST",
+      "lessonId": "lesson_16",
+      "importedStatus": "asset-only",
+      "linkedDataFiles": ["data/concept_videos.js", "NOTEBOOKLM_CONCEPT_CLIPS.md"]
+    },
+    {
+      "filename": "הסיור_הגדול_ב-GitHub.mp4",
+      "type": "mp4",
+      "sourceKind": "video",
+      "svcollegeModule": "JavaScript מודרני / async",
+      "lessonId": "lesson_tooling_git",
+      "importedStatus": "asset-only",
+      "linkedDataFiles": ["data/lesson_tooling_git.js", "data/concept_videos.js"]
+    },
+    {
+      "filename": "מבוא_ל-React_Hooks.mp4",
+      "type": "mp4",
+      "sourceKind": "video",
+      "svcollegeModule": "React Frontend",
+      "lessonId": "lesson_24",
+      "importedStatus": "asset-only",
+      "linkedDataFiles": ["data/lesson24.js", "data/concept_videos.js"]
+    },
+    {
+      "filename": "כלי_הנשק_הסודיים_של_ריאקט.mp4",
+      "type": "mp4",
+      "sourceKind": "video",
+      "svcollegeModule": "React Frontend",
+      "lessonId": "lesson_24",
+      "importedStatus": "asset-only",
+      "linkedDataFiles": ["data/lesson24.js", "data/concept_videos.js"]
+    },
+    {
+      "filename": "מדריך_ריאקט_מלא_מהמומחים.mp4",
+      "type": "mp4",
+      "sourceKind": "video",
+      "svcollegeModule": "React Frontend",
+      "lessonId": "lesson_21",
+      "importedStatus": "asset-only",
+      "linkedDataFiles": ["data/lesson21.js", "data/concept_videos.js"]
+    }
+  ]
+}

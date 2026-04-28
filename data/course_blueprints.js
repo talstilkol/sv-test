@@ -1,8 +1,9 @@
 // data/course_blueprints.js
 //
 // W24 — Course blueprint and exam alignment.
-// These mappings are based on public syllabus/course pages retrieved on 2026-04-28.
-// They are an internal study-alignment aid, not an official endorsement by any school.
+// Active alignment in this portal is ONLY for SVCollege AI & Full Stack.
+// Other course mappings are deferred to separate future portals so this full-stack
+// portal stays focused on its first finish line.
 
 var COURSE_BLUEPRINTS = [
   {
@@ -23,11 +24,18 @@ var COURSE_BLUEPRINTS = [
     modules: [
       {
         title: "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-        status: "partial",
-        lessonIds: ["lesson_25"],
-        conceptKeys: ["lesson_25::responsive design", "lesson_25::flex", "lesson_25::grid"],
-        examFocus: "SVCollege מציין HTML בסיסי ומבוא HTML+CSS. הפורטל מכסה responsive/Flex/Grid/Tailwind, אך חסר שיעור HTML סמנטי ו-CSS בסיסי מלא.",
-        primaryGap: "להוסיף שיעור HTML/CSS Foundation עם semantic tags, forms, selectors, box model ו-accessibility basics.",
+        status: "covered",
+        lessonIds: ["lesson_html_css_foundations", "lesson_25"],
+        conceptKeys: [
+          "lesson_html_css_foundations::HTML document",
+          "lesson_html_css_foundations::semantic HTML",
+          "lesson_html_css_foundations::HTML form",
+          "lesson_html_css_foundations::CSS selector",
+          "lesson_html_css_foundations::box model",
+          "lesson_html_css_foundations::accessibility basics",
+          "lesson_25::responsive design",
+        ],
+        examFocus: "HTML document structure, semantic landmarks, forms, labels, CSS selectors, cascade/specificity, box model, accessibility basics, and responsive continuation in lesson 25.",
       },
       {
         title: "עיצוב רספונסיבי ו-CSS מתקדם",
@@ -45,11 +53,23 @@ var COURSE_BLUEPRINTS = [
       },
       {
         title: "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
-        status: "partial",
-        lessonIds: ["lesson_11", "lesson_15", "react_blueprint"],
-        conceptKeys: ["lesson_11::arrow function", "lesson_15::Promise", "react_blueprint::Testing Strategies"],
-        examFocus: "ES6/async מכוסים חלקית; Git, GitHub workflow, ESLint ו-Prettier חסרים כשיעור מסודר.",
-        primaryGap: "להוסיף שיעור Tooling/Git עם commit/branch/PR, npm scripts, ESLint, Prettier ו-format-on-save.",
+        status: "covered",
+        lessonIds: ["lesson_tooling_git", "lesson_11", "lesson_15", "react_blueprint"],
+        conceptKeys: [
+          "lesson_tooling_git::Git",
+          "lesson_tooling_git::repository",
+          "lesson_tooling_git::commit",
+          "lesson_tooling_git::branch",
+          "lesson_tooling_git::pull request",
+          "lesson_tooling_git::GitHub workflow",
+          "lesson_tooling_git::npm scripts",
+          "lesson_tooling_git::ESLint",
+          "lesson_tooling_git::Prettier",
+          "lesson_11::arrow function",
+          "lesson_15::Promise",
+          "react_blueprint::Testing Strategies",
+        ],
+        examFocus: "ES6/async basics, Git repository workflow, commits, branches, pull requests, npm scripts, ESLint, Prettier and format-on-save habits.",
       },
       {
         title: "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
@@ -60,19 +80,57 @@ var COURSE_BLUEPRINTS = [
       },
       {
         title: "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
-        status: "partial",
-        lessonIds: ["lesson_20"],
-        conceptKeys: ["lesson_20::MongoDB", "lesson_20::Mongoose"],
-        examFocus: "MongoDB/Mongoose קיים בפורטל; SVCollege כולל גם PostgreSQL עם Drizzle/Prisma.",
-        primaryGap: "להוסיף שיעור SQL/PostgreSQL + ORM עם schema, migrations, relations, Prisma/Drizzle CRUD.",
+        status: "covered",
+        lessonIds: ["lesson_20", "lesson_sql_orm"],
+        conceptKeys: [
+          "lesson_20::MongoDB",
+          "lesson_20::Mongoose",
+          "lesson_sql_orm::SQL",
+          "lesson_sql_orm::PostgreSQL",
+          "lesson_sql_orm::database",
+          "lesson_sql_orm::table",
+          "lesson_sql_orm::row",
+          "lesson_sql_orm::column",
+          "lesson_sql_orm::primary key",
+          "lesson_sql_orm::foreign key",
+          "lesson_sql_orm::relation",
+          "lesson_sql_orm::JOIN",
+          "lesson_sql_orm::schema",
+          "lesson_sql_orm::migration",
+          "lesson_sql_orm::ORM",
+          "lesson_sql_orm::Prisma",
+          "lesson_sql_orm::Drizzle",
+          "lesson_sql_orm::CRUD",
+          "lesson_sql_orm::transaction",
+        ],
+        examFocus: "MongoDB/Mongoose לצד SQL/PostgreSQL, schema, keys, relations, JOIN, migrations, transactions, Prisma CRUD ו-Drizzle query building.",
       },
       {
         title: "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
-        status: "gap",
-        lessonIds: [],
-        conceptKeys: [],
-        examFocus: "חסר שיעור מלא על auth flow, sessions, JWT, cookies, OAuth/provider auth ו-security boundaries.",
-        primaryGap: "להוסיף Auth Foundations + Auth Provider mini-build לפני הרחבות AI/קהילה.",
+        status: "covered",
+        lessonIds: ["lesson_auth_security"],
+        conceptKeys: [
+          "lesson_auth_security::authentication",
+          "lesson_auth_security::authorization",
+          "lesson_auth_security::session",
+          "lesson_auth_security::cookie",
+          "lesson_auth_security::secure cookie",
+          "lesson_auth_security::JWT",
+          "lesson_auth_security::access token",
+          "lesson_auth_security::refresh token",
+          "lesson_auth_security::OAuth",
+          "lesson_auth_security::provider auth",
+          "lesson_auth_security::password hashing",
+          "lesson_auth_security::bcrypt",
+          "lesson_auth_security::CSRF",
+          "lesson_auth_security::XSS boundary",
+          "lesson_auth_security::CORS",
+          "lesson_auth_security::middleware guard",
+          "lesson_auth_security::Supabase Auth",
+          "lesson_auth_security::Firebase Auth",
+          "lesson_auth_security::Kinde/Appwrite",
+        ],
+        examFocus: "authentication מול authorization, sessions, secure cookies, JWT/access/refresh tokens, OAuth/provider auth, password hashing/bcrypt, CSRF, XSS, CORS ו-middleware guards.",
       },
       {
         title: "React ופיתוח Frontend מתקדם",
@@ -98,11 +156,29 @@ var COURSE_BLUEPRINTS = [
       },
       {
         title: "פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO",
-        status: "gap",
-        lessonIds: [],
-        conceptKeys: [],
-        examFocus: "SVCollege כולל Next.js intro/advanced, API routes ו-SEO. אין שיעור Next מלא בפורטל.",
-        primaryGap: "להוסיף שיעורי Next.js: routing, layouts, server/client components, API route, SEO ו-deploy.",
+        status: "covered",
+        lessonIds: ["lesson_nextjs"],
+        conceptKeys: [
+          "lesson_nextjs::Next.js",
+          "lesson_nextjs::App Router",
+          "lesson_nextjs::file-system routing",
+          "lesson_nextjs::dynamic route",
+          "lesson_nextjs::layout",
+          "lesson_nextjs::page",
+          "lesson_nextjs::server component",
+          "lesson_nextjs::client component",
+          "lesson_nextjs::route handler",
+          "lesson_nextjs::API route",
+          "lesson_nextjs::server action",
+          "lesson_nextjs::SSR",
+          "lesson_nextjs::SSG",
+          "lesson_nextjs::ISR",
+          "lesson_nextjs::metadata API",
+          "lesson_nextjs::SEO",
+          "lesson_nextjs::image optimization",
+          "lesson_nextjs::Vercel deploy",
+        ],
+        examFocus: "Next.js App Router, file-system routing, dynamic routes, layouts/pages, server/client components, route handlers/API routes, server actions, SSR/SSG/ISR, metadata, SEO, image optimization ו-Vercel deploy.",
       },
       {
         title: "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
@@ -137,14 +213,17 @@ var COURSE_BLUEPRINTS = [
       },
     ],
     capstoneLinks: ["capstone_task_manager", "capstone_movie_app", "capstone_auth_crud", "capstone_dashboard"],
-    mockExamTags: ["js_foundations", "react_full", "all_full"],
+    mockExamTags: ["svcollege_fullstack", "js_foundations", "react_full", "all_full"],
     recommendedNext: [
-      "עדיפות 1: להשלים שיעורי HTML/CSS foundations, Git/tooling, SQL/PostgreSQL+ORM, Auth, Next.js, DevOps/Docker/CI-CD, Nest.js ו-AI Engineering.",
+      "עדיפות 1: להשלים שיעורי DevOps/Docker/CI-CD, Nest.js ו-AI Engineering.",
       "עדיפות 1: להוסיף מבחן SVCollege מלא שמכסה את כל המודולים הציבוריים, ולא רק JS/React/Node.",
       "עדיפות 1: להוסיף site health gate שמוודא שכל הטאבים והמסכים העיקריים נפתחים בלי שגיאות.",
       "עדיפות 2 בלבד: מוזיאון, קהילה, פרימיום ו-AI Tutor production אחרי SVCollege readiness.",
     ],
   },
+];
+
+var DEFERRED_COURSE_PORTAL_BLUEPRINTS = [
   {
     id: "john_bryce_fullstack_ai",
     provider: "John Bryce",
@@ -339,4 +418,5 @@ var COURSE_BLUEPRINTS = [
 
 if (typeof window !== "undefined") {
   window.COURSE_BLUEPRINTS = COURSE_BLUEPRINTS;
+  window.DEFERRED_COURSE_PORTAL_BLUEPRINTS = DEFERRED_COURSE_PORTAL_BLUEPRINTS;
 }

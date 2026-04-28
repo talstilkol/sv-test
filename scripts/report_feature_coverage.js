@@ -309,7 +309,7 @@ function buildCoverage() {
         ),
       },
     }),
-    metric("courseBlueprints", "Course Blueprint Alignment", countCompleteCourseBlueprints(courseBlueprints), 4, "blueprints", [
+    metric("courseBlueprints", "SVCollege Course Blueprint Alignment", countCompleteCourseBlueprints(courseBlueprints), 1, "active blueprint", [
       "data/course_blueprints.js",
     ], {
       details: {

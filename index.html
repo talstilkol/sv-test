@@ -19,7 +19,7 @@
       href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css?v=museum-notebook-video-studio-v1" />
+    <link rel="stylesheet" href="style.css?v=museum-ai-model-deep-dive-v1" />
     <!-- P1.3 — PWA -->
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236366f1'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' fill='white' font-family='Arial,sans-serif'%3EL%3C/text%3E%3C/svg%3E" />
@@ -264,8 +264,8 @@
           <button class="top-tab" id="open-capstones" data-tab="capstones" aria-label="פתח מסלול פרויקטי גמר">
             <span class="emoji" aria-hidden="true">🏗️</span><span>פרויקטים</span>
           </button>
-          <button class="top-tab" id="open-blueprints" data-tab="blueprints" aria-label="פתח יישור קורסים ומבחנים">
-            <span class="emoji" aria-hidden="true">🧾</span><span>יישור קורסים</span>
+          <button class="top-tab" id="open-blueprints" data-tab="blueprints" aria-label="פתח יישור SVCollege">
+            <span class="emoji" aria-hidden="true">🧾</span><span>יישור SVCollege</span>
           </button>
           <button class="top-tab" id="open-comparator" data-tab="comparator" aria-label="פתח השוואות — Side-by-Side">
             <span class="emoji" aria-hidden="true">⚖️</span><span>השוואות</span>
@@ -756,7 +756,7 @@
           <div class="blueprints-view" id="blueprints-view" style="display:none">
             <div class="blueprints-header glass-panel">
               <div>
-                <h2>🧾 יישור קורסים ומבחנים</h2>
+                <h2>🧾 יישור SVCollege — AI & Full Stack</h2>
                 <p>מיפוי לא רשמי לפי מקורות ציבוריים: אילו חלקים בפורטל מכסים כל מסלול, איפה יש פערים, ומה לתרגל במבחן או בפרויקט.</p>
               </div>
               <div class="blueprints-header-stats" id="blueprints-header-stats"></div>
@@ -852,12 +852,17 @@
     <script src="data/lesson11.js"></script>
     <script src="data/lesson12.js"></script>
     <script src="data/lesson13.js"></script>
+    <script src="data/lesson_html_css_foundations.js"></script>
+    <script src="data/lesson_tooling_git.js"></script>
     <script src="data/lesson15.js"></script>
     <script src="data/lesson16.js"></script>
     <script src="data/lesson17.js"></script>
     <script src="data/lesson18.js"></script>
     <script src="data/lesson19.js"></script>
     <script src="data/lesson20.js"></script>
+    <script src="data/lesson_sql_orm.js?v=svcollege-sql-orm-v1"></script>
+    <script src="data/lesson_auth_security.js?v=svcollege-auth-v1"></script>
+    <script src="data/lesson_nextjs.js?v=svcollege-nextjs-v1"></script>
     <script src="data/lesson21.js"></script>
     <script src="data/lesson22.js"></script>
     <script src="data/lesson23.js"></script>
@@ -874,10 +879,19 @@
     <script src="data/concept_enrichment.js"></script>
     <script src="data/extended_explanations.js"></script>
     <script src="data/questions_trace.js"></script>
+    <script src="data/svcollege_traces_sql_orm.js?v=svcollege-sql-orm-v1"></script>
+    <script src="data/svcollege_traces_auth.js?v=svcollege-auth-v1"></script>
+    <script src="data/svcollege_traces_nextjs.js?v=svcollege-nextjs-v1"></script>
     <!-- P1.4.3 — Bug Hunt questions -->
     <script src="data/questions_bug.js"></script>
+    <script src="data/svcollege_questions_sql_orm.js?v=svcollege-sql-orm-v1"></script>
+    <script src="data/svcollege_questions_auth.js?v=svcollege-auth-v1"></script>
+    <script src="data/svcollege_questions_nextjs.js?v=svcollege-nextjs-v1"></script>
     <!-- P1.4.4 — Mini Build questions -->
     <script src="data/questions_build.js"></script>
+    <script src="data/svcollege_builds_sql_orm.js?v=svcollege-sql-orm-v1"></script>
+    <script src="data/svcollege_builds_auth.js?v=svcollege-auth-v1"></script>
+    <script src="data/svcollege_builds_nextjs.js?v=svcollege-nextjs-v1"></script>
     <!-- Sprint 2 — Mental Model Animator -->
     <script src="data/animations.js"></script>
     <!-- Sprint 3 — What-If Simulator -->
@@ -904,6 +918,9 @@
     <script src="data/comparisons.js"></script>
     <!-- W14 — Prerequisite graph -->
     <script src="data/prerequisites.js"></script>
+    <script src="data/svcollege_prerequisites_sql_orm.js?v=svcollege-sql-orm-v1"></script>
+    <script src="data/svcollege_prerequisites_auth.js?v=svcollege-auth-v1"></script>
+    <script src="data/svcollege_prerequisites_nextjs.js?v=svcollege-nextjs-v1"></script>
     <!-- W7 — Metaphor Library + Learning Pathways -->
     <script src="data/metaphors.js"></script>
     <script src="data/pathways.js"></script>
@@ -915,7 +932,7 @@
     <script src="data/bug_quests.js"></script>
     <!-- W24 — Capstone project track -->
     <script src="data/capstones.js?v=capstones-v2"></script>
-    <script src="data/course_blueprints.js?v=course-blueprints-v1"></script>
+    <script src="data/course_blueprints.js?v=svcollege-only-v1"></script>
     <!-- P5.3.2 — Explicit lesson quiz concept routing -->
     <script src="data/lesson_quiz_keys.js"></script>
     <!-- W9 — AI Tutor FAB + modal -->
@@ -929,7 +946,7 @@
     <!-- P4.6.4 — HTML sanitization must patch legacy rendering before app.js -->
     <script src="lib/vendor/dompurify.min.js"></script>
     <script src="src/core/sanitize-early.js"></script>
-    <script src="app.js?v=museum-notebook-video-studio-v1"></script>
+    <script src="app.js?v=museum-ai-model-deep-dive-v1"></script>
     <script type="module" src="/src/main.js"></script>
 
     <!-- W12 — Achievements overlay -->

@@ -4,7 +4,7 @@ describe("lesson quiz concept key mappings", () => {
   it("maps every lesson-level quiz item to existing concept keys", () => {
     const report = lessonQuizKeys.buildReport();
 
-    expect(report.summary.totalQuizItems).toBe(133);
+    expect(report.summary.totalQuizItems).toBe(145);
     expect(report.summary.mappedQuizItems).toBe(report.summary.totalQuizItems);
     expect(report.summary.coverage).toBe(100);
     expect(report.summary.issueCount).toBe(0);

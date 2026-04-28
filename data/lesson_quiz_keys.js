@@ -33,6 +33,22 @@ var LESSON_QUIZ_KEYS = {
     ["lesson_13::setItem", "lesson_13::localStorage"],
     ["lesson_13::Property", "lesson_13::Method"],
   ],
+  lesson_html_css_foundations: [
+    ["lesson_html_css_foundations::semantic HTML", "lesson_html_css_foundations::HTML document"],
+    ["lesson_html_css_foundations::HTML form", "lesson_html_css_foundations::label"],
+    ["lesson_html_css_foundations::CSS selector"],
+    ["lesson_html_css_foundations::cascade and specificity", "lesson_html_css_foundations::CSS selector"],
+    ["lesson_html_css_foundations::box model"],
+    ["lesson_html_css_foundations::accessibility basics", "lesson_html_css_foundations::label"],
+  ],
+  lesson_tooling_git: [
+    ["lesson_tooling_git::commit", "lesson_tooling_git::staging area"],
+    ["lesson_tooling_git::branch", "lesson_tooling_git::GitHub workflow"],
+    ["lesson_tooling_git::pull request", "lesson_tooling_git::GitHub workflow"],
+    ["lesson_tooling_git::npm scripts"],
+    ["lesson_tooling_git::ESLint"],
+    ["lesson_tooling_git::Prettier"],
+  ],
   lesson_15: [
     ["lesson_15::Error", "lesson_15::try", "lesson_15::catch", "lesson_15::Exception"],
     ["lesson_15::throw", "lesson_15::Error", "lesson_15::Exception"],

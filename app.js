@@ -415,7 +415,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: "gap", label: "פערים", action: () => openGapMatrix() },
             { id: "learning-evidence", label: "ראיות למידה", action: () => openLearningEvidence() },
             { id: "capstones", label: "פרויקטים", action: () => openCapstones() },
-            { id: "blueprints", label: "יישור קורסים", action: () => openBlueprints() },
+            { id: "blueprints", label: "יישור SVCollege", action: () => openBlueprints() },
           ],
         },
         {
@@ -1876,33 +1876,90 @@ document.addEventListener("DOMContentLoaded", () => {
   const PROGRAMMING_LANGUAGE_LINEAGES = [
     {
       title: "שושלת קרובה לחומרה",
+      subtitle: "מהמתג החשמלי ועד שפה שמנהלת זיכרון ידנית.",
+      accent: "#fbbf24",
       path: ["טרנזיסטור", "קוד מכונה", "Assembly", "BCPL", "B", "C", "C++ / Rust"],
+      milestones: [
+        { era: "1947", label: "טרנזיסטור", detail: "מתג פיזי קטן שמייצג 0/1." },
+        { era: "1948-1951", label: "קוד מכונה", detail: "פקודות בינאריות שהמעבד מבצע ישירות." },
+        { era: "1949-1951", label: "Assembly", detail: "שמות אנושיים לפקודות נמוכות." },
+        { era: "1967", label: "BCPL", detail: "שפה קטנה לתכנות מערכות." },
+        { era: "1969", label: "B", detail: "חוליית מעבר בדרך ל-C." },
+        { era: "1972", label: "C", detail: "טיפוסים, pointers וכתיבה ניידת יותר של Unix." },
+        { era: "1983-היום", label: "C++ / Rust", detail: "ביצועים גבוהים עם מודלים שונים לבטיחות." },
+      ],
       lesson: "ככל שיורדים שכבה, מקבלים שליטה ומהירות; ככל שעולים, מקבלים קריאות ובטיחות.",
       today: "בחר C/Rust כששליטה בזיכרון וביצועים הם חלק מהבעיה, לא רק סקרנות.",
+      diagramTakeaway: "הקו הזה מסביר למה array, pointer, reference ו-performance קשורים לאותה שכבת זיכרון.",
     },
     {
       title: "שושלת אובייקטים",
+      subtitle: "מהדמיית מערכות עד קומפוננטות עם state.",
+      accent: "#a78bfa",
       path: ["Simula", "Smalltalk", "C++", "Java", "C#", "Component models"],
+      milestones: [
+        { era: "1967", label: "Simula", detail: "מחלקות ואובייקטים נולדו כדי לדמות מערכות." },
+        { era: "1970s", label: "Smalltalk", detail: "הכול אובייקט, והמערכת חיה ואינטראקטיבית." },
+        { era: "1983", label: "C++", detail: "OOP מעל C, עם ביצועים קרובים למכונה." },
+        { era: "1995", label: "Java", detail: "אובייקטים, bytecode, VM ו-GC." },
+        { era: "2000", label: "C#", detail: "מודל מנוהל חזק לעולם enterprise ו-UI." },
+        { era: "היום", label: "Components", detail: "יחידות UI עם נתונים, props, state והתנהגות." },
+      ],
       lesson: "אובייקט הוא ניסיון לארוז נתונים ופעולות ביחידה אחת עם גבולות ברורים.",
       today: "בחר OOP כשיש ישויות מתמשכות עם state והתנהגות, לא רק פונקציה קצרה.",
+      diagramTakeaway: "הקו הזה מחבר class, object, component ו-state לאותו רעיון: יחידה עם גבולות.",
     },
     {
       title: "שושלת ה-web",
+      subtitle: "ממסמך סטטי למכונת אפליקציות מלאה.",
+      accent: "#22d3ee",
       path: ["HTML", "DOM", "JavaScript", "Node.js", "TypeScript", "React", "Next.js"],
+      milestones: [
+        { era: "1990", label: "HTML", detail: "מסמך עם תגיות ומשמעות סמנטית." },
+        { era: "1990s", label: "DOM", detail: "המסמך הופך לעץ שאפשר לשנות בקוד." },
+        { era: "1995", label: "JavaScript", detail: "אירועים, פונקציות ואובייקטים בדפדפן." },
+        { era: "2009", label: "Node.js", detail: "JS יוצאת מהדפדפן לשרת ולכלי פיתוח." },
+        { era: "2012", label: "TypeScript", detail: "חוזי טיפוסים מעל JavaScript." },
+        { era: "2013", label: "React", detail: "UI כתלות של state וקומפוננטות." },
+        { era: "2016-היום", label: "Next.js", detail: "React עם routing, server rendering ו-data loading." },
+      ],
       lesson: "ה-web בנוי מעץ, אירועים ופונקציות שמגיבות לשינוי state.",
       today: "למד קודם JS data structures; אחר כך React נראה כמו שימוש מאורגן באותן אבנים.",
+      diagramTakeaway: "הקו הזה מראה למה React/Next הם המשך של DOM, events, data ו-state, לא קסם נפרד.",
     },
     {
       title: "שושלת מדע ו-AI",
+      subtitle: "מנוסחאות מדעיות אל כלים שמריצים חישוב כבד מאחורי API נוח.",
+      accent: "#34d399",
       path: ["FORTRAN", "Lisp", "Python", "NumPy", "PyTorch", "AI tools"],
+      milestones: [
+        { era: "1957", label: "FORTRAN", detail: "נוסחאות מדעיות הופכות לקוד יעיל." },
+        { era: "1958", label: "Lisp", detail: "רשימות, פונקציות ורעיונות מוקדמים ל-AI." },
+        { era: "1991", label: "Python", detail: "קריאות ופשטות לסקריפטים ומדעי נתונים." },
+        { era: "2006", label: "NumPy", detail: "מערכים וחישוב native מהיר דרך Python." },
+        { era: "2016", label: "PyTorch", detail: "מודלים, tensors ו-gradient training." },
+        { era: "2020s", label: "AI tools", detail: "מודלים עוזרים לכתוב, לבדוק ולהסביר קוד." },
+      ],
       lesson: "שפות מצליחות כשהן מורידות חיכוך מתחום עבודה אמיתי.",
       today: "Python איטית בליבה שלה, אבל חזקה כי היא מפעילה ספריות native מהירות.",
+      diagramTakeaway: "הקו הזה מלמד להבדיל בין שפה איטית לבין ספריות native מהירות שרצות מתחתיה.",
     },
     {
       title: "שושלת נתונים ועסקים",
+      subtitle: "מרשומות וקבצים אל APIs שמזיזים מידע בין מערכות.",
+      accent: "#fb7185",
       path: ["COBOL", "Files", "SQL", "JSON", "APIs", "Data apps"],
+      milestones: [
+        { era: "1959", label: "COBOL", detail: "שפה עסקית לרשומות, שכר ומלאי." },
+        { era: "1960s", label: "Files", detail: "נתונים נשמרים כקבצים ורשומות." },
+        { era: "1970s", label: "SQL", detail: "שאילתות על טבלאות וקשרים." },
+        { era: "2000s", label: "JSON", detail: "מבנה טקסטואלי קל להעברת אובייקטים." },
+        { era: "2000s-היום", label: "APIs", detail: "חוזים בין לקוח, שרת ושירותים." },
+        { era: "היום", label: "Data apps", detail: "מוצרים שמציגים, מאמתים ומסנכרנים מידע." },
+      ],
       lesson: "רוב התוכנה בעולם היא העברת נתונים, אימות נתונים והצגת נתונים.",
       today: "לפני UI מרשים, תכנן מבנה נתונים פשוט, ברור וניתן לבדיקה.",
+      diagramTakeaway: "הקו הזה מסביר למה schema, key, value, request ו-response הם אבני יסוד של מוצר.",
     },
   ];
 
@@ -1993,7 +2050,14 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  const MUSEUM_STACK_LAYER_PAGE_VERSION = "museum-notebook-video-studio-v1";
+  const MUSEUM_STACK_LAYER_PAGE_VERSION = "museum-ai-model-deep-dive-v1";
+  const MUSEUM_SUPPORTED_PAGE_VERSIONS = Object.freeze([
+    "museum-root-cause-router-v1",
+    "museum-course-bridge-v1",
+    "museum-ai-evolution-v1",
+    "museum-ai-product-lab-v1",
+    "museum-ai-model-deep-dive-v1",
+  ]);
 
   const PROGRAMMING_STACK_LAYER_MUSEUMS = [
     {
@@ -2693,6 +2757,461 @@ document.addEventListener("DOMContentLoaded", () => {
     { error: "מידע נעלם אחרי רענון", layerId: "application", layer: "Database", diagnosis: "המידע נשמר רק בזיכרון זמני.", action: "העבר מקור אמת לשרת/DB או הגדר שמירה מקומית במפורש." },
   ];
 
+  const AI_MUSEUM_TIMELINE = [
+    {
+      era: "1950",
+      title: "שאלת המכונה החושבת",
+      signal: "Turing ניסח את מבחן החיקוי: האם התנהגות שיחתית יכולה להיראות אינטליגנטית.",
+      solved: "העביר את הדיון מ'מהי מחשבה' אל בדיקה התנהגותית שאפשר לדון בה.",
+      evolvedTo: "הערכה של מערכות לפי תגובה, שיחה, פתרון בעיות והתנהגות מול משתמש.",
+    },
+    {
+      era: "1955-1956",
+      title: "השם Artificial Intelligence",
+      signal: "הצעת Dartmouth נתנה לתחום שם ומטרת מחקר: לגרום למכונות לבצע היבטים של למידה ואינטליגנציה.",
+      solved: "איחדה רעיונות ממחשוב, לוגיקה, חיפוש, שפה ולמידה תחת תחום מחקר אחד.",
+      evolvedTo: "מעבדות AI, תכנון, חיפוש, ייצוג ידע ושפות שמנסות לתאר חשיבה.",
+    },
+    {
+      era: "1955-1956",
+      title: "Logic Theorist",
+      signal: "תוכנה מוקדמת מאוד ל-reasoning אוטומטי, שנבנתה כדי להוכיח משפטים בלוגיקה.",
+      solved: "הראתה שתוכנה יכולה לחפש פתרון סמלי במקום רק לחשב נוסחה קבועה.",
+      evolvedTo: "מוכיחי משפטים, planners, מנועי חיפוש ומערכות שמפרקות בעיה לצעדים.",
+    },
+    {
+      era: "1958",
+      title: "Perceptron",
+      signal: "רשת פשוטה של יחידות לומדות שנועדה ללמוד מדוגמאות.",
+      solved: "העבירה חלק מהעבודה מכתיבת חוקים ידניים ללמידה ממשקולות ודוגמאות.",
+      evolvedTo: "Neural networks, deep learning וזיהוי תבניות בקול, תמונה וטקסט.",
+    },
+    {
+      era: "1970s-1980s",
+      title: "מערכות מומחה",
+      signal: "ידע אנושי נכתב כחוקים: אם מתקיים תנאי, הסק מסקנה.",
+      solved: "אפשרה לארוז מומחיות תחומית לתוכנה שאפשר לשאול אותה שאלות.",
+      evolvedTo: "Rules engines, decision support וחלקים ממערכות business logic.",
+    },
+    {
+      era: "1990s-2000s",
+      title: "למידת מכונה סטטיסטית",
+      signal: "המערכת לומדת דפוסים מנתונים במקום להסתמך רק על כללים כתובים.",
+      solved: "שיפרה סיווג, חיזוי ודירוג כאשר קשה לכתוב את כל החוקיות ביד.",
+      evolvedTo: "Search ranking, המלצות, זיהוי חריגות ומודלים מבוססי נתונים.",
+    },
+    {
+      era: "2010s",
+      title: "Deep Learning",
+      signal: "רשתות עמוקות למדו ייצוגים מורכבים מתוך כמות גדולה של נתונים וחישוב.",
+      solved: "הורידה צורך בהנדסת תכונות ידנית בתחומים כמו תמונה, דיבור ושפה.",
+      evolvedTo: "מודלים גדולים שמפיקים טקסט, תמונה, קוד והסברים.",
+    },
+    {
+      era: "2017+",
+      title: "Transformer ו-LLM",
+      signal: "ארכיטקטורת Transformer שיפרה עבודה עם רצפים והפכה בסיס למודלי שפה גדולים.",
+      solved: "אפשרה ללמוד הקשרים רחבים בטקסט ולייצר תשובות, קוד וסיכומים בצורה כללית יותר.",
+      evolvedTo: "Chat assistants, code assistants, RAG, multimodal models ומערכות agentic.",
+    },
+    {
+      era: "2020s",
+      title: "Agents ומנועי אינטליגנציה",
+      signal: "המודל אינו רק עונה; הוא מקבל הוראות, משתמש בכלים, בודק תוצאה ומנהל רצף עבודה.",
+      solved: "מחבר reasoning לשימוש במערכת אמיתית: קבצים, API, דפדפן, זיכרון, בדיקות והרשאות.",
+      evolvedTo: "מערכות Full-Stack שמפעילות AI כחלק ממוצר ולא רק כצ'אט.",
+    },
+  ];
+
+  const AI_MUSEUM_FIRSTS = [
+    {
+      label: "מי נתן את השאלה?",
+      answer: "Alan Turing בשנת 1950, דרך שאלת החיקוי: האם מכונה יכולה להתנהג כך שבשיחה קשה להבדיל בינה לבין אדם.",
+      nuance: "זה לא היה 'מוצר AI', אלא ניסוח מוקדם של דרך לחשוב על אינטליגנציה מכנית.",
+    },
+    {
+      label: "מי נתן את השם?",
+      answer: "John McCarthy וחוקרים נוספים בהצעת Dartmouth משנת 1955, שהכינה את סדנת 1956.",
+      nuance: "מכאן הגיע השם Artificial Intelligence ככותרת מחקרית לתחום.",
+    },
+    {
+      label: "מה הייתה תוכנת ה-AI הראשונה?",
+      answer: "Logic Theorist של Newell, Simon ו-Shaw נחשבת בדרך כלל לאחת התוכנות הראשונות, ולעיתים הראשונה, שנבנתה ל-reasoning אוטומטי.",
+      nuance: "אם מגדירים 'ראשונה' אחרת, למשל משחק או למידה, מתקבלים מועמדים אחרים. לכן במוזיאון מציגים 'ראשונים לפי פירוש'.",
+    },
+    {
+      label: "מה הייתה התחלה של למידה עצבית?",
+      answer: "Perceptron של Rosenblatt בשנת 1958 הוא תחנה מרכזית מוקדמת ברעיון של מערכת שלומדת מדוגמאות.",
+      nuance: "זה לא LLM, אבל הוא מסמן מעבר חשוב מחוקים בלבד ללמידה ממשקולות.",
+    },
+  ];
+
+  const AI_MUSEUM_COMPARISON = [
+    {
+      term: "AI",
+      role: "שם רחב לתחום ולמערכות שמציגות יכולות כמו הבנה, חיזוי, תכנון, יצירה או החלטה.",
+      input: "בעיה, נתונים, הקשר או מטרה.",
+      output: "תחזית, החלטה, טקסט, פעולה, המלצה או תובנה.",
+      not: "לא בהכרח מודל שפה ולא בהכרח סוכן.",
+    },
+    {
+      term: "AI System",
+      role: "מערכת תוכנה מלאה שמשתמשת במודל, נתונים, UI, כללים, בדיקות והרשאות כדי לייצר תוצאה.",
+      input: "משתמש, API, מסמכים, לוגים, הרשאות ומדדי מוצר.",
+      output: "פיצ'ר במוצר: חיפוש חכם, סיכום, המלצה, אוטומציה או תמיכה.",
+      not: "לא רק קובץ model; זו מערכת סביבו.",
+    },
+    {
+      term: "Model",
+      role: "הרכיב שלמד דפוסים מנתונים ומחשב פלט לפי קלט.",
+      input: "טקסט, תמונה, טבלה, embedding או תכונות.",
+      output: "הסתברות, סיווג, embedding, טקסט, קוד או פעולה מוצעת.",
+      not: "לא יודע לבד מה מותר לעשות במוצר אם לא מחברים לו כללים וכלים.",
+    },
+    {
+      term: "LLM",
+      role: "מודל שפה גדול שמנבא ומייצר טקסט/קוד לפי הקשר רחב.",
+      input: "prompt, הודעות קודמות, מסמכים או תוצאות כלים.",
+      output: "תשובה, הסבר, סיכום, קוד, תכנון או קריאה לכלי.",
+      not: "לא בהכרח יודע אמת עדכנית בלי מקור, retrieval או כלי בדיקה.",
+    },
+    {
+      term: "Agent",
+      role: "מערכת שמפעילה מודל עם הוראות, כלים, הקשר ובקרה כדי להשלים משימה רב-שלבית.",
+      input: "מטרה, מצב מערכת, כלים זמינים, הרשאות ותוצאות ביניים.",
+      output: "סדרת פעולות: קריאה, כתיבה, בדיקה, תיקון, ניווט או יצירת artifact.",
+      not: "לא סתם prompt ארוך; הוא מחובר ליכולת פעולה ולמדיניות.",
+    },
+    {
+      term: "Workflow / Automation",
+      role: "רצף צעדים קבוע מראש; לפעמים משתמש במודל, אבל הלוגיקה המרכזית דטרמיניסטית.",
+      input: "אירוע או טופס שמפעיל תהליך מוגדר.",
+      output: "צעדים צפויים כמו שליחת הודעה, פתיחת issue או עדכון רשומה.",
+      not: "לא בהכרח 'חכם'; החוכמה היא בתהליך ובבדיקות.",
+    },
+    {
+      term: "RAG",
+      role: "שיטה שבה המערכת שולפת מקורות רלוונטיים ואז נותנת אותם למודל כהקשר.",
+      input: "שאלה, מסמכים, אינדקס, חיפוש וקטורי או חיפוש טקסטואלי.",
+      output: "תשובה שמבוססת על חומר קיים יותר מאשר על זיכרון המודל בלבד.",
+      not: "לא מבטיח אמת אם המקורות לא טובים או השליפה שגויה.",
+    },
+    {
+      term: "Intelligence Engine",
+      role: "שם מוצרי/ארכיטקטוני למרכז שמחבר מודלים, retrieval, כלים, policy, evals, logs ו-UX.",
+      input: "משימה עסקית, נתוני מוצר, משתמש, הרשאות, מקורות וכלים.",
+      output: "יכולת AI שחוזרת על עצמה במוצר: המלצה, בדיקה, ניתוח, סוכן או copilots.",
+      not: "זה לא מונח מדעי אחד מוסכם; במוזיאון זה שם לשכבת תזמור מלאה.",
+    },
+    {
+      term: "Tool",
+      role: "פעולה חיצונית שהמודל או הסוכן יכולים לבקש: חיפוש, DB, API, קובץ, דפדפן או בדיקה.",
+      input: "פרמטרים מובנים.",
+      output: "תוצאה שמוחזרת למודל או למערכת.",
+      not: "לא AI בפני עצמו; הוא זרוע פעולה.",
+    },
+    {
+      term: "Guardrail / Evaluation",
+      role: "שכבת בקרה שבודקת איכות, הרשאות, בטיחות, פורמט או דיוק לפני/אחרי פעולה.",
+      input: "קלט, פלט, מקור, policy או בדיקת יחידה.",
+      output: "אישור, חסימה, תיקון, ציון איכות או בקשת הבהרה.",
+      not: "לא מחליף הבנה; הוא מקטין סיכון במערכת.",
+    },
+  ];
+
+  const AI_MUSEUM_ENGINE_FLOW = [
+    "מטרה",
+    "הקשר",
+    "מקורות",
+    "מודל",
+    "כלים",
+    "בדיקה",
+    "פעולה",
+    "מדידה",
+  ];
+
+  const AI_MUSEUM_MODEL_TERMS = [
+    {
+      term: "מודל בינה מלאכותית",
+      year: "רעיון כללי",
+      why: "נוצר כדי שמחשב לא יצטרך חוק ידני לכל מצב, אלא יוכל להשתמש בייצוג שנלמד מנתונים.",
+      solves: "סיווג, חיזוי, דירוג, יצירה או המלצה כאשר קשה לכתוב את כל הכללים ביד.",
+      how: "המודל מחזיק פרמטרים, משקולות או חוקים שנוצרו בתהליך אימון, ומחשב פלט מתוך קלט.",
+      remember: "מודל הוא רכיב. מוצר AI אמיתי צריך סביבו מקורות, הרשאות, בדיקות ו-UX.",
+    },
+    {
+      term: "למידת מכונה",
+      year: "1959",
+      why: "הכיוון התחזק כאשר חוקרים רצו שתוכנה תשפר ביצוע לפי ניסיון, למשל במשחק דמקה של Arthur Samuel.",
+      solves: "מצבים שבהם הנתונים רבים והחוקיות משתנה: חיזוי, זיהוי תבניות, המלצות וסינון.",
+      how: "נותנים דוגמאות, מודדים טעות, ומשנים את המודל כך שבפעם הבאה הטעות תהיה קטנה יותר.",
+      remember: "Machine Learning הוא אופן בנייה של מודל; לא כל AI הוא LLM ולא כל ML הוא צ'אט.",
+    },
+    {
+      term: "רשתות נוירונים",
+      year: "1943 / 1958",
+      why: "נוצרו כהשראה מתמטית ממערכת עצבים: יחידות פשוטות שמתחברות לרשת ולומדות דפוסים.",
+      solves: "זיהוי תבניות מורכבות שקשה לפרק לחוקים ידניים, למשל תמונה, קול, טקסט והתנהגות משתמש.",
+      how: "שכבות של יחידות מחשבות משקולות, activation ופלט ביניים עד שמתקבלת תחזית או יצירה.",
+      remember: "רשת עמוקה היא רשת עם שכבות רבות; הכוח מגיע מהייצוגים שהיא לומדת בדרך.",
+    },
+    {
+      term: "אימון מודל",
+      year: "תהליך",
+      why: "נדרש כדי להפוך נתונים גולמיים למערכת שמסוגלת לבצע משימה בצורה עקבית.",
+      solves: "הופך דוגמאות, טקסטים או מדידות לפרמטרים שמייצגים דפוסים שימושיים.",
+      how: "אוספים נתונים, מנקים אותם, בוחרים ארכיטקטורה, מריצים loss ו-optimizer, ואז מעריכים על מידע שלא שימש לאימון.",
+      remember: "אימון טוב הוא לא רק להריץ קוד; הוא גם איכות נתונים, בדיקות, הטיות ומדדי הצלחה.",
+    },
+    {
+      term: "Fine-tuning",
+      year: "שיטה ותיקה; נפוצה מאוד ב-2020s",
+      why: "נוצר כדי לקחת מודל כללי שכבר למד הרבה, ולהתאים אותו למשימה, סגנון או תחום מסוים.",
+      solves: "חוסך אימון מאפס כאשר צריך מודל שמבין פורמט, שפה מקצועית, טון או משימת מוצר.",
+      how: "ממשיכים לאמן את המודל על Dataset קטן וממוקד יותר, עם יעד ברור ובדיקות איכות.",
+      remember: "Fine-tuning לא מחליף מקור אמת. אם צריך ידע עדכני או מסמכים, בדרך כלל מוסיפים RAG.",
+    },
+    {
+      term: "LoRA",
+      year: "2021",
+      why: "נוצר כי Fine-tuning מלא של מודלי שפה גדולים דורש הרבה זיכרון, זמן ועלות.",
+      solves: "מאפשר התאמה זולה יותר: משאירים את מודל הבסיס קפוא ומאמנים שכבות/מטריצות קטנות.",
+      how: "LoRA מוסיף מטריצות Low-Rank בתוך שכבות Transformer, ולכן מספר הפרמטרים המאומנים קטן בהרבה.",
+      remember: "LoRA הוא Adapter לאימון יעיל; הוא לא הופך Dataset חלש למודל אמין.",
+    },
+  ];
+
+  const AI_MUSEUM_MODEL_MILESTONES = [
+    {
+      year: "1943",
+      title: "נוירון מלאכותי",
+      layer: "רעיון עצבי",
+      detail: "McCulloch ו-Pitts הציעו מודל לוגי של פעילות עצבית.",
+      solves: "נתן שפה מתמטית ראשונה לרעיון של יחידות חישוב דמויות נוירון.",
+    },
+    {
+      year: "1958",
+      title: "Perceptron",
+      layer: "למידה ממשקולות",
+      detail: "Rosenblatt הדגים מערכת מוקדמת שלומדת מדוגמאות.",
+      solves: "הראה מעבר מחוקים ידניים ללמידה מתוך דוגמאות פשוטות.",
+    },
+    {
+      year: "1959",
+      title: "Machine Learning",
+      layer: "למידה מניסיון",
+      detail: "Arthur Samuel חקר תוכנית דמקה שמשפרת ביצוע דרך משחקים.",
+      solves: "הפך את רעיון 'המחשב לומד מניסיון' לניסוח מעשי.",
+    },
+    {
+      year: "1980",
+      title: "R1/XCON",
+      layer: "מסחרי-סמלי",
+      detail: "מערכת מומחה של DEC להגדרת מערכות VAX לפי הזמנות לקוח.",
+      solves: "הפחיתה טעויות בתצורת חומרה מורכבת בעזרת חוקים ומנוע הסקה.",
+    },
+    {
+      year: "2012",
+      title: "Deep Learning בפריצה רחבה",
+      layer: "רשתות עמוקות",
+      detail: "AlexNet סימן קפיצה בזיהוי תמונה בעזרת רשת עמוקה וחישוב GPU.",
+      solves: "הראה שייצוגים נלמדים יכולים לנצח הנדסת תכונות ידנית במשימות מורכבות.",
+    },
+    {
+      year: "2017",
+      title: "Transformer",
+      layer: "Attention",
+      detail: "ארכיטקטורה שמבוססת על attention במקום recurrence כמרכז החישוב.",
+      solves: "אפשרה עבודה מקבילית ויעילה יותר עם רצפים, והפכה בסיס ל-LLMs.",
+    },
+    {
+      year: "2020",
+      title: "GPT-3 API",
+      layer: "מודל שפה מסחרי כללי",
+      detail: "OpenAI פתחה API מסחרי למודלי GPT-3 בממשק text-in/text-out.",
+      solves: "הוריד חסם כניסה למוצרים שמשתמשים במודל שפה גדול בלי להפעיל תשתית אימון.",
+    },
+    {
+      year: "2021",
+      title: "GPT-J ו-LoRA",
+      layer: "מקומי/יעיל יותר",
+      detail: "GPT-J נתן מודל פתוח משמעותי להרצה וניסוי; LoRA הפך התאמה של LLMs לזולה יותר.",
+      solves: "פתח דרך ללמידה, ניסוי והתאמה בלי לשלוח כל דבר ל-API מסחרי.",
+    },
+    {
+      year: "2023",
+      title: "LLaMA",
+      layer: "מודלי בסיס יעילים",
+      detail: "משפחת מודלי foundation בגדלים 7B-65B שתרמה מאוד לאקו-סיסטם המקומי/מחקרי.",
+      solves: "הראתה שמודלים קטנים יחסית יכולים להיות חזקים, ניתנים להתאמה ונוחים יותר להרצה.",
+    },
+  ];
+
+  const AI_MUSEUM_FIRST_MODEL_CARDS = [
+    {
+      label: "מסחרי מוקדם לפי AI קלאסי",
+      name: "R1 / XCON",
+      year: "1980",
+      what: "מערכת מומחה מסחרית של Digital Equipment Corporation להגדרת הזמנות VAX.",
+      did: "קיבלה הזמנת לקוח, בדקה רכיבים חסרים או לא מתאימים, והפיקה תרשימי הרכבה.",
+      tech: "מערכת חוקים, knowledge base, production rules ומנוע הסקה. זה לא LLM.",
+      caveat: "זה מועמד חזק ל'ראשון מסחרי' בהקשר מערכות מומחה, לא בהקשר מודלי שפה מודרניים.",
+    },
+    {
+      label: "מודל שפה מסחרי כללי",
+      name: "GPT-3 API",
+      year: "2020",
+      what: "API מסחרי למודלי GPT-3, בממשק כללי של טקסט נכנס וטקסט יוצא.",
+      did: "השלמת טקסט, few-shot prompting, תשובות, סיכום, יצירת תוכן וקוד לפי הקשר.",
+      tech: "מודל שפה autoregressive מסוג Transformer, עם 175B פרמטרים לפי מאמר GPT-3.",
+      caveat: "לא 'ה-AI המסחרי הראשון', אלא תחנה מרכזית במודלי שפה גדולים כמוצר למפתחים.",
+    },
+    {
+      label: "מקומי/פתוח מוקדם ומשמעותי ל-LLM",
+      name: "GPT-J-6B",
+      year: "2021",
+      what: "מודל Transformer פתוח של EleutherAI, 6B פרמטרים, שניתן לטעינה דרך Transformers.",
+      did: "יצירת טקסט באנגלית, ניסויים מקומיים, fine-tuning ומחקר ללא API מסחרי סגור.",
+      tech: "Mesh Transformer JAX, RoPE, causal language modeling ואימון על The Pile.",
+      caveat: "לא מודל ML מקומי ראשון בכלל; הוא תחנה חשובה בהרצת LLM פתוח/מקומי.",
+    },
+    {
+      label: "האצה רחבה של אקו-סיסטם מקומי",
+      name: "LLaMA",
+      year: "2023",
+      what: "משפחת מודלי foundation של Meta בגדלים 7B עד 65B, שפורסמה למחקר.",
+      did: "שימשה בסיס ל-fine-tuning, adapters, ניסויי מוצר והרצה יעילה יותר בסביבות מקומיות.",
+      tech: "Transformer, אימון על טריליוני tokens ודגש על יעילות מול גודל מודל.",
+      caveat: "לא הראשון כרונולוגית, אבל נקודת מפנה חשובה בהפיכת Local LLMs לנגישים יותר.",
+    },
+  ];
+
+  const AI_MUSEUM_TRAINING_FLOW = [
+    {
+      step: "בעיה",
+      detail: "מגדירים מה המודל אמור לפתור: סיווג, חיזוי, יצירה, סיכום או פעולה במוצר.",
+      output: "מדד הצלחה",
+    },
+    {
+      step: "נתונים",
+      detail: "אוספים מקורות רלוונטיים ובודקים איכות, הרשאות, הטיות ושפה.",
+      output: "Dataset",
+    },
+    {
+      step: "עיבוד",
+      detail: "מנקים, מחלקים, מתייגים, מאזנים וממירים לפורמט שהמודל יודע ללמוד ממנו.",
+      output: "Train/Validation/Test",
+    },
+    {
+      step: "ארכיטקטורה",
+      detail: "בוחרים מודל בסיס: רשת קטנה, Transformer, מודל פתוח, API או מודל קיים.",
+      output: "Model choice",
+    },
+    {
+      step: "אימון",
+      detail: "המודל מחשב פלט, loss מודד טעות, optimizer משנה משקולות, והסבבים חוזרים.",
+      output: "Weights",
+    },
+    {
+      step: "הערכה",
+      detail: "בודקים על מידע שלא שימש לאימון, כולל שגיאות, הטיות, hallucination ו-regression.",
+      output: "Eval report",
+    },
+    {
+      step: "Fine-tune / LoRA",
+      detail: "מתאימים למוצר: סגנון, פורמט, שפה מקצועית או משימה צרה, בלי לאמן הכל מאפס.",
+      output: "Adapter או מודל מותאם",
+    },
+    {
+      step: "הטמעה",
+      detail: "מחברים ל-UX, הרשאות, RAG, guardrails, ניטור ועלויות כדי להפוך יכולת למוצר.",
+      output: "AI System",
+    },
+  ];
+
+  const AI_MUSEUM_PRODUCT_SCENARIOS = [
+    {
+      id: "explain-course",
+      title: "הסבר שיעור לפי מחברת",
+      need: "התלמיד שואל על מושג מתוך חומר קיים, והמערכת צריכה לענות בלי להמציא.",
+      bestFit: "RAG + LLM",
+      why: "צריך לשלב שפה טבעית עם מקורות קורס כדי שהתשובה תישען על חומר ידוע.",
+      avoid: "לא להשתמש במודל לבד אם צריך דיוק מול חומר קורס.",
+      stack: ["Notebook", "Retrieval", "LLM", "Citation", "Check question"],
+      buildSteps: ["לאסוף מקורות", "לחלק למסמכים קטנים", "לשלוף לפי שאלה", "לתת למודל הקשר", "להציג תשובה + מקור"],
+      checks: ["האם יש מקור?", "האם התשובה עונה רק על מה שנשלף?", "האם יש שאלת בדיקה לתלמיד?"],
+    },
+    {
+      id: "triage-bug",
+      title: "אבחון שגיאה בקוד תלמיד",
+      need: "המערכת מקבלת הודעת שגיאה וקוד, ומחזירה שכבת שורש ופעולת תיקון.",
+      bestFit: "Agent עם כלים מוגבלים",
+      why: "צריך לקרוא קוד, לבדוק סימפטום, לפתוח מושג, ואולי להריץ בדיקה או lint.",
+      avoid: "לא לתת לסוכן הרשאות כתיבה לפני אבחון והצגת diff ברור.",
+      stack: ["Error", "Code context", "Model", "Static check", "Root cause", "Fix plan"],
+      buildSteps: ["לזהות שגיאה", "למפות לשכבה", "למצוא מושג מסביר", "להציע תיקון קטן", "להריץ בדיקה"],
+      checks: ["האם התיקון מינימלי?", "האם נשמר קוד תלמיד?", "האם הבדיקה מוכיחה את התיקון?"],
+    },
+    {
+      id: "content-workflow",
+      title: "יצירת תקציר וסקריפט לסרטון",
+      need: "צריך להפוך חומר מוזיאון לסקריפט עקבי לפי מבנה קבוע.",
+      bestFit: "Workflow + LLM",
+      why: "השלבים ידועים מראש: חומר רקע, ידע מקדים, סקריפט, פרומפט והוראות בחירה.",
+      avoid: "לא להשתמש בסוכן חופשי כשמבנה הפלט צריך להיות אחיד.",
+      stack: ["Museum data", "Template", "LLM", "Validation", "NotebookLM prompt"],
+      buildSteps: ["לקרוא נתוני אולם", "למלא תבנית", "לבדוק שדות חסרים", "להציג חלון סרטון", "לשמור מסמך הפקה"],
+      checks: ["האם כל סעיף קיים?", "האם אין תאריך חדש?", "האם הפרומפט תואם לאולם?"],
+    },
+    {
+      id: "release-monitor",
+      title: "מעקב אחרי מוצר אחרי השקה",
+      need: "המערכת צריכה לקרוא logs, feedback ובדיקות ולהציע מה לשדרג.",
+      bestFit: "Intelligence Engine",
+      why: "זה כבר לא מודל יחיד: יש נתוני מוצר, מדידה, כללים, סיכום, החלטה ופעולה.",
+      avoid: "לא לתת למודל להחליט לבד על roadmap בלי מדדים וגבולות מוצר.",
+      stack: ["Analytics", "Errors", "Feedback", "Policy", "Model", "Decision board"],
+      buildSteps: ["לאסוף אותות", "לסווג לפי שכבה", "להשוות ל-KPI", "להציע שדרוג/החלפה", "לפתוח משימות"],
+      checks: ["האם יש baseline?", "האם ההמלצה קשורה למדד?", "האם יש owner לשלב הבא?"],
+    },
+  ];
+
+  const AI_MUSEUM_AGENT_LOOP = [
+    { label: "Instruction", detail: "מה המערכת אמורה להשיג ומה אסור לה לעשות." },
+    { label: "Context", detail: "מסמכים, קוד, שיחה קודמת, מצב מוצר והרשאות." },
+    { label: "Reason", detail: "פירוק המשימה לצעדים ובחירת השלב הבא." },
+    { label: "Tool", detail: "קריאה לכלי מוגדר: חיפוש, קובץ, API, בדיקה או דפדפן." },
+    { label: "Observe", detail: "קריאת התוצאה בלי להניח שהיא נכונה." },
+    { label: "Guardrail", detail: "בדיקה של פורמט, הרשאה, מקור, סיכון ואיכות." },
+    { label: "Act", detail: "תשובה, שינוי קוד, פתיחת משימה או בקשת אישור." },
+    { label: "Evaluate", detail: "מדידה אם התוצאה פתרה את הבעיה או דורשת סבב נוסף." },
+  ];
+
+  const AI_MUSEUM_READINESS_CHECKS = [
+    "יש מקור מידע ברור או הודעה שאין מקור.",
+    "יש גבול הרשאות לפני פעולה שמשנה מידע.",
+    "יש דרך לבדוק איכות: test, eval, review או מדד מוצר.",
+    "יש fallback כאשר המודל לא יודע או הכלי נכשל.",
+    "יש הפרדה בין המלצה לבין פעולה שמבצעת שינוי.",
+    "יש לוג או עקבה שמסבירים למה המערכת החליטה כך.",
+  ];
+
+  const AI_MUSEUM_SOURCES = [
+    { title: "Turing 1950: Computing Machinery and Intelligence", url: "https://academic.oup.com/mind/article/LIX/236/433/986238" },
+    { title: "Dartmouth AI proposal", url: "https://www-formal.stanford.edu/jmc/history/dartmouth/dartmouth.html" },
+    { title: "NIST AI Risk Management Framework", url: "https://www.nist.gov/itl/ai-risk-management-framework" },
+    { title: "OpenAI Agents SDK concepts", url: "https://openai.github.io/openai-agents-python/" },
+    { title: "Cornell: Rosenblatt Perceptron", url: "https://news.cornell.edu/stories/2019/09/professors-perceptron-paved-way-ai-60-years-too-soon" },
+    { title: "Google Research: Transformer", url: "https://research.google/pubs/attention-is-all-you-need/" },
+    { title: "OpenAI API and GPT-3", url: "https://openai.com/index/openai-api/" },
+    { title: "GPT-3 paper", url: "https://arxiv.org/abs/2005.14165" },
+    { title: "Computer History Museum: R1/XCON papers", url: "https://www.computerhistory.org/collections/catalog/102719644" },
+    { title: "EleutherAI GPT-J-6B model card", url: "https://huggingface.co/EleutherAI/gpt-j-6b" },
+    { title: "LoRA paper", url: "https://arxiv.org/abs/2106.09685" },
+    { title: "Meta LLaMA paper", url: "https://arxiv.org/abs/2302.13971" },
+    { title: "AlexNet paper", url: "https://proceedings.neurips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html" },
+  ];
+
   const MUSEUM_PORTAL_CONNECTIONS = [
     { area: "אבני בסיס", connection: "לכל אבן מוצגים נבנה מ, מוביל אל, טעות נפוצה ושכבת מוזיאון.", layer: "foundation" },
     { area: "שיעורים", connection: "בראש שיעור מוצג איפה הוא יושב במפה ומה צריך לדעת לפניו.", layer: "lesson" },
@@ -2746,6 +3265,9 @@ document.addEventListener("DOMContentLoaded", () => {
     { role: "Database", does: "מגדיר schema, indexes ושמירת מידע.", owns: "מקור אמת והתמדה." },
     { role: "QA/DevOps", does: "בודק flows, שגיאות, build, deploy ומדידה.", owns: "אמינות לפני ואחרי השקה." },
   ];
+
+  const MUSEUM_VISIT_STORAGE_KEY = "lumenportal:museumPassport:museum-ai-model-deep-dive-v1";
+  const MUSEUM_REDUCED_MOTION_KEY = "lumenportal:museumReducedMotion:museum-ai-model-deep-dive-v1";
 
   const FULL_STACK_MUSEUM_HALLS = [
     {
@@ -3359,6 +3881,131 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
     },
   };
+
+  const buildMuseumRoute = (params = {}) => {
+    const entries = Object.entries({ ...params, v: MUSEUM_STACK_LAYER_PAGE_VERSION })
+      .filter(([, value]) => value !== "" && value != null)
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`);
+    return `museum.html?${entries.join("&")}`;
+  };
+
+  const MUSEUM_CROSS_WING_ROUTES = [
+    {
+      id: "starter",
+      title: "מתחילים",
+      summary: "מהאות הפיזי עד שפה שאפשר לקרוא.",
+      stops: [
+        { label: "חשמל", params: { wing: "stack", stackLayer: "electricity" } },
+        { label: "ביט / Byte", params: { wing: "stack", stackLayer: "bit-byte" } },
+        { label: "חומר לחשמל", params: { wing: "languages", hall: "hardware" } },
+        { label: "מכונה במספרים", params: { wing: "languages", hall: "machine" } },
+      ],
+    },
+    {
+      id: "exam",
+      title: "לפני מבחן",
+      summary: "התחנות שמסבירות scope, זיכרון, runtime ושגיאות.",
+      stops: [
+        { label: "Scope", params: { wing: "languages", hall: "structured" } },
+        { label: "זיכרון", params: { wing: "stack", stackLayer: "machine-code" } },
+        { label: "שפה", params: { wing: "stack", stackLayer: "language" } },
+        { label: "Debug", params: { wing: "errors" } },
+      ],
+    },
+    {
+      id: "product",
+      title: "בניית מוצר",
+      summary: "מהרעיון אל מסך, API, נתונים והשקה.",
+      stops: [
+        { label: "רעיון למוצר", params: { wing: "product" } },
+        { label: "UI", params: { wing: "fullstack", domain: "interface" } },
+        { label: "API", params: { wing: "fullstack", domain: "api-contract" } },
+        { label: "Data", params: { wing: "fullstack", domain: "data-persistence" } },
+      ],
+    },
+    {
+      id: "debug",
+      title: "Debug",
+      summary: "מאבחנים סימפטום לפי שכבה ואז חוזרים לאולם השורש.",
+      stops: [
+        { label: "טעויות", params: { wing: "errors" } },
+        { label: "Runtime", params: { wing: "stack", stackLayer: "language" } },
+        { label: "API", params: { wing: "fullstack", domain: "api-contract" } },
+        { label: "Quality", params: { wing: "fullstack", domain: "quality-delivery" } },
+      ],
+    },
+    {
+      id: "react-fullstack",
+      title: "React / Full-Stack",
+      summary: "מ-state מקומי עד נתון שנשמר וחוזר למסך.",
+      stops: [
+        { label: "Framework", params: { wing: "stack", stackLayer: "framework" } },
+        { label: "React", params: { wing: "fullstack", domain: "react-product" } },
+        { label: "Async", params: { wing: "fullstack", domain: "async-network" } },
+        { label: "Node", params: { wing: "fullstack", domain: "node-server" } },
+      ],
+    },
+  ];
+
+  const productLifecycleById = Object.fromEntries(PROGRAMMING_PRODUCT_LIFECYCLE.map((phase) => [phase.id, phase]));
+  const upgradeDecision = PROGRAMMING_PRODUCT_VERSION_DECISIONS.find((item) => item.decision === "לשדרג גרסה");
+  const replaceDecisions = PROGRAMMING_PRODUCT_VERSION_DECISIONS.filter((item) => item.decision.includes("להחליף"));
+
+  PROGRAMMING_STACK_LAYER_MUSEUMS.forEach((layer) => {
+    layer.route = buildMuseumRoute({ wing: "stack", stackLayer: layer.id });
+    layer.learningGoal = layer.thesis;
+    layer.interactiveDemo = {
+      title: `סימולטור ${layer.blockTitle}`,
+      steps: layer.pathway,
+    };
+    layer.diagramSteps = layer.pathway;
+    layer.rooms.forEach((room) => {
+      room.route = buildMuseumRoute({ wing: "stack", stackLayer: layer.id, room: room.id });
+      room.learningGoal = room.what;
+      room.interactiveDemo = {
+        title: `סימולטור ${room.title}`,
+        steps: room.diagram,
+      };
+      room.diagramSteps = room.diagram;
+    });
+  });
+
+  PROGRAMMING_LANGUAGE_MUSEUM_HALLS.forEach((hall) => {
+    hall.route = buildMuseumRoute({ wing: "languages", hall: hall.id });
+    hall.learningGoal = hall.thesis;
+    hall.interactiveDemo = {
+      title: `ביקור מודרך: ${hall.title}`,
+      steps: (hall.exhibits || []).map((exhibit) => exhibit.name),
+    };
+    hall.diagramSteps = (hall.exhibits || []).map((exhibit) => exhibit.name);
+  });
+
+  FULL_STACK_MUSEUM_HALLS.forEach((hall) => {
+    const domain = FULL_STACK_DOMAIN_EXHIBITIONS[hall.id] || { rooms: [] };
+    hall.route = buildMuseumRoute({ wing: "fullstack", domain: hall.id });
+    hall.learningGoal = hall.summary;
+    hall.interactiveDemo = {
+      title: `סימולטור ${hall.layer}`,
+      steps: hall.artifacts,
+    };
+    hall.diagramSteps = hall.artifacts;
+    hall.beforeDevelopment = productLifecycleById["before-dev"]?.goal || "";
+    hall.duringDevelopment = productLifecycleById["during-dev"]?.goal || "";
+    hall.beforeLaunch = productLifecycleById["pre-launch"]?.goal || "";
+    hall.launch = productLifecycleById.launch?.goal || "";
+    hall.afterLaunch = productLifecycleById["post-launch"]?.goal || "";
+    hall.upgradeSignals = upgradeDecision?.signals || [];
+    hall.replaceSignals = replaceDecisions.flatMap((item) => item.signals || []);
+    domain.rooms.forEach((room) => {
+      room.route = buildMuseumRoute({ wing: "fullstack", domain: hall.id, room: room.id });
+      room.learningGoal = room.what;
+      room.interactiveDemo = {
+        title: `סימולטור ${room.title}`,
+        steps: room.diagram,
+      };
+      room.diagramSteps = room.diagram;
+    });
+  });
 
   const PROGRAMMING_HISTORY_EXTENSION_IDEAS = [
     {
@@ -4105,7 +4752,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function scrollBasicsSection(id) {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!el) return;
+    const reduceMotion = document.body.classList.contains("museum-reduced-motion");
+    const doScroll = () => el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    if (!reduceMotion && document.startViewTransition) {
+      document.startViewTransition(doScroll);
+      return;
+    }
+    doScroll();
   }
 
   function slugifyId(value) {
@@ -4449,7 +5103,12 @@ document.addEventListener("DOMContentLoaded", () => {
               label: layer.blockTitle,
               meta: layer.id === stackLayerMuseum.id ? "נוכחי" : "פתח",
               action: () => {
-                window.location.href = `/?standalone=museum&stackLayer=${encodeURIComponent(layer.id)}&v=${encodeURIComponent(MUSEUM_STACK_LAYER_PAGE_VERSION)}`;
+                const href = getMuseumStackLayerPageHref(layer.id);
+                try {
+                  window.top.location.href = href;
+                } catch (_) {
+                  window.location.href = href;
+                }
               },
             })),
           },
@@ -4476,6 +5135,11 @@ document.addEventListener("DOMContentLoaded", () => {
               id: "museum-stack",
               label: "תרשים שכבות",
               action: () => scrollBasicsSection("programming-museum-stack"),
+            },
+            {
+              id: "museum-product-blueprint",
+              label: "מרעיון למוצר",
+              action: () => scrollBasicsSection("programming-museum-product-blueprint"),
             },
             {
               id: "museum-timeline",
@@ -10233,15 +10897,27 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>שפה לא נולדת לבד. היא יורשת רעיונות, משנה פשרות, ומשאירה סימנים בשפות הבאות.</p>
           </div>
           <div class="pb-museum-lineages">
-            ${PROGRAMMING_LANGUAGE_LINEAGES.map((lineage) => `
+            ${PROGRAMMING_LANGUAGE_LINEAGES.map((lineage, idx) => `
               <article class="pb-museum-lineage">
                 <h3>${esc(lineage.title)}</h3>
+                <p class="pb-museum-lineage-subtitle">${esc(lineage.subtitle || "")}</p>
+                <div class="museum-lineage-visual">${renderLineageTimelineSvg(lineage, idx, { compact: true, scope: "pb" })}</div>
                 <div class="pb-museum-path" aria-label="${esc(lineage.title)}">
                   ${lineage.path.map((step) => `<span>${esc(step)}</span>`).join("<b>←</b>")}
+                </div>
+                <div class="museum-lineage-detail-grid">
+                  ${(lineage.milestones || []).map((milestone) => `
+                    <div class="museum-lineage-milestone">
+                      <span>${esc(milestone.era)}</span>
+                      <strong>${esc(milestone.label)}</strong>
+                      <p>${esc(milestone.detail)}</p>
+                    </div>
+                  `).join("")}
                 </div>
                 <dl class="pb-mini-dl">
                   <div><dt>מה לומדים</dt><dd>${esc(lineage.lesson)}</dd></div>
                   <div><dt>איך להשתמש היום</dt><dd>${esc(lineage.today)}</dd></div>
+                  <div><dt>מה התרשים מלמד</dt><dd>${esc(lineage.diagramTakeaway || "")}</dd></div>
                 </dl>
               </article>
             `).join("")}
@@ -10955,16 +11631,774 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function getMuseumStackLayerId() {
+  function updateMuseumPassportCounters(container, state = loadMuseumPassportState()) {
+    const stampCounter = container.querySelector("[data-museum-passport-count]");
+    const visitCounter = container.querySelector("[data-museum-visited-count]");
+    const tourCounter = container.querySelector("[data-museum-tour-count]");
+    const drillCounter = container.querySelector("[data-museum-drill-count]");
+    if (stampCounter) stampCounter.textContent = String(state.stamps.length);
+    if (visitCounter) visitCounter.textContent = String(state.visited.length);
+    if (tourCounter) tourCounter.textContent = String((state.tourStops || []).length);
+    if (drillCounter) drillCounter.textContent = String((state.drills || []).length);
+    updateMuseumTourCounters(container, state);
+  }
+
+  function updateMuseumTourCounters(container, state = loadMuseumPassportState()) {
+    container.querySelectorAll("[data-museum-route-progress]").forEach((item) => {
+      const route = getMuseumTourRoute(item.dataset.museumRouteProgress);
+      if (!route) return;
+      const progress = getMuseumTourProgress(route, state);
+      item.textContent = `${progress.completed}/${progress.total}`;
+    });
+    container.querySelectorAll("[data-museum-tour-progress]").forEach((item) => {
+      const route = getMuseumTourRoute(item.dataset.museumTourProgress);
+      if (!route) return;
+      const progress = getMuseumTourProgress(route, state);
+      item.style.setProperty("--museum-tour-progress", `${progress.percent}%`);
+    });
+  }
+
+  function bindMuseumPassport(container) {
+    container.querySelectorAll("[data-museum-passport-stamp]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const stamp = btn.dataset.museumPassportStamp;
+        const state = loadMuseumPassportState();
+        const hasStamp = state.stamps.includes(stamp);
+        state.stamps = hasStamp ? state.stamps.filter((item) => item !== stamp) : [...state.stamps, stamp];
+        const nextState = saveMuseumPassportState(state);
+        const card = btn.closest("[data-passport-card]");
+        card?.classList.toggle("done", !hasStamp);
+        btn.setAttribute("aria-pressed", hasStamp ? "false" : "true");
+        btn.textContent = hasStamp ? "סמן חותמת" : "חותמת הושלמה";
+        updateMuseumPassportCounters(container, nextState);
+      });
+    });
+
+    container.querySelectorAll("[data-museum-tour-stop]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const stopId = btn.dataset.museumTourStop;
+        const state = loadMuseumPassportState();
+        const hasStop = state.tourStops.includes(stopId);
+        state.tourStops = hasStop ? state.tourStops.filter((item) => item !== stopId) : [...state.tourStops, stopId];
+        const nextState = saveMuseumPassportState(state);
+        container.querySelectorAll(`[data-museum-tour-card="${cssEscape(stopId)}"]`).forEach((card) => {
+          card.classList.toggle("done", !hasStop);
+        });
+        container.querySelectorAll(`[data-museum-tour-stop="${cssEscape(stopId)}"]`).forEach((item) => {
+          item.setAttribute("aria-pressed", hasStop ? "false" : "true");
+          item.textContent = hasStop ? "סמן תחנה" : "תחנה הושלמה";
+        });
+        updateMuseumPassportCounters(container, nextState);
+      });
+    });
+  }
+
+  function bindMuseumConnectionFilters(container) {
+    const search = container.querySelector("[data-museum-connection-search]");
+    const layer = container.querySelector("[data-museum-connection-layer]");
+    const count = container.querySelector("[data-museum-connection-count]");
+    if (!search && !layer) return;
+
+    const applyFilter = () => {
+      const term = (search?.value || "").trim().toLowerCase();
+      const layerId = layer?.value || "";
+      let visibleCards = 0;
+      container.querySelectorAll(".museum-system-concept-card, .museum-system-error-item, .museum-debug-card, .museum-knowledge-lane, .museum-contract-inspector, .museum-practice-card, .museum-root-cause-card, .museum-course-bridge-card, .museum-integration-card").forEach((item) => {
+        const itemLayer = item.dataset.layer || "";
+        const haystack = (item.dataset.museumSearch || item.textContent || "").toLowerCase();
+        const layerMatch = !layerId || itemLayer === layerId;
+        const termMatch = !term || haystack.includes(term);
+        const visible = layerMatch && termMatch;
+        item.hidden = !visible;
+        if (visible && item.classList.contains("museum-system-concept-card")) visibleCards += 1;
+      });
+      if (count) count.textContent = String(visibleCards);
+    };
+
+    search?.addEventListener("input", applyFilter);
+    layer?.addEventListener("change", applyFilter);
+    applyFilter();
+  }
+
+  function applyMuseumReducedMotionState(container) {
+    let reduced = false;
     try {
-      return new URLSearchParams(window.location.search).get("stackLayer") || "";
+      reduced = localStorage.getItem(MUSEUM_REDUCED_MOTION_KEY) === "1";
+    } catch (_) {}
+    document.body.classList.toggle("museum-reduced-motion", reduced);
+    container.querySelectorAll("[data-museum-motion-toggle]").forEach((btn) => {
+      btn.setAttribute("aria-pressed", reduced ? "true" : "false");
+      btn.textContent = reduced ? "הפעל תנועה" : "הפחת תנועה";
+    });
+  }
+
+  function bindMuseumMotionToggle(container) {
+    applyMuseumReducedMotionState(container);
+    container.querySelectorAll("[data-museum-motion-toggle]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const reduced = !document.body.classList.contains("museum-reduced-motion");
+        document.body.classList.toggle("museum-reduced-motion", reduced);
+        try {
+          localStorage.setItem(MUSEUM_REDUCED_MOTION_KEY, reduced ? "1" : "0");
+        } catch (_) {}
+        applyMuseumReducedMotionState(container);
+      });
+    });
+  }
+
+  function bindMuseumRevealAndVisitTracking(container) {
+    const targets = Array.from(container.querySelectorAll(".museum-stage, .museum-section, .stack-layer-room-card, .fullstack-hall-card"))
+      .filter((target) => !target.hidden && !target.closest("[hidden]"));
+    if (!targets.length) return;
+
+    const markVisited = (id) => {
+      if (!id) return;
+      const state = loadMuseumPassportState();
+      if (state.visited.includes(id)) return;
+      state.visited.push(id);
+      const nextState = saveMuseumPassportState(state);
+      updateMuseumPassportCounters(container, nextState);
+    };
+
+    if (!("IntersectionObserver" in window) || document.body.classList.contains("museum-reduced-motion")) {
+      targets.forEach((target) => {
+        target.classList.add("museum-revealed");
+        markVisited(target.id);
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("museum-revealed");
+        markVisited(entry.target.id);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.18 });
+
+    targets.forEach((target) => observer.observe(target));
+  }
+
+  function bindMuseumSimulators(container) {
+    container.querySelectorAll("[data-museum-sim-step]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const group = btn.dataset.museumSimGroup;
+        const index = btn.dataset.museumSimStep;
+        container.querySelectorAll(`[data-museum-sim-group="${cssEscape(group)}"]`).forEach((item) => {
+          item.classList.toggle("active", item.dataset.museumSimStep === index);
+        });
+      });
+    });
+  }
+
+  function bindMuseumXrayLab(container) {
+    container.querySelectorAll("[data-museum-xray-step]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const index = btn.dataset.museumXrayStep;
+        const lab = btn.closest(".museum-xray-lab");
+        if (!lab) return;
+        lab.querySelectorAll("[data-museum-xray-step]").forEach((item) => {
+          const active = item.dataset.museumXrayStep === index;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        lab.querySelectorAll("[data-museum-xray-panel]").forEach((panel) => {
+          const active = panel.dataset.museumXrayPanel === index;
+          panel.hidden = !active;
+          panel.classList.toggle("active", active);
+        });
+      });
+    });
+  }
+
+  function bindMuseumProductCommandBoard(container) {
+    container.querySelectorAll("[data-museum-product-phase]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const phaseId = btn.dataset.museumProductPhase;
+        const board = btn.closest(".museum-product-command-board");
+        if (!board) return;
+        board.querySelectorAll("[data-museum-product-phase]").forEach((item) => {
+          const active = item.dataset.museumProductPhase === phaseId;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        board.querySelectorAll("[data-museum-product-panel]").forEach((panel) => {
+          const active = panel.dataset.museumProductPanel === phaseId;
+          panel.hidden = !active;
+          panel.classList.toggle("active", active);
+        });
+      });
+    });
+  }
+
+  function bindMuseumContractInspector(container) {
+    container.querySelectorAll("[data-museum-contract-step]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const contractId = btn.dataset.museumContractStep;
+        const inspector = btn.closest(".museum-contract-inspector");
+        if (!inspector) return;
+        inspector.querySelectorAll("[data-museum-contract-step]").forEach((item) => {
+          const active = item.dataset.museumContractStep === contractId;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        inspector.querySelectorAll("[data-museum-contract-panel]").forEach((panel) => {
+          const active = panel.dataset.museumContractPanel === contractId;
+          panel.hidden = !active;
+          panel.classList.toggle("active", active);
+        });
+      });
+    });
+  }
+
+  function bindMuseumPracticeLab(container) {
+    container.querySelectorAll("[data-museum-practice-drill]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const drillId = btn.dataset.museumPracticeDrill;
+        const lab = btn.closest(".museum-practice-lab");
+        if (!lab) return;
+        lab.querySelectorAll("[data-museum-practice-drill]").forEach((item) => {
+          const active = item.dataset.museumPracticeDrill === drillId;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        lab.querySelectorAll("[data-museum-practice-panel]").forEach((panel) => {
+          const active = panel.dataset.museumPracticePanel === drillId;
+          panel.hidden = !active;
+          panel.classList.toggle("active", active);
+        });
+      });
+    });
+
+    container.querySelectorAll("[data-museum-practice-complete]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const drillId = btn.dataset.museumPracticeComplete;
+        const state = loadMuseumPassportState();
+        const hasDrill = (state.drills || []).includes(drillId);
+        state.drills = hasDrill ? state.drills.filter((item) => item !== drillId) : [...(state.drills || []), drillId];
+        const nextState = saveMuseumPassportState(state);
+        container.querySelectorAll(`[data-museum-practice-card="${cssEscape(drillId)}"]`).forEach((card) => {
+          card.classList.toggle("done", !hasDrill);
+        });
+        container.querySelectorAll(`[data-museum-practice-complete="${cssEscape(drillId)}"]`).forEach((item) => {
+          item.setAttribute("aria-pressed", hasDrill ? "false" : "true");
+          item.textContent = hasDrill ? "סמן תרגול" : "תרגול הושלם";
+        });
+        updateMuseumPassportCounters(container, nextState);
+      });
+    });
+  }
+
+  function bindMuseumTeamHandoffLab(container) {
+    container.querySelectorAll("[data-museum-team-role]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const roleId = btn.dataset.museumTeamRole;
+        const lab = btn.closest(".museum-team-handoff-lab");
+        if (!lab) return;
+        lab.querySelectorAll("[data-museum-team-role]").forEach((item) => {
+          const active = item.dataset.museumTeamRole === roleId;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        lab.querySelectorAll("[data-museum-team-panel]").forEach((panel) => {
+          const active = panel.dataset.museumTeamPanel === roleId;
+          panel.hidden = !active;
+          panel.classList.toggle("active", active);
+        });
+      });
+    });
+  }
+
+  function bindMuseumIntegrationMatrix(container) {
+    container.querySelectorAll("[data-museum-integration-step]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const stepId = btn.dataset.museumIntegrationStep;
+        const matrix = btn.closest(".museum-integration-matrix");
+        if (!matrix) return;
+        matrix.querySelectorAll("[data-museum-integration-step]").forEach((item) => {
+          const active = item.dataset.museumIntegrationStep === stepId;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        matrix.querySelectorAll("[data-museum-integration-panel]").forEach((panel) => {
+          const active = panel.dataset.museumIntegrationPanel === stepId;
+          panel.hidden = !active;
+          panel.classList.toggle("active", active);
+        });
+      });
+    });
+  }
+
+  function bindMuseumAiProductLab(container) {
+    container.querySelectorAll("[data-museum-ai-scenario]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const scenarioId = btn.dataset.museumAiScenario;
+        const lab = btn.closest(".museum-ai-product-lab");
+        if (!lab) return;
+        lab.querySelectorAll("[data-museum-ai-scenario]").forEach((item) => {
+          const active = item.dataset.museumAiScenario === scenarioId;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        lab.querySelectorAll("[data-museum-ai-panel]").forEach((panel) => {
+          const active = panel.dataset.museumAiPanel === scenarioId;
+          panel.hidden = !active;
+          panel.classList.toggle("active", active);
+        });
+      });
+    });
+  }
+
+  function bindMuseumInteractions(container) {
+    bindMuseumMotionToggle(container);
+    bindMuseumConnectionFilters(container);
+    bindMuseumPassport(container);
+    bindMuseumSimulators(container);
+    bindMuseumXrayLab(container);
+    bindMuseumProductCommandBoard(container);
+    bindMuseumContractInspector(container);
+    bindMuseumPracticeLab(container);
+    bindMuseumTeamHandoffLab(container);
+    bindMuseumIntegrationMatrix(container);
+    bindMuseumAiProductLab(container);
+    bindMuseumRevealAndVisitTracking(container);
+  }
+
+  function focusMuseumWing(activeWing) {
+    const hall = getMuseumHallParam();
+    const domain = getMuseumDomainParam();
+    const wingTargets = {
+      home: "programming-museum-wing-gate",
+      stack: "programming-museum-stack",
+      languages: "programming-museum-halls",
+      fullstack: "fullstack-museum-wing",
+      product: "programming-museum-product-blueprint",
+      errors: "programming-museum-connection-system",
+      contracts: "programming-museum-connection-system",
+      ai: "programming-museum-ai-evolution",
+      videos: "programming-museum-video-studio",
+      passport: "programming-museum-passport",
+    };
+    const targetId = hall
+      ? `programming-museum-hall-${hall}`
+      : domain
+        ? `fullstack-museum-hall-${domain}`
+        : wingTargets[activeWing] || wingTargets.home;
+    if (activeWing === "home" && !hall && !domain) return;
+    window.requestAnimationFrame(() => scrollBasicsSection(targetId));
+  }
+
+  function applyMuseumFocusedWing(container, activeWing) {
+    if (!activeWing || activeWing === "home") return;
+    const allowedSectionIds = new Set(getMuseumFocusedSectionIds(activeWing));
+    container.querySelectorAll(".museum-stage, .museum-section").forEach((section) => {
+      section.hidden = Boolean(section.id) && !allowedSectionIds.has(section.id);
+    });
+
+    const hallId = getMuseumHallParam();
+    if (activeWing === "languages" && hallId) {
+      container.querySelectorAll(".museum-hall-card").forEach((card) => {
+        const selected = card.id === `programming-museum-hall-${hallId}`;
+        card.hidden = !selected;
+        card.classList.toggle("museum-focused-target", selected);
+      });
+    }
+
+    const domainId = getMuseumDomainParam();
+    if (activeWing === "fullstack" && domainId) {
+      container.querySelectorAll(".fullstack-hall-card").forEach((card) => {
+        const selected = card.id === `fullstack-museum-hall-${domainId}`;
+        card.hidden = !selected;
+        card.classList.toggle("museum-focused-target", selected);
+      });
+
+      const roomId = getMuseumQueryParam("room");
+      if (roomId) {
+        container.querySelectorAll(`#fullstack-museum-hall-${cssEscape(domainId)} .fullstack-room-card`).forEach((card) => {
+          const selected = card.id === `fullstack-room-${domainId}-${roomId}`;
+          card.hidden = !selected;
+          card.classList.toggle("museum-focused-target", selected);
+        });
+      }
+    }
+  }
+
+  function getMuseumStackLayerId() {
+    return getMuseumQueryParam("stackLayer");
+  }
+
+  function getMuseumQueryParam(name) {
+    try {
+      return new URLSearchParams(window.location.search).get(name) || "";
     } catch (_) {
       return "";
     }
   }
 
+  function getMuseumWingId() {
+    const wing = getMuseumQueryParam("wing");
+    if (wing) return wing;
+    if (getMuseumStackLayerId()) return "stack";
+    return "home";
+  }
+
+  function getMuseumHallParam() {
+    return getMuseumQueryParam("hall");
+  }
+
+  function getMuseumDomainParam() {
+    return getMuseumQueryParam("domain");
+  }
+
+  function getMuseumTourParam() {
+    return getMuseumQueryParam("tour");
+  }
+
+  function getMuseumExternalHref(params = {}) {
+    const nextParams = new URLSearchParams({
+      ...params,
+      v: MUSEUM_STACK_LAYER_PAGE_VERSION,
+    });
+    Object.keys(params).forEach((key) => {
+      if (!params[key]) nextParams.delete(key);
+    });
+    return `museum.html?${nextParams.toString()}`;
+  }
+
+  function getMuseumTourStopId(routeId, stop, index) {
+    return `${routeId}-${String(index + 1).padStart(2, "0")}-${slugifyId(stop.label).replace(/^id-/, "")}`;
+  }
+
+  function getMuseumTourRoute(routeId = getMuseumTourParam()) {
+    return MUSEUM_CROSS_WING_ROUTES.find((route) => route.id === routeId) || null;
+  }
+
+  function getMuseumTourProgress(route, state = loadMuseumPassportState()) {
+    const completedStops = new Set(state.tourStops || []);
+    const ids = route.stops.map((stop, idx) => getMuseumTourStopId(route.id, stop, idx));
+    const completed = ids.filter((id) => completedStops.has(id)).length;
+    const total = ids.length;
+    return {
+      completed,
+      total,
+      percent: total ? Math.round((completed / total) * 100) : 0,
+    };
+  }
+
+  function getMuseumTourStopLabel(stop) {
+    return [
+      stop.params.wing,
+      stop.params.stackLayer,
+      stop.params.hall,
+      stop.params.domain,
+      stop.params.room,
+    ].filter(Boolean).join(" · ");
+  }
+
+  function isMuseumTourStopActive(stop) {
+    return ["wing", "stackLayer", "hall", "domain", "room"].every((key) => {
+      const currentValue = key === "wing" ? getMuseumWingId() : getMuseumQueryParam(key);
+      return String(currentValue || "") === String(stop.params[key] || "");
+    });
+  }
+
+  function renderMuseumTourCockpit() {
+    const route = getMuseumTourRoute();
+    if (!route) return "";
+    const state = loadMuseumPassportState();
+    const progress = getMuseumTourProgress(route, state);
+    return `
+      <div class="museum-tour-cockpit" data-museum-active-tour="${esc(route.id)}">
+        <div class="museum-tour-cockpit-head">
+          <div>
+            <span class="museum-kicker">מסלול ביקור פעיל</span>
+            <h3>${esc(route.title)}</h3>
+            <p>${esc(route.summary)}</p>
+          </div>
+          <strong><span data-museum-route-progress="${esc(route.id)}">${String(progress.completed)}/${String(progress.total)}</span> תחנות</strong>
+        </div>
+        <div class="museum-tour-progress" data-museum-tour-progress="${esc(route.id)}" style="--museum-tour-progress: ${progress.percent}%">
+          <span></span>
+        </div>
+        <div class="museum-tour-stop-grid">
+          ${route.stops.map((stop, idx) => {
+            const stopId = getMuseumTourStopId(route.id, stop, idx);
+            const done = state.tourStops.includes(stopId);
+            const active = isMuseumTourStopActive(stop);
+            return `
+              <article class="museum-tour-stop-card ${done ? "done" : ""} ${active ? "active" : ""}" data-museum-tour-card="${esc(stopId)}">
+                <span>${String(idx + 1).padStart(2, "0")}</span>
+                <div>
+                  <strong>${esc(stop.label)}</strong>
+                  <small>${esc(getMuseumTourStopLabel(stop))}</small>
+                </div>
+                <a href="${esc(getMuseumExternalHref({ ...stop.params, tour: route.id }))}" target="_top" ${active ? `aria-current="page"` : ""}>פתח תחנה</a>
+                <button type="button"
+                        data-museum-tour-stop="${esc(stopId)}"
+                        aria-pressed="${done ? "true" : "false"}">
+                  ${done ? "תחנה הושלמה" : "סמן תחנה"}
+                </button>
+              </article>`;
+          }).join("")}
+        </div>
+      </div>`;
+  }
+
   function getMuseumStackLayerPageHref(layerId) {
-    return `museum.html?stackLayer=${encodeURIComponent(layerId)}&v=${encodeURIComponent(MUSEUM_STACK_LAYER_PAGE_VERSION)}`;
+    return getMuseumExternalHref({ wing: "stack", stackLayer: layerId });
+  }
+
+  function getMuseumFullStackDomain(hall) {
+    return FULL_STACK_DOMAIN_EXHIBITIONS[hall.id] || {
+      era: "modern",
+      profession: hall.layer,
+      does: hall.summary,
+      rooms: [],
+    };
+  }
+
+  function getMuseumShortHallTitle(hall) {
+    return (hall?.title || "").replace(/^אולם \d+ —\s*/, "");
+  }
+
+  function getMuseumFocusedSectionIds(activeWing) {
+    const focus = ["programming-museum-wing-focus"];
+    const commonLearning = ["programming-museum-video-studio", "programming-museum-passport"];
+    const groups = {
+      stack: ["programming-museum-stack", "programming-museum-connection-system", ...commonLearning],
+      languages: [
+        "programming-museum-timeline",
+        "programming-museum-guided-routes",
+        "programming-museum-halls",
+        "programming-museum-value-map",
+        "programming-museum-lineages",
+        ...commonLearning,
+      ],
+      fullstack: ["fullstack-museum-wing", "programming-museum-product-blueprint", "programming-museum-connection-system", ...commonLearning],
+      product: ["programming-museum-product-blueprint", "fullstack-museum-wing", "programming-museum-connection-system", "programming-museum-passport"],
+      errors: ["programming-museum-connection-system", "programming-museum-video-studio", "programming-museum-passport"],
+      contracts: ["programming-museum-connection-system", "programming-museum-product-blueprint", "programming-museum-video-studio", "programming-museum-passport"],
+      ai: ["programming-museum-ai-evolution", "programming-museum-connection-system", "programming-museum-video-studio", "programming-museum-passport"],
+      videos: ["programming-museum-video-studio", "programming-museum-connection-system"],
+      passport: ["programming-museum-passport", "programming-museum-guided-routes", "programming-museum-connection-system"],
+    };
+    return [...focus, ...(groups[activeWing] || [])];
+  }
+
+  function getMuseumFocusConfig(activeWing) {
+    const wing = getMuseumWingDefinitions().find((item) => item.id === activeWing);
+    const stackLayer = PROGRAMMING_STACK_LAYER_MUSEUMS.find((layer) => layer.id === getMuseumStackLayerId());
+    const languageHall = PROGRAMMING_LANGUAGE_MUSEUM_HALLS.find((hall) => hall.id === getMuseumHallParam());
+    const fullStackHall = FULL_STACK_MUSEUM_HALLS.find((hall) => hall.id === getMuseumDomainParam());
+    const fullStackRoom = fullStackHall
+      ? getMuseumFullStackDomain(fullStackHall).rooms.find((room) => room.id === getMuseumQueryParam("room"))
+      : null;
+
+    if (stackLayer) {
+      return {
+        kicker: "Stack Layer · דף בלוק",
+        title: stackLayer.title,
+        description: `${stackLayer.inventedBecause} ${stackLayer.solved}`,
+        stats: [
+          `${stackLayer.rooms.length} אולמות`,
+          `${stackLayer.pathway.length} שלבי התפתחות`,
+          "X-Ray פעולה",
+        ],
+        links: [
+          { label: "כל שכבות המחשב", params: { wing: "stack" } },
+          { label: "מערכת הקשרים", params: { wing: "errors" } },
+        ],
+      };
+    }
+
+    if (languageHall) {
+      return {
+        kicker: "Programming Languages · אולם ממוקד",
+        title: getMuseumShortHallTitle(languageHall),
+        description: languageHall.learningGoal,
+        stats: [
+          languageHall.period,
+          `${languageHall.exhibits.length} מוצגים`,
+          `${(languageHall.subMuseums || []).length} תתי מוזיאונים`,
+        ],
+        links: [
+          { label: "כל אולמות השפות", params: { wing: "languages" } },
+          { label: "Video Studio", params: { wing: "videos" } },
+        ],
+      };
+    }
+
+    if (fullStackHall) {
+      const domain = getMuseumFullStackDomain(fullStackHall);
+      return {
+        kicker: fullStackRoom ? "Full Stack · חדר ממוקד" : "Full Stack · תחום מקצועי",
+        title: fullStackRoom ? fullStackRoom.title : fullStackHall.title,
+        description: fullStackRoom ? fullStackRoom.learningGoal : `${domain.profession}: ${domain.does}`,
+        stats: [
+          FULL_STACK_ERA_LABELS[fullStackRoom?.era || domain.era] || "תחום",
+          `${domain.rooms.length} חדרים`,
+          `${fullStackHall.artifacts.length} מוצגים`,
+        ],
+        links: [
+          { label: "כל תחומי Full-Stack", params: { wing: "fullstack" } },
+          { label: "רעיון למוצר", params: { wing: "product" } },
+        ],
+      };
+    }
+
+    return {
+      kicker: wing?.kicker || "Museum Wing",
+      title: wing?.title || "מוזיאון LumenPortal",
+      description: wing?.learningGoal || "שער אגפים שמחבר בין שכבות, שפות, Full-Stack, מוצר, טעויות וסרטונים.",
+      stats: wing ? [`${wing.count} ${wing.metric}`, "דף אגף עצמאי", "מחובר לדרכון תלמיד"] : ["שער ראשי"],
+      links: [
+        { label: "שער האגפים", params: { wing: "home" } },
+        { label: "Video Studio", params: { wing: "videos" } },
+        { label: "דרכון תלמיד", params: { wing: "passport" } },
+      ],
+    };
+  }
+
+  function renderMuseumFocusHeader(activeWing = "home") {
+    if (activeWing === "home") return "";
+    const config = getMuseumFocusConfig(activeWing);
+    const passportState = loadMuseumPassportState();
+    return `
+      <section class="museum-section museum-focus-header" id="programming-museum-wing-focus">
+        <div class="museum-focus-copy">
+          <span class="museum-kicker">${esc(config.kicker)}</span>
+          <h2>${esc(config.title)}</h2>
+          <p>${esc(config.description)}</p>
+          <div class="museum-focus-stat-row">
+            ${config.stats.map((stat) => `<span>${esc(stat)}</span>`).join("")}
+          </div>
+          <div class="museum-focus-link-row">
+            ${config.links.map((link) => `
+              <a href="${esc(getMuseumExternalHref(link.params))}" target="_top">${esc(link.label)}</a>
+            `).join("")}
+          </div>
+          ${renderMuseumTourCockpit()}
+        </div>
+        <div class="museum-focus-route-grid" aria-label="מסלולי ביקור בין אגפים">
+          ${MUSEUM_CROSS_WING_ROUTES.map((route) => {
+            const progress = getMuseumTourProgress(route, passportState);
+            return `
+              <article class="museum-focus-route-card ${getMuseumTourParam() === route.id ? "active" : ""}">
+                <div class="museum-focus-route-title">
+                  <strong>${esc(route.title)}</strong>
+                  <em data-museum-route-progress="${esc(route.id)}">${String(progress.completed)}/${String(progress.total)}</em>
+                </div>
+                <p>${esc(route.summary)}</p>
+                <a class="museum-tour-start" href="${esc(getMuseumExternalHref({ ...route.stops[0].params, tour: route.id }))}" target="_top">התחל מסלול</a>
+                <div>
+                  ${route.stops.map((stop) => `
+                    <a href="${esc(getMuseumExternalHref({ ...stop.params, tour: route.id }))}" target="_top">${esc(stop.label)}</a>
+                  `).join("<b>←</b>")}
+                </div>
+              </article>`;
+          }).join("")}
+        </div>
+      </section>`;
+  }
+
+  function getMuseumWingDefinitions() {
+    const fullStackRoomCount = FULL_STACK_MUSEUM_HALLS.reduce((sum, hall) => {
+      const domain = FULL_STACK_DOMAIN_EXHIBITIONS[hall.id];
+      return sum + (domain?.rooms || []).length;
+    }, 0);
+    return [
+      {
+        id: "stack",
+        title: "שכבות המחשב",
+        kicker: "Electricity → App",
+        route: getMuseumExternalHref({ wing: "stack" }),
+        count: PROGRAMMING_STACK_LAYER_MUSEUMS.length,
+        metric: "מוזיאוני בלוקים",
+        learningGoal: "להבין איך פעולה אחת נבנית מחשמל, ביטים, פקודות, שפה, framework ואפליקציה.",
+        target: "programming-museum-stack",
+      },
+      {
+        id: "languages",
+        title: "שפות התכנות",
+        kicker: "History → Tradeoffs",
+        route: getMuseumExternalHref({ wing: "languages" }),
+        count: PROGRAMMING_LANGUAGE_MUSEUM_HALLS.length,
+        metric: "אולמות",
+        learningGoal: "לראות למה כל שכבת שפה נולדה, מה היא הסתירה ומה המחיר של הפשטה.",
+        target: "programming-museum-halls",
+      },
+      {
+        id: "fullstack",
+        title: "Full Stack",
+        kicker: "UI → DB → Quality",
+        route: getMuseumExternalHref({ wing: "fullstack" }),
+        count: fullStackRoomCount,
+        metric: "חדרי מקצוע",
+        learningGoal: "לחבר UI, רשת, שרת, API, נתונים ואיכות למוצר אחד.",
+        target: "fullstack-museum-wing",
+      },
+      {
+        id: "product",
+        title: "מוצר מרעיון להשקה",
+        kicker: "Idea → Launch",
+        route: getMuseumExternalHref({ wing: "product" }),
+        count: PROGRAMMING_PRODUCT_LIFECYCLE.length,
+        metric: "שלבי מוצר",
+        learningGoal: "להבין מה עושים לפני פיתוח, בזמן פיתוח, לפני השקה, בזמן השקה ואחרי השקה.",
+        target: "programming-museum-product-blueprint",
+      },
+      {
+        id: "errors",
+        title: "טעויות ו-Debug",
+        kicker: "Bug → Layer",
+        route: getMuseumExternalHref({ wing: "errors" }),
+        count: MUSEUM_ERROR_LAYER_MAP.length,
+        metric: "אבחוני שכבה",
+        learningGoal: "לזהות מאיזו שכבה שגיאה מגיעה ומה בודקים קודם.",
+        target: "programming-museum-connection-system",
+      },
+      {
+        id: "contracts",
+        title: "חוזים ונתונים",
+        kicker: "State → API → DB",
+        route: getMuseumExternalHref({ wing: "contracts" }),
+        count: MUSEUM_BOUNDARY_MAP.length + MUSEUM_DECISION_GUIDES.length,
+        metric: "גבולות והחלטות",
+        learningGoal: "לראות איפה עובר חוזה בין function, component, API, server ו-database.",
+        target: "programming-museum-connection-system",
+      },
+      {
+        id: "ai",
+        title: "התפתחות AI",
+        kicker: "Turing → Agents",
+        route: getMuseumExternalHref({ wing: "ai" }),
+        count: AI_MUSEUM_TIMELINE.length,
+        metric: "תחנות AI",
+        learningGoal: "להבין מאיפה התחיל רעיון הבינה המלאכותית ומה ההבדל בין AI, מודל, LLM, סוכן ומנוע אינטליגנציה.",
+        target: "programming-museum-ai-evolution",
+      },
+      {
+        id: "videos",
+        title: "Video Studio",
+        kicker: "NotebookLM",
+        route: getMuseumExternalHref({ wing: "videos" }),
+        count: getMuseumVideoEntries().length,
+        metric: "חומרי סרטון",
+        learningGoal: "לקבל חומר רקע, ידע מקדים, סקריפט ופרומפט לכל סרטון במוזיאון.",
+        target: "programming-museum-video-studio",
+      },
+      {
+        id: "passport",
+        title: "דרכון תלמיד",
+        kicker: "Visit → Proof",
+        route: getMuseumExternalHref({ wing: "passport" }),
+        count: MUSEUM_STUDENT_PASSPORT.length,
+        metric: "חותמות",
+        learningGoal: "להפוך ביקור לצעדי הבנה: שורש, קוד, באג ומוצר.",
+        target: "programming-museum-passport",
+      },
+    ];
   }
 
   function renderMuseumStackSvg() {
@@ -11016,6 +12450,26 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>`;
   }
 
+  function renderMuseumMiniSimulator(groupId, steps = [], label = "סימולטור קטן") {
+    const safeSteps = (steps || []).filter(Boolean);
+    if (!safeSteps.length) return "";
+    return `
+      <div class="museum-mini-simulator" aria-label="${esc(label)}">
+        <strong>${esc(label)}</strong>
+        <div>
+          ${safeSteps.map((step, idx) => `
+            <button class="${idx === 0 ? "active" : ""}"
+                    type="button"
+                    data-museum-sim-group="${esc(groupId)}"
+                    data-museum-sim-step="${String(idx)}">
+              <span>${String(idx + 1).padStart(2, "0")}</span>
+              ${esc(step)}
+            </button>
+          `).join("")}
+        </div>
+      </div>`;
+  }
+
   function renderMuseumFlowTrack(title, intro, steps) {
     return `
       <article class="museum-system-flow-card">
@@ -11039,11 +12493,1173 @@ document.addEventListener("DOMContentLoaded", () => {
       </article>`;
   }
 
+  function renderMuseumXrayLab(activeLayerId = "") {
+    const activeIndex = Math.max(0, MUSEUM_ACTION_XRAY_FLOW.findIndex((step) => step.layerId === activeLayerId));
+    return `
+      <article class="museum-xray-lab" aria-label="מעבדת X-Ray לפעולה אחת במערכת">
+        <div class="museum-system-card-head">
+          <span>x-ray</span>
+          <h4>מעבדת X-Ray: פעולה אחת מהחשמל עד מוצר</h4>
+        </div>
+        <p>
+          בחר תחנה וראה אותה פעולה בשלוש שכבות: מה המשתמש רואה, מה הקוד עושה,
+          ומה באמת נשבר אם החוזה לא ברור.
+        </p>
+        <div class="museum-xray-layout">
+          <div class="museum-xray-rail" role="tablist" aria-label="תחנות X-Ray">
+            ${MUSEUM_ACTION_XRAY_FLOW.map((step, idx) => `
+              <button class="${idx === activeIndex ? "active" : ""}"
+                      type="button"
+                      role="tab"
+                      aria-selected="${idx === activeIndex ? "true" : "false"}"
+                      data-museum-xray-step="${String(idx)}">
+                <span>${String(idx + 1).padStart(2, "0")}</span>
+                <strong>${esc(step.title)}</strong>
+                <small>${esc(step.layerId)}</small>
+              </button>
+            `).join("")}
+          </div>
+          <div class="museum-xray-stage">
+            ${MUSEUM_ACTION_XRAY_FLOW.map((step, idx) => `
+              <section class="museum-xray-panel ${idx === activeIndex ? "active" : ""}"
+                       data-museum-xray-panel="${String(idx)}"
+                       ${idx === activeIndex ? "" : "hidden"}>
+                <div>
+                  <span>מה רואים</span>
+                  <p>${esc(step.visible)}</p>
+                </div>
+                <div>
+                  <span>איפה בקוד</span>
+                  <code>${esc(step.code)}</code>
+                </div>
+                <div>
+                  <span>מה קורה מתחת</span>
+                  <p>${esc(step.machine)}</p>
+                </div>
+                <div class="museum-xray-break">
+                  <span>נשבר כאשר</span>
+                  <p>${esc(step.breaksWhen)}</p>
+                </div>
+                <a href="${esc(getMuseumExternalHref({ wing: "stack", stackLayer: step.layerId }))}" target="_top">פתח את שכבת השורש</a>
+              </section>
+            `).join("")}
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function renderMuseumDebugLab(errors) {
+    const safeErrors = errors.length ? errors : MUSEUM_ERROR_LAYER_MAP;
+    return `
+      <article class="museum-debug-lab" aria-label="אבחון מהיר לפי שגיאה">
+        <div class="museum-system-card-head">
+          <span>debug</span>
+          <h4>אבחון מהיר: סימפטום → שכבה → בדיקה ראשונה</h4>
+        </div>
+        <div class="museum-debug-grid">
+          ${safeErrors.map((item, idx) => `
+            <a class="museum-debug-card"
+               href="${esc(getMuseumExternalHref({ wing: "stack", stackLayer: item.layerId }))}"
+               target="_top"
+               data-layer="${esc(item.layerId)}"
+               data-museum-search="${esc([item.error, item.layer, item.diagnosis, item.action].join(" "))}">
+              <span>${String(idx + 1).padStart(2, "0")}</span>
+              <code>${esc(item.error)}</code>
+              <strong>${esc(item.layer)}</strong>
+              <p>${esc(item.diagnosis)}</p>
+              <small>${esc(item.action)}</small>
+            </a>
+          `).join("")}
+        </div>
+      </article>`;
+  }
+
+  function getMuseumConceptConnection(id) {
+    return MUSEUM_CONCEPT_CONNECTIONS.find((card) => card.id === id) || null;
+  }
+
+  function getMuseumBoundary(title) {
+    return MUSEUM_BOUNDARY_MAP.find((item) => item.title === title) || null;
+  }
+
+  function getMuseumContractInspectorItems(activeLayerId = "") {
+    const models = [
+      { id: "ui-state", label: "UI State", conceptId: "react-state", boundaryTitle: "State / Database", route: { wing: "fullstack", domain: "react-product" } },
+      { id: "api", label: "API Contract", conceptId: "api-contract", boundaryTitle: "Client / Server", route: { wing: "fullstack", domain: "api-contract" } },
+      { id: "validation", label: "Validation", conceptId: "validation-chain", boundaryTitle: "Client / Server", route: { wing: "errors" } },
+      { id: "database", label: "Database", conceptId: "database-persistence", boundaryTitle: "State / Database", route: { wing: "fullstack", domain: "data-persistence" } },
+    ];
+    return models.map((model) => ({
+      ...model,
+      concept: getMuseumConceptConnection(model.conceptId),
+      boundary: getMuseumBoundary(model.boundaryTitle),
+    })).filter((item) => {
+      if (!item.concept) return false;
+      if (!activeLayerId) return true;
+      return item.concept.stackLayer === activeLayerId || (item.concept.relatedLayers || []).includes(activeLayerId);
+    });
+  }
+
+  function renderMuseumContractInspector(activeLayerId = "") {
+    const items = getMuseumContractInspectorItems(activeLayerId);
+    if (!items.length) return "";
+    const activeId = items[0].id;
+    const searchText = items.map((item) => [
+      item.label,
+      item.concept.title,
+      item.concept.question,
+      item.concept.breaksWhen,
+      item.boundary?.contract,
+      ...(item.concept.whereInCourse || []),
+      ...(item.concept.whereInCode || []),
+    ].join(" ")).join(" ");
+
+    return `
+      <article class="museum-contract-inspector"
+               aria-label="Contract Inspector לחוזים ונתונים"
+               data-museum-search="${esc(searchText)}">
+        <div class="museum-system-card-head">
+          <span>contract</span>
+          <h4>Contract Inspector: איפה הנתון משנה צורה</h4>
+        </div>
+        <p>
+          בחר חוזה וראה מה נשלח, מי אחראי עליו, איפה בקוד הוא מופיע,
+          ומה נשבר כשה-shape או מקור האמת לא ברורים.
+        </p>
+
+        <div class="museum-contract-journey" aria-label="מסע נתון דרך המערכת">
+          ${MUSEUM_DATA_JOURNEY_FLOW.map((step, idx) => `
+            <span data-layer="${esc(step.layerId)}">
+              <b>${String(idx + 1).padStart(2, "0")}</b>
+              <strong>${esc(step.title)}</strong>
+              <small>${esc(step.detail)}</small>
+            </span>
+          `).join("<i>←</i>")}
+        </div>
+
+        <div class="museum-contract-step-grid" role="tablist" aria-label="בחירת חוזה לבדיקה">
+          ${items.map((item, idx) => `
+            <button class="${item.id === activeId ? "active" : ""}"
+                    type="button"
+                    role="tab"
+                    aria-selected="${item.id === activeId ? "true" : "false"}"
+                    data-museum-contract-step="${esc(item.id)}">
+              <span>${String(idx + 1).padStart(2, "0")}</span>
+              <strong>${esc(item.label)}</strong>
+              <small>${esc(item.concept.layer)}</small>
+            </button>
+          `).join("")}
+        </div>
+
+        <div class="museum-contract-panel-stack">
+          ${items.map((item) => {
+            const concept = item.concept;
+            const boundary = item.boundary;
+            return `
+              <section class="museum-contract-panel ${item.id === activeId ? "active" : ""}"
+                       data-museum-contract-panel="${esc(item.id)}"
+                       ${item.id === activeId ? "" : "hidden"}>
+                <div class="museum-contract-main">
+                  <div>
+                    <span class="museum-kicker">${esc(item.label)}</span>
+                    <h5>${esc(concept.title)}</h5>
+                    <p>${esc(concept.hides)}</p>
+                  </div>
+                  <a href="${esc(getMuseumExternalHref(item.route))}" target="_top">פתח אולם מקצועי</a>
+                </div>
+
+                <dl class="museum-contract-dl">
+                  <div>
+                    <dt>Shape שנבנה מ</dt>
+                    <dd>${renderMuseumChipList(concept.builtFrom)}</dd>
+                  </div>
+                  <div>
+                    <dt>מוביל אל</dt>
+                    <dd>${renderMuseumChipList(concept.leadsTo)}</dd>
+                  </div>
+                  <div>
+                    <dt>גבול</dt>
+                    <dd>${esc(boundary?.boundary || concept.solves)}</dd>
+                  </div>
+                  <div>
+                    <dt>חוזה</dt>
+                    <dd>${esc(boundary?.contract || concept.question)}</dd>
+                  </div>
+                  <div>
+                    <dt>נשבר כאשר</dt>
+                    <dd>${esc(concept.breaksWhen)}</dd>
+                  </div>
+                  <div>
+                    <dt>בדיקת תלמיד</dt>
+                    <dd>${esc(concept.question)}</dd>
+                  </div>
+                </dl>
+
+                <div class="museum-contract-code">
+                  <strong>איפה בקוד</strong>
+                  ${(concept.whereInCode || []).map((line) => `<code>${esc(line)}</code>`).join("")}
+                </div>
+              </section>`;
+          }).join("")}
+        </div>
+      </article>`;
+  }
+
+  function getMuseumPracticeConcept(errorItem) {
+    const conceptIdByError = {
+      "Unexpected token": "function-contract",
+      "Cannot read properties of undefined": "value-type",
+      "State לא מתעדכן": "react-state",
+      "404": "api-contract",
+      "400": "validation-chain",
+      "מידע נעלם אחרי רענון": "database-persistence",
+    };
+    const mappedConceptId = conceptIdByError[errorItem.error];
+    const mappedConcept = mappedConceptId ? getMuseumConceptConnection(mappedConceptId) : null;
+    if (mappedConcept) return mappedConcept;
+    return MUSEUM_CONCEPT_CONNECTIONS.find((card) => card.stackLayer === errorItem.layerId)
+      || MUSEUM_CONCEPT_CONNECTIONS.find((card) => (card.relatedLayers || []).includes(errorItem.layerId))
+      || null;
+  }
+
+  function getMuseumPracticeDrills(activeLayerId = "") {
+    const bugPassport = MUSEUM_STUDENT_PASSPORT.find((item) => item.stamp === "באג") || MUSEUM_STUDENT_PASSPORT[0];
+    return MUSEUM_ERROR_LAYER_MAP.map((errorItem, idx) => {
+      const concept = getMuseumPracticeConcept(errorItem);
+      const stackLayer = PROGRAMMING_STACK_LAYER_MUSEUMS.find((layer) => layer.id === errorItem.layerId) || null;
+      const journeyStep = MUSEUM_DATA_JOURNEY_FLOW.find((step) => step.layerId === errorItem.layerId) || null;
+      const drillId = `drill-${String(idx + 1).padStart(2, "0")}-${slugifyId(errorItem.error).replace(/^id-/, "")}`;
+      return {
+        id: drillId,
+        error: errorItem,
+        concept,
+        stackLayer,
+        journeyStep,
+        passport: bugPassport,
+        videoId: concept ? `concept-${concept.id}` : "",
+        route: getMuseumExternalHref({ wing: "stack", stackLayer: errorItem.layerId }),
+      };
+    }).filter((drill) => {
+      if (!activeLayerId) return true;
+      return drill.error.layerId === activeLayerId
+        || drill.concept?.stackLayer === activeLayerId
+        || (drill.concept?.relatedLayers || []).includes(activeLayerId);
+    });
+  }
+
+  function renderMuseumPracticeLab(activeLayerId = "") {
+    const drills = getMuseumPracticeDrills(activeLayerId);
+    if (!drills.length) return "";
+    const state = loadMuseumPassportState();
+    const completedDrills = new Set(state.drills || []);
+    const activeId = drills[0].id;
+    const searchText = drills.map((drill) => [
+      drill.error.error,
+      drill.error.layer,
+      drill.error.diagnosis,
+      drill.error.action,
+      drill.concept?.title,
+      drill.concept?.question,
+      ...(drill.concept?.whereInCourse || []),
+      ...(drill.concept?.whereInCode || []),
+    ].join(" ")).join(" ");
+
+    return `
+      <article class="museum-practice-lab"
+               aria-label="מעבדת תרגול לאבחון טעויות"
+               data-museum-search="${esc(searchText)}">
+        <div class="museum-system-card-head">
+          <span>practice</span>
+          <h4>Practice Lab: מטעות למסלול תיקון</h4>
+        </div>
+        <p>
+          כל תרגיל מתחיל מסימפטום אמיתי מטבלת הטעויות של המוזיאון,
+          עובר לשכבת השורש, מחבר למושג בקורס, ומסתיים בהוכחת הבנה בדרכון.
+        </p>
+        <div class="museum-practice-metrics">
+          <article>
+            <strong>${String(drills.length)}</strong>
+            <span>תרגילי אבחון</span>
+          </article>
+          <article>
+            <strong data-museum-drill-count>${String(completedDrills.size)}</strong>
+            <span>תרגולים הושלמו</span>
+          </article>
+          <article>
+            <strong>${esc(activeLayerId ? "שכבה" : "מפה")}</strong>
+            <span>${esc(activeLayerId || "כל המוזיאון")}</span>
+          </article>
+        </div>
+
+        <div class="museum-practice-stage">
+          <div class="museum-practice-rail" role="tablist" aria-label="בחירת תרגיל Debug">
+            ${drills.map((drill, idx) => {
+              const done = completedDrills.has(drill.id);
+              return `
+                <button class="museum-practice-card ${drill.id === activeId ? "active" : ""} ${done ? "done" : ""}"
+                        type="button"
+                        role="tab"
+                        aria-selected="${drill.id === activeId ? "true" : "false"}"
+                        data-layer="${esc(drill.error.layerId)}"
+                        data-museum-practice-card="${esc(drill.id)}"
+                        data-museum-practice-drill="${esc(drill.id)}"
+                        data-museum-search="${esc([drill.error.error, drill.error.layer, drill.error.diagnosis, drill.error.action, drill.concept?.title].join(" "))}">
+                  <span>${String(idx + 1).padStart(2, "0")}</span>
+                  <code>${esc(drill.error.error)}</code>
+                  <strong>${esc(drill.error.layer)}</strong>
+                </button>`;
+            }).join("")}
+          </div>
+
+          <div class="museum-practice-panel-stack">
+            ${drills.map((drill) => {
+              const done = completedDrills.has(drill.id);
+              const concept = drill.concept;
+              return `
+                <section class="museum-practice-panel ${drill.id === activeId ? "active" : ""} ${done ? "done" : ""}"
+                         data-museum-practice-card="${esc(drill.id)}"
+                         data-museum-practice-panel="${esc(drill.id)}"
+                         ${drill.id === activeId ? "" : "hidden"}>
+                  <div class="museum-practice-panel-head">
+                    <div>
+                      <span class="museum-kicker">Debug drill</span>
+                      <h5>${esc(drill.error.error)}</h5>
+                      <p>${esc(drill.error.diagnosis)}</p>
+                    </div>
+                    <button type="button"
+                            data-museum-practice-complete="${esc(drill.id)}"
+                            aria-pressed="${done ? "true" : "false"}">
+                      ${done ? "תרגול הושלם" : "סמן תרגול"}
+                    </button>
+                  </div>
+
+                  <div class="museum-practice-panel-grid">
+                    <div>
+                      <span>בדיקה ראשונה</span>
+                      <p>${esc(drill.error.action)}</p>
+                    </div>
+                    <div>
+                      <span>שכבת שורש</span>
+                      <p>${esc(drill.stackLayer ? `${drill.stackLayer.blockTitle}: ${drill.stackLayer.detail}` : drill.error.layer)}</p>
+                    </div>
+                    <div>
+                      <span>מושג שמסביר</span>
+                      <p>${esc(concept ? concept.title : drill.error.layer)}</p>
+                    </div>
+                    <div>
+                      <span>מסע נתון</span>
+                      <p>${esc(drill.journeyStep ? `${drill.journeyStep.title}: ${drill.journeyStep.detail}` : drill.error.diagnosis)}</p>
+                    </div>
+                  </div>
+
+                  ${concept ? `
+                    <dl class="museum-practice-dl">
+                      <div>
+                        <dt>נבנה מ</dt>
+                        <dd>${renderMuseumChipList(concept.builtFrom)}</dd>
+                      </div>
+                      <div>
+                        <dt>נשבר כאשר</dt>
+                        <dd>${esc(concept.breaksWhen)}</dd>
+                      </div>
+                      <div>
+                        <dt>איפה בקורס</dt>
+                        <dd>${renderMuseumChipList(concept.whereInCourse)}</dd>
+                      </div>
+                      <div>
+                        <dt>איפה בקוד</dt>
+                        <dd>${(concept.whereInCode || []).map((line) => `<code>${esc(line)}</code>`).join("")}</dd>
+                      </div>
+                    </dl>
+                    <div class="museum-practice-check">
+                      <strong>שאלת בדיקה</strong>
+                      <p>${esc(concept.question)}</p>
+                    </div>
+                  ` : ""}
+
+                  <div class="museum-practice-actions">
+                    <a href="${esc(drill.route)}" target="_top">פתח אולם שורש</a>
+                    ${concept ? `<a href="#museum-connection-${esc(concept.id)}">פתח כרטיס מושג</a>` : ""}
+                    ${drill.videoId ? renderMuseumVideoOpenButton(drill.videoId, "פתח חומר לסרטון") : ""}
+                  </div>
+
+                  <div class="museum-practice-passport">
+                    <strong>${esc(drill.passport?.stamp || "דרכון")}</strong>
+                    <p>${esc(drill.passport?.task || "כתוב הוכחת הבנה קצרה.")}</p>
+                    <small>${esc(drill.passport?.proof || drill.error.action)}</small>
+                  </div>
+                </section>`;
+            }).join("")}
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function getMuseumRootCausePhase(errorItem, concept) {
+    const phaseByError = {
+      "Unexpected token": "during-dev",
+      "Cannot read properties of undefined": "during-dev",
+      "State לא מתעדכן": "during-dev",
+      "404": "pre-launch",
+      "400": "pre-launch",
+      "מידע נעלם אחרי רענון": "post-launch",
+    };
+    const phaseByConcept = {
+      "boolean-decision": "before-dev",
+      "value-type": "during-dev",
+      "memory-reference": "during-dev",
+      "function-contract": "during-dev",
+      "scope-closure": "during-dev",
+      "react-state": "during-dev",
+      "api-contract": "pre-launch",
+      "database-persistence": "post-launch",
+      "validation-chain": "pre-launch",
+    };
+    const phaseId = phaseByError[errorItem.error] || phaseByConcept[concept?.id] || "during-dev";
+    return PROGRAMMING_PRODUCT_LIFECYCLE.find((phase) => phase.id === phaseId) || PROGRAMMING_PRODUCT_LIFECYCLE[0];
+  }
+
+  function getMuseumRootCauseContract(concept) {
+    if (!concept) return null;
+    return getMuseumContractInspectorItems().find((item) => item.concept?.id === concept.id) || null;
+  }
+
+  function renderMuseumRootCauseRouter(activeLayerId = "") {
+    const items = getMuseumPracticeDrills(activeLayerId).map((drill, idx) => {
+      const phase = getMuseumRootCausePhase(drill.error, drill.concept);
+      const contract = getMuseumRootCauseContract(drill.concept);
+      return {
+        ...drill,
+        id: `root-${drill.id}`,
+        index: idx,
+        phase,
+        contract,
+      };
+    });
+    if (!items.length) return "";
+
+    const layerCount = new Set(items.map((item) => item.error.layerId)).size;
+    const conceptCount = new Set(items.map((item) => item.concept?.id).filter(Boolean)).size;
+    const phaseCount = new Set(items.map((item) => item.phase.id)).size;
+    const searchText = items.map((item) => [
+      item.error.error,
+      item.error.layer,
+      item.error.diagnosis,
+      item.error.action,
+      item.concept?.title,
+      item.concept?.question,
+      item.contract?.boundary?.contract,
+      item.phase.stage,
+      item.phase.goal,
+    ].join(" ")).join(" ");
+
+    return `
+      <article class="museum-root-cause-router"
+               aria-label="Root Cause Router המחבר שגיאות למושגים, חוזים ושלבי מוצר"
+               data-museum-search="${esc(searchText)}">
+        <div class="museum-system-card-head">
+          <span>router</span>
+          <h4>Root Cause Router: מטעות למסלול תיקון</h4>
+        </div>
+        <p>
+          כל שגיאה מקבלת מסלול קבוע: מזהים סימפטום, פותחים את שכבת השורש,
+          חוזרים למושג שמסביר את השבירה, ואז בודקים איזה חוזה ושלב מוצר צריכים חיזוק.
+        </p>
+
+        <div class="museum-root-summary">
+          <article>
+            <strong>${String(items.length)}</strong>
+            <span>שגיאות ממופות</span>
+          </article>
+          <article>
+            <strong>${String(layerCount)}</strong>
+            <span>שכבות שורש</span>
+          </article>
+          <article>
+            <strong>${String(conceptCount)}</strong>
+            <span>מושגים מתקנים</span>
+          </article>
+          <article>
+            <strong>${String(phaseCount)}</strong>
+            <span>שלבי מוצר</span>
+          </article>
+        </div>
+
+        <div class="museum-root-grid">
+          ${items.map((item) => {
+            const concept = item.concept;
+            const contractText = item.contract?.boundary?.contract || concept?.question || item.error.action;
+            const courseLinks = concept?.whereInCourse || [item.error.layer];
+            const codeLinks = concept?.whereInCode || [];
+            return `
+              <article class="museum-root-cause-card"
+                       id="museum-root-cause-${esc(item.id)}"
+                       data-layer="${esc(item.error.layerId)}"
+                       data-museum-search="${esc([item.error.error, item.error.layer, item.error.diagnosis, item.error.action, concept?.title, item.phase.stage, contractText].join(" "))}">
+                <div class="museum-root-card-head">
+                  <span>${String(item.index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <code>${esc(item.error.error)}</code>
+                    <strong>${esc(item.error.layer)}</strong>
+                  </div>
+                </div>
+
+                <div class="museum-root-route" aria-label="מסלול תיקון עבור ${esc(item.error.error)}">
+                  <span>סימפטום</span>
+                  <i>←</i>
+                  <span>שכבת שורש</span>
+                  <i>←</i>
+                  <span>מושג</span>
+                  <i>←</i>
+                  <span>חוזה</span>
+                  <i>←</i>
+                  <span>שלב מוצר</span>
+                </div>
+
+                <dl class="museum-root-dl">
+                  <div>
+                    <dt>אבחון</dt>
+                    <dd>${esc(item.error.diagnosis)}</dd>
+                  </div>
+                  <div>
+                    <dt>בדיקה ראשונה</dt>
+                    <dd>${esc(item.error.action)}</dd>
+                  </div>
+                  <div>
+                    <dt>מושג שמתקן</dt>
+                    <dd>${esc(concept?.title || item.error.layer)}</dd>
+                  </div>
+                  <div>
+                    <dt>חוזה לבדיקה</dt>
+                    <dd>${esc(contractText)}</dd>
+                  </div>
+                  <div>
+                    <dt>שלב מוצר</dt>
+                    <dd>${esc(item.phase.stage)} · ${esc(item.phase.deliverable)}</dd>
+                  </div>
+                  <div>
+                    <dt>איפה בקורס</dt>
+                    <dd>${renderMuseumChipList(courseLinks)}</dd>
+                  </div>
+                </dl>
+
+                ${codeLinks.length ? `
+                  <div class="museum-root-code">
+                    <strong>איפה בקוד</strong>
+                    ${codeLinks.map((line) => `<code>${esc(line)}</code>`).join("")}
+                  </div>
+                ` : ""}
+
+                <div class="museum-root-actions">
+                  <a href="${esc(getMuseumExternalHref({ wing: "stack", stackLayer: item.error.layerId }))}" target="_top">פתח שכבת שורש</a>
+                  ${concept ? `<a href="#museum-connection-${esc(concept.id)}">פתח מושג מתקן</a>` : ""}
+                  <a href="${esc(getMuseumExternalHref({ wing: "product" }))}" target="_top">פתח שלב מוצר</a>
+                </div>
+              </article>`;
+          }).join("")}
+        </div>
+      </article>`;
+  }
+
+  function getMuseumCourseBridgeRoute(concept) {
+    const routesByConcept = {
+      "react-state": { wing: "fullstack", domain: "react-product" },
+      "api-contract": { wing: "fullstack", domain: "api-contract" },
+      "database-persistence": { wing: "fullstack", domain: "data-persistence" },
+      "validation-chain": { wing: "errors" },
+      "function-contract": { wing: "stack", stackLayer: "language" },
+      "scope-closure": { wing: "stack", stackLayer: "language" },
+      "memory-reference": { wing: "stack", stackLayer: "machine-code" },
+      "boolean-decision": { wing: "stack", stackLayer: "bit-byte" },
+      "value-type": { wing: "stack", stackLayer: "bit-byte" },
+    };
+    return routesByConcept[concept.id] || { wing: "stack", stackLayer: concept.stackLayer };
+  }
+
+  function getMuseumCourseBridgeRows(concepts, errors, activeLayerId = "") {
+    const visibleConcepts = concepts.filter((concept) => {
+      if (!activeLayerId) return true;
+      return concept.stackLayer === activeLayerId || (concept.relatedLayers || []).includes(activeLayerId);
+    });
+    return visibleConcepts.map((concept, idx) => {
+      const layer = PROGRAMMING_STACK_LAYER_MUSEUMS.find((item) => item.id === concept.stackLayer) || null;
+      const relatedErrors = errors.filter((errorItem) => {
+        const errorConcept = getMuseumPracticeConcept(errorItem);
+        return errorConcept?.id === concept.id
+          || errorItem.layerId === concept.stackLayer
+          || (concept.relatedLayers || []).includes(errorItem.layerId);
+      });
+      const primaryError = relatedErrors[0] || null;
+      const primaryDrill = primaryError ? getMuseumPracticeDrills().find((drill) => drill.error.error === primaryError.error) || null : null;
+      const phase = getMuseumRootCausePhase(primaryError || { error: "" }, concept);
+      const route = getMuseumCourseBridgeRoute(concept);
+      return {
+        id: `course-${String(idx + 1).padStart(2, "0")}-${concept.id}`,
+        concept,
+        layer,
+        relatedErrors,
+        primaryError,
+        primaryDrill,
+        phase,
+        route,
+      };
+    });
+  }
+
+  function renderMuseumCourseBridge(concepts, errors, activeLayerId = "") {
+    const rows = getMuseumCourseBridgeRows(concepts, errors, activeLayerId);
+    if (!rows.length) return "";
+    const courseCount = new Set(rows.flatMap((row) => row.concept.whereInCourse || [])).size;
+    const codeCount = rows.reduce((sum, row) => sum + (row.concept.whereInCode || []).length, 0);
+    const errorCount = new Set(rows.flatMap((row) => row.relatedErrors.map((item) => item.error))).size;
+    const searchText = rows.map((row) => [
+      row.concept.title,
+      row.concept.layer,
+      row.concept.question,
+      row.concept.solves,
+      row.concept.breaksWhen,
+      ...(row.concept.whereInCourse || []),
+      ...(row.concept.whereInCode || []),
+      ...row.relatedErrors.map((item) => [item.error, item.diagnosis, item.action].join(" ")),
+      row.phase.stage,
+    ].join(" ")).join(" ");
+
+    return `
+      <article class="museum-course-bridge"
+               aria-label="Course Bridge המחבר מושגים לשיעורים, קוד וטעויות"
+               data-museum-search="${esc(searchText)}">
+        <div class="museum-system-card-head">
+          <span>course</span>
+          <h4>Course Bridge: מהמוזיאון לשיעור ולקוד</h4>
+        </div>
+        <p>
+          זהו לוח התיאום של המוזיאון: כל מושג מצביע לשיעורים שבהם הוא מופיע,
+          לשורות קוד שממחישות אותו, לשגיאות שהוא פותר ולאולם שכדאי לפתוח אחריו.
+        </p>
+
+        <div class="museum-course-summary">
+          <article>
+            <strong>${String(rows.length)}</strong>
+            <span>מושגים מחוברים</span>
+          </article>
+          <article>
+            <strong>${String(courseCount)}</strong>
+            <span>תחנות קורס</span>
+          </article>
+          <article>
+            <strong>${String(codeCount)}</strong>
+            <span>מופעי קוד</span>
+          </article>
+          <article>
+            <strong>${String(errorCount)}</strong>
+            <span>שגיאות קשורות</span>
+          </article>
+        </div>
+
+        <div class="museum-course-bridge-grid">
+          ${rows.map((row, idx) => {
+            const concept = row.concept;
+            const nextStop = row.layer ? `${row.layer.blockTitle}: ${row.layer.detail}` : concept.layer;
+            return `
+              <article class="museum-course-bridge-card"
+                       id="museum-course-${esc(row.id)}"
+                       data-layer="${esc(concept.stackLayer)}"
+                       data-museum-search="${esc([
+                         concept.title,
+                         concept.layer,
+                         concept.question,
+                         concept.solves,
+                         concept.breaksWhen,
+                         ...(concept.whereInCourse || []),
+                         ...(concept.whereInCode || []),
+                         ...row.relatedErrors.map((item) => item.error),
+                         row.phase.stage,
+                       ].join(" "))}">
+                <div class="museum-course-card-head">
+                  <span>${String(idx + 1).padStart(2, "0")}</span>
+                  <div>
+                    <strong>${esc(concept.title)}</strong>
+                    <small>${esc(nextStop)}</small>
+                  </div>
+                </div>
+
+                <p>${esc(concept.solves)}</p>
+
+                <div class="museum-course-map">
+                  <div>
+                    <span>איפה בקורס</span>
+                    ${renderMuseumChipList(concept.whereInCourse)}
+                  </div>
+                  <div>
+                    <span>איפה בקוד</span>
+                    ${(concept.whereInCode || []).map((line) => `<code>${esc(line)}</code>`).join("")}
+                  </div>
+                  <div>
+                    <span>שגיאות קשורות</span>
+                    ${row.relatedErrors.length
+                      ? row.relatedErrors.map((item) => `<code>${esc(item.error)}</code>`).join("")
+                      : `<em>${esc(concept.breaksWhen)}</em>`}
+                  </div>
+                  <div>
+                    <span>שלב מוצר</span>
+                    <strong>${esc(row.phase.stage)}</strong>
+                    <em>${esc(row.phase.deliverable)}</em>
+                  </div>
+                </div>
+
+                <div class="museum-course-check">
+                  <strong>שאלת בדיקה</strong>
+                  <p>${esc(concept.question)}</p>
+                </div>
+
+                <div class="museum-course-actions">
+                  <a href="${esc(getMuseumExternalHref(row.route))}" target="_top">פתח אולם המשך</a>
+                  <a href="#museum-connection-${esc(concept.id)}">פתח כרטיס מושג</a>
+                  ${row.primaryDrill ? `<a href="#museum-root-cause-root-${esc(row.primaryDrill.id)}">פתח שורש טעות</a>` : ""}
+                  ${renderMuseumVideoOpenButton(`concept-${concept.id}`, "פתח חומר לסרטון")}
+                </div>
+              </article>`;
+          }).join("")}
+        </div>
+      </article>`;
+  }
+
+  function renderMuseumAiEvolutionWing() {
+    const activeScenarioId = AI_MUSEUM_PRODUCT_SCENARIOS[0]?.id || "";
+    return `
+      <section class="museum-section museum-ai-wing" id="programming-museum-ai-evolution">
+        <div class="museum-section-head">
+          <span>05</span>
+          <div>
+            <h3>אגף AI: איך התפתחה אינטליגנציה מלאכותית</h3>
+            <p>האגף עושה סדר בין רעיון, תחום מחקר, מודל, סוכן ומנוע אינטליגנציה בתוך מוצר Full-Stack.</p>
+          </div>
+        </div>
+
+        <div class="museum-ai-hero">
+          <div>
+            <span class="museum-kicker">Turing · Dartmouth · Logic Theorist · Perceptron · Transformer · Agents</span>
+            <h3>אין “AI ראשונה” אחת. יש כמה התחלות לפי ההגדרה.</h3>
+            <p>
+              אם שואלים מי ניסח את השאלה, מתחילים ב-Turing. אם שואלים מאיפה הגיע השם,
+              מגיעים ל-Dartmouth. אם שואלים על תוכנה שמנסה לנמק, Logic Theorist היא תחנה מוקדמת מרכזית.
+              ואם שואלים על למידה מדוגמאות, Perceptron הוא אבן דרך מוקדמת.
+            </p>
+          </div>
+          <div class="museum-ai-core" aria-hidden="true">
+            <span>context</span>
+            <strong>AI</strong>
+            <em>model · tools · memory · policy</em>
+          </div>
+        </div>
+
+        <div class="museum-ai-stat-grid" aria-label="נתוני אגף AI">
+          <article>
+            <strong>${String(AI_MUSEUM_TIMELINE.length)}</strong>
+            <span>תחנות התפתחות</span>
+          </article>
+          <article>
+            <strong>${String(AI_MUSEUM_FIRSTS.length)}</strong>
+            <span>ראשונים לפי פירוש</span>
+          </article>
+          <article>
+            <strong>${String(AI_MUSEUM_COMPARISON.length)}</strong>
+            <span>מושגים להשוואה</span>
+          </article>
+          <article>
+            <strong>${String(AI_MUSEUM_SOURCES.length)}</strong>
+            <span>מקורות מחקר</span>
+          </article>
+        </div>
+
+        <div class="museum-ai-first-grid">
+          ${AI_MUSEUM_FIRSTS.map((item, idx) => `
+            <article>
+              <span>${String(idx + 1).padStart(2, "0")}</span>
+              <h4>${esc(item.label)}</h4>
+              <p>${esc(item.answer)}</p>
+              <small>${esc(item.nuance)}</small>
+            </article>
+          `).join("")}
+        </div>
+
+        <article class="museum-ai-model-deep-dive" aria-label="מה זה מודל בינה מלאכותית ואיך מאמנים אותו">
+          <div class="museum-system-card-head">
+            <span>model</span>
+            <h4>Model Deep Dive: מודל, למידת מכונה, רשתות נוירונים ו-LoRA</h4>
+          </div>
+          <p>
+            החלק הזה מפריד בין המילים שנשמעות דומות: מודל הוא רכיב שלמד ייצוג;
+            Machine Learning היא דרך ללמד אותו מנתונים; Neural Network היא משפחת ארכיטקטורות;
+            Fine-tuning ו-LoRA הן דרכי התאמה של מודל קיים למוצר.
+          </p>
+
+          <div class="museum-ai-model-term-grid">
+            ${AI_MUSEUM_MODEL_TERMS.map((item, idx) => `
+              <article class="museum-ai-model-term-card">
+                <div class="museum-ai-term-head">
+                  <span>${String(idx + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h5>${esc(item.term)}</h5>
+                    <small>${esc(item.year)}</small>
+                  </div>
+                </div>
+                <dl>
+                  <div>
+                    <dt>למה נוצר</dt>
+                    <dd>${esc(item.why)}</dd>
+                  </div>
+                  <div>
+                    <dt>מה פתר</dt>
+                    <dd>${esc(item.solves)}</dd>
+                  </div>
+                  <div>
+                    <dt>איך זה עובד</dt>
+                    <dd>${esc(item.how)}</dd>
+                  </div>
+                </dl>
+                <strong>${esc(item.remember)}</strong>
+              </article>
+            `).join("")}
+          </div>
+
+          <div class="museum-ai-model-graph" aria-label="גרף התפתחות מודלים בבינה מלאכותית">
+            <div class="museum-ai-model-graph-head">
+              <span class="museum-kicker">development graph</span>
+              <h5>גרף התפתחות: מרעיון עצבי למודלים מקומיים וסוכנים</h5>
+            </div>
+            <div class="museum-ai-model-graph-track">
+              ${AI_MUSEUM_MODEL_MILESTONES.map((item, idx) => `
+                <article class="museum-ai-model-node">
+                  <time>${esc(item.year)}</time>
+                  <strong>${esc(item.title)}</strong>
+                  <span>${esc(item.layer)}</span>
+                  <p>${esc(item.detail)}</p>
+                  <em>${esc(item.solves)}</em>
+                </article>
+                ${idx < AI_MUSEUM_MODEL_MILESTONES.length - 1 ? `<b aria-hidden="true">←</b>` : ""}
+              `).join("")}
+            </div>
+          </div>
+
+          <div class="museum-ai-first-model-grid" aria-label="ראשונים מסחריים ומקומיים לפי הקשר">
+            ${AI_MUSEUM_FIRST_MODEL_CARDS.map((item) => `
+              <article class="museum-ai-first-model-card">
+                <span>${esc(item.label)}</span>
+                <div>
+                  <h5>${esc(item.name)}</h5>
+                  <time>${esc(item.year)}</time>
+                </div>
+                <p>${esc(item.what)}</p>
+                <dl>
+                  <div>
+                    <dt>מה הוא עשה</dt>
+                    <dd>${esc(item.did)}</dd>
+                  </div>
+                  <div>
+                    <dt>טכנולוגיות</dt>
+                    <dd>${esc(item.tech)}</dd>
+                  </div>
+                </dl>
+                <small>${esc(item.caveat)}</small>
+              </article>
+            `).join("")}
+          </div>
+
+          <div class="museum-ai-training-flow" aria-label="איך מאמנים מודל AI">
+            <div class="museum-system-card-head">
+              <span>train</span>
+              <h4>איך מאמנים מודל: מהבעיה עד מוצר עובד</h4>
+            </div>
+            <div class="museum-ai-training-grid">
+              ${AI_MUSEUM_TRAINING_FLOW.map((item, idx) => `
+                <article class="museum-ai-training-step">
+                  <span>${String(idx + 1).padStart(2, "0")}</span>
+                  <h5>${esc(item.step)}</h5>
+                  <p>${esc(item.detail)}</p>
+                  <strong>${esc(item.output)}</strong>
+                </article>
+              `).join("")}
+            </div>
+          </div>
+        </article>
+
+        <div class="museum-ai-timeline" aria-label="ציר התפתחות AI">
+          ${AI_MUSEUM_TIMELINE.map((item, idx) => `
+            <article class="museum-ai-timeline-card">
+              <time>${esc(item.era)}</time>
+              <h4>${esc(item.title)}</h4>
+              <p>${esc(item.signal)}</p>
+              <dl>
+                <div>
+                  <dt>מה פתר</dt>
+                  <dd>${esc(item.solved)}</dd>
+                </div>
+                <div>
+                  <dt>לאן התפתח</dt>
+                  <dd>${esc(item.evolvedTo)}</dd>
+                </div>
+              </dl>
+              <span>${String(idx + 1).padStart(2, "0")}</span>
+            </article>
+          `).join("")}
+        </div>
+
+        <div class="museum-ai-engine">
+          <div>
+            <span class="museum-kicker">Intelligence Engine</span>
+            <h4>מה זה “מנוע אינטליגנציה” במוצר?</h4>
+            <p>
+              זה לא מונח מדעי יחיד כמו “מודל”. במוזיאון נגדיר אותו כשכבת תזמור מוצרית:
+              היא מחברת מודלים, מקורות מידע, retrieval, כלים, מדיניות, בדיקות, logs ו-UX
+              כדי להפוך יכולת AI לפיצ'ר שאפשר להפעיל שוב ושוב.
+            </p>
+          </div>
+          <div class="museum-ai-engine-flow" aria-label="זרימת מנוע אינטליגנציה">
+            ${AI_MUSEUM_ENGINE_FLOW.map((step) => `<span>${esc(step)}</span>`).join("<b>←</b>")}
+          </div>
+        </div>
+
+        <article class="museum-ai-product-lab" aria-label="AI Product Lab לבחירת ארכיטקטורת AI לפי צורך מוצר">
+          <div class="museum-system-card-head">
+            <span>lab</span>
+            <h4>AI Product Lab: איזה מנגנון מתאים לאיזו בעיה?</h4>
+          </div>
+          <p>
+            בחר תרחיש מוצר וראה מתי מספיק מודל, מתי צריך RAG, מתי מתאים workflow,
+            ומתי כבר צריך סוכן או מנוע אינטליגנציה עם כלים, הרשאות ובדיקות.
+          </p>
+
+          <div class="museum-ai-lab-stage">
+            <div class="museum-ai-scenario-rail" role="tablist" aria-label="בחירת תרחיש AI במוצר">
+              ${AI_MUSEUM_PRODUCT_SCENARIOS.map((scenario, idx) => `
+                <button class="${scenario.id === activeScenarioId ? "active" : ""}"
+                        type="button"
+                        role="tab"
+                        aria-selected="${scenario.id === activeScenarioId ? "true" : "false"}"
+                        data-museum-ai-scenario="${esc(scenario.id)}">
+                  <span>${String(idx + 1).padStart(2, "0")}</span>
+                  <strong>${esc(scenario.title)}</strong>
+                  <small>${esc(scenario.bestFit)}</small>
+                </button>
+              `).join("")}
+            </div>
+
+            <div class="museum-ai-panel-stack">
+              ${AI_MUSEUM_PRODUCT_SCENARIOS.map((scenario) => `
+                <section class="museum-ai-scenario-panel ${scenario.id === activeScenarioId ? "active" : ""}"
+                         data-museum-ai-panel="${esc(scenario.id)}"
+                         ${scenario.id === activeScenarioId ? "" : "hidden"}>
+                  <div class="museum-ai-panel-head">
+                    <div>
+                      <span class="museum-kicker">${esc(scenario.bestFit)}</span>
+                      <h5>${esc(scenario.title)}</h5>
+                      <p>${esc(scenario.need)}</p>
+                    </div>
+                    <strong>${esc(scenario.bestFit)}</strong>
+                  </div>
+
+                  <div class="museum-ai-fit-grid">
+                    <div>
+                      <span>למה זה מתאים</span>
+                      <p>${esc(scenario.why)}</p>
+                    </div>
+                    <div>
+                      <span>מה לא לעשות</span>
+                      <p>${esc(scenario.avoid)}</p>
+                    </div>
+                  </div>
+
+                  <div class="museum-ai-stack-flow" aria-label="שכבות פתרון עבור ${esc(scenario.title)}">
+                    ${scenario.stack.map((step) => `<span>${esc(step)}</span>`).join("<b>←</b>")}
+                  </div>
+
+                  <div class="museum-ai-build-grid">
+                    <div>
+                      <strong>צעדי בנייה</strong>
+                      <ol>${scenario.buildSteps.map((step) => `<li>${esc(step)}</li>`).join("")}</ol>
+                    </div>
+                    <div>
+                      <strong>בדיקות לפני שימוש</strong>
+                      <ol>${scenario.checks.map((check) => `<li>${esc(check)}</li>`).join("")}</ol>
+                    </div>
+                  </div>
+                </section>
+              `).join("")}
+            </div>
+          </div>
+        </article>
+
+        <div class="museum-ai-agent-loop">
+          <div class="museum-system-card-head">
+            <span>loop</span>
+            <h4>לולאת Agent: מטרה → כלי → בדיקה → פעולה</h4>
+          </div>
+          <div class="museum-ai-agent-loop-grid">
+            ${AI_MUSEUM_AGENT_LOOP.map((step, idx) => `
+              <article>
+                <span>${String(idx + 1).padStart(2, "0")}</span>
+                <strong>${esc(step.label)}</strong>
+                <p>${esc(step.detail)}</p>
+              </article>
+            `).join("")}
+          </div>
+        </div>
+
+        <div class="museum-ai-readiness">
+          <div class="museum-system-card-head">
+            <span>readiness</span>
+            <h4>Checklist לפני שמכניסים AI למוצר</h4>
+          </div>
+          <ul>
+            ${AI_MUSEUM_READINESS_CHECKS.map((check) => `<li>${esc(check)}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div class="museum-ai-table-wrap">
+          <table class="museum-ai-comparison-table">
+            <caption>טבלת הבדלים: AI, מודל, סוכן, מנוע אינטליגנציה ומושגים דומים</caption>
+            <thead>
+              <tr>
+                <th>מושג</th>
+                <th>מה זה עושה</th>
+                <th>קלט אופייני</th>
+                <th>פלט אופייני</th>
+                <th>מה זה לא</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${AI_MUSEUM_COMPARISON.map((item) => `
+                <tr>
+                  <th scope="row">${esc(item.term)}</th>
+                  <td>${esc(item.role)}</td>
+                  <td>${esc(item.input)}</td>
+                  <td>${esc(item.output)}</td>
+                  <td>${esc(item.not)}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="museum-ai-source-grid">
+          <div class="museum-system-card-head">
+            <span>sources</span>
+            <h4>מקורות שעליהם מבוסס האגף</h4>
+          </div>
+          ${AI_MUSEUM_SOURCES.map((source) => `
+            <a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)}</a>
+          `).join("")}
+        </div>
+      </section>`;
+  }
+
+  function getMuseumConceptsForLayer(layerId, concepts) {
+    return concepts.filter((card) => card.stackLayer === layerId || (card.relatedLayers || []).includes(layerId));
+  }
+
+  function getMuseumErrorsForLayer(layerId, errors) {
+    return errors.filter((item) => item.layerId === layerId);
+  }
+
+  function getMuseumNextStackLayer(layerId) {
+    const index = PROGRAMMING_STACK_LAYER_MUSEUMS.findIndex((layer) => layer.id === layerId);
+    return index >= 0 ? PROGRAMMING_STACK_LAYER_MUSEUMS[index + 1] || null : null;
+  }
+
+  function renderMuseumKnowledgeAtlas(concepts, errors, activeLayerId = "") {
+    const lanes = PROGRAMMING_STACK_LAYER_MUSEUMS.map((layer) => {
+      const layerConcepts = getMuseumConceptsForLayer(layer.id, concepts);
+      const layerErrors = getMuseumErrorsForLayer(layer.id, errors);
+      return { layer, concepts: layerConcepts, errors: layerErrors, nextLayer: getMuseumNextStackLayer(layer.id) };
+    }).filter((lane) => !activeLayerId || lane.layer.id === activeLayerId || lane.concepts.length || lane.errors.length);
+
+    if (!lanes.length) return "";
+
+    return `
+      <article class="museum-knowledge-atlas" aria-label="אטלס קשרים בין שכבות, מושגים וטעויות">
+        <div class="museum-system-card-head">
+          <span>atlas</span>
+          <h4>אטלס קשרים: שכבה → מושגים → טעויות → המשך לימוד</h4>
+        </div>
+        <p>
+          במקום לחפש מושג בנפרד, האטלס מראה לאיזו שכבת מחשב הוא שייך,
+          איזו טעות הוא מסביר, ואיזו תחנה לפתוח כדי לסגור את פער ההבנה.
+        </p>
+        <div class="museum-knowledge-lane-grid">
+          ${lanes.map(({ layer, concepts: layerConcepts, errors: layerErrors, nextLayer }) => {
+            const firstConcept = layerConcepts[0];
+            const firstError = layerErrors[0];
+            const searchText = [
+              layer.blockTitle,
+              layer.detail,
+              ...(layerConcepts || []).map((card) => [card.title, card.layer, card.question, ...(card.whereInCourse || [])].join(" ")),
+              ...(layerErrors || []).map((item) => [item.error, item.layer, item.diagnosis, item.action].join(" ")),
+            ].join(" ");
+            return `
+              <section class="museum-knowledge-lane"
+                       data-layer="${esc(layer.id)}"
+                       data-museum-search="${esc(searchText)}"
+                       style="--museum-atlas-accent: ${esc(layer.accent)};">
+                <div class="museum-knowledge-lane-head">
+                  <span>${esc(layer.blockTitle)}</span>
+                  <strong>${esc(layer.detail)}</strong>
+                </div>
+
+                <div class="museum-knowledge-path" aria-label="מסלול מושגים בשכבה ${esc(layer.blockTitle)}">
+                  ${(firstConcept?.builtFrom || layer.pathway || []).slice(0, 3).map((item) => `<span>${esc(item)}</span>`).join("<b>←</b>")}
+                  ${firstConcept ? `<b>←</b><strong>${esc(firstConcept.title)}</strong>` : ""}
+                  ${(firstConcept?.leadsTo || []).slice(0, 3).map((item) => `<b>←</b><span>${esc(item)}</span>`).join("")}
+                </div>
+
+                <div class="museum-knowledge-meta">
+                  <div>
+                    <small>מושגים באולם</small>
+                    ${layerConcepts.length
+                      ? layerConcepts.map((card) => `<a href="#museum-connection-${esc(card.id)}">${esc(card.title)}</a>`).join("")
+                      : "<em>אין כרטיס מושג ישיר בשכבה הזו.</em>"}
+                  </div>
+                  <div>
+                    <small>טעויות שמפנות לכאן</small>
+                    ${layerErrors.length
+                      ? layerErrors.map((item) => `<code>${esc(item.error)}</code>`).join("")
+                      : "<em>אין אבחון טעות ישיר בשכבה הזו.</em>"}
+                  </div>
+                  <div>
+                    <small>בדיקה ראשונה</small>
+                    <p>${esc(firstError?.action || firstConcept?.question || layer.thesis)}</p>
+                  </div>
+                </div>
+
+                <div class="museum-knowledge-actions">
+                  <a href="${esc(getMuseumExternalHref({ wing: "stack", stackLayer: layer.id }))}" target="_top">פתח שכבת שורש</a>
+                  ${nextLayer
+                    ? `<a href="${esc(getMuseumExternalHref({ wing: "stack", stackLayer: nextLayer.id }))}" target="_top">המשך ל${esc(nextLayer.blockTitle)}</a>`
+                    : `<a href="${esc(getMuseumExternalHref({ wing: "product" }))}" target="_top">המשך למוצר</a>`}
+                  <a href="${esc(getMuseumExternalHref({ wing: "videos" }))}" target="_top">סרטונים קשורים</a>
+                </div>
+              </section>`;
+          }).join("")}
+        </div>
+      </article>`;
+  }
+
   function renderMuseumConnectionCards(cards) {
     return `
       <div class="museum-system-card-grid">
         ${cards.map((card) => `
-          <article class="museum-system-concept-card" id="museum-connection-${esc(card.id)}" data-layer="${esc(card.stackLayer)}">
+          <article class="museum-system-concept-card"
+                   id="museum-connection-${esc(card.id)}"
+                   data-layer="${esc(card.stackLayer)}"
+                   data-museum-search="${esc([
+                     card.title,
+                     card.layer,
+                     ...(card.builtFrom || []),
+                     ...(card.leadsTo || []),
+                     ...(card.whereInCourse || []),
+                     ...(card.whereInCode || []),
+                     card.breaksWhen,
+                   ].join(" "))}">
             <div class="museum-system-card-head">
               <span>${esc(card.layer)}</span>
               <h4>${esc(card.title)}</h4>
@@ -11093,7 +13709,786 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>`;
   }
 
-  function renderMuseumConnectionHub(activeLayer = null) {
+  function renderMuseumWingNav(activeWing = "home") {
+    const wings = getMuseumWingDefinitions();
+    return `
+      <nav class="museum-wing-nav" aria-label="ניווט אגפי המוזיאון">
+        <a class="${activeWing === "home" ? "active" : ""}" href="${esc(getMuseumExternalHref({ wing: "home" }))}" target="_top">שער</a>
+        ${wings.map((wing) => `
+          <a class="${wing.id === activeWing ? "active" : ""}" href="${esc(wing.route)}" target="_top">
+            <span>${esc(wing.kicker)}</span>
+            <strong>${esc(wing.title)}</strong>
+          </a>
+        `).join("")}
+        <button class="museum-motion-toggle" type="button" data-museum-motion-toggle aria-pressed="false">הפחת תנועה</button>
+      </nav>`;
+  }
+
+  function renderMuseumWingGate(activeWing = "home") {
+    return `
+      <section class="museum-section museum-wing-gate" id="programming-museum-wing-gate">
+        <div class="museum-section-head">
+          <span>00</span>
+          <div>
+            <h3>שער אגפים: כל המוזיאון כמפת למידה אחת</h3>
+            <p>כל אגף נפתח כדף עצמאי דרך URL דטרמיניסטי, בלי תפריטי הפורטל, ועדיין מחובר לשיעורים, טעויות, סרטונים ודרכון תלמיד.</p>
+          </div>
+        </div>
+        <div class="museum-wing-grid">
+          ${getMuseumWingDefinitions().map((wing, idx) => `
+            <a class="museum-wing-card ${wing.id === activeWing ? "active" : ""}"
+               href="${esc(wing.route)}"
+               target="_top"
+               data-wing="${esc(wing.id)}">
+              <span>${String(idx + 1).padStart(2, "0")}</span>
+              <small>${esc(wing.kicker)}</small>
+              <strong>${esc(wing.title)}</strong>
+              <p>${esc(wing.learningGoal)}</p>
+              <em>${esc(wing.count)} ${esc(wing.metric)}</em>
+            </a>
+          `).join("")}
+        </div>
+      </section>`;
+  }
+
+  function loadMuseumPassportState() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(MUSEUM_VISIT_STORAGE_KEY) || "{}");
+      return {
+        stamps: Array.isArray(parsed.stamps) ? parsed.stamps : [],
+        visited: Array.isArray(parsed.visited) ? parsed.visited : [],
+        tourStops: Array.isArray(parsed.tourStops) ? parsed.tourStops : [],
+        drills: Array.isArray(parsed.drills) ? parsed.drills : [],
+      };
+    } catch (_) {
+      return { stamps: [], visited: [], tourStops: [], drills: [] };
+    }
+  }
+
+  function saveMuseumPassportState(state) {
+    const safeState = {
+      stamps: Array.from(new Set(state.stamps || [])).sort(),
+      visited: Array.from(new Set(state.visited || [])).sort(),
+      tourStops: Array.from(new Set(state.tourStops || [])).sort(),
+      drills: Array.from(new Set(state.drills || [])).sort(),
+    };
+    try {
+      localStorage.setItem(MUSEUM_VISIT_STORAGE_KEY, JSON.stringify(safeState));
+    } catch (_) {}
+    return safeState;
+  }
+
+  function renderMuseumPassportWing() {
+    const passportState = loadMuseumPassportState();
+    return `
+      <section class="museum-section museum-passport-wing" id="programming-museum-passport">
+        <div class="museum-section-head">
+          <span>13</span>
+          <div>
+            <h3>דרכון תלמיד: ביקור שמייצר הוכחת הבנה</h3>
+            <p>כל חותמת מחייבת פעולה קטנה: להסביר שורש, למצוא שורת קוד, לאבחן באג או לחבר למוצר. הסטטוס נשמר מקומית בדפדפן בלבד.</p>
+          </div>
+        </div>
+        <div class="museum-passport-summary">
+          <article>
+            <strong data-museum-passport-count>${String(passportState.stamps.length)}</strong>
+            <span>חותמות הושלמו</span>
+          </article>
+          <article>
+            <strong data-museum-visited-count>${String(passportState.visited.length)}</strong>
+            <span>תחנות נצפו</span>
+          </article>
+          <article>
+            <strong data-museum-tour-count>${String(passportState.tourStops.length)}</strong>
+            <span>תחנות מסלול הושלמו</span>
+          </article>
+          <article>
+            <strong data-museum-drill-count>${String((passportState.drills || []).length)}</strong>
+            <span>תרגילי Debug הושלמו</span>
+          </article>
+        </div>
+        <div class="museum-tour-passport-grid" aria-label="מסלולי ביקור בדרכון">
+          ${MUSEUM_CROSS_WING_ROUTES.map((route) => {
+            const progress = getMuseumTourProgress(route, passportState);
+            return `
+              <article class="museum-tour-passport-card">
+                <div>
+                  <span class="museum-kicker">מסלול</span>
+                  <h4>${esc(route.title)}</h4>
+                  <p>${esc(route.summary)}</p>
+                </div>
+                <strong data-museum-route-progress="${esc(route.id)}">${String(progress.completed)}/${String(progress.total)}</strong>
+                <div class="museum-tour-progress" data-museum-tour-progress="${esc(route.id)}" style="--museum-tour-progress: ${progress.percent}%">
+                  <span></span>
+                </div>
+                <a href="${esc(getMuseumExternalHref({ ...route.stops[0].params, tour: route.id }))}" target="_top">פתח מסלול</a>
+                <div class="museum-tour-passport-stops">
+                  ${route.stops.map((stop, idx) => {
+                    const stopId = getMuseumTourStopId(route.id, stop, idx);
+                    const done = passportState.tourStops.includes(stopId);
+                    return `<button type="button"
+                                    data-museum-tour-stop="${esc(stopId)}"
+                                    data-museum-tour-card="${esc(stopId)}"
+                                    aria-pressed="${done ? "true" : "false"}">${done ? "הושלם" : esc(stop.label)}</button>`;
+                  }).join("")}
+                </div>
+              </article>`;
+          }).join("")}
+        </div>
+        <div class="museum-passport-grid">
+          ${MUSEUM_STUDENT_PASSPORT.map((item, idx) => {
+            const done = passportState.stamps.includes(item.stamp);
+            return `
+              <article class="museum-passport-card ${done ? "done" : ""}" data-passport-card="${esc(item.stamp)}">
+                <span>${String(idx + 1).padStart(2, "0")}</span>
+                <h4>${esc(item.stamp)}</h4>
+                <p>${esc(item.task)}</p>
+                <strong>${esc(item.proof)}</strong>
+                <button type="button"
+                        data-museum-passport-stamp="${esc(item.stamp)}"
+                        aria-pressed="${done ? "true" : "false"}">
+                  ${done ? "חותמת הושלמה" : "סמן חותמת"}
+                </button>
+              </article>`;
+          }).join("")}
+        </div>
+        <div class="museum-visited-strip" aria-label="תחנות ביקור שנצפו">
+          ${passportState.visited.slice(0, 24).map((id) => `<span>${esc(id)}</span>`).join("") || "<span>תחנות יופיעו כאן אחרי גלילה במוזיאון.</span>"}
+        </div>
+      </section>`;
+  }
+
+  function normalizeMuseumRoleName(role) {
+    return String(role || "").replace(/\s+/g, "").replace(/\//g, "").toLowerCase();
+  }
+
+  function getMuseumTeamResponsibility(roleName) {
+    const aliases = {
+      [normalizeMuseumRoleName("Data")]: "Database",
+      [normalizeMuseumRoleName("QA / Delivery")]: "QA/DevOps",
+    };
+    const target = aliases[normalizeMuseumRoleName(roleName)] || roleName;
+    return MUSEUM_TEAM_RESPONSIBILITIES.find((item) => item.role === target)
+      || MUSEUM_TEAM_RESPONSIBILITIES.find((item) => normalizeMuseumRoleName(item.role) === normalizeMuseumRoleName(target))
+      || null;
+  }
+
+  function getMuseumTeamDomainConfig(roleName) {
+    const configs = {
+      Product: { label: "מוצר", route: { wing: "product" }, conceptId: "validation-chain", flowTitle: "מסך" },
+      "UX/UI": { label: "UI/HTML/CSS", route: { wing: "fullstack", domain: "interface" }, conceptId: "react-state", flowTitle: "מסך" },
+      Frontend: { label: "React Product", route: { wing: "fullstack", domain: "react-product" }, conceptId: "react-state", flowTitle: "אירוע" },
+      Backend: { label: "API/HTTP/Express", route: { wing: "fullstack", domain: "api-contract" }, conceptId: "api-contract", flowTitle: "שרת" },
+      Data: { label: "Database/MongoDB/Mongoose", route: { wing: "fullstack", domain: "data-persistence" }, conceptId: "database-persistence", flowTitle: "מידע" },
+      "QA / Delivery": { label: "Quality/Tests/AI Review", route: { wing: "fullstack", domain: "quality-delivery" }, conceptId: "validation-chain", flowTitle: "איכות" },
+    };
+    return configs[roleName] || { label: roleName, route: { wing: "product" }, conceptId: "", flowTitle: "" };
+  }
+
+  function getMuseumTeamPhaseItems(roleName, phase) {
+    if (roleName === "Product") return phase.product;
+    if (roleName === "UX/UI") {
+      const uxTerms = ["flow", "wireframe", "states", "copy", "accessibility", "onboarding", "feedback", "מחקר", "תוכן"];
+      const items = phase.product.filter((item) => uxTerms.some((term) => item.toLowerCase().includes(term.toLowerCase())));
+      return items.length ? items : phase.product;
+    }
+    const techTermsByRole = {
+      Frontend: ["Frontend", "React", "מסך", "forms", "build", "UI", "accessibility"],
+      Backend: ["Backend", "API", "security", "logging", "monitoring", "errors", "hotfix", "rollback"],
+      Data: ["Database", "data", "backup", "analytics", "observability", "queries", "scaling"],
+      "QA / Delivery": ["Tests", "QA", "build", "release", "smoke", "logging", "monitoring", "quality", "performance"],
+    };
+    const terms = techTermsByRole[roleName] || [];
+    const items = phase.tech.filter((item) => terms.some((term) => item.toLowerCase().includes(term.toLowerCase())));
+    return items.length ? items : phase.tech.slice(0, 2);
+  }
+
+  function getMuseumTeamHandoffItems() {
+    return PROGRAMMING_PRODUCT_TEAM_SPLIT.map((role, idx) => {
+      const config = getMuseumTeamDomainConfig(role.role);
+      const responsibility = getMuseumTeamResponsibility(role.role);
+      const concept = config.conceptId ? getMuseumConceptConnection(config.conceptId) : null;
+      const flow = FULL_STACK_MUSEUM_FLOW.find((item) => item.title === config.flowTitle) || FULL_STACK_MUSEUM_FLOW[idx] || null;
+      const previous = PROGRAMMING_PRODUCT_TEAM_SPLIT[idx - 1] || null;
+      const next = PROGRAMMING_PRODUCT_TEAM_SPLIT[idx + 1] || null;
+      const phaseChecklist = PROGRAMMING_PRODUCT_LIFECYCLE.map((phase) => ({
+        phase,
+        items: getMuseumTeamPhaseItems(role.role, phase),
+      }));
+      return {
+        id: `team-${slugifyId(role.role).replace(/^id-/, "")}`,
+        role,
+        config,
+        responsibility,
+        concept,
+        flow,
+        previous,
+        next,
+        phaseChecklist,
+      };
+    });
+  }
+
+  function getMuseumIntegrationConceptId(flowTitle) {
+    const conceptByFlow = {
+      "מסך": "react-state",
+      "אירוע": "react-state",
+      "בקשה": "api-contract",
+      "שרת": "validation-chain",
+      "מידע": "database-persistence",
+      "איכות": "validation-chain",
+    };
+    return conceptByFlow[flowTitle] || "function-contract";
+  }
+
+  function getMuseumIntegrationError(flowTitle) {
+    const errorByFlow = {
+      "מסך": "State לא מתעדכן",
+      "אירוע": "Cannot read properties of undefined",
+      "בקשה": "404",
+      "שרת": "400",
+      "מידע": "מידע נעלם אחרי רענון",
+      "איכות": "400",
+    };
+    const errorName = errorByFlow[flowTitle];
+    return MUSEUM_ERROR_LAYER_MAP.find((item) => item.error === errorName) || MUSEUM_ERROR_LAYER_MAP[0];
+  }
+
+  function getMuseumIntegrationPhase(flowTitle) {
+    const phaseByFlow = {
+      "מסך": "before-dev",
+      "אירוע": "during-dev",
+      "בקשה": "during-dev",
+      "שרת": "during-dev",
+      "מידע": "pre-launch",
+      "איכות": "pre-launch",
+    };
+    const phaseId = phaseByFlow[flowTitle] || "during-dev";
+    return PROGRAMMING_PRODUCT_LIFECYCLE.find((phase) => phase.id === phaseId) || PROGRAMMING_PRODUCT_LIFECYCLE[0];
+  }
+
+  function getMuseumIntegrationMatrixItems(activeLayerId = "") {
+    return FULL_STACK_MUSEUM_FLOW.map((flow, idx) => {
+      const role = PROGRAMMING_PRODUCT_TEAM_SPLIT[idx] || PROGRAMMING_PRODUCT_TEAM_SPLIT[0];
+      const config = getMuseumTeamDomainConfig(role.role);
+      const concept = getMuseumConceptConnection(getMuseumIntegrationConceptId(flow.title));
+      const error = getMuseumIntegrationError(flow.title);
+      const phase = getMuseumIntegrationPhase(flow.title);
+      const contract = getMuseumContractInspectorItems().find((item) => item.concept?.id === concept?.id) || null;
+      return {
+        id: `integration-${String(idx + 1).padStart(2, "0")}-${slugifyId(flow.title).replace(/^id-/, "")}`,
+        flow,
+        role,
+        config,
+        concept,
+        error,
+        phase,
+        contract,
+      };
+    }).filter((item) => {
+      if (!activeLayerId) return true;
+      return item.concept?.stackLayer === activeLayerId
+        || (item.concept?.relatedLayers || []).includes(activeLayerId)
+        || item.error?.layerId === activeLayerId;
+    });
+  }
+
+  function renderMuseumIntegrationMatrix(activeLayerId = "") {
+    const items = getMuseumIntegrationMatrixItems(activeLayerId);
+    if (!items.length) return "";
+    const activeId = items[0].id;
+    const searchText = items.map((item) => [
+      item.flow.title,
+      item.flow.detail,
+      item.flow.signal,
+      item.role.role,
+      item.role.owns,
+      item.concept?.title,
+      item.concept?.question,
+      item.error?.error,
+      item.error?.diagnosis,
+      item.phase.stage,
+    ].join(" ")).join(" ");
+
+    return `
+      <article class="museum-integration-matrix"
+               aria-label="מטריצת אינטגרציה בין שכבות, תפקידים, חוזים וטעויות"
+               data-museum-search="${esc(searchText)}">
+        <div class="museum-system-card-head">
+          <span>matrix</span>
+          <h4>Integration Matrix: פעולה אחת, כל האחריות</h4>
+        </div>
+        <p>
+          המטריצה מחברת את שרשרת Full‑Stack לתפקיד בצוות, שלב מוצר,
+          מושג שצריך להבין, טעות שמופיעה כשהגבול נשבר, והתחנה הבאה לפתיחה.
+        </p>
+
+        <div class="museum-integration-summary">
+          <article>
+            <strong>${String(items.length)}</strong>
+            <span>תחנות מחוברות</span>
+          </article>
+          <article>
+            <strong>${String(new Set(items.map((item) => item.role.role)).size)}</strong>
+            <span>תפקידי צוות</span>
+          </article>
+          <article>
+            <strong>${String(new Set(items.map((item) => item.phase.id)).size)}</strong>
+            <span>שלבי מוצר</span>
+          </article>
+        </div>
+
+        <div class="museum-integration-stage">
+          <div class="museum-integration-rail" role="tablist" aria-label="בחירת תחנת אינטגרציה">
+            ${items.map((item, idx) => `
+              <button class="museum-integration-card ${item.id === activeId ? "active" : ""}"
+                      type="button"
+                      role="tab"
+                      aria-selected="${item.id === activeId ? "true" : "false"}"
+                      data-layer="${esc(item.concept?.stackLayer || item.error?.layerId || "")}"
+                      data-museum-integration-step="${esc(item.id)}"
+                      data-museum-search="${esc([item.flow.title, item.role.role, item.concept?.title, item.error?.error, item.phase.stage].join(" "))}">
+                <span>${String(idx + 1).padStart(2, "0")}</span>
+                <strong>${esc(item.flow.title)}</strong>
+                <small>${esc(item.role.role)}</small>
+              </button>
+            `).join("")}
+          </div>
+
+          <div class="museum-integration-panel-stack">
+            ${items.map((item) => `
+              <section class="museum-integration-panel ${item.id === activeId ? "active" : ""}"
+                       data-museum-integration-panel="${esc(item.id)}"
+                       ${item.id === activeId ? "" : "hidden"}>
+                <div class="museum-integration-panel-head">
+                  <div>
+                    <span class="museum-kicker">${esc(item.phase.stage)}</span>
+                    <h5>${esc(item.flow.title)} · ${esc(item.role.role)}</h5>
+                    <p>${esc(`${item.flow.detail}: ${item.flow.signal}`)}</p>
+                  </div>
+                  <a href="${esc(getMuseumExternalHref(item.config.route))}" target="_top">פתח אולם מקצועי</a>
+                </div>
+
+                <div class="museum-integration-flow">
+                  <div>
+                    <span>שלב מוצר</span>
+                    <strong>${esc(item.phase.stage)}</strong>
+                    <p>${esc(item.phase.goal)}</p>
+                  </div>
+                  <i>←</i>
+                  <div>
+                    <span>תפקיד אחראי</span>
+                    <strong>${esc(item.role.role)}</strong>
+                    <p>${esc(item.role.handoff)}</p>
+                  </div>
+                  <i>←</i>
+                  <div>
+                    <span>חוזה / מושג</span>
+                    <strong>${esc(item.concept?.title || item.flow.title)}</strong>
+                    <p>${esc(item.concept?.question || item.flow.signal)}</p>
+                  </div>
+                </div>
+
+                <div class="museum-integration-detail-grid">
+                  <div>
+                    <span>נשבר כאשר</span>
+                    <p>${esc(item.concept?.breaksWhen || item.error?.diagnosis || item.flow.signal)}</p>
+                  </div>
+                  <div>
+                    <span>סימפטום</span>
+                    <code>${esc(item.error?.error || "")}</code>
+                    <p>${esc(item.error?.action || "")}</p>
+                  </div>
+                  <div>
+                    <span>חוזה</span>
+                    <p>${esc(item.contract?.boundary?.contract || item.role.owns)}</p>
+                  </div>
+                </div>
+
+                <div class="museum-integration-actions">
+                  <a href="${esc(getMuseumExternalHref(item.config.route))}" target="_top">פתח תחום Full‑Stack</a>
+                  <a href="${esc(getMuseumExternalHref({ wing: "stack", stackLayer: item.error?.layerId || item.concept?.stackLayer }))}" target="_top">פתח שכבת שורש</a>
+                  ${item.concept ? `<a href="#museum-connection-${esc(item.concept.id)}">פתח כרטיס מושג</a>` : ""}
+                  ${item.concept ? renderMuseumVideoOpenButton(`concept-${item.concept.id}`, "פתח חומר לסרטון") : ""}
+                </div>
+              </section>
+            `).join("")}
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function renderMuseumTeamHandoffLab() {
+    const items = getMuseumTeamHandoffItems();
+    const activeId = items[0]?.id || "";
+    const searchText = items.map((item) => [
+      item.role.role,
+      item.role.owns,
+      item.role.during,
+      item.role.handoff,
+      item.responsibility?.does,
+      item.responsibility?.owns,
+      item.concept?.title,
+      item.concept?.breaksWhen,
+      item.config.label,
+    ].join(" ")).join(" ");
+    return `
+      <article class="museum-team-handoff-lab"
+               aria-label="Handoff Lab למסירות צוות Full-Stack"
+               data-museum-search="${esc(searchText)}">
+        <div class="museum-system-card-head">
+          <span>team</span>
+          <h4>Handoff Lab: מי מוסר מה למי</h4>
+        </div>
+        <p>
+          בחר תפקיד וראה את האחריות שלו בתוך מוצר: מה הוא מקבל מהתפקיד הקודם,
+          מה הוא בונה, מה הוא מוסר הלאה, ואיזה אולם במוזיאון מסביר את הגבול הטכני.
+        </p>
+
+        <div class="museum-team-summary">
+          <article>
+            <strong>${String(items.length)}</strong>
+            <span>תפקידי מוצר</span>
+          </article>
+          <article>
+            <strong>${String(PROGRAMMING_PRODUCT_LIFECYCLE.length)}</strong>
+            <span>שלבי עבודה</span>
+          </article>
+          <article>
+            <strong>${String(FULL_STACK_MUSEUM_FLOW.length)}</strong>
+            <span>תחנות Full‑Stack</span>
+          </article>
+        </div>
+
+        <div class="museum-team-stage">
+          <div class="museum-team-role-rail" role="tablist" aria-label="בחירת תפקיד צוות">
+            ${items.map((item, idx) => `
+              <button class="museum-team-role-card ${item.id === activeId ? "active" : ""}"
+                      type="button"
+                      role="tab"
+                      aria-selected="${item.id === activeId ? "true" : "false"}"
+                      data-museum-team-role="${esc(item.id)}">
+                <span>${String(idx + 1).padStart(2, "0")}</span>
+                <strong>${esc(item.role.role)}</strong>
+                <small>${esc(item.config.label)}</small>
+              </button>
+            `).join("")}
+          </div>
+
+          <div class="museum-team-panel-stack">
+            ${items.map((item) => `
+              <section class="museum-team-panel ${item.id === activeId ? "active" : ""}"
+                       data-museum-team-panel="${esc(item.id)}"
+                       ${item.id === activeId ? "" : "hidden"}>
+                <div class="museum-team-panel-head">
+                  <div>
+                    <span class="museum-kicker">${esc(item.config.label)}</span>
+                    <h5>${esc(item.role.role)}</h5>
+                    <p>${esc(item.responsibility?.does || item.role.during)}</p>
+                  </div>
+                  <a href="${esc(getMuseumExternalHref(item.config.route))}" target="_top">פתח אולם אחריות</a>
+                </div>
+
+                <div class="museum-team-handoff-flow" aria-label="זרימת מסירה לתפקיד ${esc(item.role.role)}">
+                  <div>
+                    <span>מקבל מ</span>
+                    <strong>${esc(item.previous?.role || "בעיה ומשתמש")}</strong>
+                    <p>${esc(item.previous?.handoff || PROGRAMMING_PRODUCT_LIFECYCLE[0]?.deliverable || item.role.owns)}</p>
+                  </div>
+                  <i>←</i>
+                  <div>
+                    <span>אחראי על</span>
+                    <strong>${esc(item.role.owns)}</strong>
+                    <p>${esc(item.role.during)}</p>
+                  </div>
+                  <i>←</i>
+                  <div>
+                    <span>מוסר אל</span>
+                    <strong>${esc(item.next?.role || "השקה ושיפור")}</strong>
+                    <p>${esc(item.role.handoff)}</p>
+                  </div>
+                </div>
+
+                <div class="museum-team-detail-grid">
+                  <div>
+                    <span>תחנת Full‑Stack</span>
+                    <strong>${esc(item.flow?.title || item.config.label)}</strong>
+                    <p>${esc(item.flow ? `${item.flow.detail}: ${item.flow.signal}` : item.role.owns)}</p>
+                  </div>
+                  <div>
+                    <span>גבול שנשבר</span>
+                    <strong>${esc(item.concept?.title || item.role.role)}</strong>
+                    <p>${esc(item.concept?.breaksWhen || item.responsibility?.owns || item.role.handoff)}</p>
+                  </div>
+                  <div>
+                    <span>הוכחת הבנה</span>
+                    <strong>מה למסור</strong>
+                    <p>${esc(item.role.handoff)}</p>
+                  </div>
+                </div>
+
+                <div class="museum-team-phase-map" aria-label="מה התפקיד עושה בכל שלב מוצר">
+                  ${item.phaseChecklist.map(({ phase, items: phaseItems }, phaseIdx) => `
+                    <article>
+                      <span>${String(phaseIdx + 1).padStart(2, "0")}</span>
+                      <strong>${esc(phase.stage)}</strong>
+                      <ul>${phaseItems.map((phaseItem) => `<li>${esc(phaseItem)}</li>`).join("")}</ul>
+                    </article>
+                  `).join("")}
+                </div>
+
+                <div class="museum-team-actions">
+                  <a href="${esc(getMuseumExternalHref({ wing: "product" }))}" target="_top">פתח אגף מוצר</a>
+                  <a href="${esc(getMuseumExternalHref(item.config.route))}" target="_top">פתח אולם מקצועי</a>
+                  ${item.concept ? `<a href="#museum-connection-${esc(item.concept.id)}">פתח מושג קשור</a>` : ""}
+                  ${item.concept ? renderMuseumVideoOpenButton(`concept-${item.concept.id}`, "פתח חומר לסרטון") : ""}
+                </div>
+              </section>
+            `).join("")}
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function renderMuseumProductCommandBoard() {
+    const firstPhaseId = PROGRAMMING_PRODUCT_LIFECYCLE[0]?.id || "";
+    const readinessTotals = PROGRAMMING_PRODUCT_LIFECYCLE.map((phase) => (
+      phase.product.length + phase.tech.length + phase.business.length + (phase.deliverable ? 1 : 0)
+    ));
+    const maxReadinessTotal = Math.max(...readinessTotals);
+    const decisionSignals = PROGRAMMING_PRODUCT_VERSION_DECISIONS.flatMap((decision) => decision.signals);
+    return `
+      <article class="museum-product-command-board" aria-label="Product Command Board מרעיון להשקה">
+        <div class="museum-product-board-head">
+          <div>
+            <span class="museum-kicker">Product Command Board</span>
+            <h4>מה עושים עכשיו בכל שלב של מוצר</h4>
+            <p>בחר שלב וקבל רשימת מוכנות לפי Product, Tech ו-Business, מסירות צוות, וסימני החלטה לגרסה הבאה.</p>
+          </div>
+          <div class="museum-product-board-score">
+            <strong>${String(PROGRAMMING_PRODUCT_LIFECYCLE.length)}</strong>
+            <span>שלבי עבודה</span>
+            <strong>${String(PROGRAMMING_PRODUCT_TEAM_SPLIT.length)}</strong>
+            <span>תפקידי צוות</span>
+          </div>
+        </div>
+
+        <div class="museum-product-phase-rail" role="tablist" aria-label="בחירת שלב מוצר">
+          ${PROGRAMMING_PRODUCT_LIFECYCLE.map((phase, idx) => `
+            <button class="${phase.id === firstPhaseId ? "active" : ""}"
+                    type="button"
+                    role="tab"
+                    aria-selected="${phase.id === firstPhaseId ? "true" : "false"}"
+                    data-museum-product-phase="${esc(phase.id)}">
+              <span>${String(idx + 1).padStart(2, "0")}</span>
+              ${esc(phase.stage)}
+            </button>
+          `).join("")}
+        </div>
+
+        <div class="museum-product-command-stage">
+          ${PROGRAMMING_PRODUCT_LIFECYCLE.map((phase, idx) => {
+            const readinessItems = [
+              { lane: "Product", items: phase.product },
+              { lane: "Tech", items: phase.tech },
+              { lane: "Business", items: phase.business },
+            ];
+            const readinessCount = readinessTotals[idx];
+            const readinessPercent = maxReadinessTotal ? Math.round((readinessCount / maxReadinessTotal) * 100) : 0;
+            return `
+              <section class="museum-product-command-panel ${phase.id === firstPhaseId ? "active" : ""}"
+                       data-museum-product-panel="${esc(phase.id)}"
+                       ${phase.id === firstPhaseId ? "" : "hidden"}>
+                <div class="museum-product-panel-brief">
+                  <span>${String(idx + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h5>${esc(phase.stage)}</h5>
+                    <p>${esc(phase.goal)}</p>
+                    <strong>${esc(phase.deliverable)}</strong>
+                  </div>
+                </div>
+
+                <div class="museum-product-readiness-meter" style="--museum-product-readiness: ${readinessPercent}%">
+                  <span></span>
+                  <em>${String(readinessCount)} פריטי מוכנות</em>
+                </div>
+
+                <div class="museum-product-readiness-grid">
+                  ${readinessItems.map((lane) => `
+                    <div>
+                      <strong>${esc(lane.lane)}</strong>
+                      <ul>${lane.items.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
+                    </div>
+                  `).join("")}
+                </div>
+              </section>`;
+          }).join("")}
+        </div>
+
+        <div class="museum-product-board-bottom">
+          <div class="museum-product-handoff-map">
+            <div class="museum-system-card-head">
+              <span>handoff</span>
+              <h4>מסירת עבודה בין תפקידים</h4>
+            </div>
+            ${PROGRAMMING_PRODUCT_TEAM_SPLIT.map((role) => `
+              <article>
+                <strong>${esc(role.role)}</strong>
+                <p>${esc(role.handoff)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="museum-product-decision-console">
+            <div class="museum-system-card-head">
+              <span>signals</span>
+              <h4>מתי לשנות גרסה או כיוון</h4>
+            </div>
+            <div class="museum-product-signal-cloud">
+              ${decisionSignals.map((signal) => `<span>${esc(signal)}</span>`).join("")}
+            </div>
+            ${PROGRAMMING_PRODUCT_VERSION_DECISIONS.map((decision) => `
+              <article>
+                <strong>${esc(decision.decision)}</strong>
+                <p>${esc(decision.when)}</p>
+              </article>
+            `).join("")}
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function renderMuseumProductBlueprintWing() {
+    const productFlowHTML = PROGRAMMING_PRODUCT_STACK_FLOW.map((step, idx) => `
+      <article class="pb-product-flow-node">
+        <span>${String(idx + 1).padStart(2, "0")}</span>
+        <strong>${esc(step.title)}</strong>
+        <small>${esc(step.layer)}</small>
+        <p>${esc(step.question)}</p>
+        <em>${esc(step.output)}</em>
+      </article>
+    `).join(`<b class="pb-product-arrow">←</b>`);
+
+    return `
+      <section class="museum-section museum-product-wing" id="programming-museum-product-blueprint">
+        <div class="museum-section-head">
+          <span>02</span>
+          <div>
+            <h3>אגף מוצר: מרעיון לגרסה בשוק</h3>
+            <p>האגף מחבר את המוזיאון לעבודה אמיתית: מה בודקים לפני קוד, איך מחלקים עבודה בזמן פיתוח, ומה עושים אחרי שהמוצר יוצא למשתמשים.</p>
+          </div>
+        </div>
+
+        <div class="museum-product-command">
+          <div>
+            <span class="fullstack-kicker">Business · UX · Client · API · Server · Data · Release</span>
+            <h3>מוצר לא מתחיל ב-React. הוא מתחיל בבעיה.</h3>
+            <p>
+              כל שכבה במוזיאון מקבלת תפקיד בתוך מוצר: השפה מתארת חוק, ה-UI מתאר פעולה,
+              ה-API מגדיר חוזה, השרת שומר אחריות, והמדידה אחרי השקה מחזירה אותנו לשיפור.
+            </p>
+          </div>
+          <div class="museum-product-focus-strip">
+            <button type="button" data-programming-museum-scroll="fullstack-museum-wing">פתח את אגף Full-Stack</button>
+            <button type="button" data-programming-museum-scroll="programming-museum-connection-system">ראה חוזים וקשרים</button>
+            <button type="button" data-programming-museum-scroll="programming-museum-quests">קח משימת ביקור</button>
+          </div>
+        </div>
+
+        <div class="pb-product-stage museum-product-stage" role="img" aria-label="תרשים מוצר Full-Stack מרעיון להשקה">
+          ${productFlowHTML}
+        </div>
+
+        <div class="museum-product-bridge-grid" aria-label="חיבור תרשים מוצר לשכבות Full-Stack">
+          ${FULL_STACK_MUSEUM_FLOW.map((step, idx) => `
+            <article class="museum-product-bridge-card">
+              <span>${String(idx + 1).padStart(2, "0")}</span>
+              <strong>${esc(step.title)}</strong>
+              <p>${esc(step.detail)}</p>
+              <small>${esc(step.signal)}</small>
+            </article>
+          `).join("")}
+        </div>
+
+        ${renderMuseumProductCommandBoard()}
+        ${renderMuseumTeamHandoffLab()}
+        ${renderMuseumIntegrationMatrix()}
+
+        <div class="museum-product-panels">
+          <article class="museum-product-panel">
+            <div class="museum-system-card-head">
+              <span>lifecycle</span>
+              <h4>מה עושים בכל שלב</h4>
+            </div>
+            <div class="pb-product-phase-grid">
+              ${PROGRAMMING_PRODUCT_LIFECYCLE.map((phase, idx) => `
+                <article class="pb-product-phase">
+                  <div class="pb-product-phase-head">
+                    <span>${String(idx + 1).padStart(2, "0")}</span>
+                    <h3>${esc(phase.stage)}</h3>
+                  </div>
+                  <p>${esc(phase.goal)}</p>
+                  <div class="pb-product-lanes">
+                    <div>
+                      <h4>Product</h4>
+                      <ul>${phase.product.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
+                    </div>
+                    <div>
+                      <h4>Tech</h4>
+                      <ul>${phase.tech.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
+                    </div>
+                    <div>
+                      <h4>Business</h4>
+                      <ul>${phase.business.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
+                    </div>
+                  </div>
+                  <strong>${esc(phase.deliverable)}</strong>
+                </article>
+              `).join("")}
+            </div>
+          </article>
+
+          <article class="museum-product-panel">
+            <div class="museum-system-card-head">
+              <span>team</span>
+              <h4>איך העבודה מתחלקת בזמן הפיתוח</h4>
+            </div>
+            <div class="pb-product-team-grid">
+              ${PROGRAMMING_PRODUCT_TEAM_SPLIT.map((role) => `
+                <article class="pb-product-team-card">
+                  <h3>${esc(role.role)}</h3>
+                  <dl class="pb-mini-dl">
+                    <div><dt>אחראי על</dt><dd>${esc(role.owns)}</dd></div>
+                    <div><dt>בזמן פיתוח</dt><dd>${esc(role.during)}</dd></div>
+                    <div><dt>מסירה לצוות</dt><dd>${esc(role.handoff)}</dd></div>
+                  </dl>
+                </article>
+              `).join("")}
+            </div>
+          </article>
+
+          <article class="museum-product-panel">
+            <div class="museum-system-card-head">
+              <span>versioning</span>
+              <h4>מתי לשדרג, להחליף חלק או לעצור</h4>
+            </div>
+            <div class="pb-product-decision-grid">
+              ${PROGRAMMING_PRODUCT_VERSION_DECISIONS.map((item) => `
+                <article class="pb-product-decision">
+                  <h3>${esc(item.decision)}</h3>
+                  <p>${esc(item.when)}</p>
+                  <div class="pb-product-signal-list">
+                    ${item.signals.map((signal) => `<span>${esc(signal)}</span>`).join("")}
+                  </div>
+                  <strong>${esc(item.action)}</strong>
+                </article>
+              `).join("")}
+            </div>
+          </article>
+        </div>
+      </section>`;
+  }
+
+  function renderMuseumConnectionHub(activeLayer = null, options = {}) {
     const layerId = activeLayer?.id || "";
     const isLayerPage = Boolean(activeLayer);
     const layerTitle = activeLayer?.blockTitle || "";
@@ -11112,7 +14507,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ? MUSEUM_ERROR_LAYER_MAP.filter((item) => item.layerId === layerId)
       : MUSEUM_ERROR_LAYER_MAP;
     const sectionId = isLayerPage ? "stack-layer-connection-system" : "programming-museum-connection-system";
-    const sectionNumber = isLayerPage ? "04" : "04";
+    const sectionNumber = options.number || (isLayerPage ? "04" : "04");
 
     return `
       <section class="museum-section museum-system-hub" id="${sectionId}">
@@ -11147,6 +14542,31 @@ document.addEventListener("DOMContentLoaded", () => {
           </article>
         </div>
 
+        <div class="museum-connection-tools" aria-label="חיפוש וסינון קשרים">
+          <label>
+            <span>חיפוש מושג, שגיאה או שיעור</span>
+            <input type="search" data-museum-connection-search placeholder="לדוגמה: API, state, 400, closure" />
+          </label>
+          <label>
+            <span>סינון שכבה</span>
+            <select data-museum-connection-layer>
+              <option value="">כל השכבות</option>
+              ${PROGRAMMING_STACK_LAYER_MUSEUMS.map((layer) => `
+                <option value="${esc(layer.id)}">${esc(layer.blockTitle)}</option>
+              `).join("")}
+            </select>
+          </label>
+          <strong data-museum-connection-count>${esc(relatedConcepts.length)}</strong>
+        </div>
+
+        ${renderMuseumXrayLab(layerId)}
+        ${renderMuseumContractInspector(layerId)}
+        ${renderMuseumPracticeLab(layerId)}
+        ${renderMuseumRootCauseRouter(layerId)}
+        ${renderMuseumCourseBridge(relatedConcepts, relatedErrors, layerId)}
+        ${renderMuseumIntegrationMatrix(layerId)}
+        ${renderMuseumKnowledgeAtlas(relatedConcepts, relatedErrors, layerId)}
+
         <div class="museum-system-flow-grid">
           ${renderMuseumFlowTrack(
             isLayerPage ? `X-Ray פעולה בתוך ${layerTitle}` : "X-Ray: לחיצה על כפתור בכל השכבות",
@@ -11172,13 +14592,17 @@ document.addEventListener("DOMContentLoaded", () => {
               <span>errors</span>
               <h4>טעויות שמגלות שכבה</h4>
             </div>
+            ${renderMuseumDebugLab(relatedErrors)}
             <div class="museum-system-error-list">
               ${(relatedErrors.length ? relatedErrors : MUSEUM_ERROR_LAYER_MAP).map((item) => `
-                <div>
+                <div class="museum-system-error-item"
+                     data-layer="${esc(item.layerId)}"
+                     data-museum-search="${esc([item.error, item.layer, item.diagnosis, item.action].join(" "))}">
                   <code>${esc(item.error)}</code>
                   <strong>${esc(item.layer)}</strong>
                   <p>${esc(item.diagnosis)}</p>
                   <small>${esc(item.action)}</small>
+                  <a href="${esc(getMuseumExternalHref({ wing: "stack", stackLayer: item.layerId }))}" target="_top">פתח אולם שורש הטעות</a>
                 </div>
               `).join("")}
             </div>
@@ -11293,12 +14717,14 @@ document.addEventListener("DOMContentLoaded", () => {
       { value: layer.rooms.length, label: "סרטונים" },
     ];
     const siblingLinks = PROGRAMMING_STACK_LAYER_MUSEUMS.map((item) => `
-      <a class="${item.id === layer.id ? "active" : ""}" href="/?standalone=museum&stackLayer=${esc(item.id)}&v=${esc(MUSEUM_STACK_LAYER_PAGE_VERSION)}">
+      <a class="${item.id === layer.id ? "active" : ""}" href="${esc(getMuseumStackLayerPageHref(item.id))}" target="_top">
         ${esc(item.blockTitle)}
       </a>
     `).join("");
 
     return `
+      ${renderMuseumWingNav("stack")}
+      ${renderMuseumFocusHeader("stack")}
       <section class="stack-layer-museum stack-layer-era-${esc(layer.era)}" id="stack-layer-museum-gate" style="--stack-accent: ${esc(layer.accent)};">
         <div class="stack-layer-hero">
           <div class="stack-layer-hero-copy">
@@ -11314,7 +14740,7 @@ document.addEventListener("DOMContentLoaded", () => {
               `).join("")}
             </div>
             <div class="museum-actions">
-              <a class="museum-primary-action stack-layer-action" href="/?standalone=museum&v=${esc(MUSEUM_STACK_LAYER_PAGE_VERSION)}">חזרה למוזיאון הראשי</a>
+              <a class="museum-primary-action stack-layer-action" href="${esc(getMuseumExternalHref({ wing: "home" }))}" target="_top">חזרה למוזיאון הראשי</a>
               ${layer.rooms.map((room) => `
                 <button class="museum-secondary-action" type="button" data-stack-layer-room="${esc(room.id)}">${esc(room.title)}</button>
               `).join("")}
@@ -11383,6 +14809,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="stack-layer-room-flow" aria-label="תרשים חדר">
                   ${(room.diagram || []).map((step) => `<span>${esc(step)}</span>`).join("<b>←</b>")}
                 </div>
+                ${renderMuseumMiniSimulator(`stack-${layer.id}-${room.id}`, room.diagram, "סימולטור התפתחות החדר")}
                 <div class="stack-layer-category-grid">
                   ${(room.categories || []).map((category) => `
                     <div>
@@ -11507,6 +14934,113 @@ document.addEventListener("DOMContentLoaded", () => {
       </svg>`;
   }
 
+  function splitSvgText(text, maxChars = 13, maxLines = 2) {
+    const words = String(text || "").split(/\s+/).filter(Boolean);
+    const lines = [];
+    let current = "";
+    words.forEach((word) => {
+      const next = current ? `${current} ${word}` : word;
+      if (next.length > maxChars && current) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = next;
+      }
+    });
+    if (current) lines.push(current);
+    if (!lines.length) return [""];
+    if (lines.length <= maxLines) return lines;
+    return [...lines.slice(0, maxLines - 1), `${lines.slice(maxLines - 1).join(" ").slice(0, maxChars - 1)}…`];
+  }
+
+  function renderLineageSvgText(text, x, y, options = {}) {
+    const lines = splitSvgText(text, options.maxChars || 13, options.maxLines || 2);
+    const fill = options.fill || "#f8fafc";
+    const size = options.size || 14;
+    const weight = options.weight || 900;
+    const lineHeight = options.lineHeight || 17;
+    return lines.map((line, idx) => `
+      <text x="${x}" y="${y + idx * lineHeight}" text-anchor="middle" fill="${fill}" font-size="${size}" font-weight="${weight}" direction="rtl">${esc(line)}</text>
+    `).join("");
+  }
+
+  function renderLineageTimelineSvg(lineage, index, options = {}) {
+    const milestones = Array.isArray(lineage.milestones) && lineage.milestones.length
+      ? lineage.milestones
+      : lineage.path.map((label) => ({ era: "", label, detail: "" }));
+    const compact = Boolean(options.compact);
+    const width = compact ? 920 : 1120;
+    const height = compact ? 390 : 500;
+    const railStart = compact ? 78 : 92;
+    const railEnd = width - railStart;
+    const railRange = railEnd - railStart;
+    const railBase = compact ? 198 : 244;
+    const chartScope = slugifyId(options.scope || "museum").replace(/^id-/, "");
+    const chartId = `lineageGradient-${chartScope}-${slugifyId(lineage.title).replace(/^id-/, "")}-${index}`;
+    const accent = lineage.accent || ["#fbbf24", "#22d3ee", "#a78bfa", "#34d399", "#fb7185"][index % 5];
+    const secondary = ["#22d3ee", "#a78bfa", "#34d399", "#fb7185", "#fbbf24"][index % 5];
+    const points = milestones.map((_, idx) => {
+      const x = milestones.length === 1 ? width / 2 : railStart + (railRange * idx) / (milestones.length - 1);
+      const railY = railBase + (idx % 2 === 0 ? -20 : 22);
+      const cardY = idx % 2 === 0 ? railY - (compact ? 128 : 150) : railY + (compact ? 60 : 70);
+      return { x: Math.round(x), railY, cardY };
+    });
+    const railPath = points.map((point, idx) => {
+      if (idx === 0) return `M ${point.x} ${point.railY}`;
+      const prev = points[idx - 1];
+      const mid = Math.round((prev.x + point.x) / 2);
+      return `C ${mid} ${prev.railY}, ${mid} ${point.railY}, ${point.x} ${point.railY}`;
+    }).join(" ");
+    const cardWidth = compact ? 126 : 144;
+    const cardHeight = compact ? 92 : 106;
+
+    return `
+      <svg class="lineage-timeline-svg${compact ? " compact" : ""}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(`תרשים שושלת: ${lineage.title}`)}">
+        <defs>
+          <linearGradient id="${chartId}" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stop-color="${accent}"/>
+            <stop offset="45%" stop-color="${secondary}"/>
+            <stop offset="100%" stop-color="#34d399"/>
+          </linearGradient>
+          <filter id="${chartId}-glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <rect x="24" y="32" width="${width - 48}" height="${height - 70}" rx="28" fill="rgba(2,6,23,0.76)" stroke="rgba(148,163,184,0.20)"/>
+        <g opacity="0.26">
+          ${Array.from({ length: compact ? 11 : 15 }, (_, idx) => {
+            const x = 48 + idx * ((width - 96) / (compact ? 10 : 14));
+            return `<line x1="${x}" y1="32" x2="${x}" y2="${height - 38}" stroke="rgba(148,163,184,0.22)" stroke-width="1"/>`;
+          }).join("")}
+          ${Array.from({ length: 4 }, (_, idx) => {
+            const y = 80 + idx * ((height - 160) / 3);
+            return `<line x1="24" y1="${y}" x2="${width - 24}" y2="${y}" stroke="rgba(148,163,184,0.18)" stroke-width="1"/>`;
+          }).join("")}
+        </g>
+        <path d="${railPath}" fill="none" stroke="url(#${chartId})" stroke-width="${compact ? 8 : 10}" stroke-linecap="round" filter="url(#${chartId}-glow)"/>
+        ${milestones.map((milestone, idx) => {
+          const point = points[idx];
+          const color = idx % 3 === 0 ? accent : idx % 3 === 1 ? secondary : "#a78bfa";
+          const labelY = point.cardY + 32;
+          const detailY = point.cardY + (compact ? 59 : 64);
+          return `
+            <g class="lineage-timeline-node">
+              <line x1="${point.x}" y1="${point.railY}" x2="${point.x}" y2="${point.cardY + (idx % 2 === 0 ? cardHeight : 0)}" stroke="${color}" stroke-width="3" stroke-dasharray="7 8" opacity="0.72"/>
+              <circle cx="${point.x}" cy="${point.railY}" r="${compact ? 16 : 18}" fill="#020617" stroke="${color}" stroke-width="5"/>
+              <circle cx="${point.x}" cy="${point.railY}" r="${compact ? 7 : 8}" fill="${color}" opacity="0.78"/>
+              <rect x="${point.x - cardWidth / 2}" y="${point.cardY}" width="${cardWidth}" height="${cardHeight}" rx="15" fill="rgba(15,23,42,0.94)" stroke="${color}" stroke-width="1.8"/>
+              <text x="${point.x}" y="${point.cardY + 21}" text-anchor="middle" fill="#fde68a" font-size="${compact ? 12 : 13}" font-weight="900" direction="rtl">${esc(milestone.era)}</text>
+              ${renderLineageSvgText(milestone.label, point.x, labelY, { maxChars: compact ? 11 : 12, maxLines: 2, size: compact ? 13 : 15, fill: "#ffffff" })}
+              ${renderLineageSvgText(milestone.detail, point.x, detailY, { maxChars: compact ? 14 : 16, maxLines: compact ? 2 : 3, size: compact ? 10 : 11, weight: 800, lineHeight: compact ? 13 : 14, fill: "#cbd5e1" })}
+            </g>`;
+        }).join("")}
+      </svg>`;
+  }
+
   function renderMuseumHallIllustration(hall, idx) {
     const palette = [
       { main: "#fbbf24", second: "#22d3ee", dim: "rgba(251,191,36,0.18)" },
@@ -11583,6 +15117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("programming-museum-content");
     if (!container) return;
 
+    const activeWing = getMuseumWingId();
     const stackLayerId = getMuseumStackLayerId();
     const stackLayerMuseum = PROGRAMMING_STACK_LAYER_MUSEUMS.find((layer) => layer.id === stackLayerId);
     const museumVideoEntries = getMuseumVideoEntries();
@@ -11594,6 +15129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
       bindMuseumVideoStudio(container, museumVideoEntries);
+      bindMuseumInteractions(container);
       return;
     }
 
@@ -11649,11 +15185,10 @@ document.addEventListener("DOMContentLoaded", () => {
       ),
       0,
     );
-    const fullStackVideoCount = FULL_STACK_MUSEUM_HALLS.length + fullStackRoomCount;
     const museumStats = [
       { value: PROGRAMMING_LANGUAGE_MUSEUM_HALLS.length + FULL_STACK_MUSEUM_HALLS.length, label: "אולמות" },
       { value: exhibitCount + fullStackArtifactCount, label: "מוצגים" },
-      { value: museumVideoEntries.length, label: "סרטוני NotebookLM" },
+      { value: PROGRAMMING_PRODUCT_LIFECYCLE.length, label: "שלבי מוצר" },
       { value: MUSEUM_CONCEPT_CONNECTIONS.length, label: "כרטיסי קשר" },
       { value: PROGRAMMING_LANGUAGE_LINEAGES.length, label: "שושלות" },
     ];
@@ -11661,10 +15196,12 @@ document.addEventListener("DOMContentLoaded", () => {
       { value: FULL_STACK_MUSEUM_HALLS.length, label: "אולמות Full-Stack" },
       { value: fullStackRoomCount, label: "חדרי תצוגה" },
       { value: fullStackCategoryCount, label: "קטגוריות" },
-      { value: fullStackVideoCount, label: "סרטונים" },
+      { value: PROGRAMMING_PRODUCT_TEAM_SPLIT.length, label: "תפקידי צוות" },
     ];
 
     container.innerHTML = `
+      ${renderMuseumWingNav(activeWing)}
+      ${renderMuseumFocusHeader(activeWing)}
       <section class="museum-stage" id="programming-museum-gate">
         <div class="museum-stage-lines" aria-hidden="true"></div>
         <div class="museum-hero">
@@ -11687,6 +15224,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <button class="museum-primary-action" type="button" data-programming-museum-scroll="fullstack-museum-wing">כניסה למוזיאון Full-Stack</button>
               <button class="museum-secondary-action" type="button" data-programming-museum-scroll="programming-museum-halls">אולמות שפות התכנות</button>
               <button class="museum-secondary-action" type="button" data-programming-museum-scroll="programming-museum-stack">ראה איך הכול נבנה</button>
+              <button class="museum-secondary-action" type="button" data-programming-museum-scroll="programming-museum-product-blueprint">מרעיון למוצר</button>
               <button class="museum-secondary-action" type="button" data-programming-museum-scroll="programming-museum-connection-system">מערכת הקשרים</button>
             </div>
           </div>
@@ -11705,6 +15243,8 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </section>
 
+      ${renderMuseumWingGate(activeWing)}
+
       <section class="museum-section museum-stack-section" id="programming-museum-stack">
         <div class="museum-section-head">
           <span>01</span>
@@ -11716,9 +15256,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="museum-svg-panel">${renderMuseumStackSvg()}</div>
       </section>
 
+      ${renderMuseumProductBlueprintWing()}
+
       <section class="museum-section" id="programming-museum-timeline">
         <div class="museum-section-head">
-          <span>02</span>
+          <span>03</span>
           <div>
             <h3>ציר זמן חי: מהטרנזיסטור ועד TypeScript</h3>
             <p>הציר מדגיש שהתקדמות בתכנות היא סדרה של שכבות שנבנו כדי להקל על בני אדם בלי לשבור את המכונה.</p>
@@ -11729,7 +15271,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <section class="museum-section" id="programming-museum-guided-routes">
         <div class="museum-section-head">
-          <span>03</span>
+          <span>04</span>
           <div>
             <h3>מצב ביקור מודרך</h3>
             <p>שלושה מסלולים קבועים עוזרים להיכנס למוזיאון לפי מטרה: בסיס, מבחן או בניית Full-Stack.</p>
@@ -11757,18 +15299,20 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </section>
 
-      ${renderMuseumConnectionHub()}
+      ${renderMuseumAiEvolutionWing()}
+
+      ${renderMuseumConnectionHub(null, { number: "06" })}
 
       ${renderMuseumVideoStudioHub(museumVideoEntries, {
         id: "programming-museum-video-studio",
-        number: "05",
+        number: "07",
         title: "מסמך NotebookLM חי לכל סרטוני המוזיאון",
         intro: "כל 63 הסרטונים נפתחים בחלון מלא בתוך דף המוזיאון: חומר רקע, ידע מקדים, סקריפט, פרומפט והוראות בחירה ב-NotebookLM.",
       })}
 
       <section class="museum-section fullstack-museum-wing" id="fullstack-museum-wing">
         <div class="museum-section-head">
-          <span>06</span>
+          <span>08</span>
           <div>
             <h3>מוזיאון Full-Stack: ממסך חי למערכת שעובדת באמת</h3>
             <p>אגף ייחודי שמראה למה כל שכבה נולדה, מה היא פתרה, ולאן היא התפתחה בתוך מוצר אמיתי.</p>
@@ -11808,6 +15352,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <em>${esc(FULL_STACK_ERA_LABELS[domain.era] || "תחום")}</em>
               </div>
               <h3>${esc(hall.title)}</h3>
+              <a class="museum-card-page-link" href="${esc(hall.route)}" target="_top">פתח תחום זה כדף נפרד</a>
               <p class="fullstack-summary">${esc(hall.summary)}</p>
               <div class="fullstack-domain-banner">
                 <span>${esc(domain.profession)}</span>
@@ -11836,10 +15381,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         <strong>${esc(FULL_STACK_ERA_LABELS[room.era] || "תצוגה")}</strong>
                       </div>
                       <h4>${esc(room.title)}</h4>
+                      <a class="museum-card-page-link compact" href="${esc(room.route)}" target="_top">פתח חדר כדף ממוקד</a>
                       <p class="fullstack-room-what">${esc(room.what)}</p>
                       <div class="fullstack-room-diagram" aria-label="תרשים זרימת החדר">
                         ${(room.diagram || []).map((step) => `<span>${esc(step)}</span>`).join("<b>←</b>")}
                       </div>
+                      ${renderMuseumMiniSimulator(`fullstack-${hall.id}-${room.id}`, room.diagram, "סימולטור זרימת התחום")}
                       <div class="fullstack-room-category-grid">
                         ${(room.categories || []).map((category) => `
                           <div>
@@ -11911,7 +15458,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <section class="museum-section" id="programming-museum-halls">
         <div class="museum-section-head">
-          <span>07</span>
+          <span>09</span>
           <div>
             <h3>אולמות המוזיאון</h3>
             <p>כל אולם הוא תחנת למידה: פריצת דרך, אבני בניין, והחיבור לשאלות שהתלמיד יפגוש בפורטל.</p>
@@ -11927,6 +15474,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   <strong>${esc(hall.period)}</strong>
                 </div>
                 <h3>${esc(hall.title)}</h3>
+                <a class="museum-card-page-link" href="${esc(hall.route)}" target="_top">פתח אולם זה כדף נפרד</a>
                 <p class="museum-thesis">${esc(hall.thesis)}</p>
                 <p class="museum-visit">${esc(hall.visit)}</p>
                 <div class="museum-hall-insights">
@@ -11983,7 +15531,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <section class="museum-section" id="programming-museum-value-map">
         <div class="museum-section-head">
-          <span>08</span>
+          <span>10</span>
           <div>
             <h3>מפת ערך: מה כל משפחת שפות קונה ומה היא עולה</h3>
             <p>המפה מחברת אולמות לפשרה המרכזית שלהם: שליטה, קריאות, בטיחות, ניידות או מהירות פיתוח.</p>
@@ -12007,18 +15555,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <section class="museum-section" id="programming-museum-lineages">
         <div class="museum-section-head">
-          <span>09</span>
+          <span>11</span>
           <div>
             <h3>שושלות רעיונות</h3>
             <p>אותו רעיון עובר בין שפות, מחליף שם, ומשנה פשרה. זה החיבור שמונע לימוד מנותק של טכנולוגיות.</p>
           </div>
         </div>
         <div class="museum-lineage-grid">
-          ${PROGRAMMING_LANGUAGE_LINEAGES.map((lineage) => `
+          ${PROGRAMMING_LANGUAGE_LINEAGES.map((lineage, idx) => `
             <article class="museum-lineage-card">
-              <h3>${esc(lineage.title)}</h3>
+              <div class="museum-lineage-card-head">
+                <span>${String(idx + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>${esc(lineage.title)}</h3>
+                  <p>${esc(lineage.subtitle || "")}</p>
+                </div>
+              </div>
+              <div class="museum-lineage-visual">${renderLineageTimelineSvg(lineage, idx)}</div>
               <div class="museum-lineage-path">${lineage.path.map((step) => `<span>${esc(step)}</span>`).join("<b>←</b>")}</div>
+              <div class="museum-lineage-detail-grid">
+                ${(lineage.milestones || []).map((milestone) => `
+                  <div class="museum-lineage-milestone">
+                    <span>${esc(milestone.era)}</span>
+                    <strong>${esc(milestone.label)}</strong>
+                    <p>${esc(milestone.detail)}</p>
+                  </div>
+                `).join("")}
+              </div>
               <p>${esc(lineage.lesson)}</p>
+              <p class="museum-lineage-takeaway">${esc(lineage.diagramTakeaway || "")}</p>
               <strong>${esc(lineage.today)}</strong>
             </article>
           `).join("")}
@@ -12027,7 +15592,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <section class="museum-section" id="programming-museum-quests">
         <div class="museum-section-head">
-          <span>10</span>
+          <span>12</span>
           <div>
             <h3>משימות ביקור לתלמיד</h3>
             <p>החוויה לא נועדה רק לצפייה. היא מכוונת את התלמיד לחבר היסטוריה, יעילות וקוד בפועל.</p>
@@ -12046,6 +15611,8 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </section>
 
+      ${renderMuseumPassportWing()}
+
       ${renderMuseumVideoModalShell()}`;
 
     container.querySelectorAll("[data-programming-museum-target]").forEach((btn) => {
@@ -12060,7 +15627,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
+    applyMuseumFocusedWing(container, activeWing);
     bindMuseumVideoStudio(container, museumVideoEntries);
+    bindMuseumInteractions(container);
+    focusMuseumWing(activeWing);
   }
 
   function openProgrammingBasics() {
@@ -12094,12 +15664,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function openProgrammingMuseum() {
     hideAllViews();
     currentLessonId = null;
+    const activeWing = getMuseumWingId();
     const stackLayerId = getMuseumStackLayerId();
     const stackLayerMuseum = PROGRAMMING_STACK_LAYER_MUSEUMS.find((layer) => layer.id === stackLayerId);
-    currentLessonTitle.textContent = stackLayerMuseum ? `🏛️ ${stackLayerMuseum.title}` : "🏛️ מוזיאון שפות התכנות";
+    const wing = getMuseumWingDefinitions().find((item) => item.id === activeWing);
+    currentLessonTitle.textContent = stackLayerMuseum ? `🏛️ ${stackLayerMuseum.title}` : `🏛️ ${wing?.title || "מוזיאון שפות התכנות"}`;
     currentLessonDesc.textContent = stackLayerMuseum
       ? `מוזיאון נפרד לבלוק ${stackLayerMuseum.blockTitle}: למה השכבה נוצרה, מה היא פתרה ולאן היא התפתחה.`
-      : "מסע חזותי מהחשמל והטרנזיסטור ועד שפות, runtimes ו-frameworks. המטרה: להבין למה הטכנולוגיות נבנו ומה המחיר של כל שכבה.";
+      : (wing?.learningGoal || "מסע חזותי מהחשמל והטרנזיסטור ועד שפות, runtimes ו-frameworks. המטרה: להבין למה הטכנולוגיות נבנו ומה המחיר של כל שכבה.");
     if (programmingMuseumView) programmingMuseumView.style.display = "block";
     openProgrammingMuseumBtn?.classList.add("active");
     renderProgrammingMuseum();
@@ -12560,6 +16132,113 @@ document.addEventListener("DOMContentLoaded", () => {
     return "לא ידוע";
   }
 
+  function blueprintPct(part, total) {
+    if (!total) return 0;
+    return Math.round((part / total) * 1000) / 10;
+  }
+
+  function blueprintClampPct(value) {
+    return Math.max(0, Math.min(100, Math.round(value * 10) / 10));
+  }
+
+  function blueprintConceptMatches(item, conceptKeys, lessonIds) {
+    if (!item || !item.conceptKey) return false;
+    if (conceptKeys.has(item.conceptKey)) return true;
+    return Array.from(lessonIds).some((lessonId) => item.conceptKey.startsWith(`${lessonId}::`));
+  }
+
+  function blueprintQuestionList(kind) {
+    const curated = Array.isArray(window.QUESTIONS_BANK?.[kind]) ? window.QUESTIONS_BANK[kind] : [];
+    const seeded = Array.isArray(window.QUESTIONS_BANK_SEEDED?.[kind]) ? window.QUESTIONS_BANK_SEEDED[kind] : [];
+    return [...curated, ...seeded];
+  }
+
+  function blueprintCountConceptPractice(items, conceptKeys, lessonIds) {
+    return (Array.isArray(items) ? items : []).filter((item) =>
+      blueprintConceptMatches(item, conceptKeys, lessonIds)
+    ).length;
+  }
+
+  function blueprintCountPairPractice(lessonIds) {
+    return (window.PAIR_MATCH_GAMES || [])
+      .filter((game) => lessonIds.has(game.lesson))
+      .reduce((sum, game) => sum + (Array.isArray(game.pairs) ? game.pairs.length : 0), 0);
+  }
+
+  function blueprintCountCapstonePractice(conceptKeys, lessonIds) {
+    return capstoneProjects().filter((project) => {
+      const projectKeys = new Set(project.conceptKeys || []);
+      const recommendedAfter = new Set(project.recommendedAfter || []);
+      const hasConcept = Array.from(conceptKeys).some((key) => projectKeys.has(key));
+      const hasLesson = Array.from(lessonIds).some((lessonId) => recommendedAfter.has(lessonId));
+      return hasConcept || hasLesson;
+    }).length;
+  }
+
+  function blueprintModuleReadiness(module) {
+    const lessonIds = new Set(module.lessonIds || []);
+    const conceptKeys = new Set(module.conceptKeys || []);
+    const existingLessons = Array.from(lessonIds).filter((lessonId) =>
+      (window.LESSONS_DATA || []).some((lesson) => lesson.id === lessonId)
+    );
+    const existingConcepts = Array.from(conceptKeys).filter((key) => !!findConceptByKeyLoose(key));
+    const counts = {
+      mc: blueprintCountConceptPractice(blueprintQuestionList("mc"), conceptKeys, lessonIds),
+      fill: blueprintCountConceptPractice(blueprintQuestionList("fill"), conceptKeys, lessonIds),
+      trace: blueprintCountConceptPractice(window.QUESTIONS_TRACE || [], conceptKeys, lessonIds),
+      miniBuild: blueprintCountConceptPractice(window.QUESTIONS_BUILD || [], conceptKeys, lessonIds),
+      bugHunt: blueprintCountConceptPractice(window.QUESTIONS_BUG || [], conceptKeys, lessonIds),
+      pairMatchPairs: blueprintCountPairPractice(lessonIds),
+      capstone: blueprintCountCapstonePractice(conceptKeys, lessonIds),
+    };
+    const statusScore = module.status === "covered" ? 100 : module.status === "partial" ? 50 : 0;
+    const questionCount = counts.mc + counts.fill;
+    const questionTarget = Math.max(conceptKeys.size * 2, lessonIds.size ? 2 : 0);
+    const activityCount = counts.trace + counts.miniBuild + counts.bugHunt + counts.pairMatchPairs + counts.capstone;
+    const dimensions = {
+      status: statusScore,
+      lessons: lessonIds.size ? blueprintPct(existingLessons.length, lessonIds.size) : 0,
+      concepts: conceptKeys.size ? blueprintPct(existingConcepts.length, conceptKeys.size) : 0,
+      questions: questionTarget ? blueprintClampPct((questionCount / questionTarget) * 100) : 0,
+      activities: lessonIds.size ? (activityCount > 0 ? 100 : 0) : 0,
+    };
+    const readiness = blueprintClampPct(
+      dimensions.status * 0.2 +
+        dimensions.lessons * 0.2 +
+        dimensions.concepts * 0.2 +
+        dimensions.questions * 0.25 +
+        dimensions.activities * 0.15,
+    );
+    return { readiness, dimensions, counts };
+  }
+
+  function blueprintReadinessClass(readiness, status) {
+    if (readiness >= 90 && status === "covered") return "green";
+    if (readiness >= 50) return "amber";
+    return "red";
+  }
+
+  function renderBlueprintReadiness(module) {
+    const report = blueprintModuleReadiness(module);
+    const readinessClass = blueprintReadinessClass(report.readiness, module.status);
+    return `
+      <div class="blueprint-readiness ${readinessClass}" aria-label="מדדי מוכנות מודול">
+        <span><strong>${report.readiness}%</strong> מוכנות</span>
+        <span>שיעורים ${report.dimensions.lessons}%</span>
+        <span>מושגים ${report.dimensions.concepts}%</span>
+        <span>שאלות ${report.dimensions.questions}%</span>
+        <span>פעילות ${report.dimensions.activities}%</span>
+      </div>
+    `;
+  }
+
+  function blueprintAverageReadiness(blueprint) {
+    const modules = blueprint.modules || [];
+    if (!modules.length) return 0;
+    const total = modules.reduce((sum, module) => sum + blueprintModuleReadiness(module).readiness, 0);
+    return Math.round((total / modules.length) * 10) / 10;
+  }
+
   function renderBlueprintLessonLinks(module) {
     const buttons = (module.lessonIds || []).map((lessonId) => {
       const lesson = (window.LESSONS_DATA || []).find((item) => item.id === lessonId);
@@ -12610,7 +16289,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (stats) {
       stats.innerHTML = `
-        <span><strong>${blueprints.length}</strong> מסלולים</span>
+        <span><strong>${blueprints.length}</strong> מסלול SVCollege פעיל</span>
         <span><strong>${moduleCount}</strong> מודולים</span>
         <span><strong>${gapCount}</strong> פערים</span>
         <span><strong>${sourceCount}</strong> מקורות</span>
@@ -12626,6 +16305,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const covered = (blueprint.modules || []).filter((module) => module.status === "covered").length;
       const total = (blueprint.modules || []).length || 1;
       const coverage = Math.round((covered / total) * 100);
+      const readiness = blueprintAverageReadiness(blueprint);
       return `
         <article class="blueprint-card glass-panel" id="blueprint-${esc(blueprint.id)}">
           <div class="blueprint-card-head">
@@ -12635,8 +16315,9 @@ document.addEventListener("DOMContentLoaded", () => {
               <p>${esc(blueprint.audience)}</p>
             </div>
             <div class="blueprint-score">
-              <strong>${coverage}%</strong>
-              <span>כיסוי מלא</span>
+              <strong>${readiness}%</strong>
+              <span>מוכנות משוקללת</span>
+              <small>${coverage}% מודולים מכוסים</small>
             </div>
           </div>
 
@@ -12651,6 +16332,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   <h4>${esc(module.title)}</h4>
                   <span class="blueprint-status">${blueprintStatusLabel(module.status)}</span>
                 </div>
+                ${renderBlueprintReadiness(module)}
                 <p>${esc(module.examFocus)}</p>
                 <div class="blueprint-links" aria-label="שיעורים בפורטל">
                   ${renderBlueprintLessonLinks(module)}
@@ -12700,14 +16382,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setBlueprintsContextTree() {
     setContextTree(
-      "יישור קורסים",
+      "יישור SVCollege",
       courseBlueprints().map((blueprint) => ({
         id: blueprint.id,
         label: blueprint.provider,
         meta: `${(blueprint.modules || []).length}`,
         open: false,
         action: () => scrollBasicsSection(`blueprint-${blueprint.id}`),
-        children: [
+          children: [
           {
             id: `${blueprint.id}-sources`,
             label: "מקורות",
@@ -12717,7 +16399,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ...(blueprint.modules || []).map((module, index) => ({
             id: `${blueprint.id}-module-${index + 1}`,
             label: module.title,
-            meta: blueprintStatusLabel(module.status),
+            meta: `${blueprintStatusLabel(module.status)} · ${blueprintModuleReadiness(module).readiness}%`,
             action: () => scrollBasicsSection(`blueprint-${blueprint.id}-module-${index + 1}`),
           })),
         ],
@@ -12729,14 +16411,22 @@ document.addEventListener("DOMContentLoaded", () => {
   function openBlueprints() {
     hideAllViews();
     currentLessonId = null;
-    currentLessonTitle.textContent = "🧾 יישור קורסים ומבחנים";
+    currentLessonTitle.textContent = "🧾 יישור SVCollege — AI & Full Stack";
     currentLessonDesc.textContent =
-      "מיפוי לפי מקורות ציבוריים וארכיטיפ bootcamp: מה מכוסה בפורטל, מה חלקי, ומה צריך להשלים לפני מבחן או פרויקט.";
+      "יישור הקורסים בפורטל הזה תקף רק למסלול SVCollege — קורס AI & Full Stack. הפורטל הוא פורטל Full-Stack; קורסים אחרים יטופלו בפורטלים נפרדים בהמשך.";
     if (blueprintsView) blueprintsView.style.display = "block";
     openBlueprintsBtn?.classList.add("active");
     recordLearningEvidence("view", { source: "course-blueprints" });
     renderBlueprints();
     setBlueprintsContextTree();
+    if (typeof window.ensureSeededBank === "function" && !(window.QUESTIONS_BANK?._seededMerged)) {
+      window.ensureSeededBank().then(() => {
+        if (blueprintsView && blueprintsView.style.display !== "none") {
+          renderBlueprints();
+          setBlueprintsContextTree();
+        }
+      }).catch(() => {});
+    }
     scrollToTop();
     sidebar.classList.remove("open");
   }
@@ -14913,7 +18603,97 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // =========== P1.5.1 — Mock Exam Mode ===========
   const MX_HISTORY_KEY = "lumenportal:examHistory:v1";
+  const SVCOLLEGE_EXAM_MODULES = [
+    {
+      id: "html_css_foundations",
+      label: "HTML/CSS Foundations",
+      filter: (k) => /^lesson_html_css_foundations::/i.test(k) || /^lesson_25::responsive design$/i.test(k),
+    },
+    {
+      id: "css_responsive",
+      label: "CSS Responsive + Tailwind",
+      filter: (k) => /^lesson_25::(Tailwind CSS|utility classes|responsive design|grid|flex)$/i.test(k),
+    },
+    {
+      id: "js_dom",
+      label: "JavaScript + DOM",
+      filter: (k) => /^(lesson_(1[1-3])|workbook_taskmanager)::/i.test(k),
+    },
+    {
+      id: "tooling_es6",
+      label: "ES6 + Tooling",
+      filter: (k) =>
+        /^lesson_tooling_git::/i.test(k) ||
+        /^(lesson_11::arrow function|lesson_15::Promise|react_blueprint::Testing Strategies)$/i.test(k),
+    },
+    {
+      id: "node_express",
+      label: "Node + Express + REST",
+      filter: (k) => /^lesson_(16|17|18)::/i.test(k),
+    },
+    {
+      id: "database",
+      label: "Database",
+      filter: (k) => /^lesson_20::/i.test(k),
+    },
+    {
+      id: "auth",
+      label: "Auth + Security",
+      filter: () => false,
+    },
+    {
+      id: "react_frontend",
+      label: "React Frontend",
+      filter: (k) => /^lesson_2[1-5]::/i.test(k),
+    },
+    {
+      id: "typescript_react",
+      label: "TypeScript + React",
+      filter: (k) => /^lesson_2[6-7]::/i.test(k),
+    },
+    {
+      id: "design_system",
+      label: "Design Systems",
+      filter: (k) => /^(lesson_25::Tailwind CSS|react_blueprint::Component Architecture)$/i.test(k),
+    },
+    {
+      id: "nextjs",
+      label: "Next.js",
+      filter: () => false,
+    },
+    {
+      id: "devops",
+      label: "DevOps + CI/CD",
+      filter: (k) => /^react_blueprint::Testing Strategies$/i.test(k),
+    },
+    {
+      id: "nestjs",
+      label: "Nest.js",
+      filter: () => false,
+    },
+    {
+      id: "ai_tools",
+      label: "AI Developer Tools",
+      filter: (k) => /^ai_development::/i.test(k),
+    },
+    {
+      id: "ai_engineering",
+      label: "AI Engineering",
+      filter: () => false,
+    },
+  ];
+
   const EXAM_TEMPLATES = [
+    {
+      id: "svcollege_fullstack",
+      name: "🎓 SVCollege Full Stack + AI",
+      desc: "55 שאלות, 90 דקות. דוגם את כל מודולי SVCollege שיש להם כיסוי בפורטל ומסמן gaps בנפרד.",
+      durationMin: 90,
+      distribution: { mc: 36, fill: 12, trace: 5, bug: 2 },
+      filter: (k) => SVCOLLEGE_EXAM_MODULES.some((module) => module.filter(k)),
+      moduleGroups: SVCOLLEGE_EXAM_MODULES,
+      releaseGate: "Finish Line 1",
+    },
     {
       id: "react_full",
       name: "⚛️ React מלא",
@@ -14998,6 +18778,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const sourceFill = (window.QUESTIONS_BANK?.fill || []).filter((q) => template.filter(q.conceptKey || ""));
     const sourceTrace = (window.QUESTIONS_BANK?.trace || []).filter((q) => template.filter(q.conceptKey || ""));
     const sourceBug = (window.QUESTIONS_BANK?.bug || []).filter((q) => template.filter(q.conceptKey || ""));
+    const sourcesByKind = {
+      mc: sourceMC,
+      fill: sourceFill,
+      trace: sourceTrace,
+      bug: sourceBug,
+    };
 
     function sample(arr, n) {
       if (!arr || !arr.length) return [];
@@ -15005,41 +18791,80 @@ document.addEventListener("DOMContentLoaded", () => {
       return shuffled.slice(0, Math.min(n, shuffled.length));
     }
 
-    const picked = [
-      ...sample(sourceMC, template.distribution.mc).map((q) => ({ kind: "mc", q })),
-      ...sample(sourceFill, template.distribution.fill).map((q) => ({ kind: "fill", q })),
-      ...sample(sourceTrace, template.distribution.trace).map((q) => ({ kind: "trace", q })),
-      ...sample(sourceBug, template.distribution.bug).map((q) => ({ kind: "bug", q })),
-    ];
+    const picked = [];
+    const used = new Set();
+    const remaining = { ...template.distribution };
+
+    function qid(kind, q) {
+      return `${kind}:${q.id}`;
+    }
+
+    function take(kind, list, n) {
+      const available = sample(list.filter((q) => !used.has(qid(kind, q))), n);
+      available.forEach((q) => {
+        used.add(qid(kind, q));
+        picked.push({ kind, q });
+        remaining[kind] = Math.max(0, (remaining[kind] || 0) - 1);
+      });
+    }
+
+    if (Array.isArray(template.moduleGroups) && template.moduleGroups.length) {
+      template.moduleGroups.forEach((module) => {
+        const kinds = ["mc", "fill", "trace", "bug"];
+        const kind = kinds.find((candidateKind) => {
+          if ((remaining[candidateKind] || 0) <= 0) return false;
+          return sourcesByKind[candidateKind].some((q) => module.filter(q.conceptKey || "") && !used.has(qid(candidateKind, q)));
+        });
+        if (!kind) return;
+        take(kind, sourcesByKind[kind].filter((q) => module.filter(q.conceptKey || "")), 1);
+      });
+    }
+
+    take("mc", sourceMC, remaining.mc || 0);
+    take("fill", sourceFill, remaining.fill || 0);
+    take("trace", sourceTrace, remaining.trace || 0);
+    take("bug", sourceBug, remaining.bug || 0);
 
     return rng.shuffle(picked);
   }
 
+  function examModuleForQuestion(question, template = mxState.template) {
+    const key = question?.conceptKey || "";
+    if (!key || !Array.isArray(template?.moduleGroups)) return null;
+    return template.moduleGroups.find((module) => module.filter(key)) || null;
+  }
+
   function startMockExam(template) {
-    const questions = composeMockExam(template);
-    if (!questions.length) {
-      alert("לא נמצאו שאלות לתבנית זו. ייתכן שהמאגר עדיין ריק.");
+    const begin = () => {
+      const questions = composeMockExam(template);
+      if (!questions.length) {
+        alert("לא נמצאו שאלות לתבנית זו. ייתכן שהמאגר עדיין ריק.");
+        return;
+      }
+
+      mxState.template = template;
+      mxState.questions = questions;
+      mxState.answers = {};
+      mxState.currentIdx = 0;
+      mxState.startTime = Date.now();
+      mxState.deadline = Date.now() + template.durationMin * 60 * 1000;
+
+      document.getElementById("mx-settings").style.display = "none";
+      document.getElementById("mx-result").style.display = "none";
+      document.getElementById("mx-runner").style.display = "block";
+
+      // Hide Pocket FAB during exam (no cheating with saved concepts)
+      if (typeof window.pocketIsHidden === "function") window.pocketIsHidden(true);
+
+      renderMxQuestion();
+      startMxTimer();
+    };
+
+    if (typeof window.ensureSeededBank === "function" && !(window.QUESTIONS_BANK?._seededMerged)) {
+      window.ensureSeededBank().then(begin).catch(begin);
       return;
     }
-    // Lazy-load seeded bank if needed
-    if (window.ensureSeededBank) window.ensureSeededBank();
-
-    mxState.template = template;
-    mxState.questions = questions;
-    mxState.answers = {};
-    mxState.currentIdx = 0;
-    mxState.startTime = Date.now();
-    mxState.deadline = Date.now() + template.durationMin * 60 * 1000;
-
-    document.getElementById("mx-settings").style.display = "none";
-    document.getElementById("mx-result").style.display = "none";
-    document.getElementById("mx-runner").style.display = "block";
-
-    // Hide Pocket FAB during exam (no cheating with saved concepts)
-    if (typeof window.pocketIsHidden === "function") window.pocketIsHidden(true);
-
-    renderMxQuestion();
-    startMxTimer();
+    begin();
   }
 
   function startMxTimer() {
@@ -15214,6 +19039,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof window.pocketIsHidden === "function") window.pocketIsHidden(false);
     // Score the exam
     const breakdown = { mc: { right: 0, total: 0 }, fill: { right: 0, total: 0 }, trace: { right: 0, total: 0 }, bug: { right: 0, total: 0 } };
+    const moduleBreakdown = {};
     const wrongConcepts = new Set();
     const wrongRecords = new Map();
 
@@ -15242,8 +19068,16 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }
       }
+      const moduleInfo = examModuleForQuestion(q);
+      if (moduleInfo) {
+        if (!moduleBreakdown[moduleInfo.id]) {
+          moduleBreakdown[moduleInfo.id] = { label: moduleInfo.label, right: 0, total: 0 };
+        }
+        moduleBreakdown[moduleInfo.id].total++;
+      }
       if (correct) {
         breakdown[kind].right++;
+        if (moduleInfo) moduleBreakdown[moduleInfo.id].right++;
       } else {
         const key = primaryConceptKeyForQuestion({ question: q });
         if (key) {
@@ -15272,6 +19106,7 @@ document.addEventListener("DOMContentLoaded", () => {
       date: new Date().toISOString(),
       score, totalRight, totalQs,
       breakdown,
+      moduleBreakdown,
       durationSec,
       autoTimeout: !!autoTimeout,
     };
@@ -15305,6 +19140,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return `<div class="mx-result-row"><span>${label}</span><span class="mx-result-row-score">${b.right}/${b.total} (${pct}%)</span></div>`;
       }).join("");
 
+    const moduleBreakdownRows = Object.values(record.moduleBreakdown || {})
+      .filter((b) => b.total > 0)
+      .map((b) => {
+        const pct = Math.round((b.right / b.total) * 100);
+        return `<div class="mx-result-row"><span>${esc(b.label)}</span><span class="mx-result-row-score">${b.right}/${b.total} (${pct}%)</span></div>`;
+      })
+      .join("");
+
     const weakHtml = wrongConcepts.length
       ? `<div class="mx-result-weak">
            <h4>📚 מושגים לחיזוק — נוספו אוטומטית לחולשות</h4>
@@ -15337,6 +19180,14 @@ document.addEventListener("DOMContentLoaded", () => {
         <h4>פירוק לפי סוג שאלה</h4>
         ${breakdownHtml}
       </div>
+      ${
+        moduleBreakdownRows
+          ? `<div class="mx-result-breakdown">
+              <h4>פירוק לפי מודולי SVCollege</h4>
+              ${moduleBreakdownRows}
+            </div>`
+          : ""
+      }
       ${weakHtml}
       <div class="mx-result-actions">
         <button class="km-btn-mini primary" id="mx-result-new">📝 מבחן חדש</button>

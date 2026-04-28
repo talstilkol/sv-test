@@ -18,7 +18,7 @@
 
 | Phase | בוצע / סך | אחוז |
 |---|:-:|:-:|
-| Priority 0: SVCollege Readiness + Site Health | 4/21 | **19%** 🚨 |
+| Finish Line 1: SVCollege Full Portal Coverage | 31/73 | **42%** 🚨 |
 | Phase 0: Status (DONE) | 25/25 | 100% ✅ |
 | Phase 1: Foundation | 60/62 | **97%** 🚧 |
 | Phase 2: Core Learning | 68/70 | **97%** 🚧 |
@@ -27,11 +27,15 @@
 | Phase 5: Quality Governance + Rebaseline | 22/39 | **56%** 🚧 |
 | Phase 6: Learning Evidence + Productization | 19/36 | **53%** 🚧 |
 | Phase 7: Learning OS + Outcome Scale | 0/48 | 0% |
-| **TOTAL** | **238/370** | **64%** |
+| **TOTAL** | **262/422** | **62%** |
 
-### Priority Override — 2026-04-28
+### Finish Line 1 Override — 2026-04-28
 
-היעד הראשון עכשיו הוא **כיסוי מלא של חומר SVCollege + אתר עובד בכל החלקים המרכזיים**. כל הרחבות המוזיאון, AI, קהילה, mobile, Teacher Dashboard ופיצ'רי פרימיום הן עדיפות שנייה עד ש-Priority 0 ירוק.
+היעד הראשון עכשיו הוא **כיסוי מלא של חומר SVCollege בכל הפורטל: כל השיעורים, כל מצבי התרגול, כל הטאבים, כל התפריטים, וכל מסכי הסיכום**. כל הרחבות המוזיאון, AI, קהילה, mobile, Teacher Dashboard ופיצ'רי פרימיום הן עדיפות שנייה עד ש-Finish Line 1 ירוק.
+
+### Parallel Work Mode — 2026-04-28
+
+רכבת המיזוג המלאה מוקפאת כרגע. **SQL/ORM, Auth/Security ו-Next.js כבר חוברו ל-Finish Line 1**, ורק **המוזיאון** נשאר פעיל במקביל. העבודה השוטפת כאן מוגבלת למשימות לא מתנגשות עם קבצי המוזיאון: דוחות, readiness, quality gates, תכנון, ותוכן SVCollege שנמצא מחוץ לבעלות המוזיאון.
 
 ### Phase 1 Detailed:
 - W1 Architecture: ✅ 14/14 (lazy load + per-card + Vitest baseline; current suite 127 tests)
@@ -60,41 +64,130 @@
 
 ---
 
-## 🚨 Priority 0 — SVCollege Readiness + Site Health
+## 🚨 Finish Line 1 — SVCollege Full Portal Coverage
 
 > מקור קנוני: `data/course_blueprints.js` + `SVCOLLEGE_COVERAGE_REPORT.md`  
-> DoD: כל חומר SVCollege ממופה, כל gap מקבל שיעור/תרגול/מבחן, וכל חלקי האתר עוברים smoke בדפדפן.
+> DoD: כל חומר SVCollege ממופה ומכוסה בשיעור, תרגול, מבחן, ניווט וטאב; כל חלק באתר נפתח בלי שגיאת runtime; אין הרחבת Priority 2 לפני שהשער הזה ירוק.
+
+### Finish Line 1 Definition of Done
+
+- כל מודול ציבורי של SVCollege מופיע ב-blueprint עם `covered` / `partial` / `gap`.
+- כל מודול `covered` או `partial` מחובר לשיעור אמיתי, מושגים, תרגול ומבחן מדומה.
+- כל `gap` מקבל שיעור יעד, תרגול יעד, וטאב/תפריט שבו הוא יופיע.
+- כל שיעור בפורטל כולל: מטרות, דרישות קדם, מושגים, הסבר פשוט, קוד, שאלות, תרגול, ומיפוי לטאב.
+- כל טאב ראשי וכל תת-תפריט צד נפתח בדסקטופ ובמובייל בלי console errors.
+- כל מצב תרגול עובד: שיעורים, מאמן ידע, לימוד מותאם, מבחן מדומה, Code Trace, Bug Hunt, Mini Build, Flashcards, Pair-Match, Gap Matrix, Course Blueprints.
+- מבחן SVCollege ייעודי דוגם את כל המודולים ולא רק JS/React/Node.
+- CI כולל smoke לאתר, בדיקות תוכן, שאלות, feature coverage, `npm audit`, build, Vitest, ו-No-Math.random.
+
+### P-1.0 — Finish Line Governance
+- [V] P-1.0.1 — Declare SVCollege full portal coverage as Finish Line 1
+- [V] P-1.0.2 — Mark museum / community / premium / AI Tutor production as Priority 2 until Finish Line 1 is green
+- [V] P-1.0.3 — Add Finish Line 1 to summary table and execution plan
+- [V] P-1.0.4 — Add PR checklist rule: no Priority 2 feature unless it directly closes SVCollege/site-health risk
+- [V] P-1.0.5 — Add weekly SVCollege readiness report command/script
+- [V] P-1.0.6 — Scope Course Blueprints / יישור קורסים to SVCollege AI & Full Stack only; defer other schools to separate future portals
 
 ### P-1.1 — Canonical SVCollege Coverage Map
 - [V] P-1.1.1 — Verify current public SVCollege course source
 - [V] P-1.1.2 — Update `svcollege_fullstack_ai` blueprint as primary target
 - [V] P-1.1.3 — Add `SVCOLLEGE_COVERAGE_REPORT.md`
 - [V] P-1.1.4 — Add regression test for SVCollege module mapping
+- [V] P-1.1.5 — Add automatic coverage percentage per SVCollege module
+- [V] P-1.1.6 — Add UI indicator: Covered / Partial / Gap inside Course Blueprints tab
 
-### P-1.2 — Site Health Before Expansion
-- [ ] P-1.2.1 — Add Playwright smoke suite for every top tab
-- [ ] P-1.2.2 — Add smoke suite for right-side tree menus and submenus
-- [ ] P-1.2.3 — Add smoke suite for Trainer, Study, Mock Exam, Bug Hunt, Mini Build, Code Trace
-- [ ] P-1.2.4 — Add desktop + mobile viewport screenshots for critical flows
-- [ ] P-1.2.5 — Fix every runtime console error found by smoke tests
+### P-1.2 — All SVCollege Lessons Coverage
+- [V] P-1.2.1 — Create full lesson inventory: existing lessons + missing SVCollege modules
+- [V] P-1.2.2 — Add HTML/CSS foundations lesson: semantic HTML, forms, selectors, box model, accessibility basics
+- [V] P-1.2.3 — Add Git/tooling lesson: GitHub workflow, branch/PR, ESLint, Prettier, npm scripts
+- [V] P-1.2.4 — Add PostgreSQL + ORM lesson: schema, relations, migrations, Prisma/Drizzle CRUD
+- [V] P-1.2.5 — Add Auth lesson: JWT, cookies, sessions, provider auth, security boundaries
+- [V] P-1.2.6 — Add Next.js lesson: routing, layouts, server/client components, API routes, SEO, deploy
+- [ ] P-1.2.7 — Add DevOps lesson: Vercel, Docker, Docker Compose, CI/CD, testing workflow
+- [ ] P-1.2.8 — Add Nest.js bridge lesson: modules, controllers, providers, dependency injection
+- [ ] P-1.2.9 — Add AI Engineering lesson: Vercel AI SDK, OpenAI API, LangChain, RAG, Agents, Fine-tuning boundaries
+- [ ] P-1.2.10 — Add prerequisites, glossary entries, 7-level explanations and code examples to every new SVCollege lesson
 
-### P-1.3 — Missing SVCollege Curriculum
-- [ ] P-1.3.1 — Add HTML/CSS foundations lesson: semantic HTML, forms, selectors, box model, accessibility basics
-- [ ] P-1.3.2 — Add Git/tooling lesson: GitHub workflow, branch/PR, ESLint, Prettier, npm scripts
-- [ ] P-1.3.3 — Add PostgreSQL + ORM lesson: schema, relations, migrations, Prisma/Drizzle CRUD
-- [ ] P-1.3.4 — Add Auth lesson: JWT, cookies, sessions, provider auth, security boundaries
-- [ ] P-1.3.5 — Add Next.js lesson: routing, layouts, server/client components, API routes, SEO, deploy
-- [ ] P-1.3.6 — Add DevOps lesson: Vercel, Docker, Docker Compose, CI/CD, testing workflow
-- [ ] P-1.3.7 — Add Nest.js bridge lesson: modules, controllers, providers, dependency injection
-- [ ] P-1.3.8 — Add AI Engineering lesson: Vercel AI SDK, OpenAI API, LangChain, RAG, Agents, Fine-tuning boundaries
+### P-1.3 — All Lessons Practice Coverage
+- [ ] P-1.3.1 — Ensure every SVCollege lesson has MC + Fill coverage
+- [ ] P-1.3.2 — Ensure every SVCollege lesson has at least one Code Trace where code flow matters
+- [ ] P-1.3.3 — Ensure every SVCollege lesson has at least one Mini Build where implementation matters
+- [ ] P-1.3.4 — Ensure every backend / DB / auth lesson has Bug Hunt coverage
+- [ ] P-1.3.5 — Add per-distractor feedback for all SVCollege mock-exam MC questions
+- [ ] P-1.3.6 — Add weak-concept repair routing for every new SVCollege module
+- [ ] P-1.3.7 — Add flashcards and SRS hooks for every new SVCollege lesson
+- [ ] P-1.3.8 — Add capstone links for every SVCollege domain: frontend, backend, DB, auth, Next, AI
+- [ ] P-1.3.9 — Add question-quality gate scoped to SVCollege readiness
+- [ ] P-1.3.10 — Add remediation queue for SVCollege gaps before expanding non-core content
 
-### P-1.4 — SVCollege Assessment Readiness
-- [ ] P-1.4.1 — Add SVCollege-specific mock exam template
-- [ ] P-1.4.2 — Ensure every SVCollege module has MC + Fill coverage
-- [ ] P-1.4.3 — Ensure every SVCollege gap module has at least one Mini Build or Trace once lesson is added
-- [ ] P-1.4.4 — Add SVCollege readiness dashboard metric to Course Blueprints tab
+### P-1.4 — All Portal Tabs Must Support SVCollege
+- [ ] P-1.4.1 — Lessons tab: every SVCollege lesson appears in right-side tree and concept jumper
+- [ ] P-1.4.2 — Adaptive trainer / Study tab: can pick every SVCollege concept and gap module
+- [V] P-1.4.3 — Mock Exam tab: add SVCollege-specific template and scoring breakdown by module
+- [ ] P-1.4.4 — Knowledge Map / Gap Matrix tabs: show SVCollege readiness by topic and lesson
+- [ ] P-1.4.5 — Code Trace / Bug Hunt / Mini Build tabs: include SVCollege module filters
+- [ ] P-1.4.6 — Flashcards / Pair-Match tabs: include cards/games for all new SVCollege lessons
+- [ ] P-1.4.7 — Quick Guide / Grandma Knowledge / Concept Cards: include the missing SVCollege modules
+- [ ] P-1.4.8 — Course Blueprints tab: add readiness dashboard, gaps, next action and exam readiness
+- [ ] P-1.4.9 — Reports / History / Export / PDF flows: include SVCollege readiness status
+- [ ] P-1.4.10 — Mobile drawer and right-side tree: expose all SVCollege lessons and tabs without overflow/overlap
 
-**Priority 0 Total: 4/21 🚨**
+### P-1.5 — Site Health Gate For Every Tab
+- [ ] P-1.5.1 — Add Playwright smoke suite for every top tab
+- [ ] P-1.5.2 — Add smoke suite for every right-side tree branch and submenu
+- [ ] P-1.5.3 — Add smoke suite for Trainer, Study, Mock Exam, Bug Hunt, Mini Build, Code Trace
+- [ ] P-1.5.4 — Add desktop + mobile viewport screenshots for critical flows
+- [ ] P-1.5.5 — Fail CI on runtime console errors in critical flows
+- [ ] P-1.5.6 — Add accessibility smoke: focus order, modal close, keyboard navigation, contrast
+- [ ] P-1.5.7 — Add PWA/offline smoke for core SVCollege flow
+- [ ] P-1.5.8 — Fix every runtime/UI issue found before adding Priority 2 features
+
+### P-1.6 — SVCollege Assessment Readiness
+- [V] P-1.6.1 — Add SVCollege-specific mock exam template
+- [V] P-1.6.2 — Add SVCollege module scoring: HTML/CSS, JS, Tooling, Backend, DB, Auth, React, TS, Next, DevOps, Nest, AI
+- [ ] P-1.6.3 — Add exam review screen: weak modules, prerequisite rewind, recommended lesson path
+- [ ] P-1.6.4 — Add deterministic question sampler that covers every SVCollege module
+- [ ] P-1.6.5 — Add SVCollege final-project readiness rubric
+- [ ] P-1.6.6 — Add teacher/student export summary for SVCollege readiness
+- [ ] P-1.6.7 — Add pass/fail gate: no "ready" badge until all required modules are covered
+
+### P-1.7 — Finish Line Release Gate
+- [ ] P-1.7.1 — Finish Line 1 cannot close while any SVCollege module is `gap`
+- [ ] P-1.7.2 — Finish Line 1 cannot close while any top tab has failing smoke coverage
+- [ ] P-1.7.3 — Finish Line 1 cannot close while SVCollege mock exam misses a module
+- [ ] P-1.7.4 — Finish Line 1 cannot close while CI, build, validation or audit is red
+
+### P-1.8 — Question Learning Contract + Prerequisite Capsules
+- [ ] P-1.8.1 — Add `questionPrerequisites` contract for every SVCollege mock-exam question: required concepts, required terms, and assumed prior knowledge
+- [ ] P-1.8.2 — Show a right-side "מה צריך לדעת כדי לענות?" panel beside every hard question
+- [ ] P-1.8.3 — Add mini explanations for required terms: bit, byte, value, key, variable, array, object, function, request, response, schema, token
+- [ ] P-1.8.4 — If a learner misses an advanced question, route first to the weakest prerequisite capsule before retesting
+- [ ] P-1.8.5 — Add validation: no SVCollege hard question can ship without prerequisite and side-explanation metadata
+- [ ] P-1.8.6 — Add browser smoke for prerequisite panel in lesson quiz, trainer and mock exam
+
+### P-1.9 — SVCollege Command Center
+- [ ] P-1.9.1 — Add a single SVCollege dashboard tab/section: readiness, release blockers, next actions, weak modules and tab-health status
+- [V] P-1.9.2 — Merge readiness sources into one report: blueprint coverage, lesson inventory, question coverage, feature coverage, quiz-key coverage and smoke status
+- [V] P-1.9.3 — Add "red first" work queue sorted by release blockers: Auth, SQL/ORM, Next.js, DevOps, Nest.js, AI Engineering
+- [V] P-1.9.4 — Add parallel-session board with file ownership, branch name, model/intelligence level and merge order
+- [V] P-1.9.5 — Add evidence links for every module: data file, questions, trace/build/bug items, tests and browser verification
+- [V] P-1.9.6 — Add no-evidence gate: `covered` is forbidden without lesson + practice + tab + test evidence
+
+### P-1.10 — Lesson Source + Asset Registry
+- [V] P-1.10.1 — Move raw lesson assets from repo root into `lessons/`
+- [V] P-1.10.2 — Create `lessons/manifest.json` with filename, type, source lesson, SVCollege module, imported status and linked data file
+- [V] P-1.10.3 — Add a script that fails if new PDF/MP4/DOCX/PPTX lesson assets are left in the root folder
+- [V] P-1.10.4 — Link every new SVCollege lesson to its raw source assets and generated summaries
+- [V] P-1.10.5 — Add "source coverage" column to `SVCOLLEGE_LESSON_INVENTORY.md`
+
+### P-1.11 — Real Learner Outcome Loop
+- [ ] P-1.11.1 — Add a 10-student pilot protocol: baseline exam, 7-day use, final exam, qualitative feedback
+- [ ] P-1.11.2 — Track D1/D7 retention, module mastery, average wrong-to-correct recovery time and repeated misconception rate
+- [ ] P-1.11.3 — Add "student got stuck" feedback button with current lesson, question, prerequisite and viewport metadata
+- [ ] P-1.11.4 — Add teacher-facing weekly SVCollege progress export before building any broad teacher dashboard
+- [ ] P-1.11.5 — Define promotion rule: a module is "ready for students" only after content, practice, smoke and first-user feedback pass
+
+**Finish Line 1 Total: 31/73 🚨**
 
 ---
 
@@ -537,7 +630,7 @@
 
 ### W24 — Curriculum Coverage + Capstone Projects
 - [ ] P6.3.1 — Close question coverage: every concept has ≥3 MC, ≥2 Fill/Code, ≥1 trace/build/bug where relevant
-- [V] P6.3.2 — Add course blueprint mapping: svcollege / John Bryce / Sela / generic bootcamp
+- [V] P6.3.2 — Active course blueprint mapping is SVCollege AI & Full Stack only; John Bryce / Sela / generic bootcamp deferred to separate future portals
 - [V] P6.3.3 — Add capstone project track: Task Manager, Movie App, Budget Manager, Auth CRUD, Dashboard
 - [V] P6.3.4 — Add project rubrics: requirements, edge cases, tests, code review checklist
 - [ ] P6.3.5 — Add "from zero to feature" guided builds for React, Node, Next and TypeScript
@@ -696,8 +789,8 @@
                    - Updated total baseline to 232/349
 2026-04-28 18:11 — W24 Course Blueprint alignment shipped:
                    - Added "יישור קורסים" tab with side-tree navigation
-                   - Added public-source mappings for SVCollege, John Bryce, Sela, and generic bootcamp
-                   - Linked modules to real lessons/concepts, capstones, mock exam tags, gaps and next actions
+                   - Initial public-source mappings included SVCollege, John Bryce, Sela, and generic bootcamp
+                   - Later scoped active portal alignment to SVCollege only; other mappings moved to deferred future portals
                    - Updated total baseline to 234/349
 2026-04-28 09:57 — AUDIT-FIX-6 browser re-verification:
                    - Per-card refresh verified: Report Weak updates Array card in place
@@ -922,6 +1015,97 @@
                    - Updated SVCollege blueprint to match public AI & Full Stack modules
                    - Added SVCOLLEGE_COVERAGE_REPORT.md and svcollege-readiness regression tests
                    - All museum/AI/community expansions are explicitly secondary until SVCollege readiness is green
+2026-04-28 21:45 — Finish Line 1 expanded:
+                   - Replaced Priority 0 with Finish Line 1: SVCollege Full Portal Coverage
+                   - Added DoD across all lessons, all tabs, all practice modes, all menus and site-health gates
+                   - Expanded first-line backlog to 50 measurable tasks before secondary expansions
+2026-04-28 22:05 — SVCollege readiness automation shipped:
+                   - Added `scripts/report_svcollege_readiness.js` with automatic module readiness percentages
+                   - Added `npm run svcollege:readiness*` commands and CI metadata gate
+                   - Added PR checklist gate preventing Priority 2 work before SVCollege/site-health closure
+                   - Generated `SVCOLLEGE_READINESS_REPORT.md/json`: 70% average, 6/15 covered, 4 gaps
+2026-04-28 22:18 — Course Blueprints readiness UI shipped:
+                   - Course Blueprints tab now shows weighted readiness per course and per module
+                   - Each module displays lesson/concept/question/activity percentages beside Covered/Partial/Gap status
+                   - Right-side tree metadata includes module status + readiness percentage
+2026-04-28 22:35 — SVCollege mock exam shipped:
+                   - Added `svcollege_fullstack` exam template with 55 questions and 90-minute timer
+                   - Mock exam now loads the seeded bank before composing questions
+                   - SVCollege results include module-level scoring breakdown beside question-kind scoring
+                   - Course blueprint mock exam tags now expose `svcollege_fullstack`
+2026-04-28 22:48 — SVCollege lesson inventory shipped:
+                   - Added `SVCOLLEGE_LESSON_INVENTORY.md`
+                   - Mapped existing lessons, partial modules and required new lesson IDs
+                   - Defined per-new-lesson DoD for content, practice, tabs, mock exam and CI
+2026-04-28 23:05 — HTML/CSS Foundations lesson shipped:
+                   - Added `data/lesson_html_css_foundations.js` with 8 concepts and lesson quiz
+                   - Added curated MC, Fill, Code Trace and Mini Build practice for the new lesson
+                   - Wired lesson into loader, offline cache, quiz-key report, readiness report and SVCollege blueprint
+                   - SVCollege HTML/CSS module moved from Partial to Covered; readiness now 70.7%, 7/15 covered
+2026-04-28 23:25 — Tooling & Git lesson shipped:
+                   - Added `data/lesson_tooling_git.js` with Git, repo, working tree, staging, commit, branch, PR, GitHub workflow, npm scripts, ESLint and Prettier
+                   - Added curated MC, Fill, Code Trace and Mini Build practice for tooling workflow
+                   - Wired lesson into loader, offline cache, quiz-key report, prerequisites, readiness report and SVCollege mock exam module
+                   - SVCollege ES6/Git/ESLint/Prettier module moved from Partial to Covered; readiness now 71.3%, 8/15 covered
+2026-04-28 23:40 — Course alignment scope corrected:
+                   - `COURSE_BLUEPRINTS` now exposes only `svcollege_fullstack_ai` for the active portal
+                   - John Bryce, Sela and generic bootcamp mappings moved to `DEFERRED_COURSE_PORTAL_BLUEPRINTS`
+                   - Top tab label changed to `יישור SVCollege`; this portal remains a Full-Stack portal focused on SVCollege coverage
+2026-04-28 23:55 — Forward plan upgraded:
+                   - Added Learning Contract + prerequisite capsules for hard questions
+                   - Added SVCollege Command Center, lesson source registry and real learner outcome loop
+                   - Recorded that raw lesson assets now live under `lessons/`
+2026-04-29 00:05 — Parallel session prompt board shipped:
+                   - Added `SVCOLLEGE_PARALLEL_SESSION_PROMPTS.md`
+                   - Includes exact timing, prompts, ownership, DoD, tests and final-report format for Sessions 0-8
+                   - Marked P-1.9.4 done; Finish Line 1 now 20/73
+2026-04-29 00:18 — Lesson source registry shipped:
+                   - Added `lessons/manifest.json` for 36 raw lesson assets
+                   - Added `npm run lessons:assets` root-asset guard and `tests/lesson-assets.test.js`
+                   - Added source coverage to `SVCOLLEGE_LESSON_INVENTORY.md`; Finish Line 1 now 23/73
+2026-04-29 00:26 — New lesson source links shipped:
+                   - Added `sourceAssets`, `generatedSummaries` and `sourceCoverageNote` to the HTML/CSS and Tooling/Git bridge lessons
+                   - Extended `tests/lesson-assets.test.js` to verify lesson-level source links against `lessons/manifest.json`
+                   - Marked P-1.10.4 done; Finish Line 1 now 24/73
+2026-04-29 00:34 — SVCollege Command Center report shipped:
+                   - Added `scripts/report_svcollege_command_center.js`
+                   - Added `SVCOLLEGE_COMMAND_CENTER.md/json` with readiness, red-first queue, feature gates, source assets and parallel sessions
+                   - Added `npm run svcollege:command-center:*` and `tests/svcollege-command-center.test.js`
+                   - Marked P-1.9.2 done; Finish Line 1 now 25/73
+2026-04-29 00:42 — Command Center evidence matrix shipped:
+                   - Added module-level evidence links for lesson files, question banks, activity banks, tests and browser-smoke ownership
+                   - Locked the red-first release queue order in tests
+                   - Marked P-1.9.3 + P-1.9.5 done; Finish Line 1 now 27/73
+2026-04-28 latest — Limited parallel mode set:
+                   - Full merge train paused by user instruction
+                   - Only SQL/ORM and Museum sessions continue in parallel
+                   - Current session restricted to non-SQL/non-museum governance, reports and quality gates
+2026-04-28 latest — No-evidence gate shipped:
+                   - Command Center now fails strict mode if any `covered` SVCollege module lacks lesson + practice + tab + test evidence
+                   - Added tab evidence and dedicated regression coverage
+                   - Marked P-1.9.6 done; Finish Line 1 now 28/73
+2026-04-28 latest — Museum lineage diagrams shipped:
+                   - Added lightweight inline SVG timeline diagrams for every programming-language lineage
+                   - Reused the same diagrams in `אבני בסיס → מוזיאון` and the standalone `מוזיאון` top tab
+                   - Added milestone detail grids without external media or new runtime dependency
+2026-04-28 latest — SQL/ORM integrated into SVCollege Finish Line:
+                   - Wired `lesson_sql_orm` into index, content loader, offline cache, readiness and command center evidence
+                   - Database module moved from Partial to Covered: MongoDB/Mongoose + SQL/PostgreSQL/Prisma/Drizzle
+                   - SQL practice now includes 18 MC, 10 Fill, 3 Trace, 3 Mini Build, 2 Bug Hunt and prerequisites
+                   - SVCollege readiness now 72%, 9/15 covered, 6 release blockers
+                   - Marked P-1.2.4 done; Finish Line 1 now 29/73
+2026-04-28 latest — Auth/Security integrated into SVCollege Finish Line:
+                   - Added `lesson_auth_security` for authentication, authorization, sessions, secure cookies, JWT, OAuth/provider auth and security boundaries
+                   - Auth practice now includes 28 MC, 10 Fill, 3 Trace, 3 Mini Build, 3 Bug Hunt and prerequisites
+                   - Auth module moved from Gap to Covered
+                   - SVCollege readiness now 78.7%, 10/15 covered, 5 release blockers
+                   - Marked P-1.2.5 done; Finish Line 1 now 30/73
+2026-04-28 latest — Next.js integrated into SVCollege Finish Line:
+                   - Added `lesson_nextjs` for App Router, routing, layouts/pages, server/client components, route handlers/API routes, server actions, SSR/SSG/ISR, metadata, SEO, image optimization and Vercel deploy
+                   - Next.js practice now includes 28 MC, 10 Fill, 3 Trace, 3 Mini Build, 3 Bug Hunt and prerequisites
+                   - Next.js module moved from Gap to Covered
+                   - SVCollege readiness now 85.3%, 11/15 covered, 4 release blockers
+                   - Marked P-1.2.6 done; Finish Line 1 now 31/73
 ```
 
 ---

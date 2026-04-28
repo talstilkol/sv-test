@@ -20,17 +20,17 @@ describe("Feature coverage report", () => {
     expect(byId.antiPatterns.status).toBe("Done");
 
     expect(byId.warStories.implemented).toBe(31);
-    expect(byId.miniBuilds.implemented).toBe(21);
-    expect(byId.codeTrace.implemented).toBe(85);
+    expect(byId.miniBuilds.implemented).toBe(23);
+    expect(byId.codeTrace.implemented).toBe(89);
     expect(byId.capstones.implemented).toBe(5);
     expect(byId.capstones.target).toBe(5);
     expect(byId.capstones.status).toBe("Done");
     expect(byId.capstones.details.rubricItems).toBeGreaterThanOrEqual(100);
 
-    expect(byId.courseBlueprints.implemented).toBe(4);
-    expect(byId.courseBlueprints.target).toBe(4);
+    expect(byId.courseBlueprints.implemented).toBe(1);
+    expect(byId.courseBlueprints.target).toBe(1);
     expect(byId.courseBlueprints.status).toBe("Done");
-    expect(byId.courseBlueprints.details.modules).toBeGreaterThanOrEqual(20);
+    expect(byId.courseBlueprints.details.modules).toBe(15);
   });
 
   it("keeps full-bank distractor feedback marked partial until all MC questions are covered", () => {

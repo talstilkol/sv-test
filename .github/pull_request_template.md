@@ -20,11 +20,18 @@ What can the learner or maintainer do after this PR that they could not do befor
 
 - [ ] `npm run validate:strict`
 - [ ] `npm run coverage:features:strict`
+- [ ] `npm run svcollege:readiness:strict`
 - [ ] Feature evidence gate passes for any promoted `Done` module
 - [ ] `npm run quality:questions:strict`
 - [ ] `npm run qa:questions:strict`
 - [ ] `npm test -- --run`
 - [ ] Browser/manual verification attached or described
+
+## Finish Line 1 — SVCollege Gate
+
+- [ ] This PR directly improves SVCollege coverage, assessment readiness, or site health.
+- [ ] If it is Priority 2 work, it is explicitly deferred and does not promote museum / community / AI production / mobile ahead of unresolved SVCollege gaps.
+- [ ] `npm run svcollege:readiness` was reviewed when curriculum, practice, tabs, exams, reports, or coverage metadata changed.
 
 ## Rollback
 

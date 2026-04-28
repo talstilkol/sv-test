@@ -7,6 +7,8 @@ const DATA_FILES = [
   "data/lesson11.js",
   "data/lesson12.js",
   "data/lesson13.js",
+  "data/lesson_html_css_foundations.js",
+  "data/lesson_tooling_git.js",
   "data/lesson15.js",
   "data/lesson16.js",
   "data/lesson17.js",
