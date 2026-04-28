@@ -22,17 +22,17 @@
 | TypeScript + React | Covered | `lesson_26`, `lesson_27` | Add SV-style project questions |
 | shadcn/UI + design systems | Partial | Tailwind + component architecture | Add shadcn/UI, accessible primitives, design system build |
 | Next.js SSR/API/SEO | Covered | `lesson_nextjs` covers App Router, routing, layouts/pages, server/client components, route handlers/API routes, server actions, SSR/SSG/ISR, metadata, SEO, image optimization, Vercel deploy, MC/Fill/Trace/Mini Build/Bug Hunt and prerequisites | Maintain practice, mock-exam coverage and tab health |
-| DevOps: Vercel/Docker/CI-CD/testing | Partial | CI exists; testing strategy exists | Add deploy/Docker/CI-CD student-facing lessons |
-| Nest.js + DI | Gap | None | Add Nest.js bridge after Express |
+| DevOps: Vercel/Docker/CI-CD/testing | Covered | `lesson_devops_deploy` covers production readiness, env vars, Vercel deploy/preview, build command, Docker, Dockerfile, image/container, Docker Compose, services, volumes, health checks, CI/CD, smoke tests and release checklist; includes MC/Fill/Trace/Mini Build/Bug Hunt and prerequisites | Maintain practice, mock-exam coverage and tab health |
+| Nest.js + DI | Covered | `lesson_nestjs` covers modules, controllers, providers/services, dependency injection, decorators, DTO, validation pipe, guards, pipes, middleware, interceptors, exception filters, repository pattern and testing module; includes MC/Fill/Trace/Mini Build/Bug Hunt and prerequisites | Maintain practice, mock-exam coverage and tab health |
 | AI coding tools | Covered | `ai_development` covers Cursor, Windsurf, prompt engineering, AI review | Add workflow drills |
 | AI engineering: Vercel AI/OpenAI/LangChain/RAG/Agents/Fine-tuning | Gap | None | Add AI Engineering track |
 
 ## Immediate Priority Queue
 
 1. Build a site-health smoke suite for every top tab and critical modal.
-2. Add backend/production lessons: DevOps/Docker/CI-CD, Nest.js.
-3. Add AI Engineering only after the web/full-stack base is covered.
-4. Add shadcn/UI design-system bridge after the release blockers are lower-risk.
+2. Add AI Engineering track for Vercel AI SDK, OpenAI, LangChain, RAG, Agents and fine-tuning boundaries.
+3. Add shadcn/UI design-system bridge after the AI Engineering gap is closed or explicitly deferred.
+4. Harden all-tab smoke coverage for the now-covered SVCollege modules.
 5. Harden the dedicated SVCollege mock exam so its sampler guarantees every module above.
 
 ## Definition Of Done For SVCollege Coverage

@@ -15,6 +15,11 @@ const DATA_FILES = [
   "data/lesson18.js",
   "data/lesson19.js",
   "data/lesson20.js",
+  "data/lesson_sql_orm.js",
+  "data/lesson_auth_security.js",
+  "data/lesson_nextjs.js",
+  "data/lesson_nestjs.js",
+  "data/lesson_devops_deploy.js",
   "data/lesson21.js",
   "data/lesson22.js",
   "data/lesson23.js",
@@ -28,6 +33,11 @@ const DATA_FILES = [
   "data/react_blueprint.js",
   "content-loader.js",
   "data/prerequisites.js",
+  "data/svcollege_prerequisites_sql_orm.js",
+  "data/svcollege_prerequisites_auth.js",
+  "data/svcollege_prerequisites_nextjs.js",
+  "data/svcollege_prerequisites_nestjs.js",
+  "data/svcollege_prerequisites_devops.js",
 ];
 
 function loadCourseData() {

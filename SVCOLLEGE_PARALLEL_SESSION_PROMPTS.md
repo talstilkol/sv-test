@@ -8,14 +8,13 @@
 
 ## Current Operating Mode — Limited Parallel
 
-> סטטוס עדכני: **מוותרים כרגע על רכבת המיזוג המלאה**. SQL/ORM, Auth/Security ו-Next.js סיימו וחוברו ל-Finish Line 1. כרגע רק **המוזיאון** נשאר פעיל במקביל. שאר הסשנים במסמך נשארים כתוכנית ייחוס בלבד, ולא פותחים אותם בלי הוראה חדשה.
+> סטטוס עדכני: **מוותרים כרגע על רכבת המיזוג המלאה**. SQL/ORM, Auth/Security, Next.js, המוזיאון, Nest.js ו-DevOps מוזגו/חוברו ל-Finish Line 1. שאר הסשנים במסמך נשארים כתוכנית ייחוס בלבד, ולא פותחים אותם בלי הוראה חדשה.
 
 ### מי עובד עכשיו
 
 | Active work | Branch | Ownership | אסור לסשנים אחרים לערוך |
 |---|---|---|---|
-| Museum | `codex/museum` | Programming language museum, museum visuals, museum experience, museum-specific QA | `museum.html`, museum-specific sections in `app.js`, museum-specific CSS, museum docs/prompts/assets |
-| Current Codex session | current branch | Governance, reports, readiness gates, post-SQL/Auth/Next.js quality gates, non-museum docs and validators | Must not touch museum-owned files while the Museum session is active |
+| Current Codex session | `codex/svcollege-backend-prod-coverage-20260428` | Finish Line 1 module coverage, governance, reports, readiness gates, quality gates and validators | Do not reopen the full merge train without explicit user instruction |
 
 ### Completed work in limited mode
 
@@ -24,6 +23,9 @@
 | SQL/ORM | `codex/svcollege-sql-orm` | Integrated into index, content loader, service worker, readiness, command center and SVCollege blueprint | Only regression fixes; no new SQL scope without a new task |
 | Auth/Security | current | Integrated into index, content loader, service worker, readiness, command center and SVCollege blueprint | Only regression fixes; no new Auth scope without a new task |
 | Next.js | current | Integrated into index, content loader, service worker, readiness, command center and SVCollege blueprint | Only regression fixes; no new Next.js scope without a new task |
+| Museum | `codex/finish-line1-museum-integration-20260428` | Integrated without tracking MP4 assets | Only contextual video embedding; no MP4 upload |
+| Nest.js | `codex/svcollege-backend-prod-coverage-20260428` | Integrated into index, content loader, service worker, readiness, command center and SVCollege blueprint | Only regression fixes; no new Nest scope without a new task |
+| DevOps | `codex/svcollege-backend-prod-coverage-20260428` | Integrated into index, content loader, service worker, readiness, command center and SVCollege blueprint | Only regression fixes; no new DevOps scope without a new task |
 
 ### תרשים זרימה פעיל — Limited Parallel
 
@@ -31,22 +33,17 @@
 
 ```mermaid
 flowchart TD
-  A["מצב נוכחי: Limited Parallel"] --> B["SQL/ORM, Auth ו-Next.js סיימו וחוברו"]
-  A --> C["Museum עובד ב-codex/museum"]
-  A --> D["Current Codex עובד רק על governance/readiness/quality gates"]
+  A["מצב נוכחי: Limited Parallel"] --> B["SQL/ORM, Auth, Next.js, Museum, Nest ו-DevOps חוברו"]
+  A --> D["Current Codex עובד על מודול Finish Line 1 אחד בכל פעם"]
 
-  B --> E["DB, Auth ו-Next.js עכשיו covered ב-readiness"]
-  C --> F{"Museum מסר Final Report?"}
-  D --> G["לא פותחים Next/DevOps/Nest/AI/QA"]
-
-  F -- "לא" --> F1["לא משנים מוזיאון. ממתינים או מחזירים לסשן Museum."]
-  F -- "כן" --> F2["Coordinator בודק רק museum-owned files + browser smoke"]
-
-  E --> H{"Museum מוכן לחיבור?"}
-  F2 --> H
-  H -- "לא" --> H1["לא ממזגים. מתקנים רק במסלול החסום."]
-  H -- "כן" --> I["פותחים Coordinator Integration קצר"]
-  I --> J["מריצים build/tests/readiness/browser smoke"]
+  B --> E["DB, Auth, Next.js, Nest ו-DevOps עכשיו covered ב-readiness"]
+  D --> G["לא פותחים AI/QA בלי הוראה מפורשת"]
+  E --> H{"מה החסם הבא?"}
+  H -- "AI Engineering gap" --> I2["פותחים/מבצעים AI Engineering רק אם המשתמש מאשר"]
+  H -- "shadcn partial" --> I3["פותחים/מבצעים Design System רק אחרי AI או defer מפורש"]
+  I2 --> J
+  I3 --> J
+  J["מריצים build/tests/readiness/browser smoke"]
   J --> K{"ירוק?"}
   K -- "לא" --> K1["חוזרים למסלול שהכניס regression"]
   K -- "כן" --> L["מעדכנים reports ו-Go/No-Go זמני"]
@@ -54,19 +51,19 @@ flowchart TD
 
 ### מתי לפתוח Session חדש במצב הנוכחי
 
-- לא פותחים Session חדש ל-Auth, Next.js, DevOps, Nest.js, AI Engineering, Question Quality או All Tabs QA.
+- לא פותחים Session חדש ל-Auth, Next.js, DevOps, Nest.js, AI Engineering, Question Quality או All Tabs QA בלי הוראה מפורשת.
 - מותר לפתוח Session המשך ל-SQL רק אם הוא נשאר בתוך קבצי SQL-owned.
-- מותר לפתוח Session המשך למוזיאון רק אם הוא נשאר בתוך קבצי museum-owned.
-- מותר לפתוח Coordinator Integration רק אחרי ש-SQL ומוזיאון סיימו Final Report או שהמשתמש מבטל אחד מהם.
+- מותר לפתוח Session המשך למוזיאון רק להטמעה הקשרית של סרטון/נכס רלוונטי, בלי העלאת MP4.
+- מותר לפתוח Coordinator Integration רק אחרי שמודול יחיד סיים Final Report או שהמשתמש מבטל אותו.
 - אם צריך תיקון בקובץ משותף כמו `app.js`, `index.html`, `content-loader.js`, `service-worker.js` או `data/course_blueprints.js`, זה עובר רק דרך Coordinator Integration.
 
 ### Opening rule during limited mode
 
 - Do **not** open Sessions 2-8 from the full train.
 - Do **not** merge branches automatically.
-- Let Museum finish its own final report first.
-- This session may continue only on safe, non-conflicting work: command center, reports, readiness scripts, quality gates, task planning, and SVCollege content outside museum-owned files.
-- When Museum finishes, Coordinator reviews only the changed ownership scope for that session.
+- Museum is integrated; do not upload MP4 assets.
+- This session may continue only on one Finish Line 1 module at a time: command center, reports, readiness scripts, quality gates, task planning, and SVCollege content.
+- When any new module finishes, Coordinator reviews only the changed ownership scope for that module.
 
 ---
 

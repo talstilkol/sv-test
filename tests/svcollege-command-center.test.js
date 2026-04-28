@@ -31,17 +31,19 @@ describe("SVCollege command center", () => {
     const activeIds = report.activeParallelMode.activeExternalSessions.map((session) => session.id);
     const completedIds = report.activeParallelMode.completedExternalSessions.map((session) => session.id);
 
-    expect(report.activeParallelMode.status).toBe("limited-parallel-museum-only-after-sql-auth-nextjs-integration");
-    expect(activeIds).toEqual(["museum"]);
-    expect(completedIds).toEqual(["sql-orm", "auth-security", "nextjs"]);
+    expect(report.activeParallelMode.status).toBe("single-session-finish-line-after-sql-auth-nextjs-museum-nestjs-devops");
+    expect(activeIds).toEqual([]);
+    expect(completedIds).toEqual(["sql-orm", "auth-security", "nextjs", "museum", "nestjs", "devops"]);
     expect(report.activeParallelMode.pausedSessions).toEqual(expect.arrayContaining([
       "All Tabs QA",
     ]));
     expect(report.activeParallelMode.pausedSessions).not.toContain("Auth");
     expect(report.activeParallelMode.pausedSessions).not.toContain("Next.js");
+    expect(report.activeParallelMode.pausedSessions).not.toContain("Nest.js");
+    expect(report.activeParallelMode.pausedSessions).not.toContain("DevOps");
     expect(report.activeParallelMode.currentSessionAllowedScope).toEqual(expect.arrayContaining([
       "Command Center reports",
-      "post-SQL/Auth/Next.js integration quality gates",
+      "post-SQL/Auth/Next.js/Museum integration quality gates",
     ]));
   });
 
@@ -97,8 +99,6 @@ describe("SVCollege command center", () => {
     const report = commandCenter.buildReport();
 
     expect(report.redFirstQueue.map((item) => item.title)).toEqual([
-      "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
-      "Frameworks צד-שרת — Nest.js modules + dependency injection",
       "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
       "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
     ]);
@@ -115,7 +115,7 @@ describe("SVCollege command center", () => {
       "8 Question Quality",
       "7 All Tabs QA",
     ]));
-    expect(report.parallelSessions.nextOpenRule).toContain("Next.js are integrated");
+    expect(report.parallelSessions.nextOpenRule).toContain("Nest.js and DevOps are integrated");
   });
 
   it("renders markdown with queue and gates", () => {

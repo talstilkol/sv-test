@@ -10,7 +10,7 @@ var SVCOLLEGE_AUTH_PREREQUISITES = {
   "lesson_auth_security::JWT": ["lesson_auth_security::authentication"],
   "lesson_auth_security::access token": ["lesson_auth_security::JWT"],
   "lesson_auth_security::refresh token": ["lesson_auth_security::access token", "lesson_auth_security::secure cookie"],
-  "lesson_auth_security::OAuth": ["lesson_auth_security::authentication", "lesson_auth_security::provider auth"],
+  "lesson_auth_security::OAuth": ["lesson_auth_security::authentication", "lesson_auth_security::authorization"],
   "lesson_auth_security::provider auth": ["lesson_auth_security::OAuth", "lesson_auth_security::authorization"],
   "lesson_auth_security::password hashing": ["lesson_sql_orm::database"],
   "lesson_auth_security::bcrypt": ["lesson_auth_security::password hashing"],
