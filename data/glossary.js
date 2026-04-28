@@ -818,6 +818,12 @@ Object.assign(window.GLOSSARY, {
 
 Object.assign(window.GLOSSARY, {
   // ============== SVCollege Term Clarity ==============
+  "primitive": {
+    he: "ערך פרימיטיבי",
+    short: "ערך בסיסי שאינו אובייקט, כמו string, number או boolean.",
+    long: "primitive הוא ערך בסיסי שנשמר ומושווה לפי value. ב-JavaScript זה כולל string, number, boolean, null, undefined, symbol ו-bigint.",
+    category: "js",
+  },
   "value": {
     he: "ערך",
     short: "המידע עצמו שנשמר במשתנה, מוחזר מפונקציה או עובר כפרמטר.",
@@ -834,6 +840,12 @@ Object.assign(window.GLOSSARY, {
     he: "ביט",
     short: "יחידת המידע הקטנה ביותר: 0 או 1.",
     long: "bit מייצג מצב בינארי אחד. רצפים של bits מרכיבים מספרים, תווים, קבצים ותקשורת דיגיטלית.",
+    category: "js",
+  },
+  "key": {
+    he: "מפתח",
+    short: "שם או מזהה שמוביל לערך, שדה או פריט מסוים.",
+    long: "key יכול להיות שם שדה באובייקט, מזהה יציב של פריט ברשימת React, או מפתח בטבלה. בכל מקרה הוא עוזר למצוא את הערך הנכון.",
     category: "js",
   },
   "variable": {
@@ -860,16 +872,58 @@ Object.assign(window.GLOSSARY, {
     long: "object שומר נתונים כ-key/value. ניגשים לשדות עם נקודה או סוגריים, למשל user.name או user['name'].",
     category: "js",
   },
+  "class": {
+    he: "מחלקה",
+    short: "תבנית ליצירת אובייקטים עם constructor ומתודות.",
+    long: "class מרכזת מבנה והתנהגות של אובייקטים מאותו סוג. ב-JavaScript היא תחביר מעל prototype, עם constructor, methods ו-extends.",
+    category: "js",
+  },
+  "stack": {
+    he: "מחסנית",
+    short: "מבנה שבו האחרון שנכנס יוצא ראשון.",
+    long: "stack משמש להסבר call stack ולזיכרון זמני של קריאות פונקציה. מוסיפים ומוציאים מאותו קצה.",
+    category: "js",
+  },
   "heap": {
     he: "ערימת זיכרון",
     short: "אזור זיכרון שבו נשמרים אובייקטים ומערכים בזמן ריצה.",
     long: "heap מחזיק נתונים דינמיים כמו objects ו-arrays. משתנים בדרך כלל שומרים reference למיקום שלהם בזיכרון.",
     category: "js",
   },
+  "reference": {
+    he: "ייחוס",
+    short: "הפניה למיקום של אובייקט או מערך בזיכרון.",
+    long: "reference הוא הקישור לערך מורכב שנמצא ב-heap. שני משתנים יכולים להחזיק אותו reference ולכן לראות את אותו שינוי.",
+    category: "js",
+  },
+  "scope": {
+    he: "סקופ",
+    short: "האזור בקוד שבו שם משתנה זמין לשימוש.",
+    long: "scope קובע איפה אפשר לקרוא או לעדכן שם מסוים. let ו-const מוגבלים לבלוק, ו-var מוגבל לפונקציה.",
+    category: "js",
+  },
+  "callback": {
+    he: "Callback",
+    short: "פונקציה שמעבירים כדי שתיקרא מאוחר יותר.",
+    long: "callback מאפשר להעביר פעולה כערך: event handler, פונקציה ל-map/filter או טיפול בתוצאה שמגיעה בהמשך.",
+    category: "js",
+  },
   "promise": {
     he: "הבטחה",
     short: "אובייקט שמייצג תוצאה אסינכרונית שתגיע בעתיד.",
     long: "promise מייצג פעולה שתסתיים בהמשך בהצלחה או בכישלון. מטפלים בו עם then/catch או עם async/await.",
+    category: "js",
+  },
+  "async": {
+    he: "Async",
+    short: "מילת מפתח שמסמנת פונקציה שמחזירה Promise.",
+    long: "async מאפשרת לכתוב פונקציה אסינכרונית ולשלב בתוכה await. הערך שמוחזר ממנה נעטף ב-Promise.",
+    category: "js",
+  },
+  "await": {
+    he: "Await",
+    short: "מילת מפתח שממתינה ל-Promise בתוך פונקציה async.",
+    long: "await עוצר את המשך הפונקציה עד שה-Promise מסתיים, בלי לחסום את הדפדפן או את event loop.",
     category: "js",
   },
   "component": {
@@ -884,16 +938,46 @@ Object.assign(window.GLOSSARY, {
     long: "prop הוא שדה בתוך props. הוא read-only מצד הילד ומשמש להעברת נתונים או callbacks מלמעלה למטה.",
     category: "react",
   },
+  "state": {
+    he: "מצב",
+    short: "מידע פנימי ש-React עוקב אחריו ומרנדר לפיו.",
+    long: "state הוא מקור אמת מקומי או אפליקטיבי שמשתנה לאורך זמן. שינוי state דרך setter גורם ל-React לחשב תצוגה חדשה.",
+    category: "react",
+  },
   "hook": {
     he: "הוק",
     short: "פונקציית React שמחברת קומפוננטה ל-state, effect או יכולת אחרת.",
     long: "hook מתחיל לרוב ב-use ומאפשר לקומפוננטת פונקציה להשתמש ב-state, effects, context ולוגיקה משותפת.",
     category: "react",
   },
+  "route": {
+    he: "נתיב",
+    short: "נתיב שמחבר URL לקוד שמטפל בבקשה או במסך.",
+    long: "route יכול למפות URL למסך בפרונט או ל-handler בשרת. בדרך כלל הוא משלב path, ולעיתים גם HTTP method.",
+    category: "web",
+  },
+  "middleware": {
+    he: "תווך עיבוד",
+    short: "פונקציה שרצה באמצע שרשרת טיפול בבקשה.",
+    long: "middleware רצה לפני או אחרי handler מרכזי, למשל לאימות, parsing, logging, הרשאות או טיפול בשגיאות.",
+    category: "web",
+  },
   "token": {
     he: "טוקן",
     short: "מחרוזת שמייצגת הרשאה, זהות או גישה זמנית.",
     long: "token משמש במערכות auth כדי להעביר הוכחת זהות או הרשאה בין לקוח לשרת. צריך לשמור עליו בזהירות ולהגדיר תוקף.",
+    category: "web",
+  },
+  "cookie": {
+    he: "Cookie",
+    short: "מחרוזת קטנה שהדפדפן שומר ושולח לשרת.",
+    long: "cookie נשמרת בדפדפן ונשלחת בבקשות לדומיין מתאים. משתמשים בה ל-session, העדפות ואימות, עם הגדרות אבטחה כמו HttpOnly ו-SameSite.",
+    category: "web",
+  },
+  "session": {
+    he: "סשן",
+    short: "מצב התחברות או עבודה שנשמר בין בקשות.",
+    long: "session מאפשר לשרת לזהות המשכיות של משתמש בין בקשות HTTP. בדרך כלל cookie מחזיקה מזהה והשרת מחזיק את נתוני הסשן.",
     category: "web",
   },
   "SQL": {

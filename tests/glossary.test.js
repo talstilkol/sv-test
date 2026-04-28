@@ -83,8 +83,11 @@ describe("Glossary data", () => {
     const { GLOSSARY } = loadGlossary();
 
     SVCOLLEGE_REQUIRED_TERMS.forEach((term) => {
-      expect(GLOSSARY[term].short.trim().length, term).toBeGreaterThan(0);
-      expect(GLOSSARY[term].short.length, term).toBeLessThanOrEqual(95);
+      const short = GLOSSARY[term].short;
+      expect(short.trim().length, term).toBeGreaterThan(0);
+      expect(short, term).toBe(short.trim());
+      expect(short, term).not.toMatch(/\n/);
+      expect(short.length, term).toBeLessThanOrEqual(95);
     });
   });
 
