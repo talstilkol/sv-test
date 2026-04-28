@@ -39,10 +39,60 @@ function copyLegacyStaticPlugin() {
   };
 }
 
+function preserveLegacyScriptTagsPlugin() {
+  const legacySrcAttr = "data-lumen-legacy-src";
+  const scriptTagPattern = /<script\b([^>]*)\bsrc=(["'])([^"']+)\2([^>]*)><\/script>/g;
+
+  function isModuleScript(attrs) {
+    return /\btype\s*=\s*(["'])module\1/i.test(attrs);
+  }
+
+  function isExternalScript(src) {
+    return /^(https?:)?\/\//i.test(src);
+  }
+
+  function protectLegacyScripts(html) {
+    return html.replace(scriptTagPattern, (tag, beforeSrc, quote, src, afterSrc) => {
+      const attrs = `${beforeSrc}${afterSrc}`;
+      if (isModuleScript(attrs) || isExternalScript(src)) return tag;
+      return `<script${beforeSrc} ${legacySrcAttr}=${quote}${src}${quote}${afterSrc}></script>`;
+    });
+  }
+
+  function restoreLegacyScripts(html) {
+    const protectedTagPattern = new RegExp(
+      `<script\\b([^>]*)\\b${legacySrcAttr}=(["'])([^"']+)\\2([^>]*)><\\/script>`,
+      "g"
+    );
+    return html.replace(protectedTagPattern, (tag, beforeSrc, quote, src, afterSrc) => {
+      return `<script${beforeSrc} src=${quote}${src}${quote}${afterSrc}></script>`;
+    });
+  }
+
+  return [
+    {
+      name: "lumen-protect-legacy-script-tags",
+      apply: "build",
+      transformIndexHtml: {
+        order: "pre",
+        handler: protectLegacyScripts,
+      },
+    },
+    {
+      name: "lumen-restore-legacy-script-tags",
+      apply: "build",
+      transformIndexHtml: {
+        order: "post",
+        handler: restoreLegacyScripts,
+      },
+    },
+  ];
+}
+
 module.exports = defineConfig({
   root: ".",
   publicDir: false,
-  plugins: [copyLegacyStaticPlugin()],
+  plugins: [...preserveLegacyScriptTagsPlugin(), copyLegacyStaticPlugin()],
   server: {
     host: "127.0.0.1",
     port: 5173,
