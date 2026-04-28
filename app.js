@@ -77,8 +77,158 @@ document.addEventListener("DOMContentLoaded", () => {
     try { localStorage.setItem(PROF_STORAGE_KEY, JSON.stringify(proficiency)); } catch (_) {}
   }
 
+  function conceptTagCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.conceptTags;
+  }
+
   function conceptKey(lessonId, conceptName) {
-    return `${lessonId}::${conceptName}`;
+    const core = conceptTagCore();
+    if (core && typeof core.canonicalConceptKey === "function") {
+      return core.canonicalConceptKey(lessonId, conceptName);
+    }
+    return `${String(lessonId || "").trim()}::${String(conceptName || "").trim()}`;
+  }
+
+  function uniqueStableValues(values) {
+    const seen = new Set();
+    return (values || []).filter((value) => {
+      const normalized = String(value || "").trim();
+      if (!normalized || seen.has(normalized)) return false;
+      seen.add(normalized);
+      return true;
+    });
+  }
+
+  let conceptRegistryCache = null;
+  let conceptRegistryCacheSignature = "";
+  let bankQuestionKeysCache = new WeakMap();
+
+  function fallbackBuildConceptRegistry(lessons) {
+    const byKey = Object.create(null);
+    const aliasToKeys = Object.create(null);
+    const duplicateConceptNames = [];
+    (lessons || []).forEach((lesson) => {
+      (lesson.concepts || []).forEach((concept, index) => {
+        const key = conceptKey(lesson.id, concept.conceptName);
+        const normalized = String(concept.conceptName || "").trim().toLowerCase();
+        byKey[key] = {
+          key,
+          lessonId: lesson.id,
+          lessonTitle: lesson.title || "",
+          conceptName: concept.conceptName,
+          normalizedName: normalized,
+          aliases: [concept.conceptName],
+          normalizedAliases: [normalized],
+          tags: [key, `lesson:${lesson.id}`, `concept:${normalized}`, `concept-index:${index + 1}`],
+        };
+        if (!aliasToKeys[normalized]) aliasToKeys[normalized] = [];
+        aliasToKeys[normalized].push(key);
+      });
+    });
+    Object.entries(aliasToKeys).forEach(([name, keys]) => {
+      if (keys.length > 1) duplicateConceptNames.push({ name, keys: uniqueStableValues(keys) });
+    });
+    return { version: 1, size: Object.keys(byKey).length, byKey, aliasToKeys, duplicateConceptNames };
+  }
+
+  function conceptRegistry() {
+    const lessons = window.LESSONS_DATA || [];
+    const core = conceptTagCore();
+    const coreReady = !!(core && typeof core.buildConceptRegistry === "function");
+    const signature = [
+      coreReady ? "core" : "fallback",
+      lessons.length,
+      lessons.map((lesson) => `${lesson.id}:${(lesson.concepts || []).length}`).join("|"),
+    ].join(";");
+    if (conceptRegistryCache && conceptRegistryCacheSignature === signature) return conceptRegistryCache;
+    conceptRegistryCache = coreReady
+      ? core.buildConceptRegistry(lessons)
+      : fallbackBuildConceptRegistry(lessons);
+    conceptRegistryCacheSignature = signature;
+    bankQuestionKeysCache = new WeakMap();
+    return conceptRegistryCache;
+  }
+
+  function resolveCanonicalConceptKey(input = {}) {
+    const core = conceptTagCore();
+    if (core && typeof core.resolveConceptKey === "function") {
+      return core.resolveConceptKey({ ...input, registry: conceptRegistry() });
+    }
+    const rawLessonId = input.lessonId || input.lesson?.id || "";
+    const rawConceptName = input.conceptName || input.concept?.conceptName || "";
+    const raw = input.conceptKey || (
+      rawLessonId && rawConceptName
+        ? conceptKey(rawLessonId, rawConceptName)
+        : rawConceptName
+    );
+    if (!raw) return "";
+    const registry = conceptRegistry();
+    if (registry.byKey && registry.byKey[raw]) return raw;
+    const [lessonId, ...rest] = String(raw).split("::");
+    const conceptName = rest.join("::");
+    const alias = String(conceptName || raw).trim().toLowerCase();
+    const candidates = (registry.aliasToKeys && registry.aliasToKeys[alias]) || [];
+    const lessonMatches = lessonId ? candidates.filter((key) => key.startsWith(`${lessonId}::`)) : candidates;
+    return lessonMatches.length === 1 ? lessonMatches[0] : raw;
+  }
+
+  function conceptTagSnapshot(lessonId, conceptName, concept = null) {
+    const registry = conceptRegistry();
+    const key = resolveCanonicalConceptKey({ lessonId, conceptName, concept, registry });
+    return registry.byKey?.[key] || {
+      key: conceptKey(lessonId, conceptName),
+      lessonId,
+      conceptName,
+      tags: [conceptKey(lessonId, conceptName)],
+      aliases: [conceptName],
+    };
+  }
+
+  function explicitQuestionConceptKeys(question = {}, lessonIdHint = "") {
+    const rawKeys = uniqueStableValues([
+      ...(Array.isArray(question.conceptKeys) ? question.conceptKeys : []),
+      question.conceptKey,
+    ]);
+    return uniqueStableValues(rawKeys.map((key) =>
+      resolveCanonicalConceptKey({ conceptKey: key, lessonId: lessonIdHint }),
+    ));
+  }
+
+  function bankQuestionConceptKeys(question = {}, lessonIdHint = "") {
+    if (question && typeof question === "object" && bankQuestionKeysCache.has(question)) {
+      return bankQuestionKeysCache.get(question);
+    }
+    const explicitKeys = explicitQuestionConceptKeys(question, lessonIdHint);
+    const keys = explicitKeys.length
+      ? explicitKeys
+      : uniqueStableValues(
+        inferQuestionConceptKeys(question, null, null, null, 6)
+          .map((key) => resolveCanonicalConceptKey({ conceptKey: key, lessonId: lessonIdHint }))
+          .filter(Boolean),
+      );
+    if (question && typeof question === "object") bankQuestionKeysCache.set(question, keys);
+    return keys;
+  }
+
+  function questionConceptKeysForContext(question = {}, lesson = null, concept = null, questionIndex = null, limit = 8) {
+    const core = conceptTagCore();
+    let keys = [];
+    if (core && typeof core.resolveConceptKeysForQuestion === "function") {
+      keys = core.resolveConceptKeysForQuestion({
+        question,
+        lesson,
+        concept,
+        questionIndex,
+        registry: conceptRegistry(),
+        limit,
+      });
+    }
+    if (!keys.length) keys = fallbackQuestionConceptKeys(question, lesson, concept, questionIndex);
+    if (!keys.length) keys = inferQuestionConceptKeys(question, lesson, concept, questionIndex, limit);
+    return uniqueStableValues(keys.map((key) => resolveCanonicalConceptKey({
+      conceptKey: key,
+      lessonId: lesson?.id || "",
+    }))).slice(0, Math.max(1, Number(limit) || 8));
   }
 
   function setProficiency(lessonId, conceptName, val) {
@@ -106,9 +256,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Counts questions per (lessonId, conceptName), separating curated vs seeded
   function bankCountsFor(lessonId, conceptName) {
     const bank = window.QUESTIONS_BANK || { mc: [], fill: [] };
-    const key = conceptKey(lessonId, conceptName);
-    const mcAll = (bank.mc || []).filter((q) => q.conceptKey === key);
-    const fillAll = (bank.fill || []).filter((q) => q.conceptKey === key);
+    const key = resolveCanonicalConceptKey({ lessonId, conceptName }) || conceptKey(lessonId, conceptName);
+    const hasKey = (q) => bankQuestionConceptKeys(q, lessonId).includes(key);
+    const mcAll = (bank.mc || []).filter(hasKey);
+    const fillAll = (bank.fill || []).filter(hasKey);
     const counts = {
       mc: mcAll.length,
       fill: fillAll.length,
@@ -128,16 +279,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function bankByConcept(lessonId, conceptName) {
     const bank = window.QUESTIONS_BANK || { mc: [], fill: [] };
-    const key = conceptKey(lessonId, conceptName);
+    const key = resolveCanonicalConceptKey({ lessonId, conceptName }) || conceptKey(lessonId, conceptName);
+    const hasKey = (q) => bankQuestionConceptKeys(q, lessonId).includes(key);
     return {
-      mc: (bank.mc || []).filter((q) => q.conceptKey === key),
-      fill: (bank.fill || []).filter((q) => q.conceptKey === key),
+      mc: (bank.mc || []).filter(hasKey),
+      fill: (bank.fill || []).filter(hasKey),
     };
   }
   // Find concept by key (used by guide to update levels for hand-crafted Qs)
   function findConceptByKey(key) {
     if (!key) return null;
-    const [lessonId, ...rest] = key.split("::");
+    const resolvedKey = resolveCanonicalConceptKey({ conceptKey: key });
+    const [lessonId, ...rest] = String(resolvedKey || key).split("::");
     const conceptName = rest.join("::");
     const lesson = (window.LESSONS_DATA || []).find((l) => l.id === lessonId);
     if (!lesson) return null;
@@ -208,6 +361,18 @@ document.addEventListener("DOMContentLoaded", () => {
       .filter(Boolean);
   }
 
+  function contextNumber(path) {
+    const view = contextTreeView();
+    if (view && typeof view.contextNumber === "function") return view.contextNumber(path);
+    return (path || []).map((index) => Number(index) + 1).join(".");
+  }
+
+  function contextNodeHasActive(node) {
+    if (!node) return false;
+    if (node.active) return true;
+    return (node.children || []).some((child) => contextNodeHasActive(child));
+  }
+
   function setContextTree(title, sections, options = {}) {
     const key = options.key || title || "context";
     if (contextTreeSource.key !== key) {
@@ -231,15 +396,25 @@ document.addEventListener("DOMContentLoaded", () => {
     if (contextTreePanel) {
       contextTreePanel.hidden = false;
     }
-    if (contextTreeTitle) contextTreeTitle.textContent = contextTreeSource.title;
+    if (contextTreeTitle) contextTreeTitle.textContent = "תוכן עניינים";
     if (contextTreeCount) {
       const count = countContextLeaves(sections);
       contextTreeCount.textContent = count ? `${count} פריטים` : "";
     }
 
     contextTreeBody.innerHTML = sections.length
-      ? `<div class="ctx-tree-root">${sections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
-      : `<div class="ctx-empty">אין ענפים תואמים.</div>`;
+      ? `
+        <div class="ctx-map-head">
+          <strong>${esc(contextTreeSource.title || "עץ ניווט")}</strong>
+          <span>נושא → תת נושא → תת תת נושא → מושג</span>
+        </div>
+        <div class="ctx-tree-root">${sections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
+      : `
+        <div class="ctx-map-head">
+          <strong>${esc(contextTreeSource.title || "עץ ניווט")}</strong>
+          <span>נושא → תת נושא → תת תת נושא → מושג</span>
+        </div>
+        <div class="ctx-empty">אין ענפים תואמים.</div>`;
 
     contextTreeBody.querySelectorAll("[data-ctx-action]").forEach((el) => {
       el.addEventListener("click", () => {
@@ -251,12 +426,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderContextNode(node, path, depth = 0) {
     const children = node.children || [];
+    const number = contextNumber(path);
     if (children.length) {
-      const open = node.forceOpen || node.open !== false ? "open" : "";
+      const hasActive = contextNodeHasActive(node);
+      const open = node.forceOpen || hasActive || node.open !== false ? "open" : "";
       const count = node.count ?? countContextLeaves(children);
       return `
-        <details class="ctx-branch ctx-depth-${depth}" ${open}>
+        <details class="ctx-branch ctx-depth-${depth} ${hasActive ? "has-active" : ""}" ${open}>
           <summary>
+            <span class="ctx-number">${esc(number)}</span>
             <span class="ctx-label">${esc(node.label || "")}</span>
             ${count ? `<span class="ctx-count">${esc(count)}</span>` : ""}
           </summary>
@@ -281,6 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .join(" ");
     return `
       <button class="${cls}" type="button" data-ctx-action="${esc(actionId)}" title="${esc(node.title || node.label || "")}">
+        <span class="ctx-number">${esc(number)}</span>
         <span class="ctx-label">${esc(node.label || "")}</span>
         ${node.level ? `<span class="ctx-level">${esc(node.level)}</span>` : ""}
         ${node.meta ? `<span class="ctx-meta">${esc(node.meta)}</span>` : ""}
@@ -295,7 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function scoreStateClass(sc) {
     if (!sc) return "";
     if (sc.attempts > 0 && typeof isSrsDue === "function" && isSrsDue(sc)) return "is-due";
-    if ((sc.level || 1) >= 7) return "is-mastered";
+    if (isScoreMastered(sc)) return "is-mastered";
     if ((sc.level || 1) <= 2 || (sc.weakReports || 0) > 0) return "is-weak";
     return "";
   }
@@ -311,7 +490,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 80);
   }
 
-  function conceptLeafNode(lesson, concept, activeName = "") {
+  function conceptLeafNode(lesson, concept, activeName = "", activeLessonId = "") {
     const sc = getScore(lesson.id, concept.conceptName);
     const bank = bankCountsFor(lesson.id, concept.conceptName);
     const totalBank = bank.mc + bank.fill;
@@ -320,11 +499,40 @@ document.addEventListener("DOMContentLoaded", () => {
       label: concept.conceptName,
       level: `${sc.level || 1}/7`,
       meta: totalBank ? `${totalBank} ש׳` : "",
-      active: concept.conceptName === activeName,
+      active: concept.conceptName === activeName && (!activeLessonId || lesson.id === activeLessonId),
       stateClass: scoreStateClass(sc),
       title: `${lesson.title} · ${concept.conceptName}`,
       action: () => openLessonConcept(lesson.id, concept.conceptName),
     };
+  }
+
+  function lessonConceptTreeNodes(activeLessonId = "", activeConceptName = "") {
+    const lessons = window.LESSONS_DATA || [];
+    return [
+      {
+        id: "all-lessons-concepts",
+        label: "כל השיעורים",
+        open: true,
+        children: lessons.map((lesson) => {
+          const isCurrentLesson = lesson.id === activeLessonId;
+          const concepts = lesson.concepts || [];
+          return {
+            id: `lesson-concepts:${lesson.id}`,
+            label: lesson.title,
+            meta: `${concepts.length} מושגים`,
+            open: isCurrentLesson,
+            children: concepts.map((concept) =>
+              conceptLeafNode(
+                lesson,
+                concept,
+                isCurrentLesson ? activeConceptName : "",
+                activeLessonId,
+              ),
+            ),
+          };
+        }),
+      },
+    ];
   }
 
   function lessonConceptBuckets(lesson, activeName = "") {
@@ -338,7 +546,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const sc = getScore(lesson.id, concept.conceptName);
       const leaf = conceptLeafNode(lesson, concept, activeName);
       if (sc.attempts > 0 && isSrsDue(sc)) buckets[0].items.push(leaf);
-      else if ((sc.level || 1) >= 7) buckets[3].items.push(leaf);
+      else if (isScoreMastered(sc)) buckets[3].items.push(leaf);
       else if ((sc.level || 1) <= 2 || (sc.weakReports || 0) > 0) buckets[1].items.push(leaf);
       else buckets[2].items.push(leaf);
     });
@@ -354,16 +562,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setLessonContextTree(lesson, activeConceptName = "") {
     setContextTree(
-      "מושגי השיעור",
-      [
-        {
-          id: lesson.id,
-          label: lesson.title,
-          open: true,
-          children: lessonConceptBuckets(lesson, activeConceptName),
-        },
-      ],
-      { key: `lesson:${lesson.id}` },
+      "שיעורים ומושגים",
+      lessonConceptTreeNodes(lesson?.id || currentLessonId || "", activeConceptName),
+      { key: "lessons-concepts" },
     );
   }
 
@@ -397,7 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
           label: "טאבים ראשיים",
           open: true,
           children: [
-            { id: "home", label: "שיעורים", action: () => document.getElementById("open-home")?.click() },
+            { id: "home", label: "שיעורים", active: true, action: () => document.getElementById("open-home")?.click() },
             { id: "guide", label: "מדריך מקוצר", action: () => openGuide() },
             { id: "grandma", label: "ידע מורחב ברמת סבתא", action: () => openGrandmaKnowledge() },
             { id: "programming-basics", label: "אבני בסיס", action: () => openProgrammingBasics() },
@@ -6192,11 +6393,13 @@ document.addEventListener("DOMContentLoaded", () => {
       // levels is an OBJECT keyed by audience (grandma/child/soldier/student/junior/professor)
       const levelKeys = ["soldier", "student", "junior", "child", "grandma", "professor"];
       function pickDefinition(c) {
+        const concise = conciseConceptDefinition(c);
+        if (concise) return concise;
         if (!c.levels) return "";
         if (Array.isArray(c.levels)) return c.levels[2] || c.levels[0] || "";
         // Object form: prefer mid-level definition (soldier/student)
         for (const k of levelKeys) {
-          if (c.levels[k]) return c.levels[k];
+          if (c.levels[k] && !isLowSignalExplanation(c.levels[k])) return c.levels[k];
         }
         return "";
       }
@@ -6338,7 +6541,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const ref = findConceptByKey(key);
         const title = ref ? ref.concept.conceptName : key;
         const lessonTitle = ref ? ref.lesson.title : "";
-        const isMastered = (sc.level || 1) >= 7;
+        const isMastered = isScoreMastered(sc);
         const isWeak = (sc.weakReports || 0) > 0;
         entries.push({
           date: reviewedAt,
@@ -6362,7 +6565,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const reflections = loadTimeMachineReflections();
       const wrapUps = loadLessonWrapUps();
       const scored = Object.values(scores || {}).filter((sc) => sc && sc.attempts > 0);
-      const mastered = scored.filter((sc) => (sc.level || 1) >= 7).length;
+      const mastered = scored.filter((sc) => isScoreMastered(sc)).length;
       const weak = scored.filter((sc) => (sc.weakReports || 0) > 0).length;
       const due = scored.filter((sc) => isSrsDue(sc)).length;
       const bestExam = exams.length ? Math.max(...exams.map((r) => r.score || 0)) : null;
@@ -6612,6 +6815,9 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollToTop();
     sidebar.classList.remove("open");
   });
+  document.getElementById("brand-home-btn")?.addEventListener("click", () => {
+    document.getElementById("open-home")?.click();
+  });
 
   function scrollToTop() {
     const c = document.getElementById("content-container");
@@ -6697,12 +6903,21 @@ document.addEventListener("DOMContentLoaded", () => {
     "lesson_11":            { topic: "JavaScript Foundations",  emoji: "🟦", subtopic: "Arrays, Functions, Scope" },
     "lesson_12":            { topic: "JavaScript Foundations",  emoji: "🟦", subtopic: "Array Methods (map/filter/reduce)" },
     "lesson_13":            { topic: "JavaScript + DOM",        emoji: "🟪", subtopic: "Objects, DOM, Classes" },
+    "lesson_html_css_foundations": { topic: "HTML/CSS Foundations", emoji: "🧱", subtopic: "HTML, Forms, CSS Basics" },
+    "lesson_tooling_git":   { topic: "Tooling + Git",           emoji: "🛠️", subtopic: "Git, npm scripts, ESLint, Prettier" },
     "lesson_15":            { topic: "JavaScript Advanced",     emoji: "🧠", subtopic: "Errors, Closures, Async" },
     "lesson_16":            { topic: "Backend (Node.js)",       emoji: "🟫", subtopic: "Node.js, npm, Modules" },
     "lesson_17":            { topic: "Backend (Express/REST)",  emoji: "🟫", subtopic: "HTTP, REST API" },
     "lesson_18":            { topic: "Backend (Express/REST)",  emoji: "🟫", subtopic: "Forms, Validation, Storage" },
     "lesson_19":            { topic: "JavaScript Foundations",  emoji: "🟦", subtopic: "חזרה וסיכום JS" },
     "lesson_20":            { topic: "Database (Mongo)",        emoji: "🟧", subtopic: "MongoDB, Mongoose" },
+    "lesson_sql_orm":        { topic: "Database (SQL/ORM)",      emoji: "🗄️", subtopic: "PostgreSQL, Prisma, Drizzle" },
+    "lesson_auth_security":  { topic: "Auth + Security",        emoji: "🛡️", subtopic: "JWT, Cookies, OAuth, Provider Auth" },
+    "lesson_nextjs":         { topic: "Next.js Full-Stack",      emoji: "▲", subtopic: "App Router, SSR, API Routes, SEO" },
+    "lesson_nestjs":         { topic: "Backend Frameworks",      emoji: "🏗️", subtopic: "Nest.js, Modules, DI" },
+    "lesson_devops_deploy":  { topic: "DevOps + Deploy",        emoji: "🚀", subtopic: "Vercel, Docker, CI/CD" },
+    "lesson_ai_engineering": { topic: "AI Engineering",         emoji: "🧠", subtopic: "OpenAI, Vercel AI SDK, RAG, Agents" },
+    "lesson_design_systems": { topic: "Design Systems",         emoji: "🎛️", subtopic: "shadcn/UI, Radix, tokens, variants" },
     "lesson_21":            { topic: "React Basics",            emoji: "⚛️", subtopic: "Components, JSX, Props" },
     "lesson_22":            { topic: "React State",             emoji: "⚛️", subtopic: "useState, Immutable State" },
     "lesson_23":            { topic: "React Routing + Context", emoji: "⚛️", subtopic: "Router, Context API" },
@@ -7006,7 +7221,7 @@ document.addEventListener("DOMContentLoaded", () => {
     allConcepts().forEach(({ lesson, concept }) => {
       const sc = getScore(lesson.id, concept.conceptName);
       levelSum += sc.level;
-      if (sc.level >= 7) masterCount++;
+      if (isScoreMastered(sc)) masterCount++;
       else if (sc.attempts === 0 && sc.level === 1) pendingCnt++;
       else if (sc.level <= 2) weakCnt++;
       else partialCnt++;
@@ -7082,7 +7297,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const lessonScores = (lesson.concepts || []).map((c) =>
           getScore(lesson.id, c.conceptName),
         );
-        const lessonMaster = lessonScores.filter((s) => s.level >= 7).length;
+        const lessonMaster = lessonScores.filter((s) => isScoreMastered(s)).length;
         const lessonWeak = lessonScores.filter((s) => s.level <= 2).length;
         const lessonTotal = (lesson.concepts || []).length;
         const lessonAvg = lessonTotal
@@ -7097,7 +7312,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const state = getMasteryState(sc);
             const due = isSrsDue(sc) && state !== "new";
             const rowCls = [
-              sc.level >= 7 ? "is-known" : sc.level <= 2 ? "is-unknown" : "",
+              isScoreMastered(sc) ? "is-known" : sc.level <= 2 ? "is-unknown" : "",
               due ? "is-due" : "",
             ]
               .filter(Boolean)
@@ -7547,16 +7762,35 @@ document.addEventListener("DOMContentLoaded", () => {
     7: { icon: "🏆", label: "מאסטר", cssClass: "lvl-7" },
   };
 
+  function scoreHasStoredMasteryProof(sc) {
+    return Boolean(
+      sc &&
+      (
+        sc.masteryChallengePassed === true ||
+        sc.deepProofPassed === true ||
+        sc.masteryProof === true ||
+        (sc.masteryProof && sc.masteryProof.passed === true)
+      ),
+    );
+  }
+
   function getScore(lessonId, conceptName) {
     const k = conceptKey(lessonId, conceptName);
+    const tag = conceptTagSnapshot(lessonId, conceptName);
     return (
       scores[k] || {
+        conceptKey: tag.key,
+        conceptTags: tag.tags || [k],
         level: 1,
         passedMC: false,
         passedFill: false,
         attempts: 0,
         correct: 0,
+        taggedAttempts: 0,
+        taggedCorrect: 0,
         markedKnown: false,
+        masteryProof: null,
+        masteryGatePending: false,
         weakReports: 0,
         correctRunCount: 0,
       }
@@ -7580,17 +7814,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function ensureScore(lessonId, conceptName) {
     const k = conceptKey(lessonId, conceptName);
+    const tag = conceptTagSnapshot(lessonId, conceptName);
     if (!scores[k]) {
       scores[k] = {
+        conceptKey: tag.key,
+        conceptTags: tag.tags || [k],
         level: 1, passedMC: false, passedFill: false, attempts: 0, correct: 0,
-        markedKnown: false, weakReports: 0, correctRunCount: 0,
+        taggedAttempts: 0, taggedCorrect: 0,
+        markedKnown: false, masteryProof: null, masteryGatePending: false,
+        weakReports: 0, correctRunCount: 0,
         srsState: defaultSrsState(),
       };
     } else {
       // Lazy migration — fill new fields on existing records
+      scores[k].conceptKey = tag.key;
+      scores[k].conceptTags = tag.tags || [k];
+      if (scores[k].taggedAttempts === undefined) scores[k].taggedAttempts = 0;
+      if (scores[k].taggedCorrect === undefined) scores[k].taggedCorrect = 0;
       if (scores[k].markedKnown === undefined) scores[k].markedKnown = false;
+      if (scores[k].masteryProof === undefined) scores[k].masteryProof = null;
+      if (scores[k].masteryGatePending === undefined) scores[k].masteryGatePending = false;
       if (scores[k].weakReports === undefined) scores[k].weakReports = 0;
       if (scores[k].correctRunCount === undefined) scores[k].correctRunCount = 0;
+      if ((Number(scores[k].level) || 1) >= 7 && !scoreHasStoredMasteryProof(scores[k])) {
+        scores[k].level = 6;
+        scores[k].masteryGatePending = true;
+      }
       if (!scores[k].srsState || typeof scores[k].srsState !== "object") {
         scores[k].srsState = defaultSrsState();
       }
@@ -7639,11 +7888,23 @@ document.addEventListener("DOMContentLoaded", () => {
     return window.LUMEN_CORE && window.LUMEN_CORE.scoring;
   }
 
+  function scoreHasMasteryProof(sc) {
+    const core = scoringCore();
+    if (core && typeof core.hasMasteryProof === "function") return core.hasMasteryProof(sc);
+    return scoreHasStoredMasteryProof(sc);
+  }
+
+  function isScoreMastered(sc) {
+    const core = scoringCore();
+    if (core && typeof core.isScoreMastered === "function") return core.isScoreMastered(sc);
+    return Boolean(sc && (Number(sc.level) || 1) >= 7 && scoreHasMasteryProof(sc));
+  }
+
   function getMasteryState(sc) {
     const core = scoringCore();
     if (core && typeof core.getMasteryState === "function") return core.getMasteryState(sc);
     if (!sc || sc.attempts === 0) return "new";
-    if (sc.level >= 7) return "mastered";
+    if (isScoreMastered(sc)) return "mastered";
     const due = sc.srsState && sc.srsState.due;
     if (typeof due === "number" && due <= Date.now() && sc.level >= 6) {
       return "at-risk";
@@ -7686,7 +7947,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const core = scoringCore();
     if (core && typeof core.canMarkV === "function") return core.canMarkV(sc, concept);
     if (sc.markedKnown) return false;
-    if (sc.level >= 7) return false; // already mastered, no need
+    if (isScoreMastered(sc)) return false; // already mastered, no need
     const need = correctNeededForV(getDifficulty(concept));
     if (!isFinite(need)) return false; // hard concepts cannot be V'd
     return sc.correctRunCount >= need;
@@ -7694,8 +7955,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function markAsKnown(lessonId, conceptName) {
     const sc = ensureScore(lessonId, conceptName);
+    const ref = findConceptByKeyLoose(conceptKey(lessonId, conceptName));
+    const concept = ref?.concept || null;
     sc.markedKnown = true;
-    sc.level = 7; // mastered via shortcut
+    sc.markedKnownAt = Date.now();
+    sc.level = Math.min(6, Math.max(Number(sc.level) || 1, 4));
+    if (!scoreHasMasteryProof(sc)) {
+      markMasteryGatePending(sc, lessonId, conceptName, concept, "manual", {
+        mode: "mark-known",
+        question: { id: "manual-known", level: 0 },
+      });
+      sc.masteryGate.reason = "manual-known-is-not-mastery";
+      sc.masteryGate.message = "סימון ידוע עוזר למאמן, אבל ציון 100 דורש תשובה נכונה לשאלת אתגר.";
+    }
     saveScores();
   }
 
@@ -7796,12 +8068,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return confusionBlockerState;
   }
 
-  function primaryConceptKeyForQuestion({ lesson = null, concept = null, question = {} } = {}) {
-    if (Array.isArray(question.conceptKeys) && question.conceptKeys[0]) {
-      return question.conceptKeys[0];
-    }
-    if (question.conceptKey) return question.conceptKey;
-    if (lesson && concept) return conceptKey(lesson.id, concept.conceptName);
+  function primaryConceptKeyForQuestion({ lesson = null, concept = null, question = {}, questionIndex = null } = {}) {
+    const routedKeys = questionConceptKeysForContext(question, lesson, concept, questionIndex, 1);
+    if (routedKeys[0]) return routedKeys[0];
 
     const prereqCore = window.LUMEN_CORE && window.LUMEN_CORE.questionPrerequisites;
     if (prereqCore && typeof prereqCore.inferQuestionConceptKeys === "function") {
@@ -7811,7 +8080,7 @@ document.addEventListener("DOMContentLoaded", () => {
         glossary: window.GLOSSARY || {},
         limit: 1,
       });
-      return keys[0] || "";
+      return resolveCanonicalConceptKey({ conceptKey: keys[0] || "", lesson });
     }
     return "";
   }
@@ -8270,14 +8539,170 @@ document.addEventListener("DOMContentLoaded", () => {
     return !!concept.codeExample;
   }
 
+  function questionChallengeLevelForProof(question = {}, concept = {}, kind = "mc") {
+    const core = scoringCore();
+    if (core && typeof core.questionChallengeLevel === "function") {
+      return core.questionChallengeLevel(question, concept, kind);
+    }
+    const direct = Number(question.challengeLevel ?? question.level ?? question.difficulty);
+    if (Number.isFinite(direct) && direct > 0) {
+      return Math.max(1, Math.min(6, Math.round(direct)));
+    }
+    const derived = Math.ceil(getDifficulty(concept) / 2);
+    if (kind === "fill" && needsCodeFill(concept)) return Math.max(4, Math.min(6, derived));
+    return Math.max(1, Math.min(6, derived));
+  }
+
+  function availableChallengeLevelsForConcept(lessonId, conceptName, concept) {
+    const bank = bankByConcept(lessonId, conceptName);
+    const levels = [];
+    [...(bank.mc || []), ...(bank.fill || [])].forEach((q) => {
+      const level = Number(q.challengeLevel ?? q.level ?? q.difficulty);
+      if (Number.isFinite(level) && level > 0) {
+        levels.push(Math.max(1, Math.min(6, Math.round(level))));
+      }
+    });
+    if (!levels.length && concept && concept.codeExample) {
+      levels.push(Math.max(4, Math.min(6, Math.ceil(getDifficulty(concept) / 2))));
+    }
+    return levels;
+  }
+
+  function masteryProofThresholdForConcept(lessonId, conceptName, concept) {
+    const levels = availableChallengeLevelsForConcept(lessonId, conceptName, concept);
+    const core = scoringCore();
+    if (core && typeof core.masteryProofThreshold === "function") {
+      return core.masteryProofThreshold(concept || {}, levels);
+    }
+    if (levels.length) return Math.max(...levels);
+    const diff = getDifficulty(concept);
+    if (diff >= 8) return 6;
+    if (diff >= 6) return 5;
+    if (diff >= 4) return 4;
+    return 3;
+  }
+
+  function masteryProofInfo(lessonId, conceptName, concept, kind, meta = {}) {
+    const actualKind = meta.actualKind || kind || "mc";
+    const threshold = masteryProofThresholdForConcept(lessonId, conceptName, concept);
+    const level = questionChallengeLevelForProof(meta.question || {}, concept || {}, actualKind);
+    return {
+      passed: level >= threshold,
+      level,
+      threshold,
+      kind: actualKind,
+      questionId: meta.question?.id || "",
+      mode: meta.mode || "question",
+    };
+  }
+
+  function maybeRecordMasteryProof(sc, lessonId, conceptName, concept, kind, meta = {}) {
+    const info = masteryProofInfo(lessonId, conceptName, concept, kind, meta);
+    if (!info.passed) return info;
+    sc.masteryProof = {
+      passed: true,
+      level: info.level,
+      threshold: info.threshold,
+      kind: info.kind,
+      questionId: info.questionId,
+      mode: info.mode,
+      timestamp: Date.now(),
+    };
+    sc.masteryGatePending = false;
+    sc.masteryGate = null;
+    return info;
+  }
+
+  function markMasteryGatePending(sc, lessonId, conceptName, concept, kind, meta = {}) {
+    const info = masteryProofInfo(lessonId, conceptName, concept, kind, meta);
+    sc.level = Math.min(6, Math.max(1, Number(sc.level) || 1));
+    sc.passedMC = false;
+    sc.passedFill = false;
+    sc.masteryGatePending = true;
+    sc.masteryGate = {
+      reason: "needs-highest-question",
+      level: info.level,
+      threshold: info.threshold,
+      kind: info.kind,
+      questionId: info.questionId,
+      message: "כדי לקבל 100 במושג צריך לפתור נכון שאלה ברמת האתגר הגבוהה ביותר שלו.",
+      timestamp: Date.now(),
+    };
+    return info;
+  }
+
   // Returns "mc" or "fill" — which question type the concept needs at its current level
   function nextNeedFor(concept, sc) {
     const core = scoringCore();
     if (core && typeof core.nextNeedFor === "function") return core.nextNeedFor(concept, sc);
-    if (sc.level >= 7) return null;
+    if (isScoreMastered(sc)) return null;
     if (!sc.passedMC) return "mc";
     if (needsCodeFill(concept) && !sc.passedFill) return "fill";
     return null; // ready to advance — handled in applyAnswer
+  }
+
+  function advanceScoreFromTaggedAnswer(sc, lessonId, conceptName, concept, kind, correct, meta = {}) {
+    if (correct) {
+      sc.correct++;
+      sc.correctRunCount = (sc.correctRunCount || 0) + 1;
+      maybeRecordMasteryProof(sc, lessonId, conceptName, concept, kind, meta);
+      if (isScoreMastered(sc)) return false;
+      if (kind === "mc") sc.passedMC = true;
+      else if (kind === "fill") sc.passedFill = true;
+      const fillReq = needsCodeFill(concept);
+      if (sc.passedMC && (!fillReq || sc.passedFill)) {
+        const targetLevel = Math.min(7, (sc.level || 1) + 1);
+        if (targetLevel >= 7 && !scoreHasMasteryProof(sc)) {
+          markMasteryGatePending(sc, lessonId, conceptName, concept, kind, meta);
+          return false;
+        }
+        sc.level = targetLevel;
+        sc.passedMC = false;
+        sc.passedFill = false;
+        return true;
+      }
+      return false;
+    }
+    applyWeakSignalToScore(sc, concept);
+    return false;
+  }
+
+  function recordTaggedAnswerSignals(lessonId, conceptName, concept, kind, correct, meta, primaryScore) {
+    const lesson = (window.LESSONS_DATA || []).find((item) => item.id === lessonId) || null;
+    const primaryKey = resolveCanonicalConceptKey({ lessonId, conceptName, concept }) || conceptKey(lessonId, conceptName);
+    const inferredKeys = questionConceptKeysForContext(
+      meta.question || {},
+      lesson,
+      concept,
+      Number.isInteger(meta.questionIndex) ? meta.questionIndex : null,
+      8,
+    );
+    const allKeys = uniqueStableValues([primaryKey, ...inferredKeys]);
+    const primaryTag = conceptTagSnapshot(lessonId, conceptName, concept);
+    primaryScore.conceptKey = primaryTag.key;
+    primaryScore.conceptTags = primaryTag.tags || [primaryKey];
+    primaryScore.taggedAttempts = (primaryScore.taggedAttempts || 0) + 1;
+    if (correct) primaryScore.taggedCorrect = (primaryScore.taggedCorrect || 0) + 1;
+    primaryScore.lastTaggedConceptKeys = allKeys;
+
+    const relatedKeys = allKeys.filter((key) => key !== primaryKey);
+    relatedKeys.forEach((key) => {
+      const ref = findConceptByKeyLoose(key);
+      if (!ref) return;
+      const sc = ensureScore(ref.lesson.id, ref.concept.conceptName);
+      const tag = conceptTagSnapshot(ref.lesson.id, ref.concept.conceptName, ref.concept);
+      sc.conceptKey = tag.key;
+      sc.conceptTags = tag.tags || [key];
+      sc.taggedAttempts = (sc.taggedAttempts || 0) + 1;
+      if (correct) sc.taggedCorrect = (sc.taggedCorrect || 0) + 1;
+      sc.attempts = (sc.attempts || 0) + 1;
+      sc.lastTaggedConceptKeys = allKeys;
+      sc.lastTaggedFrom = primaryKey;
+      sc.lastTaggedMode = meta.mode || "question";
+      advanceScoreFromTaggedAnswer(sc, ref.lesson.id, ref.concept.conceptName, ref.concept, meta.actualKind || kind, correct, meta);
+    });
+
+    return { allKeys, relatedKeys };
   }
 
   // Apply a correct/wrong answer for the given kind ("mc" | "fill") at the concept's current level.
@@ -8287,6 +8712,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const levelBefore = sc.level || 1;
     sc.attempts++;
     let mistakeRecord = null;
+    let tagSignals = { allKeys: [conceptKey(lessonId, conceptName)], relatedKeys: [] };
     if (correct) {
       sc.correct++;
       sc.correctRunCount = (sc.correctRunCount || 0) + 1;
@@ -8303,6 +8729,10 @@ document.addEventListener("DOMContentLoaded", () => {
         saveScoreState: false,
       });
     }
+    tagSignals = recordTaggedAnswerSignals(lessonId, conceptName, concept, meta.actualKind || kind, correct, meta, sc);
+    let masteryProof = correct
+      ? maybeRecordMasteryProof(sc, lessonId, conceptName, concept, meta.actualKind || kind, meta)
+      : null;
     const confidenceCalibration = recordConceptConfidenceCalibration(lessonId, conceptName, concept, {
       confidence: meta.confidence ?? null,
       correct,
@@ -8326,6 +8756,8 @@ document.addEventListener("DOMContentLoaded", () => {
         confidencePct: calibrationEntry?.confidencePct ?? null,
         calibrationBucket: calibrationEntry?.bucket || "",
         calibrationGap: calibrationEntry?.gap ?? null,
+        conceptKeys: tagSignals.allKeys,
+        relatedConceptKeys: tagSignals.relatedKeys,
       };
       recordLearningEvidence("answer", evidencePayload);
       if (mistakeRecord) {
@@ -8343,10 +8775,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
-    if (sc.level >= 7) {
-      // Already mastered — keep stats only
+    if (isScoreMastered(sc)) {
+      // Already mastered with proof — keep stats only
       saveScores();
-      const result = { advanced: false, newLevel: 7, mistake: mistakeRecord, confidenceCalibration };
+      const result = { advanced: false, newLevel: 7, mistake: mistakeRecord, confidenceCalibration, masteryProof };
       if (meta.retestItem) recordAdaptiveRetestOutcome(meta.retestItem, correct);
       emitAnswerEvidence(result);
       return result;
@@ -8359,14 +8791,33 @@ document.addEventListener("DOMContentLoaded", () => {
       // Advance if both stages cleared (or only MC if no codeExample)
       const fillReq = needsCodeFill(concept);
       if (sc.passedMC && (!fillReq || sc.passedFill)) {
-        sc.level = Math.min(7, sc.level + 1);
+        const targetLevel = Math.min(7, sc.level + 1);
+        if (targetLevel >= 7 && !scoreHasMasteryProof(sc)) {
+          masteryProof = markMasteryGatePending(sc, lessonId, conceptName, concept, meta.actualKind || kind, meta);
+          saveScores();
+          tickStudyStreak();
+          awardXP(10);
+          checkAchievements({ lessonId, conceptName, correct: true, advanced: false, sc });
+          const result = {
+            advanced: false,
+            newLevel: sc.level,
+            masteryGateBlocked: true,
+            masteryGate: sc.masteryGate,
+            masteryProof,
+            confidenceCalibration,
+          };
+          if (meta.retestItem) recordAdaptiveRetestOutcome(meta.retestItem, correct);
+          emitAnswerEvidence(result);
+          return result;
+        }
+        sc.level = targetLevel;
         sc.passedMC = false;
         sc.passedFill = false;
         saveScores();
         tickStudyStreak();
         awardXP(35);
         checkAchievements({ lessonId, conceptName, correct: true, advanced: true, sc });
-        const result = { advanced: true, newLevel: sc.level, confidenceCalibration };
+        const result = { advanced: true, newLevel: sc.level, masteryProof, confidenceCalibration };
         if (meta.retestItem) recordAdaptiveRetestOutcome(meta.retestItem, correct);
         emitAnswerEvidence(result);
         return result;
@@ -8426,7 +8877,117 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function bestExplanation(concept) {
     const lv = concept.levels || {};
-    return lv.junior || lv.student || lv.professor || lv.soldier || lv.child || lv.grandma || "";
+    const best = lv.junior || lv.student || lv.professor || lv.soldier || lv.child || lv.grandma || "";
+    if (isLowSignalExplanation(best)) return conciseConceptDefinition(concept) || "";
+    return best || conciseConceptDefinition(concept) || "";
+  }
+
+  function normalizeDefinitionKey(value) {
+    return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+  }
+
+  function conciseDefinitionEntry(conceptOrName) {
+    const name = typeof conceptOrName === "string"
+      ? conceptOrName
+      : conceptOrName?.conceptName || "";
+    const defs = window.CONCISE_CONCEPT_DEFINITIONS || {};
+    const key = normalizeDefinitionKey(name);
+    return defs[key] || defs[key.replace(/\s+/g, "")] || null;
+  }
+
+  function glossaryEntryForConcept(name) {
+    const glossary = window.GLOSSARY || {};
+    const candidates = [
+      name,
+      String(name || "").toLowerCase(),
+      String(name || "").replace(/^./, (ch) => ch.toUpperCase()),
+      String(name || "").toUpperCase(),
+    ];
+    return candidates.map((key) => glossary[key]).find(Boolean) || null;
+  }
+
+  function conciseConceptDefinition(conceptOrName) {
+    if (typeof conceptOrName === "object" && conceptOrName?.conciseDefinition) {
+      return conceptOrName.conciseDefinition;
+    }
+    const name = typeof conceptOrName === "string"
+      ? conceptOrName
+      : conceptOrName?.conceptName || "";
+    const entry = conciseDefinitionEntry(conceptOrName);
+    if (entry?.what) return entry.what;
+    const glossaryEntry = glossaryEntryForConcept(name);
+    return glossaryEntry?.short || "";
+  }
+
+  function conciseConceptNeed(conceptOrName) {
+    if (typeof conceptOrName === "object" && conceptOrName?.mustKnow) {
+      return conceptOrName.mustKnow;
+    }
+    const entry = conciseDefinitionEntry(conceptOrName);
+    return entry?.need || "";
+  }
+
+  function isLowSignalExplanation(value) {
+    return /רעיון שמופיע הרבה בפועל|מייצג קונספט שמופיע בסטנדרט|משמש בתוך מבני קוד אמיתיים|תאר\/תארי|חלק מהפרוטוקול|חוסכת הרבה זמן דיבוג|ניתוח המושג/.test(String(value || ""));
+  }
+
+  function isTermBoundaryChar(ch) {
+    return !ch || !/[A-Za-z0-9_$]/.test(ch);
+  }
+
+  function inlineGlossaryCandidates(text) {
+    const glossary = window.GLOSSARY || {};
+    const lower = String(text || "").toLowerCase();
+    return Object.entries(glossary)
+      .filter(([term, entry]) => {
+        const raw = String(term || "").trim();
+        if (!raw || !entry) return false;
+        if (raw.length < 3 && !["if"].includes(raw.toLowerCase())) return false;
+        return lower.includes(raw.toLowerCase());
+      })
+      .sort(([a], [b]) => {
+        if (b.length !== a.length) return b.length - a.length;
+        return a.localeCompare(b);
+      })
+      .slice(0, 24)
+      .map(([term, entry]) => ({
+        term,
+        lower: term.toLowerCase(),
+        entry,
+      }));
+  }
+
+  function renderInlineGlossaryText(text) {
+    const raw = String(text || "");
+    if (!raw) return "";
+    const candidates = inlineGlossaryCandidates(raw);
+    if (!candidates.length) return esc(raw);
+    const lower = raw.toLowerCase();
+    let out = "";
+    let i = 0;
+    while (i < raw.length) {
+      const match = candidates.find((item) => {
+        if (!lower.startsWith(item.lower, i)) return false;
+        const before = raw[i - 1] || "";
+        const after = raw[i + item.term.length] || "";
+        return isTermBoundaryChar(before) && isTermBoundaryChar(after);
+      });
+      if (!match) {
+        out += esc(raw[i]);
+        i += 1;
+        continue;
+      }
+      const label = raw.slice(i, i + match.term.length);
+      const entry = match.entry || {};
+      const tip = [
+        match.term,
+        entry.he ? `(${entry.he})` : "",
+        entry.short || entry.long || "",
+      ].filter(Boolean).join(" ");
+      out += `<span class="inline-gloss-term" tabindex="0" role="note" aria-label="${esc(tip)}" data-tooltip="${esc(tip)}">${esc(label)}</span>`;
+      i += match.term.length;
+    }
+    return out;
   }
 
   function compactTextForTooltip(text, limit = 150) {
@@ -8450,7 +9011,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const core = scoringCore();
     if (core && typeof core.masteryPercent === "function") return core.masteryPercent(sc);
     const level = Math.max(1, Math.min(7, Number(sc?.level) || 1));
-    if (sc?.markedKnown || level >= 7) return 100;
+    if (isScoreMastered(sc)) return 100;
 
     const attempts = Math.max(0, Number(sc?.attempts) || 0);
     const correct = Math.max(0, Number(sc?.correct) || 0);
@@ -8716,8 +9277,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function fallbackQuestionConceptKeys(question, lesson, concept, questionIndex) {
-    if (Array.isArray(question?.conceptKeys) && question.conceptKeys.length) return question.conceptKeys;
-    if (question?.conceptKey) return [question.conceptKey];
+    const explicitKeys = explicitQuestionConceptKeys(question || {}, lesson?.id || "");
+    if (explicitKeys.length) return explicitKeys;
     if (lesson && concept) return [conceptKey(lesson.id, concept.conceptName)];
     if (lesson && Number.isInteger(questionIndex) && lesson.concepts?.[questionIndex]) {
       return [conceptKey(lesson.id, lesson.concepts[questionIndex].conceptName)];
@@ -8767,8 +9328,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const fallback = splitGraphConceptKey(key);
     const conceptName = ref?.concept?.conceptName || fallback.conceptName || key;
     const lessonTitle = ref?.lesson?.title || fallback.lessonId || "שיעור לא זמין";
-    const simple = ref?.concept?.levels?.grandma || "";
-    const technical = ref?.concept?.levels?.student || bestExplanation(ref?.concept || {});
+    const rawSimple = ref?.concept?.levels?.grandma || "";
+    const rawTechnical = ref?.concept?.levels?.student || "";
+    const simple =
+      conciseConceptDefinition(ref?.concept || conceptName) ||
+      (isLowSignalExplanation(rawSimple) ? "" : rawSimple);
+    const technicalCandidate =
+      conciseConceptNeed(ref?.concept || conceptName) ||
+      (isLowSignalExplanation(rawTechnical) ? "" : rawTechnical) ||
+      bestExplanation(ref?.concept || {});
+    const technical = technicalCandidate && technicalCandidate !== simple ? technicalCandidate : "";
     const sc = ref ? getScore(ref.lesson.id, ref.concept.conceptName) : null;
     const pct = ref ? masteryPercent(sc) : null;
     const relationLabel = focusSet.has(key)
@@ -8787,8 +9356,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <small>${esc(relationLabel)}${pct !== null ? ` · ${pct}/100` : ""}</small>
         </button>
         <div class="q-prereq-lesson">${esc(lessonTitle)}</div>
-        ${simple ? `<p><strong>בשפה פשוטה:</strong> ${esc(simple)}</p>` : ""}
-        ${technical ? `<p><strong>מה צריך לדעת:</strong> ${esc(technical)}</p>` : ""}
+        ${simple ? `<p><strong>מה זה:</strong> ${renderInlineGlossaryText(simple)}</p>` : ""}
+        ${technical ? `<p><strong>צריך לדעת:</strong> ${renderInlineGlossaryText(technical)}</p>` : ""}
       </article>`;
   }
 
@@ -9032,9 +9601,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // weak ones surface more often.
   function weightFor(lessonId, conceptName) {
     const sc = getScore(lessonId, conceptName);
-    if (sc.level >= 7) return 0.15; // mastered — almost never re-asked
+    if (isScoreMastered(sc)) return 0.15; // mastered — almost never re-asked
     // Base: level 1 -> 8, level 6 -> 3
     let w = Math.max(1.5, 9 - sc.level);
+    if (sc.masteryGatePending) w *= 2.2; // needs hardest-question proof before 100
     if (sc.attempts === 0) w *= 1.3; // never tried — slight boost
     // If concept already passed MC at current level but not fill, slightly boost it so the user finishes the level
     if (sc.passedMC || sc.passedFill) w *= 1.4;
@@ -9303,7 +9873,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function masteredCount() {
     let m = 0;
     trainableConcepts().forEach(({ lesson, concept }) => {
-      if (getScore(lesson.id, concept.conceptName).level >= 7) m++;
+      if (isScoreMastered(getScore(lesson.id, concept.conceptName))) m++;
     });
     return m;
   }
@@ -10030,7 +10600,7 @@ document.addEventListener("DOMContentLoaded", () => {
         enriched.sort((a, b) => a.sc.level - b.sc.level);
 
         const lessonAttempts = enriched.reduce((s, e) => s + e.sc.attempts, 0);
-        const lessonMastered = enriched.filter((e) => e.sc.level >= 7).length;
+        const lessonMastered = enriched.filter((e) => isScoreMastered(e.sc)).length;
         const lessonAvgLevel =
           enriched.reduce((s, e) => s + e.sc.level, 0) / enriched.length;
         const lessonPct = Math.round(((lessonAvgLevel - 1) / 6) * 100);
@@ -10038,16 +10608,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const rows = enriched
           .map(({ c, sc }) => {
             const lvl = LEVEL_INFO[sc.level];
-            const masteredCls = sc.level >= 7 ? "mastered" : "";
+            const mastered = isScoreMastered(sc);
+            const masteredCls = mastered ? "mastered" : "";
             const cls =
               sc.level >= 6 ? "pos" : sc.level >= 3 ? "zero" : "neg";
             const levelPct = Math.round(((sc.level - 1) / 6) * 100);
-            const stagesNote = sc.level < 7
+            const stagesNote = !mastered
               ? `<span class="tr-stages">${sc.passedMC ? "🅰️✅" : "🅰️◯"}${needsCodeFill(c) ? (sc.passedFill ? " ✍️✅" : " ✍️◯") : ""}</span>`
               : "";
             return `
               <div class="tr-concept ${cls} ${masteredCls}" title="רמה ${sc.level}/7 · ${esc(lvl.label)}">
-                <span class="tr-name">${esc(c.conceptName)}${sc.level >= 7 ? " 🏆" : ""}</span>
+                <span class="tr-name">${esc(c.conceptName)}${mastered ? " 🏆" : ""}</span>
                 <span class="tr-attempts">${sc.correct}/${sc.attempts}</span>
                 ${stagesNote}
                 <div class="tr-bar"><div style="width:${levelPct}%"></div></div>
@@ -16521,7 +17092,7 @@ document.addEventListener("DOMContentLoaded", () => {
         acc.lvl += sc.level;
         acc.attempts += sc.attempts || 0;
         acc.correct += sc.correct || 0;
-        if (sc.level >= 7) acc.masters++;
+        if (isScoreMastered(sc)) acc.masters++;
         return acc;
       },
       { lvl: 0, attempts: 0, correct: 0, masters: 0 },
@@ -18210,7 +18781,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const attempts = sc.attempts || 0;
         if (attempts === 0 || isSrsDue(sc)) acc.due++;
         if (isFlashcardWeak(sc)) acc.weak++;
-        if ((sc.level || 1) >= 7) acc.mastered++;
+        if (isScoreMastered(sc)) acc.mastered++;
         acc.total++;
         return acc;
       },
@@ -18654,7 +19225,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       id: "design_system",
       label: "Design Systems",
-      filter: (k) => /^(lesson_25::Tailwind CSS|react_blueprint::Component Architecture)$/i.test(k),
+      filter: (k) => /^(lesson_25::Tailwind CSS|react_blueprint::Component Architecture|lesson_design_systems::)/i.test(k),
     },
     {
       id: "nextjs",
@@ -18679,7 +19250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       id: "ai_engineering",
       label: "AI Engineering",
-      filter: () => false,
+      filter: (k) => /^lesson_ai_engineering::/i.test(k),
     },
   ];
 
@@ -19386,6 +19957,7 @@ document.addEventListener("DOMContentLoaded", () => {
           correct: sc.correct,
           weakReports: sc.weakReports || 0,
           srsState: sc.srsState,
+          mastered: isScoreMastered(sc),
         });
       });
     });
@@ -19393,8 +19965,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Compute stats per topic
     const rows = Object.values(topicMap).map((t) => {
       const total = t.concepts.length;
-      const mastered = t.concepts.filter((c) => c.level >= 7).length;
-      const learning = t.concepts.filter((c) => c.attempts > 0 && c.level < 7).length;
+      const mastered = t.concepts.filter((c) => c.mastered).length;
+      const learning = t.concepts.filter((c) => c.attempts > 0 && !c.mastered).length;
       const notStarted = t.concepts.filter((c) => c.attempts === 0).length;
       const pctMastered = total ? (mastered / total) * 100 : 0;
       const pctLearning = total ? (learning / total) * 100 : 0;
@@ -19464,7 +20036,7 @@ document.addEventListener("DOMContentLoaded", () => {
               ${r.concepts
                 .sort((a, b) => a.level - b.level)
                 .map((c) => {
-                  const lvlClass = c.level >= 7 ? "gm-lvl-mastered" : c.level >= 4 ? "gm-lvl-mid" : "gm-lvl-low";
+                  const lvlClass = c.mastered ? "gm-lvl-mastered" : c.level >= 4 ? "gm-lvl-mid" : "gm-lvl-low";
                   const due = c.srsState && c.srsState.due < now ? "🔁" : "";
                   return `<span class="gm-concept-chip ${lvlClass}" title="רמה ${c.level}/7">${due}${esc(c.name)}</span>`;
                 })
@@ -20216,7 +20788,7 @@ document.addEventListener("DOMContentLoaded", () => {
       correctQs += prog.correct;
       if (prog.total > 0 && prog.answered === prog.total) completed++;
       const sc = getScore(b.lessonId, b.conceptName);
-      if (sc.level >= 7) masterCount++;
+      if (isScoreMastered(sc)) masterCount++;
     });
     const progressPct =
       totalQs > 0 ? Math.round((correctQs / totalQs) * 100) : 0;
@@ -21271,8 +21843,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const sc = getScore(lesson.id, concept.conceptName);
     const fill = concept.codeExample ? makeCodeFill(concept) : null;
 
-    // Master state — show only a "refresh" button
-    if (sc.level >= 7) {
+    // Master state — show only a "refresh" button after the highest-question proof.
+    if (isScoreMastered(sc)) {
       slot.innerHTML = `
         <div class="concept-mastered-banner">
           🏆 הגעת לרמת מאסטר במושג זה — שלטת בכל 6 הרמות.
@@ -21283,6 +21855,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       return;
     }
+
+    const masteryGateHTML = sc.masteryGatePending
+      ? `<div class="concept-stage-done mastery-gate-pending">
+          🔒 נשאר מבחן עומק: כדי לקבל 100 במושג צריך לענות נכון על שאלה ברמת האתגר הגבוהה ביותר.
+        </div>`
+      : "";
 
     const mcStageHTML = sc.passedMC
       ? `<div class="concept-stage-done">🅰️ ✅ עברת את שלב השאלה האמריקנית ברמה זו.</div>`
@@ -21297,6 +21875,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     slot.innerHTML = `
       <div class="concept-stages">
+        ${masteryGateHTML}
         ${mcStageHTML}
         ${fillStageHTML}
       </div>`;
@@ -23224,10 +23803,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const correctIndex = parseInt(qEl.dataset.correct);
       const selectedIndex = parseInt(selected.value);
+      const isCorrect = selectedIndex === correctIndex;
+      const routedKeys = questionConceptKeysForContext(quizItem || {}, lesson, null, qIndex, 6);
+      let answerResult = null;
 
       qEl.classList.add("answered");
 
-      if (selectedIndex === correctIndex) {
+      if (routedKeys[0]) {
+        const ref = findConceptByKeyLoose(routedKeys[0]);
+        if (ref) {
+          answerResult = applyAnswer(
+            ref.lesson.id,
+            ref.concept.conceptName,
+            ref.concept,
+            "mc",
+            isCorrect,
+            {
+              question: {
+                ...(quizItem || {}),
+                conceptKey: routedKeys[0],
+                conceptKeys: routedKeys,
+              },
+              selectedIdx: selectedIndex,
+              mode: "lesson-quiz",
+              questionIndex: qIndex,
+            },
+          );
+        }
+      }
+
+      if (isCorrect) {
         correct++;
         qEl.classList.add("correct");
         qEl
@@ -23248,6 +23853,10 @@ document.addEventListener("DOMContentLoaded", () => {
           correctAnswer: quizItem?.options?.[correctIndex] || "",
           explanation: quizItem?.explanation || "",
         });
+        const explanationBox = qEl.querySelector(".quiz-explanation");
+        if (explanationBox && answerResult?.mistake) {
+          explanationBox.insertAdjacentHTML("beforeend", renderMistakeAgentFeedback(answerResult.mistake));
+        }
       }
 
       // Disable further clicks
@@ -23567,7 +24176,7 @@ document.addEventListener("DOMContentLoaded", () => {
     all.forEach(({ lesson, concept }) => {
       const sc = getScore(lesson.id, concept.conceptName);
       totalLevel += sc.level;
-      if (sc.level >= 7) masters++;
+      if (isScoreMastered(sc)) masters++;
     });
     const avgLevel = totalLevel / all.length;
     // Map [1, 7] → [0%, 100%]
@@ -23783,7 +24392,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: "fifty_correct",  title: "5️⃣0️⃣ חמישים נכונות", desc: "ענית נכון 50 פעמים",      check: (d, all) => all.totalCorrect >= 50 },
     { id: "first_level",    title: "📈 עלייה בדרגה",   desc: "עלית רמה לראשונה",          check: (d) => d.advanced },
     { id: "level_5",        title: "🎓 מומחה",          desc: "הגעת לרמה 5 במושג כלשהו",   check: (d) => d.sc.level >= 5 },
-    { id: "mastered",       title: "🏆 מאסטר",          desc: "שלטת במושג לחלוטין (רמה 7)", check: (d) => d.sc.level >= 7 },
+    { id: "mastered",       title: "🏆 מאסטר",          desc: "שלטת במושג לחלוטין דרך שאלת עומק", check: (d) => isScoreMastered(d.sc) },
     { id: "streak_3",       title: "🔥 שלושה ימים",     desc: "למדת 3 ימים ברציפות",       check: () => getStreak().count >= 3 },
     { id: "streak_7",       title: "🔥🔥 שבוע שלם",    desc: "למדת 7 ימים ברציפות",       check: () => getStreak().count >= 7 },
     { id: "streak_30",      title: "🔥🔥🔥 חודש מלא",  desc: "למדת 30 ימים ברציפות",      check: () => getStreak().count >= 30 },
@@ -23826,7 +24435,7 @@ document.addEventListener("DOMContentLoaded", () => {
       totalCorrect += sc.correct || 0;
       totalAttempts += sc.attempts || 0;
       if (sc.attempts > 0) lessons.add(key.split("::")[0]);
-      if ((sc.level || 1) >= 7) masteredConcepts++;
+      if (isScoreMastered(sc)) masteredConcepts++;
       if ((sc.weakReports || 0) > 0) weakConcepts++;
       if (sc.attempts > 0 && isSrsDue(sc)) dueConcepts++;
     });

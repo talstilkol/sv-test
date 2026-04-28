@@ -9,8 +9,13 @@ describe("SVCollege command center", () => {
     expect(first.reportVersion).toBe("svcollege-command-center-v1");
     expect(first.finishLine.target).toBe("SVCollege AI & Full Stack only");
     expect(first.finishLine.modules).toBe(15);
-    expect(first.finishLine.releaseBlockers).toBeGreaterThan(0);
-    expect(first.redFirstQueue.length).toBeGreaterThan(0);
+    expect(first.finishLine.releaseBlockers).toBe(0);
+    expect(first.finishLine.tabMatrixGaps).toBe(0);
+    expect(first.finishLine.browserSmoke.desktop).toBe("pass");
+    expect(first.finishLine.browserSmoke.mobile).toBe("pending");
+    expect(first.redFirstQueue.length).toBe(0);
+    expect(first.tabMatrix.ready).toBe(true);
+    expect(first.tabMatrix.strictCoverage).toBe(100);
   });
 
   it("summarizes source assets and canonical docs", () => {
@@ -21,6 +26,7 @@ describe("SVCollege command center", () => {
     expect(report.docs.every((doc) => doc.exists)).toBe(true);
     expect(report.commands).toEqual(expect.arrayContaining([
       "npm run svcollege:readiness:write",
+      "npm run svcollege:tab-matrix:write",
       "npm run lessons:assets",
       "npm run build",
     ]));
@@ -31,16 +37,26 @@ describe("SVCollege command center", () => {
     const activeIds = report.activeParallelMode.activeExternalSessions.map((session) => session.id);
     const completedIds = report.activeParallelMode.completedExternalSessions.map((session) => session.id);
 
-    expect(report.activeParallelMode.status).toBe("single-session-finish-line-after-sql-auth-nextjs-museum-nestjs-devops");
+    expect(report.activeParallelMode.status).toBe("single-session-finish-line1-all-modules-covered");
     expect(activeIds).toEqual([]);
-    expect(completedIds).toEqual(["sql-orm", "auth-security", "nextjs", "museum", "nestjs", "devops"]);
+    expect(completedIds).toEqual([
+      "sql-orm",
+      "auth-security",
+      "nextjs",
+      "museum",
+      "nestjs",
+      "devops",
+      "ai-engineering",
+      "design-systems",
+    ]);
     expect(report.activeParallelMode.pausedSessions).toEqual(expect.arrayContaining([
-      "All Tabs QA",
+      "Mobile All Tabs QA",
     ]));
     expect(report.activeParallelMode.pausedSessions).not.toContain("Auth");
     expect(report.activeParallelMode.pausedSessions).not.toContain("Next.js");
     expect(report.activeParallelMode.pausedSessions).not.toContain("Nest.js");
     expect(report.activeParallelMode.pausedSessions).not.toContain("DevOps");
+    expect(report.activeParallelMode.pausedSessions).not.toContain("AI Engineering");
     expect(report.activeParallelMode.currentSessionAllowedScope).toEqual(expect.arrayContaining([
       "Command Center reports",
       "post-SQL/Auth/Next.js/Museum integration quality gates",
@@ -60,8 +76,9 @@ describe("SVCollege command center", () => {
       expect(module.tests.length).toBeGreaterThan(0);
       expect(module.tests.every((test) => test.exists)).toBe(true);
       expect(module.browserVerification).toEqual(expect.objectContaining({
-        status: "pending-session-7",
-        owner: "codex/svcollege-tab-health",
+        status: "desktop-pass/mobile-pending",
+        owner: "current",
+        report: "SVCOLLEGE_BROWSER_SMOKE.md",
       }));
     });
 
@@ -98,10 +115,7 @@ describe("SVCollege command center", () => {
   it("keeps the red-first queue sorted by release priority", () => {
     const report = commandCenter.buildReport();
 
-    expect(report.redFirstQueue.map((item) => item.title)).toEqual([
-      "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
-      "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
-    ]);
+    expect(report.redFirstQueue.map((item) => item.title)).toEqual([]);
   });
 
   it("extracts the parallel-session opening board", () => {
@@ -115,7 +129,7 @@ describe("SVCollege command center", () => {
       "8 Question Quality",
       "7 All Tabs QA",
     ]));
-    expect(report.parallelSessions.nextOpenRule).toContain("Nest.js and DevOps are integrated");
+    expect(report.parallelSessions.nextOpenRule).toContain("All 15 SVCollege modules are covered");
   });
 
   it("renders markdown with queue and gates", () => {
@@ -126,6 +140,8 @@ describe("SVCollege command center", () => {
     expect(markdown).toContain("## Red-First Queue");
     expect(markdown).toContain("## No-Evidence Gate");
     expect(markdown).toContain("## Module Evidence Matrix");
+    expect(markdown).toContain("## Module × Tab Matrix");
+    expect(markdown).toContain("Desktop browser smoke: pass");
     expect(markdown).toContain("## Parallel Sessions");
     expect(markdown).toContain("Per-distractor feedback");
   });

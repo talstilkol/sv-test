@@ -35,6 +35,10 @@ export function filterContextNodes(nodes, query) {
     .filter(Boolean);
 }
 
+export function contextNumber(path) {
+  return (path || []).map((index) => Number(index) + 1).join(".");
+}
+
 export function contextActionId(path, node) {
   const suffix = String((node && (node.id || node.label)) || "leaf").replace(/\s+/g, "_");
   return `ctx-${path.join("-")}-${suffix}`;

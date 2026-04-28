@@ -28,6 +28,8 @@ const LESSON_FILES = [
   ["lesson_nextjs.js", "LESSON_NEXTJS"],
   ["lesson_nestjs.js", "LESSON_NESTJS"],
   ["lesson_devops_deploy.js", "LESSON_DEVOPS_DEPLOY"],
+  ["lesson_ai_engineering.js", "LESSON_AI_ENGINEERING"],
+  ["lesson_design_systems.js", "LESSON_DESIGN_SYSTEMS"],
   ["lesson21.js", "LESSON_21"],
   ["lesson22.js", "LESSON_22"],
   ["lesson23.js", "LESSON_23"],
@@ -120,6 +122,15 @@ function collectPractice() {
   const devopsQuestions = readDataValue("svcollege_questions_devops.js", "SVCOLLEGE_DEVOPS_QUESTIONS") || {};
   const devopsTraces = readDataValue("svcollege_traces_devops.js", "SVCOLLEGE_DEVOPS_TRACES") || [];
   const devopsBuilds = readDataValue("svcollege_builds_devops.js", "SVCOLLEGE_DEVOPS_BUILDS") || [];
+  const aiEngineeringQuestions = readDataValue("svcollege_questions_ai_engineering.js", "SVCOLLEGE_AI_ENGINEERING_QUESTIONS") || {};
+  const aiEngineeringTraces = readDataValue("svcollege_traces_ai_engineering.js", "SVCOLLEGE_AI_ENGINEERING_TRACES") || [];
+  const aiEngineeringBuilds = readDataValue("svcollege_builds_ai_engineering.js", "SVCOLLEGE_AI_ENGINEERING_BUILDS") || [];
+  const designSystemsQuestions = readDataValue("svcollege_questions_design_systems.js", "SVCOLLEGE_DESIGN_SYSTEMS_QUESTIONS") || {};
+  const designSystemsTraces = readDataValue("svcollege_traces_design_systems.js", "SVCOLLEGE_DESIGN_SYSTEMS_TRACES") || [];
+  const designSystemsBuilds = readDataValue("svcollege_builds_design_systems.js", "SVCOLLEGE_DESIGN_SYSTEMS_BUILDS") || [];
+  const bridgeQuestions = readDataValue("svcollege_questions_bridge.js", "SVCOLLEGE_BRIDGE_QUESTIONS") || {};
+  const bridgeTraces = readDataValue("svcollege_traces_bridge.js", "SVCOLLEGE_BRIDGE_TRACES") || [];
+  const bridgeBuilds = readDataValue("svcollege_builds_bridge.js", "SVCOLLEGE_BRIDGE_BUILDS") || [];
 
   return {
     mc: [
@@ -130,6 +141,9 @@ function collectPractice() {
       ...listQuestions(nextjsQuestions, "mc"),
       ...listQuestions(nestjsQuestions, "mc"),
       ...listQuestions(devopsQuestions, "mc"),
+      ...listQuestions(aiEngineeringQuestions, "mc"),
+      ...listQuestions(designSystemsQuestions, "mc"),
+      ...listQuestions(bridgeQuestions, "mc"),
     ],
     fill: [
       ...listQuestions(bank, "fill"),
@@ -139,9 +153,32 @@ function collectPractice() {
       ...listQuestions(nextjsQuestions, "fill"),
       ...listQuestions(nestjsQuestions, "fill"),
       ...listQuestions(devopsQuestions, "fill"),
+      ...listQuestions(aiEngineeringQuestions, "fill"),
+      ...listQuestions(designSystemsQuestions, "fill"),
+      ...listQuestions(bridgeQuestions, "fill"),
     ],
-    trace: [...(readDataValue("questions_trace.js", "QUESTIONS_TRACE") || []), ...sqlOrmTraces, ...authTraces, ...nextjsTraces, ...nestjsTraces, ...devopsTraces],
-    builds: [...(readDataValue("questions_build.js", "QUESTIONS_BUILD") || []), ...sqlOrmBuilds, ...authBuilds, ...nextjsBuilds, ...nestjsBuilds, ...devopsBuilds],
+    trace: [
+      ...(readDataValue("questions_trace.js", "QUESTIONS_TRACE") || []),
+      ...sqlOrmTraces,
+      ...authTraces,
+      ...nextjsTraces,
+      ...nestjsTraces,
+      ...devopsTraces,
+      ...aiEngineeringTraces,
+      ...designSystemsTraces,
+      ...bridgeTraces,
+    ],
+    builds: [
+      ...(readDataValue("questions_build.js", "QUESTIONS_BUILD") || []),
+      ...sqlOrmBuilds,
+      ...authBuilds,
+      ...nextjsBuilds,
+      ...nestjsBuilds,
+      ...devopsBuilds,
+      ...aiEngineeringBuilds,
+      ...designSystemsBuilds,
+      ...bridgeBuilds,
+    ],
     bugs: [
       ...(readDataValue("questions_bug.js", "QUESTIONS_BUG") || []),
       ...listQuestions(sqlOrmQuestions, "bugHunt"),
@@ -149,6 +186,9 @@ function collectPractice() {
       ...listQuestions(nextjsQuestions, "bugHunt"),
       ...listQuestions(nestjsQuestions, "bugHunt"),
       ...listQuestions(devopsQuestions, "bugHunt"),
+      ...listQuestions(aiEngineeringQuestions, "bugHunt"),
+      ...listQuestions(designSystemsQuestions, "bugHunt"),
+      ...listQuestions(bridgeQuestions, "bugHunt"),
     ],
     pairMatch: readDataValue("pair_match.js", "PAIR_MATCH_GAMES") || [],
     capstones: readDataValue("capstones.js", "CAPSTONE_PROJECTS") || [],

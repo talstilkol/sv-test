@@ -47,4 +47,12 @@ describe("Context tree view helpers", () => {
     expect(contextTree.contextActionId([0, 1], { id: "React Hooks" })).toBe("ctx-0-1-React_Hooks");
     expect(contextTree.contextActionId([2], { label: "Express Router" })).toBe("ctx-2-Express_Router");
   });
+
+  it("builds human tree numbers from zero-based paths", () => {
+    expect(contextTree.contextNumber([0])).toBe("1");
+    expect(contextTree.contextNumber([0, 0])).toBe("1.1");
+    expect(contextTree.contextNumber([0, 0, 0])).toBe("1.1.1");
+    expect(contextTree.contextNumber([0, 0, 0, 0])).toBe("1.1.1.1");
+    expect(contextTree.contextNumber([1, 2, 12])).toBe("2.3.13");
+  });
 });

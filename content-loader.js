@@ -17,6 +17,8 @@
     typeof LESSON_NEXTJS !== "undefined" ? LESSON_NEXTJS : null,
     typeof LESSON_NESTJS !== "undefined" ? LESSON_NESTJS : null,
     typeof LESSON_DEVOPS_DEPLOY !== "undefined" ? LESSON_DEVOPS_DEPLOY : null,
+    typeof LESSON_AI_ENGINEERING !== "undefined" ? LESSON_AI_ENGINEERING : null,
+    typeof LESSON_DESIGN_SYSTEMS !== "undefined" ? LESSON_DESIGN_SYSTEMS : null,
     typeof LESSON_21 !== "undefined" ? LESSON_21 : null,
     typeof LESSON_22 !== "undefined" ? LESSON_22 : null,
     typeof LESSON_23 !== "undefined" ? LESSON_23 : null,
@@ -57,15 +59,54 @@
   // Sprint 2 — Creative Methods (war stories + comparisons)
   const warStories = typeof WAR_STORIES !== "undefined" ? WAR_STORIES : {};
   const comparisons = typeof COMPARISONS !== "undefined" ? COMPARISONS : {};
+  const svcollegeQuestionBanks = [
+    typeof SVCOLLEGE_SQL_ORM_QUESTIONS !== "undefined" ? SVCOLLEGE_SQL_ORM_QUESTIONS : null,
+    typeof SVCOLLEGE_AUTH_QUESTIONS !== "undefined" ? SVCOLLEGE_AUTH_QUESTIONS : null,
+    typeof SVCOLLEGE_NEXTJS_QUESTIONS !== "undefined" ? SVCOLLEGE_NEXTJS_QUESTIONS : null,
+    typeof SVCOLLEGE_NESTJS_QUESTIONS !== "undefined" ? SVCOLLEGE_NESTJS_QUESTIONS : null,
+    typeof SVCOLLEGE_DEVOPS_QUESTIONS !== "undefined" ? SVCOLLEGE_DEVOPS_QUESTIONS : null,
+    typeof SVCOLLEGE_AI_ENGINEERING_QUESTIONS !== "undefined" ? SVCOLLEGE_AI_ENGINEERING_QUESTIONS : null,
+    typeof SVCOLLEGE_DESIGN_SYSTEMS_QUESTIONS !== "undefined" ? SVCOLLEGE_DESIGN_SYSTEMS_QUESTIONS : null,
+    typeof SVCOLLEGE_BRIDGE_QUESTIONS !== "undefined" ? SVCOLLEGE_BRIDGE_QUESTIONS : null,
+  ].filter(Boolean);
+  const svcollegeMC = svcollegeQuestionBanks.flatMap((bank) => bank.mc || []);
+  const svcollegeFill = svcollegeQuestionBanks.flatMap((bank) => bank.fill || []);
+  const svcollegeBugHunts = svcollegeQuestionBanks.flatMap((bank) => bank.bugHunt || []);
+  const svcollegeTraces = [
+    ...(typeof SVCOLLEGE_SQL_ORM_TRACES !== "undefined" ? SVCOLLEGE_SQL_ORM_TRACES : []),
+    ...(typeof SVCOLLEGE_AUTH_TRACES !== "undefined" ? SVCOLLEGE_AUTH_TRACES : []),
+    ...(typeof SVCOLLEGE_NEXTJS_TRACES !== "undefined" ? SVCOLLEGE_NEXTJS_TRACES : []),
+    ...(typeof SVCOLLEGE_NESTJS_TRACES !== "undefined" ? SVCOLLEGE_NESTJS_TRACES : []),
+    ...(typeof SVCOLLEGE_DEVOPS_TRACES !== "undefined" ? SVCOLLEGE_DEVOPS_TRACES : []),
+    ...(typeof SVCOLLEGE_AI_ENGINEERING_TRACES !== "undefined" ? SVCOLLEGE_AI_ENGINEERING_TRACES : []),
+    ...(typeof SVCOLLEGE_DESIGN_SYSTEMS_TRACES !== "undefined" ? SVCOLLEGE_DESIGN_SYSTEMS_TRACES : []),
+    ...(typeof SVCOLLEGE_BRIDGE_TRACES !== "undefined" ? SVCOLLEGE_BRIDGE_TRACES : []),
+  ];
+  const svcollegeBuilds = [
+    ...(typeof SVCOLLEGE_SQL_ORM_BUILDS !== "undefined" ? SVCOLLEGE_SQL_ORM_BUILDS : []),
+    ...(typeof SVCOLLEGE_AUTH_BUILDS !== "undefined" ? SVCOLLEGE_AUTH_BUILDS : []),
+    ...(typeof SVCOLLEGE_NEXTJS_BUILDS !== "undefined" ? SVCOLLEGE_NEXTJS_BUILDS : []),
+    ...(typeof SVCOLLEGE_NESTJS_BUILDS !== "undefined" ? SVCOLLEGE_NESTJS_BUILDS : []),
+    ...(typeof SVCOLLEGE_DEVOPS_BUILDS !== "undefined" ? SVCOLLEGE_DEVOPS_BUILDS : []),
+    ...(typeof SVCOLLEGE_AI_ENGINEERING_BUILDS !== "undefined" ? SVCOLLEGE_AI_ENGINEERING_BUILDS : []),
+    ...(typeof SVCOLLEGE_DESIGN_SYSTEMS_BUILDS !== "undefined" ? SVCOLLEGE_DESIGN_SYSTEMS_BUILDS : []),
+    ...(typeof SVCOLLEGE_BRIDGE_BUILDS !== "undefined" ? SVCOLLEGE_BRIDGE_BUILDS : []),
+  ];
   // P1.4.3 — Bug Hunt questions grouped by conceptKey
-  const bugList = typeof QUESTIONS_BUG !== "undefined" ? QUESTIONS_BUG : [];
+  const bugList = [
+    ...(typeof QUESTIONS_BUG !== "undefined" ? QUESTIONS_BUG : []),
+    ...svcollegeBugHunts,
+  ];
   const bugsByKey = bugList.reduce((acc, b) => {
     if (!b.conceptKey) return acc;
     (acc[b.conceptKey] = acc[b.conceptKey] || []).push(b);
     return acc;
   }, {});
   // P1.4.4 — Mini Build questions grouped by conceptKey
-  const buildList = typeof QUESTIONS_BUILD !== "undefined" ? QUESTIONS_BUILD : [];
+  const buildList = [
+    ...(typeof QUESTIONS_BUILD !== "undefined" ? QUESTIONS_BUILD : []),
+    ...svcollegeBuilds,
+  ];
   const buildsByKey = buildList.reduce((acc, b) => {
     if (!b.conceptKey) return acc;
     (acc[b.conceptKey] = acc[b.conceptKey] || []).push(b);
@@ -81,6 +122,28 @@
   const memoryPalaces = typeof MEMORY_PALACES !== "undefined" ? MEMORY_PALACES : {};
   const problemFirst = typeof PROBLEM_FIRST !== "undefined" ? PROBLEM_FIRST : {};
   const conceptVideos = typeof CONCEPT_VIDEOS !== "undefined" ? CONCEPT_VIDEOS : {};
+  const conciseDefinitions = typeof CONCISE_CONCEPT_DEFINITIONS !== "undefined" ? CONCISE_CONCEPT_DEFINITIONS : {};
+  const lowSignalExplanationRe = /רעיון שמופיע הרבה בפועל|מייצג קונספט שמופיע בסטנדרט|משמש בתוך מבני קוד אמיתיים|תאר\/תארי|חלק מהפרוטוקול|חוסכת הרבה זמן דיבוג|ניתוח המושג/;
+  const normalizeDefinitionKey = (value) =>
+    String(value || "")
+      .toLowerCase()
+      .replace(/\s+/g, " ")
+      .trim();
+  const definitionForConcept = (conceptName) => {
+    const key = normalizeDefinitionKey(conceptName);
+    return conciseDefinitions[key] || conciseDefinitions[key.replace(/\s+/g, "")] || null;
+  };
+  const isLowSignalExplanation = (value) => lowSignalExplanationRe.test(String(value || ""));
+  const isLowSignalGeneratedQuestion = (question) => {
+    const text = [
+      question && question.question,
+      question && question.prompt,
+      question && question.explanation,
+      question && question.code,
+      ...((question && question.options) || []),
+    ].filter(Boolean).join(" ");
+    return isLowSignalExplanation(text);
+  };
   let enrichedCount = 0;
   let extendedCount = 0;
   let antiPatternsCount = 0;
@@ -95,6 +158,18 @@
   window.LESSONS_DATA.forEach((lesson) => {
     (lesson.concepts || []).forEach((c) => {
       const key = `${lesson.id}::${c.conceptName}`;
+      const concise = definitionForConcept(c.conceptName);
+      if (concise) {
+        c.conciseDefinition = concise.what;
+        c.mustKnow = concise.need || "";
+        c.levels = c.levels || {};
+        if (!c.levels.grandma || isLowSignalExplanation(c.levels.grandma)) c.levels.grandma = concise.what;
+        if (!c.levels.child || isLowSignalExplanation(c.levels.child)) c.levels.child = concise.what;
+        if (!c.levels.student || isLowSignalExplanation(c.levels.student)) c.levels.student = concise.need || concise.what;
+        if (c.codeExplanation && isLowSignalExplanation(c.codeExplanation)) {
+          c.codeExplanation = concise.need || concise.what;
+        }
+      }
       if (enrichment[key]) {
         if (enrichment[key].deepDive) c.deepDive = enrichment[key].deepDive;
         if (enrichment[key].analogies) c.analogies = enrichment[key].analogies;
@@ -168,15 +243,26 @@
 
   // Initial bank — curated only (seeded loaded lazily on demand)
   const primary = typeof QUESTIONS_BANK !== "undefined" ? QUESTIONS_BANK : { mc: [], fill: [] };
-  const traceList = typeof QUESTIONS_TRACE !== "undefined" ? QUESTIONS_TRACE : [];
+  const traceList = [
+    ...(typeof QUESTIONS_TRACE !== "undefined" ? QUESTIONS_TRACE : []),
+    ...svcollegeTraces,
+  ];
   window.QUESTIONS_BANK = {
-    mc: [...(primary.mc || [])],
-    fill: [...(primary.fill || [])],
+    mc: [...(primary.mc || []), ...svcollegeMC],
+    fill: [...(primary.fill || []), ...svcollegeFill],
     trace: [...traceList],
     bug: [...bugList],
     build: [...buildList],
   };
   window.QUICK_GUIDE = typeof QUICK_GUIDE !== "undefined" ? QUICK_GUIDE : { topics: [] };
+  if (
+    typeof CODE_BLOCKS !== "undefined" &&
+    Array.isArray(CODE_BLOCKS.blocks) &&
+    typeof SVCOLLEGE_CODE_BLOCKS !== "undefined" &&
+    Array.isArray(SVCOLLEGE_CODE_BLOCKS)
+  ) {
+    CODE_BLOCKS.blocks = [...CODE_BLOCKS.blocks, ...SVCOLLEGE_CODE_BLOCKS];
+  }
 
   // Lazy loader for the heavy seeded bank (1.4MB).
   // Loaded on demand when user opens Trainer / Study Mode.
@@ -215,19 +301,27 @@
     const seeded = window.QUESTIONS_BANK_SEEDED || { mc: [], fill: [] };
     // Avoid double-merge by checking marker
     if (window.QUESTIONS_BANK._seededMerged) return;
+    const seededMC = (seeded.mc || []).filter((q) => !isLowSignalGeneratedQuestion(q));
+    const seededFill = (seeded.fill || []).filter((q) => !isLowSignalGeneratedQuestion(q));
     window.QUESTIONS_BANK.mc = [
       ...(primary.mc || []),
-      ...(seeded.mc || []),
+      ...svcollegeMC,
+      ...seededMC,
     ];
     window.QUESTIONS_BANK.fill = [
       ...(primary.fill || []),
-      ...(seeded.fill || []),
+      ...svcollegeFill,
+      ...seededFill,
     ];
     window.QUESTIONS_BANK._seededMerged = true;
+    window.QUESTIONS_BANK._seededFiltered = {
+      mc: (seeded.mc || []).length - seededMC.length,
+      fill: (seeded.fill || []).length - seededFill.length,
+    };
   }
 
-  const handMC = (primary.mc || []).length;
-  const handFill = (primary.fill || []).length;
+  const handMC = (primary.mc || []).length + svcollegeMC.length;
+  const handFill = (primary.fill || []).length + svcollegeFill.length;
   console.log(
     `[LumenPortal] Loaded ${window.LESSONS_DATA.length} lessons · ` +
       `Bank (curated only — seeded lazy): ${handMC} MC + ${handFill} Fill · ` +

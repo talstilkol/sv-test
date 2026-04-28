@@ -18,9 +18,9 @@ Generated from repository data files. The report is deterministic and does not u
 |---|---:|---:|---:|---|---|---|
 | Anti-Pattern Gallery | 22 patterns | 22 patterns | 100% | Done | Misconception repair coverage for hard concepts | data/anti_patterns.js |
 | War Stories Library | 31 incidents | 30 incidents | 100% | Done | Real-world transfer coverage through production incident stories | data/war_stories.js |
-| Mini Build | 21 builds | 21 builds | 100% | Done | Hands-on build-practice coverage for code-writing workflows | data/questions_build.js |
-| Code Trace | 85 traces | 85 traces | 100% | Done | Execution-prediction practice coverage | data/questions_trace.js |
-| Per-Distractor Feedback | 50 MC questions | 1340 MC questions | 3.7% | Partial | Option-specific remediation coverage across the full MC bank | data/option_feedback.js<br>data/questions_bank.js<br>data/questions_bank_seeded.js |
+| Mini Build | 23 builds | 21 builds | 100% | Done | Hands-on build-practice coverage for code-writing workflows | data/questions_build.js |
+| Code Trace | 89 traces | 85 traces | 100% | Done | Execution-prediction practice coverage | data/questions_trace.js |
+| Per-Distractor Feedback | 50 MC questions | 1357 MC questions | 3.7% | Partial | Option-specific remediation coverage across the full MC bank | data/option_feedback.js<br>data/questions_bank.js<br>data/questions_bank_seeded.js |
 | Concept Metaphors | 250 metaphors | 250 metaphors | 100% | Done | Explanation-fit coverage through multiple metaphors per core concept | data/metaphors.js |
 | 3 Learning Pathways | 30 complete concepts | 30 complete concepts | 100% | Done | Persona-based explanation coverage for grandma/parent/technical paths | data/pathways.js |
 | Pair-Match | 14 games | 5 games | 100% | Done | Associative retrieval practice coverage | data/pair_match.js |
@@ -38,8 +38,8 @@ Generated from repository data files. The report is deterministic and does not u
 | Problem-First Discovery | 8 concepts | 8 concepts | 100% | Done | Problem-first discovery coverage | data/problem_first.js |
 | Stage-Zero Broken Examples | 8 concepts | 8 concepts | 100% | Done | Beginner broken-example coverage | data/stage_zero.js |
 | Hebrew/English Glossary | 228 entries | 200 entries | 100% | Done | Foundational terminology coverage | data/glossary.js |
-| Capstone Project Track | 5 projects | 5 projects | 100% | Done | Project-readiness coverage through full capstone briefs and rubrics | data/capstones.js |
-| Course Blueprint Alignment | 4 blueprints | 4 blueprints | 100% | Done | Course and exam alignment coverage from public curriculum sources | data/course_blueprints.js |
+| Capstone Project Track | 6 projects | 6 projects | 100% | Done | Project-readiness coverage through full capstone briefs and rubrics | data/capstones.js |
+| SVCollege Course Blueprint Alignment | 1 active blueprint | 1 active blueprint | 100% | Done | Course and exam alignment coverage from public curriculum sources | data/course_blueprints.js |
 
 ## Notes
 

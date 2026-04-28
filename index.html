@@ -33,7 +33,9 @@
       <!-- Sidebar Navigation -->
       <nav class="sidebar" id="sidebar">
         <div class="sidebar-header">
-          <h2>Lumen<span>Portal</span></h2>
+          <button class="sidebar-brand-home" id="brand-home-btn" type="button" aria-label="חזרה לעמוד הבית">
+            <span class="brand-main">Lumen</span><span class="brand-sub">Portal</span>
+          </button>
           <p>מאסטר בפיתוח Full-Stack</p>
         </div>
 
@@ -217,17 +219,16 @@
         </div>
       </div>
 
-      <!-- W12 — Streak + XP widgets (top bar) -->
-      <div class="w12-top-bar" id="w12-top-bar">
-        <span id="streak-widget" class="streak-widget" title="רצף לימוד" style="display:none">🔥 0</span>
-        <span id="xp-widget" class="xp-widget" title="נקודות ניסיון">⭐ 0 XP</span>
-        <button id="open-achievements" class="w12-btn" title="הישגים">🏆</button>
-        <button id="btn-open-reflection" class="w12-btn" title="רפלקציה יומית">📝</button>
-      </div>
-
       <!-- Main Content Area -->
       <main class="main-content">
         <nav class="top-tabs-bar" id="top-tabs-bar">
+          <!-- W12 — Streak + XP widgets, compact in the existing top toolbar -->
+          <div class="w12-top-bar" id="w12-top-bar" aria-label="רצף, XP והישגים">
+            <span id="streak-widget" class="streak-widget" title="רצף לימוד" style="display:none">🔥 0</span>
+            <span id="xp-widget" class="xp-widget" title="נקודות ניסיון">⭐ 0 XP</span>
+            <button id="open-achievements" class="w12-btn" title="הישגים" aria-label="פתח הישגים">🏆</button>
+            <button id="btn-open-reflection" class="w12-btn" title="רפלקציה יומית" aria-label="פתח רפלקציה יומית">📝</button>
+          </div>
           <button class="top-tab" id="open-guide" data-tab="guide" aria-label="פתח מדריך מקוצר">
             <span class="emoji" aria-hidden="true">📖</span><span>מדריך מקוצר</span>
           </button>
@@ -865,6 +866,8 @@
     <script src="data/lesson_nextjs.js?v=svcollege-nextjs-v1"></script>
     <script src="data/lesson_nestjs.js?v=svcollege-nestjs-v1"></script>
     <script src="data/lesson_devops_deploy.js?v=svcollege-devops-v1"></script>
+    <script src="data/lesson_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
+    <script src="data/lesson_design_systems.js?v=svcollege-design-systems-v1"></script>
     <script src="data/lesson21.js"></script>
     <script src="data/lesson22.js"></script>
     <script src="data/lesson23.js"></script>
@@ -886,6 +889,9 @@
     <script src="data/svcollege_traces_nextjs.js?v=svcollege-nextjs-v1"></script>
     <script src="data/svcollege_traces_nestjs.js?v=svcollege-nestjs-v1"></script>
     <script src="data/svcollege_traces_devops.js?v=svcollege-devops-v1"></script>
+    <script src="data/svcollege_traces_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
+    <script src="data/svcollege_traces_design_systems.js?v=svcollege-design-systems-v1"></script>
+    <script src="data/svcollege_traces_bridge.js?v=svcollege-bridge-v1"></script>
     <!-- P1.4.3 — Bug Hunt questions -->
     <script src="data/questions_bug.js"></script>
     <script src="data/svcollege_questions_sql_orm.js?v=svcollege-sql-orm-v1"></script>
@@ -893,6 +899,9 @@
     <script src="data/svcollege_questions_nextjs.js?v=svcollege-nextjs-v1"></script>
     <script src="data/svcollege_questions_nestjs.js?v=svcollege-nestjs-v1"></script>
     <script src="data/svcollege_questions_devops.js?v=svcollege-devops-v1"></script>
+    <script src="data/svcollege_questions_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
+    <script src="data/svcollege_questions_design_systems.js?v=svcollege-design-systems-v1"></script>
+    <script src="data/svcollege_questions_bridge.js?v=svcollege-bridge-v1"></script>
     <!-- P1.4.4 — Mini Build questions -->
     <script src="data/questions_build.js"></script>
     <script src="data/svcollege_builds_sql_orm.js?v=svcollege-sql-orm-v1"></script>
@@ -900,6 +909,9 @@
     <script src="data/svcollege_builds_nextjs.js?v=svcollege-nextjs-v1"></script>
     <script src="data/svcollege_builds_nestjs.js?v=svcollege-nestjs-v1"></script>
     <script src="data/svcollege_builds_devops.js?v=svcollege-devops-v1"></script>
+    <script src="data/svcollege_builds_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
+    <script src="data/svcollege_builds_design_systems.js?v=svcollege-design-systems-v1"></script>
+    <script src="data/svcollege_builds_bridge.js?v=svcollege-bridge-v1"></script>
     <!-- Sprint 2 — Mental Model Animator -->
     <script src="data/animations.js"></script>
     <!-- Sprint 3 — What-If Simulator -->
@@ -916,7 +928,9 @@
     <script src="data/grandma_knowledge.js"></script>
     <script src="data/grandma_visuals.js"></script>
     <script src="data/code_blocks.js"></script>
+    <script src="data/svcollege_code_blocks.js?v=svcollege-code-blocks-v1"></script>
     <script src="data/glossary.js?v=track-d-v2"></script>
+    <script src="data/concise_definitions.js?v=concise-v1"></script>
     <!-- Sprint 1 — Creative Methods (P2.S1) -->
     <script src="data/anti_patterns.js"></script>
     <script src="data/mnemonics.js"></script>
@@ -931,6 +945,8 @@
     <script src="data/svcollege_prerequisites_nextjs.js?v=svcollege-nextjs-v1"></script>
     <script src="data/svcollege_prerequisites_nestjs.js?v=svcollege-nestjs-v1"></script>
     <script src="data/svcollege_prerequisites_devops.js?v=svcollege-devops-v1"></script>
+    <script src="data/svcollege_prerequisites_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
+    <script src="data/svcollege_prerequisites_design_systems.js?v=svcollege-design-systems-v1"></script>
     <!-- W7 — Metaphor Library + Learning Pathways -->
     <script src="data/metaphors.js"></script>
     <script src="data/pathways.js"></script>
