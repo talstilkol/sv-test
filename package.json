@@ -1,0 +1,42 @@
+{
+  "name": "lumen-portal",
+  "version": "2.1.0",
+  "description": "פורטל לימוד React/JS/TS בעברית — adaptive learning portal",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "validate": "node scripts/validate_bank.js",
+    "validate:strict": "node scripts/validate_bank.js --strict",
+    "audit:distractors": "node scripts/audit_distractors.js --write --strict",
+    "audit:seeded": "node scripts/audit_seeded_questions.js --write --strict",
+    "coverage:features": "node scripts/report_feature_coverage.js",
+    "coverage:features:write": "node scripts/report_feature_coverage.js --write",
+    "coverage:features:strict": "node scripts/report_feature_coverage.js --strict --json",
+    "quality:questions": "node scripts/report_question_quality.js",
+    "quality:questions:write": "node scripts/report_question_quality.js --write",
+    "quality:questions:strict": "node scripts/report_question_quality.js --strict",
+    "quality:remediation": "node scripts/build_question_remediation_queue.js",
+    "quality:remediation:write": "node scripts/build_question_remediation_queue.js --write",
+    "quality:remediation:strict": "node scripts/build_question_remediation_queue.js --strict --summary",
+    "qa:questions": "node scripts/build_question_qa_checklist.js",
+    "qa:questions:write": "node scripts/build_question_qa_checklist.js --write",
+    "qa:questions:strict": "node scripts/build_question_qa_checklist.js --strict --summary",
+    "qa:lesson-quiz-keys": "node scripts/report_lesson_quiz_keys.js",
+    "qa:lesson-quiz-keys:write": "node scripts/report_lesson_quiz_keys.js --write",
+    "qa:lesson-quiz-keys:strict": "node scripts/report_lesson_quiz_keys.js --strict --summary",
+    "test": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "happy-dom": "^15.0.0",
+    "vitest": "^2.1.0"
+  },
+  "dependencies": {
+    "@codesandbox/sandpack-client": "^2.19.8",
+    "dompurify": "^3.4.1"
+  }
+}

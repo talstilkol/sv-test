@@ -3,8 +3,20 @@
 
 תאריך: 2026-04-26 · גרסה: 3.0 · סטטוס: טיוטה לאישור
 
+> **מסמך Legacy:** ה-Master Plan הקנוני עודכן ב-2026-04-28 בתוך [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md), כולל Re-baseline, Phase 5 Quality Governance, Phase 6 Learning Evidence + Productization, Phase 7 Learning OS + Outcome Scale, DoD קשיח, KPIs, ו-roadmap קדימה. אין להשתמש במסמך זה כמקור סטטוס עדכני.
+>
 > **PRD ו-spec מלאים:** ראה [PRODUCT_SPEC.md](PRODUCT_SPEC.md)
 > **ניתוח תחרותי:** ראה [COMPETITIVE_ANALYSIS.md](COMPETITIVE_ANALYSIS.md)
+
+---
+
+## עדכון Legacy — מוזיאון היסטורי לשפות התכנות
+
+הפרק הקנוני נמצא כעת ב-[SPEC_AND_MASTER_PLAN.md §20](SPEC_AND_MASTER_PLAN.md#20-נספח-מוזיאון-היסטורי-לשפות-התכנות).
+
+החלטת מוצר: להוסיף מסלול היסטורי שמחבר חשמל → ביטים → קוד מכונה → Assembly → שפות גבוהות → C/Java/Python/JavaScript → React/Node/Next. המטרה אינה ללמד עוד שפה, אלא לתת לתלמיד מפת עומק שמסבירה למה שפות נולדו, מה הן מסתירות, ומה המחיר/יתרון שלהן.
+
+DoD ל-MVP: 9 אולמות, 25+ מוצגים, 5 שושלות רעיונות, תפריט צד ענפי, ו-backlog להרחבות compiler/JIT/source cards.
 
 ---
 

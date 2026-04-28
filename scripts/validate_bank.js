@@ -3,7 +3,11 @@
  * scripts/validate_bank.js
  *
  * Validates data/questions_bank.js against data/lesson*.js + workbooks.
- * Usage: node scripts/validate_bank.js
+ * Usage:
+ *   node scripts/validate_bank.js            # default — warnings stay warnings
+ *   node scripts/validate_bank.js --strict   # CI mode — warnings + boilerplate +
+ *                                              missing-difficulty all become
+ *                                              errors → exit code 1
  *
  * Checks:
  *   ✓ All `conceptKey` values point to a real (lesson, concept) pair
@@ -20,6 +24,7 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 
+const STRICT = process.argv.includes("--strict");
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
 
@@ -49,16 +54,24 @@ function loadDataFiles() {
       lessons.push(v);
     }
   }
-  // QUESTIONS_TRACE lives in its own file; merge into bank.trace so the
-  // existing trace-validation block in validate() picks it up.
+  // QUESTIONS_TRACE / QUESTIONS_BUG live in their own files; merge into bank
+  // so the validation blocks in validate() pick them up.
   const baseBank = sandbox.QUESTIONS_BANK || { mc: [], fill: [] };
   const traceList = Array.isArray(sandbox.QUESTIONS_TRACE)
     ? sandbox.QUESTIONS_TRACE
+    : [];
+  const bugList = Array.isArray(sandbox.QUESTIONS_BUG)
+    ? sandbox.QUESTIONS_BUG
+    : [];
+  const buildList = Array.isArray(sandbox.QUESTIONS_BUILD)
+    ? sandbox.QUESTIONS_BUILD
     : [];
   const bank = Object.assign({}, baseBank, {
     mc: baseBank.mc || [],
     fill: baseBank.fill || [],
     trace: traceList,
+    bug: bugList,
+    build: buildList,
   });
   return {
     lessons,
@@ -189,6 +202,78 @@ function validate({ lessons, bank, seededBank, guide }) {
     if (!q.explanation) warnings.push(`[${q.id}] missing explanation (final summary)`);
   }
 
+  // -------- Bug Hunt validation (P1.4.3) --------
+  for (const q of bank.bug || []) {
+    if (!q.id) errors.push(`Bug missing id: ${JSON.stringify(q).slice(0, 80)}`);
+    if (q.id && !q.id.startsWith("bug_"))
+      warnings.push(`[${q.id}] bug IDs should start with "bug_"`);
+    if (q.id && seenIds.has(q.id)) errors.push(`Duplicate bug id: ${q.id}`);
+    seenIds.add(q.id);
+    if (!q.brokenCode || typeof q.brokenCode !== "string")
+      errors.push(`[${q.id}] bug must have brokenCode (string)`);
+    if (!Array.isArray(q.options) || q.options.length !== 4)
+      errors.push(`[${q.id}] bug must have exactly 4 options (got ${q.options?.length})`);
+    if (
+      typeof q.correctIndex !== "number" ||
+      q.correctIndex < 0 ||
+      q.correctIndex > 3
+    )
+      errors.push(`[${q.id}] correctIndex must be 0..3 (got ${q.correctIndex})`);
+    if (q.options) {
+      const set = new Set(q.options);
+      if (set.size !== q.options.length)
+        errors.push(`[${q.id}] duplicate options`);
+    }
+    if (q.brokenCode && typeof q.bugLine === "number") {
+      const totalLines = q.brokenCode.split("\n").length;
+      if (q.bugLine < 1 || q.bugLine > totalLines)
+        errors.push(
+          `[${q.id}] bugLine=${q.bugLine} out of range (1..${totalLines})`,
+        );
+    }
+    if (q.level && (q.level < 1 || q.level > 6))
+      warnings.push(`[${q.id}] level should be 1..6 (got ${q.level})`);
+    if (q.conceptKey && !validKeys.has(q.conceptKey))
+      errors.push(`[${q.id}] conceptKey not found: "${q.conceptKey}"`);
+    if (!q.explanation) warnings.push(`[${q.id}] missing explanation`);
+    if (!q.fix) warnings.push(`[${q.id}] missing fix (corrected code)`);
+  }
+
+  // -------- Mini Build validation (P1.4.4) --------
+  for (const q of bank.build || []) {
+    if (!q.id) errors.push(`Build missing id: ${JSON.stringify(q).slice(0, 80)}`);
+    if (q.id && !q.id.startsWith("build_"))
+      warnings.push(`[${q.id}] build IDs should start with "build_"`);
+    if (q.id && seenIds.has(q.id)) errors.push(`Duplicate build id: ${q.id}`);
+    seenIds.add(q.id);
+    if (!q.prompt) errors.push(`[${q.id}] build must have prompt`);
+    if (!q.starter) warnings.push(`[${q.id}] build missing starter code`);
+    if (!Array.isArray(q.tests) || q.tests.length === 0)
+      errors.push(`[${q.id}] build must have at least one test`);
+    if (Array.isArray(q.tests)) {
+      q.tests.forEach((t, i) => {
+        if (!t.regex)
+          errors.push(`[${q.id}].tests[${i}] missing regex pattern`);
+        if (t.regex) {
+          try {
+            new RegExp(t.regex, t.flags || "");
+          } catch (e) {
+            errors.push(`[${q.id}].tests[${i}] invalid regex: ${e.message}`);
+          }
+        }
+        if (!t.description)
+          warnings.push(`[${q.id}].tests[${i}] missing description`);
+      });
+    }
+    if (!q.reference)
+      warnings.push(`[${q.id}] build missing reference solution`);
+    if (q.level && (q.level < 1 || q.level > 6))
+      warnings.push(`[${q.id}] level should be 1..6 (got ${q.level})`);
+    if (q.conceptKey && !validKeys.has(q.conceptKey))
+      errors.push(`[${q.id}] conceptKey not found: "${q.conceptKey}"`);
+    if (!q.explanation) warnings.push(`[${q.id}] missing explanation`);
+  }
+
   // -------- Coverage report (combined: curated + seeded) --------
   const coverage = [];
   for (const [key, ref] of conceptByKey) {
@@ -247,6 +332,8 @@ function validate({ lessons, bank, seededBank, guide }) {
     missingDifficulty,
     totalConcepts: conceptByKey.size,
     curatedTrace: (bank.trace || []).length,
+    curatedBug: (bank.bug || []).length,
+    curatedBuild: (bank.build || []).length,
     curatedMC: (bank.mc || []).length,
     curatedFill: (bank.fill || []).length,
     seededMC: (seededBank.mc || []).length,
@@ -256,10 +343,13 @@ function validate({ lessons, bank, seededBank, guide }) {
 
 function main() {
   console.log("📦 Loading data files...");
+  if (STRICT) {
+    console.log("🔒 STRICT mode — warnings, boilerplate, and missing-difficulty are errors.");
+  }
   const data = loadDataFiles();
   console.log(
     `   ${data.lessons.length} lessons · ` +
-      `Curated bank: ${(data.bank.mc || []).length} MC + ${(data.bank.fill || []).length} Fill + ${(data.bank.trace || []).length} Trace · ` +
+      `Curated bank: ${(data.bank.mc || []).length} MC + ${(data.bank.fill || []).length} Fill + ${(data.bank.trace || []).length} Trace + ${(data.bank.bug || []).length} Bug + ${(data.bank.build || []).length} Build · ` +
       `Seeded: ${(data.seededBank.mc || []).length} MC + ${(data.seededBank.fill || []).length} Fill · ` +
       `${(data.guide.topics || []).length} guide topics.`,
   );
@@ -271,11 +361,45 @@ function main() {
     totalConcepts, curatedMC, curatedFill, seededMC, seededFill,
   } = validate(data);
 
+  // In strict mode, escalate severity for things that historically were warnings.
+  if (STRICT) {
+    warnings.forEach((w) => errors.push(`[strict:warning] ${w}`));
+    boilerplateMatches.forEach((m) =>
+      errors.push(`[strict:boilerplate] ${m.lesson}::${m.concept}`),
+    );
+    missingDifficulty.forEach((m) =>
+      errors.push(`[strict:missing-difficulty] ${m.lesson}::${m.concept}`),
+    );
+  }
+
   if (errors.length === 0) {
     console.log("✅ No errors.");
   } else {
     console.error(`❌ ${errors.length} error(s):`);
-    errors.forEach((e) => console.error(`   • ${e}`));
+    const cap = STRICT ? 50 : errors.length;
+    errors.slice(0, cap).forEach((e) => console.error(`   • ${e}`));
+    if (errors.length > cap) {
+      console.error(`   … and ${errors.length - cap} more (strict mode trims output).`);
+    }
+    if (STRICT) {
+      // Categorized summary so CI logs surface counts at a glance.
+      const buckets = {
+        warning: 0,
+        boilerplate: 0,
+        "missing-difficulty": 0,
+        other: 0,
+      };
+      errors.forEach((e) => {
+        const m = /^\[strict:([\w-]+)\]/.exec(e);
+        if (m && buckets.hasOwnProperty(m[1])) buckets[m[1]]++;
+        else buckets.other++;
+      });
+      console.error("\n📊 Strict-mode breakdown:");
+      console.error(`   • warnings (fill ambiguity etc.): ${buckets.warning}`);
+      console.error(`   • boilerplate concepts:            ${buckets.boilerplate}`);
+      console.error(`   • missing difficulty:              ${buckets["missing-difficulty"]}`);
+      if (buckets.other > 0) console.error(`   • other:                          ${buckets.other}`);
+    }
   }
 
   if (warnings.length > 0) {

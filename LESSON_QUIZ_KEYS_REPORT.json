@@ -1,0 +1,1548 @@
+{
+  "reportVersion": "lesson-quiz-keys-v1",
+  "date": "2026-04-28",
+  "source": "data/lesson_quiz_keys.js",
+  "summary": {
+    "lessons": 18,
+    "totalQuizItems": 133,
+    "mappedQuizItems": 133,
+    "issueCount": 0,
+    "coverage": 100
+  },
+  "lessons": [
+    {
+      "lessonId": "lesson_11",
+      "title": "שיעור 11 - Arrays, Functions, and Scope",
+      "quizCount": 10,
+      "mappedCount": 10,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "איך ניגשים לאיבר השני במערך ב-JavaScript?",
+          "keys": [
+            "lesson_11::Index",
+            "lesson_11::Array"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "מה קורה כאשר מעתיקים מערך (Array) למשתנה חדש על ידי פעולת הקצאה פשוטה (Assignment) רגילה?",
+          "keys": [
+            "lesson_11::Array",
+            "lesson_11::By Reference",
+            "lesson_11::Pointer"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מי מתוך הרשימה היא טיפוס בסיסי המועתק לחלוטין (By Value)?",
+          "keys": [
+            "lesson_11::By Value",
+            "lesson_11::string",
+            "lesson_11::number",
+            "lesson_11::boolean"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "מהי פעולת filter ומה הייחוד שלה?",
+          "keys": [
+            "lesson_11::filter",
+            "lesson_11::Array"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מהו התחליף המודרני, הקצר ונטול ה-This לפונקציות מסורתיות ב-ES6?",
+          "keys": [
+            "lesson_11::arrow function",
+            "lesson_11::function"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "מה הסכנה העיקרית בהגדרת המשתנה עם המילה הישנה, var?",
+          "keys": [
+            "lesson_11::var",
+            "lesson_11::scope"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 6,
+          "question": "מה ההבדל בין שימושים במתודת pop לעומת shift?",
+          "keys": [
+            "lesson_11::pop",
+            "lesson_11::shift",
+            "lesson_11::Array"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 7,
+          "question": "אם הייתי רוצה להדפיס שם לכל אלמנט בלולאה – ללא החזרת רשומות חדש – במה כדאי לבחור ביעילות?",
+          "keys": [
+            "lesson_11::forEach",
+            "lesson_11::Array"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 8,
+          "question": "מה עושה אופרטור ה-Spread (...) ואיזה כינוי יש לו?",
+          "keys": [
+            "lesson_11::spread",
+            "lesson_11::Array"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 9,
+          "question": "כאשר קוראים לפונקציה שלא התבקשה או התעמתו שאין לה Return ממשי, מה היא תחזיר כפלט אחרון אוטומטי במשאבים שלה?",
+          "keys": [
+            "lesson_11::undefined",
+            "lesson_11::function"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_12",
+      "title": "שיעור 12 - תרגול מתודות מערך",
+      "quizCount": 6,
+      "mappedCount": 6,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "מה ההבדל בין map ל-forEach?",
+          "keys": [
+            "lesson_12::map",
+            "lesson_12::forEach"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "מה תהיה התוצאה של הקוד הבא?\nconst arr = [1, 2, 3];\nconst result = arr.filter(n => n > 1).map(n => n * 10);",
+          "keys": [
+            "lesson_12::filter",
+            "lesson_12::map"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה עושה אופרטור ה-spread (...) כשהוא מופעל על מערך?",
+          "keys": [
+            "lesson_12::spread"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "מה יחזיר הביטוי \"Hello World\".toLowerCase()?",
+          "keys": [
+            "lesson_12::lowercase"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מה יודפס?\nconst arr = [\"a\", \"b\", \"c\"];\nconsole.log(arr[arr.length]);",
+          "keys": [
+            "lesson_12::index",
+            "lesson_12::array"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "איזו מתודה תיצור מערך חדש המכיל רק איברים שעומדים בתנאי?",
+          "keys": [
+            "lesson_12::filter",
+            "lesson_12::סינון לפי תנאי",
+            "lesson_12::יצירת מערך חדש מתוך קיים"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_13",
+      "title": "שיעור 13 - Objects, DOM, Classes & Storage",
+      "quizCount": 10,
+      "mappedCount": 10,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "איך ניגשים למאפיין באובייקט?",
+          "keys": [
+            "lesson_13::Object",
+            "lesson_13::Property",
+            "lesson_13::Value"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "מה ההבדל בין `getElementById` ל-`getElementsByClassName`?",
+          "keys": [
+            "lesson_13::getElementById",
+            "lesson_13::getElementsByClassName",
+            "lesson_13::DOM"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "היכן בזיכרון של המחשב מתקיים אלמנט אחרי שיצרנו אותו ב-`createElement`?",
+          "keys": [
+            "lesson_13::createElement",
+            "lesson_13::DOM",
+            "lesson_13::Document Object Model"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "מה תפקידו של ה-`constructor` בתוך שרטוט של `class`?",
+          "keys": [
+            "lesson_13::constructor",
+            "lesson_13::class"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מה ההבדל בין `localStorage` ל-`sessionStorage`?",
+          "keys": [
+            "lesson_13::localStorage",
+            "lesson_13::sessionStorage"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "איך משנים טקסט המכיל תגיות למסך של אלמנט דרך ה-DOM?",
+          "keys": [
+            "lesson_13::innerHTML",
+            "lesson_13::DOM"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 6,
+          "question": "מה עושה המילה `extends`?",
+          "keys": [
+            "lesson_13::extends",
+            "lesson_13::inheritance"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 7,
+          "question": "מה תפקידה של פונקציית `super()` במחלקה היורשת?",
+          "keys": [
+            "lesson_13::super",
+            "lesson_13::inheritance",
+            "lesson_13::extends"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 8,
+          "question": "מה קורה שמזריקים `[{ id: 1 }]` ל-setItem מלי להמירו קודם ב-`JSON.stringify`?",
+          "keys": [
+            "lesson_13::setItem",
+            "lesson_13::localStorage"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 9,
+          "question": "מה ההבדל בין Property ל-Method?",
+          "keys": [
+            "lesson_13::Property",
+            "lesson_13::Method"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_15",
+      "title": "שיעור 15 - Errors, Closure, Async, Promise, Fetch",
+      "quizCount": 8,
+      "mappedCount": 8,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "מה קורה אם יש שגיאה (Error) בתוך בלוק של try?",
+          "keys": [
+            "lesson_15::Error",
+            "lesson_15::try",
+            "lesson_15::catch",
+            "lesson_15::Exception"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "מה עושה הפקודה throw?",
+          "keys": [
+            "lesson_15::throw",
+            "lesson_15::Error",
+            "lesson_15::Exception"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה זה Closure?",
+          "keys": [
+            "lesson_15::Closure",
+            "lesson_15::Scope"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "מה ההבדל בין ריצה סינכרונית לריצה אסינכרונית?",
+          "keys": [
+            "lesson_15::Synchronous",
+            "lesson_15::Asynchronous"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מה עושה הפונקציה המובנית setTimeout?",
+          "keys": [
+            "lesson_15::setTimeout",
+            "lesson_15::Asynchronous",
+            "lesson_15::anonymous function"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "מהם שלושת המצבים האפשריים בהם Promise יכולה להיות?",
+          "keys": [
+            "lesson_15::Promise",
+            "lesson_15::resolve",
+            "lesson_15::reject"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 6,
+          "question": "מה עושה פונקציית fetch ב-JavaScript?",
+          "keys": [
+            "lesson_15::fetch",
+            "lesson_15::Promise"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 7,
+          "question": "מה קורה בתוך אובייקט ה-Promise אם פעולת ה-fetch נכשלה עקב ניתוק רשת של המשתמש בעיר אחרת?",
+          "keys": [
+            "lesson_15::fetch",
+            "lesson_15::Promise",
+            "lesson_15::reject",
+            "lesson_15::catch (Promise)"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_16",
+      "title": "שיעור 16 - Node.js, npm, Modules, File System",
+      "quizCount": 8,
+      "mappedCount": 8,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "מדוע אי אפשר לגשת ל-DOM (כמו document.getElementById) תחת סביבת Node.js?",
+          "keys": [
+            "lesson_16::Node.js"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "באיזה פקודה קלה משתמשים בכדי לייצר קובץ package.json בתחילת סגירת הפרויקט?",
+          "keys": [
+            "lesson_16::npm init",
+            "lesson_16::package.json",
+            "lesson_16::npm"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה קורה כאשר צריכים להכניס ספרית של צבע מעניינת (כגון chalk) לפרויקט? איזו פקודת תשתית מתחייבת?",
+          "keys": [
+            "lesson_16::npm install",
+            "lesson_16::dependencies",
+            "lesson_16::npm"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "הפקודה cd אמונה בתוכנות טרמינל אל...",
+          "keys": [
+            "lesson_16::cd",
+            "lesson_16::CLI",
+            "lesson_16::Command Line Interface"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מהי המשמעות המדויקת של fs במערכת החבילות והתגובות?",
+          "keys": [
+            "lesson_16::fs",
+            "lesson_16::File System"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "איך שואבים ומתבייתים על תכולת מודול שנכתב בקובץ חיצוני אחר באותה תשתית?",
+          "keys": [
+            "lesson_16::require",
+            "lesson_16::module",
+            "lesson_16::module.exports"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 6,
+          "question": "איזה דבר רע נוטה לקרות בעת הפעלת fs.writeFile בלי בדיקת של חזרתיות על קובץ סגור כרטיס יומן עסקי שמלא בשורות?",
+          "keys": [
+            "lesson_16::fs.writeFile",
+            "lesson_16::File System"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 7,
+          "question": "למה package.json כל כך הכרחי לפיתוח משותף ושילוחי רשת רגילים?",
+          "keys": [
+            "lesson_16::package.json",
+            "lesson_16::dependencies",
+            "lesson_16::npm"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_17",
+      "title": "שיעור 17 - HTTP, Express, REST API",
+      "quizCount": 10,
+      "mappedCount": 10,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "מה ההבדל העיקרי בין GET ל-POST?",
+          "keys": [
+            "lesson_17::GET",
+            "lesson_17::POST",
+            "lesson_17::Request",
+            "lesson_17::body"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "מה זה REST API?",
+          "keys": [
+            "lesson_17::REST API",
+            "lesson_17::CRUD"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה עושה middleware ב-Express?",
+          "keys": [
+            "lesson_17::middleware",
+            "lesson_17::app.use",
+            "lesson_17::Express"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "מה מייצג Status Code 404?",
+          "keys": [
+            "lesson_17::Status Codes",
+            "lesson_17::4xx-5xx",
+            "lesson_17::Response"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מה עושה הפקודה app.listen() ב-Express?",
+          "keys": [
+            "lesson_17::app.listen",
+            "lesson_17::port",
+            "lesson_17::Server"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "מה עושה express.json() (body-parser)?",
+          "keys": [
+            "lesson_17::body-parser",
+            "lesson_17::JSON",
+            "lesson_17::body"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 6,
+          "question": "מה ההבדל בין PUT ל-DELETE ב-REST API?",
+          "keys": [
+            "lesson_17::Update",
+            "lesson_17::Delete",
+            "lesson_17::CRUD",
+            "lesson_17::method"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 7,
+          "question": "מה זה Query Parameters ואיך הם נראים?",
+          "keys": [
+            "lesson_17::Query Parameters",
+            "lesson_17::URL"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 8,
+          "question": "מה עושה event.preventDefault() בטפסים?",
+          "keys": [
+            "lesson_17::event.preventDefault",
+            "lesson_17::form",
+            "lesson_17::POST"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 9,
+          "question": "מה ההבדל בין Route ל-URL?",
+          "keys": [
+            "lesson_17::Route",
+            "lesson_17::URL",
+            "lesson_17::Path"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_18",
+      "title": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
+      "quizCount": 6,
+      "mappedCount": 6,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "למה חשוב לעשות ולידציה בצד שרת ולא רק בצד Client?",
+          "keys": [
+            "lesson_18::validation",
+            "lesson_18::Express"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "מהו route ב-Express?",
+          "keys": [
+            "lesson_18::route",
+            "lesson_18::Express"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה ההבדל בין POST ל-GET בהקשר של טפסים?",
+          "keys": [
+            "lesson_18::POST",
+            "lesson_18::GET",
+            "lesson_18::form"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "מה קורה לנתונים שנשמרים ב-let users = [] כשמכבים את השרת?",
+          "keys": [
+            "lesson_18::server-side storage",
+            "lesson_18::server"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מהם שלושת הדברים שחשוב לבדוק בולידציה של סיסמה?",
+          "keys": [
+            "lesson_18::password",
+            "lesson_18::validation"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "מה עושה express.urlencoded({ extended: true })?",
+          "keys": [
+            "lesson_18::Express",
+            "lesson_18::POST",
+            "lesson_18::form"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_19",
+      "title": "חזרה וסיכום JavaScript",
+      "quizCount": 12,
+      "mappedCount": 12,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"script\"?",
+          "keys": [
+            "lesson_19::script"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"console.log\"?",
+          "keys": [
+            "lesson_19::console.log"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"alert\"?",
+          "keys": [
+            "lesson_19::alert"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"DOM\"?",
+          "keys": [
+            "lesson_19::DOM"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"Data Types\"?",
+          "keys": [
+            "lesson_19::Data Types"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"let\"?",
+          "keys": [
+            "lesson_19::let"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 6,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"var\"?",
+          "keys": [
+            "lesson_19::var"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 7,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"const\"?",
+          "keys": [
+            "lesson_19::const"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 8,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"camelCase\"?",
+          "keys": [
+            "lesson_19::camelCase"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 9,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"if/else\"?",
+          "keys": [
+            "lesson_19::if/else"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 10,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"switch\"?",
+          "keys": [
+            "lesson_19::switch"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 11,
+          "question": "שיעור 19 — חזרה וסיכום JavaScript: מה נכון לגבי המושג \"debugger\"?",
+          "keys": [
+            "lesson_19::debugger"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_20",
+      "title": "Database, MongoDB, Mongoose",
+      "quizCount": 10,
+      "mappedCount": 10,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "שיעור 20 — Database, MongoDB, Mongoose: מה נכון לגבי המושג \"Database\"?",
+          "keys": [
+            "lesson_20::Database"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "שיעור 20 — Database, MongoDB, Mongoose: מה נכון לגבי המושג \"SQL\"?",
+          "keys": [
+            "lesson_20::SQL"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "שיעור 20 — Database, MongoDB, Mongoose: מה נכון לגבי המושג \"NoSQL\"?",
+          "keys": [
+            "lesson_20::NoSQL"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "שיעור 20 — Database, MongoDB, Mongoose: מה נכון לגבי המושג \"MongoDB\"?",
+          "keys": [
+            "lesson_20::MongoDB"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "שיעור 20 — Database, MongoDB, Mongoose: מה נכון לגבי המושג \"MongoDB Atlas\"?",
+          "keys": [
+            "lesson_20::MongoDB Atlas"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "שיעור 20 — Database, MongoDB, Mongoose: מה נכון לגבי המושג \"Cluster\"?",
+          "keys": [
+            "lesson_20::Cluster"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 6,
+          "question": "שיעור 20 — Database, MongoDB, Mongoose: מה נכון לגבי המושג \"Connection String\"?",
+          "keys": [
+            "lesson_20::Connection String"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 7,
+          "question": "שיעור 20 — Database, MongoDB, Mongoose: מה נכון לגבי המושג \"Collection\"?",
+          "keys": [
+            "lesson_20::Collection"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 8,
+          "question": "שיעור 20 — Database, MongoDB, Mongoose: מה נכון לגבי המושג \"Document\"?",
+          "keys": [
+            "lesson_20::Document"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 9,
+          "question": "שיעור 20 — Database, MongoDB, Mongoose: מה נכון לגבי המושג \"Props\"?",
+          "keys": [
+            "lesson_20::Props",
+            "lesson_20::Value"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_21",
+      "title": "שיעור 21 — React בסיסי",
+      "quizCount": 6,
+      "mappedCount": 6,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "מה היתרון העיקרי של Vite על פני CRA?",
+          "keys": [
+            "lesson_21::Vite"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "למה משתמשים ב-className ולא ב-class ב-JSX?",
+          "keys": [
+            "lesson_21::className",
+            "lesson_21::JSX"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה נכון לגבי key ב-map?\n  {items.map(it => <li>{it.name}</li>)}",
+          "keys": [
+            "lesson_21::map",
+            "lesson_21::rendering"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "כמה elements ברמה עליונה מותרים ב-JSX?",
+          "keys": [
+            "lesson_21::JSX",
+            "lesson_21::Component"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מתי קומפוננטה מתרעננת?",
+          "keys": [
+            "lesson_21::rendering",
+            "lesson_21::Component"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "מה ההבדל בין <Hello /> לבין Hello()?",
+          "keys": [
+            "lesson_21::Component",
+            "lesson_21::JSX"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_22",
+      "title": "שיעור 22 — useState, Immutable State",
+      "quizCount": 6,
+      "mappedCount": 6,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "מה יודפס?\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  const handleClick = () => {\n    setCount(count + 1);\n    setCount(count + 1);\n  };\n  return <button onClick={handleClick}>{count}</button>;\n}\n\n(לחיצה אחת)",
+          "keys": [
+            "lesson_22::useState",
+            "lesson_22::setState",
+            "lesson_22::state"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "איזה משפט נכון לגבי useState?",
+          "keys": [
+            "lesson_22::useState"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה הבעיה ב-: const addItem = () => { items.push(x); setItems(items); }?",
+          "keys": [
+            "lesson_22::mutable",
+            "lesson_22::immutable",
+            "lesson_22::array reference",
+            "lesson_22::setState"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "מה ההבדל בין controlled לבין uncontrolled input?",
+          "keys": [
+            "lesson_22::controlled input",
+            "lesson_22::onChange"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "איך מעדכנים את user.age ל-31 כש-user הוא {name:'Tal', age:30} ב-state?",
+          "keys": [
+            "lesson_22::object reference",
+            "lesson_22::immutable",
+            "lesson_22::state"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "באיזה Hook משתמשים כדי שילד עטוף ב-React.memo לא יתרענן בכל פעם שהאב מתרענן?",
+          "keys": [
+            "lesson_22::Hook",
+            "lesson_22::props",
+            "lesson_22::parent component",
+            "lesson_22::child component"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_23",
+      "title": "שיעור 23 — Router, Context API",
+      "quizCount": 6,
+      "mappedCount": 6,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "מה ההבדל בין <a href='/about'> ל-<Link to='/about'>?",
+          "keys": [
+            "lesson_23::Link",
+            "lesson_23::to",
+            "lesson_23::Router"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "איך מקבלים את ה-:id מ-URL כמו /movies/42?",
+          "keys": [
+            "lesson_23::useParams",
+            "lesson_23::dynamic route",
+            "lesson_23::URL"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מתי כדאי להשתמש ב-Context API?",
+          "keys": [
+            "lesson_23::Context API",
+            "lesson_23::Prop Drilling"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "מה הבעיה ב-<Provider value={{ a, b }}>?",
+          "keys": [
+            "lesson_23::Provider",
+            "lesson_23::value",
+            "lesson_23::Context API"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מה navigate(-1) עושה?",
+          "keys": [
+            "lesson_23::useNavigate"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "איך מגדירים route עם פרמטר id?",
+          "keys": [
+            "lesson_23::Route",
+            "lesson_23::dynamic route",
+            "lesson_23::Path"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_24",
+      "title": "שיעור 24 — useEffect, useMemo, useRef",
+      "quizCount": 6,
+      "mappedCount": 6,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "מה יקרה?\n  function App() {\n    const [n, setN] = useState(0);\n    useEffect(() => { setN(n + 1); });\n    return <div>{n}</div>;\n  }",
+          "keys": [
+            "lesson_24::useEffect",
+            "lesson_24::infinite loop",
+            "lesson_24::state update"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "מה ההבדל בין useEffect(fn) לבין useEffect(fn, [])?",
+          "keys": [
+            "lesson_24::useEffect",
+            "lesson_24::dependency array"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה הבעיה?\n  const config = { url: '/api' };\n  useEffect(() => fetch(config.url), [config]);",
+          "keys": [
+            "lesson_24::useEffect",
+            "lesson_24::dependency array",
+            "lesson_24::fetch"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "באיזה Hook משתמשים לשמור הפניה ל-DOM element כדי לקרוא ל-focus?",
+          "keys": [
+            "lesson_24::useRef",
+            "lesson_24::DOM element",
+            "lesson_24::focus",
+            "lesson_24::ref.current"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מה תפקיד ה-cleanup function ב-useEffect?",
+          "keys": [
+            "lesson_24::cleanup",
+            "lesson_24::useEffect"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "מתי כדאי להשתמש ב-useMemo?",
+          "keys": [
+            "lesson_24::useMemo",
+            "lesson_24::expensive calculation",
+            "lesson_24::memoization"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_25",
+      "title": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+      "quizCount": 5,
+      "mappedCount": 5,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "מה ההבדל בין flex ל-grid?",
+          "keys": [
+            "lesson_25::flex",
+            "lesson_25::grid"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "מה הסדר הנכון להוספת פריט למערך state?",
+          "keys": [
+            "lesson_25::add/delete movie"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה Tailwind בקיצור?",
+          "keys": [
+            "lesson_25::Tailwind CSS",
+            "lesson_25::utility classes"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "ב-Tailwind, מה משמעות md:flex?",
+          "keys": [
+            "lesson_25::responsive design",
+            "lesson_25::flex"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "איך מסננים רק סרטים שהכותרת מכילה את ה-query?",
+          "keys": [
+            "lesson_25::search",
+            "lesson_25::add/delete movie"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_26",
+      "title": "שיעור 26 — TypeScript + React+TS",
+      "quizCount": 6,
+      "mappedCount": 6,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "מה ההבדל בין any ל-unknown?",
+          "keys": [
+            "lesson_26::any",
+            "lesson_26::Type Safety"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "איך לטייפ useState שיכול להיות null או User?",
+          "keys": [
+            "lesson_26::Typing State",
+            "lesson_26::React + TypeScript",
+            "lesson_26::union"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה ההבדל בין interface ל-type?",
+          "keys": [
+            "lesson_26::interface",
+            "lesson_26::interface vs type",
+            "lesson_26::type alias"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "איך מטפלים ב-union string | number?",
+          "keys": [
+            "lesson_26::union",
+            "lesson_26::string",
+            "lesson_26::number"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "איך לטייפ onClick שמקבל id ו-לא מחזיר?",
+          "keys": [
+            "lesson_26::Function Prop Type",
+            "lesson_26::void",
+            "lesson_26::number"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "מה useState מחזיר ב-TypeScript?",
+          "keys": [
+            "lesson_26::tuple",
+            "lesson_26::Typing State"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "lesson_27",
+      "title": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "quizCount": 6,
+      "mappedCount": 6,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "איך מגדירים Transaction = Income | Expense?",
+          "keys": [
+            "lesson_27::Transaction",
+            "lesson_27::Income",
+            "lesson_27::Expense",
+            "lesson_27::Union Type"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "איך לדעת אם t הוא Income?",
+          "keys": [
+            "lesson_27::Type Narrowing",
+            "lesson_27::Income"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "איך לסנן רק הוצאות?",
+          "keys": [
+            "lesson_27::Expense",
+            "lesson_27::Transaction"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "מה Omit<Transaction, 'id'> עושה?",
+          "keys": [
+            "lesson_27::type",
+            "lesson_27::Transaction"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "Record<Category, number> זה?",
+          "keys": [
+            "lesson_27::Category Breakdown",
+            "lesson_27::Category",
+            "lesson_27::Amount"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "איך לחשב balance?",
+          "keys": [
+            "lesson_27::Budget Summary",
+            "lesson_27::Income",
+            "lesson_27::Expense",
+            "lesson_27::Amount"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "ai_development",
+      "title": "שימוש נכון ב-AI בפיתוח",
+      "quizCount": 6,
+      "mappedCount": 6,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "איזה כלי מתאים ל-edits רב-קבציים אוטונומיים עם הרצת tests באוטומציה?",
+          "keys": [
+            "ai_development::Windsurf",
+            "ai_development::Claude Code"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "מה הסוג הנפוץ ביותר של hallucination בקוד?",
+          "keys": [
+            "ai_development::Hallucinations",
+            "ai_development::AI Limitations"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "מה לא יקרה אם תחרוג מהקיבולת של context window?",
+          "keys": [
+            "ai_development::Context Window"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "איזו טכניקת prompt מתאימה כשרוצים פלט בפורמט מאוד ספציפי?",
+          "keys": [
+            "ai_development::Prompt Engineering"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מה ההבדל המרכזי בין Cursor ל-Claude Code?",
+          "keys": [
+            "ai_development::Cursor",
+            "ai_development::Claude Code"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "מתי AI Code Review חלש?",
+          "keys": [
+            "ai_development::AI Code Review",
+            "ai_development::AI Limitations"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    },
+    {
+      "lessonId": "react_blueprint",
+      "title": "React Architect Blueprint",
+      "quizCount": 6,
+      "mappedCount": 6,
+      "status": "ok",
+      "issues": [],
+      "rows": [
+        {
+          "index": 0,
+          "question": "איזה ארגון תיקיות מומלץ לאפליקציית React גדולה?",
+          "keys": [
+            "react_blueprint::Component Architecture"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 1,
+          "question": "מתי כדאי להעלות (lift) state להורה משותף?",
+          "keys": [
+            "react_blueprint::Lifting State Up",
+            "react_blueprint::State Management"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 2,
+          "question": "איזה כלי מתאים ל-server data (API responses) ב-2026?",
+          "keys": [
+            "react_blueprint::State Management",
+            "react_blueprint::Data Flow"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 3,
+          "question": "מה אסור ב-Error Boundary לתפוס?",
+          "keys": [
+            "react_blueprint::Error Boundaries"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 4,
+          "question": "מה הצעד הראשון באופטימיזציה של ביצועים?",
+          "keys": [
+            "react_blueprint::Performance Optimization"
+          ],
+          "status": "ok",
+          "issues": []
+        },
+        {
+          "index": 5,
+          "question": "מה ההבדל בין Code Splitting ל-Tree Shaking?",
+          "keys": [
+            "react_blueprint::Code Splitting",
+            "react_blueprint::Performance Optimization"
+          ],
+          "status": "ok",
+          "issues": []
+        }
+      ]
+    }
+  ]
+}

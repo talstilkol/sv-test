@@ -1,0 +1,417 @@
+{
+  "reportVersion": "feature-coverage-v2",
+  "date": "2026-04-28",
+  "source": "repo",
+  "summary": {
+    "modules": 24,
+    "done": 23,
+    "partial": 1,
+    "missing": 0,
+    "strictFailures": 0,
+    "evidenceGateChecked": 23,
+    "evidenceGateFailures": 0
+  },
+  "evidenceGateFailures": [],
+  "metrics": [
+    {
+      "id": "antiPatterns",
+      "label": "Anti-Pattern Gallery",
+      "implemented": 22,
+      "target": 22,
+      "unit": "patterns",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/anti_patterns.js"
+      ],
+      "outcomeMetric": "Misconception repair coverage for hard concepts",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "warStories",
+      "label": "War Stories Library",
+      "implemented": 31,
+      "target": 30,
+      "unit": "incidents",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/war_stories.js"
+      ],
+      "outcomeMetric": "Real-world transfer coverage through production incident stories",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "miniBuilds",
+      "label": "Mini Build",
+      "implemented": 21,
+      "target": 21,
+      "unit": "builds",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/questions_build.js"
+      ],
+      "outcomeMetric": "Hands-on build-practice coverage for code-writing workflows",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "codeTrace",
+      "label": "Code Trace",
+      "implemented": 85,
+      "target": 85,
+      "unit": "traces",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/questions_trace.js"
+      ],
+      "outcomeMetric": "Execution-prediction practice coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "optionFeedback",
+      "label": "Per-Distractor Feedback",
+      "implemented": 50,
+      "target": 1340,
+      "unit": "MC questions",
+      "coverage": 3.7,
+      "status": "Partial",
+      "evidence": [
+        "data/option_feedback.js",
+        "data/questions_bank.js",
+        "data/questions_bank_seeded.js"
+      ],
+      "outcomeMetric": "Option-specific remediation coverage across the full MC bank",
+      "enforceStrict": false,
+      "enforceEvidenceGate": true,
+      "details": {
+        "optionExplanations": 200
+      }
+    },
+    {
+      "id": "metaphors",
+      "label": "Concept Metaphors",
+      "implemented": 250,
+      "target": 250,
+      "unit": "metaphors",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/metaphors.js"
+      ],
+      "outcomeMetric": "Explanation-fit coverage through multiple metaphors per core concept",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "pathways",
+      "label": "3 Learning Pathways",
+      "implemented": 30,
+      "target": 30,
+      "unit": "complete concepts",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/pathways.js"
+      ],
+      "outcomeMetric": "Persona-based explanation coverage for grandma/parent/technical paths",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "pairMatch",
+      "label": "Pair-Match",
+      "implemented": 14,
+      "target": 5,
+      "unit": "games",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/pair_match.js"
+      ],
+      "outcomeMetric": "Associative retrieval practice coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {
+        "pairs": 110
+      }
+    },
+    {
+      "id": "bugQuests",
+      "label": "Bug Hunt Quests",
+      "implemented": 25,
+      "target": 25,
+      "unit": "bugs",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/bug_quests.js"
+      ],
+      "outcomeMetric": "Narrative debugging practice coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {
+        "quests": 5
+      }
+    },
+    {
+      "id": "mnemonics",
+      "label": "Mnemonics Lab",
+      "implemented": 9,
+      "target": 9,
+      "unit": "concepts",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/mnemonics.js"
+      ],
+      "outcomeMetric": "Memory-aid coverage for hard concepts",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "animations",
+      "label": "Mental Model Animator",
+      "implemented": 6,
+      "target": 6,
+      "unit": "concepts",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/animations.js"
+      ],
+      "outcomeMetric": "Visual mental-model coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "comparisons",
+      "label": "Side-by-Side Comparator",
+      "implemented": 16,
+      "target": 10,
+      "unit": "comparisons",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/comparisons.js"
+      ],
+      "outcomeMetric": "Side-by-side distinction coverage for confusing concept pairs",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "whatIf",
+      "label": "What-If Simulator",
+      "implemented": 5,
+      "target": 5,
+      "unit": "concepts",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/what_if.js"
+      ],
+      "outcomeMetric": "Interactive counterfactual reasoning coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "scenarios",
+      "label": "Themed Scenarios",
+      "implemented": 150,
+      "target": 150,
+      "unit": "scenarios",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/scenarios.js"
+      ],
+      "outcomeMetric": "Themed scenario coverage across concept-context pairs",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "counterfactuals",
+      "label": "Counterfactuals",
+      "implemented": 30,
+      "target": 30,
+      "unit": "concepts",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/counterfactuals.js"
+      ],
+      "outcomeMetric": "What-breaks-without-this reasoning coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "conceptVideos",
+      "label": "Animated Concept Clips",
+      "implemented": 10,
+      "target": 10,
+      "unit": "clips",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/concept_videos.js"
+      ],
+      "outcomeMetric": "Embedded concept clip coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {
+        "scenes": 40
+      }
+    },
+    {
+      "id": "grandmaVisuals",
+      "label": "Real-Object Visual Aids",
+      "implemented": 50,
+      "target": 50,
+      "unit": "aids",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/grandma_visuals.js"
+      ],
+      "outcomeMetric": "Concrete visual-aid coverage for beginner explanations",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "conceptComics",
+      "label": "Concept Comics",
+      "implemented": 8,
+      "target": 8,
+      "unit": "concepts",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/concept_comics.js"
+      ],
+      "outcomeMetric": "Visual story coverage for hard concepts",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "memoryPalaces",
+      "label": "Memory Palace",
+      "implemented": 8,
+      "target": 8,
+      "unit": "concepts",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/memory_palaces.js"
+      ],
+      "outcomeMetric": "Spatial memory-location coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "problemFirst",
+      "label": "Problem-First Discovery",
+      "implemented": 8,
+      "target": 8,
+      "unit": "concepts",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/problem_first.js"
+      ],
+      "outcomeMetric": "Problem-first discovery coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "stageZero",
+      "label": "Stage-Zero Broken Examples",
+      "implemented": 8,
+      "target": 8,
+      "unit": "concepts",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/stage_zero.js"
+      ],
+      "outcomeMetric": "Beginner broken-example coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "glossary",
+      "label": "Hebrew/English Glossary",
+      "implemented": 228,
+      "target": 200,
+      "unit": "entries",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/glossary.js"
+      ],
+      "outcomeMetric": "Foundational terminology coverage",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {}
+    },
+    {
+      "id": "capstones",
+      "label": "Capstone Project Track",
+      "implemented": 5,
+      "target": 5,
+      "unit": "projects",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/capstones.js"
+      ],
+      "outcomeMetric": "Project-readiness coverage through full capstone briefs and rubrics",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {
+        "rubricItems": 100,
+        "conceptLinks": 26
+      }
+    },
+    {
+      "id": "courseBlueprints",
+      "label": "Course Blueprint Alignment",
+      "implemented": 4,
+      "target": 4,
+      "unit": "blueprints",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/course_blueprints.js"
+      ],
+      "outcomeMetric": "Course and exam alignment coverage from public curriculum sources",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {
+        "modules": 24,
+        "sources": 5
+      }
+    }
+  ]
+}

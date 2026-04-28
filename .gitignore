@@ -18,6 +18,10 @@ yarn-error.log*
 dist/
 build/
 .cache/
+coverage/
+.vitest/
+.playwright-cli/
+.playwright-mcp/
 
 # Local env
 .env

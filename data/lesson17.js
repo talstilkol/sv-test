@@ -10,6 +10,7 @@ var LESSON_17 = {
     // 1. HTTP
     {
       conceptName: "HTTP",
+      difficulty: 6,
       levels: {
         grandma:
           "זו השפה בה הטלפון שלך מדבר עם האינטרנט. כשאת מקלידה כתובת אתר, המכשיר שולח מכתב מנומס בשפה מיוחדת ומקבל תשובה באותה שפה — ככה דפים מופיעים על המסך.",
@@ -42,6 +43,7 @@ var LESSON_17 = {
     // 2. URL
     {
       conceptName: "URL",
+      difficulty: 6,
       levels: {
         grandma:
           "זה הכתובת המלאה של הבית ברשת. כמו שלבית יש רחוב, מספר וקומה — לכל דף באינטרנט יש כתובת ייחודית שמכוונת אליו בדיוק.",
@@ -70,6 +72,7 @@ var LESSON_17 = {
     // 3. Protocol
     {
       conceptName: "Protocol",
+      difficulty: 6,
       levels: {
         grandma:
           "זה 'נוהל השיחה'. כמו שיש כללי נימוס בטלפון (אומרים שלום, מחכים לתשובה, אומרים להתראות) — יש כללי שיחה גם בין מחשבים.",
@@ -100,6 +103,7 @@ var LESSON_17 = {
     // 4. Domain
     {
       conceptName: "Domain",
+      difficulty: 5,
       levels: {
         grandma:
           "זה השם הידידותי של האתר. במקום לזכור מספר טלפון ארוך (כתובת IP), את פשוט אומרת 'תחייגי לגוגל' — והמערכת יודעת לפי השם למי להתחבר.",
@@ -128,6 +132,7 @@ var LESSON_17 = {
     // 5. Path
     {
       conceptName: "Path",
+      difficulty: 6,
       levels: {
         grandma:
           "זה הנתיב הספציפי בתוך הבית. אחרי שהגעת לכתובת הנכונה (דומיין), את צריכה לדעת לאיזה חדר ללכת — לסלון, למטבח, או לחדר שינה.",
@@ -159,6 +164,7 @@ var LESSON_17 = {
     // 6. Client
     {
       conceptName: "Client",
+      difficulty: 6,
       levels: {
         grandma:
           "את הלקוחה. כשנכנסת לחנות ומבקשת עוגה — את הצד ששואל. המחשב שלך הוא הלקוח שמבקש דפים מהשרת.",
@@ -190,6 +196,7 @@ var LESSON_17 = {
     // 7. Server
     {
       conceptName: "Server",
+      difficulty: 6,
       levels: {
         grandma:
           "המלצר! הלקוח (Client) מבקש, והשרת מגיש. הוא יושב ומחכה שמישהו יבקש ממנו משהו, ואז הוא קם ומביא את מה שביקשו.",
@@ -219,6 +226,7 @@ var LESSON_17 = {
     // 8. Request
     {
       conceptName: "Request",
+      difficulty: 6,
       levels: {
         grandma:
           "הבקשה שאת שולחת. כשנכנסת לאתר — את בעצם שולחת מכתב מנומס שאומר 'היי, אני רוצה לראות את הדף הזה בבקשה'. זו הבקשה.",
@@ -250,6 +258,7 @@ var LESSON_17 = {
     // 9. Response
     {
       conceptName: "Response",
+      difficulty: 6,
       levels: {
         grandma:
           "התשובה שחוזרת אלייך. שלחת בקשה — עכשיו המלצר חוזר עם המנה על מגש, או לפעמים עם הודעה 'סליחה, המנה נגמרה'.",
@@ -281,6 +290,7 @@ var LESSON_17 = {
     // 10. headers
     {
       conceptName: "headers",
+      difficulty: 6,
       levels: {
         grandma:
           "ה-Headers הם כמו מעטפה של מכתב. לפני שפותחים את המכתב עצמו (Body), רואים על המעטפה: מי שלח, מתי, ובאיזו שפה כתוב.",
@@ -317,6 +327,7 @@ var LESSON_17 = {
     // 11. REST API
     {
       conceptName: "REST API",
+      difficulty: 6,
       levels: {
         grandma:
           "תפריט מסעדה מסודר. במקום לקרוא למלצר ולבקש בכל פעם דבר שונה בשפה אחרת, יש תפריט אחיד עם מספרים: מנה 1, מנה 2. REST API זה תפריט אחיד לשרתים.",
@@ -347,6 +358,7 @@ var LESSON_17 = {
     // 12. CRUD
     {
       conceptName: "CRUD",
+      difficulty: 5,
       levels: {
         grandma:
           "ארבע פעולות בסיסיות שאנחנו עושים עם כל דבר: יוצרים (Create), קוראים (Read), מעדכנים (Update), מוחקים (Delete). בדיוק כמו מתכון — כתוב, קרא, תקן, זרוק.",
@@ -376,6 +388,7 @@ var LESSON_17 = {
     // 13. Create
     {
       conceptName: "Create",
+      difficulty: 6,
       levels: {
         grandma:
           "ליצור דבר חדש. להוסיף מתכון חדש לספר המתכונים — דבר שלא היה קודם, עכשיו קיים.",
@@ -406,6 +419,7 @@ var LESSON_17 = {
     // 14. Read
     {
       conceptName: "Read",
+      difficulty: 6,
       levels: {
         grandma:
           "לקרוא מידע שכבר קיים. לפתוח את ספר המתכונים ולקרוא מתכון — לא משנים כלום, רק מסתכלים.",
@@ -435,6 +449,7 @@ var LESSON_17 = {
     // 15. Update
     {
       conceptName: "Update",
+      difficulty: 6,
       levels: {
         grandma:
           "לתקן מתכון קיים. לא כותבים מתכון חדש ולא זורקים — רק מחליפים 'כוס סוכר' ב'חצי כוס סוכר' בדף שכבר קיים.",
@@ -465,6 +480,7 @@ var LESSON_17 = {
     // 16. Delete
     {
       conceptName: "Delete",
+      difficulty: 5,
       levels: {
         grandma:
           "למחוק לגמרי. לקרוע מתכון מהספר ולזרוק אותו לפח. אחרי זה הוא לא קיים יותר.",
@@ -495,6 +511,7 @@ var LESSON_17 = {
     // 17. method
     {
       conceptName: "method",
+      difficulty: 6,
       levels: {
         grandma:
           "סוג הבקשה. כמו שאפשר לשלוח מכתב רגיל, חבילה, או דואר רשום — כל אחד מסוג אחר. ה-method אומר 'איזה סוג פנייה זו'.",
@@ -525,6 +542,7 @@ var LESSON_17 = {
     // 18. body
     {
       conceptName: "body",
+      difficulty: 6,
       levels: {
         grandma:
           "תוכן המכתב. אחרי המעטפה (Headers) יש את המכתב עצמו — מה שרצית לכתוב ולשלוח. ב-POST זה הנתונים שאנחנו שולחים לשרת.",
@@ -560,6 +578,7 @@ var LESSON_17 = {
     // 19. Express
     {
       conceptName: "Express",
+      difficulty: 6,
       levels: {
         grandma:
           "מלצר חכם שיושב בשרת ומנתב הזמנות. כשבקשה מגיעה הוא בודק מה ביקשו ושולח למטבח הנכון להכנת התשובה.",
@@ -592,6 +611,7 @@ var LESSON_17 = {
     // 20. app
     {
       conceptName: "app",
+      difficulty: 6,
       levels: {
         grandma:
           "ה-app הוא האפליקציה עצמה — הדלפק המרכזי שדרכו כל הפעולות עוברות. כל הזמנה חייבת לעבור דרכו.",
@@ -623,6 +643,7 @@ var LESSON_17 = {
     // 21. port
     {
       conceptName: "port",
+      difficulty: 6,
       levels: {
         grandma:
           "מספר הדלת בבניין. הבניין הוא המחשב, וכל תוכנה שרצה תופסת דלת אחרת. דלת 3000 שלנו, דלת 80 של האינטרנט.",
@@ -653,6 +674,7 @@ var LESSON_17 = {
     // 22. app.get
     {
       conceptName: "app.get",
+      difficulty: 6,
       levels: {
         grandma:
           "הוראה למלצר: 'כשמישהו מבקש את התפריט — תביא לו אותו'. app.get אומר לשרת מה לעשות כשמישהו מבקש לצפות במשהו.",
@@ -682,6 +704,7 @@ var LESSON_17 = {
     // 23. app.post
     {
       conceptName: "app.post",
+      difficulty: 6,
       levels: {
         grandma:
           "הוראה למלצר: 'כשמישהו מביא הזמנה חדשה — תרשום אותה'. app.post מטפל בנתונים שנשלחים אלינו.",
@@ -713,6 +736,7 @@ var LESSON_17 = {
     // 24. app.listen
     {
       conceptName: "app.listen",
+      difficulty: 6,
       levels: {
         grandma:
           "לפתוח את החנות! אחרי שהכנו הכל — עכשיו פותחים דלת ואומרים 'אפשר להיכנס'. app.listen מפעיל את השרת.",
@@ -743,6 +767,7 @@ var LESSON_17 = {
     // 25. middleware
     {
       conceptName: "middleware",
+      difficulty: 7,
       levels: {
         grandma:
           "שומר בכניסה למסעדה. לפני שהמלצר מגיש — השומר בודק שיש הזמנה, שמותר להיכנס, ורק אז נותן לעבור פנימה.",
@@ -771,6 +796,7 @@ var LESSON_17 = {
     // 26. app.use
     {
       conceptName: "app.use",
+      difficulty: 6,
       levels: {
         grandma:
           "להכריז: 'מעכשיו כל מי שנכנס חייב לעבור את הבדיקה הזו'. app.use מפעיל כלל גורף על כל הבקשות.",
@@ -799,6 +825,7 @@ var LESSON_17 = {
     // 27. static files
     {
       conceptName: "static files",
+      difficulty: 6,
       levels: {
         grandma:
           "המדף הפתוח בחנות. במקום שהמלצר יביא כל פעם — שמים את הלחם, הריבה והחמאה על מדף שכל אחד יכול לגשת אליו ישירות.",
@@ -832,6 +859,7 @@ var LESSON_17 = {
     // 28. body-parser
     {
       conceptName: "body-parser",
+      difficulty: 4,
       levels: {
         grandma:
           "מתורגמן שפותח חבילות. כשמגיע Body — הוא פורס אותו מטקסט מוזר לאובייקט שאפשר לעבוד איתו.",
@@ -861,6 +889,7 @@ var LESSON_17 = {
     // 29. Route
     {
       conceptName: "Route",
+      difficulty: 6,
       levels: {
         grandma:
           "שלט ניווט. כמו שלט בכביש שאומר 'לירושלים — ימינה'. Route אומר לשרת: 'בקשות ל-/users — תטפל ככה'.",
@@ -890,6 +919,7 @@ var LESSON_17 = {
     // 30. JSON (בהקשר Express)
     {
       conceptName: "JSON",
+      difficulty: 4,
       levels: {
         grandma:
           "שפה אחידה להעברת מידע. כמו מילון אחיד שכל מדינה מבינה — ככה מחשבים שונים מעבירים נתונים ביניהם.",
@@ -923,6 +953,7 @@ var LESSON_17 = {
     // 31. form
     {
       conceptName: "form",
+      difficulty: 5,
       levels: {
         grandma:
           "טופס דיגיטלי. כמו טופס בבנק שממלאים שם, טלפון ותעודת זהות — רק שהוא על המסך ונשלח ללחיצת כפתור.",
@@ -955,6 +986,7 @@ var LESSON_17 = {
     // 32. POST (method)
     {
       conceptName: "POST",
+      difficulty: 5,
       levels: {
         grandma:
           "שליחת חבילה. כשרוצים לשלוח מידע חדש — משתמשים ב-POST. זה כמו לשלוח מכתב עם תוכן חשוב בתוכו.",
@@ -983,6 +1015,7 @@ var LESSON_17 = {
     // 33. GET (method)
     {
       conceptName: "GET",
+      difficulty: 5,
       levels: {
         grandma:
           "בקשה לקבל. כמו לבקש מהספרן להביא ספר — לא משנים כלום, רק מבקשים לראות.",
@@ -1012,6 +1045,7 @@ var LESSON_17 = {
     // 34. event.preventDefault
     {
       conceptName: "event.preventDefault",
+      difficulty: 5,
       levels: {
         grandma:
           "לעצור את הרובוט מלעשות מה שהוא רגיל. כשלוחצים 'שלח' בטופס — הדפדפן רוצה לרענן את הדף. preventDefault אומר לו: 'עצור! אני אטפל בעצמי'.",
@@ -1041,6 +1075,7 @@ var LESSON_17 = {
     // 35. Query Parameters
     {
       conceptName: "Query Parameters",
+      difficulty: 6,
       levels: {
         grandma:
           "הערות קטנות שמוסיפים בסוף הכתובת. כמו להוסיף 'בלי סוכר' לסוף ההזמנה — פרטים נוספים שמדייקים את מה שביקשת.",
@@ -1072,6 +1107,7 @@ var LESSON_17 = {
     // 36. Status Codes
     {
       conceptName: "Status Codes",
+      difficulty: 6,
       levels: {
         grandma:
           "קוד תשובה. כמו שהמלצר אומר 'מוכן!' (200), 'אין לנו את זה' (404), או 'המטבח בוער' (500). מספר שמסכם מה קרה.",
@@ -1101,6 +1137,7 @@ var LESSON_17 = {
     // 37. 1xx-2xx-3xx
     {
       conceptName: "1xx-2xx-3xx",
+      difficulty: 6,
       levels: {
         grandma:
           "קודים 'חיוביים'. 1xx = 'רגע, אני עובד על זה', 2xx = 'הצלחה! הנה', 3xx = 'עברנו כתובת, בוא לפה'.",
@@ -1131,6 +1168,7 @@ var LESSON_17 = {
     // 38. 4xx-5xx
     {
       conceptName: "4xx-5xx",
+      difficulty: 6,
       levels: {
         grandma:
           "קודים 'שליליים'. 4xx = 'אתה עשית משהו לא נכון' (שלחת כתובת לא נכונה). 5xx = 'אני (השרת) התקלקלתי'.",

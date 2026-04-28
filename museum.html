@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>מוזיאון שפות התכנות ו-Full-Stack — LumenPortal</title>
+    <meta name="description" content="מוזיאון שפות התכנות ו-Full-Stack של LumenPortal, ללא תפריטי הפורטל." />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css?v=museum-connection-system-v1" />
+  </head>
+  <body class="museum-external-page">
+    <div class="museum-external-shell">
+      <div class="museum-external-topbar">
+        <a class="museum-return-button" href="/">חזרה לפורטל הלימודים</a>
+      </div>
+      <iframe
+        class="museum-external-frame"
+        title="מוזיאון שפות התכנות ו-Full-Stack"
+      ></iframe>
+    </div>
+    <script>
+      (() => {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const frameParams = new URLSearchParams({
+            standalone: "museum",
+            v: params.get("v") || "museum-connection-system-v1",
+          });
+          const stackLayer = params.get("stackLayer");
+          if (stackLayer) frameParams.set("stackLayer", stackLayer);
+          const frame = document.querySelector(".museum-external-frame");
+          if (frame) frame.setAttribute("src", `/?${frameParams.toString()}`);
+        } catch (_) {}
+      })();
+    </script>
+  </body>
+</html>
