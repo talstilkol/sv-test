@@ -7,11 +7,16 @@ const LESSON_FILES = [
   ["lesson_11", "data/lesson11.js", "LESSON_11"],
   ["lesson_12", "data/lesson12.js", "LESSON_12"],
   ["lesson_13", "data/lesson13.js", "LESSON_13"],
+  ["lesson_html_css_foundations", "data/lesson_html_css_foundations.js", "LESSON_HTML_CSS_FOUNDATIONS"],
+  ["lesson_tooling_git", "data/lesson_tooling_git.js", "LESSON_TOOLING_GIT"],
   ["lesson_15", "data/lesson15.js", "LESSON_15"],
   ["lesson_16", "data/lesson16.js", "LESSON_16"],
   ["lesson_17", "data/lesson17.js", "LESSON_17"],
   ["lesson_18", "data/lesson18.js", "LESSON_18"],
   ["lesson_20", "data/lesson20.js", "LESSON_20"],
+  ["lesson_sql_orm", "data/lesson_sql_orm.js", "LESSON_SQL_ORM"],
+  ["lesson_auth_security", "data/lesson_auth_security.js", "LESSON_AUTH_SECURITY"],
+  ["lesson_nextjs", "data/lesson_nextjs.js", "LESSON_NEXTJS"],
   ["lesson_21", "data/lesson21.js", "LESSON_21"],
   ["lesson_22", "data/lesson22.js", "LESSON_22"],
   ["lesson_23", "data/lesson23.js", "LESSON_23"],
@@ -39,6 +44,10 @@ function loadBlueprints() {
   return loadGlobal("data/course_blueprints.js", "COURSE_BLUEPRINTS") || [];
 }
 
+function loadDeferredBlueprints() {
+  return loadGlobal("data/course_blueprints.js", "DEFERRED_COURSE_PORTAL_BLUEPRINTS") || [];
+}
+
 function loadLessonMap() {
   const map = {};
   LESSON_FILES.forEach(([lessonId, file, globalName]) => {
@@ -50,9 +59,12 @@ function loadLessonMap() {
 describe("course blueprint alignment", () => {
   const blueprints = loadBlueprints();
 
-  it("ships the planned public-source and generic bootcamp alignments", () => {
-    expect(blueprints.map((item) => item.id)).toEqual([
-      "svcollege_fullstack_ai",
+  it("keeps this portal aligned only to SVCollege AI & Full Stack", () => {
+    expect(blueprints.map((item) => item.id)).toEqual(["svcollege_fullstack_ai"]);
+  });
+
+  it("keeps non-SVCollege alignments deferred for separate future portals", () => {
+    expect(loadDeferredBlueprints().map((item) => item.id)).toEqual([
       "john_bryce_fullstack_ai",
       "sela_react_professional",
       "generic_israeli_bootcamp",

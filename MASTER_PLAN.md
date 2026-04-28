@@ -2,6 +2,18 @@
 
 > **המטרה:** להגיע למצב שבו לכל מושג ב-19 השיעורים יש ✅ **3 שאלות אמריקניות** ו-✅ **2 שאלות השלמת קוד**, כך שהתלמיד יכול להגיע מרמה 1 (סבתא) לרמה 7 (מאסטר) בכל מושג בלי הפסקת שאלות מיוצרות אוטומטית.
 
+> **עדכון 2026-04-28:** מסמך זה הוא תוכנית legacy ממוקדת בנק שאלות. תוכנית האב הפעילה היא [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md), והביצוע היומי נמצא ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md). קו הסיום הראשון גובר על המסמך הזה: כיסוי מלא של `SVCollege — קורס AI & Full Stack` בכל הפורטל לפני הרחבות אחרות.
+
+## 0. עדכון אסטרטגי לתוכנית
+
+לפני הרחבת בנק השאלות לכל המושגים, המיקוד עובר ל-SVCollege:
+
+1. כל שאלה קשה תקבל דרישות קדם והסבר צדדי של המונחים שחייבים לדעת.
+2. כל מודול SVCollege חייב להופיע לא רק בשיעור אלא גם בטאבים: מאמן, מבחן מדומה, Gap Matrix, מפת ידע, Flashcards, Code Trace ו-Mini Build.
+3. כל חומר גלם בתיקיית `lessons/` יקושר לשיעור ולתוכן האינטראקטיבי שנוצר ממנו.
+4. `covered` יוגדר רק כשיש שיעור, תרגול, ניווט, בדיקות וראיית UX בדפדפן.
+5. הרחבות כמו מוזיאון, קהילה ו-AI production נשארות Priority 2 עד שדוח SVCollege ירוק.
+
 ---
 
 ## 1. תמונת מצב נוכחית
@@ -233,6 +245,145 @@ Output as a JS object matching the bank schema.
 | חודש 3 | פאזה 5 + פוליש | +170 שאלות, וולידציה מלאה |
 
 **יעד סופי:** מאגר של **2,170 שאלות איכותיות**, שמכסות 100% מהמושגים, ומאפשרות לתלמיד להגיע לרמה 7 (מאסטר) בכל מושג בלי שאלות שנוצרות אוטומטית.
+
+---
+
+## 11. נספח מוזיאון — חומרים חסרים להשלמה
+
+> **סטטוס סוף יום 2026-04-28:** המוזיאון כבר קיבל שערים, אגפים, דפי שכבות, Full-Stack, מוצר, טעויות, חוזים, Video Studio, דרכון תלמיד, ואגף AI מורחב. הרשימה כאן היא backlog תוכן/חוויה להשלמה בהמשך, בלי להוסיף עובדות לא מבוססות ובלי שימוש ב-`Math.random()`.
+
+### 11.1 חומרים חסרים ברמת תוכן ומקורות
+
+| עדיפות | חומר חסר | מה צריך להשלים | למה זה חשוב |
+|---|---|---|---|
+| P0 | מקור לכל טענה היסטורית | לכל שנה/ראשון/התפתחות להוסיף מקור או ניסוח מסויג | לא לנעול במוזיאון עובדות לא מדויקות |
+| P0 | הבחנה בין "ראשון" לפי הקשר | AI, מודל מסחרי, מודל מקומי, שפה, framework, runtime | למנוע בלבול בין קטגוריות שונות |
+| P0 | מילון מושגים אחיד | אותו ניסוח ל-model, agent, workflow, RAG, runtime, framework, API, schema | לשמור עקביות בין אגפים |
+| P1 | מפת מקורות גלויה | אזור Sources לכל אגף, לא רק אגף AI | תלמיד צריך להבין על מה החומר נשען |
+| P1 | שאלות בדיקה לכל אולם | 1-3 שאלות הבנה קצרות לכל אולם ותת-אולם | להפוך צפייה ללמידה פעילה |
+| P2 | גרסאות "לפני מבחן" | תקציר קצר לכל אולם: מה לזכור, מה מבלבל, טעות נפוצה | שימוש מהיר לפני בחינה |
+
+### 11.2 אגף שכבות המחשב — חסרים לפי בלוק
+
+| בלוק | חסר להשלים | חוויה חסרה |
+|---|---|---|
+| חשמל | הרחבת טרנזיסטור, שערים לוגיים, מתח/זרם/אות | סימולטור מתג שמראה 0/1 ו-flow לפעולה |
+| ביט / Byte | ייצוג מספרים, תווים, encoding, overflow בסיסי | ממיר ביטים דטרמיניסטי עם מצב "מה השתנה" |
+| קוד מכונה | opcode, register, memory, instruction cycle | X-Ray של פקודה אחת עד שינוי בזיכרון |
+| שפה | syntax, compiler/interpreter, runtime, GC | תרשים "מה קורה ל-JS לפני שהוא רץ" |
+| Framework | למה נוצר framework ומה הוא מסתיר | השוואת vanilla JS מול React/Node/Next באותה פעולה |
+| אפליקציה | מסך, נתונים, פעולה, state, persistence | מסלול לחיצה אחת מה-UI עד DB וחזרה |
+
+### 11.3 מוזיאון שפות התכנות — חומרים חסרים
+
+1. להשלים כרטיס לכל שפה/תחנה בשושלות: מה הבעיה שפתרה, מה המחיר, לאן התפתחה, ומה נשאר ממנה היום.
+2. להוסיף השוואות קצרות: `C` מול `Rust`, `JavaScript` מול `TypeScript`, `React` מול vanilla DOM, `SQL` מול document DB.
+3. להוסיף "חדר פשרות": מהירות, שליטה, בטיחות, קריאות, ניידות ופרודוקטיביות.
+4. להוסיף דוגמאות קוד קטנות לכל משפחת שפות, רק מתוך חומר שמאומת או חומר קורס.
+5. להוסיף מסלול "איך שפה הופכת ל-framework ואז למוצר".
+
+### 11.4 אגף Full-Stack — חומרים חסרים לפי תחום מקצועי
+
+| תחום | חומרים חסרים | תוצר נדרש |
+|---|---|---|
+| UI / HTML / CSS | semantic HTML, layout, responsive, accessibility, states | אולם UI עם before/after ותרשים DOM |
+| Browser Runtime | event loop, DOM update, storage, rendering | סימולטור פעולה בדפדפן |
+| Async / Network | promise, fetch, HTTP lifecycle, loading/error states | תרשים request/response מלא |
+| Node / npm / modules | package, module, filesystem, environment | אולם "מה קורה כשמריצים npm" |
+| API / HTTP / Express | route, middleware, status code, validation, auth boundary | Contract map בין client ל-server |
+| Database / MongoDB / Mongoose | schema, collection, document, query, index | תצוגת נתון מה-input עד document |
+| React Product | component, props, state, hooks, router, context | מפה של product state לפי feature |
+| Quality / Tests / AI Review | unit, integration, smoke, regression, review | מסלול "מה נשבר לפני release" |
+
+### 11.5 אגף מוצר מרעיון להשקה — חומרים חסרים
+
+1. **לפני פיתוח:** תבניות לבעיה, קהל יעד, KPI, scope, wireframe, data model, risk list.
+2. **בזמן פיתוח:** פירוט חלוקת עבודה בין Product, UX, Frontend, Backend, Data, QA.
+3. **לפני השקה:** checklist ל-build, נגישות, performance, תוכן, שגיאות, security בסיסי.
+4. **בזמן השקה:** rollout, ניטור, support, error budget, analytics, feedback loop.
+5. **אחרי השקה:** triage באגים, החלטת גרסה, debt, telemetry, שיפור UX.
+6. **שדרוג/החלפה:** להפוך את הקריטריונים לכרטיסי החלטה עם דוגמאות מוצריות.
+
+### 11.6 אגף טעויות ו-Debug — חומרים חסרים
+
+| סוג טעות | חסר להשלים |
+|---|---|
+| Syntax | דוגמאות נפוצות לפי JS/React + סימן זיהוי |
+| Runtime | `undefined`, null, reference, type mismatch |
+| Scope / Closure | דוגמאות קצרות של משתנה שלא קיים במקום הצפוי |
+| Async | race, missing await, promise rejection, loading state |
+| React State | mutation, stale state, derived state, dependency array |
+| API | 400/401/404/500, CORS, body חסר, endpoint לא נכון |
+| Database | schema mismatch, missing field, query לא מחזיר, persistence |
+| Release | build failure, env חסר, regression, performance |
+
+### 11.7 אגף חוזים ונתונים — חומרים חסרים
+
+1. להשלים "חוזה" לכל שכבה: function input/output, component props, API body/response, DB schema, validation rules.
+2. להוסיף דוגמאות של חוזה שנשבר ומה הסימפטום.
+3. להוסיף טבלת "מי הבעלים של החוזה": Frontend, Backend, Database, Product, QA.
+4. להוסיף מסלול נתון אחד: input → validation → state → JSON → API → DB → response → render.
+5. להוסיף בדיקות חוזה: unit, integration, schema validation, smoke.
+
+### 11.8 אגף AI — חומרים חסרים להמשך
+
+1. להרחיב את גרף ההתפתחות גם ל-RAG, embeddings, vector DB, multimodal, evals ו-guardrails.
+2. להוסיף חדר "איך LLM עונה": tokens, context window, attention, inference, hallucination.
+3. להוסיף חדר "איך בונים פיצ'ר AI במוצר": prompt, sources, policy, tools, logs, evals.
+4. להוסיף הבחנה בין local model, open weights, open source, hosted API ו-commercial product.
+5. להוסיף דוגמאות שימוש בקורס: סיכום שיעור, debug, שאלות, בדיקת פתרון, יצירת פרומפט.
+6. להשלים טבלת סיכונים: מידע שגוי, פרטיות, הרשאות, עלות, latency, bias.
+
+### 11.9 Video Studio ו-NotebookLM — חומרים חסרים
+
+1. לעבור על כל 63 הסרטונים ולוודא שלכל אחד יש חומר רקע, ידע מקדים, סקריפט, פרומפט והוראות NotebookLM.
+2. לוודא שכל כפתור "פתח חומר לסרטון" פותח חלון מתאים באולם הנכון.
+3. להוסיף מסלולי סרטונים מסכמים: "לפני מבחן", "Full-Stack end-to-end", "Debug", "AI במוצר".
+4. להוסיף שדה "מה התלמיד צריך לענות אחרי הצפייה".
+5. להוסיף QA שאין במסמכי הסרטונים תאריכים או טענות שלא מופיעים בקוד/מקורות.
+
+### 11.10 דרכון תלמיד ומסלולי ביקור — חומרים חסרים
+
+| רכיב | חסר להשלים |
+|---|---|
+| חותמות ביקור | לכל אולם: משימת הבנה + שאלה + תוצר קצר |
+| מסלול מתחילים | סדר ביקור פשוט: שכבות → שפה → UI → API → DB |
+| מסלול לפני מבחן | רק מושגים, טעויות, שאלות בדיקה וסרטונים קצרים |
+| מסלול בניית מוצר | רעיון → UI → API → DB → Tests → Launch |
+| מסלול Debug | symptom → layer → contract → fix → test |
+| React / Full-Stack | state → component → router → API → DB → release |
+
+### 11.11 חיבורים חסרים בין כל חלקי הפורטל
+
+1. מכל אולם לשיעורים הרלוונטיים.
+2. מכל טעות לאולם השורש שמסביר אותה.
+3. מכל מושג לבלוק קוד, שאלה, סרטון, ותרגול.
+4. מכל תחום Full-Stack לשלב מוצר ולבעל תפקיד בצוות.
+5. מכל סרטון לידע מקדים, שאלת בדיקה ותעודת דרכון.
+6. מכל חוזה טכני לטעות שנוצרת כשהוא נשבר.
+
+### 11.12 QA ונגישות שחסרים לפני סגירת המוזיאון
+
+| תחום | בדיקה חסרה |
+|---|---|
+| RTL | כל הכותרות, הטבלאות והתרשימים במובייל |
+| Mobile | אין טקסט חורג ואין כרטיסים שנמעכים |
+| Keyboard | טאבים, מודלים, כפתורים ומסלולי ביקור נגישים במקלדת |
+| Reduced motion | כל animation נעצרת או מצטמצמת |
+| Data tests | לכל אגף route, goal, video, diagram ושדות לא ריקים |
+| Visual QA | screenshot ידני לכל אגף מרכזי |
+| Build/Test | `node --check app.js`, `npm run build`, בדיקת מוזיאון ממוקדת, ואחר כך `npm test` |
+
+### 11.13 סדר עבודה מומלץ להמשך
+
+1. **P0 — Content Safety:** מקור לכל טענה היסטורית וניסוח מסויג לכל "ראשון".
+2. **P0 — Cross Links:** לחבר כל אולם לשיעור, שאלה, סרטון ודרכון.
+3. **P1 — Full-Stack Depth:** להשלים אולמות עומק לכל תחום מקצועי.
+4. **P1 — Debug + Contracts:** להפוך טעויות וחוזים למערכת ניווט אחת.
+5. **P1 — Video QA:** לוודא שכל 63 הסרטונים שלמים ומחוברים לחלונות במוזיאון.
+6. **P2 — Simulators:** להוסיף סימולטור קטן ודטרמיניסטי לכל שכבה.
+7. **P2 — Polish:** בדיקות מובייל, RTL, reduced motion וצילומי מסך.
+8. **P2 — Release:** לעדכן גרסה, changelog, ולסגור בדיקות.
 
 ---
 

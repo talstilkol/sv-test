@@ -2,23 +2,26 @@
 
 > תאריך: 2026-04-28  
 > מקור ראשי: https://svcollege.co.il/courses/web-development/  
-> מדיניות: SVCollege coverage + site health are Priority 0. Museum/AI/community/product extras are secondary until this table is green.
+> מדיניות: SVCollege coverage + site health are Finish Line 1. Museum/AI/community/product extras are secondary until this table is green.
+> Scope: טאב `יישור SVCollege` פעיל אך ורק למסלול `SVCollege — קורס AI & Full Stack`. קורסים אחרים לא נמדדים בפורטל הזה ויועברו לפורטלים נפרדים בעתיד.
+> דוח מדיד אוטומטי: `npm run svcollege:readiness:write` יוצר את `SVCOLLEGE_READINESS_REPORT.md` ואת `SVCOLLEGE_READINESS_REPORT.json`.
+> מלאי שיעורים לביצוע: `SVCOLLEGE_LESSON_INVENTORY.md`.
 
 ## Status Summary
 
 | Area | Status | Portal Evidence | Priority Gap |
 |---|---|---|---|
-| HTML בסיסי + HTML/CSS | Partial | `lesson_25` covers responsive/Flex/Grid/Tailwind | Add semantic HTML, forms, selectors, box model, accessibility basics |
+| HTML בסיסי + HTML/CSS | Covered | `lesson_html_css_foundations` covers semantic HTML, forms, selectors, cascade/specificity, box model and accessibility basics; `lesson_25` continues responsive/Flex/Grid/Tailwind | Maintain practice, mock-exam coverage and tab health |
 | CSS responsive + Tailwind | Covered | `lesson_25` | Keep covered through exercises and mock exam |
 | JavaScript basics + DOM | Covered | `lesson_11`, `lesson_12`, `lesson_13` | Raise question coverage for weak concepts |
-| ES6 + Git + ESLint + Prettier | Partial | ES6/async in `lesson_11`, `lesson_15`; architecture/testing in `react_blueprint` | Add Git/GitHub workflow, ESLint, Prettier, npm scripts |
+| ES6 + Git + ESLint + Prettier | Covered | `lesson_tooling_git` covers Git, repo, working tree, staging, commit, branch, PR, GitHub workflow, npm scripts, ESLint, Prettier; ES6/async supported by `lesson_11`, `lesson_15` | Maintain practice, mock-exam coverage and tab health |
 | Node.js + Express + REST | Covered | `lesson_16`, `lesson_17`, `lesson_18` | Raise question coverage and add more mini-builds |
-| DB: MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle | Partial | `lesson_20` covers MongoDB/Mongoose and SQL vocabulary | Add PostgreSQL, schema relations, migrations, Prisma/Drizzle CRUD |
-| Auth: JWT/Cookies/providers | Gap | Capstone mentions auth, no full lesson | Add auth foundations + provider-auth guided build |
+| DB: MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle | Covered | `lesson_20` covers MongoDB/Mongoose; `lesson_sql_orm` covers SQL, PostgreSQL, schema, relations, migrations, Prisma/Drizzle CRUD, transactions, MC/Fill/Trace/Mini Build/Bug Hunt and prerequisites | Maintain practice, mock-exam coverage and tab health |
+| Auth: JWT/Cookies/providers | Covered | `lesson_auth_security` covers authentication, authorization, sessions, secure cookies, JWT/access/refresh tokens, OAuth/provider auth, password hashing/bcrypt, CSRF, XSS, CORS, middleware guards, MC/Fill/Trace/Mini Build/Bug Hunt and prerequisites | Maintain practice, mock-exam coverage and tab health |
 | React frontend | Covered | `lesson_21` to `lesson_25` | Keep covered through E2E tab health |
 | TypeScript + React | Covered | `lesson_26`, `lesson_27` | Add SV-style project questions |
 | shadcn/UI + design systems | Partial | Tailwind + component architecture | Add shadcn/UI, accessible primitives, design system build |
-| Next.js SSR/API/SEO | Gap | None | Add Next.js full-stack module |
+| Next.js SSR/API/SEO | Covered | `lesson_nextjs` covers App Router, routing, layouts/pages, server/client components, route handlers/API routes, server actions, SSR/SSG/ISR, metadata, SEO, image optimization, Vercel deploy, MC/Fill/Trace/Mini Build/Bug Hunt and prerequisites | Maintain practice, mock-exam coverage and tab health |
 | DevOps: Vercel/Docker/CI-CD/testing | Partial | CI exists; testing strategy exists | Add deploy/Docker/CI-CD student-facing lessons |
 | Nest.js + DI | Gap | None | Add Nest.js bridge after Express |
 | AI coding tools | Covered | `ai_development` covers Cursor, Windsurf, prompt engineering, AI review | Add workflow drills |
@@ -27,10 +30,10 @@
 ## Immediate Priority Queue
 
 1. Build a site-health smoke suite for every top tab and critical modal.
-2. Add missing SVCollege lessons in this order: HTML/CSS foundations, Git/tooling, PostgreSQL+ORM, Auth, Next.js.
-3. Add backend/production lessons: DevOps/Docker/CI-CD, Nest.js.
-4. Add AI Engineering only after the web/full-stack base is covered.
-5. Add a dedicated SVCollege mock exam that samples every module above.
+2. Add backend/production lessons: DevOps/Docker/CI-CD, Nest.js.
+3. Add AI Engineering only after the web/full-stack base is covered.
+4. Add shadcn/UI design-system bridge after the release blockers are lower-risk.
+5. Harden the dedicated SVCollege mock exam so its sampler guarantees every module above.
 
 ## Definition Of Done For SVCollege Coverage
 

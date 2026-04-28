@@ -1,0 +1,132 @@
+const commandCenter = require("../scripts/report_svcollege_command_center.js");
+
+describe("SVCollege command center", () => {
+  it("builds a deterministic finish-line command report", () => {
+    const first = commandCenter.buildReport();
+    const second = commandCenter.buildReport();
+
+    expect(second).toEqual(first);
+    expect(first.reportVersion).toBe("svcollege-command-center-v1");
+    expect(first.finishLine.target).toBe("SVCollege AI & Full Stack only");
+    expect(first.finishLine.modules).toBe(15);
+    expect(first.finishLine.releaseBlockers).toBeGreaterThan(0);
+    expect(first.redFirstQueue.length).toBeGreaterThan(0);
+  });
+
+  it("summarizes source assets and canonical docs", () => {
+    const report = commandCenter.buildReport();
+
+    expect(report.sourceAssets.total).toBe(36);
+    expect(report.sourceAssets.rootAssets).toBe(0);
+    expect(report.docs.every((doc) => doc.exists)).toBe(true);
+    expect(report.commands).toEqual(expect.arrayContaining([
+      "npm run svcollege:readiness:write",
+      "npm run lessons:assets",
+      "npm run build",
+    ]));
+  });
+
+  it("records the active limited parallel mode", () => {
+    const report = commandCenter.buildReport();
+    const activeIds = report.activeParallelMode.activeExternalSessions.map((session) => session.id);
+    const completedIds = report.activeParallelMode.completedExternalSessions.map((session) => session.id);
+
+    expect(report.activeParallelMode.status).toBe("limited-parallel-museum-only-after-sql-auth-nextjs-integration");
+    expect(activeIds).toEqual(["museum"]);
+    expect(completedIds).toEqual(["sql-orm", "auth-security", "nextjs"]);
+    expect(report.activeParallelMode.pausedSessions).toEqual(expect.arrayContaining([
+      "All Tabs QA",
+    ]));
+    expect(report.activeParallelMode.pausedSessions).not.toContain("Auth");
+    expect(report.activeParallelMode.pausedSessions).not.toContain("Next.js");
+    expect(report.activeParallelMode.currentSessionAllowedScope).toEqual(expect.arrayContaining([
+      "Command Center reports",
+      "post-SQL/Auth/Next.js integration quality gates",
+    ]));
+  });
+
+  it("adds evidence links for every SVCollege module", () => {
+    const report = commandCenter.buildReport();
+
+    expect(report.moduleEvidence.length).toBe(report.finishLine.modules);
+    report.moduleEvidence.forEach((module) => {
+      expect(module.title).toEqual(expect.any(String));
+      expect(module.questions.files.length).toBeGreaterThan(0);
+      expect(module.activities.files.length).toBeGreaterThan(0);
+      expect(module.tabEvidence.status).toBe("mapped-through-course-blueprints");
+      expect(module.tabEvidence.files.every((file) => file.exists)).toBe(true);
+      expect(module.tests.length).toBeGreaterThan(0);
+      expect(module.tests.every((test) => test.exists)).toBe(true);
+      expect(module.browserVerification).toEqual(expect.objectContaining({
+        status: "pending-session-7",
+        owner: "codex/svcollege-tab-health",
+      }));
+    });
+
+    const coveredModules = report.moduleEvidence.filter((module) => module.status === "covered");
+    expect(coveredModules.every((module) => module.lessonFiles.some((lesson) => lesson.exists))).toBe(true);
+  });
+
+  it("blocks covered modules that lack lesson, practice, tab or test evidence", () => {
+    const report = commandCenter.buildReport();
+    const coveredCount = report.moduleEvidence.filter((module) => module.status === "covered").length;
+
+    expect(report.noEvidenceGate.status).toBe("passed");
+    expect(report.noEvidenceGate.checkedCoveredModules).toBe(coveredCount);
+    expect(report.noEvidenceGate.failures).toEqual([]);
+
+    const brokenModule = {
+      ...report.moduleEvidence.find((module) => module.status === "covered"),
+      lessonFiles: [],
+      questions: { count: 0, files: [] },
+      activities: { count: 0, files: [] },
+      tabEvidence: { status: "missing", files: [] },
+      tests: [],
+    };
+    const gate = commandCenter.buildNoEvidenceGate([brokenModule]);
+
+    expect(gate.status).toBe("failed");
+    expect(gate.failures).toEqual([
+      expect.objectContaining({
+        missing: ["lesson", "practice", "tab", "test"],
+      }),
+    ]);
+  });
+
+  it("keeps the red-first queue sorted by release priority", () => {
+    const report = commandCenter.buildReport();
+
+    expect(report.redFirstQueue.map((item) => item.title)).toEqual([
+      "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
+      "Frameworks צד-שרת — Nest.js modules + dependency injection",
+      "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
+      "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
+    ]);
+  });
+
+  it("extracts the parallel-session opening board", () => {
+    const report = commandCenter.buildReport();
+    const sessions = report.parallelSessions.sessions.map((session) => session.session);
+
+    expect(report.parallelSessions.total).toBe(9);
+    expect(sessions).toEqual(expect.arrayContaining([
+      "0 Coordinator",
+      "1 SQL/ORM",
+      "8 Question Quality",
+      "7 All Tabs QA",
+    ]));
+    expect(report.parallelSessions.nextOpenRule).toContain("Next.js are integrated");
+  });
+
+  it("renders markdown with queue and gates", () => {
+    const markdown = commandCenter.toMarkdown(commandCenter.buildReport());
+
+    expect(markdown).toContain("# SVCollege Command Center");
+    expect(markdown).toContain("## Current Parallel Mode");
+    expect(markdown).toContain("## Red-First Queue");
+    expect(markdown).toContain("## No-Evidence Gate");
+    expect(markdown).toContain("## Module Evidence Matrix");
+    expect(markdown).toContain("## Parallel Sessions");
+    expect(markdown).toContain("Per-distractor feedback");
+  });
+});

@@ -2258,6 +2258,138 @@ var QUESTIONS_TRACE = [
     explanation:
       "Stale closure נוצר כש-callback מחזיק snapshot ישן של ערך. ב-React זה מופיע כש-effect או handler נסגר על state ישן בגלל deps חסרים או שימוש לא נכון.",
   },
+  {
+    id: "trace_html_css_01",
+    conceptKey: "lesson_html_css_foundations::semantic HTML",
+    level: 3,
+    title: "קריאת שלד HTML סמנטי",
+    code: "<header>\n  <h1>לוח משימות</h1>\n</header>\n<nav>\n  <a href=\"/tasks\">משימות</a>\n</nav>\n<main>\n  <section>\n    <h2>היום</h2>\n  </section>\n</main>",
+    steps: [
+      {
+        line: 7,
+        prompt: "איזה אלמנט מסמן את התוכן המרכזי של הדף?",
+        answer: "main",
+        acceptable: ["<main>"],
+        hint: "חפש את ה-landmark שאינו כותרת עליונה ואינו תפריט.",
+      },
+      {
+        line: 8,
+        prompt: "איזה אלמנט מחלק אזור תוכן בתוך התוכן המרכזי?",
+        answer: "section",
+        acceptable: ["<section>"],
+        hint: "האלמנט שעוטף את הכותרת 'היום'.",
+      },
+      {
+        line: 4,
+        prompt: "איזה אלמנט מתאים לאזור ניווט?",
+        answer: "nav",
+        acceptable: ["<nav>"],
+        hint: "בתוכו נמצא הקישור למשימות.",
+      },
+    ],
+    explanation:
+      "HTML סמנטי הוא מפת תפקידים: header לכותרת עליונה, nav לניווט, main לתוכן המרכזי ו-section לאזור תוכן פנימי.",
+  },
+  {
+    id: "trace_html_css_02",
+    conceptKey: "lesson_html_css_foundations::cascade and specificity",
+    level: 5,
+    title: "מי מנצח ב-CSS specificity",
+    code: "button {\n  color: gray;\n}\n.primary {\n  color: blue;\n}\n#save {\n  color: green;\n}",
+    steps: [
+      {
+        line: 1,
+        prompt: "איזה צבע מגיע מה-selector הכללי של תגית button?",
+        answer: "gray",
+        hint: "זה הכלל הראשון והוא הכי פחות ספציפי.",
+      },
+      {
+        line: 4,
+        prompt: "איזה selector ספציפי יותר מ-button?",
+        answer: ".primary",
+        acceptable: ["primary", "class"],
+        hint: "class selector חזק יותר מ-tag selector.",
+      },
+      {
+        line: 7,
+        prompt: "אם הכפתור הוא <button id=\"save\" class=\"primary\">, איזה צבע ינצח?",
+        answer: "green",
+        hint: "id selector חזק יותר מ-class ו-tag.",
+      },
+    ],
+    explanation:
+      "ב-CSS לא רק הסדר קובע. specificity מדרגת selectors: תגית < class < id. לכן #save מנצח אם כל הכללים חלים על אותו כפתור.",
+  },
+  {
+    id: "trace_tooling_01",
+    conceptKey: "lesson_tooling_git::GitHub workflow",
+    level: 4,
+    title: "רצף עבודה נקי מ-branch ל-PR",
+    code: "git pull --ff-only\ngit switch -c feature/search\n# edit src/Search.jsx\nnpm test\ngit add src/Search.jsx\ngit commit -m \"add search box\"\ngit push -u origin feature/search\n# open pull request",
+    steps: [
+      {
+        line: 1,
+        prompt: "איזו פקודה מביאה את העדכון האחרון בלי merge מפתיע?",
+        answer: "git pull --ff-only",
+        acceptable: ["pull --ff-only"],
+        hint: "זו הפקודה הראשונה ברצף.",
+      },
+      {
+        line: 2,
+        prompt: "מה שם הענף החדש שנוצר?",
+        answer: "feature/search",
+        hint: "השם מופיע אחרי switch -c.",
+      },
+      {
+        line: 6,
+        prompt: "איזה שלב יוצר snapshot רשמי של השינוי?",
+        answer: "commit",
+        acceptable: ["git commit"],
+        hint: "זה השלב עם הודעת השינוי.",
+      },
+      {
+        line: 8,
+        prompt: "מה הפעולה הבאה אחרי push כדי לבקש review?",
+        answer: "open pull request",
+        acceptable: ["pull request", "PR"],
+        hint: "ההערה בשורה האחרונה אומרת מה עושים ב-GitHub.",
+      },
+    ],
+    explanation:
+      "Workflow בריא מתחיל בעדכון main, יוצר branch מבודד, מריץ בדיקות, עושה commit קטן, דוחף ל-GitHub ואז פותח PR ל-review.",
+  },
+  {
+    id: "trace_tooling_02",
+    conceptKey: "lesson_tooling_git::npm scripts",
+    level: 4,
+    title: "קריאת package.json scripts",
+    code: "{\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"test\": \"vitest run\",\n    \"lint\": \"eslint src\"\n  }\n}",
+    steps: [
+      {
+        line: 3,
+        prompt: "איזה script מפעיל שרת פיתוח?",
+        answer: "dev",
+        acceptable: ["npm run dev"],
+        hint: "הפקודה שלו היא vite.",
+      },
+      {
+        line: 4,
+        prompt: "איזה script בונה גרסת production?",
+        answer: "build",
+        acceptable: ["npm run build"],
+        hint: "הפקודה כוללת vite build.",
+      },
+      {
+        line: 6,
+        prompt: "איזה script בודק חוקים סטטיים?",
+        answer: "lint",
+        acceptable: ["npm run lint"],
+        hint: "הפקודה שלו מתחילה ב-eslint.",
+      },
+    ],
+    explanation:
+      "package.json scripts נותנים שמות קבועים לפקודות. זה מאפשר לצוות ול-CI להריץ אותה פעולה בלי לזכור פקודות ארוכות.",
+  },
 ];
 
 // Browser bridge: expose under QUESTIONS_BANK.trace so the trainer's

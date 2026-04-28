@@ -51,7 +51,7 @@
 1. **SVCollege curriculum coverage** — כל מודול ציבורי של SVCollege חייב להיות ממופה ל-lesson / practice / mock exam / gap task.
 2. **Site health** — כל טאב, תת-תפריט, מודל, מצב תרגול ומסך תוצאה חייב להיפתח בלי שגיאת runtime.
 3. **Assessment readiness** — מבחן מדומה ייעודי ל-SVCollege חייב לדגום את כל המודולים, לא רק JS/React/Node.
-4. **Content before expansion** — לא מוסיפים פיצ'רי הרחבה משמעותיים עד שסוגרים את פערי HTML/CSS, Git/tooling, PostgreSQL+ORM, Auth, Next.js, DevOps, Nest.js ו-AI Engineering.
+4. **Content before expansion** — לא מוסיפים פיצ'רי הרחבה משמעותיים עד שסוגרים את פערי DevOps, Nest.js ו-AI Engineering, ומקשיחים את ה-partials שנותרו.
 
 ## 0.2 מיפוי SVCollege נוכחי
 
@@ -59,17 +59,31 @@
 
 סטטוס תמציתי:
 
-- Covered: JavaScript basics, DOM, React, TypeScript, Node/Express/REST, Tailwind responsive, AI coding tools.
-- Partial: HTML/CSS foundations, Git/tooling, DB beyond MongoDB, shadcn/UI, DevOps.
-- Gap: Auth, Next.js, Nest.js, AI Engineering with Vercel AI/OpenAI/LangChain/RAG/Agents/Fine-tuning.
+- Covered: HTML/CSS foundations, Git/tooling, JavaScript basics, DOM, React, TypeScript, Node/Express/REST, Tailwind responsive, DB including SQL/ORM, Auth/Security, Next.js, AI coding tools.
+- Partial: shadcn/UI, DevOps.
+- Gap: Nest.js, AI Engineering with Vercel AI/OpenAI/LangChain/RAG/Agents/Fine-tuning.
 
 ## 0.3 Definition Of Done לפני הרחבות
 
 - כל מודול SVCollege מסומן Covered/Partial/Gap עם משימת סגירה.
 - כל Covered/Partial מקבל לפחות תרגול אחד: MC, Fill, Trace, Bug או Build.
+- כל שאלה קשה מקבלת "חוזה למידה": דרישות קדם, מונחים שחייבים לדעת, והסבר צדדי קצר לפני או אחרי הטעות.
 - כל הטאבים הקריטיים עוברים smoke test בדפדפן בשני גדלים: desktop ו-mobile.
 - CI כולל `npm audit`, validation, feature coverage, question quality, no-Math.random, Vite build smoke ו-Vitest.
 - אין PR פתוח שמוסיף הרחבה גדולה בלי לקשור אותה ישירות ל-SVCollege readiness.
+
+## 0.4 שדרוג תוכנית קדימה — 2026-04-28
+
+המערכת כבר עשירה בפיצ'רים, אבל הסיכון המרכזי הוא לא חוסר רעיונות אלא חוסר קו סיום חד. לכן השיפור האסטרטגי הבא הוא להפוך את SVCollege ל-"מסלול נמדד" לפני שמוסיפים עוד חוויות.
+
+1. **Learning Contract לכל שאלה** — שאלה לא יכולה להיות "קשה" בלי לציין מה צריך לדעת כדי לפתור אותה. כל פריט מבחן יקבל דרישות קדם, מונחי חובה, והסבר צדדי שמחזיר את התלמיד לרעיון הבסיסי.
+2. **SVCollege Command Center** — מסך אחד שמראה readiness, gaps, release blockers, בריאות טאבים, איכות שאלות ומשימת העבודה הבאה.
+3. **Tab Coverage Matrix** — לא מספיק שיש שיעור. כל מודול SVCollege חייב להופיע בשיעורים, מאמן, מבחן מדומה, Code Trace, Mini Build, Flashcards, Gap Matrix, מפת ידע ותפריט הצד.
+4. **Lesson Source Registry** — כל חומר גלם ב-`lessons/` יקושר לשיעור, מושגים, שאלות ותוצרי תרגול. כך אפשר לדעת מה כבר נוצל ומה עדיין לא הומר לתוכן אינטראקטיבי.
+5. **Question Quality Pipeline** — בדיקת distractors, רמזי אורך, near-duplicates, ambiguity ודרישות קדם הופכת לחלק מהשער לפני `covered`.
+6. **Real Learner Outcome Loop** — לפני Teacher Dashboard גדול או קהילה, מודדים 10 תלמידים: baseline, שימוש שבועי, מבחן חוזר, ושאלות שבהן נתקעו.
+
+משימות הביצוע החדשות נמצאות ב-`EXECUTION_TASKS.md` תחת P-1.8 עד P-1.11.
 
 # חלק I — איפיון מוצר
 

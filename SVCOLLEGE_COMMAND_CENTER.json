@@ -1,0 +1,2663 @@
+{
+  "reportVersion": "svcollege-command-center-v1",
+  "date": "2026-04-28",
+  "finishLine": {
+    "target": "SVCollege AI & Full Stack only",
+    "ready": false,
+    "readiness": 85.3,
+    "covered": 11,
+    "partial": 2,
+    "gap": 2,
+    "modules": 15,
+    "releaseBlockers": 4
+  },
+  "redFirstQueue": [
+    {
+      "title": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
+      "status": "partial",
+      "readiness": 90,
+      "level": "amber",
+      "nextAction": "להוסיף DevOps Foundations + deploy checklist + Docker mini-build.",
+      "priority": 4
+    },
+    {
+      "title": "Frameworks צד-שרת — Nest.js modules + dependency injection",
+      "status": "gap",
+      "readiness": 0,
+      "level": "red",
+      "nextAction": "להוסיף Nest.js bridge אחרי Express: controllers, providers, modules, DI ו-validation pipe.",
+      "priority": 5
+    },
+    {
+      "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
+      "status": "gap",
+      "readiness": 0,
+      "level": "red",
+      "nextAction": "להוסיף AI Engineering track: OpenAI/Vercel AI SDK, embeddings, RAG, tool calling, agents וגבולות fine-tuning.",
+      "priority": 6
+    },
+    {
+      "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
+      "status": "partial",
+      "readiness": 90,
+      "level": "amber",
+      "nextAction": "להוסיף shadcn/UI ו-design system guided build.",
+      "priority": 7
+    }
+  ],
+  "moduleEvidence": [
+    {
+      "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_html_css_foundations",
+          "file": "data/lesson_html_css_foundations.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_25",
+          "file": "data/lesson25.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 77,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 10,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "עיצוב רספונסיבי ו-CSS מתקדם",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_25",
+          "file": "data/lesson25.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 63,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 7,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_11",
+          "file": "data/lesson11.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_12",
+          "file": "data/lesson12.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_13",
+          "file": "data/lesson13.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 313,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 44,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_tooling_git",
+          "file": "data/lesson_tooling_git.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_11",
+          "file": "data/lesson11.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_15",
+          "file": "data/lesson15.js",
+          "exists": true
+        },
+        {
+          "lessonId": "react_blueprint",
+          "file": "data/react_blueprint.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 254,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 43,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_16",
+          "file": "data/lesson16.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_17",
+          "file": "data/lesson17.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_18",
+          "file": "data/lesson18.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 316,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 51,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_20",
+          "file": "data/lesson20.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_sql_orm",
+          "file": "data/lesson_sql_orm.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 149,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 22,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_auth_security",
+          "file": "data/lesson_auth_security.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 38,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 9,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "React ופיתוח Frontend מתקדם",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_21",
+          "file": "data/lesson21.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_22",
+          "file": "data/lesson22.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_23",
+          "file": "data/lesson23.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_24",
+          "file": "data/lesson24.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_25",
+          "file": "data/lesson25.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 399,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 75,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "TypeScript ופטרנים מתקדמים ב-React",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_26",
+          "file": "data/lesson26.js",
+          "exists": true
+        },
+        {
+          "lessonId": "lesson_27",
+          "file": "data/lesson27.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 205,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 21,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
+      "status": "partial",
+      "readiness": 90,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_25",
+          "file": "data/lesson25.js",
+          "exists": true
+        },
+        {
+          "lessonId": "react_blueprint",
+          "file": "data/react_blueprint.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 105,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 8,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_nextjs",
+          "file": "data/lesson_nextjs.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 38,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 9,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
+      "status": "partial",
+      "readiness": 90,
+      "lessonFiles": [
+        {
+          "lessonId": "react_blueprint",
+          "file": "data/react_blueprint.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 42,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 1,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "Frameworks צד-שרת — Nest.js modules + dependency injection",
+      "status": "gap",
+      "readiness": 0,
+      "lessonFiles": [],
+      "questions": {
+        "count": 0,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 0,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "ai_development",
+          "file": "data/ai_development.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 53,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 1,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    },
+    {
+      "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
+      "status": "gap",
+      "readiness": 0,
+      "lessonFiles": [],
+      "questions": {
+        "count": 0,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bank_seeded.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 0,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "pending-session-7",
+        "owner": "codex/svcollege-tab-health",
+        "note": "Session 7 owns desktop/mobile smoke evidence after content integration."
+      }
+    }
+  ],
+  "noEvidenceGate": {
+    "status": "passed",
+    "checkedCoveredModules": 11,
+    "failures": [],
+    "rule": "`covered` is forbidden without lesson + practice + tab + test evidence."
+  },
+  "sourceAssets": {
+    "total": 36,
+    "rootAssets": 0,
+    "rootAssetNames": [],
+    "byType": {
+      "pdf": 28,
+      "docx": 1,
+      "mp4": 7
+    },
+    "byImportStatus": {
+      "imported": 19,
+      "partially-imported": 7,
+      "partial-svcollege-gap": 1,
+      "reference": 2,
+      "asset-only": 7
+    }
+  },
+  "featureCoverage": {
+    "modules": 24,
+    "done": 23,
+    "partial": 1,
+    "missing": 0,
+    "strictFailures": 0,
+    "evidenceGateFailures": 0,
+    "optionFeedback": {
+      "id": "optionFeedback",
+      "label": "Per-Distractor Feedback",
+      "implemented": 50,
+      "target": 1357,
+      "unit": "MC questions",
+      "coverage": 3.7,
+      "status": "Partial",
+      "evidence": [
+        "data/option_feedback.js",
+        "data/questions_bank.js",
+        "data/questions_bank_seeded.js"
+      ],
+      "outcomeMetric": "Option-specific remediation coverage across the full MC bank",
+      "enforceStrict": false,
+      "enforceEvidenceGate": true,
+      "details": {
+        "optionExplanations": 200
+      }
+    },
+    "courseBlueprints": {
+      "id": "courseBlueprints",
+      "label": "SVCollege Course Blueprint Alignment",
+      "implemented": 1,
+      "target": 1,
+      "unit": "active blueprint",
+      "coverage": 100,
+      "status": "Done",
+      "evidence": [
+        "data/course_blueprints.js"
+      ],
+      "outcomeMetric": "Course and exam alignment coverage from public curriculum sources",
+      "enforceStrict": true,
+      "enforceEvidenceGate": true,
+      "details": {
+        "modules": 15,
+        "sources": 1
+      }
+    }
+  },
+  "activeParallelMode": {
+    "status": "limited-parallel-museum-only-after-sql-auth-nextjs-integration",
+    "note": "Full merge train is paused. SQL/ORM, Auth/Security and Next.js are integrated; only the Museum session remains active in parallel.",
+    "activeExternalSessions": [
+      {
+        "id": "museum",
+        "branch": "codex/museum",
+        "owner": "external Museum session",
+        "scope": [
+          "museum.html",
+          "museum-specific sections in app.js",
+          "museum-specific CSS",
+          "museum docs/prompts/assets"
+        ]
+      }
+    ],
+    "completedExternalSessions": [
+      {
+        "id": "sql-orm",
+        "branch": "codex/svcollege-sql-orm",
+        "status": "integrated",
+        "result": "Database module covered: lesson_sql_orm + SQL/ORM practice + readiness evidence."
+      },
+      {
+        "id": "auth-security",
+        "branch": "current",
+        "status": "integrated",
+        "result": "Auth module covered: lesson_auth_security + Auth practice + readiness evidence."
+      },
+      {
+        "id": "nextjs",
+        "branch": "current",
+        "status": "integrated",
+        "result": "Next.js module covered: lesson_nextjs + Next.js practice + readiness evidence."
+      }
+    ],
+    "pausedSessions": [
+      "DevOps",
+      "Nest.js",
+      "AI Engineering",
+      "Question Quality",
+      "All Tabs QA"
+    ],
+    "currentSessionAllowedScope": [
+      "SVCollege governance docs",
+      "Command Center reports",
+      "readiness scripts",
+      "post-SQL/Auth/Next.js integration quality gates",
+      "non-museum planning documents"
+    ]
+  },
+  "parallelSessions": {
+    "total": 9,
+    "sessions": [
+      {
+        "session": "0 Coordinator",
+        "branch": "codex/svcollege-coordination",
+        "model": "GPT-5.5",
+        "intelligence": "xhigh",
+        "openWhen": "T0",
+        "ownership": "תוכניות, דוחות, מיזוג, wiring משותף"
+      },
+      {
+        "session": "1 SQL/ORM",
+        "branch": "codex/svcollege-sql-orm",
+        "model": "GPT-5.5",
+        "intelligence": "high",
+        "openWhen": "T0+10",
+        "ownership": "SQL/PostgreSQL/Prisma/Drizzle content"
+      },
+      {
+        "session": "2 Auth",
+        "branch": "codex/svcollege-auth",
+        "model": "GPT-5.5",
+        "intelligence": "xhigh",
+        "openWhen": "T0+10",
+        "ownership": "Auth/security content"
+      },
+      {
+        "session": "3 Next.js",
+        "branch": "codex/svcollege-nextjs",
+        "model": "GPT-5.5",
+        "intelligence": "high",
+        "openWhen": "T0+10",
+        "ownership": "Next.js content"
+      },
+      {
+        "session": "4 DevOps",
+        "branch": "codex/svcollege-devops",
+        "model": "GPT-5.4",
+        "intelligence": "high",
+        "openWhen": "T0+10",
+        "ownership": "DevOps/Docker/CI content"
+      },
+      {
+        "session": "5 Nest.js",
+        "branch": "codex/svcollege-nestjs",
+        "model": "GPT-5.5",
+        "intelligence": "high",
+        "openWhen": "T0+10",
+        "ownership": "Nest.js content"
+      },
+      {
+        "session": "6 AI Engineering",
+        "branch": "codex/svcollege-ai-engineering",
+        "model": "GPT-5.5",
+        "intelligence": "xhigh",
+        "openWhen": "T0+10",
+        "ownership": "AI SDK/RAG/Agents content"
+      },
+      {
+        "session": "8 Question Quality",
+        "branch": "codex/svcollege-question-quality",
+        "model": "GPT-5.4",
+        "intelligence": "high",
+        "openWhen": "אחרי 1-6",
+        "ownership": "validators, prerequisites, feedback"
+      },
+      {
+        "session": "7 All Tabs QA",
+        "branch": "codex/svcollege-tab-health",
+        "model": "GPT-5.4",
+        "intelligence": "high",
+        "openWhen": "אחרי integration",
+        "ownership": "smoke/e2e/tests + small fixes"
+      }
+    ],
+    "nextOpenRule": "Limited mode active: do not open the full train. SQL/ORM, Auth/Security and Next.js are integrated; only Museum remains active until the user re-enables wider merging."
+  },
+  "docs": [
+    {
+      "file": "EXECUTION_TASKS.md",
+      "exists": true
+    },
+    {
+      "file": "SPEC_AND_MASTER_PLAN.md",
+      "exists": true
+    },
+    {
+      "file": "SVCOLLEGE_COVERAGE_REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "SVCOLLEGE_READINESS_REPORT.md",
+      "exists": true
+    },
+    {
+      "file": "SVCOLLEGE_READINESS_REPORT.json",
+      "exists": true
+    },
+    {
+      "file": "SVCOLLEGE_LESSON_INVENTORY.md",
+      "exists": true
+    },
+    {
+      "file": "SVCOLLEGE_PARALLEL_SESSION_PROMPTS.md",
+      "exists": true
+    },
+    {
+      "file": "lessons/manifest.json",
+      "exists": true
+    }
+  ],
+  "commands": [
+    "npm run svcollege:readiness:write",
+    "npm run coverage:features:strict",
+    "npm run lessons:assets",
+    "npm test -- --run",
+    "npm run build"
+  ]
+}

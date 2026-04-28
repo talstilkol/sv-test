@@ -25,6 +25,7 @@ describe("SVCollege primary readiness map", () => {
     expect(sv.priority).toBe("primary");
     expect(sv.successTarget).toContain("100%");
     expect(sv.sources.some((source) => source.url === "https://svcollege.co.il/courses/web-development/")).toBe(true);
+    expect(sv.mockExamTags).toContain("svcollege_fullstack");
   });
 
   it("tracks the public SVCollege curriculum modules explicitly", () => {

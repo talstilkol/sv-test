@@ -1,0 +1,761 @@
+{
+  "reportVersion": "svcollege-readiness-v1",
+  "date": "2026-04-28",
+  "source": "data/course_blueprints.js#svcollege_fullstack_ai",
+  "summary": {
+    "modules": 15,
+    "covered": 11,
+    "partial": 2,
+    "gap": 2,
+    "green": 11,
+    "amber": 2,
+    "red": 2,
+    "averageReadiness": 85.3,
+    "finishLineReady": false
+  },
+  "validation": {
+    "failures": []
+  },
+  "releaseBlockers": [
+    "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI (partial, 90%)",
+    "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing (partial, 90%)",
+    "Frameworks צד-שרת — Nest.js modules + dependency injection (gap, 0%)",
+    "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning (gap, 0%)"
+  ],
+  "modules": [
+    {
+      "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_html_css_foundations",
+        "lesson_25"
+      ],
+      "existingLessons": [
+        "lesson_html_css_foundations",
+        "lesson_25"
+      ],
+      "conceptKeys": [
+        "lesson_html_css_foundations::HTML document",
+        "lesson_html_css_foundations::semantic HTML",
+        "lesson_html_css_foundations::HTML form",
+        "lesson_html_css_foundations::CSS selector",
+        "lesson_html_css_foundations::box model",
+        "lesson_html_css_foundations::accessibility basics",
+        "lesson_25::responsive design"
+      ],
+      "existingConcepts": [
+        "lesson_html_css_foundations::HTML document",
+        "lesson_html_css_foundations::semantic HTML",
+        "lesson_html_css_foundations::HTML form",
+        "lesson_html_css_foundations::CSS selector",
+        "lesson_html_css_foundations::box model",
+        "lesson_html_css_foundations::accessibility basics",
+        "lesson_25::responsive design"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 50,
+        "fill": 27,
+        "trace": 7,
+        "miniBuild": 1,
+        "bugHunt": 1,
+        "pairMatchPairs": 0,
+        "capstone": 1,
+        "generatedFlashcards": 7
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "עיצוב רספונסיבי ו-CSS מתקדם",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_25"
+      ],
+      "existingLessons": [
+        "lesson_25"
+      ],
+      "conceptKeys": [
+        "lesson_25::Tailwind CSS",
+        "lesson_25::utility classes",
+        "lesson_25::responsive design",
+        "lesson_25::grid",
+        "lesson_25::flex"
+      ],
+      "existingConcepts": [
+        "lesson_25::Tailwind CSS",
+        "lesson_25::utility classes",
+        "lesson_25::responsive design",
+        "lesson_25::grid",
+        "lesson_25::flex"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 42,
+        "fill": 21,
+        "trace": 5,
+        "miniBuild": 0,
+        "bugHunt": 1,
+        "pairMatchPairs": 0,
+        "capstone": 1,
+        "generatedFlashcards": 5
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_11",
+        "lesson_12",
+        "lesson_13"
+      ],
+      "existingLessons": [
+        "lesson_11",
+        "lesson_12",
+        "lesson_13"
+      ],
+      "conceptKeys": [
+        "lesson_11::Array",
+        "lesson_11::function",
+        "lesson_13::DOM"
+      ],
+      "existingConcepts": [
+        "lesson_11::Array",
+        "lesson_11::function",
+        "lesson_13::DOM"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 216,
+        "fill": 97,
+        "trace": 15,
+        "miniBuild": 4,
+        "bugHunt": 0,
+        "pairMatchPairs": 24,
+        "capstone": 1,
+        "generatedFlashcards": 3
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_tooling_git",
+        "lesson_11",
+        "lesson_15",
+        "react_blueprint"
+      ],
+      "existingLessons": [
+        "lesson_tooling_git",
+        "lesson_11",
+        "lesson_15",
+        "react_blueprint"
+      ],
+      "conceptKeys": [
+        "lesson_tooling_git::Git",
+        "lesson_tooling_git::repository",
+        "lesson_tooling_git::commit",
+        "lesson_tooling_git::branch",
+        "lesson_tooling_git::pull request",
+        "lesson_tooling_git::GitHub workflow",
+        "lesson_tooling_git::npm scripts",
+        "lesson_tooling_git::ESLint",
+        "lesson_tooling_git::Prettier",
+        "lesson_11::arrow function",
+        "lesson_15::Promise",
+        "react_blueprint::Testing Strategies"
+      ],
+      "existingConcepts": [
+        "lesson_tooling_git::Git",
+        "lesson_tooling_git::repository",
+        "lesson_tooling_git::commit",
+        "lesson_tooling_git::branch",
+        "lesson_tooling_git::pull request",
+        "lesson_tooling_git::GitHub workflow",
+        "lesson_tooling_git::npm scripts",
+        "lesson_tooling_git::ESLint",
+        "lesson_tooling_git::Prettier",
+        "lesson_11::arrow function",
+        "lesson_15::Promise",
+        "react_blueprint::Testing Strategies"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 177,
+        "fill": 77,
+        "trace": 13,
+        "miniBuild": 5,
+        "bugHunt": 0,
+        "pairMatchPairs": 23,
+        "capstone": 2,
+        "generatedFlashcards": 12
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_16",
+        "lesson_17",
+        "lesson_18"
+      ],
+      "existingLessons": [
+        "lesson_16",
+        "lesson_17",
+        "lesson_18"
+      ],
+      "conceptKeys": [
+        "lesson_16::Node.js",
+        "lesson_17::Express",
+        "lesson_17::REST API",
+        "lesson_18::validation"
+      ],
+      "existingConcepts": [
+        "lesson_16::Node.js",
+        "lesson_17::Express",
+        "lesson_17::REST API",
+        "lesson_18::validation"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 231,
+        "fill": 85,
+        "trace": 15,
+        "miniBuild": 3,
+        "bugHunt": 0,
+        "pairMatchPairs": 32,
+        "capstone": 1,
+        "generatedFlashcards": 4
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_20",
+        "lesson_sql_orm"
+      ],
+      "existingLessons": [
+        "lesson_20",
+        "lesson_sql_orm"
+      ],
+      "conceptKeys": [
+        "lesson_20::MongoDB",
+        "lesson_20::Mongoose",
+        "lesson_sql_orm::SQL",
+        "lesson_sql_orm::PostgreSQL",
+        "lesson_sql_orm::database",
+        "lesson_sql_orm::table",
+        "lesson_sql_orm::row",
+        "lesson_sql_orm::column",
+        "lesson_sql_orm::primary key",
+        "lesson_sql_orm::foreign key",
+        "lesson_sql_orm::relation",
+        "lesson_sql_orm::JOIN",
+        "lesson_sql_orm::schema",
+        "lesson_sql_orm::migration",
+        "lesson_sql_orm::ORM",
+        "lesson_sql_orm::Prisma",
+        "lesson_sql_orm::Drizzle",
+        "lesson_sql_orm::CRUD",
+        "lesson_sql_orm::transaction"
+      ],
+      "existingConcepts": [
+        "lesson_20::MongoDB",
+        "lesson_20::Mongoose",
+        "lesson_sql_orm::SQL",
+        "lesson_sql_orm::PostgreSQL",
+        "lesson_sql_orm::database",
+        "lesson_sql_orm::table",
+        "lesson_sql_orm::row",
+        "lesson_sql_orm::column",
+        "lesson_sql_orm::primary key",
+        "lesson_sql_orm::foreign key",
+        "lesson_sql_orm::relation",
+        "lesson_sql_orm::JOIN",
+        "lesson_sql_orm::schema",
+        "lesson_sql_orm::migration",
+        "lesson_sql_orm::ORM",
+        "lesson_sql_orm::Prisma",
+        "lesson_sql_orm::Drizzle",
+        "lesson_sql_orm::CRUD",
+        "lesson_sql_orm::transaction"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 108,
+        "fill": 41,
+        "trace": 8,
+        "miniBuild": 3,
+        "bugHunt": 2,
+        "pairMatchPairs": 8,
+        "capstone": 1,
+        "generatedFlashcards": 19
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_auth_security"
+      ],
+      "existingLessons": [
+        "lesson_auth_security"
+      ],
+      "conceptKeys": [
+        "lesson_auth_security::authentication",
+        "lesson_auth_security::authorization",
+        "lesson_auth_security::session",
+        "lesson_auth_security::cookie",
+        "lesson_auth_security::secure cookie",
+        "lesson_auth_security::JWT",
+        "lesson_auth_security::access token",
+        "lesson_auth_security::refresh token",
+        "lesson_auth_security::OAuth",
+        "lesson_auth_security::provider auth",
+        "lesson_auth_security::password hashing",
+        "lesson_auth_security::bcrypt",
+        "lesson_auth_security::CSRF",
+        "lesson_auth_security::XSS boundary",
+        "lesson_auth_security::CORS",
+        "lesson_auth_security::middleware guard",
+        "lesson_auth_security::Supabase Auth",
+        "lesson_auth_security::Firebase Auth",
+        "lesson_auth_security::Kinde/Appwrite"
+      ],
+      "existingConcepts": [
+        "lesson_auth_security::authentication",
+        "lesson_auth_security::authorization",
+        "lesson_auth_security::session",
+        "lesson_auth_security::cookie",
+        "lesson_auth_security::secure cookie",
+        "lesson_auth_security::JWT",
+        "lesson_auth_security::access token",
+        "lesson_auth_security::refresh token",
+        "lesson_auth_security::OAuth",
+        "lesson_auth_security::provider auth",
+        "lesson_auth_security::password hashing",
+        "lesson_auth_security::bcrypt",
+        "lesson_auth_security::CSRF",
+        "lesson_auth_security::XSS boundary",
+        "lesson_auth_security::CORS",
+        "lesson_auth_security::middleware guard",
+        "lesson_auth_security::Supabase Auth",
+        "lesson_auth_security::Firebase Auth",
+        "lesson_auth_security::Kinde/Appwrite"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 28,
+        "fill": 10,
+        "trace": 3,
+        "miniBuild": 3,
+        "bugHunt": 3,
+        "pairMatchPairs": 0,
+        "capstone": 0,
+        "generatedFlashcards": 19
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "React ופיתוח Frontend מתקדם",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_21",
+        "lesson_22",
+        "lesson_23",
+        "lesson_24",
+        "lesson_25"
+      ],
+      "existingLessons": [
+        "lesson_21",
+        "lesson_22",
+        "lesson_23",
+        "lesson_24",
+        "lesson_25"
+      ],
+      "conceptKeys": [
+        "lesson_21::React",
+        "lesson_22::useState",
+        "lesson_23::Router",
+        "lesson_24::useEffect",
+        "lesson_25::Tailwind CSS"
+      ],
+      "existingConcepts": [
+        "lesson_21::React",
+        "lesson_22::useState",
+        "lesson_23::Router",
+        "lesson_24::useEffect",
+        "lesson_25::Tailwind CSS"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 276,
+        "fill": 123,
+        "trace": 25,
+        "miniBuild": 13,
+        "bugHunt": 11,
+        "pairMatchPairs": 23,
+        "capstone": 3,
+        "generatedFlashcards": 5
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "TypeScript ופטרנים מתקדמים ב-React",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_26",
+        "lesson_27"
+      ],
+      "existingLessons": [
+        "lesson_26",
+        "lesson_27"
+      ],
+      "conceptKeys": [
+        "lesson_26::TypeScript",
+        "lesson_26::Typing Props",
+        "lesson_27::Union Type",
+        "lesson_27::Type Narrowing"
+      ],
+      "existingConcepts": [
+        "lesson_26::TypeScript",
+        "lesson_26::Typing Props",
+        "lesson_27::Union Type",
+        "lesson_27::Type Narrowing"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 150,
+        "fill": 55,
+        "trace": 10,
+        "miniBuild": 0,
+        "bugHunt": 2,
+        "pairMatchPairs": 8,
+        "capstone": 1,
+        "generatedFlashcards": 4
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
+      "status": "partial",
+      "readiness": 90,
+      "level": "amber",
+      "lessonIds": [
+        "lesson_25",
+        "react_blueprint"
+      ],
+      "existingLessons": [
+        "lesson_25",
+        "react_blueprint"
+      ],
+      "conceptKeys": [
+        "lesson_25::Tailwind CSS",
+        "react_blueprint::Component Architecture"
+      ],
+      "existingConcepts": [
+        "lesson_25::Tailwind CSS",
+        "react_blueprint::Component Architecture"
+      ],
+      "dimensions": {
+        "declaredStatus": 50,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 72,
+        "fill": 33,
+        "trace": 5,
+        "miniBuild": 0,
+        "bugHunt": 1,
+        "pairMatchPairs": 0,
+        "capstone": 2,
+        "generatedFlashcards": 2
+      },
+      "nextAction": "להוסיף shadcn/UI ו-design system guided build."
+    },
+    {
+      "title": "פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "lesson_nextjs"
+      ],
+      "existingLessons": [
+        "lesson_nextjs"
+      ],
+      "conceptKeys": [
+        "lesson_nextjs::Next.js",
+        "lesson_nextjs::App Router",
+        "lesson_nextjs::file-system routing",
+        "lesson_nextjs::dynamic route",
+        "lesson_nextjs::layout",
+        "lesson_nextjs::page",
+        "lesson_nextjs::server component",
+        "lesson_nextjs::client component",
+        "lesson_nextjs::route handler",
+        "lesson_nextjs::API route",
+        "lesson_nextjs::server action",
+        "lesson_nextjs::SSR",
+        "lesson_nextjs::SSG",
+        "lesson_nextjs::ISR",
+        "lesson_nextjs::metadata API",
+        "lesson_nextjs::SEO",
+        "lesson_nextjs::image optimization",
+        "lesson_nextjs::Vercel deploy"
+      ],
+      "existingConcepts": [
+        "lesson_nextjs::Next.js",
+        "lesson_nextjs::App Router",
+        "lesson_nextjs::file-system routing",
+        "lesson_nextjs::dynamic route",
+        "lesson_nextjs::layout",
+        "lesson_nextjs::page",
+        "lesson_nextjs::server component",
+        "lesson_nextjs::client component",
+        "lesson_nextjs::route handler",
+        "lesson_nextjs::API route",
+        "lesson_nextjs::server action",
+        "lesson_nextjs::SSR",
+        "lesson_nextjs::SSG",
+        "lesson_nextjs::ISR",
+        "lesson_nextjs::metadata API",
+        "lesson_nextjs::SEO",
+        "lesson_nextjs::image optimization",
+        "lesson_nextjs::Vercel deploy"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 28,
+        "fill": 10,
+        "trace": 3,
+        "miniBuild": 3,
+        "bugHunt": 3,
+        "pairMatchPairs": 0,
+        "capstone": 0,
+        "generatedFlashcards": 18
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
+      "status": "partial",
+      "readiness": 90,
+      "level": "amber",
+      "lessonIds": [
+        "react_blueprint"
+      ],
+      "existingLessons": [
+        "react_blueprint"
+      ],
+      "conceptKeys": [
+        "react_blueprint::Testing Strategies"
+      ],
+      "existingConcepts": [
+        "react_blueprint::Testing Strategies"
+      ],
+      "dimensions": {
+        "declaredStatus": 50,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 30,
+        "fill": 12,
+        "trace": 0,
+        "miniBuild": 0,
+        "bugHunt": 0,
+        "pairMatchPairs": 0,
+        "capstone": 1,
+        "generatedFlashcards": 1
+      },
+      "nextAction": "להוסיף DevOps Foundations + deploy checklist + Docker mini-build."
+    },
+    {
+      "title": "Frameworks צד-שרת — Nest.js modules + dependency injection",
+      "status": "gap",
+      "readiness": 0,
+      "level": "red",
+      "lessonIds": [],
+      "existingLessons": [],
+      "conceptKeys": [],
+      "existingConcepts": [],
+      "dimensions": {
+        "declaredStatus": 0,
+        "lessonCoverage": 0,
+        "conceptCoverage": 0,
+        "questionCoverage": 0,
+        "activityCoverage": 0
+      },
+      "counts": {
+        "mc": 0,
+        "fill": 0,
+        "trace": 0,
+        "miniBuild": 0,
+        "bugHunt": 0,
+        "pairMatchPairs": 0,
+        "capstone": 0,
+        "generatedFlashcards": 0
+      },
+      "nextAction": "להוסיף Nest.js bridge אחרי Express: controllers, providers, modules, DI ו-validation pipe."
+    },
+    {
+      "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+      "status": "covered",
+      "readiness": 100,
+      "level": "green",
+      "lessonIds": [
+        "ai_development"
+      ],
+      "existingLessons": [
+        "ai_development"
+      ],
+      "conceptKeys": [
+        "ai_development::Cursor",
+        "ai_development::Windsurf",
+        "ai_development::Prompt Engineering",
+        "ai_development::AI Code Review"
+      ],
+      "existingConcepts": [
+        "ai_development::Cursor",
+        "ai_development::Windsurf",
+        "ai_development::Prompt Engineering",
+        "ai_development::AI Code Review"
+      ],
+      "dimensions": {
+        "declaredStatus": 100,
+        "lessonCoverage": 100,
+        "conceptCoverage": 100,
+        "questionCoverage": 100,
+        "activityCoverage": 100
+      },
+      "counts": {
+        "mc": 36,
+        "fill": 17,
+        "trace": 0,
+        "miniBuild": 0,
+        "bugHunt": 0,
+        "pairMatchPairs": 0,
+        "capstone": 1,
+        "generatedFlashcards": 4
+      },
+      "nextAction": "Maintain practice, mock-exam coverage and tab health."
+    },
+    {
+      "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
+      "status": "gap",
+      "readiness": 0,
+      "level": "red",
+      "lessonIds": [],
+      "existingLessons": [],
+      "conceptKeys": [],
+      "existingConcepts": [],
+      "dimensions": {
+        "declaredStatus": 0,
+        "lessonCoverage": 0,
+        "conceptCoverage": 0,
+        "questionCoverage": 0,
+        "activityCoverage": 0
+      },
+      "counts": {
+        "mc": 0,
+        "fill": 0,
+        "trace": 0,
+        "miniBuild": 0,
+        "bugHunt": 0,
+        "pairMatchPairs": 0,
+        "capstone": 0,
+        "generatedFlashcards": 0
+      },
+      "nextAction": "להוסיף AI Engineering track: OpenAI/Vercel AI SDK, embeddings, RAG, tool calling, agents וגבולות fine-tuning."
+    }
+  ]
+}

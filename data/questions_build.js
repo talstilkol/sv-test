@@ -833,6 +833,97 @@ function About() { return <h1>אודות</h1>; }`,
     explanation:
       "מחיקה immutable = filter שמשאיר את כולם חוץ מזה שמחקנו. React מקבל reference חדשה → re-render.",
   },
+  {
+    id: "build_html_css_01",
+    conceptKey: "lesson_html_css_foundations::HTML form",
+    level: 3,
+    title: "טופס התחברות נגיש",
+    prompt:
+      "בנה טופס התחברות קטן ונגיש: form עם method מתאים, label מחובר ל-input של אימייל, label מחובר ל-input של סיסמה, וכפתור submit.",
+    starter: `<form>
+  <!-- הוסף כאן label + input לאימייל -->
+  <!-- הוסף כאן label + input לסיסמה -->
+  <!-- הוסף כאן כפתור שליחה -->
+</form>`,
+    tests: [
+      { regex: "<form\\b", description: "קיים אלמנט form", flags: "i" },
+      {
+        regex: "method\\s*=\\s*['\"]post['\"]",
+        description: "הטופס משתמש ב-method='post'",
+        flags: "i",
+      },
+      { regex: "<label\\b", description: "יש לפחות label אחד", flags: "i" },
+      { regex: "for\\s*=", description: "label מחובר בעזרת for", flags: "i" },
+      { regex: "id\\s*=", description: "input מקבל id לחיבור label", flags: "i" },
+      {
+        regex: "type\\s*=\\s*['\"]email['\"]",
+        description: "שדה האימייל משתמש ב-type='email'",
+        flags: "i",
+      },
+      {
+        regex: "type\\s*=\\s*['\"]password['\"]",
+        description: "שדה הסיסמה משתמש ב-type='password'",
+        flags: "i",
+      },
+      {
+        regex: "type\\s*=\\s*['\"]submit['\"]|<button[^>]*type\\s*=\\s*['\"]submit['\"]",
+        description: "יש כפתור שליחה סמנטי",
+        flags: "i",
+      },
+    ],
+    reference: `<form method="post" action="/login">
+  <label for="login-email">אימייל</label>
+  <input id="login-email" name="email" type="email" autocomplete="email" />
+
+  <label for="login-password">סיסמה</label>
+  <input id="login-password" name="password" type="password" autocomplete="current-password" />
+
+  <button type="submit">כניסה</button>
+</form>`,
+    hint: "החיבור החשוב הוא label[for] אל input[id]. לטופס התחברות השתמש ב-post וב-type מתאים לכל שדה.",
+    explanation:
+      "טופס בסיסי טוב אינו רק נראה נכון. הוא שולח נתונים עם name, מחבר labels לשדות כדי לשפר נגישות, ומשתמש ב-type מתאים כדי שהדפדפן יעזור למשתמש.",
+  },
+  {
+    id: "build_tooling_01",
+    conceptKey: "lesson_tooling_git::npm scripts",
+    level: 4,
+    title: "package.json עם scripts לצוות",
+    prompt:
+      "כתוב קטע package.json שמגדיר scripts לצוות: dev, build, test, lint ו-format. lint צריך להשתמש ב-ESLint, ו-format צריך להשתמש ב-Prettier.",
+    starter: `{
+  "scripts": {
+    "dev": "",
+    "build": "",
+    "test": "",
+    "lint": "",
+    "format": ""
+  }
+}`,
+    tests: [
+      { regex: "\"dev\"\\s*:", description: "קיים script בשם dev", flags: "" },
+      { regex: "\"build\"\\s*:", description: "קיים script בשם build", flags: "" },
+      { regex: "\"test\"\\s*:", description: "קיים script בשם test", flags: "" },
+      { regex: "\"lint\"\\s*:", description: "קיים script בשם lint", flags: "" },
+      { regex: "\"format\"\\s*:", description: "קיים script בשם format", flags: "" },
+      { regex: "eslint", description: "lint משתמש ב-ESLint", flags: "i" },
+      { regex: "prettier", description: "format משתמש ב-Prettier", flags: "i" },
+      { regex: "vite\\s+build|next\\s+build", description: "build מפעיל בניית production מוכרת", flags: "i" },
+      { regex: "Math\\.random", description: "אסור להכניס randomness ל-tooling", flags: "", mustNotMatch: true },
+    ],
+    reference: `{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest run",
+    "lint": "eslint src",
+    "format": "prettier --write src"
+  }
+}`,
+    hint: "scripts הם aliases. שמור שמות קצרים וצוותיים: dev/build/test/lint/format.",
+    explanation:
+      "package.json טוב הופך פעולות חוזרות לפקודות קבועות. כך מפתח חדש ו-CI מריצים בדיוק את אותם scripts בלי ידע נסתר.",
+  },
 ];
 
 // Export to global scope (no module system in this app)

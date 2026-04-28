@@ -15,6 +15,8 @@ const LESSON_FILES = [
   ["lesson11.js", "LESSON_11"],
   ["lesson12.js", "LESSON_12"],
   ["lesson13.js", "LESSON_13"],
+  ["lesson_html_css_foundations.js", "LESSON_HTML_CSS_FOUNDATIONS"],
+  ["lesson_tooling_git.js", "LESSON_TOOLING_GIT"],
   ["lesson15.js", "LESSON_15"],
   ["lesson16.js", "LESSON_16"],
   ["lesson17.js", "LESSON_17"],

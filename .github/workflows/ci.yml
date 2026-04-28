@@ -58,6 +58,11 @@ jobs:
       - name: Feature coverage gate
         run: node scripts/report_feature_coverage.js --strict --json
 
+      # Finish Line 1 — SVCollege stays the primary target until every module
+      # has lesson, practice, assessment, and tab-health evidence.
+      - name: SVCollege readiness metadata gate
+        run: node scripts/report_svcollege_readiness.js --strict --summary
+
       # Phase 5 — full-bank question quality gate.
       # Fails on blocker-level MC/Fill issues. Warnings stay visible in the
       # generated report and remediation queue.
