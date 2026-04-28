@@ -18,6 +18,7 @@
 
 | Phase | בוצע / סך | אחוז |
 |---|:-:|:-:|
+| Priority 0: SVCollege Readiness + Site Health | 4/21 | **19%** 🚨 |
 | Phase 0: Status (DONE) | 25/25 | 100% ✅ |
 | Phase 1: Foundation | 60/62 | **97%** 🚧 |
 | Phase 2: Core Learning | 68/70 | **97%** 🚧 |
@@ -26,7 +27,11 @@
 | Phase 5: Quality Governance + Rebaseline | 22/39 | **56%** 🚧 |
 | Phase 6: Learning Evidence + Productization | 19/36 | **53%** 🚧 |
 | Phase 7: Learning OS + Outcome Scale | 0/48 | 0% |
-| **TOTAL** | **234/349** | **67%** |
+| **TOTAL** | **238/370** | **64%** |
+
+### Priority Override — 2026-04-28
+
+היעד הראשון עכשיו הוא **כיסוי מלא של חומר SVCollege + אתר עובד בכל החלקים המרכזיים**. כל הרחבות המוזיאון, AI, קהילה, mobile, Teacher Dashboard ופיצ'רי פרימיום הן עדיפות שנייה עד ש-Priority 0 ירוק.
 
 ### Phase 1 Detailed:
 - W1 Architecture: ✅ 14/14 (lazy load + per-card + Vitest baseline; current suite 127 tests)
@@ -52,6 +57,44 @@
 - Cross-device Sync סווג מחדש כ-Partial בתוך Phase 2: Export/Import וטבלאות Supabase קיימים, אך live sync ו-conflict resolution עדיין לא בוצעו.
 - AI Tutor נשאר MVP מקומי/דמו: production Alpha עם guardrails, logging, streaming ו-rate limits אמיתיים עבר ל-Phase 5.
 - Phase 5 נוסף כדי להפוך ביקורת איכות, מדדי כיסוי, ו-90-day roadmap למשימות נמדדות.
+
+---
+
+## 🚨 Priority 0 — SVCollege Readiness + Site Health
+
+> מקור קנוני: `data/course_blueprints.js` + `SVCOLLEGE_COVERAGE_REPORT.md`  
+> DoD: כל חומר SVCollege ממופה, כל gap מקבל שיעור/תרגול/מבחן, וכל חלקי האתר עוברים smoke בדפדפן.
+
+### P-1.1 — Canonical SVCollege Coverage Map
+- [V] P-1.1.1 — Verify current public SVCollege course source
+- [V] P-1.1.2 — Update `svcollege_fullstack_ai` blueprint as primary target
+- [V] P-1.1.3 — Add `SVCOLLEGE_COVERAGE_REPORT.md`
+- [V] P-1.1.4 — Add regression test for SVCollege module mapping
+
+### P-1.2 — Site Health Before Expansion
+- [ ] P-1.2.1 — Add Playwright smoke suite for every top tab
+- [ ] P-1.2.2 — Add smoke suite for right-side tree menus and submenus
+- [ ] P-1.2.3 — Add smoke suite for Trainer, Study, Mock Exam, Bug Hunt, Mini Build, Code Trace
+- [ ] P-1.2.4 — Add desktop + mobile viewport screenshots for critical flows
+- [ ] P-1.2.5 — Fix every runtime console error found by smoke tests
+
+### P-1.3 — Missing SVCollege Curriculum
+- [ ] P-1.3.1 — Add HTML/CSS foundations lesson: semantic HTML, forms, selectors, box model, accessibility basics
+- [ ] P-1.3.2 — Add Git/tooling lesson: GitHub workflow, branch/PR, ESLint, Prettier, npm scripts
+- [ ] P-1.3.3 — Add PostgreSQL + ORM lesson: schema, relations, migrations, Prisma/Drizzle CRUD
+- [ ] P-1.3.4 — Add Auth lesson: JWT, cookies, sessions, provider auth, security boundaries
+- [ ] P-1.3.5 — Add Next.js lesson: routing, layouts, server/client components, API routes, SEO, deploy
+- [ ] P-1.3.6 — Add DevOps lesson: Vercel, Docker, Docker Compose, CI/CD, testing workflow
+- [ ] P-1.3.7 — Add Nest.js bridge lesson: modules, controllers, providers, dependency injection
+- [ ] P-1.3.8 — Add AI Engineering lesson: Vercel AI SDK, OpenAI API, LangChain, RAG, Agents, Fine-tuning boundaries
+
+### P-1.4 — SVCollege Assessment Readiness
+- [ ] P-1.4.1 — Add SVCollege-specific mock exam template
+- [ ] P-1.4.2 — Ensure every SVCollege module has MC + Fill coverage
+- [ ] P-1.4.3 — Ensure every SVCollege gap module has at least one Mini Build or Trace once lesson is added
+- [ ] P-1.4.4 — Add SVCollege readiness dashboard metric to Course Blueprints tab
+
+**Priority 0 Total: 4/21 🚨**
 
 ---
 
@@ -874,6 +917,11 @@
                    - Added mapped cards for 20 React/JS/TS/Node mistake patterns plus fallback
                    - Added deterministic tests for coverage and specific rule routing
                    - Service worker bumped to v2.4.8; total baseline now 230/301
+2026-04-28 21:30 — Priority override: SVCollege first
+                   - Added Priority 0: SVCollege Readiness + Site Health
+                   - Updated SVCollege blueprint to match public AI & Full Stack modules
+                   - Added SVCOLLEGE_COVERAGE_REPORT.md and svcollege-readiness regression tests
+                   - All museum/AI/community expansions are explicitly secondary until SVCollege readiness is green
 ```
 
 ---

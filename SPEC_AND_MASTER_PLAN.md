@@ -10,6 +10,7 @@
 # 📑 תוכן עניינים
 
 **חלק I — איפיון מוצר (Product Specification)**
+0. יעד ראשי מחייב — SVCollege Readiness + Site Health
 1. חזון ועקרונות
 2. קהל יעד (Personas)
 3. הצעת ערך מובדלת
@@ -36,6 +37,39 @@
 22. Phase 7 — Learning OS + Outcome Scale
 
 ---
+
+# 0. יעד ראשי מחייב — SVCollege Readiness + Site Health
+
+היעד הראשון של LumenPortal הוא לא עוד הרחבות. היעד הראשון הוא:
+
+> **כיסוי מלא של חומר SVCollege + אתר שכל החלקים המרכזיים בו עובדים בפועל.**
+
+כל הרחבה אחרת — מוזיאון, קהילה, AI Tutor production, Teacher Dashboard, native mobile, סרטונים ואלמנטים פרימיום — יורדת לעדיפות שנייה עד ש-SVCollege Readiness ירוק.
+
+## 0.1 סדר עדיפויות מחייב
+
+1. **SVCollege curriculum coverage** — כל מודול ציבורי של SVCollege חייב להיות ממופה ל-lesson / practice / mock exam / gap task.
+2. **Site health** — כל טאב, תת-תפריט, מודל, מצב תרגול ומסך תוצאה חייב להיפתח בלי שגיאת runtime.
+3. **Assessment readiness** — מבחן מדומה ייעודי ל-SVCollege חייב לדגום את כל המודולים, לא רק JS/React/Node.
+4. **Content before expansion** — לא מוסיפים פיצ'רי הרחבה משמעותיים עד שסוגרים את פערי HTML/CSS, Git/tooling, PostgreSQL+ORM, Auth, Next.js, DevOps, Nest.js ו-AI Engineering.
+
+## 0.2 מיפוי SVCollege נוכחי
+
+המיפוי הקנוני נמצא ב-[data/course_blueprints.js](data/course_blueprints.js) והדוח הניהולי נמצא ב-[SVCOLLEGE_COVERAGE_REPORT.md](SVCOLLEGE_COVERAGE_REPORT.md).
+
+סטטוס תמציתי:
+
+- Covered: JavaScript basics, DOM, React, TypeScript, Node/Express/REST, Tailwind responsive, AI coding tools.
+- Partial: HTML/CSS foundations, Git/tooling, DB beyond MongoDB, shadcn/UI, DevOps.
+- Gap: Auth, Next.js, Nest.js, AI Engineering with Vercel AI/OpenAI/LangChain/RAG/Agents/Fine-tuning.
+
+## 0.3 Definition Of Done לפני הרחבות
+
+- כל מודול SVCollege מסומן Covered/Partial/Gap עם משימת סגירה.
+- כל Covered/Partial מקבל לפחות תרגול אחד: MC, Fill, Trace, Bug או Build.
+- כל הטאבים הקריטיים עוברים smoke test בדפדפן בשני גדלים: desktop ו-mobile.
+- CI כולל `npm audit`, validation, feature coverage, question quality, no-Math.random, Vite build smoke ו-Vitest.
+- אין PR פתוח שמוסיף הרחבה גדולה בלי לקשור אותה ישירות ל-SVCollege readiness.
 
 # חלק I — איפיון מוצר
 
