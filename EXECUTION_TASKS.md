@@ -18,7 +18,7 @@
 
 | Phase | בוצע / סך | אחוז |
 |---|:-:|:-:|
-| Finish Line 1: SVCollege Full Portal Coverage | 84/106 | **79%** 🚧 |
+| Finish Line 1: SVCollege Full Portal Coverage | 85/112 | **76%** 🚧 |
 | Phase 0: Status (DONE) | 25/25 | 100% ✅ |
 | Phase 1: Foundation | 60/62 | **97%** 🚧 |
 | Phase 2: Core Learning | 68/70 | **97%** 🚧 |
@@ -27,7 +27,7 @@
 | Phase 5: Quality Governance + Rebaseline | 22/39 | **56%** 🚧 |
 | Phase 6: Learning Evidence + Productization | 19/36 | **53%** 🚧 |
 | Phase 7: Learning OS + Outcome Scale | 0/48 | 0% |
-| **TOTAL** | **318/455** | **70%** |
+| **TOTAL** | **319/461** | **69%** |
 
 ### Finish Line 1 Override — 2026-04-28
 
@@ -35,7 +35,7 @@
 
 ### Exam Priority Lock — 2026-04-28
 
-עדיפות ראשונה מוחלטת עד המבחן: **100% כיסוי של קורס Full Stack בכל הטאבים**. אין להתחיל או למזג משימות Priority 2 עד שכל מודולי הקורס, כל הטאבים, כל מצבי התרגול וכל בדיקות ה-smoke ירוקים. מצב מדיד נוכחי: `100%`, `15/15 covered`, `0 partial`, `0 gaps`, `0 release blockers`, `225/225 module×tab cells`, `0 tab gaps`, desktop browser smoke passed. נשאר Priority 0 להשלמת mobile smoke ול-QA ידני לפני המבחן, ולהגדלת עומק השאלות במושגים ש-`validate:strict` עדיין מסמן כ-density warnings (`463/568` concepts need more questions).
+עדיפות ראשונה מוחלטת עד המבחן: **100% כיסוי של קורס Full Stack בכל הטאבים**. אין להתחיל או למזג משימות Priority 2 עד שכל מודולי הקורס, כל הטאבים, כל מצבי התרגול וכל בדיקות ה-smoke ירוקים. מצב מדיד נוכחי: `100%`, `15/15 covered`, `0 partial`, `0 gaps`, `0 release blockers`, `225/225 module×tab cells`, `0 tab gaps`, desktop browser smoke passed. נשאר Priority 0 להשלמת mobile smoke, QA ידני לפני המבחן, סגירת `qa:questions:strict` שמדווח `ready:false` בגלל `252 missingGlossaryTerms`, ולהגדלת עומק השאלות במושגים ש-`validate:strict` עדיין מסמן כ-density warnings (`463/568` concepts need more questions).
 
 ### Parallel Work Mode — 2026-04-28
 
@@ -43,7 +43,7 @@
 
 ### Parallel Repair Mode — 2026-04-29
 
-נפתחו רק שני סשני תיקון עצמאיים וקלים יחסית: **Session A — Term Clarity** על `glossary/concise definitions`, ו-**Session B — Prerequisite Gates** על `question-prerequisites/QA checklist`. שניהם לא נוגעים ב-`app.js`, לא פותחים רכבת מיזוג מלאה, ומטרתם לסגור בעיות של מונחים לא מוסברים ודרישות קדם לשאלות.
+המצב עודכן: המשתמש ביטל עבודה מקבילה מחשש להתנגשויות. **Session A — Term Clarity** ו-**Session B — Prerequisite Gates** מוזגו ל-`main`; מעכשיו אין לפתוח סשנים מקבילים בלי בעלות קבצים קשיחה ואישור חדש. המשך העבודה יתבצע סדרתית על `main` או branch יחיד.
 
 ### Phase 1 Detailed:
 - W1 Architecture: ✅ 14/14 (lazy load + per-card + Vitest baseline; current suite 209 tests)
@@ -92,6 +92,17 @@
 - [V] P-0.0.9 — Run `npm run svcollege:readiness:release` and keep it green before any Priority 2 work
 - [V] P-0.0.10 — Freeze museum/premium/community/native/teacher-dashboard work unless it directly fixes Full Stack exam readiness
 - [V] P-0.0.11 — Add canonical concept tags/keys so every answer updates one unified knowledge profile per concept across all tabs and prevents duplicate score buckets
+
+### 🚨 P-0.2 — Post-Merge Reality Check — 2026-04-29
+
+> נוצר בעקבות מיזוג הענפים והרצות `npm test`, `npm run build`, `npm run validate:strict`, `npm run qa:questions:strict`.
+
+- [V] P-0.2.1 — Merge local repair branches into `main`: `codex/svcollege-prereq-gates` + `codex/svcollege-term-clarity`
+- [ ] P-0.2.2 — Push `main` to GitHub after explicit approval; current local state is `main...origin/main [ahead 4]`
+- [!] P-0.2.3 — Close `qa:questions:strict` blocker: 252 SVCollege question aids still report `missingGlossaryTerms`
+- [ ] P-0.2.4 — Add glossary aliases for terms inferred by `QUESTION_QA_CHECKLIST.json` until `missingGlossaryTerms = 0`
+- [ ] P-0.2.5 — Add automated smoke for mastery-proof gate: no concept can show 100 / mastered until highest available challenge question is solved
+- [ ] P-0.2.6 — Add automated layout smoke for W12 XP/streak bar so it never appears in the central empty column
 
 ### P-0.1 — Per-Tab 100% Full Stack Material Checklist
 
@@ -206,10 +217,10 @@
 
 ### P-1.8 — Question Learning Contract + Prerequisite Capsules
 - [ ] P-1.8.1 — Add `questionPrerequisites` contract for every SVCollege mock-exam question: required concepts, required terms, and assumed prior knowledge
-- [ ] P-1.8.2 — Show a right-side "מה צריך לדעת כדי לענות?" panel beside every hard question
-- [ ] P-1.8.3 — Add mini explanations for required terms: bit, byte, value, key, variable, array, object, function, request, response, schema, token
-- [ ] P-1.8.4 — If a learner misses an advanced question, route first to the weakest prerequisite capsule before retesting
-- [ ] P-1.8.5 — Add validation: no SVCollege hard question can ship without prerequisite and side-explanation metadata
+- [V] P-1.8.2 — Show a right-side "מה צריך לדעת כדי לענות?" panel beside every hard question
+- [~] P-1.8.3 — Add mini explanations for required terms: bit, byte, value, key, variable, array, object, function, request, response, schema, token; remaining blocker is 252 inferred missing glossary aliases
+- [V] P-1.8.4 — If a learner misses an advanced question, route first to the weakest prerequisite capsule before retesting
+- [~] P-1.8.5 — Add validation: no SVCollege hard question can ship without prerequisite and side-explanation metadata; validation exists but `ready:false` until missing glossary terms are closed
 - [ ] P-1.8.6 — Add browser smoke for prerequisite panel in lesson quiz, trainer and mock exam
 
 ### P-1.9 — SVCollege Command Center
@@ -234,7 +245,7 @@
 - [ ] P-1.11.4 — Add teacher-facing weekly SVCollege progress export before building any broad teacher dashboard
 - [ ] P-1.11.5 — Define promotion rule: a module is "ready for students" only after content, practice, smoke and first-user feedback pass
 
-**Finish Line 1 Total: 41/101 🚧**
+**Finish Line 1 Total: 85/112 🚧**
 
 ---
 
@@ -1174,6 +1185,13 @@
                    - SVCollege readiness/release gate now 100%, 15/15 covered, 0 gaps, 0 release blockers
                    - Browser smoke verified new AI Engineering and Design Systems lessons in the right-side tree with prerequisite side panels
                    - Finish Line 1 now 41/101; remaining Priority 0 work is full all-tabs desktop/mobile QA and module × tab matrix
+2026-04-29 01:35 — Post-merge QA reality check:
+                   - Cancelled parallel repair mode and merged `codex/svcollege-prereq-gates` + `codex/svcollege-term-clarity` into `main`
+                   - Added mastery-proof gate: level 7 alone is not 100; a concept needs highest available challenge proof
+                   - Moved W12 XP/streak controls out of the central empty column and into the top bar
+                   - Verification passed: 227/227 Vitest, build, validate:strict, no Math.random
+                   - `qa:questions:strict` still reports `ready:false` due to 252 missing glossary term aliases; added P-0.2 blockers
+                   - `main` is local-only and ahead of `origin/main` by 4 commits; push requires explicit approval
 ```
 
 ---
