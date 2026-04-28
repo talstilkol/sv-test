@@ -18,7 +18,7 @@
 
 | Phase | בוצע / סך | אחוז |
 |---|:-:|:-:|
-| Finish Line 1: SVCollege Full Portal Coverage | 85/112 | **76%** 🚧 |
+| Finish Line 1: SVCollege Full Portal Coverage | 89/112 | **79%** 🚧 |
 | Phase 0: Status (DONE) | 25/25 | 100% ✅ |
 | Phase 1: Foundation | 60/62 | **97%** 🚧 |
 | Phase 2: Core Learning | 68/70 | **97%** 🚧 |
@@ -27,7 +27,7 @@
 | Phase 5: Quality Governance + Rebaseline | 22/39 | **56%** 🚧 |
 | Phase 6: Learning Evidence + Productization | 19/36 | **53%** 🚧 |
 | Phase 7: Learning OS + Outcome Scale | 0/48 | 0% |
-| **TOTAL** | **319/461** | **69%** |
+| **TOTAL** | **323/461** | **70%** |
 
 ### Finish Line 1 Override — 2026-04-28
 
@@ -35,7 +35,7 @@
 
 ### Exam Priority Lock — 2026-04-28
 
-עדיפות ראשונה מוחלטת עד המבחן: **100% כיסוי של קורס Full Stack בכל הטאבים**. אין להתחיל או למזג משימות Priority 2 עד שכל מודולי הקורס, כל הטאבים, כל מצבי התרגול וכל בדיקות ה-smoke ירוקים. מצב מדיד נוכחי: `100%`, `15/15 covered`, `0 partial`, `0 gaps`, `0 release blockers`, `225/225 module×tab cells`, `0 tab gaps`, desktop browser smoke passed. נשאר Priority 0 להשלמת mobile smoke, QA ידני לפני המבחן, סגירת `qa:questions:strict` שמדווח `ready:false` בגלל `252 missingGlossaryTerms`, ולהגדלת עומק השאלות במושגים ש-`validate:strict` עדיין מסמן כ-density warnings (`463/568` concepts need more questions).
+עדיפות ראשונה מוחלטת עד המבחן: **100% כיסוי של קורס Full Stack בכל הטאבים**. אין להתחיל או למזג משימות Priority 2 עד שכל מודולי הקורס, כל הטאבים, כל מצבי התרגול וכל בדיקות ה-smoke ירוקים. מצב מדיד נוכחי: `100%`, `15/15 covered`, `0 partial`, `0 gaps`, `0 release blockers`, `225/225 module×tab cells`, `0 tab gaps`, desktop browser smoke passed, `qa:questions:strict ready:true`. נשאר Priority 0 להשלמת mobile smoke, QA ידני לפני המבחן, ולהגדלת עומק השאלות במושגים ש-`validate:strict` עדיין מסמן כ-density warnings (`463/568` concepts need more questions).
 
 ### Parallel Work Mode — 2026-04-28
 
@@ -99,8 +99,8 @@
 
 - [V] P-0.2.1 — Merge local repair branches into `main`: `codex/svcollege-prereq-gates` + `codex/svcollege-term-clarity`
 - [ ] P-0.2.2 — Push `main` to GitHub after explicit approval; current local state is `main...origin/main [ahead 4]`
-- [!] P-0.2.3 — Close `qa:questions:strict` blocker: 252 SVCollege question aids still report `missingGlossaryTerms`
-- [ ] P-0.2.4 — Add glossary aliases for terms inferred by `QUESTION_QA_CHECKLIST.json` until `missingGlossaryTerms = 0`
+- [V] P-0.2.3 — Close `qa:questions:strict` blocker: 252 SVCollege question aids previously reported `missingGlossaryTerms`; now 0 issues / ready:true
+- [V] P-0.2.4 — Add glossary aliases for terms inferred by `QUESTION_QA_CHECKLIST.json` until `missingGlossaryTerms = 0`
 - [ ] P-0.2.5 — Add automated smoke for mastery-proof gate: no concept can show 100 / mastered until highest available challenge question is solved
 - [ ] P-0.2.6 — Add automated layout smoke for W12 XP/streak bar so it never appears in the central empty column
 
@@ -218,9 +218,9 @@
 ### P-1.8 — Question Learning Contract + Prerequisite Capsules
 - [ ] P-1.8.1 — Add `questionPrerequisites` contract for every SVCollege mock-exam question: required concepts, required terms, and assumed prior knowledge
 - [V] P-1.8.2 — Show a right-side "מה צריך לדעת כדי לענות?" panel beside every hard question
-- [~] P-1.8.3 — Add mini explanations for required terms: bit, byte, value, key, variable, array, object, function, request, response, schema, token; remaining blocker is 252 inferred missing glossary aliases
+- [V] P-1.8.3 — Add mini explanations for required terms: bit, byte, value, key, variable, array, object, function, request, response, schema, token; SVCollege QA aliases cover 0 missing glossary terms
 - [V] P-1.8.4 — If a learner misses an advanced question, route first to the weakest prerequisite capsule before retesting
-- [~] P-1.8.5 — Add validation: no SVCollege hard question can ship without prerequisite and side-explanation metadata; validation exists but `ready:false` until missing glossary terms are closed
+- [V] P-1.8.5 — Add validation: no SVCollege hard question can ship without prerequisite and side-explanation metadata; `qa:questions:strict` is ready:true
 - [ ] P-1.8.6 — Add browser smoke for prerequisite panel in lesson quiz, trainer and mock exam
 
 ### P-1.9 — SVCollege Command Center
@@ -245,7 +245,7 @@
 - [ ] P-1.11.4 — Add teacher-facing weekly SVCollege progress export before building any broad teacher dashboard
 - [ ] P-1.11.5 — Define promotion rule: a module is "ready for students" only after content, practice, smoke and first-user feedback pass
 
-**Finish Line 1 Total: 85/112 🚧**
+**Finish Line 1 Total: 89/112 🚧**
 
 ---
 
@@ -1192,6 +1192,11 @@
                    - Verification passed: 227/227 Vitest, build, validate:strict, no Math.random
                    - `qa:questions:strict` still reports `ready:false` due to 252 missing glossary term aliases; added P-0.2 blockers
                    - `main` is local-only and ahead of `origin/main` by 4 commits; push requires explicit approval
+2026-04-29 01:40 — SVCollege question-aid QA blocker closed:
+                   - Added deterministic SVCollege QA glossary aliases generated from requiredTerms
+                   - Glossary now exposes complete tooltip entries for all required question terms
+                   - `npm run qa:questions:strict` now reports `ready:true`, 0 issues, 0 missingGlossaryTerms
+                   - Marked P-0.2.3, P-0.2.4, P-1.8.3 and P-1.8.5 done
 ```
 
 ---
