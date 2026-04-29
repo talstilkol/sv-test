@@ -5,11 +5,11 @@ Generated from repository data files. The report is deterministic and does not u
 ## Summary
 
 - Modules tracked: 24
-- Done: 23
-- Partial: 1
+- Done: 24
+- Partial: 0
 - Missing: 0
 - Strict target failures: 0
-- Evidence gate checked: 23
+- Evidence gate checked: 24
 - Evidence gate failures: 0
 
 ## Coverage
@@ -20,7 +20,7 @@ Generated from repository data files. The report is deterministic and does not u
 | War Stories Library | 31 incidents | 30 incidents | 100% | Done | Real-world transfer coverage through production incident stories | data/war_stories.js |
 | Mini Build | 23 builds | 21 builds | 100% | Done | Hands-on build-practice coverage for code-writing workflows | data/questions_build.js |
 | Code Trace | 89 traces | 85 traces | 100% | Done | Execution-prediction practice coverage | data/questions_trace.js |
-| Per-Distractor Feedback | 50 MC questions | 1357 MC questions | 3.7% | Partial | Option-specific remediation coverage across the full MC bank | data/option_feedback.js<br>data/questions_bank.js<br>data/questions_bank_seeded.js |
+| Per-Distractor Feedback | 1665 MC questions | 1665 MC questions | 100% | Done | Option-specific remediation coverage across the full MC bank | data/option_feedback.js<br>data/questions_bank.js<br>data/questions_bank_seeded.js |
 | Concept Metaphors | 250 metaphors | 250 metaphors | 100% | Done | Explanation-fit coverage through multiple metaphors per core concept | data/metaphors.js |
 | 3 Learning Pathways | 30 complete concepts | 30 complete concepts | 100% | Done | Persona-based explanation coverage for grandma/parent/technical paths | data/pathways.js |
 | Pair-Match | 14 games | 5 games | 100% | Done | Associative retrieval practice coverage | data/pair_match.js |
@@ -37,13 +37,13 @@ Generated from repository data files. The report is deterministic and does not u
 | Memory Palace | 8 concepts | 8 concepts | 100% | Done | Spatial memory-location coverage | data/memory_palaces.js |
 | Problem-First Discovery | 8 concepts | 8 concepts | 100% | Done | Problem-first discovery coverage | data/problem_first.js |
 | Stage-Zero Broken Examples | 8 concepts | 8 concepts | 100% | Done | Beginner broken-example coverage | data/stage_zero.js |
-| Hebrew/English Glossary | 228 entries | 200 entries | 100% | Done | Foundational terminology coverage | data/glossary.js |
+| Hebrew/English Glossary | 587 entries | 200 entries | 100% | Done | Foundational terminology coverage | data/glossary.js |
 | Capstone Project Track | 6 projects | 6 projects | 100% | Done | Project-readiness coverage through full capstone briefs and rubrics | data/capstones.js |
 | SVCollege Course Blueprint Alignment | 1 active blueprint | 1 active blueprint | 100% | Done | Course and exam alignment coverage from public curriculum sources | data/course_blueprints.js |
 
 ## Notes
 
-- Per-Distractor Feedback is intentionally reported against the full MC bank, so it remains Partial until every MC question has option-specific feedback.
+- Per-Distractor Feedback is intentionally reported against the full MC bank; Done means every loaded MC has option-specific feedback from either inline data or the curated feedback map.
 - Strict target failures ignore modules explicitly marked as non-strict because they are tracked as staged coverage work.
 - Evidence gate failures block Done modules that lack an outcome metric or repository evidence.
 - This report is the source of truth for content-module coverage counters in Phase 5.

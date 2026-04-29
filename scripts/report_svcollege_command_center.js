@@ -110,13 +110,13 @@ const TAB_EVIDENCE_FILES = Object.freeze([
 
 const BROWSER_SMOKE_EVIDENCE = Object.freeze({
   desktop: "pass",
-  mobile: "pending",
+  mobile: "pass",
   report: "SVCOLLEGE_BROWSER_SMOKE.md",
 });
 
 const ACTIVE_PARALLEL_MODE = Object.freeze({
   status: "single-session-finish-line1-all-modules-covered",
-  note: "Full merge train is paused. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js, DevOps, AI Engineering and Design Systems are integrated. Desktop all-tabs smoke passed; current work focuses on mobile smoke, question depth and hard-question feedback.",
+  note: "Full merge train is paused. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js, DevOps, AI Engineering and Design Systems are integrated. Desktop and mobile all-tabs smoke passed; current work focuses on question depth, hard-question feedback and regression fixes.",
   activeExternalSessions: Object.freeze([]),
   completedExternalSessions: Object.freeze([
     Object.freeze({
@@ -170,17 +170,31 @@ const ACTIVE_PARALLEL_MODE = Object.freeze({
   ]),
   pausedSessions: Object.freeze([
     "Question Quality",
-    "Mobile All Tabs QA",
   ]),
   currentSessionAllowedScope: Object.freeze([
     "SVCollege governance docs",
     "Command Center reports",
     "readiness scripts",
     "post-SQL/Auth/Next.js/Museum integration quality gates",
-    "mobile all-tabs smoke",
     "SVCollege question-depth hardening",
     "non-museum planning documents",
   ]),
+});
+
+const MODULE_PROMOTION_RULE = Object.freeze({
+  status: "defined",
+  label: "SVCollege module ready for students",
+  rule:
+    "A module may be promoted to ready-for-students only after content coverage, practice coverage, tab/smoke evidence and first-user feedback evidence are all present.",
+  requiredEvidence: Object.freeze([
+    "content: lesson + concepts + one-line definitions + prerequisites",
+    "practice: MC + Fill + at least one deeper activity",
+    "tab-health: module appears in all strict SVCollege tabs",
+    "smoke: desktop/mobile browser flow is clean",
+    "feedback: first-user or pilot feedback reviewed",
+  ]),
+  currentFinishLineScope:
+    "Finish Line 1 can be exam-ready before the 10-student pilot; broad student-ready promotion still requires first-user feedback.",
 });
 
 function readJson(file) {
@@ -313,10 +327,10 @@ function buildModuleEvidence(readinessReport) {
         files: TAB_EVIDENCE_FILES.map(fileEvidence),
       },
       browserVerification: {
-        status: "desktop-pass/mobile-pending",
+        status: "desktop-pass/mobile-pass",
         owner: "current",
         report: BROWSER_SMOKE_EVIDENCE.report,
-        note: "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending.",
+        note: "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser.",
       },
     };
   });
@@ -413,11 +427,12 @@ function buildReport() {
       courseBlueprints,
     },
     activeParallelMode: ACTIVE_PARALLEL_MODE,
+    promotionRule: MODULE_PROMOTION_RULE,
     parallelSessions: {
       total: sessions.length,
       sessions,
       nextOpenRule:
-        "Limited mode active: do not open the full train. All 15 SVCollege modules are covered and desktop all-tabs smoke passed; continue only with mobile all-tabs QA, question-depth hardening, hard-question feedback, or regression fixes unless the user re-enables wider merging.",
+        "Limited mode active: do not open the full train. All 15 SVCollege modules are covered and desktop/mobile all-tabs smoke passed; continue only with question-depth hardening, hard-question feedback, or regression fixes unless the user re-enables wider merging.",
     },
     docs: buildDocsStatus(),
     commands: [
@@ -559,6 +574,15 @@ function toMarkdown(report) {
     "## No-Evidence Gate",
     "",
     ...mdNoEvidenceGate(report.noEvidenceGate),
+    "",
+    "## Promotion Rule",
+    "",
+    `- Status: ${report.promotionRule.status}`,
+    `- Label: ${report.promotionRule.label}`,
+    `- Rule: ${report.promotionRule.rule}`,
+    `- Current Finish Line scope: ${report.promotionRule.currentFinishLineScope}`,
+    "",
+    ...report.promotionRule.requiredEvidence.map((item) => `- ${item}`),
     "",
     "## Module Evidence Matrix",
     "",

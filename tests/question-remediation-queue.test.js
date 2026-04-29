@@ -12,8 +12,22 @@ describe("question remediation queue", () => {
   });
 
   it("builds a deterministic manual-review queue without auto rewrites", () => {
-    const first = buildRemediationQueue();
-    const second = buildRemediationQueue();
+    const report = {
+      remediationQueue: [
+        {
+          id: "synthetic_quality_note",
+          kind: "mc",
+          source: "curated",
+          conceptKey: "lesson_11::Array",
+          severity: "note",
+          code: "length-cue",
+          message: "Synthetic issue for deterministic queue test.",
+          priority: 2,
+        },
+      ],
+    };
+    const first = buildRemediationQueue(report);
+    const second = buildRemediationQueue(report);
 
     expect(first.map((item) => item.id)).toEqual(second.map((item) => item.id));
     expect(first.length).toBeGreaterThan(0);

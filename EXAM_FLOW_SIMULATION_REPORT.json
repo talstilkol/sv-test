@@ -1,0 +1,39 @@
+{
+  "reportVersion": "exam-flow-simulation-v1",
+  "date": "2026-04-29",
+  "policy": {
+    "deterministic": true,
+    "noRandomness": true,
+    "noFakeData": true,
+    "sampleProfile": "clean-local-learner"
+  },
+  "summary": {
+    "questionBankSize": 2840,
+    "blockers": 0,
+    "blockerCodes": [],
+    "passed": true
+  },
+  "noRepeat": {
+    "requested": 100,
+    "bankSize": 2840,
+    "answered": 100,
+    "unique": 100,
+    "exhaustedBeforeLimit": false,
+    "duplicateCount": 0,
+    "duplicates": [],
+    "passed": true
+  },
+  "harderAfterCorrect": {
+    "checked": 160,
+    "failures": [],
+    "failureCount": 0,
+    "passed": true
+  },
+  "wrongAnswerRepair": {
+    "checked": 160,
+    "hookFailures": [],
+    "dataFailures": [],
+    "failureCount": 0,
+    "passed": true
+  }
+}

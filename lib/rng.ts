@@ -87,12 +87,20 @@ export function shuffle<T>(arr: readonly T[]): T[] {
 
 export function getUserId(): string {
   try {
-    if (typeof localStorage === "undefined") return "anonymous";
+    if (
+      typeof process !== "undefined" &&
+      process.versions &&
+      process.versions.node
+    ) {
+      return "anonymous";
+    }
+    if (typeof window === "undefined" || !window.localStorage) return "anonymous";
+    const storage = window.localStorage;
     const key = "lumenportal:userId:v1";
-    let id = localStorage.getItem(key);
+    let id = storage.getItem(key);
     if (!id) {
       id = `user-${seedFromString(key).toString(16)}`;
-      localStorage.setItem(key, id);
+      storage.setItem(key, id);
     }
     return id;
   } catch (_) {

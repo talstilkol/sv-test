@@ -13,7 +13,7 @@
     "tabMatrixGaps": 0,
     "browserSmoke": {
       "desktop": "pass",
-      "mobile": "pending",
+      "mobile": "pass",
       "report": "SVCOLLEGE_BROWSER_SMOKE.md"
     }
   },
@@ -36,7 +36,7 @@
         }
       ],
       "questions": {
-        "count": 77,
+        "count": 110,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -249,10 +249,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -267,7 +267,7 @@
         }
       ],
       "questions": {
-        "count": 63,
+        "count": 70,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -480,10 +480,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -508,7 +508,7 @@
         }
       ],
       "questions": {
-        "count": 313,
+        "count": 360,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -721,10 +721,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -754,7 +754,7 @@
         }
       ],
       "questions": {
-        "count": 254,
+        "count": 335,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -799,7 +799,7 @@
         ]
       },
       "activities": {
-        "count": 45,
+        "count": 46,
         "files": [
           {
             "file": "data/questions_trace.js",
@@ -967,10 +967,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -995,7 +995,7 @@
         }
       ],
       "questions": {
-        "count": 316,
+        "count": 385,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -1208,10 +1208,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -1231,7 +1231,7 @@
         }
       ],
       "questions": {
-        "count": 149,
+        "count": 263,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -1444,10 +1444,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -1462,7 +1462,7 @@
         }
       ],
       "questions": {
-        "count": 38,
+        "count": 133,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -1675,10 +1675,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -1713,7 +1713,7 @@
         }
       ],
       "questions": {
-        "count": 399,
+        "count": 460,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -1926,10 +1926,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -1949,7 +1949,7 @@
         }
       ],
       "questions": {
-        "count": 205,
+        "count": 250,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -2162,10 +2162,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -2190,7 +2190,7 @@
         }
       ],
       "questions": {
-        "count": 131,
+        "count": 206,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -2403,10 +2403,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -2421,7 +2421,7 @@
         }
       ],
       "questions": {
-        "count": 38,
+        "count": 128,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -2634,10 +2634,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -2657,7 +2657,7 @@
         }
       ],
       "questions": {
-        "count": 76,
+        "count": 169,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -2870,10 +2870,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -2888,7 +2888,7 @@
         }
       ],
       "questions": {
-        "count": 34,
+        "count": 114,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -3101,10 +3101,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -3119,7 +3119,7 @@
         }
       ],
       "questions": {
-        "count": 53,
+        "count": 60,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -3332,10 +3332,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     },
     {
@@ -3350,7 +3350,7 @@
         }
       ],
       "questions": {
-        "count": 38,
+        "count": 133,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -3563,10 +3563,10 @@
         ]
       },
       "browserVerification": {
-        "status": "desktop-pass/mobile-pending",
+        "status": "desktop-pass/mobile-pass",
         "owner": "current",
         "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke passed in the in-app browser; mobile viewport smoke is still pending."
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
       }
     }
   ],
@@ -3604,19 +3604,19 @@
   },
   "featureCoverage": {
     "modules": 24,
-    "done": 23,
-    "partial": 1,
+    "done": 24,
+    "partial": 0,
     "missing": 0,
     "strictFailures": 0,
     "evidenceGateFailures": 0,
     "optionFeedback": {
       "id": "optionFeedback",
       "label": "Per-Distractor Feedback",
-      "implemented": 50,
-      "target": 1357,
+      "implemented": 1704,
+      "target": 1704,
       "unit": "MC questions",
-      "coverage": 3.7,
-      "status": "Partial",
+      "coverage": 100,
+      "status": "Done",
       "evidence": [
         "data/option_feedback.js",
         "data/questions_bank.js",
@@ -3626,7 +3626,7 @@
       "enforceStrict": false,
       "enforceEvidenceGate": true,
       "details": {
-        "optionExplanations": 200
+        "optionExplanations": 7016
       }
     },
     "courseBlueprints": {
@@ -3651,7 +3651,7 @@
   },
   "activeParallelMode": {
     "status": "single-session-finish-line1-all-modules-covered",
-    "note": "Full merge train is paused. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js, DevOps, AI Engineering and Design Systems are integrated. Desktop all-tabs smoke passed; current work focuses on mobile smoke, question depth and hard-question feedback.",
+    "note": "Full merge train is paused. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js, DevOps, AI Engineering and Design Systems are integrated. Desktop and mobile all-tabs smoke passed; current work focuses on question depth, hard-question feedback and regression fixes.",
     "activeExternalSessions": [],
     "completedExternalSessions": [
       {
@@ -3704,18 +3704,29 @@
       }
     ],
     "pausedSessions": [
-      "Question Quality",
-      "Mobile All Tabs QA"
+      "Question Quality"
     ],
     "currentSessionAllowedScope": [
       "SVCollege governance docs",
       "Command Center reports",
       "readiness scripts",
       "post-SQL/Auth/Next.js/Museum integration quality gates",
-      "mobile all-tabs smoke",
       "SVCollege question-depth hardening",
       "non-museum planning documents"
     ]
+  },
+  "promotionRule": {
+    "status": "defined",
+    "label": "SVCollege module ready for students",
+    "rule": "A module may be promoted to ready-for-students only after content coverage, practice coverage, tab/smoke evidence and first-user feedback evidence are all present.",
+    "requiredEvidence": [
+      "content: lesson + concepts + one-line definitions + prerequisites",
+      "practice: MC + Fill + at least one deeper activity",
+      "tab-health: module appears in all strict SVCollege tabs",
+      "smoke: desktop/mobile browser flow is clean",
+      "feedback: first-user or pilot feedback reviewed"
+    ],
+    "currentFinishLineScope": "Finish Line 1 can be exam-ready before the 10-student pilot; broad student-ready promotion still requires first-user feedback."
   },
   "parallelSessions": {
     "total": 9,
@@ -3793,7 +3804,7 @@
         "ownership": "smoke/e2e/tests + small fixes"
       }
     ],
-    "nextOpenRule": "Limited mode active: do not open the full train. All 15 SVCollege modules are covered and desktop all-tabs smoke passed; continue only with mobile all-tabs QA, question-depth hardening, hard-question feedback, or regression fixes unless the user re-enables wider merging."
+    "nextOpenRule": "Limited mode active: do not open the full train. All 15 SVCollege modules are covered and desktop/mobile all-tabs smoke passed; continue only with question-depth hardening, hard-question feedback, or regression fixes unless the user re-enables wider merging."
   },
   "docs": [
     {

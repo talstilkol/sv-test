@@ -217,6 +217,21 @@ function buildCoverage() {
   const mcBank = distractorAudit.loadBanks();
 
   const optionFeedbackIds = Object.keys(optionFeedback || {});
+  const mcIds = new Set(mcBank.map((question) => question && question.id).filter(Boolean));
+  const optionFeedbackCoveredIds = new Set(optionFeedbackIds.filter((id) => mcIds.has(id)));
+  let inlineOptionExplanations = 0;
+  mcBank.forEach((question) => {
+    if (
+      question &&
+      question.id &&
+      Array.isArray(question.options) &&
+      Array.isArray(question.optionFeedback) &&
+      question.optionFeedback.length === question.options.length
+    ) {
+      optionFeedbackCoveredIds.add(question.id);
+      inlineOptionExplanations += question.optionFeedback.length;
+    }
+  });
   const metrics = [
     metric("antiPatterns", "Anti-Pattern Gallery", countObjectArrays(antiPatterns), 22, "patterns", [
       "data/anti_patterns.js",
@@ -233,7 +248,7 @@ function buildCoverage() {
     metric(
       "optionFeedback",
       "Per-Distractor Feedback",
-      optionFeedbackIds.length,
+      optionFeedbackCoveredIds.size,
       mcBank.length,
       "MC questions",
       ["data/option_feedback.js", "data/questions_bank.js", "data/questions_bank_seeded.js"],
@@ -243,7 +258,7 @@ function buildCoverage() {
           optionExplanations: Object.values(optionFeedback || {}).reduce(
             (sum, feedback) => sum + (Array.isArray(feedback) ? feedback.length : 0),
             0,
-          ),
+          ) + inlineOptionExplanations,
         },
       },
     ),
@@ -387,7 +402,7 @@ function buildMarkdown(report) {
     "",
     "## Notes",
     "",
-    "- Per-Distractor Feedback is intentionally reported against the full MC bank, so it remains Partial until every MC question has option-specific feedback.",
+    "- Per-Distractor Feedback is intentionally reported against the full MC bank; Done means every loaded MC has option-specific feedback from either inline data or the curated feedback map.",
     "- Strict target failures ignore modules explicitly marked as non-strict because they are tracked as staged coverage work.",
     "- Evidence gate failures block Done modules that lack an outcome metric or repository evidence.",
     "- This report is the source of truth for content-module coverage counters in Phase 5.",

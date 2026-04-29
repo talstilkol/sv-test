@@ -1,0 +1,73 @@
+{
+  "reportVersion": "svcollege-student-readiness-export-v1",
+  "date": "2026-04-29",
+  "target": "SVCollege AI & Full Stack",
+  "audience": [
+    "student",
+    "teacher"
+  ],
+  "reportScope": "weekly-progress",
+  "summary": {
+    "readyForExamPractice": true,
+    "blockers": 0,
+    "readinessAverage": 100,
+    "coveredModules": 15,
+    "totalModules": 15,
+    "tabCoverage": 100,
+    "tabCells": "225/225",
+    "weakestCriticalCounters": {
+      "totalConcepts": 498,
+      "withoutQuestions": 0,
+      "withoutHardQuestion": 0,
+      "withoutDefinition": 0,
+      "withoutPrerequisiteEntry": 0,
+      "codeConceptsWithoutProof": 0
+    },
+    "mockVariants": 3,
+    "flowSimulationPassed": true
+  },
+  "nextActions": [
+    {
+      "conceptKey": "react_blueprint::Performance Optimization",
+      "riskScore": 27,
+      "action": "לבדוק ידנית בסימולציית תלמיד נקייה."
+    },
+    {
+      "conceptKey": "lesson_15::Closure",
+      "riskScore": 25,
+      "action": "לבדוק ידנית בסימולציית תלמיד נקייה."
+    },
+    {
+      "conceptKey": "react_blueprint::State Management",
+      "riskScore": 25,
+      "action": "לבדוק ידנית בסימולציית תלמיד נקייה."
+    },
+    {
+      "conceptKey": "react_blueprint::Testing Strategies",
+      "riskScore": 25,
+      "action": "לבדוק ידנית בסימולציית תלמיד נקייה."
+    },
+    {
+      "conceptKey": "lesson_25::responsive design",
+      "riskScore": 24,
+      "action": "לבדוק ידנית בסימולציית תלמיד נקייה."
+    }
+  ],
+  "teacherWeeklyProgress": {
+    "status": "ready-for-exam-practice",
+    "moduleCoverage": "15/15",
+    "tabCoverage": "225/225",
+    "recommendedReviewAgenda": [
+      "react_blueprint::Performance Optimization",
+      "lesson_15::Closure",
+      "react_blueprint::State Management"
+    ],
+    "evidenceCommands": [
+      "npm run svcollege:readiness:release",
+      "npm run svcollege:tab-matrix:strict",
+      "npm run qa:questions:strict",
+      "npm run exam:mock-variants:strict",
+      "npm run exam:flows:strict"
+    ]
+  }
+}

@@ -42,7 +42,7 @@ const COMPLEX_CONCEPT_PATTERNS = Object.freeze([
   /^(lesson_ai_engineering|lesson_auth_security|lesson_devops_deploy|lesson_design_systems|lesson_nestjs|lesson_nextjs|lesson_sql_orm)::/i,
 ]);
 
-function normalizeQuestionText(value) {
+export function normalizeQuestionText(value) {
   return String(value || "")
     .toLowerCase()
     .replace(/[\u0591-\u05C7]/g, "")
@@ -50,11 +50,11 @@ function normalizeQuestionText(value) {
     .trim();
 }
 
-function conceptKey(lessonId, conceptName) {
+export function conceptKey(lessonId, conceptName) {
   return `${lessonId}::${conceptName}`;
 }
 
-function questionTextBlob(question = {}, options = {}) {
+export function questionTextBlob(question = {}, options = {}) {
   const includeExplanation = options.includeExplanation !== false;
   return [
     question.question,
@@ -101,7 +101,7 @@ function scoreTermMatch(blob, term, glossaryEntry) {
   return score;
 }
 
-function inferQuestionConceptKeys({
+export function inferQuestionConceptKeys({
   question = {},
   lesson = null,
   concept = null,
@@ -150,7 +150,7 @@ function inferQuestionConceptKeys({
     .map((item) => item.key);
 }
 
-function inferGlossaryTerms({ question = {}, glossary = {}, limit = 8 } = {}) {
+export function inferGlossaryTerms({ question = {}, glossary = {}, limit = 8 } = {}) {
   const blob = questionTextBlob(question, { includeExplanation: false });
   return Object.entries(glossary || {})
     .map(([term, entry]) => ({
@@ -166,7 +166,7 @@ function inferGlossaryTerms({ question = {}, glossary = {}, limit = 8 } = {}) {
     .slice(0, limit);
 }
 
-function uniqueStable(values) {
+export function uniqueStable(values) {
   const seen = new Set();
   return (values || []).filter((value) => {
     if (!value || seen.has(value)) return false;
@@ -175,16 +175,16 @@ function uniqueStable(values) {
   });
 }
 
-function stableList(value) {
+export function stableList(value) {
   return uniqueStable(Array.isArray(value) ? value.map((item) => String(item || "").trim()) : []);
 }
 
-function isHardQuestion(question = {}, hardLevel = 4) {
+export function isHardQuestion(question = {}, hardLevel = 4) {
   const level = Number(question.level);
   return Number.isFinite(level) && level >= hardLevel;
 }
 
-function hasComplexConcept(question = {}, patterns = COMPLEX_CONCEPT_PATTERNS) {
+export function hasComplexConcept(question = {}, patterns = COMPLEX_CONCEPT_PATTERNS) {
   const keys = stableList([
     question.conceptKey,
     ...(Array.isArray(question.conceptKeys) ? question.conceptKeys : []),
@@ -192,7 +192,7 @@ function hasComplexConcept(question = {}, patterns = COMPLEX_CONCEPT_PATTERNS) {
   return keys.some((key) => patterns.some((pattern) => pattern.test(key)));
 }
 
-function resolveSideExplanationSource(question = {}) {
+export function resolveSideExplanationSource(question = {}) {
   const explicitSource = String(question.sideExplanationSource || "").trim();
   const text = String(question.sideExplanation || "").trim();
   if (explicitSource && text) return explicitSource;
@@ -200,7 +200,7 @@ function resolveSideExplanationSource(question = {}) {
   return "";
 }
 
-function analyzeQuestionPrerequisiteAid({
+export function analyzeQuestionPrerequisiteAid({
   question = {},
   conceptPrerequisites = {},
   glossary = {},
@@ -259,7 +259,7 @@ function analyzeQuestionPrerequisiteAid({
   };
 }
 
-function choosePrerequisiteRewind({
+export function choosePrerequisiteRewind({
   prereqKeys = [],
   statsByKey = {},
   thresholdPct = 60,
@@ -284,18 +284,3 @@ function choosePrerequisiteRewind({
     return a.key.localeCompare(b.key);
   })[0] || null;
 }
-
-module.exports = {
-  analyzeQuestionPrerequisiteAid,
-  choosePrerequisiteRewind,
-  conceptKey,
-  hasComplexConcept,
-  inferGlossaryTerms,
-  inferQuestionConceptKeys,
-  isHardQuestion,
-  normalizeQuestionText,
-  questionTextBlob,
-  resolveSideExplanationSource,
-  stableList,
-  uniqueStable,
-};

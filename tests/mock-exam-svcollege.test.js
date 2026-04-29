@@ -38,4 +38,14 @@ describe("SVCollege mock exam integration", () => {
     expect(app).toContain("window.ensureSeededBank().then(begin).catch(begin)");
     expect(app).toContain("begin();");
   });
+
+  it("shows an exam review path with weak modules and prerequisite rewind", () => {
+    expect(app).toContain("const weakModules = Object.values(record.moduleBreakdown || {})");
+    expect(app).toContain("const recommendedPathItems = wrongRecords.slice(0, 6).map");
+    expect(app).toContain("🧭 סקירת מבחן — מה עושים עכשיו");
+    expect(app).toContain("מודולים חלשים");
+    expect(app).toContain("מסלול מומלץ");
+    expect(app).toContain("קודם:");
+    expect(app).toContain("אחר כך:");
+  });
 });

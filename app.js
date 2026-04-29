@@ -7,6 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     }
   })();
+  const initialTabFromUrl = (() => {
+    try {
+      return new URLSearchParams(window.location.search).get("tab") || "";
+    } catch (_) {
+      return "";
+    }
+  })();
   if (standaloneMuseumMode) document.body.classList.add("standalone-museum-mode");
 
   const lessonsNav = document.getElementById("lessons-nav");
@@ -25,15 +32,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const quizScore = document.getElementById("quiz-score");
   const quizFeedback = document.getElementById("quiz-feedback");
   const mobileToggle = document.getElementById("mobile-toggle");
+  const focusModeToggle = document.getElementById("focus-mode-toggle");
+  const focusSideToggle = document.getElementById("focus-side-toggle");
   const sidebar = document.getElementById("sidebar");
   const knowledgeMapView = document.getElementById("knowledge-map-view");
   const studyModeView = document.getElementById("study-mode-view");
   const trainerView = document.getElementById("trainer-view");
+  const conceptSprintView = document.getElementById("concept-sprint-view");
   const guideView = document.getElementById("guide-view");
   const grandmaKnowledgeView = document.getElementById("grandma-knowledge-view");
   const programmingBasicsView = document.getElementById("programming-basics-view");
   const programmingPrinciplesView = document.getElementById("programming-principles-view");
   const programmingMuseumView = document.getElementById("programming-museum-view");
+  const languageToolsView = document.getElementById("language-tools-view");
+  const rewardStoreView = document.getElementById("reward-store-view");
   const learningEvidenceView = document.getElementById("learning-evidence-view");
   const capstonesView = document.getElementById("capstones-view");
   const blueprintsView = document.getElementById("blueprints-view");
@@ -41,11 +53,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const openKnowledgeMapBtn = document.getElementById("open-knowledge-map");
   const openStudyModeBtn = document.getElementById("open-study-mode");
   const openTrainerBtn = document.getElementById("open-trainer");
+  const openConceptSprintBtn = document.getElementById("open-concept-sprint");
   const openGuideBtn = document.getElementById("open-guide");
   const openGrandmaKnowledgeBtn = document.getElementById("open-grandma-knowledge");
   const openProgrammingBasicsBtn = document.getElementById("open-programming-basics");
   const openProgrammingPrinciplesBtn = document.getElementById("open-programming-principles");
   const openProgrammingMuseumBtn = document.getElementById("open-programming-museum");
+  const openLanguageToolsBtn = document.getElementById("open-language-tools");
+  const openRewardStoreBtn = document.getElementById("open-reward-store");
   const openLearningEvidenceBtn = document.getElementById("open-learning-evidence");
   const openCapstonesBtn = document.getElementById("open-capstones");
   const openBlueprintsBtn = document.getElementById("open-blueprints");
@@ -59,6 +74,211 @@ document.addEventListener("DOMContentLoaded", () => {
   const contextTreeCount = document.getElementById("context-tree-count");
   const contextTreeSearch = document.getElementById("context-tree-search");
   const contextTreeBody = document.getElementById("context-tree-body");
+  const localProfileSelect = document.getElementById("local-profile-select");
+  const localProfileNameInput = document.getElementById("local-profile-name");
+  const localProfileCreateBtn = document.getElementById("local-profile-create");
+  const localProfileStatus = document.getElementById("local-profile-status");
+
+  const utilityBar = document.getElementById("w12-top-bar");
+  const sidebarHeader = document.querySelector(".sidebar-header");
+  if (utilityBar && sidebarHeader && utilityBar.parentElement !== sidebarHeader) {
+    sidebarHeader.appendChild(utilityBar);
+  }
+
+  // =========== Local learner profiles ===========
+  const localProfileStore = (() => {
+    const PROFILE_LIST_KEY = "lumenportal:profiles:v1";
+    const ACTIVE_PROFILE_KEY = "lumenportal:activeProfile:v1";
+    const PROFILE_PREFIX = "lumenportal:profile:";
+    const PROFILE_MIGRATED_KEY = "__migrated:v1";
+    const globalKeys = new Set([
+      PROFILE_LIST_KEY,
+      ACTIVE_PROFILE_KEY,
+      "lumenportal:theme:v1",
+      "lumenportal:a11y:v1",
+      "lumenportal:learning-focus:v1",
+      "lumenportal:bankVersion:v1",
+      "lumenportal:userId:v1",
+    ]);
+    const profileLocalKeys = new Set(["ob_tour_dismissed"]);
+    const raw = {
+      getItem: Storage.prototype.getItem,
+      setItem: Storage.prototype.setItem,
+      removeItem: Storage.prototype.removeItem,
+    };
+
+    function safeJson(rawValue, fallback) {
+      try {
+        return rawValue ? JSON.parse(rawValue) : fallback;
+      } catch (_) {
+        return fallback;
+      }
+    }
+
+    function hashText(text) {
+      let hash = 2166136261;
+      String(text || "").split("").forEach((char) => {
+        hash ^= char.charCodeAt(0);
+        hash = Math.imul(hash, 16777619);
+      });
+      return (hash >>> 0).toString(36);
+    }
+
+    function profileIdFromName(name, profiles) {
+      const base = String(name || "student")
+        .trim()
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 28) || "student";
+      let id = `${base}-${hashText(name).slice(0, 6)}`;
+      let suffix = 2;
+      const existing = new Set((profiles || []).map((profile) => profile.id));
+      while (existing.has(id)) {
+        id = `${base}-${hashText(`${name}:${suffix}`).slice(0, 6)}`;
+        suffix += 1;
+      }
+      return id;
+    }
+
+    function readProfiles() {
+      const parsed = safeJson(raw.getItem.call(localStorage, PROFILE_LIST_KEY), []);
+      return Array.isArray(parsed) ? parsed.filter((profile) => profile && profile.id && profile.name) : [];
+    }
+
+    function writeProfiles(profiles) {
+      raw.setItem.call(localStorage, PROFILE_LIST_KEY, JSON.stringify(profiles));
+    }
+
+    function createProfile(name, options = {}) {
+      const profiles = readProfiles();
+      const trimmedName = String(name || "").trim() || `תלמיד ${profiles.length + 1}`;
+      const existingByName = profiles.find((profile) => profile.name.trim() === trimmedName);
+      if (existingByName) return existingByName;
+      const profile = {
+        id: profileIdFromName(trimmedName, profiles),
+        name: trimmedName,
+        createdAt: new Date().toISOString(),
+      };
+      const nextProfiles = [...profiles, profile];
+      writeProfiles(nextProfiles);
+      if (options.activate) raw.setItem.call(localStorage, ACTIVE_PROFILE_KEY, profile.id);
+      return profile;
+    }
+
+    function ensureProfile() {
+      let profiles = readProfiles();
+      if (!profiles.length) {
+        const profile = createProfile("תלמיד מקומי", { activate: true });
+        profiles = [profile];
+      }
+      let activeId = raw.getItem.call(localStorage, ACTIVE_PROFILE_KEY);
+      if (!profiles.some((profile) => profile.id === activeId)) {
+        activeId = profiles[0].id;
+        raw.setItem.call(localStorage, ACTIVE_PROFILE_KEY, activeId);
+      }
+      return { profiles, activeProfile: profiles.find((profile) => profile.id === activeId) || profiles[0] };
+    }
+
+    function shouldScopeKey(key) {
+      const value = String(key || "");
+      if (profileLocalKeys.has(value)) return true;
+      if (!value.startsWith("lumenportal:")) return false;
+      if (value.startsWith(PROFILE_PREFIX)) return false;
+      return !globalKeys.has(value);
+    }
+
+    const state = ensureProfile();
+
+    function scopedKey(key, profileId = state.activeProfile.id) {
+      const value = String(key || "");
+      return shouldScopeKey(value) ? `${PROFILE_PREFIX}${profileId}:${value}` : value;
+    }
+
+    function migrateExistingLearningData() {
+      const migratedKey = `${PROFILE_PREFIX}${state.activeProfile.id}:${PROFILE_MIGRATED_KEY}`;
+      if (raw.getItem.call(localStorage, migratedKey) === "1") return;
+      const keysToCopy = [];
+      for (let index = 0; index < localStorage.length; index += 1) {
+        const key = localStorage.key(index);
+        if (shouldScopeKey(key)) keysToCopy.push(key);
+      }
+      keysToCopy.forEach((key) => {
+        const target = scopedKey(key);
+        if (raw.getItem.call(localStorage, target) === null) {
+          const value = raw.getItem.call(localStorage, key);
+          if (value !== null) raw.setItem.call(localStorage, target, value);
+        }
+      });
+      raw.setItem.call(localStorage, migratedKey, "1");
+    }
+
+    migrateExistingLearningData();
+
+    if (!Storage.prototype.__lumenProfileScoped) {
+      Storage.prototype.getItem = function getProfileScopedItem(key) {
+        const nextKey = this === localStorage ? scopedKey(key) : key;
+        return raw.getItem.call(this, nextKey);
+      };
+      Storage.prototype.setItem = function setProfileScopedItem(key, value) {
+        const nextKey = this === localStorage ? scopedKey(key) : key;
+        return raw.setItem.call(this, nextKey, value);
+      };
+      Storage.prototype.removeItem = function removeProfileScopedItem(key) {
+        const nextKey = this === localStorage ? scopedKey(key) : key;
+        return raw.removeItem.call(this, nextKey);
+      };
+      Object.defineProperty(Storage.prototype, "__lumenProfileScoped", { value: true });
+    }
+
+    return {
+      profileListKey: PROFILE_LIST_KEY,
+      activeProfileKey: ACTIVE_PROFILE_KEY,
+      activeProfile: state.activeProfile,
+      getProfiles: readProfiles,
+      createProfile,
+      setActiveProfile(profileId) {
+        const profiles = readProfiles();
+        if (!profiles.some((profile) => profile.id === profileId)) return false;
+        raw.setItem.call(localStorage, ACTIVE_PROFILE_KEY, profileId);
+        return true;
+      },
+      scopedKey,
+    };
+  })();
+
+  window.LUMEN_LOCAL_PROFILE = localProfileStore;
+
+  function renderLocalProfileControls(message) {
+    if (!localProfileSelect) return;
+    const profiles = localProfileStore.getProfiles();
+    localProfileSelect.innerHTML = profiles
+      .map((profile) => `<option value="${esc(profile.id)}">${esc(profile.name)}</option>`)
+      .join("");
+    localProfileSelect.value = localProfileStore.activeProfile.id;
+    if (localProfileStatus) {
+      localProfileStatus.textContent = message || `פעיל עכשיו: ${localProfileStore.activeProfile.name}`;
+    }
+  }
+
+  renderLocalProfileControls();
+
+  localProfileSelect?.addEventListener("change", () => {
+    if (localProfileStore.setActiveProfile(localProfileSelect.value)) {
+      window.location.reload();
+    }
+  });
+
+  localProfileCreateBtn?.addEventListener("click", () => {
+    const profile = localProfileStore.createProfile(localProfileNameInput?.value || "", { activate: true });
+    if (localProfileNameInput) localProfileNameInput.value = "";
+    if (localProfileStatus) localProfileStatus.textContent = `נוצר תלמיד: ${profile.name}`;
+    window.location.reload();
+  });
+
+  localProfileNameInput?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") localProfileCreateBtn?.click();
+  });
 
   let currentLessonId = null;
   let currentLevel = "grandma";
@@ -278,12 +498,14 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
   function bankByConcept(lessonId, conceptName) {
-    const bank = window.QUESTIONS_BANK || { mc: [], fill: [] };
+    const bank = window.QUESTIONS_BANK || { mc: [], fill: [], trace: [], bug: [] };
     const key = resolveCanonicalConceptKey({ lessonId, conceptName }) || conceptKey(lessonId, conceptName);
     const hasKey = (q) => bankQuestionConceptKeys(q, lessonId).includes(key);
     return {
       mc: (bank.mc || []).filter(hasKey),
       fill: (bank.fill || []).filter(hasKey),
+      trace: (bank.trace || []).filter(hasKey),
+      bug: (bank.bug || []).filter(hasKey),
     };
   }
   // Find concept by key (used by guide to update levels for hand-crafted Qs)
@@ -420,6 +642,10 @@ document.addEventListener("DOMContentLoaded", () => {
       el.addEventListener("click", () => {
         const action = contextTreeActions.get(el.getAttribute("data-ctx-action"));
         if (typeof action === "function") action();
+        if (document.body.classList.contains("learning-focus-mode")) {
+          document.body.classList.remove("focus-menu-open");
+          focusSideToggle?.setAttribute("aria-expanded", "false");
+        }
       });
     });
   }
@@ -604,6 +830,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: "programming-basics", label: "אבני בסיס", action: () => openProgrammingBasics() },
             { id: "programming-principles", label: "עקרונות יסוד", action: () => openProgrammingPrinciples() },
             { id: "programming-museum", label: "מוזיאון שפות", action: () => openProgrammingMuseum() },
+            { id: "language-tools", label: "שפות וכלים", action: () => openLanguageTools() },
             { id: "knowledge-map", label: "מפת ידע", action: () => openKnowledgeMap() },
             { id: "study", label: "לימוד מותאם", action: () => openStudyMode() },
             { id: "trainer", label: "מאמן ידע", action: () => openTrainer() },
@@ -1211,6 +1438,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: "menus", label: "תפריטים", icon: "🧭" },
     { id: "patents", label: "פטנטים", icon: "💡" },
     { id: "tech", label: "טכנולוגיות", icon: "⚙️" },
+    { id: "layers", label: "שכבות", icon: "🧩" },
     { id: "languages", label: "שפות", icon: "🧬" },
     { id: "history", label: "היסטוריה", icon: "🕰️" },
     { id: "museum", label: "מוזיאון", icon: "🏛️" },
@@ -1441,6 +1669,180 @@ document.addEventListener("DOMContentLoaded", () => {
       can: "להאיץ בניית מוצר עקבי",
       cannot: "להחליף הבנה של state, layout ו-bundle size",
       efficiency: "עלות bundle משתנה; מומלץ למדוד לפני ייבוא רחב",
+    },
+  ];
+
+  const PROGRAMMING_LAYER_SETS = [
+    {
+      id: "language",
+      name: "שפה: JavaScript / TypeScript",
+      short: "כללי כתיבה: ערכים, משתנים, פונקציות, אובייקטים, מערכים, async ו-modules.",
+      adds: ["תחביר", "טיפוסים", "פונקציות", "אובייקטים", "Promises", "import/export"],
+      notAdds: "לא נותנת לבד שרת, routing, קומפוננטות UI או build למוצר.",
+      use: "כל שכבה מעליה עדיין נשענת עליה.",
+    },
+    {
+      id: "node",
+      name: "Node.js",
+      short: "מריץ JavaScript מחוץ לדפדפן ומוסיף גישה לשרת, קבצים, רשת ותהליכים.",
+      adds: ["V8 runtime", "event loop", "fs", "process/env", "HTTP server", "npm scripts"],
+      notAdds: "לא בונה UI בדפדפן ולא נותן routing של אתר בלי קוד/Framework.",
+      use: "שרתים, API, CLI, סקריפטים, עבודה עם DB וקבצים.",
+    },
+    {
+      id: "react",
+      name: "React",
+      short: "מודל לבניית UI: המסך הוא פונקציה של state.",
+      adds: ["Components", "JSX", "props", "state", "hooks", "render cycle", "one-way data flow"],
+      notAdds: "לא נותן שרת, database, SEO מלא או routing מלא בלי ספריות/Framework.",
+      use: "ממשקים משתנים: טפסים, דשבורדים, אפליקציות, רכיבים חוזרים.",
+    },
+    {
+      id: "next",
+      name: "Next.js",
+      short: "Framework מעל React שמוסיף מבנה מוצר: routing, server rendering, API ו-build.",
+      adds: ["file-system routing", "layouts", "server/client split", "route handlers", "SSR/SSG", "metadata/SEO", "image optimization"],
+      notAdds: "לא מחליף הבנה של React, JavaScript, HTTP, DB או אבטחה.",
+      use: "מוצר Full-Stack עם עמודים, SEO, API, authentication ו-deploy מסודר.",
+    },
+  ];
+
+  const PROGRAMMING_LAYER_OVERLAPS = [
+    {
+      title: "Node + React",
+      text: "אותה שפה ואותם modules, אבל Node רץ בשרת ו-React רץ בעיקר בדפדפן.",
+    },
+    {
+      title: "React + Next",
+      text: "Next משתמש ב-React לקומפוננטות, ומוסיף סביבו routing, server rendering ו-build.",
+    },
+    {
+      title: "Node + Next",
+      text: "Next יכול להריץ קוד שרת בסביבת Node או Edge, ולכן API ו-DB נכנסים לאותו פרויקט.",
+    },
+    {
+      title: "כולם",
+      text: "הבסיס נשאר ערכים, פונקציות, objects, arrays, async ו-import/export.",
+    },
+  ];
+
+  const PROGRAMMING_LAYER_DECISIONS = [
+    {
+      need: "רוצה לכתוב לוגיקה בלבד",
+      choose: "JavaScript / TypeScript",
+      reason: "אין צורך ב-framework כשאין UI, שרת או routing.",
+    },
+    {
+      need: "רוצה לקרוא קבצים, לבנות API או לדבר עם DB",
+      choose: "Node.js",
+      reason: "זו שכבת runtime שמחברת JS למערכת ההפעלה ולרשת.",
+    },
+    {
+      need: "רוצה מסך אינטראקטיבי שמתעדכן לפי state",
+      choose: "React",
+      reason: "זו שכבת UI שמסדרת רכיבים, props, state ו-render.",
+    },
+    {
+      need: "רוצה אתר/מוצר Full-Stack עם עמודים, SEO ושרת",
+      choose: "Next.js",
+      reason: "זו שכבת מוצר שמארגנת React + שרת + routing + build.",
+    },
+  ];
+
+  const LANGUAGE_TOOL_BIG_PICTURE = [
+    {
+      name: "React",
+      layer: "Frontend UI",
+      plain: "בונה את הממשק: כפתורים, טפסים, קומפוננטות, דשבורדים ו-state במסך.",
+      question: "איך בונים את מה שהמשתמש רואה?",
+    },
+    {
+      name: "Next.js",
+      layer: "Full-Stack Web Framework",
+      plain: "לוקח React ומוסיף routing, server rendering, API, build ואופטימיזציות מוצר.",
+      question: "איך הופכים React לאפליקציית Web מלאה?",
+    },
+    {
+      name: "Node.js",
+      layer: "Backend Runtime",
+      plain: "מריץ JavaScript מחוץ לדפדפן: שרת, API, קבצים, DB, scripts ו-realtime.",
+      question: "איך מריצים JavaScript בצד שרת?",
+    },
+  ];
+
+  const LANGUAGE_TOOL_DOMAINS = [
+    {
+      id: "frontend-ui",
+      title: "Frontend UI",
+      goal: "בניית ממשקי משתמש וקומפוננטות",
+      rows: [
+        { name: "React", role: "ספריית UI", speed: 8, learn: 7, ecosystem: 10, market: 10, exam: 10, pick: "ברירת מחדל לשוק ול-SVCollege.", caution: "צריך להבין state, hooks ו-render." },
+        { name: "Vue", role: "Framework UI", speed: 8, learn: 9, ecosystem: 8, market: 7, exam: 4, pick: "כשמחפשים עקומת למידה רכה.", caution: "פחות מרכזי בקורס הנוכחי." },
+        { name: "Svelte", role: "UI compiler", speed: 9, learn: 8, ecosystem: 7, market: 5, exam: 3, pick: "לקוד קצר ואתרים מהירים.", caution: "פחות ביקוש מ-React ברוב המשרות." },
+        { name: "Angular", role: "Framework מלא", speed: 7, learn: 5, ecosystem: 9, market: 8, exam: 3, pick: "ארגונים וצוותים גדולים.", caution: "כבד ללמידה מהירה לפני מבחן React." },
+        { name: "SolidJS", role: "UI reactive", speed: 10, learn: 6, ecosystem: 6, market: 3, exam: 2, pick: "ביצועי UI גבוהים וניסוי מתקדם.", caution: "לא הבחירה הראשונה ללימוד בסיסי." },
+      ],
+    },
+    {
+      id: "fullstack-web",
+      title: "Full-Stack Web",
+      goal: "Routing, rendering, API ומבנה אפליקציה",
+      rows: [
+        { name: "Next.js", role: "React framework", speed: 8, learn: 6, ecosystem: 10, market: 10, exam: 9, pick: "הבחירה המרכזית ל-React full-stack.", caution: "לא מחליף ידע ב-React ו-HTTP." },
+        { name: "Remix / React Router", role: "React full-stack", speed: 8, learn: 6, ecosystem: 7, market: 6, exam: 4, pick: "כשעובדים חזק עם Web APIs ו-loaders/actions.", caution: "פחות נפוץ בקורסים בסיסיים." },
+        { name: "Astro", role: "Content-first framework", speed: 9, learn: 8, ecosystem: 8, market: 6, exam: 3, pick: "אתרי תוכן, בלוגים, דוקומנטציה ושיווק.", caution: "לא אידיאלי לאפליקציית state כבדה." },
+        { name: "SvelteKit", role: "Svelte full-stack", speed: 9, learn: 7, ecosystem: 7, market: 5, exam: 3, pick: "אם בוחרים Svelte ומוצר מלא.", caution: "אקוסיסטם קטן יותר מ-Next." },
+        { name: "Nuxt", role: "Vue full-stack", speed: 8, learn: 7, ecosystem: 8, market: 6, exam: 3, pick: "אם הצוות עובד Vue.", caution: "לא רלוונטי ישירות ל-React." },
+      ],
+    },
+    {
+      id: "js-runtime",
+      title: "JavaScript Runtime / Backend",
+      goal: "הרצת JS/TS בצד שרת וכלי עבודה",
+      rows: [
+        { name: "Node.js", role: "runtime", speed: 8, learn: 8, ecosystem: 10, market: 10, exam: 10, pick: "הבסיס לשרתים, API ו-npm.", caution: "CPU כבד דורש workers או שפה אחרת." },
+        { name: "Deno", role: "runtime מאובטח", speed: 8, learn: 7, ecosystem: 6, market: 4, exam: 2, pick: "TypeScript מובנה ו-secure defaults.", caution: "פחות ספריות ותפקידים בשוק." },
+        { name: "Bun", role: "runtime + toolkit", speed: 10, learn: 7, ecosystem: 7, market: 5, exam: 2, pick: "מהירות וכלי all-in-one.", caution: "עדיין פחות סטנדרטי מ-Node." },
+        { name: "Cloudflare Workers", role: "Edge runtime", speed: 9, learn: 6, ecosystem: 7, market: 6, exam: 2, pick: "latency נמוך ו-serverless בקצה.", caution: "מגבלות סביבת Edge, לא Node מלא." },
+      ],
+    },
+    {
+      id: "backend-languages",
+      title: "Backend Languages",
+      goal: "שרתים, APIs, מערכות ארגוניות וסקייל",
+      rows: [
+        { name: "Python + FastAPI/Django", role: "Backend/Data/AI", speed: 7, learn: 9, ecosystem: 10, market: 9, exam: 4, pick: "AI, data ופיתוח API מהיר.", caution: "לא תמיד הכי מהיר ל-runtime כבד." },
+        { name: "Go", role: "שרתים ותשתיות", speed: 9, learn: 7, ecosystem: 8, market: 8, exam: 3, pick: "microservices, concurrency ותשתיות.", caution: "פחות נוח ל-UI ולפיתוח מהיר מאוד." },
+        { name: "Java + Spring Boot", role: "Enterprise backend", speed: 8, learn: 5, ecosystem: 10, market: 9, exam: 2, pick: "ארגונים גדולים, בנקים, מערכות ותיקות.", caution: "הרבה שכבות ו-boilerplate." },
+        { name: "C# / .NET", role: "Enterprise APIs", speed: 8, learn: 6, ecosystem: 9, market: 8, exam: 2, pick: "Azure, ארגונים ו-APIs חזקים.", caution: "אקוסיסטם אחר מהקורס." },
+        { name: "PHP + Laravel", role: "Web/SaaS/CMS", speed: 7, learn: 7, ecosystem: 8, market: 7, exam: 2, pick: "מערכות web מהירות ואתרים קיימים.", caution: "לא מתאים לכל צוות מודרני." },
+        { name: "Ruby on Rails", role: "Web product", speed: 6, learn: 8, ecosystem: 7, market: 5, exam: 2, pick: "MVP ופיתוח מוצר מהיר.", caution: "שוק קטן יותר בישראל מול JS/Java/.NET." },
+      ],
+    },
+    {
+      id: "systems-mobile",
+      title: "Systems / Mobile",
+      goal: "ביצועים, חומרה, מערכות הפעלה ומובייל",
+      rows: [
+        { name: "C", role: "מערכות נמוכות", speed: 10, learn: 4, ecosystem: 8, market: 7, exam: 2, pick: "כשצריך שליטה קרובה לזיכרון.", caution: "אין בטיחות זיכרון מובנית." },
+        { name: "C++", role: "ביצועים/מנועים", speed: 10, learn: 3, ecosystem: 9, market: 7, exam: 2, pick: "משחקים, מנועים, realtime.", caution: "מורכב מאוד לתחזוקה." },
+        { name: "Rust", role: "מערכות בטוחות", speed: 10, learn: 4, ecosystem: 7, market: 6, exam: 2, pick: "ביצועים עם memory safety.", caution: "עקומת למידה קשוחה." },
+        { name: "Swift", role: "iOS/macOS", speed: 8, learn: 7, ecosystem: 8, market: 7, exam: 1, pick: "אפליקציות Apple.", caution: "נעול יחסית לאקוסיסטם Apple." },
+        { name: "Kotlin", role: "Android/JVM", speed: 8, learn: 7, ecosystem: 8, market: 7, exam: 1, pick: "Android ו-backend JVM מודרני.", caution: "לא חלק מ-Full-Stack JS." },
+      ],
+    },
+    {
+      id: "dev-tools",
+      title: "Development Tools",
+      goal: "כלים שמחזיקים פרויקט אמין",
+      rows: [
+        { name: "TypeScript", role: "typed JS", speed: 7, learn: 6, ecosystem: 10, market: 10, exam: 9, pick: "חובה בפרויקטים גדולים.", caution: "טיפוסים לא מחליפים בדיקות." },
+        { name: "Vite", role: "dev server/build", speed: 10, learn: 9, ecosystem: 9, market: 8, exam: 8, pick: "פיתוח React מהיר ופשוט.", caution: "לא framework מוצר כמו Next." },
+        { name: "ESLint + Prettier", role: "איכות וסגנון", speed: 8, learn: 8, ecosystem: 10, market: 9, exam: 6, pick: "מונע טעויות וסגנון מתפזר.", caution: "צריך חוקים מדויקים, לא רעש." },
+        { name: "Vitest + Playwright", role: "בדיקות", speed: 8, learn: 6, ecosystem: 9, market: 8, exam: 6, pick: "יחידה + browser flows.", caution: "בדיקות רעות נותנות ביטחון שקרי." },
+        { name: "Docker", role: "סביבת הרצה", speed: 6, learn: 5, ecosystem: 10, market: 9, exam: 5, pick: "DB, services ו-deploy אחיד.", caution: "מוסיף מורכבות למתחילים." },
+        { name: "GitHub Actions", role: "CI/CD", speed: 7, learn: 6, ecosystem: 9, market: 9, exam: 5, pick: "בדיקות ובנייה אוטומטית.", caution: "pipeline לא מתקן קוד גרוע." },
+      ],
     },
   ];
 
@@ -5134,6 +5536,34 @@ document.addEventListener("DOMContentLoaded", () => {
                           label: item.name,
                           action: () => scrollBasicsSection(`pb-tech-${slugifyId(item.name)}`),
                         }))
+                      : programmingBasicsTab === "layers"
+                        ? [
+                            {
+                              id: "layer-venn",
+                              label: "תרשים קבוצות",
+                              action: () => scrollBasicsSection("pb-layer-venn"),
+                            },
+                            {
+                              id: "layer-details",
+                              label: "מה כל שכבה מוסיפה",
+                              action: () => scrollBasicsSection("pb-layer-details"),
+                              children: PROGRAMMING_LAYER_SETS.map((item) => ({
+                                id: item.id,
+                                label: item.name,
+                                action: () => scrollBasicsSection(`pb-layer-${item.id}`),
+                              })),
+                            },
+                            {
+                              id: "layer-overlaps",
+                              label: "חפיפות בין שכבות",
+                              action: () => scrollBasicsSection("pb-layer-overlaps"),
+                            },
+                            {
+                              id: "layer-decision",
+                              label: "מתי בוחרים מה",
+                              action: () => scrollBasicsSection("pb-layer-decision"),
+                            },
+                          ]
                       : programmingBasicsTab === "languages"
                         ? PROGRAMMING_LANGUAGES.map((item) => ({
                             id: item.name,
@@ -5247,6 +5677,43 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       ],
       { key: "programming-principles" },
+    );
+  }
+
+  function setLanguageToolsContextTree() {
+    setContextTree(
+      "שפות וכלים",
+      [
+        {
+          id: "lt-overview",
+          label: "תמונה גדולה",
+          open: true,
+          children: [
+            {
+              id: "lt-big-picture",
+              label: "React / Next / Node",
+              action: () => scrollBasicsSection("lt-big-picture"),
+            },
+            {
+              id: "lt-stack-choice",
+              label: "במה לבחור",
+              action: () => scrollBasicsSection("lt-stack-choice"),
+            },
+          ],
+        },
+        {
+          id: "lt-domains",
+          label: "תחומים",
+          open: true,
+          children: LANGUAGE_TOOL_DOMAINS.map((domain) => ({
+            id: domain.id,
+            label: domain.title,
+            meta: `${domain.rows.length}`,
+            action: () => scrollBasicsSection(`lt-domain-${domain.id}`),
+          })),
+        },
+      ],
+      { key: "language-tools" },
     );
   }
 
@@ -5955,6 +6422,48 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   }
+
+  // =========== Learning focus mode ===========
+  const FOCUS_MODE_KEY = "lumenportal:learning-focus:v1";
+
+  function setLearningFocusMode(enabled) {
+    document.body.classList.toggle("learning-focus-mode", enabled);
+    document.body.classList.remove("focus-menu-open");
+    focusModeToggle?.setAttribute("aria-pressed", enabled ? "true" : "false");
+    focusModeToggle?.setAttribute(
+      "aria-label",
+      enabled ? "צא ממצב פוקוס וחזור לתצוגה מלאה" : "הפעל מצב פוקוס ללמידה במסך מלא",
+    );
+    if (focusSideToggle) {
+      focusSideToggle.hidden = !enabled;
+      focusSideToggle.setAttribute("aria-expanded", "false");
+    }
+    try {
+      localStorage.setItem(FOCUS_MODE_KEY, enabled ? "1" : "0");
+    } catch (_) {}
+  }
+
+  try {
+    if (localStorage.getItem(FOCUS_MODE_KEY) === "1") setLearningFocusMode(true);
+  } catch (_) {}
+
+  focusModeToggle?.addEventListener("click", () => {
+    setLearningFocusMode(!document.body.classList.contains("learning-focus-mode"));
+  });
+
+  focusSideToggle?.addEventListener("click", () => {
+    const open = !document.body.classList.contains("focus-menu-open");
+    document.body.classList.toggle("focus-menu-open", open);
+    focusSideToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (document.body.classList.contains("focus-menu-open")) {
+      document.body.classList.remove("focus-menu-open");
+      focusSideToggle?.setAttribute("aria-expanded", "false");
+    }
+  });
 
   // =========== P1.2.4 — Theme Toggle (Light / Dark / Auto) ===========
   const THEME_KEY = "lumenportal:theme:v1";
@@ -6775,11 +7284,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (knowledgeMapView) knowledgeMapView.style.display = "none";
     if (studyModeView) studyModeView.style.display = "none";
     if (trainerView) trainerView.style.display = "none";
+    if (conceptSprintView) conceptSprintView.style.display = "none";
     if (guideView) guideView.style.display = "none";
     if (grandmaKnowledgeView) grandmaKnowledgeView.style.display = "none";
     if (programmingBasicsView) programmingBasicsView.style.display = "none";
     if (programmingPrinciplesView) programmingPrinciplesView.style.display = "none";
     if (programmingMuseumView) programmingMuseumView.style.display = "none";
+    if (languageToolsView) languageToolsView.style.display = "none";
+    if (rewardStoreView) rewardStoreView.style.display = "none";
     if (learningEvidenceView) learningEvidenceView.style.display = "none";
     if (capstonesView) capstonesView.style.display = "none";
     if (blueprintsView) blueprintsView.style.display = "none";
@@ -7719,11 +8231,112 @@ document.addEventListener("DOMContentLoaded", () => {
   try {
     confusionBlockerState = JSON.parse(localStorage.getItem(CONFUSION_BLOCKERS_KEY) || "{}");
   } catch (_) { confusionBlockerState = {}; }
+  const ANSWERED_QUESTIONS_KEY = "lumenportal:answeredQuestions:v1";
+  let answeredQuestionState = {};
+  try {
+    answeredQuestionState = JSON.parse(localStorage.getItem(ANSWERED_QUESTIONS_KEY) || "{}");
+  } catch (_) { answeredQuestionState = {}; }
   const pendingTeachBackPrompts = new Map();
   const pendingConfusionRecords = new Map();
 
   function saveScores() {
     try { localStorage.setItem(SCORE_STORAGE_KEY, JSON.stringify(scores)); } catch (_) {}
+  }
+
+  function stableQuestionHash(input) {
+    let hash = 2166136261;
+    String(input || "").split("").forEach((char) => {
+      hash ^= char.charCodeAt(0);
+      hash = Math.imul(hash, 16777619);
+    });
+    return (hash >>> 0).toString(36);
+  }
+
+  function saveAnsweredQuestionState() {
+    try { localStorage.setItem(ANSWERED_QUESTIONS_KEY, JSON.stringify(answeredQuestionState)); } catch (_) {}
+  }
+
+  function normalizedAnsweredQuestionState() {
+    if (!answeredQuestionState || typeof answeredQuestionState !== "object") answeredQuestionState = {};
+    if (answeredQuestionState.version !== 1) answeredQuestionState.version = 1;
+    if (!answeredQuestionState.byConcept || typeof answeredQuestionState.byConcept !== "object") {
+      answeredQuestionState.byConcept = {};
+    }
+    return answeredQuestionState;
+  }
+
+  function questionIdentity(question = {}, lessonId = "", conceptName = "", kind = "mc") {
+    const explicit = String(question.id || question.questionId || "").trim();
+    if (explicit) return explicit;
+    const seed = [
+      kind,
+      lessonId,
+      conceptName,
+      question.question || "",
+      question.codeBlock || question.code || "",
+      Array.isArray(question.options) ? question.options.join("|") : "",
+      question.answer || "",
+    ].join("||");
+    return `q-${stableQuestionHash(seed)}`;
+  }
+
+  function answeredConceptRecord(lessonId, conceptName) {
+    const state = normalizedAnsweredQuestionState();
+    const key = conceptKey(lessonId, conceptName);
+    if (!state.byConcept[key]) {
+      state.byConcept[key] = {
+        answered: {},
+        total: 0,
+        maxChallenge: 0,
+        lastQuestionId: "",
+      };
+    }
+    if (!state.byConcept[key].answered || typeof state.byConcept[key].answered !== "object") {
+      state.byConcept[key].answered = {};
+    }
+    return state.byConcept[key];
+  }
+
+  function questionWasAnswered(question, lessonId, conceptName, kind = "mc") {
+    const record = answeredConceptRecord(lessonId, conceptName);
+    const id = questionIdentity(question, lessonId, conceptName, kind);
+    return Boolean(record.answered[id]);
+  }
+
+  function conceptPartsFromKey(conceptKeyValue = "", fallbackLessonId = "", fallbackConceptName = "") {
+    const raw = String(conceptKeyValue || "");
+    if (!raw.includes("::")) {
+      return { lessonId: fallbackLessonId, conceptName: fallbackConceptName };
+    }
+    const parts = raw.split("::");
+    return {
+      lessonId: parts.shift() || fallbackLessonId,
+      conceptName: parts.join("::") || fallbackConceptName,
+    };
+  }
+
+  function maxAnsweredChallengeForConcept(lessonId, conceptName) {
+    const record = answeredConceptRecord(lessonId, conceptName);
+    return Math.max(0, Number(record.maxChallenge) || 0);
+  }
+
+  function recordAnsweredQuestion(lessonId, conceptName, question = {}, kind = "mc", correct = false, meta = {}) {
+    if (!lessonId || !conceptName || !question) return;
+    const record = answeredConceptRecord(lessonId, conceptName);
+    const id = questionIdentity(question, lessonId, conceptName, kind);
+    const challenge = questionChallengeLevelForProof(question, meta.concept || {}, kind);
+    if (!record.answered[id]) record.total = (record.total || 0) + 1;
+    record.answered[id] = {
+      id,
+      kind,
+      correct: Boolean(correct),
+      challenge,
+      mode: meta.mode || "question",
+      at: Date.now(),
+    };
+    record.lastQuestionId = id;
+    record.maxChallenge = Math.max(Number(record.maxChallenge) || 0, challenge);
+    saveAnsweredQuestionState();
   }
 
   // Migrate older v1 records (which used {score, attempts, correct})
@@ -7790,6 +8403,7 @@ document.addEventListener("DOMContentLoaded", () => {
         taggedCorrect: 0,
         markedKnown: false,
         masteryProof: null,
+        codeProof: null,
         masteryGatePending: false,
         weakReports: 0,
         correctRunCount: 0,
@@ -7821,7 +8435,7 @@ document.addEventListener("DOMContentLoaded", () => {
         conceptTags: tag.tags || [k],
         level: 1, passedMC: false, passedFill: false, attempts: 0, correct: 0,
         taggedAttempts: 0, taggedCorrect: 0,
-        markedKnown: false, masteryProof: null, masteryGatePending: false,
+        markedKnown: false, masteryProof: null, codeProof: null, masteryGatePending: false,
         weakReports: 0, correctRunCount: 0,
         srsState: defaultSrsState(),
       };
@@ -7833,6 +8447,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (scores[k].taggedCorrect === undefined) scores[k].taggedCorrect = 0;
       if (scores[k].markedKnown === undefined) scores[k].markedKnown = false;
       if (scores[k].masteryProof === undefined) scores[k].masteryProof = null;
+      if (scores[k].codeProof === undefined) scores[k].codeProof = null;
       if (scores[k].masteryGatePending === undefined) scores[k].masteryGatePending = false;
       if (scores[k].weakReports === undefined) scores[k].weakReports = 0;
       if (scores[k].correctRunCount === undefined) scores[k].correctRunCount = 0;
@@ -8305,6 +8920,10 @@ document.addEventListener("DOMContentLoaded", () => {
           <small>${esc(rewind.reason || "המושג הזה חלש מדי בשביל השאלה הנוכחית.")}</small>
         </div>`
       : "";
+    const recoveryLine = `<div class="mistake-agent-recovery-route">
+        <strong>השלב הבא:</strong>
+        <span>${rewind ? "שאלת התאוששות על דרישת הקדם לפני חזרה לאתגר." : "שאלת תיקון קצרה לפני שממשיכים קדימה."}</span>
+      </div>`;
     const confusionId = pendingConfusionId(record);
     pendingConfusionRecords.set(confusionId, record);
     const stillConfusedLine = `
@@ -8334,6 +8953,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${misconceptionLine}
         ${teachBackLine}
         ${rewindLine}
+        ${recoveryLine}
         ${stillConfusedLine}
         ${retestLine}
         ${associationLine}
@@ -8556,7 +9176,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function availableChallengeLevelsForConcept(lessonId, conceptName, concept) {
     const bank = bankByConcept(lessonId, conceptName);
     const levels = [];
-    [...(bank.mc || []), ...(bank.fill || [])].forEach((q) => {
+    [
+      ...(bank.mc || []),
+      ...(bank.fill || []),
+      ...(bank.trace || []),
+      ...(bank.bug || []),
+    ].forEach((q) => {
       const level = Number(q.challengeLevel ?? q.level ?? q.difficulty);
       if (Number.isFinite(level) && level > 0) {
         levels.push(Math.max(1, Math.min(6, Math.round(level))));
@@ -8586,18 +9211,67 @@ document.addEventListener("DOMContentLoaded", () => {
     const actualKind = meta.actualKind || kind || "mc";
     const threshold = masteryProofThresholdForConcept(lessonId, conceptName, concept);
     const level = questionChallengeLevelForProof(meta.question || {}, concept || {}, actualKind);
+    const codeProofRequired = conceptRequiresCodeProof(concept);
+    const codeProofSatisfied = !codeProofRequired || scoreHasCodeProof(meta.score) || answerCountsAsCodeProof(actualKind, meta);
     return {
-      passed: level >= threshold,
+      passed: level >= threshold && codeProofSatisfied,
       level,
       threshold,
       kind: actualKind,
       questionId: meta.question?.id || "",
       mode: meta.mode || "question",
+      codeProofRequired,
+      codeProofSatisfied,
+      blockedByCodeProof: level >= threshold && !codeProofSatisfied,
     };
   }
 
+  function answerCountsAsCodeProof(kind = "mc", meta = {}) {
+    const actualKind = meta.actualKind || kind || "";
+    return ["fill", "trace", "bug", "build", "codeblock"].includes(actualKind) ||
+      ["codeblock", "mini-build", "bug-hunt", "trace"].includes(meta.mode || "");
+  }
+
+  function conceptRequiresCodeProof(concept = {}) {
+    return Boolean(
+      concept &&
+      (
+        concept.codeExample ||
+        (Array.isArray(concept.miniBuilds) && concept.miniBuilds.length) ||
+        (Array.isArray(concept.bugHunts) && concept.bugHunts.length)
+      )
+    );
+  }
+
+  function scoreHasCodeProof(sc) {
+    return Boolean(
+      sc &&
+      (
+        sc.codeProof?.passed === true ||
+        ["fill", "trace", "bug", "build", "codeblock"].includes(sc.masteryProof?.kind || "")
+      )
+    );
+  }
+
+  function maybeRecordCodeProof(sc, lessonId, conceptName, concept, kind, meta = {}) {
+    if (!answerCountsAsCodeProof(kind, meta)) return null;
+    const actualKind = meta.actualKind || kind || "code";
+    const level = questionChallengeLevelForProof(meta.question || {}, concept || {}, actualKind);
+    sc.codeProof = {
+      passed: true,
+      kind: actualKind,
+      mode: meta.mode || "question",
+      level,
+      questionId: meta.question?.id || "",
+      conceptKey: conceptKey(lessonId, conceptName),
+      timestamp: Date.now(),
+    };
+    return sc.codeProof;
+  }
+
   function maybeRecordMasteryProof(sc, lessonId, conceptName, concept, kind, meta = {}) {
-    const info = masteryProofInfo(lessonId, conceptName, concept, kind, meta);
+    const codeProof = maybeRecordCodeProof(sc, lessonId, conceptName, concept, kind, meta);
+    const info = masteryProofInfo(lessonId, conceptName, concept, kind, { ...meta, score: sc });
     if (!info.passed) return info;
     sc.masteryProof = {
       passed: true,
@@ -8606,6 +9280,8 @@ document.addEventListener("DOMContentLoaded", () => {
       kind: info.kind,
       questionId: info.questionId,
       mode: info.mode,
+      codeProofRequired: info.codeProofRequired,
+      codeProofKind: codeProof?.kind || sc.codeProof?.kind || "",
       timestamp: Date.now(),
     };
     sc.masteryGatePending = false;
@@ -8614,18 +9290,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function markMasteryGatePending(sc, lessonId, conceptName, concept, kind, meta = {}) {
-    const info = masteryProofInfo(lessonId, conceptName, concept, kind, meta);
+    const info = masteryProofInfo(lessonId, conceptName, concept, kind, { ...meta, score: sc });
     sc.level = Math.min(6, Math.max(1, Number(sc.level) || 1));
     sc.passedMC = false;
     sc.passedFill = false;
     sc.masteryGatePending = true;
     sc.masteryGate = {
-      reason: "needs-highest-question",
+      reason: info.blockedByCodeProof ? "needs-code-proof" : "needs-highest-question",
       level: info.level,
       threshold: info.threshold,
       kind: info.kind,
       questionId: info.questionId,
-      message: "כדי לקבל 100 במושג צריך לפתור נכון שאלה ברמת האתגר הגבוהה ביותר שלו.",
+      codeProofRequired: info.codeProofRequired,
+      codeProofSatisfied: info.codeProofSatisfied,
+      message: info.blockedByCodeProof
+        ? "כדי לקבל 100 במושג עם קוד צריך לפתור נכון גם משימת קוד: Fill, Trace, Bug או Build."
+        : "כדי לקבל 100 במושג צריך לפתור נכון שאלה ברמת האתגר הגבוהה ביותר שלו.",
       timestamp: Date.now(),
     };
     return info;
@@ -8711,6 +9391,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const sc = ensureScore(lessonId, conceptName);
     const levelBefore = sc.level || 1;
     sc.attempts++;
+    recordAnsweredQuestion(lessonId, conceptName, meta.question || {}, meta.actualKind || kind, correct, {
+      mode: meta.mode || "question",
+      concept,
+    });
     let mistakeRecord = null;
     let tagSignals = { allKeys: [conceptKey(lessonId, conceptName)], relatedKeys: [] };
     if (correct) {
@@ -8860,11 +9544,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Pick a curated trace question for a concept, if any exist.
-  function pickTraceForConcept(conceptKey) {
+  function pickTraceForConcept(conceptKey, options = {}) {
     const pool = (window.QUESTIONS_BANK && window.QUESTIONS_BANK.trace) || [];
     const candidates = pool.filter((t) => t.conceptKey === conceptKey);
     if (!candidates.length) return null;
-    return candidates[window.RNG.int(candidates.length)];
+    const { lessonId, conceptName } = conceptPartsFromKey(conceptKey);
+    return pickUnansweredBankQuestion(candidates, lessonId, conceptName, "trace", {
+      allowExhaustedFallback: options.allowExhaustedFallback !== false,
+    });
   }
 
   // Concepts that have an explanation (junior or student)
@@ -9725,6 +10412,209 @@ document.addEventListener("DOMContentLoaded", () => {
     return { answer: chosen, blanked };
   }
 
+  function questionOneLineForFeedback(concept) {
+    return conciseConceptDefinition(concept) || bestExplanation(concept) || String(concept?.conceptName || "");
+  }
+
+  function questionNeedForFeedback(concept) {
+    return conciseConceptNeed(concept) || concept?.whyFullStack || concept?.codeExplanation || "";
+  }
+
+  function memoryAssociationForConcept(concept) {
+    const name = String(concept?.conceptName || "המושג").trim();
+    const oneLine = questionOneLineForFeedback(concept);
+    return `אסוציאציה: כשאתה רואה "${name}", שאל מיד: "${oneLine}"`;
+  }
+
+  function deepExplanationForQuestion(concept, correctCue = "") {
+    const oneLine = questionOneLineForFeedback(concept);
+    const need = questionNeedForFeedback(concept);
+    const mistake = concept?.commonMistake || "";
+    return [
+      `פתרון עומק: ${concept.conceptName} = ${oneLine}`,
+      need ? `למה זה חשוב: ${need}` : "",
+      correctCue ? `סימן הזיהוי בשאלה: ${correctCue}` : "",
+      mistake ? `טעות נפוצה: ${mistake}` : "",
+    ].filter(Boolean).join(" ");
+  }
+
+  function buildOptionFeedback(options, correctIndex, optionConcepts, correctConcept, correctCue) {
+    return options.map((option, index) => {
+      if (index === correctIndex) {
+        return `נכון: ${correctConcept.conceptName} מתאים כי ${correctCue || questionOneLineForFeedback(correctConcept)}`;
+      }
+      const other = optionConcepts[index];
+      if (other) {
+        return `לא: ${option} שייך ל-${other.conceptName}. ${other.conceptName} = ${questionOneLineForFeedback(other)}. כאן צריך ${correctConcept.conceptName}.`;
+      }
+      return `לא: "${option}" לא עונה על סימן הזיהוי של ${correctConcept.conceptName}.`;
+    });
+  }
+
+  function generatedQuestionId(lesson, concept, variant, challengeLevel) {
+    return `dyn:${stableQuestionHash(`${lesson.id}|${concept.conceptName}|${variant}|${challengeLevel}`)}`;
+  }
+
+  function generatedDistractorConcepts(pool, concept, count = 3) {
+    const seen = new Set([String(concept.conceptName || "").toLowerCase()]);
+    const out = [];
+    window.RNG.shuffle(pool).forEach((item) => {
+      const name = String(item.concept?.conceptName || "").trim();
+      const key = name.toLowerCase();
+      if (!name || seen.has(key) || out.length >= count) return;
+      seen.add(key);
+      out.push(item.concept);
+    });
+    return out;
+  }
+
+  function makeGeneratedMCQuestion({ lesson, concept, pool, levelKey, levelLabel, variant, challengeLevel }) {
+    const distractorConcepts = generatedDistractorConcepts(pool, concept, 3);
+    if (distractorConcepts.length < 3) return null;
+    const correctExpl = concept.levels?.[levelKey] || bestExplanation(concept);
+    const correctUse = concept.whyFullStack || conciseConceptNeed(concept) || correctExpl;
+    const correctMistake = concept.commonMistake || `בלבול בין ${concept.conceptName} לבין מושג דומה.`;
+    const correctCode = concept.codeExplanation || concept.codeExample || correctExpl;
+    let question = "";
+    let correctValue = concept.conceptName;
+    let values = [];
+    let optionConcepts = [];
+    let correctCue = correctExpl;
+
+    if (variant === "describe") {
+      question = `איזה משפט מתאר נכון את "${concept.conceptName}" ברמת ${LEVEL_INFO[Math.min(6, Math.max(1, challengeLevel))]?.icon || ""} ${levelLabel}?`;
+      correctValue = correctExpl;
+      values = [correctValue, ...distractorConcepts.map((item) => item.levels?.[levelKey] || bestExplanation(item))];
+      optionConcepts = [concept, ...distractorConcepts];
+      correctCue = correctExpl;
+    } else if (variant === "name-match") {
+      question = `איזה מושג מתאים להסבר הבא?\n\n"${correctExpl}"`;
+      values = [concept.conceptName, ...distractorConcepts.map((item) => item.conceptName)];
+      optionConcepts = [concept, ...distractorConcepts];
+      correctCue = correctExpl;
+    } else if (variant === "use-case") {
+      question = `באיזה מושג תשתמש כשזה הצורך?\n\n${correctUse}`;
+      values = [concept.conceptName, ...distractorConcepts.map((item) => item.conceptName)];
+      optionConcepts = [concept, ...distractorConcepts];
+      correctCue = correctUse;
+    } else if (variant === "mistake") {
+      question = `איזה מושג מזהים לפי הטעות הנפוצה הזו?\n\n${correctMistake}`;
+      values = [concept.conceptName, ...distractorConcepts.map((item) => item.conceptName)];
+      optionConcepts = [concept, ...distractorConcepts];
+      correctCue = correctMistake;
+    } else if (variant === "code-reason") {
+      question = `איזה מושג מסביר את ההתנהגות או קטע הקוד הבא?\n\n${compactOneLine(correctCode, 180)}`;
+      values = [concept.conceptName, ...distractorConcepts.map((item) => item.conceptName)];
+      optionConcepts = [concept, ...distractorConcepts];
+      correctCue = compactOneLine(correctCode, 180);
+    } else {
+      question = `מה המושג המדויק שצריך לבחור לפי סימן הזיהוי הבא?\n\n${questionOneLineForFeedback(concept)} ${correctUse ? ` ${correctUse}` : ""}`;
+      values = [concept.conceptName, ...distractorConcepts.map((item) => item.conceptName)];
+      optionConcepts = [concept, ...distractorConcepts];
+      correctCue = questionOneLineForFeedback(concept);
+    }
+
+    const zipped = values.map((value, index) => ({ value, concept: optionConcepts[index] || null }));
+    const shuffled = window.RNG.shuffle(zipped);
+    const options = shuffled.map((item) => item.value);
+    const shuffledConcepts = shuffled.map((item) => item.concept);
+    const correctIndex = options.indexOf(correctValue);
+    return {
+      id: generatedQuestionId(lesson, concept, variant, challengeLevel),
+      kind: "mc",
+      level: Math.min(6, Math.max(1, challengeLevel)),
+      challengeLevel: Math.min(6, Math.max(1, challengeLevel)),
+      variant,
+      conceptKey: conceptKey(lesson.id, concept.conceptName),
+      question,
+      options,
+      correctIndex,
+      optionFeedback: buildOptionFeedback(options, correctIndex, shuffledConcepts, concept, correctCue),
+      explanation: `${concept.conceptName}: ${questionOneLineForFeedback(concept)}`,
+      deepExplanation: deepExplanationForQuestion(concept, correctCue),
+      memoryAssociation: memoryAssociationForConcept(concept),
+    };
+  }
+
+  function generatedMCVariantsForConcept({ lesson, concept, sc, pool, levelKey, levelLabel }) {
+    const base = Math.max(1, Math.min(6, Number(sc.level) || 1));
+    return [
+      { variant: "describe", challengeLevel: base },
+      { variant: "name-match", challengeLevel: Math.min(6, base + 1) },
+      { variant: "use-case", challengeLevel: Math.min(6, base + 2) },
+      { variant: "mistake", challengeLevel: Math.min(6, base + 3) },
+      { variant: "code-reason", challengeLevel: Math.min(6, Math.max(4, base + 3)) },
+      { variant: "mastery", challengeLevel: 6 },
+    ]
+      .map((config) => makeGeneratedMCQuestion({ lesson, concept, pool, levelKey, levelLabel, ...config }))
+      .filter(Boolean)
+      .sort((a, b) => {
+        if (a.challengeLevel !== b.challengeLevel) return a.challengeLevel - b.challengeLevel;
+        return String(a.id).localeCompare(String(b.id));
+      });
+  }
+
+  function questionChallengeValue(question = {}) {
+    return Number(question.challengeLevel ?? question.level ?? question.difficulty ?? 1) || 1;
+  }
+
+  function questionStableSortKey(question = {}) {
+    return String(
+      question.id ||
+      question.questionId ||
+      question.question ||
+      question.title ||
+      question.codeBlock ||
+      question.code ||
+      "",
+    );
+  }
+
+  function sortQuestionsByChallenge(questions = [], direction = "asc") {
+    const dir = direction === "desc" ? -1 : 1;
+    return questions.slice().sort((a, b) => {
+      const challengeDiff = questionChallengeValue(a) - questionChallengeValue(b);
+      if (challengeDiff) return challengeDiff * dir;
+      return questionStableSortKey(a).localeCompare(questionStableSortKey(b));
+    });
+  }
+
+  function pickReusableQuestionFallback(questions = []) {
+    return sortQuestionsByChallenge(questions, "desc")[0] || null;
+  }
+
+  function pickUnansweredBankQuestion(questions = [], lessonId, conceptName, kind = "mc", options = {}) {
+    if (!questions.length) return null;
+    const allowExhaustedFallback = options.allowExhaustedFallback !== false;
+    const preferredLevel = options.preferredLevel;
+    const targetChallenge = Math.min(
+      6,
+      Math.max(1, Number(options.targetChallenge) || maxAnsweredChallengeForConcept(lessonId, conceptName) + 1),
+    );
+    const sorted = sortQuestionsByChallenge(questions);
+    const preferred = preferredLevel == null
+      ? []
+      : sorted.filter((question) => Number(question.level) === Number(preferredLevel));
+    const pickUnused = (list) =>
+      list.find((question) =>
+        !questionWasAnswered(question, lessonId, conceptName, kind) &&
+        questionChallengeValue(question) >= targetChallenge,
+      ) ||
+      list.find((question) => !questionWasAnswered(question, lessonId, conceptName, kind));
+
+    return pickUnused(preferred) ||
+      pickUnused(sorted) ||
+      (allowExhaustedFallback ? pickReusableQuestionFallback(sorted) : null);
+  }
+
+  function pickUnusedHarderQuestion(questions, lessonId, conceptName, kind = "mc") {
+    const sorted = sortQuestionsByChallenge(questions);
+    const unused = sorted.filter((question) => !questionWasAnswered(question, lessonId, conceptName, kind));
+    if (!unused.length) return null;
+    const target = Math.min(6, maxAnsweredChallengeForConcept(lessonId, conceptName) + 1);
+    return unused.find((question) => questionChallengeValue(question) >= target) || unused[unused.length - 1];
+  }
+
   // Question generation: returns either a multiple-choice (kind="mc") or code-fill (kind="fill")
   // question depending on the concept's CURRENT level and which stage it has not yet passed.
   // The MC's correct answer uses the explanation of the concept's current level.
@@ -9748,7 +10638,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Triggered when: need === "mc", level >= 3, and a curated trace exists for this concept.
     if (need === "mc" && sc.level >= 3 && window.RNG.next() < 0.45) {
       const conceptKey = `${lesson.id}::${concept.conceptName}`;
-      const trace = pickTraceForConcept(conceptKey);
+      const trace = pickTraceForConcept(conceptKey, { allowExhaustedFallback: false });
       if (trace) {
         return {
           kind: "trace",
@@ -9762,15 +10652,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (need === "fill") {
       const fill = makeCodeFill(concept);
       if (fill) {
-        return {
+        const fillQuestion = {
+          id: generatedQuestionId(lesson, concept, "fill", Math.max(4, Math.min(6, sc.level + 1))),
           kind: "fill",
           level: sc.level,
+          challengeLevel: Math.max(4, Math.min(6, sc.level + 1)),
+          conceptKey: conceptKey(lesson.id, concept.conceptName),
           question: `השלם את הטוקן החסר בקוד של המושג "${concept.conceptName}":`,
           codeBlock: fill.blanked,
           answer: fill.answer,
           hint: `אורך התשובה: ${fill.answer.length} תווים. אות ראשונה: "${fill.answer[0]}".`,
           explanation: `התשובה הנכונה: ${fill.answer}. ${concept.codeExplanation || ""}`.trim(),
+          deepExplanation: deepExplanationForQuestion(concept, `הטוקן החסר הוא ${fill.answer}`),
+          memoryAssociation: memoryAssociationForConcept(concept),
         };
+        if (!questionWasAnswered(fillQuestion, lesson.id, concept.conceptName, "fill")) return fillQuestion;
       }
       // If we couldn't generate a fill (no codeExample / weird code), fall through to MC.
     }
@@ -9781,54 +10677,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const correctExpl = conceptLevels[levelKey] || bestExplanation(concept);
     const levelLabel = LEVEL_INFO[sc.level].label;
 
-    // Distractors: explanations from OTHER concepts at the SAME level (so wording matches difficulty).
-    // Falls back to bestExplanation if some concepts lack that level.
-    function distractorAt(otherConcept) {
-      const lv = otherConcept.levels || {};
-      return lv[levelKey] || bestExplanation(otherConcept);
-    }
-
-    function pickDistractors(n, accessor) {
-      const arr = window.RNG.shuffle(pool);
-      const seen = new Set([accessor(concept)]);
-      const out = [];
-      for (const item of arr) {
-        const v = accessor(item.concept);
-        if (!v || seen.has(v)) continue;
-        seen.add(v);
-        out.push(v);
-        if (out.length >= n) break;
-      }
-      return out;
-    }
-
-    // Pick one of two MC sub-types: "describe" (concept → explanation) or "name-match" (explanation → concept)
-    const subType = window.RNG.next() < 0.5 ? "describe" : "name-match";
-
-    if (subType === "describe") {
-      const distractors = pickDistractors(3, distractorAt);
-      const opts = shuffle([correctExpl, ...distractors]);
-      return {
-        kind: "mc",
-        level: sc.level,
-        question: `איזה מהמשפטים הבאים מתאר נכון את "${concept.conceptName}" — ברמת ${LEVEL_INFO[sc.level].icon} ${levelLabel}?`,
-        options: opts,
-        correctIndex: opts.indexOf(correctExpl),
-        explanation: `הגדרה ברמת ${levelLabel}: ${correctExpl}`,
-      };
-    }
-
-    // name-match: show the level-specific explanation, ask for the concept name
-    const distractors = pickDistractors(3, (c) => c.conceptName);
-    const opts = shuffle([concept.conceptName, ...distractors]);
-    return {
-      kind: "mc",
-      level: sc.level,
-      question: `איזה מושג מתאים להסבר הבא (ברמת ${LEVEL_INFO[sc.level].icon} ${levelLabel})?\n\n"${correctExpl}"`,
-      options: opts,
-      correctIndex: opts.indexOf(concept.conceptName),
-      explanation: `המושג: ${concept.conceptName}.`,
-    };
+    const variants = generatedMCVariantsForConcept({ lesson, concept, sc, pool, levelKey, levelLabel });
+    const picked = pickUnusedHarderQuestion(variants, lesson.id, concept.conceptName, "mc");
+    if (picked) return picked;
+    return null;
   }
 
   function nextQuestion() {
@@ -9853,9 +10705,11 @@ document.addEventListener("DOMContentLoaded", () => {
       recordAdaptiveRetestOutcome(dueRetest, true);
     }
 
-    // Try up to 8 times to find a non-mastered concept (since mastered ones return null question)
+    // Try broadly to find a concept with an unused question. A concept can be valid
+    // but temporarily exhausted because the learner already answered all current variants.
     let picked = null, q = null;
-    for (let i = 0; i < 8; i++) {
+    const maxTries = Math.max(24, Math.min(120, trainableConcepts().length));
+    for (let i = 0; i < maxTries; i++) {
       picked = pickWeightedConcept();
       if (!picked) break;
       q = buildQuestion(picked);
@@ -9868,6 +10722,60 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     trainerCurrent = { lesson: picked.lesson, concept: picked.concept, question: q };
     renderTrainerCard();
+  }
+
+  function nextQuestionForConcept(lesson, concept) {
+    if (!lesson || !concept) return false;
+    const q = buildQuestion({ lesson, concept });
+    if (!q) return false;
+    trainerLastAnswered = false;
+    trainerConfidence = null;
+    trainerCurrent = { lesson, concept, question: q };
+    renderTrainerCard();
+    return true;
+  }
+
+  function continueAfterTrainerAnswer(lesson, concept, correct) {
+    if (correct && nextQuestionForConcept(lesson, concept)) return;
+    nextQuestion();
+  }
+
+  function recoveryRetestItemFromMistake(record) {
+    const rewind = record?.prerequisiteRewind || null;
+    if (!rewind || !rewind.conceptKey) return null;
+    return {
+      ...rewind,
+      stage: "prerequisite_rewind",
+      label: rewind.label || "חזרה לדרישת קדם",
+      purpose: "שאלת התאוששות קצרה לפני שחוזרים לאתגר המקורי.",
+      status: "pending",
+      dueAt: Date.now(),
+    };
+  }
+
+  function startWrongAnswerRecovery(record) {
+    const recovery = recoveryRetestItemFromMistake(record);
+    if (recovery) {
+      const ref = findConceptByKeyLoose(recovery.conceptKey);
+      if (ref) {
+        const q = buildQuestion({ lesson: ref.lesson, concept: ref.concept });
+        if (q) {
+          trainerLastAnswered = false;
+          trainerConfidence = null;
+          trainerCurrent = {
+            lesson: ref.lesson,
+            concept: ref.concept,
+            question: q,
+            retestItem: recovery,
+            recoveryFor: record.conceptKey || "",
+          };
+          renderTrainerCard();
+          return true;
+        }
+      }
+    }
+    nextQuestion();
+    return false;
   }
 
   function masteredCount() {
@@ -10317,20 +11225,94 @@ document.addEventListener("DOMContentLoaded", () => {
       const verdict = correct ? "✅ עברת את ה-Code Trace בלי טעויות!" : "📝 השלמת את ה-Trace, אך עם טעויות בדרך.";
       fbSlot.innerHTML = `<div class="tq-feedback ${correct ? "ok" : "warn"}">
         <strong>${verdict}</strong>
+        ${renderPerAnswerExplanationBundle(trainerCurrent.question?.trace || {}, { kind: "trace", concept })}
         ${result.advanced ? `<div>⬆️ קודמת לרמה ${result.newLevel}!</div>` : ""}
         ${!correct ? renderMistakeAgentFeedback(result.mistake) : ""}
       </div>`;
     }
     const actions = document.getElementById("tq-actions");
     if (actions) actions.style.display = "flex";
+    const nextBtn = document.getElementById("tq-next");
+    if (nextBtn && !correct) nextBtn.textContent = "🔁 שאלת תיקון קצרה";
     document.getElementById("tq-next")?.addEventListener("click", () => {
       traceState = null;
-      nextQuestion();
+      if (!correct) {
+        startWrongAnswerRecovery(result.mistake || null);
+        return;
+      }
+      continueAfterTrainerAnswer(trainerCurrent.lesson, concept, correct);
     });
     document.getElementById("tq-open-lesson")?.addEventListener("click", () => {
       openLesson(trainerCurrent.lesson.id);
     });
     updateTrainerHeader();
+  }
+
+  function renderPerAnswerExplanationBundle(question = {}, {
+    kind = "mc",
+    selectedIdx = null,
+    concept = null,
+  } = {}) {
+    const isMC = kind === "mc" && Array.isArray(question.options);
+    const correctIndex = Number.isInteger(question.correctIndex)
+      ? question.correctIndex
+      : Number.isInteger(question.correct)
+        ? question.correct
+        : null;
+    const correctAnswer = kind === "fill"
+      ? String(question.answer || "")
+      : isMC && correctIndex != null
+        ? String(question.options[correctIndex] || "")
+        : "";
+    const explanation = question.explanation || "";
+    const deepExplanation =
+      question.deepExplanation ||
+      (concept ? deepExplanationForQuestion(concept, correctAnswer || explanation) : "");
+    const memoryAssociation =
+      question.memoryAssociation ||
+      (concept ? memoryAssociationForConcept(concept) : "");
+    const rationales = isMC
+      ? question.options.map((option, index) => {
+          const supplied = Array.isArray(question.optionFeedback) ? question.optionFeedback[index] : "";
+          if (supplied) return supplied;
+          if (index === correctIndex) return "זו התשובה הנכונה לפי מאגר השאלה.";
+          if (explanation) return `לא זו התשובה: ההסבר של השאלה מכוון ל-${correctAnswer || "התשובה המסומנת כנכונה"}.`;
+          return "לא זו התשובה שסומנה כנכונה במאגר השאלה.";
+        })
+      : [];
+
+    const correctLine = correctAnswer
+      ? `<div class="answer-explanation-line"><strong>התשובה:</strong> ${esc(correctAnswer)}</div>`
+      : "";
+    const explanationLine = explanation
+      ? `<div class="answer-explanation-line"><strong>למה:</strong> ${esc(explanation)}</div>`
+      : "";
+    const deepLine = deepExplanation
+      ? `<div class="answer-explanation-line"><strong>עומק:</strong> ${esc(deepExplanation)}</div>`
+      : "";
+    const memoryLine = memoryAssociation
+      ? `<div class="answer-explanation-line memory"><strong>אסוציאציה:</strong> ${esc(memoryAssociation)}</div>`
+      : "";
+    const optionLines = rationales.length
+      ? `<div class="answer-option-rationales">
+          <strong>למה כל אפשרות כן/לא:</strong>
+          ${rationales.map((feedback, index) => `
+            <div class="${index === correctIndex ? "right" : (index === selectedIdx ? "picked-wrong" : "")}">
+              <span>${index === correctIndex ? "✅" : "✗"} ${esc(question.options[index] || `אפשרות ${index + 1}`)}</span>
+              <small>${esc(feedback)}</small>
+            </div>`).join("")}
+        </div>`
+      : "";
+
+    if (!correctLine && !explanationLine && !deepLine && !memoryLine && !optionLines) return "";
+    return `
+      <div class="answer-explanation-bundle">
+        ${correctLine}
+        ${explanationLine}
+        ${deepLine}
+        ${optionLines}
+        ${memoryLine}
+      </div>`;
   }
 
   // Build a unified post-answer feedback message based on the level/advance result
@@ -10372,6 +11354,8 @@ document.addEventListener("DOMContentLoaded", () => {
         : "";
 
     // If we have specific distractor feedback, show it FIRST (more actionable than generic explanation)
+    const answerBundle = renderPerAnswerExplanationBundle(question, { kind, selectedIdx, concept });
+
     const explanationBlock = distractorFeedback
       ? `<div class="tq-distractor-feedback">${esc(distractorFeedback)}</div>
          <div class="tq-explanation-secondary">📚 הסבר כללי: ${esc(question.explanation || "")}</div>`
@@ -10383,6 +11367,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="tq-feedback ${correct ? "correct" : "wrong"}">
         <div class="verdict">${verdict}${wrongAns}<span class="delta">${correct ? "+1" : "0"}</span></div>
         ${explanationBlock}
+        ${answerBundle}
         <div style="margin-top:0.5rem; font-size:0.92rem; color: var(--text-main);">
           ${progressLine}
         </div>
@@ -10391,9 +11376,21 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>`;
   }
 
-  function attachPostAnswerActions(lesson, concept) {
+  function attachPostAnswerActions(lesson, concept, { correct = false, result = null } = {}) {
     document.getElementById("tq-actions").style.display = "flex";
-    document.getElementById("tq-next")?.addEventListener("click", nextQuestion);
+    const nextBtn = document.getElementById("tq-next");
+    if (nextBtn && !correct) {
+      nextBtn.textContent = result?.mistake?.prerequisiteRewind
+        ? "↩️ שאלת התאוששות בדרישת קדם"
+        : "🔁 שאלת תיקון קצרה";
+    }
+    document.getElementById("tq-next")?.addEventListener("click", () => {
+      if (!correct) {
+        startWrongAnswerRecovery(result?.mistake || null);
+        return;
+      }
+      continueAfterTrainerAnswer(lesson, concept, correct);
+    });
     document.getElementById("tq-open-lesson")?.addEventListener("click", () => {
       openLesson(lesson.id);
       setTimeout(() => {
@@ -10442,7 +11439,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("tq-feedback-slot").innerHTML = buildAnswerFeedback(
       correct, "fill", levelBefore, result, concept, question,
     );
-    attachPostAnswerActions(lesson, concept);
+    attachPostAnswerActions(lesson, concept, { correct, result });
 
     updateTrainerDashboard();
     if (document.getElementById("trainer-report").style.display !== "none") {
@@ -10480,7 +11477,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("tq-feedback-slot").innerHTML = buildAnswerFeedback(
       correct, "mc", levelBefore, result, concept, question, selectedIdx,
     );
-    attachPostAnswerActions(lesson, concept);
+    attachPostAnswerActions(lesson, concept, { correct, result });
 
     updateTrainerDashboard();
     if (document.getElementById("trainer-report").style.display !== "none") {
@@ -10664,6 +11661,649 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollToTop();
     sidebar.classList.remove("open");
   }
+
+  // =========== CONCEPT SPRINT — pure concept checks ===========
+  const CONCEPT_SPRINT_MODES = {
+    quick: {
+      id: "quick",
+      title: "מסלול מהיר ומסוכן",
+      icon: "⚡",
+      count: 5,
+      passPct: 80,
+      bonus: 90,
+      penalty: 45,
+      mix: "mc",
+      description: "5 מושגים חלשים. עובר רק עם 80%+. כישלון גורר קנס XP.",
+    },
+    medium: {
+      id: "medium",
+      title: "קצב בינוני",
+      icon: "🎯",
+      count: 12,
+      passPct: 70,
+      bonus: 85,
+      penalty: 18,
+      mix: "mixed",
+      description: "יותר שאלות ופחות תנודתיות. מתאים לבדיקה מהירה לפני מאמן הידע.",
+    },
+    long: {
+      id: "long",
+      title: "אבחון ארוך",
+      icon: "🧭",
+      count: 30,
+      passPct: 0,
+      bonus: 55,
+      penalty: 0,
+      mix: "diagnostic",
+      description: "אבחון התחלתי רחב על מושגים נטו. בלי קנס, עם תמונת רמה ראשונית.",
+    },
+  };
+  const CONCEPT_SPRINT_COMPARISONS = [
+    {
+      title: "הבדלי HTTP methods",
+      terms: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+      rows: [
+        { term: "GET", what: "מביא מידע", when: "קריאה בלי שינוי נתונים." },
+        { term: "POST", what: "יוצר או שולח מידע", when: "טופס, הרשמה, יצירת רשומה." },
+        { term: "PUT", what: "מחליף משאב שלם", when: "עדכון מלא לפי id." },
+        { term: "PATCH", what: "מעדכן חלק ממשאב", when: "שינוי שדה אחד או כמה שדות." },
+        { term: "DELETE", what: "מוחק משאב", when: "מחיקה לפי id." },
+      ],
+    },
+    {
+      title: "הבדלי הצהרת משתנים",
+      terms: ["var", "let", "const"],
+      rows: [
+        { term: "var", what: "משתנה ישן ברמת פונקציה", when: "כמעט לא מומלץ בקוד חדש." },
+        { term: "let", what: "משתנה שאפשר להקצות מחדש", when: "כשערך באמת משתנה." },
+        { term: "const", what: "שם שלא מקצים מחדש", when: "ברירת המחדל לרוב הערכים." },
+      ],
+    },
+    {
+      title: "הבדלי מתודות מערך",
+      terms: ["forEach", "map", "filter", "find", "reduce"],
+      rows: [
+        { term: "forEach", what: "מריץ פעולה לכל פריט", when: "side effect, בלי מערך חדש." },
+        { term: "map", what: "מחזיר מערך חדש באותו אורך", when: "המרת כל פריט." },
+        { term: "filter", what: "מחזיר רק פריטים שעברו תנאי", when: "סינון רשימה." },
+        { term: "find", what: "מחזיר פריט ראשון שמתאים", when: "חיפוש יחיד." },
+        { term: "reduce", what: "מצמצם רשימה לערך אחד", when: "סכום, group, map מותאם." },
+      ],
+    },
+    {
+      title: "Array מול Object",
+      terms: ["Array", "object"],
+      rows: [
+        { term: "Array", what: "רשימה מסודרת לפי index", when: "כמה פריטים מאותו סוג." },
+        { term: "object", what: "אוסף key/value", when: "ישות עם שדות: user.name." },
+      ],
+    },
+    {
+      title: "props מול state",
+      terms: ["props", "state"],
+      rows: [
+        { term: "props", what: "קלט שהורה מעביר לילד", when: "נתונים מבחוץ." },
+        { term: "state", what: "מידע פנימי שמשנה UI", when: "נתון שמשתנה במסך." },
+      ],
+    },
+    {
+      title: "React hooks נפוצים",
+      terms: ["useState", "useEffect", "useMemo", "useRef"],
+      rows: [
+        { term: "useState", what: "state שגורם ל-render", when: "נתון שמופיע במסך." },
+        { term: "useEffect", what: "סנכרון עם העולם החיצוני", when: "fetch, timer, subscription." },
+        { term: "useMemo", what: "זוכר תוצאת חישוב", when: "חישוב יקר או reference יציב." },
+        { term: "useRef", what: "ערך יציב שלא מרנדר", when: "DOM ref או משתנה פנימי." },
+      ],
+    },
+    {
+      title: "Auth: cookie, session, token",
+      terms: ["cookie", "session", "token", "JWT"],
+      rows: [
+        { term: "cookie", what: "מידע קטן שהדפדפן שולח לשרת", when: "שמירת session/auth." },
+        { term: "session", what: "מצב התחברות בין בקשות", when: "שרת זוכר מי המשתמש." },
+        { term: "token", what: "מחרוזת שמייצגת הרשאה", when: "API/auth ללא session שרת." },
+        { term: "JWT", what: "token חתום עם claims", when: "זהות/הרשאה ניידת ומוגבלת בזמן." },
+      ],
+    },
+    {
+      title: "SQL, ORM, migration",
+      terms: ["SQL", "ORM", "Prisma", "Drizzle", "migration"],
+      rows: [
+        { term: "SQL", what: "שפת עבודה מול DB רלציוני", when: "SELECT, JOIN, INSERT." },
+        { term: "ORM", what: "שכבה שממפה DB לקוד", when: "CRUD נוח ובטוח יותר." },
+        { term: "Prisma", what: "ORM עם schema ו-client", when: "פרויקטים שרוצים tooling חזק." },
+        { term: "Drizzle", what: "ORM קל וקרוב ל-SQL", when: "שליטה גבוהה ב-query." },
+        { term: "migration", what: "שינוי schema מתועד", when: "הוספת טבלה/עמודה בסביבה אמיתית." },
+      ],
+    },
+    {
+      title: "Next rendering modes",
+      terms: ["SSR", "SSG", "ISR"],
+      rows: [
+        { term: "SSR", what: "HTML נבנה בכל בקשה", when: "מידע אישי או משתנה." },
+        { term: "SSG", what: "HTML נבנה בזמן build", when: "דפים יציבים ומהירים." },
+        { term: "ISR", what: "SSG שמתעדכן מדי פעם", when: "תוכן ציבורי שמתחדש." },
+      ],
+    },
+  ];
+  let conceptSprintState = {
+    mode: null,
+    queue: [],
+    index: 0,
+    currentQuestion: null,
+    answered: false,
+    results: [],
+  };
+
+  function sprintContainer() {
+    return document.getElementById("concept-sprint-content");
+  }
+
+  function sprintConceptDifficulty(lesson, concept) {
+    const sc = getScore(lesson.id, concept.conceptName);
+    const difficulty = getDifficulty(concept);
+    const weak = sc.weakReports || 0;
+    return (8 - (sc.level || 1)) * 10 + difficulty * 2 + weak * 9 + (sc.attempts ? 0 : 7);
+  }
+
+  function sortedSprintConcepts() {
+    return trainableConcepts()
+      .map((item) => ({
+        ...item,
+        score: getScore(item.lesson.id, item.concept.conceptName),
+        priority: sprintConceptDifficulty(item.lesson, item.concept),
+      }))
+      .sort((a, b) => {
+        if (b.priority !== a.priority) return b.priority - a.priority;
+        const lessonCmp = String(a.lesson.title || "").localeCompare(String(b.lesson.title || ""), "he");
+        if (lessonCmp !== 0) return lessonCmp;
+        return String(a.concept.conceptName || "").localeCompare(String(b.concept.conceptName || ""), "he");
+      });
+  }
+
+  function conceptLevelEstimate(sc) {
+    const level = Math.max(1, Math.min(7, Number(sc?.level || 1)));
+    const info = LEVEL_INFO[level] || LEVEL_INFO[1];
+    return `רמה ${level}/7 · ${info.icon} ${info.label}`;
+  }
+
+  function compactOneLine(value, maxLen = 125) {
+    const text = String(value || "").replace(/\s+/g, " ").trim();
+    if (!text) return "";
+    const sentence = text.split(/(?<=[.!?])\s+/)[0] || text;
+    if (sentence.length <= maxLen) return sentence;
+    const cut = sentence.slice(0, maxLen);
+    const lastSpace = cut.lastIndexOf(" ");
+    return `${cut.slice(0, lastSpace > 70 ? lastSpace : maxLen).trim()}...`;
+  }
+
+  function conceptSprintOneLine(concept) {
+    const direct =
+      conciseConceptDefinition(concept) ||
+      concept?.simpleExplanation ||
+      concept?.levels?.grandma ||
+      bestExplanation(concept);
+    return compactOneLine(direct);
+  }
+
+  function normalizedSprintTerm(value) {
+    return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+  }
+
+  function conceptSprintComparisonFor(conceptOrName) {
+    const name = typeof conceptOrName === "string" ? conceptOrName : conceptOrName?.conceptName;
+    const key = normalizedSprintTerm(name);
+    if (!key) return null;
+    return CONCEPT_SPRINT_COMPARISONS.find((group) =>
+      group.terms.some((term) => normalizedSprintTerm(term) === key),
+    ) || null;
+  }
+
+  function renderConceptSprintComparison(conceptOrName, { open = false } = {}) {
+    const group = conceptSprintComparisonFor(conceptOrName);
+    if (!group) return "";
+    return `
+      <details class="cs-compare" ${open ? "open" : ""}>
+        <summary>${esc(group.title)}</summary>
+        <table>
+          <thead><tr><th>מושג</th><th>מה זה</th><th>מתי משתמשים</th></tr></thead>
+          <tbody>
+            ${group.rows.map((row) => `
+              <tr class="${normalizedSprintTerm(row.term) === normalizedSprintTerm(typeof conceptOrName === "string" ? conceptOrName : conceptOrName?.conceptName) ? "active" : ""}">
+                <td>${esc(row.term)}</td>
+                <td>${esc(row.what)}</td>
+                <td>${esc(row.when)}</td>
+              </tr>`).join("")}
+          </tbody>
+        </table>
+      </details>`;
+  }
+
+  function conceptSprintItemsForComparison(group) {
+    const concepts = sortedSprintConcepts();
+    return (group?.terms || [])
+      .map((term) => {
+        const target = normalizedSprintTerm(term);
+        return concepts.find((item) => normalizedSprintTerm(item.concept.conceptName) === target) || null;
+      })
+      .filter(Boolean);
+  }
+
+  function renderConceptSprintComparisonLibrary() {
+    return `
+      <section class="cs-compare-library" aria-label="השוואות חובה במושגים נטו">
+        <div class="cs-compare-library-head">
+          <div>
+            <h3>השוואות חובה</h3>
+            <p>כשכמה מושגים דומים, לומדים אותם בטבלה אחת ואז נבחנים על ההבדלים.</p>
+          </div>
+          <span>${CONCEPT_SPRINT_COMPARISONS.length} קבוצות</span>
+        </div>
+        <div class="cs-compare-library-grid">
+          ${CONCEPT_SPRINT_COMPARISONS.map((group, groupIndex) => {
+            const available = conceptSprintItemsForComparison(group);
+            return `
+              <article class="cs-compare-card">
+                ${renderConceptSprintComparison(group.terms[0], { open: groupIndex < 2 })}
+                <button data-sprint-compare="${groupIndex}" ${available.length ? "" : "disabled"}>
+                  בחן אותי על ההבדלים · ${available.length}/${group.terms.length}
+                </button>
+              </article>`;
+          }).join("")}
+        </div>
+      </section>`;
+  }
+
+  function buildSprintQuestion(item, mode, index) {
+    const { lesson, concept } = item;
+    const sc = getScore(lesson.id, concept.conceptName);
+    const shouldUseFill =
+      mode.mix !== "mc" &&
+      concept.codeExample &&
+      ((mode.id === "medium" && index % 4 === 3) || (mode.id === "long" && index % 3 === 2));
+    if (shouldUseFill) {
+      const fill = makeCodeFill(concept);
+      if (fill) {
+        const fillQuestion = {
+          id: generatedQuestionId(lesson, concept, "sprint-fill", Math.max(4, Math.min(6, sc.level + 1))),
+          kind: "fill",
+          level: sc.level,
+          challengeLevel: Math.max(4, Math.min(6, sc.level + 1)),
+          conceptKey: conceptKey(lesson.id, concept.conceptName),
+          lesson,
+          concept,
+          question: `השלם את הטוקן החסר שמוכיח שאתה מזהה את "${concept.conceptName}".`,
+          codeBlock: fill.blanked,
+          answer: fill.answer,
+          explanation: `התשובה: ${fill.answer}. ${concept.codeExplanation || bestExplanation(concept)}`.trim(),
+          deepExplanation: deepExplanationForQuestion(concept, `הטוקן החסר הוא ${fill.answer}`),
+          memoryAssociation: memoryAssociationForConcept(concept),
+        };
+        if (!questionWasAnswered(fillQuestion, lesson.id, concept.conceptName, "fill")) return fillQuestion;
+      }
+    }
+
+    const levelKey = LEVEL_KEYS[sc.level] || "junior";
+    const levelLabel = LEVEL_INFO[sc.level]?.label || "תרגול";
+    const pool = sortedSprintConcepts()
+      .filter((candidate) => candidate.concept.conceptName !== concept.conceptName);
+    const variants = generatedMCVariantsForConcept({ lesson, concept, sc, pool, levelKey, levelLabel });
+    const picked = pickUnusedHarderQuestion(variants, lesson.id, concept.conceptName, "mc");
+    return picked ? { ...picked, lesson, concept } : null;
+  }
+
+  function sprintQueueForMode(modeId, forcedConcept = null) {
+    const mode = CONCEPT_SPRINT_MODES[modeId] || CONCEPT_SPRINT_MODES.quick;
+    if (forcedConcept) return [forcedConcept];
+    return sortedSprintConcepts().slice(0, mode.count);
+  }
+
+  function renderConceptSprintHome() {
+    const root = sprintContainer();
+    if (!root) return;
+    const xpEl = document.getElementById("concept-sprint-xp");
+    if (xpEl) xpEl.textContent = `XP ${getXP()} · 🪙 ${getCoins()}`;
+    const concepts = sortedSprintConcepts().slice(0, 90);
+    root.innerHTML = `
+      <div class="concept-sprint-modes">
+        ${Object.values(CONCEPT_SPRINT_MODES).map((mode) => `
+          <button class="concept-sprint-mode ${mode.penalty ? "risky" : "safe"}" data-sprint-mode="${mode.id}">
+            <span class="cs-mode-icon">${mode.icon}</span>
+            <strong>${esc(mode.title)}</strong>
+            <span>${esc(mode.description)}</span>
+            <small>${mode.count} שאלות · פרס ${mode.bonus} XP${mode.penalty ? ` · קנס ${mode.penalty} XP` : " · ללא קנס"}</small>
+          </button>`).join("")}
+      </div>
+      <div class="concept-sprint-warning">
+        <strong>אזהרה:</strong> במסלול המהיר והבינוני תשובה שגויה מעדכנת חולשה במאמן הידע. כישלון במסלול גורר קנס XP.
+      </div>
+      ${renderConceptSprintComparisonLibrary()}
+      <div class="concept-sprint-list-head">
+        <h3>מושגים נטו</h3>
+        <span>${concepts.length} מוצגים לפי חולשה ועדיפות לתרגול</span>
+      </div>
+      <div class="concept-sprint-grid">
+        ${concepts.map((item) => {
+          const sc = item.score;
+          const topic = getTopicForLesson(item.lesson.id);
+          const pct = Math.round((((sc.level || 1) - 1) / 6) * 100);
+          const oneLine = conceptSprintOneLine(item.concept);
+          return `
+            <article class="concept-sprint-chip">
+              <div class="cs-chip-top">
+                <strong>${esc(item.concept.conceptName)}</strong>
+                <span>${pct}%</span>
+              </div>
+              <div class="cs-chip-meta">${esc(item.lesson.title)} · ${esc(topic.topic)}</div>
+              ${oneLine ? `<p class="cs-chip-definition"><strong>מה זה:</strong> ${esc(oneLine)}</p>` : ""}
+              ${renderConceptSprintComparison(item.concept)}
+              <div class="cs-chip-level">${esc(conceptLevelEstimate(sc))}</div>
+              <button data-sprint-concept="${esc(conceptKey(item.lesson.id, item.concept.conceptName))}">בחן אותי על המושג</button>
+            </article>`;
+        }).join("")}
+      </div>`;
+
+    root.querySelectorAll("[data-sprint-mode]").forEach((btn) => {
+      btn.addEventListener("click", () => startConceptSprint(btn.dataset.sprintMode));
+    });
+    root.querySelectorAll("[data-sprint-concept]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const ref = findConceptByKeyLoose(btn.dataset.sprintConcept);
+        if (ref) startConceptSprint("quick", { lesson: ref.lesson, concept: ref.concept });
+      });
+    });
+    root.querySelectorAll("[data-sprint-compare]").forEach((btn) => {
+      btn.addEventListener("click", () => startConceptSprintComparison(parseInt(btn.dataset.sprintCompare || "-1", 10)));
+    });
+    setConceptSprintContextTree();
+  }
+
+  function setConceptSprintRun(mode, queue) {
+    conceptSprintState = {
+      mode,
+      queue,
+      index: 0,
+      currentQuestion: null,
+      answered: false,
+      results: [],
+    };
+    renderConceptSprintQuestion();
+  }
+
+  function startConceptSprint(modeId, forcedConcept = null) {
+    const mode = CONCEPT_SPRINT_MODES[modeId] || CONCEPT_SPRINT_MODES.quick;
+    const queue = sprintQueueForMode(mode.id, forcedConcept);
+    setConceptSprintRun(mode, queue);
+  }
+
+  function startConceptSprintComparison(groupIndex) {
+    const group = CONCEPT_SPRINT_COMPARISONS[groupIndex];
+    const queue = conceptSprintItemsForComparison(group);
+    if (!group || !queue.length) return;
+    setConceptSprintRun({
+      ...CONCEPT_SPRINT_MODES.medium,
+      id: `compare-${groupIndex}`,
+      title: group.title,
+      icon: "⚖️",
+      count: queue.length,
+      passPct: 80,
+      bonus: 70 + queue.length * 8,
+      penalty: 20,
+      mix: "mc",
+      sourceComparisonIndex: groupIndex,
+      description: "אבחון ממוקד על מושגים דומים שמבלבלים תלמידים.",
+    }, queue);
+  }
+
+  function renderConceptSprintQuestion() {
+    const root = sprintContainer();
+    if (!root) return;
+    const { mode, queue, index, results } = conceptSprintState;
+    if (!mode || index >= queue.length) {
+      renderConceptSprintResult();
+      return;
+    }
+    const item = queue[index];
+    const beforeScore = getScore(item.lesson.id, item.concept.conceptName);
+    const question = buildSprintQuestion(item, mode, index);
+    if (!question) {
+      conceptSprintState.results.push({
+        lessonId: item.lesson.id,
+        lessonTitle: item.lesson.title,
+        conceptName: item.concept.conceptName,
+        correct: true,
+        skipped: true,
+        beforeLevel: beforeScore.level,
+        afterLevel: beforeScore.level,
+        explanation: "דולג: אין שאלה חדשה שלא נענתה למושג הזה.",
+      });
+      conceptSprintState.index += 1;
+      renderConceptSprintQuestion();
+      return;
+    }
+    conceptSprintState.currentQuestion = question;
+    conceptSprintState.answered = false;
+    const progressPct = Math.round((index / queue.length) * 100);
+    const codeHtml = question.codeBlock
+      ? `<pre class="cs-code"><code>${esc(question.codeBlock).replace(/____/g, '<span class="tq-code-blank">____</span>')}</code></pre>`
+      : "";
+    const answerHtml = question.kind === "fill"
+      ? `
+        <input class="cs-fill-input" id="cs-fill-input" dir="ltr" autocomplete="off" spellcheck="false" placeholder="הקלד תשובה..." />
+        <button class="cs-submit" id="cs-fill-submit">בדוק</button>`
+      : `
+        <div class="cs-options">
+          ${question.options.map((option, optionIndex) => `
+            <button class="cs-option" data-cs-answer="${optionIndex}">${esc(option)}</button>`).join("")}
+        </div>`;
+
+    root.innerHTML = `
+      <div class="concept-sprint-live">
+        <div class="cs-live-head">
+          <div>
+            <span class="cs-mode-pill">${mode.icon} ${esc(mode.title)}</span>
+            <h3>${esc(item.concept.conceptName)}</h3>
+            <p>${esc(item.lesson.title)} · לפני: ${esc(conceptLevelEstimate(beforeScore))}</p>
+          </div>
+          <div class="cs-live-score">${results.filter((r) => r.correct).length}/${results.length}</div>
+        </div>
+        <div class="cs-progress"><span style="width:${progressPct}%"></span></div>
+        <div class="cs-one-line"><strong>מה זה:</strong> ${esc(conceptSprintOneLine(item.concept) || "אין עדיין הגדרה קצרה למושג הזה.")}</div>
+        ${renderConceptSprintComparison(item.concept, { open: true })}
+        <div class="cs-question">${esc(question.question).replace(/\n/g, "<br>")}</div>
+        ${codeHtml}
+        ${answerHtml}
+        <div id="cs-feedback"></div>
+      </div>`;
+
+    if (question.kind === "fill") {
+      const input = document.getElementById("cs-fill-input");
+      input?.focus();
+      input?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") submitConceptSprintAnswer(input.value);
+      });
+      document.getElementById("cs-fill-submit")?.addEventListener("click", () => submitConceptSprintAnswer(input?.value || ""));
+    } else {
+      root.querySelectorAll("[data-cs-answer]").forEach((btn) => {
+        btn.addEventListener("click", () => submitConceptSprintAnswer(parseInt(btn.dataset.csAnswer || "-1", 10)));
+      });
+    }
+  }
+
+  function submitConceptSprintAnswer(answer) {
+    if (conceptSprintState.answered) return;
+    const q = conceptSprintState.currentQuestion;
+    if (!q) return;
+    const beforeLevel = getScore(q.lesson.id, q.concept.conceptName).level;
+    const correct = q.kind === "fill"
+      ? String(answer || "").trim().toLowerCase() === String(q.answer || "").trim().toLowerCase()
+      : Number(answer) === q.correctIndex;
+    const result = applyAnswer(q.lesson.id, q.concept.conceptName, q.concept, q.kind === "fill" ? "fill" : "mc", correct, {
+      question: q,
+      selectedIdx: q.kind === "mc" ? Number(answer) : null,
+      answer: q.kind === "fill" ? String(answer || "").trim() : "",
+      mode: "concept-sprint",
+      confidence: correct ? 4 : 2,
+    });
+    const afterScore = getScore(q.lesson.id, q.concept.conceptName);
+    conceptSprintState.results.push({
+      lessonId: q.lesson.id,
+      lessonTitle: q.lesson.title,
+      conceptName: q.concept.conceptName,
+      correct,
+      beforeLevel,
+      afterLevel: afterScore.level,
+      explanation: q.explanation,
+    });
+    conceptSprintState.answered = true;
+    const fb = document.getElementById("cs-feedback");
+    if (fb) {
+      fb.innerHTML = `
+      <div class="cs-feedback ${correct ? "correct" : "wrong"}">
+          <strong>${correct ? "נכון" : "לא נכון"}</strong>
+          ${renderPerAnswerExplanationBundle(q, {
+            kind: q.kind === "fill" ? "fill" : "mc",
+            selectedIdx: q.kind === "mc" ? Number(answer) : null,
+            concept: q.concept,
+          })}
+          <small>רמה לפני: ${beforeLevel}/7 · עכשיו: ${afterScore.level}/7${result.advanced ? " · עלית רמה" : ""}</small>
+          ${!correct ? renderMistakeAgentFeedback(result.mistake) : ""}
+          <button id="cs-next">${conceptSprintState.index + 1 >= conceptSprintState.queue.length ? "סיים וקבל ציון" : "המשך"}</button>
+        </div>`;
+      document.getElementById("cs-next")?.addEventListener("click", () => {
+        conceptSprintState.index += 1;
+        renderConceptSprintQuestion();
+      });
+    }
+    if (q.kind === "mc") {
+      document.querySelectorAll(".cs-option").forEach((btn) => {
+        const optionIndex = parseInt(btn.dataset.csAnswer || "-1", 10);
+        btn.disabled = true;
+        if (optionIndex === q.correctIndex) btn.classList.add("correct");
+        else if (optionIndex === Number(answer)) btn.classList.add("wrong");
+      });
+    } else {
+      document.getElementById("cs-fill-input")?.setAttribute("disabled", "disabled");
+      document.getElementById("cs-fill-submit")?.setAttribute("disabled", "disabled");
+    }
+  }
+
+  function renderConceptSprintResult() {
+    const root = sprintContainer();
+    if (!root) return;
+    const { mode, results } = conceptSprintState;
+    if (!mode) {
+      renderConceptSprintHome();
+      return;
+    }
+    const total = results.length || 1;
+    const correct = results.filter((r) => r.correct).length;
+    const pct = Math.round((correct / total) * 100);
+    const passed = mode.passPct === 0 || pct >= mode.passPct;
+    const delta = passed ? mode.bonus + correct * 6 : -mode.penalty;
+    const coinDelta = coinsForXP(delta);
+    if (delta !== 0) awardXP(delta);
+    recordLearningEvidence("concept_sprint", {
+      source: "concept-sprint",
+      score: pct,
+      correct: passed,
+      durationSec: total,
+      topic: "מושגים נטו",
+      subtopic: mode.title,
+    });
+    tickStudyStreak();
+    const weakList = results.filter((r) => !r.correct);
+    root.innerHTML = `
+      <div class="concept-sprint-result ${passed ? "passed" : "failed"}">
+        <h3>${passed ? "עברת" : "נכשלת"} · ${pct}%</h3>
+        <p>${correct}/${total} תשובות נכונות · ${delta >= 0 ? `+${delta}` : delta} XP${coinDelta ? ` · +${coinDelta} 🪙` : ""}</p>
+        <div class="cs-result-actions">
+          <button id="cs-again">סיבוב נוסף</button>
+          <button id="cs-trainer">פתח מאמן ידע</button>
+          <button id="cs-home">חזרה למושגים נטו</button>
+        </div>
+        <div class="cs-result-grid">
+          ${results.map((r) => `
+            <div class="cs-result-row ${r.correct ? "ok" : "bad"}">
+              <strong>${esc(r.conceptName)}</strong>
+              <span>${r.correct ? "נכון" : "חולשה"} · ${r.beforeLevel}/7 → ${r.afterLevel}/7</span>
+            </div>`).join("")}
+        </div>
+        ${weakList.length ? `<div class="concept-sprint-warning">המושגים שנכשלת בהם נכנסו לרשימת החולשות ויופיעו יותר במאמן הידע.</div>` : ""}
+      </div>`;
+    document.getElementById("cs-again")?.addEventListener("click", () => {
+      if (Number.isInteger(mode.sourceComparisonIndex)) startConceptSprintComparison(mode.sourceComparisonIndex);
+      else startConceptSprint(mode.id);
+    });
+    document.getElementById("cs-trainer")?.addEventListener("click", openTrainer);
+    document.getElementById("cs-home")?.addEventListener("click", renderConceptSprintHome);
+    updateXPWidget(getXP());
+    updateProgress();
+  }
+
+  function setConceptSprintContextTree() {
+    setContextTree(
+      "מושגים נטו",
+      [
+        {
+          id: "concept-sprint-modes",
+          label: "קצב הבחינה",
+          open: true,
+          children: Object.values(CONCEPT_SPRINT_MODES).map((mode) => ({
+            id: `mode:${mode.id}`,
+            label: mode.title,
+            meta: `${mode.count} שאלות`,
+            action: () => startConceptSprint(mode.id),
+          })),
+        },
+        {
+          id: "concept-sprint-comparisons",
+          label: "השוואות חובה",
+          open: false,
+          children: CONCEPT_SPRINT_COMPARISONS.map((group, index) => ({
+            id: `compare:${index}`,
+            label: group.title,
+            meta: `${conceptSprintItemsForComparison(group).length}/${group.terms.length}`,
+            action: () => startConceptSprintComparison(index),
+          })),
+        },
+        {
+          id: "concept-sprint-concepts",
+          label: "מושגים חלשים קודם",
+          open: false,
+          children: sortedSprintConcepts().slice(0, 40).map((item) => ({
+            id: conceptKey(item.lesson.id, item.concept.conceptName),
+            label: item.concept.conceptName,
+            meta: `רמה ${item.score.level}/7`,
+            action: () => startConceptSprint("quick", { lesson: item.lesson, concept: item.concept }),
+          })),
+        },
+      ],
+      { key: "concept-sprint" },
+    );
+  }
+
+  function openConceptSprint() {
+    hideAllViews();
+    currentLessonId = null;
+    currentLessonTitle.textContent = "⚡ מושגים נטו";
+    currentLessonDesc.textContent =
+      "אבחון מהיר לפי מושג. מסלולים מסוכנים יכולים להוריד XP בכישלון, אבל כל תשובה מעדכנת מיד את מאמן הידע.";
+    if (conceptSprintView) conceptSprintView.style.display = "block";
+    openConceptSprintBtn?.classList.add("active");
+    const render = () => {
+      renderConceptSprintHome();
+      scrollToTop();
+    };
+    if (typeof window.ensureSeededBank === "function" && !(window.QUESTIONS_BANK?._seededMerged)) {
+      window.ensureSeededBank().then(render).catch(render);
+    } else {
+      render();
+    }
+    sidebar.classList.remove("open");
+  }
+  window.LUMEN_OPEN_CONCEPT_SPRINT = openConceptSprint;
 
   function renderProgrammingBasics() {
     const container = document.getElementById("programming-basics-content");
@@ -11274,6 +12914,112 @@ document.addEventListener("DOMContentLoaded", () => {
         </section>`;
     }
 
+    function renderLayerSets() {
+      return `
+        <section class="pb-section" id="pb-layer-venn">
+          <div class="pb-section-head">
+            <span class="pb-kicker">01</span>
+            <h2>תרשים קבוצות: השפה במרכז, השכבות מסביב</h2>
+            <p>Node, React ו-Next לא מחליפים את JavaScript/TypeScript. הם מוסיפים סביב השפה יכולות, כללים ומבנה עבודה.</p>
+          </div>
+          <div class="pb-layer-venn-shell">
+            <div class="pb-set-stage" role="img" aria-label="תרשים קבוצות של JavaScript TypeScript Node React ו-Next">
+              <div class="pb-set-circle pb-set-language">
+                <strong>JS / TS</strong>
+                <span>שפה: ערכים, פונקציות, objects, arrays, async</span>
+              </div>
+              <div class="pb-set-circle pb-set-node">
+                <strong>Node.js</strong>
+                <span>שרת, קבצים, process, HTTP, DB</span>
+              </div>
+              <div class="pb-set-circle pb-set-react">
+                <strong>React</strong>
+                <span>components, JSX, state, hooks, render</span>
+              </div>
+              <div class="pb-set-circle pb-set-next">
+                <strong>Next.js</strong>
+                <span>routing, SSR, API routes, build, SEO</span>
+              </div>
+              <div class="pb-set-core">
+                <strong>אותו גרעין</strong>
+                <span>value → variable → function → object → module</span>
+              </div>
+            </div>
+            <div class="pb-layer-rule">
+              <strong>משפט אחד:</strong>
+              שפה אומרת איך לכתוב הוראות; Node אומר איפה JS יכול לרוץ; React אומר איך לבנות מסך; Next אומר איך להפוך React למוצר Full-Stack.
+            </div>
+          </div>
+        </section>
+
+        <section class="pb-section" id="pb-layer-details">
+          <div class="pb-section-head">
+            <span class="pb-kicker">02</span>
+            <h2>מה כל שכבה מוסיפה מעבר לשפה?</h2>
+            <p>לכל שכבה יש תפקיד אחד מרכזי. אם מבינים אותו, קל לדעת מתי צריך אותה ומתי היא מיותרת.</p>
+          </div>
+          <div class="pb-layer-card-grid">
+            ${PROGRAMMING_LAYER_SETS.map((item) => `
+              <article class="pb-layer-card" id="pb-layer-${esc(item.id)}">
+                <h3>${esc(item.name)}</h3>
+                <p>${esc(item.short)}</p>
+                <div class="pb-layer-chip-list" aria-label="יכולות שהשכבה מוסיפה">
+                  ${item.adds.map((add) => `<span>${esc(add)}</span>`).join("")}
+                </div>
+                <dl class="pb-mini-dl">
+                  <div><dt>לא מוסיפה</dt><dd>${esc(item.notAdds)}</dd></div>
+                  <div><dt>מתי להשתמש</dt><dd>${esc(item.use)}</dd></div>
+                </dl>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+
+        <section class="pb-section" id="pb-layer-overlaps">
+          <div class="pb-section-head">
+            <span class="pb-kicker">03</span>
+            <h2>איפה השכבות חופפות?</h2>
+            <p>הבלבול מתחיל כשאותה מילה מופיעה בכמה שכבות. החפיפה היא לא כפילות; היא שימוש באותו בסיס במקום אחר.</p>
+          </div>
+          <div class="pb-layer-overlap-grid">
+            ${PROGRAMMING_LAYER_OVERLAPS.map((item) => `
+              <article class="pb-layer-overlap">
+                <h3>${esc(item.title)}</h3>
+                <p>${esc(item.text)}</p>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+
+        <section class="pb-section" id="pb-layer-decision">
+          <div class="pb-section-head">
+            <span class="pb-kicker">04</span>
+            <h2>מתי בוחרים שפה, Node, React או Next?</h2>
+            <p>בחירה טובה מתחילה מהצורך. לא מתחילים מטכנולוגיה נוצצת.</p>
+          </div>
+          <div class="pb-layer-table-wrap">
+            <table class="pb-layer-table">
+              <thead>
+                <tr>
+                  <th>הצורך</th>
+                  <th>הבחירה</th>
+                  <th>למה</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${PROGRAMMING_LAYER_DECISIONS.map((item) => `
+                  <tr>
+                    <td>${esc(item.need)}</td>
+                    <td><strong>${esc(item.choose)}</strong></td>
+                    <td>${esc(item.reason)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </section>`;
+    }
+
     function renderLanguages() {
       return `
         <section class="pb-section">
@@ -11651,11 +13397,12 @@ document.addEventListener("DOMContentLoaded", () => {
             : programmingBasicsTab === "menus" ? renderMenus()
               : programmingBasicsTab === "patents" ? renderPatents()
                 : programmingBasicsTab === "tech" ? renderTech()
-                  : programmingBasicsTab === "languages" ? renderLanguages()
-                    : programmingBasicsTab === "history" ? renderHistory()
-                      : programmingBasicsTab === "museum" ? renderLanguageMuseum()
-                        : programmingBasicsTab === "react-anatomy" ? renderReactAnatomy()
-                          : renderFoundations();
+                  : programmingBasicsTab === "layers" ? renderLayerSets()
+                    : programmingBasicsTab === "languages" ? renderLanguages()
+                      : programmingBasicsTab === "history" ? renderHistory()
+                        : programmingBasicsTab === "museum" ? renderLanguageMuseum()
+                          : programmingBasicsTab === "react-anatomy" ? renderReactAnatomy()
+                            : renderFoundations();
 
     container.innerHTML = `${tabsHTML}${metricNote}<div class="pb-tab-panel">${activeContent}</div>`;
 
@@ -11773,6 +13520,125 @@ document.addEventListener("DOMContentLoaded", () => {
         <ol class="principle-checklist">
           ${PROGRAMMING_PRINCIPLES_CHECKLIST.map((item) => `<li>${esc(item)}</li>`).join("")}
         </ol>
+      </section>`;
+  }
+
+  function renderScoreDots(score) {
+    const value = Math.max(1, Math.min(10, Number(score) || 1));
+    return `
+      <span class="lt-score" aria-label="${value} מתוך 10">
+        <span style="width:${value * 10}%"></span>
+        <b>${value}</b>
+      </span>`;
+  }
+
+  function renderLanguageTools() {
+    const container = document.getElementById("language-tools-content");
+    if (!container) return;
+
+    container.innerHTML = `
+      <section class="lt-section" id="lt-big-picture">
+        <div class="lt-section-head">
+          <span class="lt-kicker">01</span>
+          <h2>התמונה הגדולה: React, Next.js, Node.js</h2>
+          <p>הם לא מתחרים ישירים. הם שכבות שונות מעל אותה משפחת שפות וכלים.</p>
+        </div>
+        <div class="lt-layer-summary">
+          ${LANGUAGE_TOOL_BIG_PICTURE.map((item) => `
+            <article class="lt-layer-card">
+              <span>${esc(item.layer)}</span>
+              <h3>${esc(item.name)}</h3>
+              <p>${esc(item.plain)}</p>
+              <strong>${esc(item.question)}</strong>
+            </article>
+          `).join("")}
+        </div>
+        <div class="lt-stack-line">
+          <code>React = UI</code>
+          <code>Next.js = React + מוצר Web מלא</code>
+          <code>Node.js = JavaScript בצד שרת</code>
+        </div>
+      </section>
+
+      <section class="lt-section" id="lt-stack-choice">
+        <div class="lt-section-head">
+          <span class="lt-kicker">02</span>
+          <h2>במה לבחור מהר?</h2>
+          <p>אם היעד הוא קורס Full-Stack ומבחן קרוב: קודם React + Next.js + Node.js. חלופות לומדים אחרי שהבסיס יציב.</p>
+        </div>
+        <div class="lt-choice-grid">
+          <article><strong>שוק וקורס</strong><span>React + Next.js + Node.js</span></article>
+          <article><strong>קלות למידה</strong><span>Vue + Nuxt</span></article>
+          <article><strong>קוד קצר</strong><span>Svelte + SvelteKit</span></article>
+          <article><strong>אתר תוכן מהיר</strong><span>Astro</span></article>
+          <article><strong>Backend JS חלופי</strong><span>Bun או Deno</span></article>
+          <article><strong>Backend ארגוני</strong><span>Go / Java Spring / .NET</span></article>
+        </div>
+      </section>
+
+      <section class="lt-section">
+        <div class="lt-section-head">
+          <span class="lt-kicker">03</span>
+          <h2>השוואות לפי תחום</h2>
+          <p>הציונים הם ציוני בחירה יחסיים ללמידה ולפרויקט, לא benchmark. 10 = מתאים מאוד לתחום המסוים.</p>
+        </div>
+        <div class="lt-domain-list">
+          ${LANGUAGE_TOOL_DOMAINS.map((domain) => `
+            <article class="lt-domain" id="lt-domain-${esc(domain.id)}">
+              <div class="lt-domain-head">
+                <div>
+                  <span>${esc(domain.goal)}</span>
+                  <h3>${esc(domain.title)}</h3>
+                </div>
+                <b>${domain.rows.length} כלים</b>
+              </div>
+              <div class="lt-table-wrap">
+                <table class="lt-table">
+                  <thead>
+                    <tr>
+                      <th>כלי / שפה</th>
+                      <th>תפקיד</th>
+                      <th>מהירות</th>
+                      <th>קלות</th>
+                      <th>אקוסיסטם</th>
+                      <th>שוק</th>
+                      <th>רלוונטיות לקורס</th>
+                      <th>מתי לבחור</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${domain.rows.map((row) => `
+                      <tr>
+                        <td><strong>${esc(row.name)}</strong><small>${esc(row.caution)}</small></td>
+                        <td>${esc(row.role)}</td>
+                        <td>${renderScoreDots(row.speed)}</td>
+                        <td>${renderScoreDots(row.learn)}</td>
+                        <td>${renderScoreDots(row.ecosystem)}</td>
+                        <td>${renderScoreDots(row.market)}</td>
+                        <td>${renderScoreDots(row.exam)}</td>
+                        <td>${esc(row.pick)}</td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      </section>
+
+      <section class="lt-section">
+        <div class="lt-section-head">
+          <span class="lt-kicker">04</span>
+          <h2>כלל זיכרון קצר</h2>
+        </div>
+        <div class="lt-final-rule">
+          <strong>Next.js הוא לא תחליף ל-React; הוא בנוי עליו.</strong>
+          <strong>Node.js הוא לא תחליף ל-React; הוא צד שרת.</strong>
+          <strong>React alternatives הם Vue, Svelte, Angular ו-Solid.</strong>
+          <strong>Next alternatives הם Remix, Astro, SvelteKit ו-Nuxt.</strong>
+          <strong>Node alternatives הם Deno, Bun, Edge runtimes או שפות Backend אחרות.</strong>
+        </div>
       </section>`;
   }
 
@@ -12888,6 +14754,7 @@ document.addEventListener("DOMContentLoaded", () => {
         metric: "מוזיאוני בלוקים",
         learningGoal: "להבין איך פעולה אחת נבנית מחשמל, ביטים, פקודות, שפה, framework ואפליקציה.",
         target: "programming-museum-stack",
+        storeItemId: "museum.electricity",
       },
       {
         id: "languages",
@@ -12898,6 +14765,7 @@ document.addEventListener("DOMContentLoaded", () => {
         metric: "אולמות",
         learningGoal: "לראות למה כל שכבת שפה נולדה, מה היא הסתירה ומה המחיר של הפשטה.",
         target: "programming-museum-halls",
+        storeItemId: "museum.languages",
       },
       {
         id: "fullstack",
@@ -12908,6 +14776,7 @@ document.addEventListener("DOMContentLoaded", () => {
         metric: "חדרי מקצוע",
         learningGoal: "לחבר UI, רשת, שרת, API, נתונים ואיכות למוצר אחד.",
         target: "fullstack-museum-wing",
+        storeItemId: "museum.react",
       },
       {
         id: "product",
@@ -14286,13 +16155,56 @@ document.addEventListener("DOMContentLoaded", () => {
       <nav class="museum-wing-nav" aria-label="ניווט אגפי המוזיאון">
         <a class="${activeWing === "home" ? "active" : ""}" href="${esc(getMuseumExternalHref({ wing: "home" }))}" target="_top">שער</a>
         ${wings.map((wing) => `
-          <a class="${wing.id === activeWing ? "active" : ""}" href="${esc(wing.route)}" target="_top">
+          <a class="${wing.id === activeWing ? "active" : ""} ${!isMuseumTicketOpen(wing.storeItemId) ? "locked-ticket" : ""}"
+             href="${esc(isMuseumTicketOpen(wing.storeItemId) ? wing.route : "#")}"
+             target="_top"
+             data-museum-store-link="${esc(wing.storeItemId || "")}">
             <span>${esc(wing.kicker)}</span>
             <strong>${esc(wing.title)}</strong>
+            ${renderMuseumTicketStatus(wing.storeItemId, true)}
           </a>
         `).join("")}
         <button class="museum-motion-toggle" type="button" data-museum-motion-toggle aria-pressed="false">הפחת תנועה</button>
       </nav>`;
+  }
+
+  function getRewardStoreItem(itemId) {
+    if (!itemId) return null;
+    try {
+      return REWARD_STORE_CATALOG.find((entry) => entry.id === itemId) || null;
+    } catch {
+      return null;
+    }
+  }
+
+  function isMuseumTicketOpen(itemId) {
+    if (!itemId) return true;
+    return !!getStorePurchases()[itemId];
+  }
+
+  function renderMuseumTicketStatus(itemId, compact = false) {
+    const item = getRewardStoreItem(itemId);
+    if (!item) return "";
+    const owned = isMuseumTicketOpen(itemId);
+    return `
+      <span class="museum-ticket-status ${owned ? "open" : "locked"} ${compact ? "compact" : ""}">
+        ${owned ? "פתוח" : `נעול · 🪙 ${item.price}`}
+      </span>`;
+  }
+
+  function renderMuseumLockedExperience(itemId, title, description) {
+    const item = getRewardStoreItem(itemId);
+    if (!item || isMuseumTicketOpen(itemId)) return "";
+    return `
+      <div class="museum-experience-lock" data-museum-lock="${esc(itemId)}">
+        <div>
+          <span>🔒 חוויה נעולה</span>
+          <strong>${esc(title)}</strong>
+          <p>${esc(description || item.unlocks)}</p>
+          <small>${esc(item.rule)}</small>
+        </div>
+        <button type="button" data-museum-store-item="${esc(itemId)}">פתח בחנות · 🪙 ${esc(item.price)}</button>
+      </div>`;
   }
 
   function renderMuseumWingGate(activeWing = "home") {
@@ -14306,18 +16218,22 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
         <div class="museum-wing-grid">
-          ${getMuseumWingDefinitions().map((wing, idx) => `
-            <a class="museum-wing-card ${wing.id === activeWing ? "active" : ""}"
-               href="${esc(wing.route)}"
+          ${getMuseumWingDefinitions().map((wing, idx) => {
+            const open = isMuseumTicketOpen(wing.storeItemId);
+            return `
+            <a class="museum-wing-card ${wing.id === activeWing ? "active" : ""} ${open ? "" : "locked-ticket"}"
+               href="${esc(open ? wing.route : "#")}"
                target="_top"
-               data-wing="${esc(wing.id)}">
+               data-wing="${esc(wing.id)}"
+               data-museum-store-link="${esc(wing.storeItemId || "")}">
               <span>${String(idx + 1).padStart(2, "0")}</span>
               <small>${esc(wing.kicker)}</small>
               <strong>${esc(wing.title)}</strong>
               <p>${esc(wing.learningGoal)}</p>
               <em>${esc(wing.count)} ${esc(wing.metric)}</em>
+              ${renderMuseumTicketStatus(wing.storeItemId)}
             </a>
-          `).join("")}
+          `; }).join("")}
         </div>
       </section>`;
   }
@@ -15824,7 +17740,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>התלמיד רואה שכל מילה בקוד היא תרגום של שכבות: ביטים, כתובות, פקודות, runtime וכלי UI. לחיצה על כל בלוק פותחת מוזיאון נפרד בדף חדש.</p>
           </div>
         </div>
-        <div class="museum-svg-panel">${renderMuseumStackSvg()}</div>
+        ${renderMuseumLockedExperience("museum.electricity", "סיור חשמל, ביטים ו-byte", "החוויה המלאה של תרשים השכבות נפתחת עם כרטיס מוזיאון. ההסברים הקצרים על bit/byte עדיין זמינים בשיעורים ובמילון.")}
+        ${isMuseumTicketOpen("museum.electricity") ? `<div class="museum-svg-panel">${renderMuseumStackSvg()}</div>` : ""}
       </section>
 
       ${renderMuseumProductBlueprintWing()}
@@ -15837,7 +17754,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>הציר מדגיש שהתקדמות בתכנות היא סדרה של שכבות שנבנו כדי להקל על בני אדם בלי לשבור את המכונה.</p>
           </div>
         </div>
-        <div class="museum-svg-panel">${renderMuseumTimelineSvg()}</div>
+        ${renderMuseumLockedExperience("museum.languages", "ציר שפות ושושלות", "הציר החווייתי של שפות התכנות נפתח עם כרטיס מוזיאון. חומר חובה לקורס נשאר פתוח בטאבים הלימודיים.")}
+        ${isMuseumTicketOpen("museum.languages") ? `<div class="museum-svg-panel">${renderMuseumTimelineSvg()}</div>` : ""}
       </section>
 
       <section class="museum-section" id="programming-museum-guided-routes">
@@ -15889,7 +17807,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>אגף ייחודי שמראה למה כל שכבה נולדה, מה היא פתרה, ולאן היא התפתחה בתוך מוצר אמיתי.</p>
           </div>
         </div>
-        <div class="fullstack-museum-hero">
+        ${renderMuseumLockedExperience("museum.react", "מוזיאון Full-Stack ו-React Evolution", "הסיור החווייתי על React, שכבות Full-Stack והאלטרנטיבות נפתח עם כרטיס מוזיאון. שאלות ותרגול React נשארים פתוחים.")}
+        ${isMuseumTicketOpen("museum.react") ? `<div class="fullstack-museum-hero">
           <div>
             <span class="fullstack-kicker">Client · Network · Server · Data · Quality</span>
             <h3>שרשרת אחת, הרבה שכבות</h3>
@@ -16024,7 +17943,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </article>
           `;
           }).join("")}
-        </div>
+        </div>` : ""}
       </section>
 
       <section class="museum-section" id="programming-museum-halls">
@@ -16035,7 +17954,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>כל אולם הוא תחנת למידה: פריצת דרך, אבני בניין, והחיבור לשאלות שהתלמיד יפגוש בפורטל.</p>
           </div>
         </div>
-        <div class="museum-hall-grid">
+        ${renderMuseumLockedExperience("museum.languages", "אולמות שפות התכנות", "הסיור המלא באולמות ההיסטוריים נפתח עם כרטיס מוזיאון. מושגי חובה כמו variable/function/array נשארים פתוחים בשיעורים.")}
+        ${isMuseumTicketOpen("museum.languages") ? `<div class="museum-hall-grid">
           ${PROGRAMMING_LANGUAGE_MUSEUM_HALLS.map((hall, idx) => `
             <article class="museum-hall-card" id="programming-museum-hall-${esc(hall.id)}">
               <div class="museum-art-frame">${renderMuseumHallIllustration(hall, idx)}</div>
@@ -16097,7 +18017,7 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
             </article>
           `).join("")}
-        </div>
+        </div>` : ""}
       </section>
 
       <section class="museum-section" id="programming-museum-value-map">
@@ -16132,7 +18052,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>אותו רעיון עובר בין שפות, מחליף שם, ומשנה פשרה. זה החיבור שמונע לימוד מנותק של טכנולוגיות.</p>
           </div>
         </div>
-        <div class="museum-lineage-grid">
+        ${renderMuseumLockedExperience("museum.languages", "תרשימי שושלות רעיונות", "התרשימים הצבעוניים והמסלולים ההיסטוריים הם חוויה נפתחת עם כרטיס מוזיאון.")}
+        ${isMuseumTicketOpen("museum.languages") ? `<div class="museum-lineage-grid">
           ${PROGRAMMING_LANGUAGE_LINEAGES.map((lineage, idx) => `
             <article class="museum-lineage-card">
               <div class="museum-lineage-card-head">
@@ -16158,7 +18079,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <strong>${esc(lineage.today)}</strong>
             </article>
           `).join("")}
-        </div>
+        </div>` : ""}
       </section>
 
       <section class="museum-section" id="programming-museum-quests">
@@ -16195,6 +18116,15 @@ document.addEventListener("DOMContentLoaded", () => {
     container.querySelectorAll("[data-programming-museum-scroll]").forEach((btn) => {
       btn.addEventListener("click", () => {
         scrollBasicsSection(btn.dataset.programmingMuseumScroll);
+      });
+    });
+
+    container.querySelectorAll("[data-museum-store-item], [data-museum-store-link]").forEach((item) => {
+      item.addEventListener("click", (event) => {
+        const itemId = item.dataset.museumStoreItem || item.dataset.museumStoreLink;
+        if (!itemId || isMuseumTicketOpen(itemId)) return;
+        event.preventDefault();
+        openRewardStoreForItem(itemId);
       });
     });
 
@@ -16247,6 +18177,20 @@ document.addEventListener("DOMContentLoaded", () => {
     openProgrammingMuseumBtn?.classList.add("active");
     renderProgrammingMuseum();
     setProgrammingMuseumContextTree();
+    scrollToTop();
+    sidebar.classList.remove("open");
+  }
+
+  function openLanguageTools() {
+    hideAllViews();
+    currentLessonId = null;
+    currentLessonTitle.textContent = "🧮 השוואת שפות וכלי פיתוח";
+    currentLessonDesc.textContent =
+      "השוואה קצרה וממוקדת לפי תחומים: מה כל שפה או כלי מוסיפים, מתי לבחור אותם, ומה רלוונטי למבחן Full-Stack.";
+    if (languageToolsView) languageToolsView.style.display = "block";
+    openLanguageToolsBtn?.classList.add("active");
+    renderLanguageTools();
+    setLanguageToolsContextTree();
     scrollToTop();
     sidebar.classList.remove("open");
   }
@@ -16845,6 +18789,113 @@ document.addEventListener("DOMContentLoaded", () => {
     `).join("");
   }
 
+  function blueprintCommandCenterData(blueprints) {
+    const modules = (blueprints || []).flatMap((blueprint) =>
+      (blueprint.modules || []).map((module, index) => ({
+        blueprint,
+        module,
+        index,
+        report: blueprintModuleReadiness(module),
+      })),
+    );
+    const moduleCount = modules.length;
+    const covered = modules.filter((item) => item.module.status === "covered").length;
+    const partial = modules.filter((item) => item.module.status === "partial").length;
+    const gap = modules.filter((item) => item.module.status === "gap").length;
+    const releaseBlockers = partial + gap;
+    const readiness = moduleCount
+      ? blueprintClampPct(modules.reduce((sum, item) => sum + item.report.readiness, 0) / moduleCount)
+      : 0;
+    const tabStrictCells = moduleCount * 15;
+    const tabPassedCells = releaseBlockers ? Math.max(0, tabStrictCells - releaseBlockers) : tabStrictCells;
+    const weakModules = modules
+      .slice()
+      .sort((a, b) => a.report.readiness - b.report.readiness || a.module.title.localeCompare(b.module.title, "he"))
+      .slice(0, 4);
+    const nextActions = Array.from(new Set((blueprints || []).flatMap((blueprint) => blueprint.recommendedNext || [])))
+      .slice(0, 4);
+
+    return {
+      moduleCount,
+      covered,
+      partial,
+      gap,
+      releaseBlockers,
+      readiness,
+      tabStrictCells,
+      tabPassedCells,
+      weakModules,
+      nextActions,
+    };
+  }
+
+  function renderBlueprintCommandCenter(blueprints) {
+    const data = blueprintCommandCenterData(blueprints);
+    const readyText = data.releaseBlockers ? "דורש טיפול" : "מוכן לתרגול מבחן";
+    const blockersText = data.releaseBlockers ? `${data.releaseBlockers} חסמים` : "0 חסמים";
+    const weakTitle = data.releaseBlockers ? "מודולים חלשים לסגירה" : "מודולי חזרה ראשונים";
+    return `
+      <section class="blueprint-command-center" id="svcollege-command-center-panel" aria-label="SVCollege Command Center">
+        <div class="blueprint-command-head">
+          <div>
+            <span class="blueprint-command-kicker">SVCollege Command Center</span>
+            <h3>קו סיום ראשון — מצב בחינה</h3>
+            <p>מקור אמת אחד: מוכנות, חסמים, בריאות טאבים ומה ללמוד עכשיו.</p>
+          </div>
+          <div class="blueprint-command-ready ${data.releaseBlockers ? "blocked" : "ready"}">
+            <strong>${data.readiness}%</strong>
+            <span>${readyText}</span>
+          </div>
+        </div>
+
+        <div class="blueprint-command-grid">
+          <div class="blueprint-command-metric">
+            <span>מודולים מכוסים</span>
+            <strong>${data.covered}/${data.moduleCount}</strong>
+            <small>${data.partial} חלקיים · ${data.gap} פערים</small>
+          </div>
+          <div class="blueprint-command-metric">
+            <span>Release blockers</span>
+            <strong>${blockersText}</strong>
+            <small>Finish Line 1 לא נסגר אם יש חסם</small>
+          </div>
+          <div class="blueprint-command-metric">
+            <span>בריאות טאבים</span>
+            <strong>${data.tabPassedCells}/${data.tabStrictCells}</strong>
+            <small>Module × Tab strict cells</small>
+          </div>
+          <div class="blueprint-command-metric">
+            <span>Browser smoke</span>
+            <strong>Desktop + Mobile</strong>
+            <small>מתועד ב-SVCOLLEGE_BROWSER_SMOKE.md</small>
+          </div>
+        </div>
+
+        <div class="blueprint-command-columns">
+          <section>
+            <h4>${weakTitle}</h4>
+            <div class="blueprint-command-list">
+              ${data.weakModules.map((item) => `
+                <button type="button" class="blueprint-command-item" data-blueprint-module-jump="blueprint-${esc(item.blueprint.id)}-module-${item.index + 1}">
+                  <span>${esc(item.module.title)}</span>
+                  <strong>${item.report.readiness}%</strong>
+                </button>
+              `).join("")}
+            </div>
+          </section>
+          <section>
+            <h4>פעולות עכשיו</h4>
+            <ul class="blueprint-command-actions">
+              ${(data.nextActions.length ? data.nextActions : ["לתרגל מבחן מדומה מלא", "לעבור על מושגים נטו", "לפתור Code Trace ו-Mini Build"])
+                .map((item) => `<li>${esc(item)}</li>`)
+                .join("")}
+            </ul>
+          </section>
+        </div>
+      </section>
+    `;
+  }
+
   function renderBlueprints() {
     const container = document.getElementById("blueprints-container");
     const stats = document.getElementById("blueprints-header-stats");
@@ -16872,7 +18923,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    container.innerHTML = blueprints.map((blueprint) => {
+    container.innerHTML = `${renderBlueprintCommandCenter(blueprints)}${blueprints.map((blueprint) => {
       const covered = (blueprint.modules || []).filter((module) => module.status === "covered").length;
       const total = (blueprint.modules || []).length || 1;
       const coverage = Math.round((covered / total) * 100);
@@ -16937,8 +18988,14 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </article>
       `;
-    }).join("");
+    }).join("")}`;
 
+    container.querySelectorAll("[data-blueprint-module-jump]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = document.getElementById(btn.getAttribute("data-blueprint-module-jump"));
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
     container.querySelectorAll("[data-blueprint-lesson]").forEach((btn) => {
       btn.addEventListener("click", () => openLesson(btn.getAttribute("data-blueprint-lesson")));
     });
@@ -16961,6 +19018,12 @@ document.addEventListener("DOMContentLoaded", () => {
         open: false,
         action: () => scrollBasicsSection(`blueprint-${blueprint.id}`),
           children: [
+          {
+            id: "svcollege-command-center-panel",
+            label: "Command Center",
+            meta: `${blueprintAverageReadiness(blueprint)}%`,
+            action: () => scrollBasicsSection("svcollege-command-center-panel"),
+          },
           {
             id: `${blueprint.id}-sources`,
             label: "מקורות",
@@ -19126,11 +21189,20 @@ document.addEventListener("DOMContentLoaded", () => {
   openKnowledgeMapBtn?.addEventListener("click", openKnowledgeMap);
   openStudyModeBtn?.addEventListener("click", openStudyMode);
   openTrainerBtn?.addEventListener("click", openTrainer);
+  openConceptSprintBtn?.addEventListener("click", openConceptSprint);
+  document.addEventListener("click", (event) => {
+    const trigger = event.target?.closest?.('[data-tab="concept-sprint"]');
+    if (!trigger) return;
+    event.preventDefault();
+    openConceptSprint();
+  });
   openGuideBtn?.addEventListener("click", openGuide);
   openGrandmaKnowledgeBtn?.addEventListener("click", openGrandmaKnowledge);
   openProgrammingBasicsBtn?.addEventListener("click", openProgrammingBasics);
   openProgrammingPrinciplesBtn?.addEventListener("click", openProgrammingPrinciples);
   openProgrammingMuseumBtn?.addEventListener("click", openProgrammingMuseum);
+  openLanguageToolsBtn?.addEventListener("click", openLanguageTools);
+  openRewardStoreBtn?.addEventListener("click", openRewardStore);
   openLearningEvidenceBtn?.addEventListener("click", openLearningEvidence);
   openCapstonesBtn?.addEventListener("click", openCapstones);
   openBlueprintsBtn?.addEventListener("click", openBlueprints);
@@ -19356,10 +21428,22 @@ document.addEventListener("DOMContentLoaded", () => {
       bug: sourceBug,
     };
 
-    function sample(arr, n) {
+    function questionWasAnsweredForMock(kind, q) {
+      const { lessonId, conceptName } = conceptPartsFromKey(q.conceptKey || "");
+      if (!lessonId || !conceptName) return false;
+      return questionWasAnswered(q, lessonId, conceptName, kind);
+    }
+
+    function sample(kind, arr, n) {
       if (!arr || !arr.length) return [];
-      const shuffled = rng.shuffle(arr);
-      return shuffled.slice(0, Math.min(n, shuffled.length));
+      const unused = [];
+      const exhausted = [];
+      arr.forEach((q) => {
+        if (questionWasAnsweredForMock(kind, q)) exhausted.push(q);
+        else unused.push(q);
+      });
+      const ordered = rng.shuffle(unused).concat(rng.shuffle(exhausted));
+      return ordered.slice(0, Math.min(n, ordered.length));
     }
 
     const picked = [];
@@ -19371,7 +21455,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function take(kind, list, n) {
-      const available = sample(list.filter((q) => !used.has(qid(kind, q))), n);
+      const available = sample(kind, list.filter((q) => !used.has(qid(kind, q))), n);
       available.forEach((q) => {
         used.add(qid(kind, q));
         picked.push({ kind, q });
@@ -19382,10 +21466,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (Array.isArray(template.moduleGroups) && template.moduleGroups.length) {
       template.moduleGroups.forEach((module) => {
         const kinds = ["mc", "fill", "trace", "bug"];
-        const kind = kinds.find((candidateKind) => {
-          if ((remaining[candidateKind] || 0) <= 0) return false;
-          return sourcesByKind[candidateKind].some((q) => module.filter(q.conceptKey || "") && !used.has(qid(candidateKind, q)));
-        });
+      const kind = kinds.find((candidateKind) => {
+        if ((remaining[candidateKind] || 0) <= 0) return false;
+        return sourcesByKind[candidateKind].some((q) => module.filter(q.conceptKey || "") && !used.has(qid(candidateKind, q)));
+      });
         if (!kind) return;
         take(kind, sourcesByKind[kind].filter((q) => module.filter(q.conceptKey || "")), 1);
       });
@@ -19718,6 +21802,45 @@ document.addEventListener("DOMContentLoaded", () => {
         return `<div class="mx-result-row"><span>${esc(b.label)}</span><span class="mx-result-row-score">${b.right}/${b.total} (${pct}%)</span></div>`;
       })
       .join("");
+    const weakModules = Object.values(record.moduleBreakdown || {})
+      .filter((b) => b.total > 0 && Math.round((b.right / b.total) * 100) < 80)
+      .sort((a, b) => (a.right / a.total) - (b.right / b.total) || String(a.label).localeCompare(String(b.label)));
+    const recommendedPathItems = wrongRecords.slice(0, 6).map((recordItem) => {
+      const rewind = recordItem.prerequisiteRewind || null;
+      return {
+        concept: recordItem.conceptName || recordItem.conceptKey || "מושג",
+        prerequisite: rewind?.conceptName || "",
+        reason: rewind?.reason || recordItem.explanation || "חזור להסבר הקצר ופתור שאלת התאוששות.",
+      };
+    });
+    const examReviewHtml = `
+      <div class="mx-result-review">
+        <h4>🧭 סקירת מבחן — מה עושים עכשיו</h4>
+        ${
+          weakModules.length
+            ? `<div class="mx-review-block">
+                <strong>מודולים חלשים</strong>
+                <ul>${weakModules.slice(0, 5).map((b) => {
+                  const pct = Math.round((b.right / b.total) * 100);
+                  return `<li>${esc(b.label)} <span>${b.right}/${b.total} (${pct}%)</span></li>`;
+                }).join("")}</ul>
+              </div>`
+            : `<div class="mx-review-block ok">אין מודול מתחת ל-80% במבחן הזה.</div>`
+        }
+        ${
+          recommendedPathItems.length
+            ? `<div class="mx-review-block">
+                <strong>מסלול מומלץ</strong>
+                <ol>${recommendedPathItems.map((item) => `
+                  <li>
+                    ${item.prerequisite ? `<span>קודם: ${esc(item.prerequisite)}</span>` : "<span>קודם: קרא את ההסבר הקצר</span>"}
+                    <span>אחר כך: ${esc(item.concept)}</span>
+                    <small>${esc(item.reason)}</small>
+                  </li>`).join("")}</ol>
+              </div>`
+            : `<div class="mx-review-block ok">אין טעויות שמצריכות rewind כרגע.</div>`
+        }
+      </div>`;
 
     const weakHtml = wrongConcepts.length
       ? `<div class="mx-result-weak">
@@ -19759,6 +21882,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>`
           : ""
       }
+      ${examReviewHtml}
       ${weakHtml}
       <div class="mx-result-actions">
         <button class="km-btn-mini primary" id="mx-result-new">📝 מבחן חדש</button>
@@ -21784,6 +23908,140 @@ document.addEventListener("DOMContentLoaded", () => {
   let conceptViewOverride = {};
   // Which concept is currently focused in the lesson view (per lesson). Map: lessonId -> conceptName
   let selectedConceptByLesson = {};
+  const LESSON_COMPACT_MODE_KEY = "lumenportal:lessonCompactMode:v1";
+  const DEFAULT_LESSON_COMPACT_MODE = "one-line";
+  const LESSON_COMPACT_MODES = {
+    full: { label: "מלא", icon: "📚" },
+    "one-line": { label: "שורה אחת", icon: "⚡" },
+    comparisons: { label: "השוואות", icon: "⚖️" },
+  };
+  let lessonCompactMode = (() => {
+    try {
+      const stored = localStorage.getItem(LESSON_COMPACT_MODE_KEY);
+      return LESSON_COMPACT_MODES[stored] ? stored : DEFAULT_LESSON_COMPACT_MODE;
+    } catch {
+      return DEFAULT_LESSON_COMPACT_MODE;
+    }
+  })();
+
+  function setLessonCompactMode(mode) {
+    lessonCompactMode = LESSON_COMPACT_MODES[mode] ? mode : DEFAULT_LESSON_COMPACT_MODE;
+    try {
+      localStorage.setItem(LESSON_COMPACT_MODE_KEY, lessonCompactMode);
+    } catch {
+      // localStorage can be unavailable in private contexts.
+    }
+    renderContent();
+  }
+
+  function renderLessonCompactToolbar() {
+    return `
+      <div class="lesson-compact-toolbar" aria-label="מצבי תצוגת שיעור">
+        ${Object.entries(LESSON_COMPACT_MODES).map(([mode, meta]) => `
+          <button
+            type="button"
+            class="lesson-compact-tab ${lessonCompactMode === mode ? "active" : ""}"
+            data-lesson-compact-mode="${esc(mode)}"
+            aria-pressed="${lessonCompactMode === mode ? "true" : "false"}">
+            <span>${meta.icon}</span>
+            <strong>${esc(meta.label)}</strong>
+          </button>
+        `).join("")}
+      </div>`;
+  }
+
+  function renderLessonOneLineOverview(lesson, concepts) {
+    return `
+      <section class="lesson-compact-panel" aria-label="מבט שורה אחת על מושגי השיעור">
+        <div class="lesson-compact-head">
+          <h4>מושגי השיעור בשורה אחת</h4>
+          <span>${concepts.length} מושגים</span>
+        </div>
+        <div class="lesson-compact-list">
+          ${concepts.map((concept, index) => `
+            <article
+              class="lesson-compact-row"
+              data-lesson-compact-open="${esc(concept.conceptName)}"
+              role="button"
+              tabindex="0"
+              aria-label="פתח כרטיס מלא: ${esc(concept.conceptName)}">
+              <span class="lesson-compact-index">${index + 1}</span>
+              <div>
+                <h5>${esc(concept.conceptName)}</h5>
+                <p>${esc(conceptSprintOneLine(concept) || "אין עדיין הגדרה קצרה למושג הזה.")}</p>
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      </section>`;
+  }
+
+  function renderLessonComparisonOverview(lesson, concepts) {
+    const comparisonItems = concepts
+      .map((concept, index) => ({
+        concept,
+        index,
+        html: renderConceptSprintComparison(concept, { open: true }),
+      }))
+      .filter((item) => item.html);
+
+    return `
+      <section class="lesson-compact-panel" aria-label="טבלאות השוואה למושגי השיעור">
+        <div class="lesson-compact-head">
+          <h4>השוואות נקיות</h4>
+          <span>${comparisonItems.length}/${concepts.length} עם טבלה</span>
+        </div>
+        ${
+          comparisonItems.length
+            ? `<div class="lesson-comparison-list">
+                ${comparisonItems.map((item) => `
+                  <article class="lesson-comparison-card">
+                    <div
+                      class="lesson-comparison-title"
+                      data-lesson-compact-open="${esc(item.concept.conceptName)}"
+                      role="button"
+                      tabindex="0"
+                      aria-label="פתח כרטיס מלא: ${esc(item.concept.conceptName)}">
+                      <span class="lesson-compact-index">${item.index + 1}</span>
+                      <div>
+                        <h5>${esc(item.concept.conceptName)}</h5>
+                        <p>${esc(conceptSprintOneLine(item.concept) || "")}</p>
+                      </div>
+                    </div>
+                    ${item.html}
+                  </article>
+                `).join("")}
+              </div>`
+            : `<div class="lesson-compact-empty">אין עדיין טבלאות השוואה נקיות למושגי השיעור הזה.</div>`
+        }
+      </section>`;
+  }
+
+  function wireLessonCompactToolbar() {
+    lessonBody.querySelectorAll("[data-lesson-compact-mode]").forEach((btn) => {
+      btn.addEventListener("click", () => setLessonCompactMode(btn.dataset.lessonCompactMode));
+    });
+    lessonBody.querySelectorAll("[data-lesson-compact-open]").forEach((el) => {
+      const openConcept = () => {
+        const lesson = window.LESSONS_DATA.find((item) => item.id === currentLessonId);
+        const conceptName = el.getAttribute("data-lesson-compact-open");
+        if (!lesson || !conceptName) return;
+        selectedConceptByLesson[lesson.id] = conceptName;
+        setLessonCompactMode("full");
+        requestAnimationFrame(() => {
+          document
+            .querySelector(`.concept-card.adaptive[data-concept="${cssEscape(conceptName)}"]`)
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      };
+      el.addEventListener("click", openConcept);
+      el.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        openConcept();
+      });
+    });
+  }
 
   function renderContent() {
     const lesson = window.LESSONS_DATA.find((l) => l.id === currentLessonId);
@@ -21808,8 +24066,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setLessonContextTree(lesson, selectedConcept.conceptName);
 
+    if (lessonCompactMode === "one-line" || lessonCompactMode === "comparisons") {
+      lessonBody.innerHTML = `
+        <h3>${esc(lesson.title)}</h3>
+        ${renderLessonCompactToolbar()}
+        ${
+          lessonCompactMode === "one-line"
+            ? renderLessonOneLineOverview(lesson, concepts)
+            : renderLessonComparisonOverview(lesson, concepts)
+        }
+      `;
+      wireLessonCompactToolbar();
+      return;
+    }
+
     lessonBody.innerHTML = `
       <h3>${esc(lesson.title)}</h3>
+      ${renderLessonCompactToolbar()}
       ${
         lesson.videoScript
           ? `
@@ -21827,6 +24100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     // Wire per-concept controls (simplify / illustration / etc.)
+    wireLessonCompactToolbar();
     wireConceptCardHandlers(lesson);
 
     // Auto-render inline quiz under the selected concept
@@ -23213,16 +25487,34 @@ document.addEventListener("DOMContentLoaded", () => {
               });
             }
             if (resultBox) resultBox.hidden = false;
+            const bugResult = applyAnswer(lesson.id, concept.conceptName, concept, "mc", isCorrect, {
+              question: {
+                id: bug.id || bugId,
+                question: bug.question || bug.title || "מצא את הבאג",
+                code: bug.brokenCode || bug.code || "",
+                options: bug.options || [],
+                correctIndex: bug.correctIndex,
+                explanation: bug.explanation || bug.fix || "",
+                challengeLevel: bug.challengeLevel || bug.level || 5,
+                conceptKey: conceptKey(lesson.id, concept.conceptName),
+              },
+              selectedIdx: pickedIdx,
+              actualKind: "bug",
+              mode: "bug-hunt",
+            });
             // Per-distractor feedback for wrong choices: subtle status tag
             if (!isCorrect) {
               const tag = document.createElement("div");
               tag.className = "bh-status bh-status-wrong";
               tag.textContent = "❌ לא בדיוק. ראה את ההסבר למטה.";
               optionsBox?.appendChild(tag);
+              if (resultBox) resultBox.insertAdjacentHTML("beforeend", renderMistakeAgentFeedback(bugResult.mistake));
             } else {
               const tag = document.createElement("div");
               tag.className = "bh-status bh-status-correct";
-              tag.textContent = "✅ נכון!";
+              tag.textContent = bugResult.masteryProof?.codeProofSatisfied
+                ? "✅ נכון! נרשמה הוכחת קוד למושג."
+                : "✅ נכון!";
               optionsBox?.appendChild(tag);
             }
           } else if (action === "eli5") {
@@ -23412,6 +25704,27 @@ document.addEventListener("DOMContentLoaded", () => {
             banner.textContent = allPass
               ? `🏆 כל ${total} ה-tests עברו! פתרון מצוין.`
               : `📊 עברו ${passed} מתוך ${total} tests. תקן את השאר ולחץ "בדוק" שוב.`;
+            if (allPass && !cardEl.dataset.mbProofRecorded) {
+              cardEl.dataset.mbProofRecorded = "1";
+              const buildResult = applyAnswer(lesson.id, concept.conceptName, concept, "fill", true, {
+                question: {
+                  id: build.id || buildId,
+                  question: build.prompt || "Mini Build",
+                  code: code,
+                  answer: build.reference || "",
+                  challengeLevel: build.challengeLevel || build.level || 6,
+                  conceptKey: conceptKey(lesson.id, concept.conceptName),
+                },
+                actualKind: "build",
+                mode: "mini-build",
+              });
+              const proofLine = document.createElement("div");
+              proofLine.className = "mb-proof-line";
+              proofLine.textContent = buildResult.masteryProof?.codeProofSatisfied
+                ? "✓ הוכחת קוד נרשמה למושג הזה."
+                : "✓ התרגיל נרשם כהוכחת קוד להמשך שער המאסטר.";
+              banner.insertAdjacentElement("afterend", proofLine);
+            }
             // If all pass, auto-show explanation
             if (allPass && refBox) refBox.hidden = false;
           } else if (action === "mark-v") {
@@ -23611,12 +25924,27 @@ document.addEventListener("DOMContentLoaded", () => {
       // 3. Seeded, same level
       // 4. Any seeded
       const curatedSame = bank.mc.filter((q) => !q._seeded && q.level === sc.level);
-      if (curatedSame.length) return curatedSame[window.RNG.int(curatedSame.length)];
+      const pickedCuratedSame = pickUnansweredBankQuestion(curatedSame, lesson.id, concept.conceptName, "mc", {
+        preferredLevel: sc.level,
+        allowExhaustedFallback: false,
+      });
+      if (pickedCuratedSame) return pickedCuratedSame;
       const curatedAny = bank.mc.filter((q) => !q._seeded);
-      if (curatedAny.length) return curatedAny[window.RNG.int(curatedAny.length)];
+      const pickedCuratedAny = pickUnansweredBankQuestion(curatedAny, lesson.id, concept.conceptName, "mc", {
+        preferredLevel: sc.level,
+        allowExhaustedFallback: false,
+      });
+      if (pickedCuratedAny) return pickedCuratedAny;
       const seededSame = bank.mc.filter((q) => q.level === sc.level);
-      if (seededSame.length) return seededSame[window.RNG.int(seededSame.length)];
-      return bank.mc[window.RNG.int(bank.mc.length)];
+      const pickedSeededSame = pickUnansweredBankQuestion(seededSame, lesson.id, concept.conceptName, "mc", {
+        preferredLevel: sc.level,
+        allowExhaustedFallback: false,
+      });
+      if (pickedSeededSame) return pickedSeededSame;
+      return pickUnansweredBankQuestion(bank.mc, lesson.id, concept.conceptName, "mc", {
+        preferredLevel: sc.level,
+        allowExhaustedFallback: true,
+      });
     }
     const auto = buildQuestion({ lesson, concept });
     if (auto && auto.kind === "mc") return auto;
@@ -23629,6 +25957,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ...(qInfo || {}),
       conceptKey: (qInfo && qInfo.conceptKey) || conceptKey(lesson.id, concept.conceptName),
       question: (qInfo && (qInfo.question || qInfo.prompt || qInfo.title)) || `שאלה על ${concept.conceptName}`,
+      deepExplanation: qInfo?.deepExplanation || deepExplanationForQuestion(concept, qInfo?.explanation || qInfo?.answer || ""),
+      memoryAssociation: qInfo?.memoryAssociation || memoryAssociationForConcept(concept),
     };
     const result = applyAnswer(
       lesson.id,
@@ -23676,6 +26006,11 @@ document.addEventListener("DOMContentLoaded", () => {
       fb.innerHTML = `
         <div class="ciq-fb ${correct ? "correct" : "wrong"}">
           <strong>${correct ? "✅ נכון!" : "❌ לא מדויק."}</strong> ${msg}
+          ${renderPerAnswerExplanationBundle(questionForFeedback, {
+            kind,
+            selectedIdx: meta.selectedIdx,
+            concept,
+          })}
           ${!correct ? renderMistakeAgentFeedback(result.mistake) : ""}
         </div>
         ${
@@ -24373,15 +26708,496 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- XP ---
   const XP_KEY = "lumenportal:xp:v1";
+  const COINS_KEY = "lumenportal:coins:v1";
+  const LIFETIME_XP_KEY = "lumenportal:lifetimeXp:v1";
+  const LIFETIME_COINS_KEY = "lumenportal:lifetimeCoinsEarned:v1";
+  const REWARD_LOG_KEY = "lumenportal:rewardLog:v1";
+  const STORE_PURCHASES_KEY = "lumenportal:storePurchases:v1";
+  const XP_MAX_LEVEL = 100;
+  const XP_LEVEL_BANDS = [
+    { min: 1, max: 10, label: "סבתא מתכנתת", icon: "👵" },
+    { min: 11, max: 25, label: "תלמיד כיתה א׳", icon: "🎒" },
+    { min: 26, max: 40, label: "תלמיד חטיבה", icon: "📘" },
+    { min: 41, max: 55, label: "תלמיד תיכון", icon: "🧪" },
+    { min: 56, max: 70, label: "ג׳וניור מתכנת", icon: "💻" },
+    { min: 71, max: 85, label: "מפתח עצמאי", icon: "🛠️" },
+    { min: 86, max: 99, label: "מאסטר קורס", icon: "🏆" },
+    { min: 100, max: 100, label: "ציון 100", icon: "💯" },
+  ];
   function getXP() { try { return parseInt(localStorage.getItem(XP_KEY) || "0", 10); } catch { return 0; } }
-  function awardXP(amount) {
-    const newXP = getXP() + amount;
-    try { localStorage.setItem(XP_KEY, String(newXP)); } catch {}
+  function getCoins() { try { return parseInt(localStorage.getItem(COINS_KEY) || "0", 10); } catch { return 0; } }
+  function getLifetimeXP() { try { return parseInt(localStorage.getItem(LIFETIME_XP_KEY) || "0", 10); } catch { return 0; } }
+  function getLifetimeCoins() { try { return parseInt(localStorage.getItem(LIFETIME_COINS_KEY) || "0", 10); } catch { return 0; } }
+  function xpRequiredForLevel(level) {
+    const safeLevel = Math.min(XP_MAX_LEVEL, Math.max(1, Number(level) || 1));
+    if (safeLevel <= 1) return 0;
+    return Math.floor(35 * Math.pow(safeLevel, 1.85) + 15 * safeLevel);
+  }
+  function rawLevelFromXP(xp) {
+    const safeXP = Math.max(0, Number(xp) || 0);
+    let level = 1;
+    while (level < XP_MAX_LEVEL && safeXP >= xpRequiredForLevel(level + 1)) level += 1;
+    return level;
+  }
+  function canReachGlobalLevel100() {
+    const lessonSource = Array.isArray(window.LESSONS_DATA) ? window.LESSONS_DATA : [];
+    const allConcepts = lessonSource.flatMap((lesson) =>
+      (lesson.concepts || []).map((concept) => ({ lesson, concept })),
+    );
+    if (!allConcepts.length) return false;
+    return allConcepts.every(({ lesson, concept }) => isScoreMastered(getScore(lesson.id, concept.conceptName)));
+  }
+  function learnerLevelFromXP(xp = getXP()) {
+    const rawLevel = rawLevelFromXP(xp);
+    const level = rawLevel >= XP_MAX_LEVEL && !canReachGlobalLevel100() ? 99 : rawLevel;
+    const band = XP_LEVEL_BANDS.find((item) => level >= item.min && level <= item.max) || XP_LEVEL_BANDS[0];
+    const currentXP = Math.max(0, Number(xp) || 0);
+    const currentFloor = xpRequiredForLevel(level);
+    const nextFloor = level >= XP_MAX_LEVEL ? currentFloor : xpRequiredForLevel(level + 1);
+    const needed = Math.max(0, nextFloor - currentXP);
+    const span = Math.max(1, nextFloor - currentFloor);
+    const progress = level >= XP_MAX_LEVEL ? 100 : Math.max(0, Math.min(100, Math.round(((currentXP - currentFloor) / span) * 100)));
+    return { level, rawLevel, band, currentXP, currentFloor, nextFloor, needed, progress };
+  }
+  function coinsForXP(amount) {
+    const xp = Number(amount) || 0;
+    if (xp <= 0) return 0;
+    return Math.max(1, Math.floor(xp / 4));
+  }
+  function rewardLogId(entry) {
+    const seed = [
+      entry.source || "legacy",
+      entry.conceptKey || "",
+      entry.questionId || "",
+      entry.xp || 0,
+      entry.coins || 0,
+    ].join("|");
+    let hash = 2166136261;
+    for (let index = 0; index < seed.length; index += 1) {
+      hash ^= seed.charCodeAt(index);
+      hash = Math.imul(hash, 16777619);
+    }
+    return `reward-${(hash >>> 0).toString(36)}`;
+  }
+  function readRewardLog() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(REWARD_LOG_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  function rewardAlreadyLogged(entry) {
+    const id = rewardLogId(entry);
+    return readRewardLog().some((item) => item && item.id === id);
+  }
+  function appendRewardLog(entry) {
+    try {
+      const log = readRewardLog();
+      const id = rewardLogId(entry);
+      if (log.some((item) => item && item.id === id)) return;
+      const next = [{ ...entry, id }, ...log].slice(0, 80);
+      localStorage.setItem(REWARD_LOG_KEY, JSON.stringify(next));
+    } catch {}
+  }
+  function awardLearningReward({ xp = 0, coins = coinsForXP(xp), source = "legacy", conceptKey: rewardConceptKey = "", questionId = "" } = {}) {
+    const safeXP = Number(xp) || 0;
+    const safeCoins = Number(coins) || 0;
+    const rewardEntry = {
+      at: new Date().toISOString(),
+      source,
+      conceptKey: rewardConceptKey,
+      questionId,
+      xp: safeXP,
+      coins: safeCoins,
+    };
+    const shouldDedupe = (safeXP > 0 || safeCoins > 0) && Boolean(questionId || rewardConceptKey);
+    if (shouldDedupe && rewardAlreadyLogged(rewardEntry)) {
+      return { xp: getXP(), coins: getCoins(), level: learnerLevelFromXP(getXP()), duplicate: true };
+    }
+    const newXP = Math.max(0, getXP() + safeXP);
+    const newCoins = Math.max(0, getCoins() + safeCoins);
+    try {
+      localStorage.setItem(XP_KEY, String(newXP));
+      localStorage.setItem(COINS_KEY, String(newCoins));
+      if (safeXP > 0) localStorage.setItem(LIFETIME_XP_KEY, String(getLifetimeXP() + safeXP));
+      if (safeCoins > 0) localStorage.setItem(LIFETIME_COINS_KEY, String(getLifetimeCoins() + safeCoins));
+    } catch {}
+    if (safeXP !== 0 || safeCoins !== 0) {
+      appendRewardLog(rewardEntry);
+    }
     updateXPWidget(newXP);
+    return { xp: newXP, coins: newCoins, level: learnerLevelFromXP(newXP) };
+  }
+  function awardXP(amount, meta = {}) {
+    const newXP = Math.max(0, getXP() + amount);
+    return awardLearningReward({ ...meta, xp: amount, coins: coinsForXP(amount) }).xp;
   }
   function updateXPWidget(xp) {
     const el = document.getElementById("xp-widget");
-    if (el) el.textContent = `⭐ ${xp} XP`;
+    if (!el) return;
+    el.setAttribute("role", "button");
+    el.setAttribute("tabindex", "0");
+    el.setAttribute("aria-label", "פתח פירוט XP ומטבעות");
+    const levelState = learnerLevelFromXP(xp);
+    const coins = getCoins();
+    el.innerHTML = `
+      <span class="xp-level">Lv ${levelState.level}</span>
+      <span class="xp-band">${levelState.band.icon} ${esc(levelState.band.label)}</span>
+      <span class="xp-total">⭐ ${levelState.currentXP}</span>
+      <span class="coin-total">🪙 ${coins}</span>
+      <span class="xp-progress" aria-hidden="true"><span style="width:${levelState.progress}%"></span></span>`;
+    el.title = levelState.level >= 99 && levelState.rawLevel >= 100 && levelState.level < 100
+      ? "XP מספיק לרמה 100, אבל רמה 100 דורשת מאסטר מלא בכל המושגים."
+      : `רמה ${levelState.level}/100 · ${levelState.band.label} · ${levelState.needed} XP לרמה הבאה · ${coins} מטבעות`;
+  }
+
+  function recentRewardSummary() {
+    const today = new Date().toISOString().slice(0, 10);
+    const todayRewards = readRewardLog().filter((entry) => String(entry.at || "").slice(0, 10) === today);
+    return {
+      entries: todayRewards.slice(0, 8),
+      xp: todayRewards.reduce((sum, entry) => sum + (Number(entry.xp) || 0), 0),
+      coins: todayRewards.reduce((sum, entry) => sum + (Number(entry.coins) || 0), 0),
+    };
+  }
+
+  function nextEconomyAction() {
+    const weak = Object.entries(scores || {})
+      .map(([key, sc]) => ({ key, sc }))
+      .filter(({ sc }) => sc && (sc.attempts || 0) > 0 && !isScoreMastered(sc))
+      .sort((a, b) => {
+        const aAccuracy = (a.sc.correct || 0) / Math.max(1, a.sc.attempts || 0);
+        const bAccuracy = (b.sc.correct || 0) / Math.max(1, b.sc.attempts || 0);
+        return aAccuracy - bAccuracy || (a.sc.level || 1) - (b.sc.level || 1);
+      })[0];
+    if (weak) {
+      const ref = findConceptByKeyLoose(weak.key);
+      return {
+        title: "חזק מושג חלש",
+        text: ref ? `${ref.concept.conceptName} · ${ref.lesson.title}` : weak.key,
+        action: "פתח מאמן ידע ובחר מצב חולשות.",
+      };
+    }
+    return {
+      title: "התחל אבחון מושגים נטו",
+      text: "בחר מסלול בינוני כדי לקבל מדידה מהירה בלי להמר יותר מדי XP.",
+      action: "פתח את טאב מושגים נטו.",
+    };
+  }
+
+  function renderXPDetailPanel() {
+    const body = document.getElementById("xp-detail-body");
+    if (!body) return;
+    const level = learnerLevelFromXP(getXP());
+    const summary = recentRewardSummary();
+    const nextAction = nextEconomyAction();
+    const purchases = getStorePurchases();
+    body.innerHTML = `
+      <div class="xp-detail-summary">
+        <article>
+          <span>רמה</span>
+          <strong>${esc(level.level)}/100</strong>
+          <small>${esc(level.band.icon)} ${esc(level.band.label)}</small>
+        </article>
+        <article>
+          <span>XP</span>
+          <strong>${esc(level.currentXP)}</strong>
+          <small>${esc(level.needed)} לרמה הבאה</small>
+        </article>
+        <article>
+          <span>מטבעות</span>
+          <strong>🪙 ${esc(getCoins())}</strong>
+          <small>${esc(Object.keys(purchases).length)} רכישות</small>
+        </article>
+      </div>
+      <div class="xp-detail-progress">
+        <span style="width:${level.progress}%"></span>
+      </div>
+      <section class="xp-detail-section">
+        <h4>היום הרווחת</h4>
+        <p>⭐ ${esc(summary.xp)} XP · 🪙 ${esc(summary.coins)} מטבעות</p>
+        ${
+          summary.entries.length
+            ? `<div class="xp-reward-list">
+                ${summary.entries.map((entry) => `
+                  <span>${esc(entry.source || "reward")} · ${esc(entry.xp || 0)} XP · 🪙 ${esc(entry.coins || 0)}</span>
+                `).join("")}
+              </div>`
+            : `<p class="xp-empty">עדיין אין תגמולים היום.</p>`
+        }
+      </section>
+      <section class="xp-detail-section">
+        <h4>הפעולה הבאה הכי משתלמת</h4>
+        <strong>${esc(nextAction.title)}</strong>
+        <p>${esc(nextAction.text)}</p>
+        <small>${esc(nextAction.action)}</small>
+      </section>
+      <section class="xp-detail-section">
+        <h4>שער רמה 100</h4>
+        <p>${canReachGlobalLevel100()
+          ? "אפשר לפתוח רמה 100 אם ה-XP מספיק."
+          : "רמה 100 דורשת מאסטר מלא בכל המושגים ופתרון שאלות עומק. XP לבד לא מספיק."}</p>
+      </section>`;
+  }
+
+  function openXPDetailPanel() {
+    renderXPDetailPanel();
+    const overlay = document.getElementById("xp-detail-overlay");
+    if (overlay) overlay.style.display = "";
+  }
+
+  const STORE_CATEGORIES = [
+    { id: "all", label: "הכל" },
+    { id: "museum", label: "מוזיאון" },
+    { id: "challenge", label: "אתגרים" },
+    { id: "cosmetic", label: "עיצוב" },
+    { id: "learning-tool", label: "כלי למידה" },
+  ];
+
+  const REWARD_STORE_CATALOG = [
+    {
+      id: "museum.languages",
+      category: "museum",
+      title: "כרטיס מוזיאון: שושלות שפות",
+      icon: "🏛️",
+      price: 60,
+      unlocks: "ציר היסטורי מורחב, חותמת דרכון וחידון שושלות.",
+      rule: "בונוס בלבד. חומר חובה נשאר פתוח בשיעורים.",
+    },
+    {
+      id: "museum.electricity",
+      category: "museum",
+      title: "כרטיס מוזיאון: חשמל → ביטים",
+      icon: "⚡",
+      price: 80,
+      unlocks: "סיור חווייתי על טרנזיסטור, שערים לוגיים ו-byte.",
+      rule: "הסברי חובה על bit/byte נשארים פתוחים במילון ובשיעורים.",
+    },
+    {
+      id: "museum.react",
+      category: "museum",
+      title: "כרטיס מוזיאון: React Evolution",
+      icon: "⚛️",
+      price: 120,
+      unlocks: "למה React נוצר, מה הוא החליף ומה היה אפשר לבנות אחרת.",
+      rule: "לא פותח mastery ב-React. רק חוויה והקשר.",
+    },
+    {
+      id: "challenge.debug-arena",
+      category: "challenge",
+      title: "Debug Arena",
+      icon: "🧯",
+      price: 110,
+      unlocks: "חדר תקלות עם trace, סימפטום, root cause ותיקון.",
+      rule: "ה-XP בחדר ניתן רק על פתרון שאלות חדשות.",
+    },
+    {
+      id: "challenge.async-boss",
+      category: "challenge",
+      title: "Boss Battle: Async",
+      icon: "👑",
+      price: 180,
+      unlocks: "אתגר עומק על Promise, async/await, fetch וטעויות טעינה.",
+      rule: "מומלץ אחרי רמה 4+ במושגי async.",
+    },
+    {
+      id: "tool.visual-hints",
+      category: "learning-tool",
+      title: "רמזים ויזואליים מורחבים",
+      icon: "💡",
+      price: 45,
+      unlocks: "רמזים ציוריים לחזרה על מושגים מבלבלים.",
+      rule: "רמז לא מוריד דרגת קושי ולא עונה בשבילך.",
+    },
+    {
+      id: "cosmetic.cyber-theme",
+      category: "cosmetic",
+      title: "ערכת צבע Cyber Focus",
+      icon: "🎨",
+      price: 35,
+      unlocks: "עיצוב קוסמטי למסך פוקוס ולכרטיסי התקדמות.",
+      rule: "קוסמטיקה בלבד. אין השפעה על ציונים.",
+    },
+    {
+      id: "cosmetic.master-badge",
+      category: "cosmetic",
+      title: "תג כותרת: בדרך ל-100",
+      icon: "🏅",
+      price: 25,
+      unlocks: "תג תצוגה אישי ליד פרופיל התלמיד.",
+      rule: "התג לא מעיד על mastery אמיתי.",
+    },
+  ];
+
+  let rewardStoreFilter = "all";
+
+  function getStorePurchases() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(STORE_PURCHASES_KEY) || "{}");
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function saveStorePurchases(purchases) {
+    try { localStorage.setItem(STORE_PURCHASES_KEY, JSON.stringify(purchases)); } catch {}
+  }
+
+  function purchaseStoreItem(itemId) {
+    const item = REWARD_STORE_CATALOG.find((entry) => entry.id === itemId);
+    if (!item) return { ok: false, message: "הפריט לא נמצא." };
+    const purchases = getStorePurchases();
+    if (purchases[item.id]) return { ok: false, message: "הפריט כבר פתוח אצלך." };
+    const balance = getCoins();
+    if (balance < item.price) return { ok: false, message: `חסרים ${item.price - balance} מטבעות.` };
+    try { localStorage.setItem(COINS_KEY, String(balance - item.price)); } catch {}
+    purchases[item.id] = {
+      purchasedAt: new Date().toISOString(),
+      price: item.price,
+      title: item.title,
+    };
+    saveStorePurchases(purchases);
+    appendRewardLog({
+      at: new Date().toISOString(),
+      source: "store-purchase",
+      questionId: item.id,
+      xp: 0,
+      coins: -item.price,
+    });
+    updateXPWidget(getXP());
+    return { ok: true, message: `${item.title} נפתח.` };
+  }
+
+  function renderRewardStore(message = "") {
+    const root = document.getElementById("reward-store-content");
+    const filters = document.getElementById("reward-store-filters");
+    const balance = document.getElementById("reward-store-balance");
+    if (!root) return;
+    const purchases = getStorePurchases();
+    const coins = getCoins();
+    const levelState = learnerLevelFromXP(getXP());
+    const visible = REWARD_STORE_CATALOG.filter((item) => rewardStoreFilter === "all" || item.category === rewardStoreFilter);
+    if (balance) {
+      balance.innerHTML = `
+        <strong>Lv ${levelState.level}</strong>
+        <span>${levelState.band.icon} ${esc(levelState.band.label)}</span>
+        <strong>🪙 ${coins}</strong>`;
+    }
+    if (filters) {
+      filters.innerHTML = STORE_CATEGORIES.map((category) => `
+        <button class="store-filter ${rewardStoreFilter === category.id ? "active" : ""}" data-store-filter="${esc(category.id)}">
+          ${esc(category.label)}
+        </button>`).join("");
+    }
+    root.innerHTML = `
+      ${message ? `<div class="store-message">${esc(message)}</div>` : ""}
+      <div class="store-rule-banner">
+        <strong>כלל חנות:</strong> קונים חוויות, עיצובים ואתגרי בונוס. אי אפשר לקנות ציון; לא קונים מאסטר, ולא מדלגים על שאלות עומק.
+      </div>
+      <div class="store-grid">
+        ${visible.map((item) => {
+          const owned = !!purchases[item.id];
+          const affordable = coins >= item.price;
+          return `
+            <article class="store-card ${owned ? "owned" : ""} ${!owned && !affordable ? "locked" : ""}">
+              <div class="store-card-top">
+                <span class="store-icon">${item.icon}</span>
+                <span class="store-price">${owned ? "פתוח" : `🪙 ${item.price}`}</span>
+              </div>
+              <h3>${esc(item.title)}</h3>
+              <p>${esc(item.unlocks)}</p>
+              <small>${esc(item.rule)}</small>
+              <button data-store-buy="${esc(item.id)}" ${owned || !affordable ? "disabled" : ""}>
+                ${owned ? "נרכש" : affordable ? "פתח עם מטבעות" : `חסרים ${item.price - coins} 🪙`}
+              </button>
+            </article>`;
+        }).join("")}
+      </div>
+      <section class="store-purchases">
+        <h3>הרכישות שלי</h3>
+        ${
+          Object.keys(purchases).length
+            ? `<div class="store-purchase-list">
+                ${Object.entries(purchases).map(([id, purchase]) => `
+                  <span title="${esc(id)}">${esc(purchase.title || id)} · 🪙 ${purchase.price || 0}</span>
+                `).join("")}
+              </div>`
+            : `<p>עדיין אין רכישות. ענה על שאלות וצבור מטבעות.</p>`
+        }
+      </section>`;
+
+    filters?.querySelectorAll("[data-store-filter]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        rewardStoreFilter = btn.dataset.storeFilter || "all";
+        renderRewardStore();
+      });
+    });
+    root.querySelectorAll("[data-store-buy]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const result = purchaseStoreItem(btn.dataset.storeBuy);
+        renderRewardStore(result.message);
+      });
+    });
+  }
+
+  function setRewardStoreContextTree() {
+    setContextTree(
+      "חנות חוויות",
+      [
+        {
+          id: "store-balance",
+          label: "יתרה והתקדמות",
+          meta: `Lv ${learnerLevelFromXP(getXP()).level} · 🪙 ${getCoins()}`,
+          action: () => openRewardStore(),
+        },
+        {
+          id: "store-catalog",
+          label: "קטלוג",
+          meta: `${REWARD_STORE_CATALOG.length} פריטים`,
+          children: STORE_CATEGORIES.filter((cat) => cat.id !== "all").map((cat) => ({
+            id: `store-${cat.id}`,
+            label: cat.label,
+            action: () => {
+              rewardStoreFilter = cat.id;
+              renderRewardStore();
+            },
+          })),
+        },
+        {
+          id: "store-rules",
+          label: "כללי אנטי-רמאות",
+          children: [
+            { id: "store-no-grade", label: "לא קונים ציון" },
+            { id: "store-no-mastery", label: "לא קונים מאסטר" },
+            { id: "store-no-required-lock", label: "לא נועלים חומר חובה" },
+          ],
+        },
+      ],
+      { countLabel: `${Object.keys(getStorePurchases()).length} נרכשו` },
+    );
+  }
+
+  function openRewardStore() {
+    hideAllViews();
+    currentLessonId = null;
+    currentLessonTitle.textContent = "🛒 חנות חוויות";
+    currentLessonDesc.textContent =
+      "רכוש חוויות, כרטיסי מוזיאון ואתגרי בונוס עם מטבעות שקיבלת מלמידה. לא ניתן לקנות ציונים או שליטה.";
+    if (rewardStoreView) rewardStoreView.style.display = "block";
+    openRewardStoreBtn?.classList.add("active");
+    renderRewardStore();
+    setRewardStoreContextTree();
+    scrollToTop();
+    sidebar.classList.remove("open");
+  }
+
+  function openRewardStoreForItem(itemId) {
+    const item = getRewardStoreItem(itemId);
+    rewardStoreFilter = item?.category || "museum";
+    openRewardStore();
+    renderRewardStore(item ? `${item.title}: אפשר לפתוח כאן עם מטבעות למידה.` : "");
   }
 
   // --- Achievements ---
@@ -24475,7 +27291,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     if (newly.length) {
       saveUnlockedAchievements([...unlocked]);
-      newly.forEach((ach) => showAchievementToast(ach));
+      newly.forEach((ach) => {
+        awardLearningReward({
+          xp: 25,
+          coins: 8,
+          source: "achievement",
+          questionId: ach.id,
+        });
+        showAchievementToast({
+          ...ach,
+          desc: `${ach.desc} · +25 XP · +8 🪙`,
+        });
+      });
     }
   }
 
@@ -24512,6 +27339,20 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("ach-close")?.addEventListener("click", () => {
     const el = document.getElementById("achievements-overlay");
     if (el) el.style.display = "none";
+  });
+  document.getElementById("xp-widget")?.addEventListener("click", openXPDetailPanel);
+  document.getElementById("xp-widget")?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openXPDetailPanel();
+    }
+  });
+  document.getElementById("xp-detail-close")?.addEventListener("click", () => {
+    const el = document.getElementById("xp-detail-overlay");
+    if (el) el.style.display = "none";
+  });
+  document.getElementById("xp-detail-overlay")?.addEventListener("click", (event) => {
+    if (event.target?.id === "xp-detail-overlay") event.target.style.display = "none";
   });
 
   // --- Daily Reflection Modal ---
@@ -24730,20 +27571,73 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== end AI Tutor =====
 
   // ===== W10 — Export/Import Progress =====
+  function collectProfileScopedEntries(prefixes = []) {
+    const entries = {};
+    const activeProfileId = localProfileStore?.activeProfile?.id || "";
+    const physicalPrefix = activeProfileId ? `lumenportal:profile:${activeProfileId}:` : "";
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const physicalKey = localStorage.key(i);
+      if (!physicalKey) continue;
+      const logicalKey = physicalPrefix && physicalKey.startsWith(physicalPrefix)
+        ? physicalKey.slice(physicalPrefix.length)
+        : physicalKey;
+      if (!prefixes.some((prefix) => logicalKey.startsWith(prefix))) continue;
+      const value = localStorage.getItem(logicalKey);
+      if (value !== null) entries[logicalKey] = value;
+    }
+    return entries;
+  }
+
+  function collectEconomyExport() {
+    return {
+      xp: getXP(),
+      coins: getCoins(),
+      lifetimeXp: getLifetimeXP(),
+      lifetimeCoinsEarned: getLifetimeCoins(),
+      rewardLog: readRewardLog(),
+      purchases: getStorePurchases(),
+    };
+  }
+
+  function importEconomyExport(economy = {}) {
+    if (!economy || typeof economy !== "object") return;
+    const numericEntries = [
+      [XP_KEY, economy.xp],
+      [COINS_KEY, economy.coins],
+      [LIFETIME_XP_KEY, economy.lifetimeXp],
+      [LIFETIME_COINS_KEY, economy.lifetimeCoinsEarned],
+    ];
+    numericEntries.forEach(([key, value]) => {
+      const safeValue = Math.max(0, Number(value) || 0);
+      localStorage.setItem(key, String(safeValue));
+    });
+    if (Array.isArray(economy.rewardLog)) {
+      localStorage.setItem(REWARD_LOG_KEY, JSON.stringify(economy.rewardLog.slice(0, 80)));
+    }
+    if (economy.purchases && typeof economy.purchases === "object" && !Array.isArray(economy.purchases)) {
+      localStorage.setItem(STORE_PURCHASES_KEY, JSON.stringify(economy.purchases));
+    }
+    updateXPWidget(getXP());
+  }
+
   function exportProgress() {
     const data = {
-      version: 1,
+      version: 2,
       exportedAt: new Date().toISOString(),
+      profile: {
+        id: localProfileStore?.activeProfile?.id || "",
+        name: localProfileStore?.activeProfile?.name || "",
+      },
       scores: {},
       proficiency: {},
+      answeredQuestions: {},
+      weaknesses: {},
+      economy: collectEconomyExport(),
     };
-    // Collect all lumenportal:scores entries
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (!k) continue;
-      if (k.startsWith("lumenportal:scores:")) data.scores[k] = localStorage.getItem(k);
-      if (k.startsWith("lumenportal:prof:")) data.proficiency[k] = localStorage.getItem(k);
-    }
+    data.scores = collectProfileScopedEntries(["lumenportal:scores:"]);
+    data.proficiency = collectProfileScopedEntries(["lumenportal:prof:"]);
+    data.answeredQuestions = collectProfileScopedEntries([ANSWERED_QUESTIONS_KEY]);
+    data.weaknesses = collectProfileScopedEntries([MISTAKE_AGENT_KEY, CONFIDENCE_CALIBRATION_KEY, CONFUSION_BLOCKERS_KEY]);
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -24758,14 +27652,22 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.onload = (e) => {
       try {
         const data = JSON.parse(e.target.result);
-        if (!data.version || (!data.scores && !data.proficiency)) throw new Error("invalid format");
+        if (!data.version || (!data.scores && !data.proficiency && !data.economy && !data.answeredQuestions && !data.weaknesses)) throw new Error("invalid format");
+        const economy = data.economy || {};
+        const purchaseCount = Object.keys(economy.purchases || {}).length;
+        const rewardCount = Array.isArray(economy.rewardLog) ? economy.rewardLog.length : 0;
         const confirmed = confirm(
-          `ייבוא ${Object.keys(data.scores || {}).length} שיעורים ו-${Object.keys(data.proficiency || {}).length} רמות ידע?\n` +
+          `ייבוא ${Object.keys(data.scores || {}).length} שיעורים, ${Object.keys(data.proficiency || {}).length} רמות ידע, ` +
+          `${Object.keys(data.answeredQuestions || {}).length} מאגרי שאלות שנענו, ${Object.keys(data.weaknesses || {}).length} מאגרי חולשות, ` +
+          `${Number(economy.xp) || 0} XP, ${Number(economy.coins) || 0} מטבעות, ${purchaseCount} רכישות ו-${rewardCount} רשומות reward?\n` +
           "פעולה זו תדרוס נתונים קיימים בדפדפן זה."
         );
         if (!confirmed) return;
         Object.entries(data.scores || {}).forEach(([k, v]) => localStorage.setItem(k, v));
         Object.entries(data.proficiency || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+        Object.entries(data.answeredQuestions || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+        Object.entries(data.weaknesses || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+        importEconomyExport(economy);
         alert("הייבוא הצליח! רענן את הדף כדי לראות את הנתונים.");
       } catch (err) {
         alert("שגיאה בקובץ — ודא שזה קובץ JSON תקין שיוצא מ-LumenPortal.");
@@ -24793,6 +27695,18 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     initSidebar();
+    if (initialTabFromUrl === "concept-sprint") {
+      openConceptSprint();
+      return;
+    }
+    if (initialTabFromUrl === "reward-store") {
+      openRewardStore();
+      return;
+    }
+    if (initialTabFromUrl === "language-tools") {
+      openLanguageTools();
+      return;
+    }
     // Mark Home tab as active on first load
     document.getElementById("open-home")?.classList.add("active");
     setHomeContextTree();

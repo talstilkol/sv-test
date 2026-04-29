@@ -32,4 +32,24 @@ describe("question QA checklist", () => {
     const checklist = buildChecklist();
     expect(() => assertStrict(checklist)).not.toThrow();
   });
+
+  it("fails strict mode when the SVCollege prerequisite gate is not ready", () => {
+    const checklist = buildChecklist();
+    const broken = {
+      ...checklist,
+      gates: {
+        ...checklist.gates,
+        svcollegePrerequisites: {
+          ...checklist.gates.svcollegePrerequisites,
+          summary: {
+            ...checklist.gates.svcollegePrerequisites.summary,
+            ready: false,
+            totalIssues: 1,
+          },
+        },
+      },
+    };
+
+    expect(() => assertStrict(broken)).toThrow("SVCollege prerequisite gate is not ready");
+  });
 });

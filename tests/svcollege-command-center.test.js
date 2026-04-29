@@ -12,7 +12,7 @@ describe("SVCollege command center", () => {
     expect(first.finishLine.releaseBlockers).toBe(0);
     expect(first.finishLine.tabMatrixGaps).toBe(0);
     expect(first.finishLine.browserSmoke.desktop).toBe("pass");
-    expect(first.finishLine.browserSmoke.mobile).toBe("pending");
+    expect(first.finishLine.browserSmoke.mobile).toBe("pass");
     expect(first.redFirstQueue.length).toBe(0);
     expect(first.tabMatrix.ready).toBe(true);
     expect(first.tabMatrix.strictCoverage).toBe(100);
@@ -49,9 +49,7 @@ describe("SVCollege command center", () => {
       "ai-engineering",
       "design-systems",
     ]);
-    expect(report.activeParallelMode.pausedSessions).toEqual(expect.arrayContaining([
-      "Mobile All Tabs QA",
-    ]));
+    expect(report.activeParallelMode.pausedSessions).toEqual(["Question Quality"]);
     expect(report.activeParallelMode.pausedSessions).not.toContain("Auth");
     expect(report.activeParallelMode.pausedSessions).not.toContain("Next.js");
     expect(report.activeParallelMode.pausedSessions).not.toContain("Nest.js");
@@ -76,7 +74,7 @@ describe("SVCollege command center", () => {
       expect(module.tests.length).toBeGreaterThan(0);
       expect(module.tests.every((test) => test.exists)).toBe(true);
       expect(module.browserVerification).toEqual(expect.objectContaining({
-        status: "desktop-pass/mobile-pending",
+        status: "desktop-pass/mobile-pass",
         owner: "current",
         report: "SVCOLLEGE_BROWSER_SMOKE.md",
       }));
@@ -112,6 +110,20 @@ describe("SVCollege command center", () => {
     ]);
   });
 
+  it("defines the module promotion rule before broad student rollout", () => {
+    const report = commandCenter.buildReport();
+
+    expect(report.promotionRule.status).toBe("defined");
+    expect(report.promotionRule.rule).toContain("content coverage");
+    expect(report.promotionRule.rule).toContain("practice coverage");
+    expect(report.promotionRule.rule).toContain("first-user feedback");
+    expect(report.promotionRule.requiredEvidence).toEqual(expect.arrayContaining([
+      expect.stringContaining("smoke"),
+      expect.stringContaining("feedback"),
+    ]));
+    expect(report.promotionRule.currentFinishLineScope).toContain("exam-ready");
+  });
+
   it("keeps the red-first queue sorted by release priority", () => {
     const report = commandCenter.buildReport();
 
@@ -139,9 +151,11 @@ describe("SVCollege command center", () => {
     expect(markdown).toContain("## Current Parallel Mode");
     expect(markdown).toContain("## Red-First Queue");
     expect(markdown).toContain("## No-Evidence Gate");
+    expect(markdown).toContain("## Promotion Rule");
     expect(markdown).toContain("## Module Evidence Matrix");
     expect(markdown).toContain("## Module × Tab Matrix");
     expect(markdown).toContain("Desktop browser smoke: pass");
+    expect(markdown).toContain("Mobile browser smoke: pass");
     expect(markdown).toContain("## Parallel Sessions");
     expect(markdown).toContain("Per-distractor feedback");
   });

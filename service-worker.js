@@ -2,7 +2,7 @@
 // Caches the app shell + primary lessons for offline use.
 // Cache strategy: cache-first for static assets, network-first for HTML.
 
-const CACHE_VERSION = "lumen-v2.4.25";
+const CACHE_VERSION = "lumen-v2.4.29";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 // Resources that MUST be available offline (the App Shell + core data)
@@ -146,7 +146,23 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-// Fetch — network-first for HTML, cache-first for static assets.
+function isVersionedCodeAsset(url) {
+  return url.searchParams.has("v") && (url.pathname.endsWith(".js") || url.pathname.endsWith(".css"));
+}
+
+function networkFirstVersionedAsset(request) {
+  return fetch(new Request(request, { cache: "reload" }))
+    .then((res) => {
+      if (res.ok) {
+        const clone = res.clone();
+        caches.open(STATIC_CACHE).then((cache) => cache.put(request, clone)).catch(() => {});
+      }
+      return res;
+    })
+    .catch(() => caches.match(request));
+}
+
+// Fetch — network-first for HTML/versioned code assets, cache-first for stable static assets.
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   // Only handle GET requests within the same origin
@@ -167,6 +183,11 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(() => caches.match(request).then((cached) => cached || caches.match("/index.html"))),
     );
+    return;
+  }
+
+  if (isVersionedCodeAsset(url)) {
+    event.respondWith(networkFirstVersionedAsset(request));
     return;
   }
 

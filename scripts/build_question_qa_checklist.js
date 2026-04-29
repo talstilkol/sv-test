@@ -498,6 +498,9 @@ function assertStrict(checklist) {
       throw new Error(`Missing SVCollege prerequisite gate issue count: ${code}.`);
     }
   });
+  if (!gate.summary.ready || gate.summary.totalIssues > 0) {
+    throw new Error(`SVCollege prerequisite gate is not ready: ${gate.summary.totalIssues} issues.`);
+  }
 }
 
 function run(argv = process.argv.slice(2)) {

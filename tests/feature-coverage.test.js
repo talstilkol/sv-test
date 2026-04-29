@@ -33,14 +33,13 @@ describe("Feature coverage report", () => {
     expect(byId.courseBlueprints.details.modules).toBe(15);
   });
 
-  it("keeps full-bank distractor feedback marked partial until all MC questions are covered", () => {
+  it("counts full-bank distractor feedback from curated maps plus inline question data", () => {
     const report = featureCoverage.buildCoverage();
     const optionFeedback = report.metrics.find((item) => item.id === "optionFeedback");
 
-    expect(optionFeedback.implemented).toBe(50);
-    expect(optionFeedback.target).toBeGreaterThan(optionFeedback.implemented);
-    expect(optionFeedback.details.optionExplanations).toBe(200);
-    expect(optionFeedback.status).toBe("Partial");
+    expect(optionFeedback.implemented).toBe(optionFeedback.target);
+    expect(optionFeedback.details.optionExplanations).toBeGreaterThanOrEqual(optionFeedback.target * 4);
+    expect(optionFeedback.status).toBe("Done");
     expect(optionFeedback.enforceStrict).toBe(false);
   });
 
@@ -51,7 +50,7 @@ describe("Feature coverage report", () => {
     expect(markdown).toContain("Feature Coverage Report");
     expect(markdown).toContain("Evidence gate failures: 0");
     expect(markdown).toContain("Per-Distractor Feedback");
-    expect(markdown).toContain("Partial");
+    expect(markdown).toContain("Done");
   });
 
   it("fails the evidence gate when a Done module has no explicit outcome metric", () => {

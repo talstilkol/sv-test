@@ -133,6 +133,39 @@
     const key = normalizeDefinitionKey(conceptName);
     return conciseDefinitions[key] || conciseDefinitions[key.replace(/\s+/g, "")] || null;
   };
+  const cleanDerivedDefinition = (value) => {
+    const text = String(value || "")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!text) return "";
+    const firstSentence = text.split(/(?<=[.!?。])\s+|[׃]\s+/)[0] || text;
+    const beforeExample = firstSentence.split(/\s+לדוגמה[:：]?|\s+למשל[:：]?/)[0] || firstSentence;
+    const clean = beforeExample.trim();
+    if (clean.length <= 110) return clean;
+    const cut = clean.slice(0, 107).replace(/\s+\S*$/, "");
+    return `${cut}...`;
+  };
+  const derivedDefinitionForConcept = (concept) => {
+    const levels = concept && concept.levels ? concept.levels : {};
+    const what = cleanDerivedDefinition(concept && (
+      concept.conciseDefinition ||
+      levels.grandma ||
+      levels.child ||
+      concept.description ||
+      concept.summary
+    ));
+    if (!what) return null;
+    const need = cleanDerivedDefinition(
+      (concept && concept.mustKnow) ||
+      levels.student ||
+      levels.technical ||
+      levels.parent ||
+      levels.child ||
+      what,
+    );
+    return { what, need: need || what };
+  };
   const isLowSignalExplanation = (value) => lowSignalExplanationRe.test(String(value || ""));
   const isLowSignalGeneratedQuestion = (question) => {
     const text = [
@@ -158,7 +191,7 @@
   window.LESSONS_DATA.forEach((lesson) => {
     (lesson.concepts || []).forEach((c) => {
       const key = `${lesson.id}::${c.conceptName}`;
-      const concise = definitionForConcept(c.conceptName);
+      const concise = definitionForConcept(c.conceptName) || derivedDefinitionForConcept(c);
       if (concise) {
         c.conciseDefinition = concise.what;
         c.mustKnow = concise.need || "";

@@ -160,7 +160,7 @@ function auditQuestion(q) {
   if (lengths.length === 4) {
     const min = Math.min(...lengths);
     const max = Math.max(...lengths);
-    if (min > 0 && max / min >= 4.2) {
+    if (min > 0 && max >= 18 && max / min >= 4.2) {
       addIssue(
         issues,
         "note",

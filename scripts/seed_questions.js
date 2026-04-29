@@ -71,7 +71,18 @@ function ck(lessonId, conceptName) {
 
 function bestExplanation(concept) {
   const lv = concept.levels || {};
-  return lv.junior || lv.student || lv.professor || lv.soldier || lv.child || lv.grandma || "";
+  return (
+    lv.junior ||
+    lv.student ||
+    lv.professor ||
+    lv.soldier ||
+    lv.child ||
+    lv.grandma ||
+    concept.simpleExplanation ||
+    concept.whyFullStack ||
+    concept.commonMistake ||
+    ""
+  );
 }
 
 function shuffle(arr) {
@@ -80,6 +91,39 @@ function shuffle(arr) {
 
 function escapeRegex(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function countTokenOccurrences(text, token) {
+  if (!text || !token) return 0;
+  const haystack = String(text).toLowerCase();
+  const needle = String(token).toLowerCase();
+  let count = 0;
+  let index = 0;
+  while ((index = haystack.indexOf(needle, index)) !== -1) {
+    count++;
+    index += needle.length;
+  }
+  return count;
+}
+
+function blankTokenOnce(code, token, matcher) {
+  if (!code || !token) return null;
+  if (countTokenOccurrences(code, token) !== 1) return null;
+  const re = matcher || new RegExp(`\\b(${escapeRegex(token)})\\b`, "i");
+  const m = code.match(re);
+  if (!m) return null;
+  const answer = m[0];
+  if (answer.length < 2 || answer.length > 24) return null;
+  const blanked = code.replace(re, "____");
+  if (countTokenOccurrences(blanked, answer) > 0) return null;
+  return { answer, blanked };
+}
+
+function cleanSnippet(text, max = 120) {
+  return String(text || "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, max);
 }
 
 // Common JS/React keywords/methods worth blanking out (mirrors app.js)
@@ -97,44 +141,61 @@ const FILL_PRIORITY = new Set([
   "props", "state", "children", "key", "ref",
 ]);
 
-function makeCodeFill(concept) {
+function collectCodeFills(concept) {
   const code = concept.codeExample;
-  if (!code || code.length < 8) return null;
+  if (!code || code.length < 8) return [];
   const name = (concept.conceptName || "").trim();
-  if (!name) return null;
+  if (!name) return [];
+  const fills = [];
+  const seen = new Set();
+
+  function addFill(token, matcher) {
+    const fill = blankTokenOnce(code, token, matcher);
+    if (!fill) return;
+    const signature = `${fill.answer}::${fill.blanked}`;
+    if (seen.has(signature)) return;
+    seen.add(signature);
+    fills.push(fill);
+  }
 
   // 1) concept name as token (or word part)
   const words = name.split(/[\s\-_]+/).filter((w) => w.length >= 3);
   for (const w of words) {
     const re = new RegExp(`\\b(${escapeRegex(w)})\\b`, "i");
-    const m = code.match(re);
-    if (m) {
-      const answer = m[0];
-      if (answer.length < 2 || answer.length > 24) continue;
-      const blanked = code.replace(re, "____");
-      return { answer, blanked };
-    }
+    addFill(w, re);
   }
   // 2) Priority keywords
   const tokens = code.match(/[A-Za-z_$][A-Za-z0-9_$]+/g) || [];
-  const priorityHits = tokens.filter((t) => FILL_PRIORITY.has(t));
-  if (priorityHits.length > 0) {
-    const chosen = priorityHits[RNG.int(priorityHits.length)];
-    const idx = code.indexOf(chosen);
-    if (idx !== -1) {
-      const blanked = code.substring(0, idx) + "____" + code.substring(idx + chosen.length);
-      return { answer: chosen, blanked };
-    }
-  }
+  const priorityHits = [...new Set(tokens.filter((t) => FILL_PRIORITY.has(t)))].filter((t) => countTokenOccurrences(code, t) === 1);
+  priorityHits.forEach((token) => addFill(token));
   // 3) Fallback identifier
   const skip = new Set(["console", "log", "document", "window", "true", "false", "null", "undefined", "if", "else", "for", "while"]);
-  const candidates = tokens.filter((t) => !skip.has(t) && t.length >= 4 && t.length <= 18);
-  if (candidates.length === 0) return null;
-  const chosen = candidates[RNG.int(candidates.length)];
-  const idx = code.indexOf(chosen);
-  if (idx === -1) return null;
-  const blanked = code.substring(0, idx) + "____" + code.substring(idx + chosen.length);
-  return { answer: chosen, blanked };
+  const candidates = [...new Set(tokens.filter((t) => !skip.has(t) && t.length >= 4 && t.length <= 18))]
+    .filter((t) => countTokenOccurrences(code, t) === 1);
+  candidates.forEach((token) => addFill(token));
+  const conceptName = name.length >= 2 && name.length <= 24 ? name : "";
+  if (conceptName) {
+    const answerPattern = new RegExp(escapeRegex(conceptName), "gi");
+    const explanation = cleanSnippet(bestExplanation(concept).replace(answerPattern, "המושג"), 140);
+    const codeCue = cleanSnippet(code.replace(answerPattern, "המושג"), 140);
+    const pseudoCode = [
+      `// מושג: ____`,
+      `// רמז מהקוד: ${codeCue || "קוד קצר שמדגים את המושג"}`,
+      `// הסבר: ${explanation || "המושג הוא החלק המרכזי שמודגם כאן"}`,
+    ].join("\n");
+    const signature = `${conceptName}::${pseudoCode}`;
+    if (!seen.has(signature)) {
+      seen.add(signature);
+      fills.push({ answer: conceptName, blanked: pseudoCode });
+    }
+  }
+  return fills;
+}
+
+function makeCodeFill(concept, variantIndex = 0) {
+  const fills = collectCodeFills(concept);
+  if (fills.length === 0) return null;
+  return fills[variantIndex % fills.length];
 }
 
 // =================== Question generators ===================
@@ -144,7 +205,7 @@ function buildPool(lessons) {
   const pool = [];
   lessons.forEach((L) => {
     (L.concepts || []).forEach((c) => {
-      if (c.levels && (c.levels.junior || c.levels.student || c.levels.grandma)) {
+      if (bestExplanation(c)) {
         pool.push({ lesson: L, concept: c });
       }
     });
@@ -166,17 +227,90 @@ function pickDistractors(pool, currentConceptName, n, accessor) {
   return out;
 }
 
+function uniqueOptionSet(correct, distractors) {
+  const values = [correct, ...distractors].map((value) => String(value || "").trim());
+  const seen = new Set(values.map((value) => value.toLowerCase()));
+  if (seen.size !== values.length) return null;
+  if (values.some(hasGenericCue)) return null;
+  for (let i = 0; i < values.length; i++) {
+    for (let j = i + 1; j < values.length; j++) {
+      if (nearDuplicateOption(values[i], values[j])) return null;
+    }
+  }
+  if (hasLengthCue(values)) return null;
+  return values;
+}
+
+function hasGenericCue(value) {
+  return [
+    /כל התשובות/i,
+    /כל האפשרויות/i,
+    /אף תשובה/i,
+    /אין תשובה/i,
+    /תמיד/i,
+    /אף פעם/i,
+  ].some((pattern) => pattern.test(String(value || "")));
+}
+
+function normalizeOptionText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[\u0591-\u05C7]/g, "")
+    .replace(/[.,:;!?'"`()\[\]{}<>/\\|*_+=~`׳״״]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function optionTokens(value) {
+  return normalizeOptionText(value)
+    .split(" ")
+    .filter((token) => token.length > 1);
+}
+
+function nearDuplicateOption(a, b) {
+  const left = new Set(optionTokens(a));
+  const right = new Set(optionTokens(b));
+  if (Math.min(left.size, right.size) < 4) return false;
+  let intersection = 0;
+  left.forEach((token) => {
+    if (right.has(token)) intersection++;
+  });
+  const similarity = intersection / (left.size + right.size - intersection || 1);
+  return similarity >= 0.86;
+}
+
+function hasLengthCue(values) {
+  const lengths = values.map((value) => normalizeOptionText(value).length).filter(Boolean);
+  if (lengths.length !== values.length) return true;
+  const min = Math.min(...lengths);
+  const max = Math.max(...lengths);
+  return min > 0 && max / min >= 4.2;
+}
+
 let mcSeq = 0;
 let fillSeq = 0;
+
+function optionFeedbackFor(conceptName, options, correctIndex, explanation) {
+  return options.map((option, index) => {
+    if (index === correctIndex) {
+      return `✅ נכון: ${explanation || conceptName}`;
+    }
+    return `❌ "${option}" לא מתאים כאן. השאלה בודקת את "${conceptName}", לכן צריך להתאים בין ההגדרה/הקוד לבין המושג המדויק ולא לבחור מושג דומה.`;
+  });
+}
 
 // MC type 1 — describe (concept → explanation at level)
 function genDescribeMC(lesson, concept, pool, level) {
   const lvKey = LEVEL_KEYS[level];
-  const correct = concept.levels?.[lvKey];
+  const correct = concept.levels?.[lvKey] || bestExplanation(concept);
   if (!correct) return null;
   const distractors = pickDistractors(pool, concept.conceptName, 3, (c) => c.levels?.[lvKey] || bestExplanation(c));
   if (distractors.length < 3) return null;
-  const opts = shuffle([correct, ...distractors]);
+  const optionSet = uniqueOptionSet(correct, distractors);
+  if (!optionSet) return null;
+  const opts = shuffle(optionSet);
+  const correctIndex = opts.indexOf(correct);
+  const explanation = `${concept.conceptName}: ${correct}`;
   return {
     id: `mc_seed_${++mcSeq}`,
     topicId: `topic_seed_${lesson.id}`,
@@ -184,8 +318,9 @@ function genDescribeMC(lesson, concept, pool, level) {
     level,
     question: `איזה מהמשפטים מתאר נכון את "${concept.conceptName}" ברמת ${LEVEL_LABELS[level]}?`,
     options: opts,
-    correctIndex: opts.indexOf(correct),
-    explanation: `${concept.conceptName}: ${correct}`,
+    correctIndex,
+    explanation,
+    optionFeedback: optionFeedbackFor(concept.conceptName, opts, correctIndex, explanation),
     _seeded: true,
   };
 }
@@ -197,7 +332,11 @@ function genNameMatchMC(lesson, concept, pool, level) {
   if (!explanation) return null;
   const distractors = pickDistractors(pool, concept.conceptName, 3, (c) => c.conceptName);
   if (distractors.length < 3) return null;
-  const opts = shuffle([concept.conceptName, ...distractors]);
+  const optionSet = uniqueOptionSet(concept.conceptName, distractors);
+  if (!optionSet) return null;
+  const opts = shuffle(optionSet);
+  const correctIndex = opts.indexOf(concept.conceptName);
+  const explanationLine = `המושג: ${concept.conceptName}.`;
   return {
     id: `mc_seed_${++mcSeq}`,
     topicId: `topic_seed_${lesson.id}`,
@@ -205,8 +344,9 @@ function genNameMatchMC(lesson, concept, pool, level) {
     level,
     question: `איזה מושג מתאים להגדרה הבאה (ברמת ${LEVEL_LABELS[level]})?\n\n"${explanation}"`,
     options: opts,
-    correctIndex: opts.indexOf(concept.conceptName),
-    explanation: `המושג: ${concept.conceptName}.`,
+    correctIndex,
+    explanation: explanationLine,
+    optionFeedback: optionFeedbackFor(concept.conceptName, opts, correctIndex, explanationLine),
     _seeded: true,
   };
 }
@@ -216,7 +356,11 @@ function genCodeMatchMC(lesson, concept, pool) {
   if (!concept.codeExample) return null;
   const distractors = pickDistractors(pool, concept.conceptName, 3, (c) => c.conceptName);
   if (distractors.length < 3) return null;
-  const opts = shuffle([concept.conceptName, ...distractors]);
+  const optionSet = uniqueOptionSet(concept.conceptName, distractors);
+  if (!optionSet) return null;
+  const opts = shuffle(optionSet);
+  const correctIndex = opts.indexOf(concept.conceptName);
+  const explanation = `${concept.conceptName} — ${concept.codeExplanation || bestExplanation(concept)}`;
   return {
     id: `mc_seed_${++mcSeq}`,
     topicId: `topic_seed_${lesson.id}`,
@@ -225,15 +369,59 @@ function genCodeMatchMC(lesson, concept, pool) {
     question: `איזה מושג מתואר/מודגם בקטע הקוד הבא?`,
     codeBlock: concept.codeExample,
     options: opts,
-    correctIndex: opts.indexOf(concept.conceptName),
-    explanation: `${concept.conceptName} — ${concept.codeExplanation || bestExplanation(concept)}`,
+    correctIndex,
+    explanation,
+    optionFeedback: optionFeedbackFor(concept.conceptName, opts, correctIndex, explanation),
+    _seeded: true,
+  };
+}
+
+function genRoleMC(lesson, concept, variantIndex) {
+  const conceptName = concept.conceptName;
+  const explanation = cleanSnippet(concept.codeExplanation || bestExplanation(concept), 180);
+  if (!conceptName || !explanation) return null;
+  const correct = `הוא החלק שמממש כאן את הרעיון של ${conceptName} בקוד.`;
+  const distractorSets = [
+    [
+      "זה רק שם קישוטי שאין לו משמעות בזמן הריצה.",
+      "זה סימן שצריך למחוק כדי שהקוד יעבוד.",
+      "זה תמיד מחליף את כל שאר השורות בקובץ.",
+    ],
+    [
+      "זה אחראי רק לצבעים ולמרווחים במסך.",
+      "זה ערך מקרי שלא משפיע על הלוגיקה בכלל.",
+      "זה מנגנון שמבטל את הצורך להבין את הקוד.",
+    ],
+    [
+      "זה רק הערה לקורא ולא חלק מההתנהגות.",
+      "זה תמיד פעולה של מסד נתונים בלבד.",
+      "זה תמיד שייך ל-CSS ולא ל-JavaScript.",
+    ],
+  ];
+  const distractors = distractorSets[variantIndex % distractorSets.length];
+  const optionSet = uniqueOptionSet(correct, distractors);
+  if (!optionSet) return null;
+  const opts = shuffle(optionSet);
+  const correctIndex = opts.indexOf(correct);
+  const explanationLine = `${conceptName}: ${explanation}`;
+  return {
+    id: `mc_seed_${++mcSeq}`,
+    topicId: `topic_seed_${lesson.id}`,
+    conceptKey: ck(lesson.id, concept.conceptName),
+    level: 5,
+    question: `מה התפקיד של "${conceptName}" בדוגמה או בהסבר של השיעור?`,
+    codeBlock: concept.codeExample || undefined,
+    options: opts,
+    correctIndex,
+    explanation: explanationLine,
+    optionFeedback: optionFeedbackFor(conceptName, opts, correctIndex, explanationLine),
     _seeded: true,
   };
 }
 
 // Fill — code completion
-function genFill(lesson, concept, level) {
-  const fill = makeCodeFill(concept);
+function genFill(lesson, concept, level, variantIndex) {
+  const fill = makeCodeFill(concept, variantIndex);
   if (!fill) return null;
   return {
     id: `fill_seed_${++fillSeq}`,
@@ -287,13 +475,14 @@ function main() {
       (lvl) => genDescribeMC(lesson, concept, pool, lvl),
       (lvl) => genNameMatchMC(lesson, concept, pool, lvl),
       () => genCodeMatchMC(lesson, concept, pool),
+      () => genRoleMC(lesson, concept, g),
     ];
     const levels = [2, 4, 5]; // try grandma-ish, mid, advanced
     let g = 0;
     let genTries = 0;
     while (
       seededMC.filter((q) => q.conceptKey === key).length < mcNeeded &&
-      genTries < 12
+      genTries < 24
     ) {
       const gen = generators[g % generators.length];
       const lvl = levels[g % levels.length];
@@ -313,10 +502,10 @@ function main() {
     let fillTries = 0;
     while (
       seededFill.filter((q) => q.conceptKey === key).length < fillNeeded &&
-      fillTries < 5
+      fillTries < 8
     ) {
       const lvl = 3 + (fillTries % 3); // 3, 4, 5
-      const q = genFill(lesson, concept, lvl);
+      const q = genFill(lesson, concept, lvl, fillTries);
       if (q) {
         const dupe = seededFill.some(
           (other) => other.conceptKey === key && other.code === q.code,

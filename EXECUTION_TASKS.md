@@ -18,7 +18,7 @@
 
 | Phase | בוצע / סך | אחוז |
 |---|:-:|:-:|
-| Finish Line 1: SVCollege Full Portal Coverage | 89/112 | **79%** 🚧 |
+| Finish Line 1: SVCollege Full Portal Coverage | 128/142 | **90%** 🚧 |
 | Phase 0: Status (DONE) | 25/25 | 100% ✅ |
 | Phase 1: Foundation | 60/62 | **97%** 🚧 |
 | Phase 2: Core Learning | 68/70 | **97%** 🚧 |
@@ -27,7 +27,10 @@
 | Phase 5: Quality Governance + Rebaseline | 22/39 | **56%** 🚧 |
 | Phase 6: Learning Evidence + Productization | 19/36 | **53%** 🚧 |
 | Phase 7: Learning OS + Outcome Scale | 0/48 | 0% |
-| **TOTAL** | **323/461** | **70%** |
+| Phase 8: XP Economy + Experience Store | 23/54 | **43%** 🚧 |
+| Phase 9: Exam Intelligence + Reliability Hardening | 8/40 | **20%** 🚧 |
+| Phase 10: Exam OS v2 + Content Factory | 0/40 | 0% |
+| **TOTAL** | **392/624** | **63%** |
 
 ### Finish Line 1 Override — 2026-04-28
 
@@ -35,7 +38,7 @@
 
 ### Exam Priority Lock — 2026-04-28
 
-עדיפות ראשונה מוחלטת עד המבחן: **100% כיסוי של קורס Full Stack בכל הטאבים**. אין להתחיל או למזג משימות Priority 2 עד שכל מודולי הקורס, כל הטאבים, כל מצבי התרגול וכל בדיקות ה-smoke ירוקים. מצב מדיד נוכחי: `100%`, `15/15 covered`, `0 partial`, `0 gaps`, `0 release blockers`, `225/225 module×tab cells`, `0 tab gaps`, desktop browser smoke passed, `qa:questions:strict ready:true`. נשאר Priority 0 להשלמת mobile smoke, QA ידני לפני המבחן, ולהגדלת עומק השאלות במושגים ש-`validate:strict` עדיין מסמן כ-density warnings (`463/568` concepts need more questions).
+עדיפות ראשונה מוחלטת עד המבחן: **100% כיסוי של קורס Full Stack בכל הטאבים**. אין להתחיל או למזג משימות Priority 2 עד שכל מודולי הקורס, כל הטאבים, כל מצבי התרגול וכל בדיקות ה-smoke ירוקים. מצב מדיד נוכחי: `100%`, `15/15 covered`, `0 partial`, `0 gaps`, `0 release blockers`, `225/225 module×tab cells`, `0 tab gaps`, desktop + mobile browser smoke passed, `qa:questions:strict ready:true`, `validate:strict` density gaps `0/568`.
 
 ### Parallel Work Mode — 2026-04-28
 
@@ -44,6 +47,30 @@
 ### Parallel Repair Mode — 2026-04-29
 
 המצב עודכן: המשתמש ביטל עבודה מקבילה מחשש להתנגשויות. **Session A — Term Clarity** ו-**Session B — Prerequisite Gates** מוזגו ל-`main`; מעכשיו אין לפתוח סשנים מקבילים בלי בעלות קבצים קשיחה ואישור חדש. המשך העבודה יתבצע סדרתית על `main` או branch יחיד.
+
+### XP Economy + Store Plan — 2026-04-29
+
+נוספה תוכנית חדשה: [XP_REWARD_STORE_MASTER_PLAN.md](XP_REWARD_STORE_MASTER_PLAN.md). היא מגדירה 100 רמות XP לא לינאריות, Coins שמתקבלים מפעולות למידה, חנות חוויות, נעילת אזורי מוזיאון חווייתיים, ושער רמה 100 שמחייב שליטה מלאה בכל המושגים ופתרון קטעי קוד. היישום הוא **Priority 2**: לא חוסם את Finish Line 1 ולא ינעל חומר חובה למבחן.
+
+### Forward Improvement Plan — 2026-04-29
+
+נוספה Phase 9: **Exam Intelligence + Reliability Hardening**. ההיגיון: המערכת כבר רחבה, ולכן השיפור הבא הוא לא עוד אגף אלא מנגנון שמוודא שהתלמיד לא מתרגל כפילויות, מתקדם משאלה קלה לקשה, מקבל מסלול יומי מדויק, וכל טאב עובד במובייל ובדסקטופ. משימות Phase 9 הן Priority 0/1 עד המבחן; פיצ'רי חנות/מוזיאון נשארים Priority 2.
+
+### Post-Exam Forward Plan — 2026-04-29
+
+נוספה Phase 10: **Exam OS v2 + Content Factory**. היא לא מחליפה את Phase 9 ולא קודמת למבחן. המטרה שלה היא להכין את LumenPortal לשלב שאחרי Exam Edition: מפעל שאלות עומק, סימולציות לחץ, דוחות מוכנות מתקדמים, מערכת איכות תוכן, ופיצול עתידי לפורטלים נפרדים לקורסים אחרים. Phase 10 נשארת Priority 2 עד ש-Phase 9 ירוקה.
+
+### Exam Week Operating Plan — 2026-04-29
+
+נוסף מסמך הפעלה יומי: [EXAM_WEEK_OPERATING_PLAN.md](EXAM_WEEK_OPERATING_PLAN.md). הוא קובע סדר עבודה עד המבחן: בדיקות בוקר, סגירת פערי מושגים בצהריים, סימולציית תלמיד בערב, ושער Exam Edition. המסמך לא מוסיף scope חדש; הוא מונע פתיחת הרחבות שלא משרתות את SVCollege AI & Full Stack.
+
+### Exam Week Sprint Addendum — 2026-04-29
+
+נוסף P-0.3: ספרינט הכנה של 7 ימים. הוא לא מוסיף מוצר חדש, אלא מתרגם את התוכנית לפעולות בדיקה ותיקון יומיות: דוח 10 מושגים חלשים, הרחבת שאלות קשות למושגים מסוכנים, smoke מובייל/פוקוס, בדיקת no-repeat, ומועמד release ל-Exam Edition.
+
+### System Audit Addendum — 2026-04-29
+
+בוצע אודיט מקומי רחב: `npm test -- --run`, `npm run build`, `npm run validate:strict`, `npm run svcollege:readiness:release`, `npm run svcollege:tab-matrix:strict`, `npm run svcollege:command-center:strict`, `npm run quality:questions:strict`, `npm run quality:remediation:strict`, `npm run qa:questions:strict`, `npm run qa:lesson-quiz-keys:strict`, `npm run lessons:assets`, `npm run exam:weakest`, `npm run coverage:features:strict`, `npm run audit:distractors`, `npm run audit:seeded`. מצב מערכת: build/tests/readiness/tab-matrix ירוקים; `validate:strict` ירוק עם `0/568` density gaps; חסרים 0 `conceptKey` בשאלות curated; חסרות 0 הגדרות בשורה אחת ב-`exam:weakest`; remediation queue ירדה ל-0; Per-Distractor Feedback מלא לכל בנק ה-MC.
 
 ### Phase 1 Detailed:
 - W1 Architecture: ✅ 14/14 (lazy load + per-card + Vitest baseline; current suite 209 tests)
@@ -88,7 +115,7 @@
 - [V] P-0.0.5 — Close shadcn/UI + design systems partial: accessible primitives, variants, Tailwind integration, guided build
 - [V] P-0.0.6 — Add exam-final release gate: module coverage + tab matrix + command center are green; full top-tab smoke evidence remains P-1.5
 - [V] P-0.0.7 — Run and document all-tabs desktop browser smoke (`SVCOLLEGE_BROWSER_SMOKE.md`)
-- [ ] P-0.0.8 — Run and document all-tabs mobile browser smoke
+- [V] P-0.0.8 — Run and document all-tabs mobile browser smoke (`SVCOLLEGE_BROWSER_SMOKE.md`)
 - [V] P-0.0.9 — Run `npm run svcollege:readiness:release` and keep it green before any Priority 2 work
 - [V] P-0.0.10 — Freeze museum/premium/community/native/teacher-dashboard work unless it directly fixes Full Stack exam readiness
 - [V] P-0.0.11 — Add canonical concept tags/keys so every answer updates one unified knowledge profile per concept across all tabs and prevents duplicate score buckets
@@ -98,11 +125,53 @@
 > נוצר בעקבות מיזוג הענפים והרצות `npm test`, `npm run build`, `npm run validate:strict`, `npm run qa:questions:strict`.
 
 - [V] P-0.2.1 — Merge local repair branches into `main`: `codex/svcollege-prereq-gates` + `codex/svcollege-term-clarity`
-- [ ] P-0.2.2 — Push `main` to GitHub after explicit approval; current local state is `main...origin/main [ahead 4]`
+- [ ] P-0.2.2 — Push `main` to GitHub after explicit approval; current local state is `main...origin/main [ahead 6]`
 - [V] P-0.2.3 — Close `qa:questions:strict` blocker: 252 SVCollege question aids previously reported `missingGlossaryTerms`; now 0 issues / ready:true
 - [V] P-0.2.4 — Add glossary aliases for terms inferred by `QUESTION_QA_CHECKLIST.json` until `missingGlossaryTerms = 0`
-- [ ] P-0.2.5 — Add automated smoke for mastery-proof gate: no concept can show 100 / mastered until highest available challenge question is solved
-- [ ] P-0.2.6 — Add automated layout smoke for W12 XP/streak bar so it never appears in the central empty column
+- [V] P-0.2.5 — Add automated smoke for mastery-proof gate: no concept can show 100 / mastered until highest available challenge question is solved
+- [V] P-0.2.6 — Add automated layout smoke for W12 XP/streak bar so it never appears in the central empty column
+- [V] P-0.2.7 — Reduce duplicated navigation chrome: top tabs are one horizontal scroll row, W12 XP/streak bar is mounted inside the right sidebar header, and learning focus mode provides a full-screen study view with a slide-in context tree
+- [V] P-0.2.8 — Add passwordless local learner profiles so all scores, weak concepts, XP and study actions are scoped immediately to the active student
+- [V] P-0.2.9 — Add `מושגים נטו` concept sprint tab: quick risky, medium and long diagnostic routes that update Knowledge Trainer scores and apply XP bonus/penalty
+
+### 🚨 P-0.3 — Exam Week 7-Day Sprint
+
+> מטרה: להפוך את ה-ready הכללי ל-ready שימושי למבחן. כל משימה כאן צריכה להוכיח שהפורטל עוזר ללמוד בפועל, לא רק שעובר build.
+
+- [V] P-0.3.1 — Generate a daily "weakest 10 concepts" list from canonical concept tags, wrong answers, proof gaps and density warnings (`npm run exam:weakest:write`)
+- [V] P-0.3.2 — Expand hard-bank first for the 50 most exam-critical weak concepts, not for random low-risk concepts; superseded by `validate:strict` density `0/568` and `exam:weakest` hard gaps `0`
+- [V] P-0.3.3 — Run one-line definition audit: every visible concept card and prerequisite popover must answer "מה זה?" in one sentence; `exam:weakest` reports `withoutDefinition: 0`
+- [V] P-0.3.4 — Run no-repeat learner simulation: clean profile, 100 answers, verify no question repeats before bank exhaustion (`npm run exam:flows:strict`)
+- [V] P-0.3.5 — Run harder-after-correct learner simulation: correct answers must escalate to harder same-concept questions where available (`npm run exam:flows:strict`)
+- [V] P-0.3.6 — Run wrong-answer repair simulation: wrong answer must add weakness, show concise explanation and trigger recovery drill (`npm run exam:flows:strict`)
+- [V] P-0.3.7 — Run mobile smoke for all top tabs, right tree, focus mode, concept sprint and mock exam (`22/22` top tabs, `0` console errors/warnings)
+- [V] P-0.3.8 — Run focus-mode smoke: no XP/status/navigation strip may consume central learning space (`body.learning-focus-mode`, top tabs hidden)
+- [V] P-0.3.9 — Verify local profile backup/export before exam week: scores, XP, coins, weak concepts, answered question IDs and proof state
+- [V] P-0.3.10 — Create final cram sheet from weak concepts only, with one-line definitions and comparison tables where needed (`EXAM_FINAL_CRAM_SHEET.md`)
+- [V] P-0.3.11 — Run 3 deterministic mock exam variants and verify full SVCollege module coverage in each (`MOCK_EXAM_VARIANTS_REPORT.md`)
+- [V] P-0.3.12 — Freeze an `Exam Edition RC` only after tests, build, readiness, tab matrix, question QA, desktop smoke and mobile smoke are green (`EXAM_EDITION_RC.md`)
+
+### 🚨 P-0.4 — System Audit Findings — 2026-04-29
+
+> מקור: אודיט מקומי מלא ב-2026-04-29. עיקר המערכת ירוק, אבל איכות שאלות/הגדרות עדיין לא ברמת 100 למבחן. אין לפתוח Priority 2 לפני סגירת ה-open items כאן.
+
+- [V] P-0.4.1 — Verify current test suite: `npm test -- --run` passed `56 files / 291 tests`; no Vitest warning after `lib/rng` browser-only localStorage fix
+- [V] P-0.4.2 — Verify production build: `npm run build` passed with Vite
+- [V] P-0.4.3 — Verify SVCollege release gates: readiness `100%`, `15/15 covered`, tab matrix `100%`, command center `0 blockers`
+- [V] P-0.4.4 — Verify content/asset gates that are green: `qa:questions:strict ready:true`, quiz keys `145/145`, lesson assets `36 in lessons/`, feature coverage strict `0 failures`, seeded/distractor audits passed
+- [V] P-0.4.5 — Fix `validate:strict` blocker: 8 ambiguous Fill warnings (`fill_html_css_007`, `fill_tooling_007`, `fill_nest_002`, `fill_next_001`, `fill_design_001`, `fill_design_002`, `fill_nest_004`, `fill_tooling_011`)
+- [V] P-0.4.6 — Reduce question remediation queue from `392` to `0` or documented accepted-risk: now `0 blockers / 0 warnings / 0 notes`
+- [V] P-0.4.7 — Add missing concept routing metadata for 70 queued questions so every answer updates the correct concept profile
+- [V] P-0.4.8 — Review/fix 214 Fill leakage issues where answer tokens are visible in code (`review-fill-leakage: 0`)
+- [V] P-0.4.9 — Rewrite 48 near-duplicate distractor sets so wrong options test real misconceptions
+- [V] P-0.4.10 — Balance 311 option-length cue notes so the correct answer is not guessable by length
+- [V] P-0.4.11 — Replace 32 generic-wording notes with concrete, exam-facing wording
+- [V] P-0.4.12 — Add one-line “מה זה?” definitions for the 262 SVCollege concepts still missing concise definitions (`npm run exam:weakest` now reports `withoutDefinition: 0`)
+- [V] P-0.4.13 — Expand question density: seeded generator + targeted curated Fill now cover `2,840` total MC/Fill questions; `validate:strict` density gaps reduced from `377/568` to `0/568`
+- [V] P-0.4.14 — Complete Per-Distractor Feedback: full MC coverage now `1704/1704` (`100%`) via explicit curated/seeded `optionFeedback`; feature coverage reports `24/24 done`
+- [V] P-0.4.15 — Fix Vitest `--localstorage-file` warning: `lib/rng.js`/`lib/rng.ts` no longer touch Node's global Web Storage during tests
+- [V] P-0.4.16 — Run mobile smoke and focus-mode smoke after the audit fixes: Playwright desktop + 390×844 mobile smoke passed, no console errors/warnings, focus mode hides top tabs and opens the side tree
+- [V] P-0.4.17 — Close exam-week hard/proof gaps: added level-5 Fill/code-proof questions for `fs`, `By Value`, `spread`, new-array-from-existing, `$gte`, `$lte`, `side effect`, `var`, `string`, `export default`, and `props`; `npm run exam:weakest` now reports all 5 critical counters at `0`
 
 ### P-0.1 — Per-Tab 100% Full Stack Material Checklist
 
@@ -177,6 +246,7 @@
 - [V] P-1.3.8 — Add capstone links for every SVCollege domain: frontend, backend, DB, auth, Next, AI
 - [V] P-1.3.9 — Add question-quality gate scoped to SVCollege readiness
 - [V] P-1.3.10 — Add remediation queue for SVCollege gaps before expanding non-core content
+- [V] P-1.3.11 — Add no-repeat answered-question registry + harder replacement variants + deep option rationales for trainer/concept sprint
 
 ### P-1.4 — All Portal Tabs Must Support SVCollege
 - [V] P-1.4.1 — Lessons tab: every SVCollege lesson appears in right-side tree and concept jumper
@@ -203,28 +273,28 @@
 ### P-1.6 — SVCollege Assessment Readiness
 - [V] P-1.6.1 — Add SVCollege-specific mock exam template
 - [V] P-1.6.2 — Add SVCollege module scoring: HTML/CSS, JS, Tooling, Backend, DB, Auth, React, TS, Next, DevOps, Nest, AI
-- [ ] P-1.6.3 — Add exam review screen: weak modules, prerequisite rewind, recommended lesson path
+- [V] P-1.6.3 — Add exam review screen: weak modules, prerequisite rewind, recommended lesson path
 - [V] P-1.6.4 — Add deterministic question sampler that covers every SVCollege module
 - [V] P-1.6.5 — Add SVCollege final-project readiness rubric
-- [ ] P-1.6.6 — Add teacher/student export summary for SVCollege readiness
+- [V] P-1.6.6 — Add teacher/student export summary for SVCollege readiness (`SVCOLLEGE_STUDENT_READINESS_EXPORT.md`)
 - [V] P-1.6.7 — Add pass/fail gate: no "ready" badge until all required modules are covered
 
 ### P-1.7 — Finish Line Release Gate
 - [V] P-1.7.1 — Finish Line 1 cannot close while any SVCollege module is `gap`
-- [ ] P-1.7.2 — Finish Line 1 cannot close while any top tab has failing smoke coverage
+- [V] P-1.7.2 — Finish Line 1 cannot close while any top tab has failing smoke coverage (`SVCOLLEGE_BROWSER_SMOKE.md`: desktop + mobile pass)
 - [V] P-1.7.3 — Finish Line 1 cannot close while SVCollege mock exam misses a module
 - [V] P-1.7.4 — Finish Line 1 cannot close while CI, build, validation or audit is red
 
 ### P-1.8 — Question Learning Contract + Prerequisite Capsules
-- [ ] P-1.8.1 — Add `questionPrerequisites` contract for every SVCollege mock-exam question: required concepts, required terms, and assumed prior knowledge
+- [V] P-1.8.1 — Add `questionPrerequisites` contract for every SVCollege mock-exam question: required concepts, required terms, and assumed prior knowledge (`qa:questions:strict` now fails if the SVCollege prerequisite gate is not ready)
 - [V] P-1.8.2 — Show a right-side "מה צריך לדעת כדי לענות?" panel beside every hard question
 - [V] P-1.8.3 — Add mini explanations for required terms: bit, byte, value, key, variable, array, object, function, request, response, schema, token; SVCollege QA aliases cover 0 missing glossary terms
 - [V] P-1.8.4 — If a learner misses an advanced question, route first to the weakest prerequisite capsule before retesting
 - [V] P-1.8.5 — Add validation: no SVCollege hard question can ship without prerequisite and side-explanation metadata; `qa:questions:strict` is ready:true
-- [ ] P-1.8.6 — Add browser smoke for prerequisite panel in lesson quiz, trainer and mock exam
+- [V] P-1.8.6 — Add browser smoke for prerequisite panel in lesson quiz, trainer and mock exam (`SVCOLLEGE_BROWSER_SMOKE.md`)
 
 ### P-1.9 — SVCollege Command Center
-- [ ] P-1.9.1 — Add a single SVCollege dashboard tab/section: readiness, release blockers, next actions, weak modules and tab-health status
+- [V] P-1.9.1 — Add a single SVCollege dashboard tab/section: readiness, release blockers, next actions, weak modules and tab-health status (`SVCollege Command Center` inside יישור SVCollege)
 - [V] P-1.9.2 — Merge readiness sources into one report: blueprint coverage, lesson inventory, question coverage, feature coverage, quiz-key coverage and smoke status
 - [V] P-1.9.3 — Add "red first" work queue sorted by release blockers: Auth, SQL/ORM, Next.js, DevOps, Nest.js, AI Engineering
 - [V] P-1.9.4 — Add parallel-session board with file ownership, branch name, model/intelligence level and merge order
@@ -242,10 +312,10 @@
 - [ ] P-1.11.1 — Add a 10-student pilot protocol: baseline exam, 7-day use, final exam, qualitative feedback
 - [ ] P-1.11.2 — Track D1/D7 retention, module mastery, average wrong-to-correct recovery time and repeated misconception rate
 - [ ] P-1.11.3 — Add "student got stuck" feedback button with current lesson, question, prerequisite and viewport metadata
-- [ ] P-1.11.4 — Add teacher-facing weekly SVCollege progress export before building any broad teacher dashboard
+- [V] P-1.11.4 — Add teacher-facing weekly SVCollege progress export before building any broad teacher dashboard (`SVCOLLEGE_STUDENT_READINESS_EXPORT.md`)
 - [ ] P-1.11.5 — Define promotion rule: a module is "ready for students" only after content, practice, smoke and first-user feedback pass
 
-**Finish Line 1 Total: 89/112 🚧**
+**Finish Line 1 Total: 128/142 🚧**
 
 ---
 
@@ -642,6 +712,7 @@
 - [ ] P5.3.7 — Raise per-distractor feedback to 50% of MC bank
 - [ ] P5.3.8 — Raise per-distractor feedback to 100% of MC bank
 - [V] P5.3.9 — Wrong-answer weakness agent: every wrong answer updates concept/topic weakness + immediate explanation/association
+- [V] P5.3.10 — No-repeat trainer questions: persist answered question IDs per learner and require the next variant to be harder when available
 
 ### W20 — Data Contracts + Runtime Stability
 - [ ] P5.4.1 — Define schema contract for Lesson/Concept/Question/Trace/Build content
@@ -659,7 +730,7 @@
 - [ ] P5.5.3 — Wave 3 lite: Teacher Dashboard Lite + class progress heatmap
 - [V] P5.5.4 — Freeze moonshots until quality gates and coverage KPIs are green
 
-**P5 Total: 22/39** — remaining focus: full per-distractor coverage, schema contracts, Playwright smoke, telemetry, and 90-day roadmap gates.
+**P5 Total: 23/40** — remaining focus: full per-distractor coverage, schema contracts, Playwright smoke, telemetry, and 90-day roadmap gates.
 
 ---
 
@@ -785,17 +856,210 @@
 
 ---
 
+## 🪙 Phase 8 — XP Economy + Experience Store
+
+> מקור קנוני: [XP_REWARD_STORE_MASTER_PLAN.md](XP_REWARD_STORE_MASTER_PLAN.md)  
+> סטטוס: Priority 2 אחרי Finish Line 1. החנות והמוזיאון הנעול לא חוסמים חומר חובה למבחן ולא נותנים ציון במקום הוכחת ידע.
+
+### W33 — Economy Core
+- [~] P8.1.1 — Replace scattered `awardXP(amount)` usage with `awardLearningReward({ xp, coins, source, conceptKey, questionId })`; current legacy `awardXP` delegates into economy core
+- [V] P8.1.2 — Add local learner economy state: xp, coins, lifetimeXp, lifetimeCoinsEarned, purchases, rewardLog
+- [V] P8.1.3 — Add deterministic reward IDs from source + learner + concept/question, without randomness
+- [V] P8.1.4 — Prevent duplicate rewards for already answered questions
+- [~] P8.1.5 — Award coins together with XP across questions, flashcards, trace, bug hunt, mini build, mock exam, streaks and achievements
+- [V] P8.1.6 — Keep XP/coins scoped to the active passwordless local learner profile
+- [V] P8.1.7 — Include XP/coins/rewardLog/purchases in export/import progress
+- [V] P8.1.8 — Add Vitest coverage for reward accounting and no-negative balances
+
+### W34 — 100-Level Progression
+- [V] P8.2.1 — Implement non-linear `xpRequired(level)` curve for 100 global levels
+- [V] P8.2.2 — Implement `getLearnerLevelFromXP(xp)` and next-level progress percentage
+- [V] P8.2.3 — Map level bands: סבתא, תלמיד כיתה א', חטיבה, תיכון, ג'וניור, מפתח עצמאי, מאסטר קורס, ציון 100
+- [V] P8.2.4 — Update sidebar/header XP widget to show level, band, XP, coins and next-level progress
+- [V] P8.2.5 — Add XP detail panel: why you earned XP today, next best action and level gates
+- [ ] P8.2.6 — Add level-up toast with coins earned and next unlock hint
+- [V] P8.2.7 — Add tests for early levels being easy and high levels being harder
+- [ ] P8.2.8 — Add reduced-motion behavior for level-up effects
+
+### W35 — Level 100 Mastery Gate
+- [ ] P8.3.1 — Define level 100 gate: all concepts mastered, highest challenge proof, code proof, no unresolved weakness, mock exam 95+
+- [ ] P8.3.2 — Add mastery proof aggregation across all concept tags and tabs
+- [ ] P8.3.3 — Require code proof for code-bearing concepts: fill/trace/bug/build evidence
+- [ ] P8.3.4 — Add "why not level 100 yet" checklist
+- [ ] P8.3.5 — Block level 100 if `qa:questions:strict`, build or smoke gates are red
+- [ ] P8.3.6 — Add tests for no-purchase/no-XP shortcut to level 100
+- [ ] P8.3.7 — Add UI copy that distinguishes global XP level from per-concept mastery
+- [ ] P8.3.8 — Add exportable 100-readiness report
+
+### W36 — Store MVP
+- [V] P8.4.1 — Add top tab `🛒 חנות`
+- [V] P8.4.2 — Create deterministic store catalog: museum tickets, challenge rooms, cosmetics, concept cards, tools
+- [V] P8.4.3 — Render price, lock status, prerequisite and unlock reason per item
+- [V] P8.4.4 — Add purchase flow with coins and clear insufficient-balance state
+- [V] P8.4.5 — Add "My purchases" view
+- [V] P8.4.6 — Add store search/filter by category and affordability
+- [V] P8.4.7 — Add tests for purchase persistence and duplicate purchase prevention
+- [ ] P8.4.8 — Add store smoke test for desktop and mobile layout
+
+### W37 — Museum Tickets + Locked Experience Areas
+- [V] P8.5.1 — Split museum into free intro and paid/earned experience wings
+- [~] P8.5.2 — Lock non-essential museum wings behind coins or mastery prerequisites; coin tickets wired, mastery alternative pending
+- [V] P8.5.3 — Keep exam-critical explanations free in concept cards and prerequisite side-aids
+- [ ] P8.5.4 — Add museum pass items: languages, electricity, React evolution, Node runtime, AI hall, Debug hall
+- [ ] P8.5.5 — Add "unlock by learning" alternative for major museum wings
+- [V] P8.5.6 — Add locked-card UI with price, reward preview and unlock path
+- [~] P8.5.7 — Add tests that locked museum does not block SVCollege readiness flows; static lock/free-copy test exists, browser readiness smoke pending
+- [ ] P8.5.8 — Add reduced-motion and keyboard access to locked/unlocked museum states
+
+### W38 — Experiential Reward Zones
+- [ ] P8.6.1 — Add Debug Arena locked rooms
+- [ ] P8.6.2 — Add Boss Battles for Async, Auth, React State, API and DB
+- [ ] P8.6.3 — Add Code Cinema / replay clips as purchasable experiences
+- [ ] P8.6.4 — Add Secret Labs mini experiments: API contract, DB query lab, state mutation lab
+- [ ] P8.6.5 — Add Theme Shop cosmetics that do not harm accessibility
+- [ ] P8.6.6 — Add collectible concept cards and museum stamps
+- [ ] P8.6.7 — Add rewards from completing locked experience rooms
+- [ ] P8.6.8 — Add balancing tests so experiences cannot farm infinite XP/coins
+
+### W39 — Economy Balancing + Governance
+- [ ] P8.7.1 — Add economy tuning table for XP/coins per action
+- [ ] P8.7.2 — Add dashboard: earned, spent, unlocked, next unlock, average coins/day
+- [ ] P8.7.3 — Add audit script for reward sources with missing conceptKey/questionId metadata
+- [ ] P8.7.4 — Add anti-cheat checks: no repeated reward, no purchase-based mastery, no fake rewards
+- [ ] P8.7.5 — Add privacy note: coins are local learning rewards, not real money
+- [ ] P8.7.6 — Add rollback strategy: economy can be disabled without deleting learning scores
+
+**P8 Total: 23/54** — Economy Core v1 + 100-level widget + XP detail panel + Store MVP + initial museum ticket gates + duplicate reward hardening + economy export/import shipped; mastery unlock alternatives and smoke still pending.
+
+---
+
+## 🧠 Phase 9 — Exam Intelligence + Reliability Hardening
+
+> סטטוס: Priority 0/1 עד המבחן. המטרה היא להפוך את הפורטל ממערכת עשירה למערכת שמובילה תלמיד לציון 100 באופן מדיד: בלי כפילויות, עם שאלות עומק, עם smoke מלא, ועם תוכנית יומית ברורה.
+
+### W40 — Exam Cockpit
+- [ ] P9.1.1 — Add "Exam Cockpit" dashboard: today's plan, weak modules, readiness %, next drill and blocker list
+- [ ] P9.1.2 — Add exam countdown and daily target: minutes, modules, question count and code tasks
+- [ ] P9.1.3 — Add "100 readiness" checklist: every concept mastered, hard question solved, code proof exists, mock exam ≥95
+- [V] P9.1.4 — Add final mock exam pack: deterministic 3 variants covering all SVCollege modules
+- [ ] P9.1.5 — Add module heatmap: JS, React, Node, DB, Auth, Next, DevOps, AI, Design Systems
+- [ ] P9.1.6 — Add one-click "study weakest 30 minutes" flow
+- [ ] P9.1.7 — Add end-of-day report: learned, failed, repeated, mastered, next action
+- [ ] P9.1.8 — Add printable/PDF exam cram sheet from weak concepts only
+
+### W41 — Deep Question Ladder
+- [V] P9.2.1 — Guarantee no repeated question in the same learner profile until the bank is exhausted
+- [V] P9.2.2 — After every correct answer, replace with a harder question for the same canonical concept
+- [V] P9.2.3 — After every wrong answer, route to prerequisite explanation + one recovery question before retry
+- [V] P9.2.4 — Add hard-bank expansion for all density warnings: `validate:strict` now reports `0/568` concepts needing more questions
+- [V] P9.2.5 — Add per-answer explanation: why correct, why every distractor is wrong, one memory association
+- [V] P9.2.6 — Add highest-difficulty proof: no concept reaches 100/mastered without level-6/7 challenge solved
+- [V] P9.2.7 — Add code proof per code concept: trace/fill/bug/build evidence required
+- [ ] P9.2.8 — Add question reuse audit report by learner profile and concept tag
+
+### W42 — Full Portal Reliability
+- [ ] P9.3.1 — Add Playwright desktop smoke for every top tab, context tree and primary action
+- [ ] P9.3.2 — Add Playwright mobile smoke for every top tab, drawer, right tree and focus mode
+- [ ] P9.3.3 — Add visual overlap audit: no XP/status/chrome strip may occupy central empty learning space
+- [ ] P9.3.4 — Add local profile backup/restore smoke: scores + XP + coins + purchases + rewardLog
+- [ ] P9.3.5 — Add offline/PWA smoke for core SVCollege flow
+- [ ] P9.3.6 — Add service worker cache audit whenever new lessons/data files are added
+- [ ] P9.3.7 — Add accessibility audit for tree navigation, modals, store, XP panel and mock exam
+- [ ] P9.3.8 — Add performance budget: initial shell, seeded bank lazy load, tab render time and mobile scroll
+
+### W43 — Learning Coach + Weakness Repair
+- [ ] P9.4.1 — Add automatic wrong-answer coach card in every question mode
+- [ ] P9.4.2 — Add misconception clusters: repeated wrong patterns across tabs become a named weakness
+- [ ] P9.4.3 — Add recovery drills: 3 short questions after a repeated mistake before returning to hard mode
+- [ ] P9.4.4 — Add confidence calibration per concept: student confidence vs actual correctness
+- [ ] P9.4.5 — Add fatigue guard: if accuracy drops sharply, suggest review mode instead of penalty mode
+- [ ] P9.4.6 — Add "explain in one line" checkpoint before mastery for conceptual topics
+- [ ] P9.4.7 — Add "write from scratch" checkpoint before mastery for implementation topics
+- [ ] P9.4.8 — Add spaced review schedule that prioritizes exam-critical weak concepts first
+
+### W44 — Post-Exam Productization
+- [ ] P9.5.1 — Freeze an "Exam Edition" release tag after all P9 smoke and readiness gates pass
+- [ ] P9.5.2 — Split future school mappings into separate portals; this portal remains SVCollege AI & Full Stack
+- [ ] P9.5.3 — Add Teacher Lite after exam: one class, progress table, weak-topic heatmap, export
+- [ ] P9.5.4 — Add Sync Alpha after exam: auth, cloud progress, conflict policy and privacy notice
+- [ ] P9.5.5 — Add AI Tutor production Alpha after exam: backend proxy, guardrails, rate limits and logs
+- [ ] P9.5.6 — Add content factory pipeline: create questions + QA + distractor review + prerequisite metadata
+- [ ] P9.5.7 — Add metrics dashboard: D1/D7 retention, mastery velocity, exam score uplift, question quality index
+- [ ] P9.5.8 — Add pricing/packaging plan for post-exam premium experiences without blocking learning content
+
+**P9 Total: 8/40** — No-repeat routing shipped across generated trainer questions, curated inline MC, trace and mock exam pools; correct trainer answers now continue into the next harder same-concept question when available; wrong trainer answers now route into prerequisite/recovery questions before retry; per-answer explanation bundles now render across trainer, trace, concept sprint and inline concept quizzes; mastery now requires highest-available challenge proof across MC, Fill, Trace and Bug pools plus code proof for code-bearing concepts; density warnings are now closed at `0/568`; final mock exam pack now has 3 deterministic SVCollege variants.
+
+---
+
+## 🧪 Phase 10 — Exam OS v2 + Content Factory
+
+> סטטוס: Priority 2 / Post-Exam. לא מתחילים Phase 10 לפני ש-Phase 9 ו-Finish Line 1 ירוקים. המטרה היא להפוך את מה שבנינו למערכת ייצור, מדידה ושיפור מתמשך, בלי להעמיס עוד טאבים על התלמיד לפני המבחן.
+
+### W45 — Content Factory Pipeline
+- [ ] P10.1.1 — Add content factory dashboard: concepts needing hard MC, Fill, Trace, Bug, Build or distractor feedback
+- [ ] P10.1.2 — Add deterministic generation queue from real concept data only; no fake placeholder questions
+- [ ] P10.1.3 — Add hard-question templates by concept family: JS basics, React state, API, DB, Auth, Next, DevOps, AI
+- [ ] P10.1.4 — Add reviewer checklist: one-line definition, prerequisite terms, correct answer, distractor quality, memory association
+- [ ] P10.1.5 — Add duplicate detector across all question pools and concept aliases
+- [ ] P10.1.6 — Add density targets per concept: minimum hard MC, Fill/code proof, Trace/Bug/Build where relevant
+- [ ] P10.1.7 — Add import path for NotebookLM clips and external video links, mapped by canonical concept tag
+- [ ] P10.1.8 — Add report that separates exam-critical content from enrichment-only content
+
+### W46 — Adaptive Daily Exam OS
+- [ ] P10.2.1 — Add daily study plan builder: time budget, weak modules, concept proofs and mock exam target
+- [ ] P10.2.2 — Add "today only" queue: no more than 3 weak topics, 2 code proofs and 1 mock section
+- [ ] P10.2.3 — Add spaced review calendar that prioritizes SVCollege exam-critical weak concepts
+- [ ] P10.2.4 — Add fatigue-aware mode switch: if accuracy drops, move to review instead of penalty sprint
+- [ ] P10.2.5 — Add offline cram mode: compact one-line definitions + comparison tables + code proof checklist
+- [ ] P10.2.6 — Add end-of-day diff: level changes, code proofs, wrong clusters, next blockers
+- [ ] P10.2.7 — Add personal exam readiness trend over days, not just current score
+- [ ] P10.2.8 — Add printable final 24-hour plan from actual weak concepts
+
+### W47 — Mastery Audit + Anti-Duplication
+- [ ] P10.3.1 — Add concept-tag audit: duplicate score buckets, aliases, unresolved conceptKeys and orphan questions
+- [ ] P10.3.2 — Add per-learner question reuse audit with exhausted-vs-repeated breakdown
+- [ ] P10.3.3 — Add mastery proof audit: concepts at level 6/7 without hard proof, code proof or recent review
+- [ ] P10.3.4 — Add "false confidence" audit: high confidence + wrong answers by misconception cluster
+- [ ] P10.3.5 — Add cross-tab evidence graph: where the student proved each concept
+- [ ] P10.3.6 — Add rollback-safe migration for old scores into proof-based mastery
+- [ ] P10.3.7 — Add release blocker when any exam-critical concept lacks a proof path
+- [ ] P10.3.8 — Add audit export for teacher/mentor review after the exam
+
+### W48 — Final Exam Simulation Lab
+- [ ] P10.4.1 — Add 3 full deterministic final exams: standard, hard, stress
+- [ ] P10.4.2 — Add timed stress mode: fewer hints, stricter navigation, no study aids during answer
+- [ ] P10.4.3 — Add post-exam review mode grouped by concept, misconception and prerequisite gap
+- [ ] P10.4.4 — Add "prove again" retest for every wrong final-exam concept
+- [ ] P10.4.5 — Add score projection: current readiness vs expected exam score with confidence range
+- [ ] P10.4.6 — Add final weak list: 20 concepts that most threaten score 100
+- [ ] P10.4.7 — Add code-only final: Trace, Fill, Bug and Mini Build without theory questions
+- [ ] P10.4.8 — Add Exam Edition freeze checklist and release notes
+
+### W49 — Post-Exam Product Split
+- [ ] P10.5.1 — Split non-SVCollege course mappings into future portal specs
+- [ ] P10.5.2 — Create portal template: curriculum blueprint, concept tags, questions, proof gates, tabs and smoke tests
+- [ ] P10.5.3 — Define Teacher Lite v2 from actual exam data: progress table, weak-topic heatmap, export
+- [ ] P10.5.4 — Define Sync v2 privacy model: local-first, cloud optional, conflict policy
+- [ ] P10.5.5 — Define AI Tutor v2 eval set: no direct answer leak, Socratic hints, misconception repair
+- [ ] P10.5.6 — Define Premium Experience rules: never lock exam-critical knowledge, only enrichment and motivation
+- [ ] P10.5.7 — Add business KPIs: D7 retention, mastery velocity, exam uplift, question quality index
+- [ ] P10.5.8 — Add quarterly roadmap review: freeze, cut, or promote features based on real usage
+
+**P10 Total: 0/40** — Forward plan only. Do not implement before Phase 9 and Finish Line 1 are green.
+
+---
+
 ## 🎯 Iron Rules (כללי ברזל) — מתעדכן עם כל commit
 
 - [V] No Math.random in functional code (lib/rng.js only)
 - [V] No fake data (validate_bank --strict enforces)
 - [V] No API keys in frontend (planned: backend proxy)
 - [V] No editing main directly (PRs only)
-- [V] No breaking CI
+- [V] No breaking CI (tests/build/strict validation/release gates are green; remediation quality queue remains tracked separately)
 - [V] No flaky tests (Vitest deterministic + no-native-random guard; desktop browser smoke passed)
 - [V] No feature without DoD (policy + PR template + CI feature evidence gate)
 - [V] No boilerplate (validator catches)
-- [V] No fill question with ambiguous answer
+- [V] No fill question with ambiguous answer (`validate:strict` is green; deeper Fill leakage cleanup remains tracked in P-0.4.8)
 - [V] No lessons without difficulty
 
 ---
@@ -1197,6 +1461,197 @@
                    - Glossary now exposes complete tooltip entries for all required question terms
                    - `npm run qa:questions:strict` now reports `ready:true`, 0 issues, 0 missingGlossaryTerms
                    - Marked P-0.2.3, P-0.2.4, P-1.8.3 and P-1.8.5 done
+2026-04-29 01:49 — Focus learning layout shipped:
+                   - Collapsed duplicate top navigation into a single horizontal scroll row
+                   - Moved W12 XP/streak/achievement controls into the right sidebar header, not the central content column
+                   - Added persistent full-screen learning focus mode with a slide-in context tree menu
+                   - Browser smoke verified: Focus button appears, Content drawer opens, build/test still green
+2026-04-29 01:55 — Focus layout regression guard added:
+                   - Added `tests/focus-layout.test.js` to lock W12/sidebar placement, one-row top tabs and focus-mode context drawer
+                   - Marked P-0.2.6 done so future merges must preserve the corrected learning layout
+2026-04-29 02:05 — Passwordless local learner profiles shipped:
+                   - Added local sidebar profile selector + create-student flow, no password and no backend
+                   - Added localStorage profile scoping so scores, weak concepts, XP, flashcards, evidence and practice state belong to the active learner
+                   - Existing unscoped learning progress migrates into the first local profile automatically
+                   - Added `tests/local-profile.test.js` regression coverage
+2026-04-29 02:10 — `מושגים נטו` concept sprint shipped:
+                   - Added new top tab for pure concept checks with quick risky, medium and long diagnostic routes
+                   - Every answer flows through `applyAnswer`, so scores, weak concepts and mastery levels update the same Knowledge Trainer profile
+                   - Quick/medium routes can apply XP penalties on failure; pass routes grant large XP bonuses; XP never drops below 0
+                   - Added `tests/concept-sprint.test.js` regression coverage
+2026-04-29 03:05 — XP Economy + Experience Store master plan added:
+                   - Created `XP_REWARD_STORE_MASTER_PLAN.md`
+                   - Added Phase 8 with 54 tasks: 100 XP levels, coins, store, museum tickets, locked experiences and anti-cheat gates
+                   - Clarified that store purchases never buy mastery, grades or exam-critical content
+2026-04-29 03:20 — XP Economy Core v1 shipped:
+                   - Existing `awardXP` now routes through `awardLearningReward`
+                   - Added Coins, reward log, 100-level non-linear XP model and compact sidebar widget
+                   - Added achievement rewards: +25 XP and +8 coins per new achievement
+                   - Added `tests/xp-economy.test.js`
+2026-04-29 03:35 — Reward Store MVP shipped:
+                   - Added `🛒 חנות` top tab and local store view
+                   - Added deterministic catalog for museum tickets, challenge rooms, learning tools and cosmetics
+                   - Purchases spend local Coins, persist per learner profile and never affect grades/mastery
+                   - Added `tests/reward-store.test.js`
+2026-04-29 03:55 — Museum ticket gates wired:
+                   - Added locked/open status to museum wing nav and wing cards
+                   - Locked non-essential museum experiences: languages, electricity/bit stack and React/Full-Stack evolution
+                   - Locked screens route to the store; exam-critical course explanations remain free in lessons and concept cards
+                   - Expanded `tests/reward-store.test.js` for ticket gates
+2026-04-29 04:05 — Duplicate reward hardening:
+                   - Reward IDs no longer include timestamps, so question/concept rewards are stable
+                   - `awardLearningReward` blocks duplicate positive XP/coin rewards for the same source + concept/question
+                   - Legacy XP without concept/question metadata remains backward-compatible
+                   - Expanded `tests/xp-economy.test.js`
+2026-04-29 04:15 — Economy export/import shipped:
+                   - Progress export upgraded to v2 with local profile metadata
+                   - Export/import now includes XP, Coins, lifetime totals, reward log and store purchases
+                   - Scores/proficiency export reads the active profile scope
+                   - Added `tests/progress-export.test.js`
+2026-04-29 04:25 — XP detail panel shipped:
+                   - Clicking the XP widget opens a panel with level, band, XP, coins and progress
+                   - Shows today's reward totals and recent reward sources
+                   - Recommends a next action based on weak concept scores
+                   - Explains that level 100 requires real mastery, not XP alone
+2026-04-29 04:35 — Forward improvement plan added:
+                   - Added Phase 9: Exam Intelligence + Reliability Hardening
+                   - New priorities: Exam Cockpit, deep question ladder, full portal smoke, weakness repair and post-exam productization
+                   - Plan keeps Finish Line 1 and exam readiness above store/museum/community expansion
+2026-04-29 04:50 — No-repeat question routing shipped:
+                   - Answered question identities now guide curated MC, Code Trace and Mock Exam selection
+                   - Each pool prefers unanswered questions and only falls back to repeats after exhaustion
+                   - Selection prefers a harder challenge based on the learner's max answered challenge per concept
+                   - Added regression coverage in `tests/question-hardening.test.js`
+2026-04-29 04:58 — Same-concept hard ladder shipped:
+                   - After a correct trainer answer, "שאלה הבאה" first tries the same concept again
+                   - The next same-concept question uses the no-repeat/harder selector
+                   - If that concept is exhausted or mastered, the trainer falls back to the regular adaptive picker
+2026-04-29 05:08 — Wrong-answer recovery route shipped:
+                   - After a wrong trainer answer, the next action routes to a prerequisite rewind when available
+                   - Recovery questions are attached as adaptive retest items so outcomes are logged
+                   - Mistake feedback now states the next recovery step before returning to the hard challenge
+2026-04-29 05:18 — Per-answer explanation bundle shipped:
+                   - Added one reusable answer explanation block: answer, why, deep explanation, option rationales and memory association
+                   - Wired the block into trainer, Code Trace completion, concept sprint and inline concept-card quizzes
+                   - Regression coverage now checks that every route uses the shared explanation bundle
+2026-04-29 05:28 — Mastery proof gate hardened:
+                   - Level 7 alone is not 100; mastery requires an explicit highest-challenge proof
+                   - Highest available challenge now includes MC, Fill, Trace and Bug question pools
+                   - Added `tests/mastery-proof-gate.test.js` so the gate cannot regress silently
+2026-04-29 05:38 — Code proof gate shipped:
+                   - Code-bearing concepts now require a real code proof before mastery
+                   - Fill, Trace, Bug Hunt, Mini Build and Codeblock answers can register code proof
+                   - Mini Build success now records a proof line and updates the same scoring system
+2026-04-29 05:50 — System audit findings added:
+                   - Tests/build/readiness/tab-matrix/command-center passed
+                   - `validate:strict` is red on 8 ambiguous Fill items; Iron Rules updated to reflect the blocker
+                   - Added P-0.4 with remediation queue: 696 quality items, 262 missing one-line definitions, 50/1369 distractor feedback coverage
+                   - Finish Line 1 count updated to 96/141; total plan count updated to 358/623
+2026-04-29 06:05 — Audit blockers reduced:
+                   - Fixed 8 ambiguous Fill items; `npm run validate:strict` is green again
+                   - Added conceptKey routing to 70 curated questions; missing routing metadata is now 0
+                   - Remediation queue reduced from 696 to 617; question density warning now 447/568
+                   - Finish Line 1 count updated to 98/141; total plan count updated to 360/623
+2026-04-29 06:12 — Concise definitions gate closed:
+                   - Added derived one-line definitions in the loader and explicit definitions for missing advanced terms
+                   - `npm run exam:weakest` now reports 0 missing definitions, 0 missing prerequisites, 0 missing hard questions
+                   - Finish Line 1 count updated to 99/141; total plan count updated to 361/623
+2026-04-29 06:22 — Seeded Fill leakage fixed:
+                   - Hardened deterministic seeded-question generator: Fill answers must disappear fully after blanking
+                   - Regenerated seeded bank; `review-fill-leakage` dropped from 214 to 0 and blockers remain 0
+                   - Question Quality Index now 98.1% warning-free; remediation queue is 392
+                   - Finish Line 1 count updated to 100/141; total plan count updated to 362/623
+2026-04-29 06:34 — Question remediation queue closed:
+                   - Hardened seeded MC generation against duplicate options, near-duplicates, generic wording and length-cue risk
+                   - Cleaned remaining curated MC/Fill notes manually
+                   - `quality:questions:strict` and `quality:remediation:strict` now report 0 blockers, 0 warnings and 0 notes
+                   - Finish Line 1 count updated to 104/141; total plan count updated to 366/623
+2026-04-29 06:58 — Exam-week hard/proof gate closed:
+                   - Added 11 level-5 Fill/code-proof questions for weakest SVCollege concepts
+                   - `exam:weakest` now reports 0 missing questions, hard questions, definitions, prerequisites and code proofs
+                   - Fixed Vitest `--localstorage-file` warning at source in `lib/rng.js` / `lib/rng.ts`
+                   - Finish Line 1 count updated to 106/142; total plan count updated to 368/624
+2026-04-29 07:12 — Focus/mobile smoke verified:
+                   - Playwright desktop smoke: focus controls, side tree, XP sidebar placement and console all clean
+                   - Playwright mobile smoke at 390×844: focus mode and slide-in tree visible; 0 console errors/warnings
+                   - Finish Line 1 count updated to 107/142; total plan count updated to 369/624
+2026-04-29 07:25 — Question-density expansion pass:
+                   - Seeded generator now uses `simpleExplanation` bridge lessons and multiple deterministic Fill blanks per code example
+                   - Total MC/Fill bank increased to 2,760; `quality:questions:strict` remains 100% warning-free
+                   - `validate:strict` density warnings reduced from 377/568 to 71/568; remaining work is manual/special-case coverage
+2026-04-29 07:38 — Per-distractor feedback gate closed:
+                   - Added deterministic inline option feedback for curated and seeded MC questions
+                   - `coverage:features:strict` now reports Per-Distractor Feedback `1665/1665` and all feature modules `24/24 done`
+                   - Finish Line 1 count updated to 108/142; total plan count updated to 370/624
+2026-04-29 07:55 — Question-density gate closed:
+                   - Added targeted curated Fill for the last density gaps: index values, Radix primitives, and Next.js file-system routing
+                   - Regenerated seeded bank: `1704 MC + 1136 Fill = 2840`, `validate:strict` reports `0/568` concepts needing more questions
+                   - Re-ran gates: question quality/remediation/QA, seeded+distractor audits, SVCollege readiness/tab-matrix/command-center, exam weakest, tests and build all green
+                   - Finish Line 1 count updated to 109/142; Phase 9 updated to 7/40; total plan count updated to 372/624
+2026-04-29 08:10 — Exam flow simulations shipped:
+                   - Added `scripts/simulate_exam_learning_flows.js` + `tests/exam-flow-simulation.test.js`
+                   - `npm run exam:flows:strict` passes: 2,840-question bank, 0 blockers, no-repeat/harder-after-correct/wrong-answer-repair all green
+                   - `npm test -- --run tests/exam-flow-simulation.test.js tests/question-hardening.test.js` passes 9/9
+                   - Finish Line 1 count updated to 112/142; total plan count updated to 375/624
+2026-04-29 08:25 — Mobile all-tabs + focus smoke documented:
+                   - Playwright mobile viewport `390×844`: `22/22` top tabs opened with populated `main`, active context tree, `0` console errors/warnings
+                   - Focus mode smoke: `body.learning-focus-mode`, top tabs hidden, central learning space not consumed by XP/status chrome
+                   - Updated `SVCOLLEGE_BROWSER_SMOKE.md`; P-0.0.8, P-0.3.7 and P-0.3.8 closed
+                   - Finish Line 1 count updated to 115/142; total plan count updated to 378/624
+2026-04-29 08:35 — Exam profile backup hardened:
+                   - Export/import now includes scores/proof state, proficiency, answered question IDs, weakness agent state, confidence/confusion state, XP, coins, rewardLog and purchases
+                   - `npm test -- --run tests/progress-export.test.js tests/local-profile.test.js` passes 6/6
+                   - Finish Line 1 count updated to 116/142; total plan count updated to 379/624
+2026-04-29 08:45 — Final weak-concept cram sheet shipped:
+                   - Added `scripts/build_exam_cram_sheet.js` and generated `EXAM_FINAL_CRAM_SHEET.md`
+                   - Sheet is built only from `exam:weakest` top 10, with one-line definitions and relevant comparison tables
+                   - `npm test -- --run tests/exam-cram-sheet.test.js tests/exam-weakest-concepts.test.js` passes 6/6
+                   - Finish Line 1 count updated to 117/142; total plan count updated to 380/624
+2026-04-29 09:00 — Deterministic mock exam variants verified:
+                   - Added `scripts/report_mock_exam_variants.js` and generated `MOCK_EXAM_VARIANTS_REPORT.md`
+                   - `npm run exam:mock-variants:strict` passes: 3 variants, 55 unique questions each, 15/15 SVCollege modules covered in every variant
+                   - `npm test -- --run tests/mock-exam-variants.test.js tests/mock-exam-svcollege.test.js` passes 5/5
+                   - Finish Line 1 count updated to 118/142; Phase 9 updated to 8/40; total plan count updated to 382/624
+2026-04-29 09:15 — Exam Edition RC frozen:
+                   - Added `EXAM_EDITION_RC.md`
+                   - Final gate sweep passed: `npm test -- --run` 59 files / 299 tests, build, validate, quality, QA, readiness, tab matrix, command center, feature coverage, exam weakest, exam flows and mock variants
+                   - Browser evidence: desktop + mobile all-tabs smoke documented, focus mode clear
+                   - Finish Line 1 count updated to 120/142; total plan count updated to 384/624
+2026-04-29 09:25 — Exam-week sprint remaining gates closed:
+                   - `validate:strict` confirms `0/568` concepts need more questions
+                   - `exam:weakest` confirms `withoutHardQuestion: 0` and `withoutDefinition: 0`
+                   - `npm test -- --run tests/concise-definitions.test.js tests/exam-weakest-concepts.test.js tests/question-qa-checklist.test.js` passes 9/9
+                   - Finish Line 1 count updated to 122/142; total plan count updated to 386/624
+2026-04-29 09:35 — Mock exam review path shipped:
+                   - Result screen now shows weak SVCollege modules and a recommended path: prerequisite rewind → failed concept → trainer
+                   - `npm test -- --run tests/mock-exam-svcollege.test.js tests/mock-exam-variants.test.js` passes 6/6
+                   - Finish Line 1 count updated to 123/142; total plan count updated to 387/624
+2026-04-29 09:50 — Student/teacher readiness export shipped:
+                   - Added `scripts/export_svcollege_student_summary.js`, `SVCOLLEGE_STUDENT_READINESS_EXPORT.md` and JSON export
+                   - `npm run svcollege:student-export:strict` passes with 0 blockers, 15/15 modules, 3 mock variants and flow simulation pass
+                   - `npm test -- --run tests/svcollege-student-export.test.js tests/svcollege-readiness-report.test.js tests/svcollege-tab-matrix.test.js` passes 9/9
+                   - Finish Line 1 count updated to 124/142; total plan count updated to 388/624
+2026-04-29 14:58 — SVCollege Command Center UI shipped:
+                   - Added a dashboard section inside the `יישור SVCollege` tab with readiness, release blockers, tab-health, browser-smoke status, weak modules and next actions
+                   - Updated command-center evidence from mobile `pending` to desktop+mobile `pass`
+                   - Added `tests/svcollege-command-center-ui.test.js`
+                   - Re-ran command-center tests, strict command-center gate and build
+                   - Finish Line 1 count updated to 125/142; total plan count updated to 389/624
+2026-04-29 15:06 — Prerequisite panel smoke closed:
+                   - Browser smoke verified prerequisite panels in lesson quiz, Knowledge Trainer and Mock Exam
+                   - Added `tests/question-prereq-panel-smoke.test.js`
+                   - Updated `SVCOLLEGE_BROWSER_SMOKE.md`
+                   - Finish Line 1 count updated to 126/142; total plan count updated to 390/624
+2026-04-29 15:13 — SVCollege prerequisite gate hardened:
+                   - `qa:questions:strict` now fails if the SVCollege prerequisite gate is not ready
+                   - Current gate: 259 SVCollege questions checked, 257 requiring aid, 0 issues, ready:true
+                   - Added regression coverage in `tests/question-qa-checklist.test.js`
+                   - Finish Line 1 count updated to 127/142; total plan count updated to 391/624
+2026-04-29 15:16 — Teacher weekly progress export fixed:
+                   - `SVCOLLEGE_STUDENT_READINESS_EXPORT.md/json` now includes weekly-progress scope, 100% readiness, 225/225 tab cells and teacher review agenda
+                   - Fixed undefined readiness/tab coverage fields in the export
+                   - `npm run svcollege:student-export:strict` passes
+                   - Finish Line 1 count updated to 128/142; total plan count updated to 392/624
 ```
 
 ---

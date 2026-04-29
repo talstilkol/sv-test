@@ -4,11 +4,11 @@
   "source": "repo",
   "summary": {
     "modules": 24,
-    "done": 23,
-    "partial": 1,
+    "done": 24,
+    "partial": 0,
     "missing": 0,
     "strictFailures": 0,
-    "evidenceGateChecked": 23,
+    "evidenceGateChecked": 24,
     "evidenceGateFailures": 0
   },
   "evidenceGateFailures": [],
@@ -80,11 +80,11 @@
     {
       "id": "optionFeedback",
       "label": "Per-Distractor Feedback",
-      "implemented": 50,
-      "target": 1357,
+      "implemented": 1665,
+      "target": 1665,
       "unit": "MC questions",
-      "coverage": 3.7,
-      "status": "Partial",
+      "coverage": 100,
+      "status": "Done",
       "evidence": [
         "data/option_feedback.js",
         "data/questions_bank.js",
@@ -94,7 +94,7 @@
       "enforceStrict": false,
       "enforceEvidenceGate": true,
       "details": {
-        "optionExplanations": 200
+        "optionExplanations": 6860
       }
     },
     {
@@ -362,7 +362,7 @@
     {
       "id": "glossary",
       "label": "Hebrew/English Glossary",
-      "implemented": 228,
+      "implemented": 587,
       "target": 200,
       "unit": "entries",
       "coverage": 100,

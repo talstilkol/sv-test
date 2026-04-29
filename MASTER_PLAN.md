@@ -6,6 +6,16 @@
 
 > **עדכון Finish Line 1:** מיפוי מודול×טאב כבר ירוק: `SVCOLLEGE_TAB_MATRIX.md` מדווח `225/225` תאים קשיחים, `0` פערי טאב, ו־`15/15` מודולי SVCollege מכוסים. העבודה שנותרה לפני סגירת קו הסיום היא smoke בדפדפן, הגדלת עומק שאלות למושגים ש-`validate:strict` מסמן, ודרישות קדם/פידבק לכל שאלה קשה.
 
+> **עדכון XP Economy 2026-04-29:** תוכנית החנות והכלכלה החדשה נמצאת ב-[XP_REWARD_STORE_MASTER_PLAN.md](XP_REWARD_STORE_MASTER_PLAN.md). היא מוסיפה 100 רמות XP לא לינאריות, Coins, חנות חוויות, כרטיסים למוזיאון ושער רמה 100 שמחייב שליטה מלאה. היא Priority 2 ואינה חוסמת חומר חובה למבחן.
+
+> **עדכון Forward Plan 2026-04-29:** נוסף כיוון Phase 9 ב-[SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md) וב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md): Exam Intelligence + Reliability Hardening. זה כולל Exam Cockpit, מניעת שאלות כפולות, escalation לשאלות קשות, recovery drills אחרי טעות, mobile/desktop smoke מלא, ושער 100 שלא מאפשר ציון מלא בלי הוכחת עומק וקוד.
+
+> **עדכון Post-Exam Plan 2026-04-29:** נוסף Phase 10: Exam OS v2 + Content Factory. זהו שלב אחרי Exam Edition, לא לפני המבחן הקרוב. הוא מגדיר מפעל שאלות עומק, דוחות Mastery Audit, סימולציות לחץ, daily exam OS, ופיצול עתידי לפורטלים נפרדים לקורסים שאינם SVCollege AI & Full Stack.
+
+> **עדכון Exam Week 2026-04-29:** נוסף [EXAM_WEEK_OPERATING_PLAN.md](EXAM_WEEK_OPERATING_PLAN.md). זהו מסמך הפעלה יומי עד המבחן: בדיקות בוקר, סגירת 10 מושגים חלשים ביום, סימולציית תלמיד בערב, ושער Exam Edition. הוא לא מוסיף scope חדש, אלא מונע סטייה מהיעד הראשון.
+
+> **עדכון Exam Sprint 2026-04-29:** נוסף P-0.3 ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md): ספרינט 7 ימים לפני מבחן. הוא מתמקד ב-weakest 10, no-repeat simulation, harder-after-correct, wrong-answer repair, smoke מובייל/פוקוס, וגיבוש `Exam Edition RC`.
+
 ## 0. עדכון אסטרטגי לתוכנית
 
 לפני הרחבת בנק השאלות לכל המושגים, המיקוד עובר ל-SVCollege:
@@ -15,6 +25,10 @@
 3. כל חומר גלם בתיקיית `lessons/` יקושר לשיעור ולתוכן האינטראקטיבי שנוצר ממנו.
 4. `covered` יוגדר רק כשיש שיעור, תרגול, ניווט, בדיקות וראיית UX בדפדפן.
 5. הרחבות כמו מוזיאון, קהילה ו-AI production נשארות Priority 2 עד שדוח SVCollege ירוק.
+6. XP/Coins/Store הם שכבת מוטיבציה בלבד: לא קונים ציון, לא קונים מאסטר, ולא נועלים ידע חובה.
+7. השיפור הבא לפני פיצ'רי פרימיום: Exam Cockpit + Deep Question Ladder + Full Portal Reliability. מטרתם להעלות סיכוי לציון 100, לא להגדיל את מספר הטאבים.
+8. אחרי Exam Edition יציב: Content Factory + Mastery Audit + Final Simulation Lab. המטרה היא להפוך את המערכת למכונה שמייצרת איכות מדידה, לא רק למסך לימוד נוסף.
+9. בשבעת ימי ההכנה למבחן: לא מודדים התקדמות לפי מספר פיצ'רים, אלא לפי מספר מושגים מסוכנים שהפכו למוכחים בשאלת עומק וקוד.
 
 ---
 

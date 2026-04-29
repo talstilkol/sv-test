@@ -11,14 +11,14 @@
 - Release blockers: 0
 - Tab matrix gaps: 0
 - Desktop browser smoke: pass (SVCOLLEGE_BROWSER_SMOKE.md)
-- Mobile browser smoke: pending
+- Mobile browser smoke: pass
 
 ## Current Parallel Mode
 
 - Status: `single-session-finish-line1-all-modules-covered`
-- Note: Full merge train is paused. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js, DevOps, AI Engineering and Design Systems are integrated. Desktop all-tabs smoke passed; current work focuses on mobile smoke, question depth and hard-question feedback.
-- Paused sessions: Question Quality, Mobile All Tabs QA
-- Current session allowed scope: SVCollege governance docs, Command Center reports, readiness scripts, post-SQL/Auth/Next.js/Museum integration quality gates, mobile all-tabs smoke, SVCollege question-depth hardening, non-museum planning documents
+- Note: Full merge train is paused. SQL/ORM, Auth/Security, Next.js, Museum, Nest.js, DevOps, AI Engineering and Design Systems are integrated. Desktop and mobile all-tabs smoke passed; current work focuses on question depth, hard-question feedback and regression fixes.
+- Paused sessions: Question Quality
+- Current session allowed scope: SVCollege governance docs, Command Center reports, readiness scripts, post-SQL/Auth/Next.js/Museum integration quality gates, SVCollege question-depth hardening, non-museum planning documents
 
 | Active session | Branch | Owner | Scope size |
 |---|---|---|---:|
@@ -47,11 +47,11 @@
 
 ## Feature Gates
 
-- Feature coverage modules: 23/24 done
+- Feature coverage modules: 24/24 done
 - Strict failures: 0
 - Evidence gate failures: 0
 - Course blueprint: 1/1 active blueprint
-- Per-distractor feedback: 50/1357 MC questions (3.7%)
+- Per-distractor feedback: 1704/1704 MC questions (100%)
 - No-evidence gate: passed (0 failures)
 - Module × tab matrix: 100% (0 strict gaps, 0 support gaps)
 
@@ -62,25 +62,38 @@
 - Rule: `covered` is forbidden without lesson + practice + tab + test evidence.
 - Failures: none
 
+## Promotion Rule
+
+- Status: defined
+- Label: SVCollege module ready for students
+- Rule: A module may be promoted to ready-for-students only after content coverage, practice coverage, tab/smoke evidence and first-user feedback evidence are all present.
+- Current Finish Line scope: Finish Line 1 can be exam-ready before the 10-student pilot; broad student-ready promotion still requires first-user feedback.
+
+- content: lesson + concepts + one-line definitions + prerequisites
+- practice: MC + Fill + at least one deeper activity
+- tab-health: module appears in all strict SVCollege tabs
+- smoke: desktop/mobile browser flow is clean
+- feedback: first-user or pilot feedback reviewed
+
 ## Module Evidence Matrix
 
 | Module | Lessons | Questions | Activities | Tab evidence | Tests | Browser smoke |
 |---|---:|---:|---:|---|---:|---|
-| יסודות האינטרנט — HTML בסיסי + HTML/CSS | 2/2 | 77 | 12 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| עיצוב רספונסיבי ו-CSS מתקדם | 1/1 | 63 | 8 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| JavaScript בסיסי ודינמיקה בדפדפן | 3/3 | 313 | 45 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier | 4/4 | 254 | 45 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware | 3/3 | 316 | 52 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle | 2/2 | 149 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde | 1/1 | 38 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| React ופיתוח Frontend מתקדם | 5/5 | 399 | 76 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| TypeScript ופטרנים מתקדמים ב-React | 2/2 | 205 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI | 3/3 | 131 | 16 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO | 1/1 | 38 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing | 2/2 | 76 | 11 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| Frameworks צד-שרת — Nest.js modules + dependency injection | 1/1 | 34 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI | 1/1 | 53 | 4 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
-| הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning | 1/1 | 38 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pending |
+| יסודות האינטרנט — HTML בסיסי + HTML/CSS | 2/2 | 110 | 12 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| עיצוב רספונסיבי ו-CSS מתקדם | 1/1 | 70 | 8 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| JavaScript בסיסי ודינמיקה בדפדפן | 3/3 | 360 | 45 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier | 4/4 | 335 | 46 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware | 3/3 | 385 | 52 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle | 2/2 | 263 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde | 1/1 | 133 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| React ופיתוח Frontend מתקדם | 5/5 | 460 | 76 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| TypeScript ופטרנים מתקדמים ב-React | 2/2 | 250 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI | 3/3 | 206 | 16 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO | 1/1 | 128 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing | 2/2 | 169 | 11 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| Frameworks צד-שרת — Nest.js modules + dependency injection | 1/1 | 114 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI | 1/1 | 60 | 4 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning | 1/1 | 133 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
 
 ## Module × Tab Matrix
 
@@ -93,7 +106,7 @@
 ## Parallel Sessions
 
 - Total planned sessions: 9
-- Rule: Limited mode active: do not open the full train. All 15 SVCollege modules are covered and desktop all-tabs smoke passed; continue only with mobile all-tabs QA, question-depth hardening, hard-question feedback, or regression fixes unless the user re-enables wider merging.
+- Rule: Limited mode active: do not open the full train. All 15 SVCollege modules are covered and desktop/mobile all-tabs smoke passed; continue only with question-depth hardening, hard-question feedback, or regression fixes unless the user re-enables wider merging.
 
 | Session | Branch | Model | Intelligence | Open when | Ownership |
 |---|---|---:|---:|---|---|

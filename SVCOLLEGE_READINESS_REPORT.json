@@ -57,8 +57,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 50,
-        "fill": 27,
+        "mc": 66,
+        "fill": 40,
         "trace": 7,
         "miniBuild": 2,
         "bugHunt": 1,
@@ -102,7 +102,7 @@
       },
       "counts": {
         "mc": 42,
-        "fill": 21,
+        "fill": 25,
         "trace": 5,
         "miniBuild": 1,
         "bugHunt": 1,
@@ -145,8 +145,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 216,
-        "fill": 97,
+        "mc": 211,
+        "fill": 100,
         "trace": 15,
         "miniBuild": 4,
         "bugHunt": 1,
@@ -209,9 +209,9 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 177,
-        "fill": 77,
-        "trace": 13,
+        "mc": 198,
+        "fill": 102,
+        "trace": 14,
         "miniBuild": 5,
         "bugHunt": 1,
         "pairMatchPairs": 23,
@@ -255,8 +255,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 231,
-        "fill": 85,
+        "mc": 224,
+        "fill": 105,
         "trace": 15,
         "miniBuild": 3,
         "bugHunt": 1,
@@ -329,8 +329,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 108,
-        "fill": 41,
+        "mc": 107,
+        "fill": 50,
         "trace": 8,
         "miniBuild": 3,
         "bugHunt": 2,
@@ -402,7 +402,7 @@
       },
       "counts": {
         "mc": 28,
-        "fill": 10,
+        "fill": 16,
         "trace": 3,
         "miniBuild": 3,
         "bugHunt": 3,
@@ -453,8 +453,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 276,
-        "fill": 123,
+        "mc": 268,
+        "fill": 151,
         "trace": 25,
         "miniBuild": 14,
         "bugHunt": 11,
@@ -497,8 +497,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 150,
-        "fill": 55,
+        "mc": 140,
+        "fill": 78,
         "trace": 10,
         "miniBuild": 1,
         "bugHunt": 2,
@@ -563,8 +563,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 90,
-        "fill": 41,
+        "mc": 87,
+        "fill": 51,
         "trace": 7,
         "miniBuild": 3,
         "bugHunt": 3,
@@ -633,8 +633,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 28,
-        "fill": 10,
+        "mc": 29,
+        "fill": 14,
         "trace": 3,
         "miniBuild": 3,
         "bugHunt": 3,
@@ -705,8 +705,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 54,
-        "fill": 22,
+        "mc": 51,
+        "fill": 29,
         "trace": 3,
         "miniBuild": 3,
         "bugHunt": 3,
@@ -772,7 +772,7 @@
       },
       "counts": {
         "mc": 24,
-        "fill": 10,
+        "fill": 14,
         "trace": 3,
         "miniBuild": 3,
         "bugHunt": 3,
@@ -813,7 +813,7 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 36,
+        "mc": 34,
         "fill": 17,
         "trace": 1,
         "miniBuild": 1,
@@ -886,7 +886,7 @@
       },
       "counts": {
         "mc": 28,
-        "fill": 10,
+        "fill": 14,
         "trace": 3,
         "miniBuild": 3,
         "bugHunt": 3,

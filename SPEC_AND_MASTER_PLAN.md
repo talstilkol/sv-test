@@ -35,6 +35,8 @@
 20. נספח: מוזיאון היסטורי לשפות התכנות
 21. Phase 6 — Learning Evidence + Productization
 22. Phase 7 — Learning OS + Outcome Scale
+23. Phase 9 — Exam Intelligence + Reliability Hardening
+24. Phase 10 — Exam OS v2 + Content Factory
 
 ---
 
@@ -86,6 +88,68 @@
 6. **Real Learner Outcome Loop** — לפני Teacher Dashboard גדול או קהילה, מודדים 10 תלמידים: baseline, שימוש שבועי, מבחן חוזר, ושאלות שבהן נתקעו.
 
 משימות הביצוע החדשות נמצאות ב-`EXECUTION_TASKS.md` תחת P-1.8 עד P-1.11.
+
+## 0.5 שדרוג תוכנית קדימה — 2026-04-29
+
+אחרי סגירת רוב כיסוי SVCollege, הסיכון הבא הוא לא "אין מספיק מסכים", אלא:
+
+1. תלמיד רואה שאלה פעמיים ומקבל מדידה לא אמינה.
+2. תלמיד עונה נכון על שאלות קלות אבל לא מוכיח עומק.
+3. טאב עובד בדסקטופ אך נשבר במובייל או במצב פוקוס.
+4. יש XP/חנות/מוזיאון, אבל הם עלולים להסיט מהיעד: ציון 100 במבחן.
+
+לכן נוסף כיוון עבודה חדש: **Exam Intelligence + Reliability Hardening**.
+
+העיקרון: לפני הרחבות פרימיום, הפורטל צריך להתנהג כמו מאמן מבחן קשוח:
+
+- **Exam Cockpit** — מסך יומי שאומר לתלמיד מה ללמוד עכשיו, כמה זמן, ולמה.
+- **Deep Question Ladder** — כל תשובה נכונה מקדמת לשאלה קשה יותר; כל טעות מחזירה לדרישת קדם קצרה ואז recovery drill.
+- **No Repeat / No Fake Mastery** — אין כפילות שאלות בפרופיל תלמיד, ואין 100 בלי שאלת עומק וראיית קוד.
+- **Full Portal Reliability** — smoke אוטומטי לכל טאב בדסקטופ ובמובייל, כולל תפריטי עץ, פוקוס ופרופיל מקומי.
+- **Weakness Repair Agent** — כל טעות נצברת למושג/נושא, מקבלת הסבר חד, אסוציאציה וזימון חזרה.
+- **Post-Exam Productization** — Teacher Lite, Sync, AI Tutor production וחוויות premium רק אחרי Exam Edition יציב.
+
+משימות הביצוע נמצאות ב-`EXECUTION_TASKS.md` תחת Phase 9.
+
+## 0.6 שדרוג תוכנית קדימה — Post-Exam 2026-04-29
+
+אחרי Phase 9, השיפור הבא הוא לא עוד מסך לימוד, אלא מערכת שמייצרת איכות בקצב קבוע. לכן נוסף Phase 10: **Exam OS v2 + Content Factory**.
+
+Phase 10 מיועד לאחר Exam Edition יציב, ומטפל בארבעה דברים:
+
+1. **Content Factory** — ייצור ושיפור שאלות עומק מתוך מושגים קיימים בלבד, עם QA ל-distractors, דרישות קדם, הגדרה בשורה אחת ואסוציאציה.
+2. **Adaptive Daily Exam OS** — תוכנית לימוד יומית שמבוססת על מצב אמיתי: מושגים חלשים, הוכחות קוד חסרות, עומס, ומבחנים מדומים.
+3. **Mastery Audit** — דוחות שמאתרים כפילויות, score buckets כפולים, מושגים בלי proof path, ושאלות שחוזרות מוקדם מדי.
+4. **Final Simulation Lab** — מבחנים מלאים, מצב לחץ, מבחן קוד בלבד, ודוח 20 המושגים שמסכנים ציון 100.
+
+Phase 10 הוא Priority 2 עד ש-Finish Line 1 ו-Phase 9 ירוקים.
+
+## 0.7 תוכנית הפעלה לשבוע מבחן — 2026-04-29
+
+כדי לא להפוך את השבוע הקרוב לשבוע הרחבות, נוסף מסמך הפעלה יומי: `EXAM_WEEK_OPERATING_PLAN.md`.
+
+המסמך מגדיר:
+
+- בדיקות בוקר: test, build, readiness, tab matrix, question QA ו-validate.
+- עבודה יומית על מושגים: 10 מושגים חלשים בכל יום, עם הגדרה בשורה אחת, דרישות קדם, שאלות עומק ופידבק מלא.
+- סימולציית תלמיד בערב: פרופיל מקומי נקי, מסלול קצר, שיעור, שאלות, Code Trace/bug ומבחן מדומה.
+- שער Exam Edition: לא משחררים אם desktop/mobile smoke, readiness או no-fake-mastery אינם ירוקים.
+- רשימת דברים שלא עושים לפני המבחן: Teacher Dashboard, הרחבת חנות/מוזיאון, פורטלים נוספים, migration גדול או AI Tutor production.
+
+זו שכבת ניהול מעל Phase 9, לא Phase חדש. היא קיימת כדי לשמור על focus עד המבחן.
+
+## 0.8 ספרינט 7 ימים לפני מבחן — 2026-04-29
+
+הרחבה תכנונית נוספת: במקום להמשיך להוסיף אזורי תוכן, השבוע שלפני המבחן צריך להתנהל כספרינט אמינות ולמידה.
+
+הספרינט עובד לפי ארבעה מדדים:
+
+1. **Weakest 10** — בכל יום מטפלים ב-10 מושגים הכי מסוכנים לפי טעויות, חוסר הוכחת עומק, חוסר שאלות קשות ו-density warnings.
+2. **No Repeat Proof** — מריצים סימולציית תלמיד נקייה ומוודאים ששאלה לא חוזרת לפני שהמאגר לאותו מושג מוצה.
+3. **Hard Proof** — תלמיד לא מקבל mastery בלי שאלה קשה ביותר זמינה, ואם המושג קוד-בייסד אז גם הוכחת קוד.
+4. **Smoke Realism** — לא מספיק שהבדיקות עוברות; צריך לעבור במסלול תלמיד בדסקטופ ובמובייל.
+
+משימות הביצוע נמצאות ב-`EXECUTION_TASKS.md` תחת P-0.3. זהו Priority 0, אבל scope שלו הוא בדיקה, תיקון והכנה למבחן בלבד.
 
 # חלק I — איפיון מוצר
 
@@ -3112,6 +3176,153 @@ DoD:
 4. W30 Teacher Lite — מאפשר פיילוטים חוזרים.
 5. W31 AI Tutor Production — רק אחרי שיש guardrails ו-eval.
 6. W32 Trust/Mobile/A11y — חובה לפני scale רחב.
+
+---
+
+## 23. Phase 9 — Exam Intelligence + Reliability Hardening
+
+**מטרה:** להפוך את LumenPortal ממערכת לימוד רחבה למאמן מבחן מדיד. Phase 9 לא מוסיפה עוד "צעצועים"; היא סוגרת את הדרך לציון 100: תרגול בלי כפילויות, קפיצה מדורגת לשאלות קשות, הוכחת קוד, ותאימות מלאה בכל הטאבים.
+
+### 23.1 עקרונות Phase 9
+
+1. **No repeat** — תלמיד לא רואה אותה שאלה שוב באותו פרופיל עד שמאגר השאלות לאותו מושג מוצה.
+2. **Harder after correct** — תשובה נכונה מובילה לשאלה קשה יותר באותו מושג, לא לעוד שאלה באותה דרגה.
+3. **Repair after wrong** — תשובה שגויה מוסיפה חולשה, מציגה הסבר חד, אסוציאציה ו-recovery drill.
+4. **No fake 100** — רמה 100 דורשת שליטה בכל המושגים, שאלות עומק, קטעי קוד ומבחן מדומה חזק.
+5. **Reliability first** — כל טאב עובר smoke בדסקטופ ובמובייל לפני שמוסיפים עוד הרחבות.
+
+### 23.2 W40 — Exam Cockpit
+
+מסך מרכזי לפני מבחן:
+
+- readiness לפי מודול, נושא ומושג.
+- משימה יומית: מה ללמוד עכשיו וכמה זמן.
+- רשימת חסמים: טאב שבור, מושג חלש, שאלה חסרת פידבק, חוסר הוכחת קוד.
+- דוח סוף יום: מה התחזק, מה נשאר חלש, מה ללמוד מחר.
+
+### 23.3 W41 — Deep Question Ladder
+
+מערכת שאלות שמוכיחה הבנה:
+
+- מניעת כפילויות בפרופיל תלמיד.
+- escalation אוטומטי לשאלת עומק אחרי תשובה נכונה.
+- recovery drill אחרי טעות.
+- הרחבת מאגר hard questions לכל מושג עם density warning.
+- פידבק מלא: למה הנכון נכון, למה כל distractor שגוי, ואסוציאציה לזיכרון.
+
+### 23.4 W42 — Full Portal Reliability
+
+בדיקות חובה:
+
+- Playwright smoke לכל top tab בדסקטופ.
+- Playwright smoke לכל top tab במובייל.
+- בדיקת overlap: XP/status/navigation לא תופסים פס מרכזי ריק.
+- בדיקת profile backup/restore: scores, XP, coins, purchases, rewardLog.
+- PWA/offline smoke למסלול SVCollege בסיסי.
+- accessibility pass לתפריטי עץ, modals, mock exam ו-store.
+
+### 23.5 W43 — Learning Coach + Weakness Repair
+
+השכבה שמתקנת טעויות:
+
+- כל טעות נקשרת למושג canonical ולנושא.
+- שלוש טעויות דומות הופכות ל-misconception cluster.
+- לפני חזרה לשאלה קשה, התלמיד מקבל recovery drill קצר.
+- confidence calibration מודד האם התלמיד באמת יודע או מנחש.
+- fatigue guard מונע מצב שבו תלמיד ממשיך להפסיד נקודות כשהדיוק מתרסק.
+
+### 23.6 W44 — Post-Exam Productization
+
+רק אחרי Exam Edition יציב:
+
+- Teacher Lite.
+- Sync Alpha.
+- AI Tutor Production Alpha.
+- Content Factory לשאלות + QA + distractor review.
+- מדדי retention/mastery/exam uplift.
+- חבילות premium שלא נועלות ידע חובה.
+
+### 23.7 DoD ל-Phase 9
+
+- `npm test`, build, no-random, readiness ו-question QA ירוקים.
+- desktop + mobile smoke לכל הטאבים הקריטיים.
+- אין שאלה כפולה בפרופיל תלמיד במסלול רגיל.
+- כל מושג לא מגיע ל-100 בלי שאלת עומק והוכחת קוד אם יש קוד.
+- דוח Exam Cockpit מציג next action אמיתי ולא רק סטטיסטיקה.
+
+---
+
+## 24. Phase 10 — Exam OS v2 + Content Factory
+
+**מטרה:** להפוך את LumenPortal ממאמן מבחן טוב למערכת ייצור ושיפור מתמשכת. Phase 10 לא מיועד לפני המבחן הקרוב; הוא נועד אחרי ש-Exam Edition יציב, כדי להגדיל איכות, עומק, מדידה ויכולת לשכפל את הפורטל לקורסים אחרים.
+
+### 24.1 עקרונות Phase 10
+
+1. **לא מוסיפים ידע מזויף** — כל שאלה, קליפ, סרטון או משימה נוצרים ממושג, שיעור או מקור קיים.
+2. **איכות לפני נפח** — יעד השאלות כולל distractor quality, דרישות קדם, אסוציאציה ו-proof path, לא רק כמות.
+3. **מדידה לאורך זמן** — readiness יומי, מגמת שיפור, חזרתיות ו-false confidence חשובים יותר מציון רגעי.
+4. **פיצול פורטלים** — קורסים שאינם SVCollege AI & Full Stack יקבלו פורטלים נפרדים, לא יעמיסו על הפורטל הזה.
+5. **Premium לא נועל חומר חובה** — חנות, מוזיאון, סרטונים וחוויות נשארים העשרה בלבד.
+
+### 24.2 W45 — Content Factory Pipeline
+
+מפעל תוכן מדיד:
+
+- דשבורד פערי תוכן לפי מושג: Hard MC, Fill, Trace, Bug, Build, distractor feedback.
+- תור יצירה דטרמיניסטי מתוך נתוני מושגים קיימים בלבד.
+- תבניות hard questions לפי משפחות: JS, React, API, DB, Auth, Next, DevOps, AI.
+- Checklist ביקורת לכל שאלה: מה זה, מה צריך לדעת, למה נכון, למה המסיחים שגויים, איך זוכרים.
+- דוח שמפריד exam-critical מ-enrichment.
+
+### 24.3 W46 — Adaptive Daily Exam OS
+
+מערכת לימוד יומית:
+
+- time budget יומי.
+- שלושה נושאים חלשים לכל היותר כדי לא להציף.
+- שתי הוכחות קוד ביום.
+- סימולציית מבחן אחת או מקטע מבחן אחד.
+- end-of-day diff: מה השתנה בפועל.
+- final 24-hour cram plan.
+
+### 24.4 W47 — Mastery Audit + Anti-Duplication
+
+איכות מדידה:
+
+- concept-tag audit לכפילויות ו-aliases.
+- question reuse audit לפי פרופיל תלמיד.
+- mastery proof audit למושגים ברמה 6/7 בלי proof מלא.
+- false confidence audit: ביטחון גבוה + טעויות.
+- cross-tab evidence graph: איפה התלמיד הוכיח כל מושג.
+
+### 24.5 W48 — Final Exam Simulation Lab
+
+סימולציות:
+
+- 3 מבחנים דטרמיניסטיים: רגיל, קשה, לחץ.
+- מצב לחץ עם פחות רמזים.
+- post-exam review לפי מושג, misconception ודרישת קדם.
+- code-only final: Trace, Fill, Bug, Mini Build.
+- דוח 20 המושגים שהכי מסכנים ציון 100.
+
+### 24.6 W49 — Post-Exam Product Split
+
+התרחבות אחרי הבחינה:
+
+- פורטלים נפרדים לקורסים אחרים.
+- תבנית Portal Factory: curriculum blueprint, concept tags, proof gates, tabs, smoke tests.
+- Teacher Lite v2 על בסיס נתונים אמיתיים.
+- Sync v2 מקומי-קודם וענן אופציונלי.
+- AI Tutor v2 עם eval שמונע leak של תשובות.
+- Premium Experience רק להעשרה ומוטיבציה.
+
+### 24.7 DoD ל-Phase 10
+
+- אין תוכן placeholder.
+- כל שאלה חדשה עוברת QA distractor + prerequisite + proof path.
+- כל readiness report ניתן להסבר לפי evidence, לא לפי תחושה.
+- אין קורס נוסף בתוך פורטל SVCollege אלא אם הוא הוגדר כפורטל נפרד.
+- Premium לא חוסם ידע חובה או הכנה למבחן.
 
 ---
 

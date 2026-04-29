@@ -19,7 +19,7 @@
       href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css?v=museum-ai-model-deep-dive-v1" />
+    <link rel="stylesheet" href="style.css?v=concept-sprint-v2" />
     <!-- P1.3 — PWA -->
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236366f1'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' fill='white' font-family='Arial,sans-serif'%3EL%3C/text%3E%3C/svg%3E" />
@@ -37,6 +37,17 @@
             <span class="brand-main">Lumen</span><span class="brand-sub">Portal</span>
           </button>
           <p>מאסטר בפיתוח Full-Stack</p>
+          <section class="local-profile-panel" aria-label="פרופיל תלמיד מקומי">
+            <div class="local-profile-row">
+              <label for="local-profile-select">תלמיד</label>
+              <select id="local-profile-select" aria-label="בחר תלמיד מקומי"></select>
+            </div>
+            <div class="local-profile-create">
+              <input id="local-profile-name" type="text" autocomplete="off" placeholder="שם תלמיד חדש" aria-label="שם תלמיד חדש" />
+              <button id="local-profile-create" type="button" aria-label="צור תלמיד מקומי ללא סיסמה">צור</button>
+            </div>
+            <div class="local-profile-status" id="local-profile-status">שמירה מקומית ללא סיסמה</div>
+          </section>
         </div>
 
         <div class="sidebar-search">
@@ -70,6 +81,14 @@
 
       <!-- Mobile Menu Toggle -->
       <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="פתח/סגור תפריט שיעורים" aria-expanded="false">☰</button>
+
+      <!-- Focus mode controls -->
+      <button class="focus-mode-toggle" id="focus-mode-toggle" type="button" aria-label="הפעל מצב פוקוס ללמידה במסך מלא" aria-pressed="false" title="מצב פוקוס">
+        <span aria-hidden="true">⛶</span><span class="focus-label">פוקוס</span>
+      </button>
+      <button class="focus-side-toggle" id="focus-side-toggle" type="button" aria-label="פתח עץ ניווט במצב פוקוס" aria-expanded="false" hidden title="עץ ניווט">
+        <span aria-hidden="true">☰</span><span class="focus-label">תוכן</span>
+      </button>
 
       <!-- P1.2.4 — Theme toggle (Light/Dark/Auto) -->
       <button class="theme-toggle-btn" id="theme-toggle" aria-label="החלף בין מצב כהה לבהיר" title="החלף תצוגה (כהה/בהיר/אוטומטי)">
@@ -244,6 +263,12 @@
           <button class="top-tab" id="open-programming-museum" data-tab="programming-museum" aria-label="פתח מוזיאון היסטורי לשפות התכנות">
             <span class="emoji" aria-hidden="true">🏛️</span><span>מוזיאון</span>
           </button>
+          <button class="top-tab" id="open-language-tools" data-tab="language-tools" aria-label="פתח השוואת שפות וכלי פיתוח">
+            <span class="emoji" aria-hidden="true">🧮</span><span>שפות וכלים</span>
+          </button>
+          <button class="top-tab" id="open-reward-store" data-tab="reward-store" aria-label="פתח חנות חוויות עם מטבעות למידה">
+            <span class="emoji" aria-hidden="true">🛒</span><span>חנות</span>
+          </button>
           <button class="top-tab" id="open-flashcards" data-tab="flashcards" aria-label="פתח כרטיסיות חזרה לפי SRS">
             <span class="emoji" aria-hidden="true">🃏</span><span>כרטיסיות</span>
           </button>
@@ -273,6 +298,9 @@
           </button>
           <button class="top-tab" id="open-trainer" data-tab="trainer" aria-label="פתח מאמן ידע + דוח">
             <span class="emoji" aria-hidden="true">🧠</span><span>מאמן ידע + דוח</span>
+          </button>
+          <button class="top-tab" id="open-concept-sprint" data-tab="concept-sprint" onclick="window.LUMEN_OPEN_CONCEPT_SPRINT && window.LUMEN_OPEN_CONCEPT_SPRINT()" aria-label="פתח מושגים נטו — אבחון מהיר לפי מושג">
+            <span class="emoji" aria-hidden="true">⚡</span><span>מושגים נטו</span>
           </button>
           <button class="top-tab" id="open-study-mode" data-tab="study" aria-label="פתח מצב לימוד מותאם">
             <span class="emoji" aria-hidden="true">🎯</span><span>לימוד מותאם</span>
@@ -411,6 +439,21 @@
             <div id="programming-museum-content"></div>
           </div>
 
+          <!-- Language & Development Tools Comparison View -->
+          <div class="language-tools-view" id="language-tools-view" style="display:none">
+            <div class="lt-hero glass-panel">
+              <div>
+                <h2>🧮 השוואת שפות וכלי פיתוח</h2>
+                <p>
+                  טבלה ממוקדת לבחירת שפה, framework, runtime וכלי עבודה לפי תחום:
+                  Frontend, Full-Stack, Backend, מערכות, מובייל וכלי פיתוח.
+                </p>
+              </div>
+              <div class="lt-hero-badge">language → runtime → framework → tooling → product</div>
+            </div>
+            <div id="language-tools-content"></div>
+          </div>
+
           <!-- Knowledge Map View -->
           <div class="knowledge-map" id="knowledge-map-view" style="display:none">
             <div class="km-header glass-panel">
@@ -545,6 +588,35 @@
             <div class="trainer-report glass-panel" id="trainer-report" style="display:none">
               <h3>📊 דוח ציונים מלא — לפי שיעור</h3>
               <div class="trainer-report-body" id="trainer-report-body"></div>
+            </div>
+          </div>
+
+          <!-- Concept Sprint View — pure concept checks that feed the Knowledge Trainer -->
+          <div class="concept-sprint-view" id="concept-sprint-view" style="display:none">
+            <div class="concept-sprint-shell glass-panel">
+              <div class="concept-sprint-head">
+                <div>
+                  <h2>⚡ מושגים נטו</h2>
+                  <p>בחינה ממוקדת על מושגים בלבד. כל תשובה נכנסת מיד למאמן הידע ומעדכנת את רמת השליטה שלך.</p>
+                </div>
+                <div class="concept-sprint-xp" id="concept-sprint-xp">XP נוכחי: 0</div>
+              </div>
+              <div id="concept-sprint-content"></div>
+            </div>
+          </div>
+
+          <!-- Reward Store View — spend earned learning coins on experiences, not grades -->
+          <div class="reward-store-view" id="reward-store-view" style="display:none">
+            <div class="reward-store-shell glass-panel">
+              <div class="reward-store-head">
+                <div>
+                  <h2>🛒 חנות חוויות</h2>
+                  <p>כאן משתמשים במטבעות שקיבלת מלמידה כדי לפתוח חוויות, עיצובים ואתגרי בונוס. אי אפשר לקנות ציון או מאסטר.</p>
+                </div>
+                <div class="reward-store-balance" id="reward-store-balance">🪙 0</div>
+              </div>
+              <div class="reward-store-filters" id="reward-store-filters" aria-label="סינון חנות"></div>
+              <div id="reward-store-content"></div>
             </div>
           </div>
 
@@ -972,8 +1044,8 @@
     <!-- P4.6.4 — HTML sanitization must patch legacy rendering before app.js -->
     <script src="lib/vendor/dompurify.min.js"></script>
     <script src="src/core/sanitize-early.js"></script>
-    <script src="app.js?v=svcollege-devops-v1"></script>
-    <script type="module" src="/src/main.js"></script>
+    <script src="app.js?v=concept-sprint-v2"></script>
+    <script type="module" src="/src/main.js?v=core-bootstrap-v2"></script>
 
     <!-- W12 — Achievements overlay -->
     <div id="achievements-overlay" class="achievements-overlay" style="display:none" role="dialog" aria-modal="true">
@@ -983,6 +1055,17 @@
           <button id="ach-close" class="ach-close-btn" aria-label="סגור">✕</button>
         </div>
         <div id="achievements-body" class="achievements-grid"></div>
+      </div>
+    </div>
+
+    <!-- W12 — XP detail panel -->
+    <div id="xp-detail-overlay" class="xp-detail-overlay" style="display:none" role="dialog" aria-modal="true">
+      <div class="xp-detail-modal glass-panel">
+        <div class="xp-detail-head">
+          <h3>⭐ מצב XP ומטבעות</h3>
+          <button id="xp-detail-close" class="ach-close-btn" aria-label="סגור">✕</button>
+        </div>
+        <div id="xp-detail-body" class="xp-detail-body"></div>
       </div>
     </div>
 

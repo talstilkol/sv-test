@@ -50,6 +50,13 @@ var QUESTIONS_BANK = {
       explanation: "const קושר את המשתנה לערך בודד — אי אפשר להציב לו ערך חדש (אפשר עדיין לשנות תוכן של אובייקט/מערך).",
     },
     {
+      id: "mc_var_deep_001", topicId: "topic_variables", conceptKey: "lesson_11::let", level: 6,
+      question: "מה יודפס?\n\nlet score = 1;\nif (true) {\n  let score = 2;\n}\nconsole.log(score);",
+      options: ["1", "2", "undefined", "ReferenceError"],
+      correctIndex: 0,
+      explanation: "let הוא block scoped. ה-score שבתוך ה-if הוא משתנה נפרד, ולכן מחוץ לבלוק נשאר הערך 1.",
+    },
+    {
       id: "mc_var_003", topicId: "topic_variables", conceptKey: "lesson_11::boolean", level: 2,
       question: "מה יודפס?\n\nlet isLoggedIn = false;\nif (isLoggedIn) console.log('Welcome');\nelse console.log('Please login');",
       options: ["Welcome", "Please login", "true", "שגיאה"],
@@ -57,7 +64,7 @@ var QUESTIONS_BANK = {
       explanation: "isLoggedIn הוא false ולכן ה-else מתבצע.",
     },
     {
-      id: "mc_var_004", topicId: "topic_variables", level: 3,
+      id: "mc_var_004", topicId: "topic_variables", conceptKey: "lesson_11::var", level: 3,
       question: "איזה משפט נכון לגבי var?",
       options: [
         "var הוא הצורה המומלצת ביותר ב-2020+",
@@ -71,25 +78,25 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 2 — Conditionals =====
     {
-      id: "mc_if_001", topicId: "topic_conditionals", level: 2,
+      id: "mc_if_001", topicId: "topic_conditionals", conceptKey: "lesson_19::switch", level: 2,
       question: "מתי משתמשים ב-switch במקום if?",
       options: [
         "כשבודקים תנאים מורכבים עם AND/OR",
         "כשמשווים ערך אחד מול הרבה ערכים קבועים",
-        "תמיד עדיף switch",
-        "switch תמיד מהיר יותר",
+        "כשצריך להריץ לולאת for",
+        "כשצריך להמיר string למספר",
       ],
       correctIndex: 1,
       explanation: "switch מתאים כשיש משתנה אחד שנבדק מול ערכים בדידים — קריא יותר מ-if/else if ארוך.",
     },
     {
-      id: "mc_if_002", topicId: "topic_conditionals", level: 3,
+      id: "mc_if_002", topicId: "topic_conditionals", conceptKey: "lesson_19::if/else", level: 3,
       question: "מה ההבדל בין == ל-===?",
       options: [
-        "אין הבדל",
-        "=== בודק גם טיפוס וגם ערך, == עושה type coercion",
-        "== מהיר יותר",
-        "=== עובד רק על מספרים",
+        "== בודק טיפוס, === לא בודק",
+        "=== בודק גם טיפוס וגם ערך",
+        "== מחזיר Promise",
+        "=== מיועד רק למערכים",
       ],
       correctIndex: 1,
       explanation: "=== הוא strict equality — לא ממיר טיפוסים. תמיד עדיף.",
@@ -108,8 +115,8 @@ var QUESTIONS_BANK = {
       question: "מה מחזירה filter?",
       options: [
         "איבר אחד בלבד",
-        "מערך חדש עם איברים שעומדים בתנאי",
-        "משנה את המערך המקורי תמיד",
+        "מערך חדש עם איברים שעברו תנאי",
+        "מספר האיברים שנמחקו",
         "מחזירה רק מספרים",
       ],
       correctIndex: 1,
@@ -119,9 +126,9 @@ var QUESTIONS_BANK = {
       id: "mc_arr_003", topicId: "topic_arrays", conceptKey: "lesson_11::map", level: 4,
       question: "מה ההבדל המרכזי בין map ל-forEach?",
       options: [
-        "אין הבדל",
-        "map מחזיר מערך חדש; forEach רץ ולא מחזיר ערך",
-        "forEach מהיר יותר תמיד",
+        "map מוחק איברים; forEach מוסיף",
+        "map יוצר מערך חדש; forEach רק רץ",
+        "forEach מחזיר מערך חדש",
         "map עובד רק עם מספרים",
       ],
       correctIndex: 1,
@@ -144,7 +151,7 @@ var QUESTIONS_BANK = {
     {
       id: "mc_arr_006", topicId: "topic_arrays", conceptKey: "lesson_11::spread", level: 4,
       question: "מה יודפס?\n\nconst a = [1, 2];\nconst b = [...a, 3];\nconsole.log(b);",
-      options: ["[1, 2]", "[1, 2, 3]", "מערך שבו a נשאר איבר אחד ואז 3", "שגיאה"],
+      options: ["[1, 2]", "[1, 2, 3]", "a נשאר מערך פנימי", "שגיאה"],
       correctIndex: 1,
       explanation: "spread (...) פורש את a לתוך b ויוצר מערך חדש [1, 2, 3].",
     },
@@ -214,14 +221,14 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 7 — Events =====
     {
-      id: "mc_evt_001", topicId: "topic_events", level: 1,
+      id: "mc_evt_001", topicId: "topic_events", conceptKey: "lesson_19::event", level: 1,
       question: "איזה אירוע מתאים ללחיצה על כפתור?",
       options: ["click", "input", "load", "submit"],
       correctIndex: 0,
       explanation: "click הוא האירוע הסטנדרטי ללחיצת עכבר על כל אלמנט.",
     },
     {
-      id: "mc_evt_002", topicId: "topic_events", level: 3,
+      id: "mc_evt_002", topicId: "topic_events", conceptKey: "lesson_19::event", level: 3,
       question: "איזה אירוע מתאים לכל הקלדה בשדה טקסט?",
       options: ["click", "input", "submit", "load"],
       correctIndex: 1,
@@ -245,10 +252,10 @@ var QUESTIONS_BANK = {
       id: "mc_st_002", topicId: "topic_storage", conceptKey: "lesson_13::sessionStorage", level: 4,
       question: "מה ההבדל בין localStorage ל-sessionStorage?",
       options: [
-        "אין הבדל",
-        "sessionStorage נמחק כשסוגרים את הטאב; localStorage נשאר",
-        "localStorage מהיר יותר",
-        "sessionStorage שומר רק מספרים",
+        "שניהם נמחקים בכל refresh",
+        "sessionStorage נמחק בסגירת טאב",
+        "localStorage עובד רק בשרת",
+        "sessionStorage שומר רק number",
       ],
       correctIndex: 1,
       explanation: "sessionStorage חי רק לאורך הסשן (סגירת טאב מנקה). localStorage נשמר בין סשנים.",
@@ -270,14 +277,14 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 10 — Async / Promise / Fetch =====
     {
-      id: "mc_async_001", topicId: "topic_async", level: 3,
+      id: "mc_async_001", topicId: "topic_async", conceptKey: "lesson_15::setTimeout", level: 3,
       question: "מה יודפס ראשון?\n\nconsole.log('A');\nsetTimeout(() => console.log('B'), 1000);\nconsole.log('C');",
       options: ["A→B→C", "A→C→B", "B→A→C", "C→A→B"],
       correctIndex: 1,
       explanation: "setTimeout נדחה ל-event loop. הקוד הסינכרוני (A,C) רץ קודם, ואז B.",
     },
     {
-      id: "mc_async_002", topicId: "topic_async", level: 4,
+      id: "mc_async_002", topicId: "topic_async", conceptKey: "lesson_15::Asynchronous", level: 4,
       question: "למה משתמשים ב-await?",
       options: [
         "כדי לחכות לתוצאה של פעולה אסינכרונית",
@@ -289,7 +296,7 @@ var QUESTIONS_BANK = {
       explanation: "await ממתין ל-Promise להיפתר ומחזיר את הערך — אפשר רק בתוך async function.",
     },
     {
-      id: "mc_async_003", topicId: "topic_async", level: 5,
+      id: "mc_async_003", topicId: "topic_async", conceptKey: "lesson_15::fetch", level: 5,
       question: "איזו מהבאות נכונה לטיפול בשגיאת fetch ב-async/await?",
       options: [
         "if (fetch.error) ...",
@@ -303,7 +310,7 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 11 — Node.js =====
     {
-      id: "mc_node_001", topicId: "topic_node", level: 2,
+      id: "mc_node_001", topicId: "topic_node", conceptKey: "lesson_16::Node.js", level: 2,
       question: "מה Node.js מאפשר לעשות?",
       options: [
         "להריץ JavaScript מחוץ לדפדפן",
@@ -315,11 +322,11 @@ var QUESTIONS_BANK = {
       explanation: "Node.js הוא runtime מבוסס V8 שמריץ JS גם מחוץ לדפדפן — מתאים לשרתים ו-CLI.",
     },
     {
-      id: "mc_node_002", topicId: "topic_node", level: 3,
+      id: "mc_node_002", topicId: "topic_node", conceptKey: "lesson_16::package.json", level: 3,
       question: "מה תפקיד package.json?",
       options: [
         "קובץ עם תמונות",
-        "קובץ הגדרות פרויקט עם תלויות וסקריפטים",
+        "קובץ עם תלויות וסקריפטים",
         "מסד נתונים",
         "קובץ HTML",
       ],
@@ -329,14 +336,14 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 12 — Express / HTTP =====
     {
-      id: "mc_exp_001", topicId: "topic_express", level: 3,
+      id: "mc_exp_001", topicId: "topic_express", conceptKey: "lesson_17::POST", level: 3,
       question: "ב-Express, איזה method מתאים ליצירת משאב חדש?",
       options: ["GET", "POST", "DELETE", "PATCH"],
       correctIndex: 1,
       explanation: "POST משמש ליצירה. GET לקריאה, PUT/PATCH לעדכון, DELETE למחיקה.",
     },
     {
-      id: "mc_exp_002", topicId: "topic_express", level: 4,
+      id: "mc_exp_002", topicId: "topic_express", conceptKey: "lesson_17::body-parser", level: 4,
       question: "מה תפקיד express.json()?",
       options: [
         "מעצב את הדף",
@@ -362,7 +369,7 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 13 — MongoDB =====
     {
-      id: "mc_mongo_001", topicId: "topic_mongo", level: 2,
+      id: "mc_mongo_001", topicId: "topic_mongo", conceptKey: "lesson_20::Collection", level: 2,
       question: "ב-MongoDB, מה זה Collection?",
       options: [
         "קובץ CSS",
@@ -374,11 +381,11 @@ var QUESTIONS_BANK = {
       explanation: "Collection היא אוסף של documents (אובייקטי JSON-like) בתוך database.",
     },
     {
-      id: "mc_mongo_002", topicId: "topic_mongo", level: 4,
+      id: "mc_mongo_002", topicId: "topic_mongo", conceptKey: "lesson_20::Mongoose", level: 4,
       question: "מה תפקיד Mongoose?",
       options: [
         "ספרייה לעיצוב",
-        "ODM שמספק Schema/Model מעל MongoDB",
+        "ODM עם Schema ו-Model ל-MongoDB",
         "framework לבדיקות",
         "שרת HTTP",
       ],
@@ -388,7 +395,7 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 14 — React Basics =====
     {
-      id: "mc_react_001", topicId: "topic_react", level: 1,
+      id: "mc_react_001", topicId: "topic_react", conceptKey: "lesson_21::Component", level: 1,
       question: "מה זה Component?",
       options: [
         "פונקציה/רכיב שמחזיר JSX",
@@ -400,7 +407,7 @@ var QUESTIONS_BANK = {
       explanation: "ב-React קומפוננטה היא פונקציה שמחזירה JSX (תיאור UI).",
     },
     {
-      id: "mc_react_002", topicId: "topic_react", level: 2,
+      id: "mc_react_002", topicId: "topic_react", conceptKey: "lesson_21::props", level: 2,
       question: "מה זה Props?",
       options: [
         "מידע שנשלח מקומפוננטה הורה לילד",
@@ -412,7 +419,7 @@ var QUESTIONS_BANK = {
       explanation: "Props הוא ה-API של הקומפוננטה — דרך ההורה להעביר מידע לילד.",
     },
     {
-      id: "mc_react_003", topicId: "topic_react", level: 3,
+      id: "mc_react_003", topicId: "topic_react", conceptKey: "lesson_21::JSX", level: 3,
       question: "למה ב-JSX כותבים className ולא class?",
       options: [
         "כי class היא מילה שמורה ב-JS",
@@ -438,7 +445,7 @@ var QUESTIONS_BANK = {
       explanation: "React משווה reference. שינוי במקום (mutation) משאיר את ה-reference זהה ולכן הקומפוננטה לא מתרנדרת.",
     },
     {
-      id: "mc_state_002", topicId: "topic_state", level: 3,
+      id: "mc_state_002", topicId: "topic_state", conceptKey: "lesson_22::immutable", level: 3,
       question: "מה הדרך הנכונה להוסיף איבר למערך ב-state?",
       options: [
         "students.push(s); setStudents(students)",
@@ -452,12 +459,12 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 16 — Parent ↔ Child Communication =====
     {
-      id: "mc_pc_001", topicId: "topic_parent_child", level: 3,
+      id: "mc_pc_001", topicId: "topic_parent_child", conceptKey: "lesson_22::passing function as prop", level: 3,
       question: "איך ילד מעדכן את ההורה?",
       options: [
         "props.parentState = ...",
-        "ההורה שולח callback ב-props; הילד מפעיל אותו",
-        "useEffect במיוחד",
+        "ההורה שולח callback ב-props",
+        "הילד משנה state ישירות",
         "לא ניתן",
       ],
       correctIndex: 1,
@@ -466,7 +473,7 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 17 — React Router =====
     {
-      id: "mc_router_001", topicId: "topic_router", level: 2,
+      id: "mc_router_001", topicId: "topic_router", conceptKey: "lesson_23::Link", level: 2,
       question: "מה תפקיד <Link to='/about'>?",
       options: [
         "טוען מחדש את הדף",
@@ -478,7 +485,7 @@ var QUESTIONS_BANK = {
       explanation: "Link מבצע ניווט פנים-אפליקציה (history API) בלי לטעון מחדש את כל הדף.",
     },
     {
-      id: "mc_router_002", topicId: "topic_router", level: 4,
+      id: "mc_router_002", topicId: "topic_router", conceptKey: "lesson_23::useParams", level: 4,
       question: "מתי משתמשים ב-useParams?",
       options: [
         "לקרוא פרמטר דינמי מתוך URL",
@@ -492,7 +499,7 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 18 — Context =====
     {
-      id: "mc_ctx_001", topicId: "topic_context", level: 4,
+      id: "mc_ctx_001", topicId: "topic_context", conceptKey: "lesson_23::Context API", level: 4,
       question: "איזו בעיה Context API פותר?",
       options: [
         "העברת props דרך הרבה קומפוננטות ביניים",
@@ -506,7 +513,7 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 19 — useEffect / useRef / useMemo =====
     {
-      id: "mc_eff_001", topicId: "topic_effects", level: 4,
+      id: "mc_eff_001", topicId: "topic_effects", conceptKey: "lesson_24::useEffect", level: 4,
       question: "מתי נשתמש ב-useEffect?",
       options: [
         "כשצריך לבצע פעולה בזמן טעינה או בעקבות שינוי",
@@ -518,10 +525,10 @@ var QUESTIONS_BANK = {
       explanation: "useEffect מיועד לתופעות לוואי: fetch, טיימרים, האזנות. רץ אחרי הרינדור.",
     },
     {
-      id: "mc_eff_002", topicId: "topic_effects", level: 5,
+      id: "mc_eff_002", topicId: "topic_effects", conceptKey: "lesson_24::fetching data", level: 5,
       question: "למה לא לעשות fetch ישירות בגוף הקומפוננטה?",
       options: [
-        "כי תמיד מחזיר undefined",
+        "כי זה רץ בכל רינדור",
         "כי זה גורם ללולאת רינדורים אינסופית",
         "כי fetch לא עובד בריאקט",
         "כי אסור להביא מידע מ-API",
@@ -530,10 +537,10 @@ var QUESTIONS_BANK = {
       explanation: "fetch בגוף הקומפוננטה רץ בכל רינדור → setState → רינדור → fetch... לולאה. useEffect עם dependency ריק רץ פעם אחת.",
     },
     {
-      id: "mc_eff_003", topicId: "topic_effects", level: 5,
+      id: "mc_eff_003", topicId: "topic_effects", conceptKey: "lesson_24::useRef", level: 5,
       question: "מה עושה useRef?",
       options: [
-        "שומר reference לאלמנט/ערך mutable שלא גורם לרינדור",
+        "שומר ref בלי לגרום לרינדור",
         "יוצר Route",
         "מוחק state",
         "מחליף MongoDB",
@@ -542,11 +549,11 @@ var QUESTIONS_BANK = {
       explanation: "useRef מחזיר אובייקט { current } שאפשר לשנות בלי לגרום לרינדור — מצוין לאלמנטי DOM ולערכים מתמשכים.",
     },
     {
-      id: "mc_eff_004", topicId: "topic_effects", level: 6,
+      id: "mc_eff_004", topicId: "topic_effects", conceptKey: "lesson_24::useMemo", level: 6,
       question: "מתי כדאי להשתמש ב-useMemo?",
       options: [
-        "תמיד, לכל ערך",
-        "כשיש חישוב כבד שלא צריך לחזור על עצמו בכל רינדור",
+        "כשצריך state חדש",
+        "כשיש חישוב כבד שחוזר ברינדור",
         "כדי ליצור state",
         "רק עם setTimeout",
       ],
@@ -556,7 +563,7 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 21 — TypeScript =====
     {
-      id: "mc_ts_001", topicId: "topic_typescript", level: 2,
+      id: "mc_ts_001", topicId: "topic_typescript", conceptKey: "lesson_26::type annotation", level: 2,
       question: "מה הבעיה כאן?\n\nlet age: number = '25';",
       options: [
         "אין בעיה",
@@ -568,7 +575,7 @@ var QUESTIONS_BANK = {
       explanation: "type annotation דורש number, אבל הוצב string — TS יסרב לקמפל.",
     },
     {
-      id: "mc_ts_002", topicId: "topic_typescript", level: 3,
+      id: "mc_ts_002", topicId: "topic_typescript", conceptKey: "lesson_26::void", level: 3,
       question: "מה המשמעות של void בפונקציה?",
       options: [
         "מחזירה string",
@@ -580,11 +587,11 @@ var QUESTIONS_BANK = {
       explanation: "void מציין שהפונקציה לא מחזירה דבר משמעותי — בדומה לפונקציה ללא return.",
     },
     {
-      id: "mc_ts_003", topicId: "topic_typescript", level: 4,
+      id: "mc_ts_003", topicId: "topic_typescript", conceptKey: "lesson_26::interface vs type", level: 4,
       question: "מה ההבדל בין interface ל-type?",
       options: [
-        "אין הבדל בכלל",
-        "interface ניתן להרחבה (extends/declaration merging); type מאפשר union/intersection",
+        "interface הוא רק runtime",
+        "interface ניתן להרחבה; type גמיש ל-union",
         "type מהיר יותר ב-runtime",
         "interface עובד רק עם React",
       ],
@@ -594,7 +601,7 @@ var QUESTIONS_BANK = {
 
     // ===== Topic 22 — React + TypeScript =====
     {
-      id: "mc_rt_001", topicId: "topic_react_ts", level: 4,
+      id: "mc_rt_001", topicId: "topic_react_ts", conceptKey: "lesson_26::Typing State", level: 4,
       question: "איך מגדירים state של מערך משימות {id:number,title:string,completed:boolean}?",
       options: [
         "useState([])",
@@ -606,7 +613,7 @@ var QUESTIONS_BANK = {
       explanation: "useState<Todo[]>([]) קובע במפורש שזה מערך של Todo — הקומפיילר יזהה טעויות.",
     },
     {
-      id: "mc_rt_002", topicId: "topic_react_ts", level: 5,
+      id: "mc_rt_002", topicId: "topic_react_ts", conceptKey: "lesson_26::Function Prop Type", level: 5,
       question: "איך מטפסים פונקציה שמועברת ב-props?\n\ntype Props = { addTodo: ??? }",
       options: [
         "any",
@@ -673,9 +680,9 @@ var QUESTIONS_BANK = {
       id: "mc_qsel_001", topicId: "topic_dom", conceptKey: "lesson_13::querySelector", level: 3,
       question: "מה ההבדל בין querySelector ל-querySelectorAll?",
       options: [
-        "אין הבדל",
-        "querySelector מחזיר את הראשון; querySelectorAll מחזיר NodeList של כולם",
-        "querySelectorAll מחזיר אובייקט",
+        "querySelector מחזיר רק id",
+        "querySelector מחזיר ראשון; All מחזיר רשימה",
+        "querySelectorAll מוחק אלמנטים",
         "querySelector עובד רק על id",
       ],
       correctIndex: 1,
@@ -685,7 +692,7 @@ var QUESTIONS_BANK = {
       id: "mc_inner_001", topicId: "topic_dom", conceptKey: "lesson_13::innerHTML", level: 5,
       question: "למה innerHTML עלול להיות מסוכן עם קלט משתמש?",
       options: [
-        "זה תמיד בטוח",
+        "הקלט מפוענח כ-HTML",
         "Cross-Site Scripting (XSS) — קוד זדוני בקלט יורץ",
         "זה עובד רק עם מספרים",
         "innerHTML מאט את הדפדפן",
@@ -720,7 +727,7 @@ var QUESTIONS_BANK = {
 
     // Lesson 15 — Errors / Closure
     {
-      id: "mc_throw_001", topicId: "topic_errors", level: 4,
+      id: "mc_throw_001", topicId: "topic_errors", conceptKey: "lesson_15::throw", level: 4,
       question: "מה קורה אם זורקים שגיאה (throw) בלי try/catch?",
       options: [
         "הקוד ממשיך כרגיל",
@@ -732,11 +739,11 @@ var QUESTIONS_BANK = {
       explanation: "שגיאה לא-מטופלת מפסיקה את ביצוע הסקריפט הנוכחי ונרשמת לקונסול כ-Uncaught.",
     },
     {
-      id: "mc_closure_001", topicId: "topic_functions", level: 5,
+      id: "mc_closure_001", topicId: "topic_functions", conceptKey: "lesson_15::Closure", level: 5,
       question: "מה Closure?",
       options: [
-        "פונקציה שיש לה גישה למשתנים מהסקופ שבו נוצרה — גם אחרי שהסקופ הסתיים",
-        "פונקציה שלא מקבלת פרמטרים",
+        "פונקציה שזוכרת את הסקופ שבו נוצרה",
+        "פונקציה בלי פרמטרים",
         "פונקציה שלא מחזירה ערך",
         "מתודה של Object",
       ],
@@ -746,7 +753,7 @@ var QUESTIONS_BANK = {
 
     // Lesson 16 — Async deeper
     {
-      id: "mc_promise_001", topicId: "topic_async", level: 4,
+      id: "mc_promise_001", topicId: "topic_async", conceptKey: "lesson_15::Promise", level: 4,
       question: "מהו Promise?",
       options: [
         "אובייקט שמייצג ערך עתידי — pending / fulfilled / rejected",
@@ -758,7 +765,7 @@ var QUESTIONS_BANK = {
       explanation: "Promise הוא placeholder לתוצאת פעולה אסינכרונית. שלושה מצבים: pending, fulfilled, rejected.",
     },
     {
-      id: "mc_then_001", topicId: "topic_async", level: 4,
+      id: "mc_then_001", topicId: "topic_async", conceptKey: "lesson_15::then", level: 4,
       question: "מה יעשה .then(handler)?",
       options: [
         "יקרא ל-handler מיד",
@@ -772,11 +779,11 @@ var QUESTIONS_BANK = {
 
     // Lesson 17 — Express / REST deeper
     {
-      id: "mc_status_201", topicId: "topic_express", level: 5,
+      id: "mc_status_201", topicId: "topic_express", conceptKey: "lesson_17::Status Codes", level: 5,
       question: "מה משמעות סטטוס 201?",
       options: [
         "OK רגיל",
-        "Created — המשאב נוצר בהצלחה (בדרך כלל בעקבות POST)",
+        "Created — נוצר משאב חדש",
         "שגיאת לקוח",
         "המשאב לא נמצא",
       ],
@@ -784,7 +791,7 @@ var QUESTIONS_BANK = {
       explanation: "201 Created מציין שהבקשה הצליחה ויצרה משאב חדש — מנהג מקצועי לאחר POST.",
     },
     {
-      id: "mc_middleware_001", topicId: "topic_express", level: 5,
+      id: "mc_middleware_001", topicId: "topic_express", conceptKey: "lesson_17::middleware", level: 5,
       question: "מה תפקיד הפרמטר next ב-middleware?",
       options: [
         "פונקציה שצריך לקרוא לה כדי להעביר ל-middleware הבא",
@@ -798,7 +805,7 @@ var QUESTIONS_BANK = {
 
     // Lesson 22 — useState deeper
     {
-      id: "mc_hook_rules_001", topicId: "topic_state", level: 6,
+      id: "mc_hook_rules_001", topicId: "topic_state", conceptKey: "lesson_22::Hook", level: 6,
       question: "איזה מהבאים מפר את 'Rules of Hooks'?",
       options: [
         "useState בתוך פונקציית קומפוננטה",
@@ -810,11 +817,11 @@ var QUESTIONS_BANK = {
       explanation: "Hooks חייבים להיקרא באותו סדר בכל רינדור. שימוש בתוך תנאי שובר את האינדקס הפנימי של React.",
     },
     {
-      id: "mc_setstate_001", topicId: "topic_state", level: 5,
+      id: "mc_setstate_001", topicId: "topic_state", conceptKey: "lesson_22::setState", level: 5,
       question: "מתי כדאי להשתמש בצורה הפונקציונלית של setState?\n\nsetCount(prev => prev + 1)",
       options: [
-        "תמיד",
-        "כשהערך החדש תלוי בערך הקודם — מבטיח עקביות בעת רינדורים מרובים",
+        "כשמעדכנים CSS",
+        "כשהערך החדש תלוי בערך הקודם",
         "רק בקומפוננטות class",
         "כשרוצים לעדכן state אחר",
       ],
@@ -824,23 +831,23 @@ var QUESTIONS_BANK = {
 
     // Lesson 24 — Effects deeper
     {
-      id: "mc_dep_001", topicId: "topic_effects", level: 5,
+      id: "mc_dep_001", topicId: "topic_effects", conceptKey: "lesson_24::dependency array", level: 5,
       question: "מה ההבדל בין useEffect(fn) ל-useEffect(fn, [])?",
       options: [
-        "אין הבדל",
-        "ללא מערך תלויות — רץ אחרי כל רינדור; עם [] — רץ רק פעם אחת אחרי mount",
-        "[] גורם ללולאה",
+        "שניהם רצים רק ב-mount",
+        "בלי deps רץ אחרי כל render; [] פעם אחת",
+        "[] מריץ לפני render",
         "ללא מערך — לא רץ בכלל",
       ],
       correctIndex: 1,
       explanation: "[] = run once on mount. [a, b] = run when a or b change. (none) = run after every render.",
     },
     {
-      id: "mc_cleanup_001", topicId: "topic_effects", level: 6,
+      id: "mc_cleanup_001", topicId: "topic_effects", conceptKey: "lesson_24::cleanup", level: 6,
       question: "מתי רץ ה-cleanup function שמוחזר מ-useEffect?",
       options: [
-        "אף פעם",
-        "לפני שה-effect הבא רץ או כשהקומפוננטה מתפרקת (unmount)",
+        "אחרי כל console.log",
+        "לפני effect הבא או unmount",
         "מיד אחרי הרינדור",
         "רק ב-class components",
       ],
@@ -850,7 +857,7 @@ var QUESTIONS_BANK = {
 
     // Lesson 25 — Router deeper
     {
-      id: "mc_dynamic_001", topicId: "topic_router", level: 4,
+      id: "mc_dynamic_001", topicId: "topic_router", conceptKey: "lesson_23::dynamic route", level: 4,
       question: 'איך מגדירים נתיב דינמי לפרופיל משתמש?',
       options: [
         '<Route path="/user" />',
@@ -864,7 +871,7 @@ var QUESTIONS_BANK = {
 
     // Lesson 26 — Context deeper
     {
-      id: "mc_provider_001", topicId: "topic_context", level: 5,
+      id: "mc_provider_001", topicId: "topic_context", conceptKey: "lesson_23::Provider", level: 5,
       question: "איזו קומפוננטה צריכה להיות בתוך ה-Provider?",
       options: [
         "רק האחרונה בעץ",
@@ -878,7 +885,7 @@ var QUESTIONS_BANK = {
 
     // Lesson 27 — TypeScript deeper
     {
-      id: "mc_optional_001", topicId: "topic_typescript", level: 4,
+      id: "mc_optional_001", topicId: "topic_typescript", conceptKey: "lesson_26::optional field", level: 4,
       question: "מה המשמעות של ? בטיפוס?\n\ntype User = { name: string; age?: number; }",
       options: [
         "age חייב להיות מסוג number",
@@ -890,7 +897,7 @@ var QUESTIONS_BANK = {
       explanation: "name: string חובה. age?: number — מותר להשמיט. הטיפוס הסופי: number | undefined.",
     },
     {
-      id: "mc_union_001", topicId: "topic_typescript", level: 5,
+      id: "mc_union_001", topicId: "topic_typescript", conceptKey: "lesson_26::union", level: 5,
       question: "איך מגדירים טיפוס שיכול להיות string או number?",
       options: [
         "Intersection: string & number",
@@ -902,7 +909,7 @@ var QUESTIONS_BANK = {
       explanation: "Union Type: type X = string | number. הערך יכול להיות אחד מהשניים.",
     },
     {
-      id: "mc_readonly_001", topicId: "topic_typescript", level: 5,
+      id: "mc_readonly_001", topicId: "topic_typescript", conceptKey: "lesson_26::readonly", level: 5,
       question: "מה עושה readonly בשדה של אובייקט?",
       options: [
         "השדה אופציונלי",
@@ -974,11 +981,59 @@ var QUESTIONS_BANK = {
       explanation: "נקודה היא class selector. סולמית היא id selector.",
     },
     {
+      id: "mc_html_css_deep_001", topicId: "topic_html_css", conceptKey: "lesson_html_css_foundations::CSS selector", level: 6,
+      question: "איזה selector הכי מדויק לכפתור שמסומן כך: <button id=\"save\" class=\"btn primary\" data-action=\"save\">?",
+      options: [
+        "button",
+        ".primary",
+        "[data-action=\"save\"]",
+        "#save",
+      ],
+      correctIndex: 3,
+      explanation: "#save הוא id selector ולכן הוא הכי ספציפי מבין האפשרויות. button הוא תגית, .primary הוא class, ו-[data-action=\"save\"] הוא attribute selector.",
+    },
+    {
       id: "mc_html_css_006", topicId: "topic_html_css", conceptKey: "lesson_html_css_foundations::cascade and specificity", level: 5,
       question: "אם button, .primary ו-#save מתאימים לאותו כפתור, מי בדרך כלל הכי ספציפי?",
       options: ["button", ".primary", "#save", "כולם שווים"],
       correctIndex: 2,
       explanation: "id selector חזק יותר מ-class ו-tag. אם הכללים מאותו מקור וללא !important, #save ינצח.",
+    },
+    {
+      id: "mc_html_css_deep_002", topicId: "topic_html_css", conceptKey: "lesson_html_css_foundations::cascade and specificity", level: 6,
+      question: "לשני כללי CSS יש אותה specificity. מי ינצח?",
+      options: [
+        "הכלל שנכתב מאוחר יותר בקובץ",
+        "כלל שנמצא בקובץ אחר",
+        "הכלל עם שם class קצר יותר",
+        "הדפדפן בוחר לפי צבע",
+      ],
+      correctIndex: 0,
+      explanation: "כש-specificity שווה והמקור זהה, cascade בוחר את הכלל המאוחר יותר. לכן סדר הקוד עדיין חשוב.",
+    },
+    {
+      id: "mc_sql_deep_001", topicId: "topic_sql", conceptKey: "lesson_sql_orm::row", level: 6,
+      question: "בטבלת users עם עמודות id, email, role — מה היא row?",
+      options: [
+        "רשומה אחת של משתמש עם ערכים בכל העמודות הרלוונטיות",
+        "שם של עמודה בלבד",
+        "כל בסיס הנתונים",
+        "פקודת SELECT",
+      ],
+      correctIndex: 0,
+      explanation: "row היא רשומה אחת בטבלה. columns מגדירות שדות, row מחזיקה את הערכים של ישות אחת.",
+    },
+    {
+      id: "mc_next_deep_001", topicId: "topic_nextjs", conceptKey: "lesson_nextjs::file-system routing", level: 6,
+      question: "איזה קובץ ייצור את הכתובת /dashboard/settings ב-Next.js App Router?",
+      options: [
+        "app/dashboard/settings/page.jsx",
+        "app/dashboard/settings.css",
+        "src/settings.json",
+        "pages/dashboard/settings.txt",
+      ],
+      correctIndex: 0,
+      explanation: "ב-App Router התיקיות מגדירות URL segments וקובץ page.jsx מגדיר את המסך של ה-route.",
     },
     {
       id: "mc_html_css_007", topicId: "topic_html_css", conceptKey: "lesson_html_css_foundations::box model", level: 4,
@@ -991,6 +1046,18 @@ var QUESTIONS_BANK = {
       ],
       correctIndex: 0,
       explanation: "כל אלמנט הוא קופסה: התוכן, הרווח הפנימי, הגבול והרווח החיצוני.",
+    },
+    {
+      id: "mc_html_css_deep_003", topicId: "topic_html_css", conceptKey: "lesson_html_css_foundations::box model", level: 6,
+      question: "אם box-sizing הוא border-box ורוחב האלמנט 200px, מה נכלל בתוך ה-200px?",
+      options: [
+        "content, padding ו-border",
+        "רק content",
+        "רק margin",
+        "רק font-size",
+      ],
+      correctIndex: 0,
+      explanation: "ב-border-box הרוחב שהוגדר כולל content, padding ו-border. margin נשאר מחוץ לרוחב.",
     },
     {
       id: "mc_html_css_008", topicId: "topic_html_css", conceptKey: "lesson_html_css_foundations::accessibility basics", level: 4,
@@ -1020,9 +1087,9 @@ var QUESTIONS_BANK = {
       id: "mc_tooling_002", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::repository", level: 3,
       question: "מה נכון לגבי repository?",
       options: [
-        "זו תיקיית פרויקט עם היסטוריית Git, ולעיתים גם חיבור ל-remote כמו GitHub",
+        "תיקיית פרויקט עם היסטוריית Git",
         "זו רק פונקציית JavaScript",
-        "זו תמיד מסד נתונים SQL",
+        "זו טבלת SQL בלבד",
         "זו תמונה שנשמרת ב-public",
       ],
       correctIndex: 0,
@@ -1041,6 +1108,54 @@ var QUESTIONS_BANK = {
       explanation: "git add מכניס שינויים ל-index. commit לוקח snapshot ממה שנמצא ב-staging area.",
     },
     {
+      id: "mc_tooling_deep_001", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::working tree", level: 6,
+      question: "git status מציג `M src/App.jsx` ו-`?? notes.md`. מה זה מוכיח על ה-working tree?",
+      options: [
+        "יש שינוי מקומי בקובץ מוכר וקובץ חדש ש-Git עדיין לא עוקב אחריו",
+        "שני הקבצים כבר נכנסו ל-commit האחרון",
+        "ה-repository נמחק ואין יותר היסטוריה",
+        "הקבצים נמצאים ב-remote בלבד ולא במחשב",
+      ],
+      correctIndex: 0,
+      explanation: "working tree הוא מצב הקבצים עכשיו. M הוא שינוי בקובץ tracked, ו-?? הוא קובץ untracked שעדיין לא נוסף ל-index.",
+    },
+    {
+      id: "mc_tooling_deep_002", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::Git", level: 6,
+      question: "למה Git לא נחשב רק 'שמירה של קבצים'?",
+      options: [
+        "כי הוא שומר snapshots עם היסטוריה, parents, branches והשוואה בין מצבים",
+        "כי הוא מריץ את האפליקציה במקום Node.js",
+        "כי הוא מחליף database בפרודקשן",
+        "כי הוא שומר רק את הקובץ האחרון בלי היסטוריה",
+      ],
+      correctIndex: 0,
+      explanation: "Git בונה גרף היסטוריה של commits. זה מאפשר branching, merge, diff, revert ועבודת צוות מדויקת.",
+    },
+    {
+      id: "mc_tooling_deep_003", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::repository", level: 6,
+      question: "מה ההבדל המדויק בין repository מקומי לבין remote repository?",
+      options: [
+        "מקומי אצלך; remote הוא עותק מרוחק",
+        "מקומי הוא DB; remote הוא component",
+        "מקומי מכיל רק תמונות ו-remote מכיל רק קוד",
+        "אין הבדל; Git לא יודע לעבוד עם יותר ממיקום אחד",
+      ],
+      correctIndex: 0,
+      explanation: "repository מקומי הוא סביבת העבודה והיסטוריית Git במחשב. remote כמו GitHub הוא יעד שיתוף וסנכרון.",
+    },
+    {
+      id: "mc_tooling_deep_004", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::staging area", level: 6,
+      question: "שינית שני קבצים, אבל רק אחד קשור לבאג שאתה מתקן. מה הפעולה הנכונה לפני commit?",
+      options: [
+        "להכניס ל-staging רק את הקובץ הרלוונטי",
+        "לעשות commit לכל השינויים יחד",
+        "למחוק את הקובץ השני כדי שלא יופיע ב-status",
+        "לעבור branch בלי לבדוק status",
+      ],
+      correctIndex: 0,
+      explanation: "staging area מאפשרת לבחור מה ייכנס ל-commit. כך לא מערבבים תיקון באג עם שינוי לא קשור.",
+    },
+    {
       id: "mc_tooling_004", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::commit", level: 3,
       question: "מה מאפיין commit טוב?",
       options: [
@@ -1051,6 +1166,18 @@ var QUESTIONS_BANK = {
       ],
       correctIndex: 0,
       explanation: "commit טוב קטן וברור. כך קל לעשות review, להבין היסטוריה ולחזור אחורה אם צריך.",
+    },
+    {
+      id: "mc_tooling_deep_005", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::commit", level: 6,
+      question: "איזה commit הכי נכון לפני PR שמתקן באג קטן בטופס התחברות?",
+      options: [
+        "commit אחד ממוקד: fix login form validation",
+        "commit ענק עם bug fix, עיצוב, refactor ושינוי DB לא קשור",
+        "commit בלי הודעה כדי לחסוך זמן",
+        "commit שמכיל גם node_modules",
+      ],
+      correctIndex: 0,
+      explanation: "commit טוב הוא קטן, ממוקד ומתאר שינוי אחד. זה מקל על review, rollback והבנת ההיסטוריה.",
     },
     {
       id: "mc_tooling_005", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::branch", level: 4,
@@ -1107,6 +1234,18 @@ var QUESTIONS_BANK = {
       correctIndex: 0,
       explanation: "ESLint מזהה בעיות לפי rules. Prettier אחראי לעיצוב עקבי של הקוד.",
     },
+    {
+      id: "mc_tooling_deep_006", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::ESLint", level: 6,
+      question: "איזה מקרה ESLint אמור לתפוס טוב יותר מ-Prettier?",
+      options: [
+        "משתנה שהוגדר ולא נעשה בו שימוש",
+        "רווחים לא אחידים בין מילים",
+        "שבירת שורה ארוכה",
+        "סדר מרכאות אחיד",
+      ],
+      correctIndex: 0,
+      explanation: "ESLint בודק rules סמנטיים וסטטיים כמו no-unused-vars. Prettier מטפל בעיקר בעיצוב טקסטואלי.",
+    },
   ],
 
   fill: [
@@ -1149,7 +1288,7 @@ var QUESTIONS_BANK = {
 
     // ===== Functions =====
     {
-      id: "fill_fn_001", topicId: "topic_functions", level: 2,
+      id: "fill_fn_001", topicId: "topic_functions", conceptKey: "lesson_11::function", level: 2,
       code: "function greet(name) {\n  ____ 'Hello ' + name;\n}",
       answer: "return",
       hint: "מילת המפתח שמחזירה ערך מהפונקציה.",
@@ -1181,7 +1320,7 @@ var QUESTIONS_BANK = {
       explanation: "localStorage שומר רק מחרוזות; חייבים stringify לפני שמירה ו-parse בקריאה.",
     },
     {
-      id: "fill_st_002", topicId: "topic_storage", level: 3,
+      id: "fill_st_002", topicId: "topic_storage", conceptKey: "lesson_13::getItem", level: 3,
       code: "const raw = localStorage.getItem('tasks');\nconst tasks = JSON.____(raw);",
       answer: "parse",
       hint: "ממיר מחרוזת JSON חזרה לערך JS.",
@@ -1199,14 +1338,14 @@ var QUESTIONS_BANK = {
 
     // ===== Async =====
     {
-      id: "fill_async_001", topicId: "topic_async", level: 4,
+      id: "fill_async_001", topicId: "topic_async", conceptKey: "lesson_15::Asynchronous", level: 4,
       code: "async function getUsers() {\n  const res = ____ fetch('/api/users');\n  return res.json();\n}",
       answer: "await",
       hint: "מילת מפתח שמחכה ל-Promise בתוך async function.",
       explanation: "await ממתין לפענוח של Promise ומחזיר את הערך.",
     },
     {
-      id: "fill_async_002", topicId: "topic_async", level: 5,
+      id: "fill_async_002", topicId: "topic_async", conceptKey: "lesson_15::Asynchronous", level: 5,
       code: "____ function loadData() {\n  const r = await fetch('/x');\n  return r.json();\n}",
       answer: "async",
       hint: "מילת מפתח שמסמנת פונקציה כאסינכרונית.",
@@ -1215,14 +1354,14 @@ var QUESTIONS_BANK = {
 
     // ===== Express =====
     {
-      id: "fill_exp_001", topicId: "topic_express", level: 3,
+      id: "fill_exp_001", topicId: "topic_express", conceptKey: "lesson_17::app.get", level: 3,
       code: "app.____('/api/users', (req, res) => {\n  res.json(users);\n});",
       answer: "get",
       hint: "method בקריאה לקבלת מידע מהשרת.",
       explanation: "app.get מגדיר Route עבור בקשות GET.",
     },
     {
-      id: "fill_exp_002", topicId: "topic_express", level: 4,
+      id: "fill_exp_002", topicId: "topic_express", conceptKey: "lesson_17::body-parser", level: 4,
       code: "app.use(express.____());\n// מאפשר לקרוא req.body כאובייקט",
       answer: "json",
       hint: "Middleware שמפענח גוף בקשת JSON.",
@@ -1231,7 +1370,7 @@ var QUESTIONS_BANK = {
 
     // ===== React Basics =====
     {
-      id: "fill_react_001", topicId: "topic_react", level: 2,
+      id: "fill_react_001", topicId: "topic_react", conceptKey: "lesson_21::props", level: 2,
       code: "function Header(____) {\n  return <h1>Welcome</h1>;\n}",
       answer: "props",
       hint: "האובייקט שמכיל את כל הפרמטרים שהועברו לקומפוננטה.",
@@ -1247,14 +1386,14 @@ var QUESTIONS_BANK = {
       explanation: "useState יוצר state בקומפוננטה פונקציונלית; setter מחליף את הערך.",
     },
     {
-      id: "fill_hook_002", topicId: "topic_effects", level: 4,
+      id: "fill_hook_002", topicId: "topic_effects", conceptKey: "lesson_24::useEffect", level: 4,
       code: "// imported from react\n____(() => {\n  console.log('mounted');\n}, []);",
       answer: "useEffect",
       hint: "Hook לפעולות צד (fetch, טיימרים).",
       explanation: "מערך תלויות ריק [] — רץ פעם אחת אחרי הרינדור הראשון.",
     },
     {
-      id: "fill_hook_003", topicId: "topic_effects", level: 5,
+      id: "fill_hook_003", topicId: "topic_effects", conceptKey: "lesson_24::useRef", level: 5,
       code: "const inputRef = ____();\nuseEffect(() => inputRef.current.focus(), []);",
       answer: "useRef",
       hint: "Hook שמחזיר אובייקט {current} שלא גורם לרינדור.",
@@ -1263,14 +1402,14 @@ var QUESTIONS_BANK = {
 
     // ===== Router =====
     {
-      id: "fill_router_001", topicId: "topic_router", level: 3,
+      id: "fill_router_001", topicId: "topic_router", conceptKey: "lesson_23::BrowserRouter", level: 3,
       code: "import { ____, Routes, Route } from 'react-router-dom';\n// עטיפת האפליקציה כדי להפעיל ניהול היסטוריה",
       answer: "BrowserRouter",
       hint: "הקומפוננטה העוטפת שמפעילה את ניהול ההיסטוריה.",
       explanation: "BrowserRouter משתמש ב-History API. עוטפים בה את כל האפליקציה.",
     },
     {
-      id: "fill_router_002", topicId: "topic_router", level: 4,
+      id: "fill_router_002", topicId: "topic_router", conceptKey: "lesson_23::useNavigate", level: 4,
       code: "import { useNavigate } from 'react-router-dom';\nconst navigate = useNavigate();\nnavigate(____);",
       answer: "'/home'",
       hint: "מחרוזת — הנתיב היעד.",
@@ -1279,14 +1418,14 @@ var QUESTIONS_BANK = {
 
     // ===== TypeScript =====
     {
-      id: "fill_ts_001", topicId: "topic_typescript", level: 3,
+      id: "fill_ts_001", topicId: "topic_typescript", conceptKey: "lesson_26::type annotation", level: 3,
       code: "function double(x): ____ {\n  return x * 2;\n}",
       answer: "number",
       hint: "טיפוס ההחזרה — מספר כפול 2 הוא תמיד מספר.",
       explanation: "ב-TS אפשר/כדאי לציין את טיפוס ההחזרה במפורש.",
     },
     {
-      id: "fill_ts_002", topicId: "topic_typescript", level: 4,
+      id: "fill_ts_002", topicId: "topic_typescript", conceptKey: "lesson_26::type alias", level: 4,
       code: "____ Book = {\n  title: string;\n  available: boolean;\n};",
       answer: "type",
       hint: "מילת מפתח להגדרת alias של טיפוס.",
@@ -1316,10 +1455,10 @@ var QUESTIONS_BANK = {
       explanation: "ללא comparator — sort ממיינת לפי מחרוזות. עם (a,b)=>a-b — מיון מספרי עולה.",
     },
     {
-      id: "fill_arr_009", topicId: "topic_arrays", level: 4,
-      code: "const total = [3, 5, 7].reduce((sum, n) => sum + n, ____);\nconsole.log(total); // 15",
-      answer: "0",
-      hint: "ערך התחלתי לסכום.",
+      id: "fill_arr_009", topicId: "topic_arrays", conceptKey: "lesson_11::reduce", level: 4,
+      code: "const total = [3, 5, 7].reduce((sum, n) => sum + n, ____);\nconsole.log(total); // 115",
+      answer: "100",
+      hint: "ערך התחלתי תלת-ספרתי לסכום.",
       explanation: "הפרמטר השני של reduce הוא הערך ההתחלתי של ה-accumulator.",
     },
 
@@ -1339,7 +1478,7 @@ var QUESTIONS_BANK = {
       explanation: "Dog יורשת את כל המתודות והשדות של Animal.",
     },
     {
-      id: "fill_obj_003", topicId: "topic_objects", level: 4,
+      id: "fill_obj_003", topicId: "topic_objects", conceptKey: "lesson_13::Object", level: 4,
       code: "const user = { name: 'Tal' };\nuser.age = 25;\nconsole.log(Object.____(user));\n// ['name', 'age']",
       answer: "keys",
       hint: "מתודת Object שמחזירה מערך של שמות המאפיינים.",
@@ -1355,7 +1494,7 @@ var QUESTIONS_BANK = {
       explanation: "createElement מחזיר Element חדש שלא מחובר ל-DOM. צריך לקרוא ל-appendChild להוסיף.",
     },
     {
-      id: "fill_dom_004", topicId: "topic_events", level: 3,
+      id: "fill_dom_004", topicId: "topic_events", conceptKey: "lesson_19::event", level: 3,
       code: "btn.____('click', () => {\n  console.log('clicked');\n});",
       answer: "addEventListener",
       hint: "מתודה שמוסיפה האזנה לאירוע.",
@@ -1364,14 +1503,14 @@ var QUESTIONS_BANK = {
 
     // ===== Async =====
     {
-      id: "fill_async_003", topicId: "topic_async", level: 4,
+      id: "fill_async_003", topicId: "topic_async", conceptKey: "lesson_15::fetch", level: 4,
       code: "fetch('/api')\n  .then(res => res.____())\n  .then(data => console.log(data));",
       answer: "json",
       hint: "מתודה שמפענחת את גוף התגובה כ-JSON.",
       explanation: "res.json() מחזיר Promise שמתפענח לאובייקט/מערך JS.",
     },
     {
-      id: "fill_async_004", topicId: "topic_async", level: 5,
+      id: "fill_async_004", topicId: "topic_async", conceptKey: "lesson_15::Promise", level: 5,
       code: "const p = new Promise((____, reject) => {\n  setTimeout(() => /* fulfill with 'hello' */, 1000);\n});",
       answer: "resolve",
       hint: "שם הפרמטר הראשון בקולבק של new Promise (קונבנציה).",
@@ -1380,21 +1519,21 @@ var QUESTIONS_BANK = {
 
     // ===== Express / Mongo =====
     {
-      id: "fill_exp_003", topicId: "topic_express", level: 4,
+      id: "fill_exp_003", topicId: "topic_express", conceptKey: "lesson_17::app.get", level: 4,
       code: "app.____('/api/users/:id', (req, res) => {\n  const id = req.params.id;\n  res.json(findUser(id));\n});",
       answer: "get",
       hint: "method ל-Read.",
       explanation: "GET /api/users/:id — קורא משאב לפי id דינמי. req.params מכיל את הפרמטרים.",
     },
     {
-      id: "fill_mongo_001", topicId: "topic_mongo", level: 4,
+      id: "fill_mongo_001", topicId: "topic_mongo", conceptKey: "lesson_20::findOne", level: 4,
       code: "const user = await User.____({ email: 'a@b.com' });",
       answer: "findOne",
       hint: "מתודת Mongoose לחיפוש מסמך אחד.",
       explanation: "findOne מחזיר את המסמך הראשון שתואם ל-filter, או null.",
     },
     {
-      id: "fill_mongo_002", topicId: "topic_mongo", level: 4,
+      id: "fill_mongo_002", topicId: "topic_mongo", conceptKey: "lesson_20::Schema", level: 4,
       code: "const Product = new mongoose.____({\n  name: String,\n  price: Number\n});",
       answer: "Schema",
       hint: "מבנה הנתונים של Mongoose.",
@@ -1445,6 +1584,20 @@ var QUESTIONS_BANK = {
       explanation: "aria-label נותן לקורא מסך שם ברור לכפתור אייקון. הטקסט הוויזואלי × מוסתר מקוראי מסך עם aria-hidden.",
     },
     {
+      id: "fill_html_css_007", topicId: "topic_html_css", conceptKey: "lesson_html_css_foundations::HTML document", level: 5,
+      code: "<!doctype html>\n<html lang=\"he\" dir=\"rtl\">\n  <____>\n    <title>LumenPortal</title>\n  <!-- metadata section closes here -->\n  <body><main>...</main></body>\n</html>",
+      answer: "head",
+      hint: "החלק שמכיל metadata, title וקישורי CSS/JS, לא את התוכן הגלוי.",
+      explanation: "HTML document מתחלק ל-head עבור מידע לדפדפן ול-body עבור מה שהמשתמש רואה. head לא מציג תוכן מרכזי במסך.",
+    },
+    {
+      id: "fill_html_css_008", topicId: "topic_html_css", conceptKey: "lesson_html_css_foundations::HTML form", level: 5,
+      code: "<form action=\"/signup\" method=\"post\">\n  <input name=\"email\" type=\"email\" />\n  <button type=\"____\">צור משתמש</button>\n</form>",
+      answer: "submit",
+      hint: "סוג כפתור שמפעיל שליחת form.",
+      explanation: "button type=\"submit\" שולח את ה-form לפי action ו-method. בלי הבנה זו קשה לחבר טפסים לשרת.",
+    },
+    {
       id: "fill_tooling_001", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::commit", level: 3,
       code: "git ____ -m \"add login form\"",
       answer: "commit",
@@ -1473,6 +1626,293 @@ var QUESTIONS_BANK = {
       explanation: "npm run test מפעיל את פקודת הבדיקות שהוגדרה ב-package.json.",
     },
     {
+      id: "fill_tooling_007", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::working tree", level: 5,
+      code: "git status --short\n# src/App.jsx is ____\n# notes.txt is untracked",
+      answer: "modified",
+      hint: "מצב של קובץ tracked שהשתנה ב-working tree.",
+      explanation: "modified מציין שקובץ ש-Git כבר עוקב אחריו השתנה ב-working tree. בקיצור של git status זה מופיע כאות M.",
+    },
+    {
+      id: "fill_tooling_008", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::Git", level: 5,
+      code: "git ____ --oneline\n# מציג את היסטוריית ה-commits בקיצור",
+      answer: "log",
+      hint: "הפקודה שמציגה היסטוריית commits.",
+      explanation: "git log מציג את גרף ההיסטוריה של Git. --oneline מקצר כל commit לשורה אחת.",
+    },
+    {
+      id: "fill_tooling_009", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::repository", level: 5,
+      code: "git ____ https://github.com/team/app.git\ncd app",
+      answer: "clone",
+      hint: "הפקודה שיוצרת repository מקומי מתוך remote.",
+      explanation: "git clone מוריד remote repository ויוצר אצלך תיקייה מקומית עם קבצים והיסטוריית Git.",
+    },
+    {
+      id: "fill_tooling_010", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::staging area", level: 5,
+      code: "git add src/App.jsx\ngit diff ____\n# מציג מה ייכנס ל-commit הבא",
+      answer: "--staged",
+      hint: "הדגל שמציג את השינויים שכבר נמצאים ב-staging area.",
+      explanation: "git diff --staged מציג את ה-index, כלומר מה שהוכנס ל-staging area וייכנס ל-commit הבא.",
+    },
+    {
+      id: "fill_auth_001", topicId: "topic_auth", conceptKey: "lesson_auth_security::bcrypt", level: 5,
+      code: "const ok = await bcrypt.____(password, user.passwordHash);",
+      answer: "compare",
+      hint: "המתודה שבודקת סיסמה מול hash קיים.",
+      explanation: "bcrypt.compare בודק סיסמה מול hash בלי לחשוף או לפענח את הסיסמה השמורה.",
+    },
+    {
+      id: "fill_auth_002", topicId: "topic_auth", conceptKey: "lesson_auth_security::Firebase Auth", level: 5,
+      code: "const user = await firebaseAuth.____(email, password);",
+      answer: "signInWithEmailAndPassword",
+      hint: "פעולת התחברות email/password בשירות auth.",
+      explanation: "Firebase Auth מנהל את תהליך ההתחברות ומחזיר משתמש/credential במקום לשמור סיסמאות ידנית.",
+    },
+    {
+      id: "fill_auth_003", topicId: "topic_auth", conceptKey: "lesson_auth_security::Kinde/Appwrite", level: 5,
+      code: "const session = await authProvider.____({ provider: 'google' });",
+      answer: "login",
+      hint: "פעולה כללית שמתחילה התחברות מול provider.",
+      explanation: "שירותי Auth כמו Kinde/Appwrite מספקים login מול provider ומחזירים session במקום לבנות OAuth מלא ידנית.",
+    },
+    {
+      id: "fill_sql_001", topicId: "topic_sql", conceptKey: "lesson_sql_orm::PostgreSQL", level: 5,
+      code: "BEGIN;\nUPDATE accounts SET balance = balance - 100 WHERE id = 1;\nUPDATE accounts SET balance = balance + 100 WHERE id = 2;\n____;",
+      answer: "COMMIT",
+      hint: "הפקודה שמאשרת transaction אחרי שכל הפעולות הצליחו.",
+      explanation: "PostgreSQL transaction מאפשרת לבצע כמה עדכונים כיחידה אחת. COMMIT מאשר אותם יחד.",
+    },
+    {
+      id: "fill_nest_001", topicId: "topic_nestjs", conceptKey: "lesson_nestjs::interceptor", level: 5,
+      code: "@UseInterceptors(____)\n@Get()\nfindAll() { return this.tasksService.findAll(); }",
+      answer: "ClassSerializerInterceptor",
+      hint: "Interceptor מובנה שמסדר serialization של response.",
+      explanation: "interceptor עוטף את handler ויכול לשנות את ה-response לפני שהוא חוזר ללקוח.",
+    },
+    {
+      id: "fill_nest_002", topicId: "topic_nestjs", conceptKey: "lesson_nestjs::middleware", level: 5,
+      code: "function logger(req, res, next) {\n  console.log(req.method, req.path);\n}\napp.____(logger);",
+      answer: "use",
+      hint: "המתודה שמחברת middleware לשרת.",
+      explanation: "middleware מתחבר ל-pipeline דרך app.use. בתוך middleware שקורא לוג בלבד צריך גם לקרוא next כדי שה-request ימשיך ל-route הבא.",
+    },
+    {
+      id: "fill_ai_001", topicId: "topic_ai_engineering", conceptKey: "lesson_ai_engineering::LangChain", level: 5,
+      code: "const chain = prompt.pipe(model).pipe(____);",
+      answer: "parser",
+      hint: "השלב שממיר פלט מודל למבנה שהקוד יכול להשתמש בו.",
+      explanation: "LangChain מחבר שלבים: prompt, model ו-parser. הערך שלו מופיע כשיש רצף פעולות ולא קריאה אחת פשוטה.",
+    },
+    {
+      id: "fill_ai_002", topicId: "topic_ai_engineering", conceptKey: "lesson_ai_engineering::model selection", level: 5,
+      code: "const modelName = process.env.____;\nconst result = await runModel(modelName, task);",
+      answer: "OPENAI_MODEL",
+      hint: "שם משתנה סביבה ששומר בחירת מודל.",
+      explanation: "model selection צריך להיות configurable כדי להחליף איכות, latency ועלות בלי לשכתב קוד.",
+    },
+    {
+      id: "fill_next_001", topicId: "topic_nextjs", conceptKey: "lesson_nextjs::layout", level: 5,
+      code: "export default function RootLayout({ ____ }) {\n  return <html><body>{/* page content */}</body></html>;\n}",
+      answer: "children",
+      hint: "ה-prop שמכיל את העמודים שה-layout עוטף.",
+      explanation: "layout ב-Next מקבל children ומחזיר שלד משותף סביב העמודים.",
+    },
+    {
+      id: "fill_next_002", topicId: "topic_nextjs", conceptKey: "lesson_nextjs::image optimization", level: 5,
+      code: "<Image src=\"/hero.png\" alt=\"Dashboard\" width={1200} height={____} />",
+      answer: "630",
+      hint: "גובה מספרי שמאפשר לדפדפן לשמור מקום לתמונה.",
+      explanation: "width ו-height עוזרים ל-Next ולדפדפן למנוע layout shift ולבחור גודל תמונה מתאים.",
+    },
+    {
+      id: "fill_next_003", topicId: "topic_nextjs", conceptKey: "lesson_nextjs::page", level: 5,
+      code: "// app/products/page.jsx\nexport default function ____() {\n  return <ProductsList />;\n}",
+      answer: "ProductsPage",
+      hint: "קומפוננטת ברירת המחדל שקובץ page מייצא.",
+      explanation: "ב-Next.js קובץ page מייצא קומפוננטה שמייצגת את המסך של ה-route. שם הפונקציה חופשי, אבל default export חובה.",
+    },
+    {
+      id: "fill_devops_001", topicId: "topic_devops", conceptKey: "lesson_devops_deploy::preview deployment", level: 5,
+      code: "git push origin feature/auth\n# Vercel creates a ____ URL for the pull request before production.",
+      answer: "preview",
+      hint: "סביבת deploy זמנית ל-PR.",
+      explanation: "preview deployment מאפשר לבדוק build ו-UI אמיתיים לכל PR בלי לשנות את production.",
+    },
+    {
+      id: "fill_ai_003", topicId: "topic_ai_engineering", conceptKey: "lesson_ai_engineering::prompt messages", level: 5,
+      code: "const messages = [\n  { role: \"system\", content: \"Answer briefly\" },\n  { role: \"____\", content: question }\n];",
+      answer: "user",
+      hint: "role של הודעת המשתמש שנשלחת למודל.",
+      explanation: "prompt messages מסדרים למודל תפקידים: system קובע כללים, user מביא את השאלה, assistant מייצג תשובות קודמות.",
+    },
+    {
+      id: "fill_dom_005", topicId: "topic_dom", conceptKey: "lesson_13::Document Object Model", level: 5,
+      code: "const title = document.querySelector('h1');\ntitle.____ = 'ברוך הבא';",
+      answer: "textContent",
+      hint: "property שמשנה טקסט בלי לפרש HTML.",
+      explanation: "Document Object Model מאפשר ל-JS לשנות nodes בזיכרון הדפדפן. textContent משנה טקסט בטוח יותר מ-innerHTML כשלא צריך HTML.",
+    },
+    {
+      id: "fill_node_001", topicId: "topic_node", conceptKey: "lesson_16::File System", level: 5,
+      code: "import { readFile } from 'node:fs/promises';\nconst text = await readFile('notes.txt', '____');",
+      answer: "utf8",
+      hint: "קידוד שמחזיר טקסט במקום Buffer.",
+      explanation: "File System מחזיר bytes. כשמבקשים utf8, Node מפענח את הקובץ למחרוזת קריאה.",
+    },
+    {
+      id: "fill_mongo_003", topicId: "topic_mongo", conceptKey: "lesson_20::$eq", level: 5,
+      code: "const activeUsers = await User.find({ status: { ____: 'active' } });",
+      answer: "$eq",
+      hint: "אופרטור MongoDB לשוויון.",
+      explanation: "$eq מסנן מסמכים שבהם השדה שווה בדיוק לערך המבוקש.",
+    },
+    {
+      id: "fill_mongo_004", topicId: "topic_mongo", conceptKey: "lesson_20::$gt", level: 5,
+      code: "const premium = await User.find({ score: { ____: 90 } });",
+      answer: "$gt",
+      hint: "אופרטור MongoDB לגדול מ.",
+      explanation: "$gt מחזיר מסמכים שבהם הערך גדול מהסף. כאן רק score מעל 90.",
+    },
+    {
+      id: "fill_mongo_005", topicId: "topic_mongo", conceptKey: "lesson_20::$lt", level: 5,
+      code: "const cheap = await Product.find({ price: { ____: 100 } });",
+      answer: "$lt",
+      hint: "אופרטור MongoDB לקטן מ.",
+      explanation: "$lt מחזיר מסמכים שבהם הערך קטן מהסף. כאן רק מוצרים מתחת ל-100.",
+    },
+    {
+      id: "fill_auth_004", topicId: "topic_auth", conceptKey: "lesson_auth_security::Supabase Auth", level: 5,
+      code: "const { data } = await supabase.auth.____({ email, password });",
+      answer: "signInWithPassword",
+      hint: "פעולת email/password של Supabase Auth.",
+      explanation: "Supabase Auth מנהל session ו-user identity. signInWithPassword מחזיר session במקום לשמור סיסמה בקוד שלך.",
+    },
+    {
+      id: "fill_ai_004", topicId: "topic_ai_engineering", conceptKey: "lesson_ai_engineering::fine-tuning boundary", level: 5,
+      code: "const strategy = stableStyleNeeded && manyReviewedExamples ? \"____\" : \"prompt-or-rag\";",
+      answer: "fine-tuning",
+      hint: "בוחרים בזה רק כשיש הרבה דוגמאות בדוקות ודפוס קבוע.",
+      explanation: "fine-tuning מתאים לשינוי התנהגות עקבי של מודל בעזרת דוגמאות רבות. ידע חיצוני ועדכני עדיף לפתור עם RAG.",
+    },
+    {
+      id: "fill_design_001", topicId: "topic_design_systems", conceptKey: "lesson_design_systems::cva", level: 5,
+      code: "const button = cva('inline-flex', {\n  variants: { intent: { brand: 'bg-blue-600', danger: 'bg-red-600' } },\n  ____: { intent: 'brand' }\n});",
+      answer: "defaultVariants",
+      hint: "השדה שמגדיר איזה variant ייבחר כשלא מעבירים props.",
+      explanation: "cva מרכז variants של className במקום לפזר תנאים בקומפוננטה. defaultVariants קובע מצב ברירת מחדל; כאן brand הוא מצב הכפתור הרגיל.",
+    },
+    {
+      id: "fill_design_002", topicId: "topic_design_systems", conceptKey: "lesson_design_systems::theme tokens", level: 5,
+      code: ":root {\n  --color-brand: #2563eb;\n}\n.button { background: ____(--color-brand); }",
+      answer: "var",
+      hint: "פונקציית CSS שקוראת ערך מתוך custom property.",
+      explanation: "theme tokens נותנים שם יציב לערכי עיצוב. var(--color-brand) קורא את ה-token, ושינוי token אחד מעדכן את כל המקומות שמשתמשים בו.",
+    },
+    {
+      id: "fill_design_003", topicId: "topic_design_systems", conceptKey: "lesson_design_systems::component registry", level: 5,
+      code: "const registry = {\n  Button,\n  Card,\n  ____\n};\nconst Component = registry[name];",
+      answer: "Input",
+      hint: "רכיב נוסף בקטלוג הרכיבים.",
+      explanation: "component registry הוא קטלוג שממפה שם לרכיב. הוא שימושי להתקנה, תיעוד או rendering דינמי מבוקר.",
+    },
+    {
+      id: "fill_devops_002", topicId: "topic_devops", conceptKey: "lesson_devops_deploy::Docker", level: 5,
+      code: "FROM node:20-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nCMD [\"npm\", \"run\", \"____\"]",
+      answer: "start",
+      hint: "script שמריץ את האפליקציה בתוך container.",
+      explanation: "Dockerfile מתאר container קבוע. CMD מגדיר מה ירוץ כשה-container מתחיל.",
+    },
+    {
+      id: "fill_next_004", topicId: "topic_nextjs", conceptKey: "lesson_nextjs::Next.js", level: 5,
+      code: "// app/api/health/route.js\nexport function GET() {\n  return Response.____({ ok: true });\n}",
+      answer: "json",
+      hint: "מתודה שמחזירה JSON response ב-route handler.",
+      explanation: "Next.js יכול להכיל גם UI וגם API routes. Response.json מחזיר תשובת JSON מהשרת.",
+    },
+    {
+      id: "fill_nest_003", topicId: "topic_nestjs", conceptKey: "lesson_nestjs::Nest.js", level: 5,
+      code: "@Module({\n  controllers: [TasksController],\n  providers: [____]\n})\nexport class TasksModule {}",
+      answer: "TasksService",
+      hint: "service שמוזרק ל-controller דרך DI.",
+      explanation: "Nest.js מארגן backend ל-modules, controllers ו-providers. providers הם השירותים שמכילים לוגיקה.",
+    },
+    {
+      id: "fill_nest_004", topicId: "topic_nestjs", conceptKey: "lesson_nestjs::decorator", level: 5,
+      code: "@____('tasks')\nexport class TasksEndpoint {}",
+      answer: "Controller",
+      hint: "decorator שמגדיר class כ-controller עם prefix ל-route.",
+      explanation: "decorator מוסיף metadata. ב-Nest, @Controller('tasks') מחבר class לנתיב /tasks.",
+    },
+    {
+      id: "fill_sql_003", topicId: "topic_sql", conceptKey: "lesson_sql_orm::database", level: 5,
+      code: "const dbUrl = process.env.____;\n// למשל postgresql://user:pass@host:5432/app",
+      answer: "DATABASE_URL",
+      hint: "משתנה סביבה שמחזיק כתובת חיבור לבסיס הנתונים.",
+      explanation: "database דורש connection string. שומרים אותו ב-env ולא בקוד כדי להחליף סביבה ולשמור סודות.",
+    },
+    {
+      id: "fill_sql_004", topicId: "topic_sql", conceptKey: "lesson_sql_orm::column", level: 5,
+      code: "CREATE TABLE users (\n  id SERIAL PRIMARY KEY,\n  email ____ NOT NULL\n);",
+      answer: "TEXT",
+      hint: "טיפוס טקסטואלי נפוץ ב-PostgreSQL.",
+      explanation: "column מגדירה שם וטיפוס בכל row. כאן email היא עמודת TEXT שאסור להשאיר ריקה.",
+    },
+    {
+      id: "fill_devops_003", topicId: "topic_devops", conceptKey: "lesson_devops_deploy::production readiness", level: 5,
+      code: "npm test -- --run\nnpm run build\n# אם שניהם עוברים, מסמנים deploy כ-____ יותר",
+      answer: "ready",
+      hint: "מוכן יותר לפרודקשן אחרי בדיקות ובנייה.",
+      explanation: "production readiness מחייבת בדיקות, build, env תקין, logs ודרך rollback. מעבר build/test הוא רק gate בסיסי.",
+    },
+    {
+      id: "fill_devops_004", topicId: "topic_devops", conceptKey: "lesson_devops_deploy::container", level: 5,
+      code: "docker run --rm -p 3000:3000 ____",
+      answer: "lumenportal",
+      hint: "שם image שממנו מריצים container.",
+      explanation: "container הוא מופע רץ של image. docker run יוצר תהליך מבודד עם פורטים, קבצים ותלויות.",
+    },
+    {
+      id: "fill_devops_005", topicId: "topic_devops", conceptKey: "lesson_devops_deploy::Vercel deploy", level: 5,
+      code: "vercel --prod\n# deploys the current project to ____",
+      answer: "production",
+      hint: "סביבת האתר החי.",
+      explanation: "Vercel deploy מחבר build לפריסה. --prod מפרסם ל-production, בניגוד ל-preview זמני.",
+    },
+    {
+      id: "fill_design_004", topicId: "topic_design_systems", conceptKey: "lesson_design_systems::accessible primitive", level: 5,
+      code: "<Dialog.Trigger asChild>\n  <button type=\"button\">____</button>\n</Dialog.Trigger>",
+      answer: "Open",
+      hint: "טקסט גלוי לכפתור נגיש.",
+      explanation: "accessible primitive נותן התנהגות, focus ו-keyboard. הילד עדיין צריך להיות כפתור סמנטי עם שם ברור.",
+    },
+    {
+      id: "fill_obj_004", topicId: "topic_objects", conceptKey: "lesson_13::inheritance", level: 5,
+      code: "class Admin ____ User {\n  canDeleteUsers() { return true; }\n}",
+      answer: "extends",
+      hint: "מילת המפתח שיוצרת ירושה בין classes.",
+      explanation: "inheritance מאפשרת ל-Admin לקבל יכולות מ-User ולהוסיף התנהגות משלה.",
+    },
+    {
+      id: "fill_sql_002", topicId: "topic_sql", conceptKey: "lesson_sql_orm::ORM", level: 5,
+      code: "const user = await prisma.user.____({ where: { id } });",
+      answer: "findUnique",
+      hint: "קריאה ל-ORM שמחזירה רשומה אחת לפי מזהה ייחודי.",
+      explanation: "ORM כמו Prisma ממפה טבלה לקוד. findUnique מחליף כתיבת SELECT ידני למקרה של מפתח ייחודי.",
+    },
+    {
+      id: "fill_auth_005", topicId: "topic_auth", conceptKey: "lesson_auth_security::provider auth", level: 5,
+      code: "await auth.signInWithOAuth({ provider: '____' });",
+      answer: "google",
+      hint: "ספק התחברות נפוץ.",
+      explanation: "provider auth מעביר את אימות המשתמש לספק כמו Google/GitHub ואז מחזיר session לאפליקציה.",
+    },
+    {
+      id: "fill_auth_006", topicId: "topic_auth", conceptKey: "lesson_auth_security::session", level: 5,
+      code: "const session = await auth.getSession();\nif (!session?.____) redirect('/login');",
+      answer: "user",
+      hint: "הישות שמוכיחה שיש משתמש מחובר בתוך session.",
+      explanation: "session מחזיק את מצב ההתחברות. אם אין user בתוך session, המשתמש לא מחובר.",
+    },
+    {
       id: "fill_tooling_005", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::ESLint", level: 4,
       code: "\"lint\": \"eslint ____\"",
       answer: "src",
@@ -1486,10 +1926,17 @@ var QUESTIONS_BANK = {
       hint: "נתיב תיקיית הקוד שרוצים לעצב.",
       explanation: "Prettier עם --write מעצב את הקבצים במקום. בדרך כלל מריצים על תיקיית המקור או על glob מוגדר.",
     },
+    {
+      id: "fill_tooling_011", topicId: "topic_tooling", conceptKey: "lesson_tooling_git::Prettier", level: 5,
+      code: "\"format:verify\": \"prettier --____ src\"",
+      answer: "check",
+      hint: "דגל שבודק formatting בלי לשנות קבצים.",
+      explanation: "prettier --check מתאים ל-CI כי הוא נכשל אם הקוד לא מעוצב, בלי לערוך קבצים אוטומטית.",
+    },
 
     // ===== React =====
     {
-      id: "fill_react_002", topicId: "topic_react", level: 3,
+      id: "fill_react_002", topicId: "topic_react", conceptKey: "lesson_21::JSX", level: 3,
       code: "// JSX:\n<div ____='container'>Hello</div>",
       answer: "className",
       hint: "התכונה שמחליפה את class ב-JSX.",
@@ -1505,18 +1952,130 @@ var QUESTIONS_BANK = {
 
     // ===== TypeScript =====
     {
-      id: "fill_ts_003", topicId: "topic_typescript", level: 4,
+      id: "fill_ts_003", topicId: "topic_typescript", conceptKey: "lesson_26::type alias", level: 4,
       code: "____ Role = 'admin' | 'guest';\nconst r: Role = 'admin';",
       answer: "type",
       hint: "מילת מפתח ל-alias של union.",
       explanation: "type Role = 'admin' | 'guest' — string literal union. רק שני הערכים האלה מותרים.",
     },
     {
-      id: "fill_ts_004", topicId: "topic_typescript", level: 5,
+      id: "fill_ts_004", topicId: "topic_typescript", conceptKey: "lesson_26::interface", level: 5,
       code: "interface Greeter {\n  greet(name): ____;\n}",
       answer: "string",
       hint: "טיפוס ההחזרה — פונקציית greet מחזירה ברכה.",
       explanation: "greet מחזירה string (לדוגמה 'Hello, ' + name). ה-interface מחייב את החתימה.",
     },
+    {
+      id: "fill_exam_by_value_001", topicId: "topic_variables", conceptKey: "lesson_11::By Value", level: 5,
+      code: "let a = 5;\nlet b = a;\nb = 9;\nconst result = a === 5 ? '____' : 'changed';",
+      answer: "unchanged",
+      hint: "העתקת primitive לא משנה את המקור.",
+      explanation: "By Value מעתיק את הערך עצמו. שינוי b לא נוגע ב-a, לכן a נשאר 5.",
+    },
+    {
+      id: "fill_exam_spread_001", topicId: "topic_arrays", conceptKey: "lesson_11::spread", level: 5,
+      code: "const nums = [1, 2];\nconst copy = [...nums, 3];\nconsole.log(copy.join('-')); // ____",
+      answer: "1-2-3",
+      hint: "spread פורס את איברי המערך לתוך מערך חדש.",
+      explanation: "spread מכניס את 1 ו-2 לתוך copy ואז מוסיף 3. nums המקורי לא משתנה.",
+    },
+    {
+      id: "fill_exam_new_array_from_existing_001", topicId: "topic_arrays", conceptKey: "lesson_12::יצירת מערך חדש מתוך קיים", level: 5,
+      code: "const nums = [1, 2, 3];\nconst doubled = nums.map((n) => n * 2);\nconsole.log(doubled.join(',')); // ____",
+      answer: "2,4,6",
+      hint: "map מחזירה מערך חדש לפי תוצאת callback לכל איבר.",
+      explanation: "map לא משנה את nums. היא בונה מערך חדש שבו כל איבר הוכפל.",
+    },
+    {
+      id: "fill_exam_gte_001", topicId: "topic_database", conceptKey: "lesson_20::$gte", level: 5,
+      code: "const adults = await User.find({ age: { ____: 18 } });",
+      answer: "$gte",
+      hint: "Greater than or equal.",
+      explanation: "$gte מסנן ערכים שגדולים או שווים לסף. כאן נקבל משתמשים מגיל 18 ומעלה.",
+    },
+    {
+      id: "fill_exam_lte_001", topicId: "topic_database", conceptKey: "lesson_20::$lte", level: 5,
+      code: "const cheap = await Product.find({ price: { ____: 100 } });",
+      answer: "$lte",
+      hint: "Less than or equal.",
+      explanation: "$lte מסנן ערכים שקטנים או שווים לסף. כאן נקבל מוצרים עד מחיר 100.",
+    },
+    {
+      id: "fill_exam_side_effect_001", topicId: "topic_effects", conceptKey: "lesson_24::side effect", level: 5,
+      code: "useEffect(() => {\n  document.title = pageTitle;\n}, [pageTitle]);\n// The effect updates the ____",
+      answer: "documentTitle",
+      hint: "שם קצר למה שמשתנה מחוץ ל-React state.",
+      explanation: "side effect הוא שינוי מחוץ לחישוב הטהור של render. כאן משנים את כותרת המסמך.",
+    },
+    {
+      id: "fill_exam_var_001", topicId: "topic_variables", conceptKey: "lesson_11::var", level: 5,
+      code: "function demo() {\n  if (true) {\n    var flag = 'ok';\n  }\n  return flag === 'ok' ? '____' : 'blockScope';\n}",
+      answer: "functionScope",
+      hint: "var תחום לפונקציה, לא לבלוק if.",
+      explanation: "var היא function-scoped. לכן flag זמין גם אחרי בלוק ה-if בתוך אותה פונקציה.",
+    },
+    {
+      id: "fill_exam_string_001", topicId: "topic_variables", conceptKey: "lesson_11::string", level: 5,
+      code: "const label = 'cat';\nconsole.log(typeof label.length); // ____",
+      answer: "number",
+      hint: "length של מחרוזת הוא מספר.",
+      explanation: "string הוא טקסט. המאפיין length מחזיר כמה תווים יש בו, וזה ערך number.",
+    },
+    {
+      id: "fill_exam_export_default_001", topicId: "topic_react", conceptKey: "lesson_21::export default", level: 5,
+      code: "____ function App() {\n  return <main />;\n}",
+      answer: "export default",
+      hint: "ייצוא ברירת מחדל של קומפוננטה אחת מהקובץ.",
+      explanation: "export default מאפשר לקובץ אחר לייבא את App בשם שיבחר, למשל import App from './App'.",
+    },
+    {
+      id: "fill_exam_props_001", topicId: "topic_react", conceptKey: "lesson_22::props", level: 5,
+      code: "function Card(input) {\n  return <h2>{input.____}</h2>;\n}",
+      answer: "title",
+      hint: "שם prop שקוראים מתוך אובייקט הקלט.",
+      explanation: "props הם נתונים שהורה מעביר לילד. כאן קוראים את title מתוך אובייקט ה-props.",
+    },
+    {
+      id: "fill_exam_fs_001", topicId: "topic_node", conceptKey: "lesson_16::fs", level: 5,
+      code: "const fs = require('fs');\nfs.____('notes.txt', 'hello');",
+      answer: "writeFileSync",
+      hint: "פונקציה סינכרונית שכותבת תוכן לקובץ.",
+      explanation: "fs הוא מודול הקבצים של Node. writeFileSync כותבת לקובץ וחוסמת עד שהכתיבה מסתיימת.",
+    },
+    {
+      id: "fill_exam_index_values_001", topicId: "topic_arrays", conceptKey: "lesson_12::עבודה עם ערכים לפי אינדקס", level: 5,
+      code: "const colors = ['red', 'green', 'blue'];\nconst result = colors[1] === 'green' ? '____' : 'wrong';",
+      answer: "match",
+      hint: "אינדקס 1 מצביע על האיבר השני.",
+      explanation: "אינדקס הוא מיקום במערך שמתחיל מ-0. לכן colors[1] מחזיר את האיבר השני: green.",
+    },
+    {
+      id: "fill_exam_radix_primitives_001", topicId: "topic_design_systems", conceptKey: "lesson_design_systems::Radix primitives", level: 5,
+      code: "const primitive = 'Dialog.Trigger';\nconst role = primitive.includes('Trigger') ? '____' : 'content';",
+      answer: "opensDialog",
+      hint: "Trigger הוא החלק שפותח את הדיאלוג.",
+      explanation: "Radix primitive נותן התנהגות נגישה מוכנה. Dialog.Trigger הוא הטריגר שפותח את Dialog.Content.",
+    },
+    {
+      id: "fill_exam_next_file_routing_001", topicId: "topic_nextjs", conceptKey: "lesson_nextjs::file-system routing", level: 5,
+      code: "const file = 'app/profile/page.jsx';\nconst result = file.endsWith('/page.jsx') ? '____' : 'notRoute';",
+      answer: "routeFile",
+      hint: "ב-App Router, page.jsx מסמן קובץ שיוצר נתיב.",
+      explanation: "file-system routing אומר שמבנה הקבצים יוצר routes. קובץ page.jsx בתוך תיקייה תחת app הופך את התיקייה לנתיב.",
+    },
   ],
 };
+
+(function attachCuratedOptionFeedback() {
+  if (typeof QUESTIONS_BANK === "undefined" || !Array.isArray(QUESTIONS_BANK.mc)) return;
+  QUESTIONS_BANK.mc.forEach((question) => {
+    if (!question || !Array.isArray(question.options) || typeof question.correctIndex !== "number") return;
+    if (Array.isArray(question.optionFeedback) && question.optionFeedback.length === question.options.length) return;
+    const conceptName = String(question.conceptKey || question.topicId || "המושג").split("::").pop();
+    const explanation = question.explanation || `התשובה הנכונה קשורה ל-${conceptName}.`;
+    question.optionFeedback = question.options.map((option, index) => {
+      if (index === question.correctIndex) return `✅ נכון: ${explanation}`;
+      return `❌ "${option}" לא מתאים כאן. השאלה בודקת את "${conceptName}", לכן צריך לבחור לפי ההגדרה/הקוד ולא לפי מילה דומה.`;
+    });
+  });
+})();

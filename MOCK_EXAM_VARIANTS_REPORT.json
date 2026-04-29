@@ -1,0 +1,413 @@
+{
+  "reportVersion": "mock-exam-variants-v1",
+  "date": "2026-04-29",
+  "target": "SVCollege AI & Full Stack",
+  "template": "svcollege_fullstack",
+  "targetSize": 55,
+  "moduleCount": 15,
+  "bankSize": 2840,
+  "summary": {
+    "variants": 3,
+    "blockers": 0,
+    "blockerCodes": [],
+    "passed": true
+  },
+  "variants": [
+    {
+      "id": "svcollege-variant-a",
+      "totalQuestions": 55,
+      "uniqueQuestions": 55,
+      "moduleCoverage": [
+        {
+          "index": 1,
+          "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
+          "questionId": "mc:mc_seed_977",
+          "conceptKey": "lesson_25::rating",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 2,
+          "title": "עיצוב רספונסיבי ו-CSS מתקדם",
+          "questionId": "fill:fill_seed_625",
+          "conceptKey": "lesson_25::responsive design",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 3,
+          "title": "JavaScript בסיסי ודינמיקה בדפדפן",
+          "questionId": "mc:mc_seed_75",
+          "conceptKey": "lesson_11::find",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 4,
+          "title": "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
+          "questionId": "mc:mc_scope_001",
+          "conceptKey": "lesson_11::scope",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 5,
+          "title": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
+          "questionId": "fill:fill_seed_218",
+          "conceptKey": "lesson_16::fs.appendFile",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 6,
+          "title": "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
+          "questionId": "fill:fill_mongo_003",
+          "conceptKey": "lesson_20::$eq",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 7,
+          "title": "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
+          "questionId": "mc:mc_seed_1203",
+          "conceptKey": "lesson_auth_security::secure cookie",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 8,
+          "title": "React ופיתוח Frontend מתקדם",
+          "questionId": "fill:fill_seed_493",
+          "conceptKey": "lesson_21::App.jsx",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 9,
+          "title": "TypeScript ופטרנים מתקדמים ב-React",
+          "questionId": "fill:fill_seed_714",
+          "conceptKey": "lesson_27::Type Narrowing",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 10,
+          "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
+          "questionId": "mc:mc_seed_1554",
+          "conceptKey": "react_blueprint::Container vs Presentational",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 11,
+          "title": "פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO",
+          "questionId": "fill:fill_seed_924",
+          "conceptKey": "lesson_nextjs::API route",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 12,
+          "title": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
+          "questionId": "mc:mc_seed_1566",
+          "conceptKey": "react_blueprint::Error Boundaries",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 13,
+          "title": "Frameworks צד-שרת — Nest.js modules + dependency injection",
+          "questionId": "mc:mc_seed_1401",
+          "conceptKey": "lesson_nestjs::guard",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 14,
+          "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+          "questionId": "fill:fill_seed_10",
+          "conceptKey": "ai_development::ChatGPT",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 15,
+          "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
+          "questionId": "mc:mc_seed_1148",
+          "conceptKey": "lesson_ai_engineering::prompt messages",
+          "kind": "mc",
+          "covered": true
+        }
+      ],
+      "missingModules": [],
+      "kindMix": {
+        "mc": 31,
+        "fill": 24
+      }
+    },
+    {
+      "id": "svcollege-variant-b",
+      "totalQuestions": 55,
+      "uniqueQuestions": 55,
+      "moduleCoverage": [
+        {
+          "index": 1,
+          "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
+          "questionId": "fill:fill_html_css_006",
+          "conceptKey": "lesson_html_css_foundations::accessibility basics",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 2,
+          "title": "עיצוב רספונסיבי ו-CSS מתקדם",
+          "questionId": "mc:mc_seed_968",
+          "conceptKey": "lesson_25::bg color",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 3,
+          "title": "JavaScript בסיסי ודינמיקה בדפדפן",
+          "questionId": "mc:mc_arr_003",
+          "conceptKey": "lesson_11::map",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 4,
+          "title": "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
+          "questionId": "mc:mc_seed_263",
+          "conceptKey": "lesson_15::fetch",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 5,
+          "title": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
+          "questionId": "fill:fill_seed_201",
+          "conceptKey": "lesson_16::module.exports",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 6,
+          "title": "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
+          "questionId": "mc:mc_seed_711",
+          "conceptKey": "lesson_20::deleteOne",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 7,
+          "title": "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
+          "questionId": "fill:fill_seed_798",
+          "conceptKey": "lesson_auth_security::bcrypt",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 8,
+          "title": "React ופיתוח Frontend מתקדם",
+          "questionId": "fill:fill_seed_492",
+          "conceptKey": "lesson_21::main.jsx",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 9,
+          "title": "TypeScript ופטרנים מתקדמים ב-React",
+          "questionId": "mc:mc_seed_1097",
+          "conceptKey": "lesson_27::Genre",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 10,
+          "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
+          "questionId": "fill:fill_seed_990",
+          "conceptKey": "react_blueprint::Container vs Presentational",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 11,
+          "title": "פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO",
+          "questionId": "fill:fill_seed_926",
+          "conceptKey": "lesson_nextjs::server action",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 12,
+          "title": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
+          "questionId": "fill:fill_seed_987",
+          "conceptKey": "react_blueprint::Data Flow",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 13,
+          "title": "Frameworks צד-שרת — Nest.js modules + dependency injection",
+          "questionId": "fill:fill_seed_888",
+          "conceptKey": "lesson_nestjs::provider",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 14,
+          "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+          "questionId": "mc:mc_seed_10",
+          "conceptKey": "ai_development::Claude Code",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 15,
+          "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
+          "questionId": "fill:fill_seed_752",
+          "conceptKey": "lesson_ai_engineering::structured output",
+          "kind": "fill",
+          "covered": true
+        }
+      ],
+      "missingModules": [],
+      "kindMix": {
+        "fill": 24,
+        "mc": 31
+      }
+    },
+    {
+      "id": "svcollege-variant-c",
+      "totalQuestions": 55,
+      "uniqueQuestions": 55,
+      "moduleCoverage": [
+        {
+          "index": 1,
+          "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
+          "questionId": "fill:fill_seed_877",
+          "conceptKey": "lesson_html_css_foundations::CSS selector",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 2,
+          "title": "עיצוב רספונסיבי ו-CSS מתקדם",
+          "questionId": "mc:mc_seed_960",
+          "conceptKey": "lesson_25::flex",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 3,
+          "title": "JavaScript בסיסי ודינמיקה בדפדפן",
+          "questionId": "mc:mc_seed_207",
+          "conceptKey": "lesson_13::super",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 4,
+          "title": "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
+          "questionId": "fill:fill_seed_159",
+          "conceptKey": "lesson_15::Synchronous",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 5,
+          "title": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
+          "questionId": "mc:mc_seed_305",
+          "conceptKey": "lesson_16::require",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 6,
+          "title": "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
+          "questionId": "mc:mc_seed_652",
+          "conceptKey": "lesson_20::NoSQL",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 7,
+          "title": "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
+          "questionId": "mc:mc_seed_1246",
+          "conceptKey": "lesson_auth_security::Kinde/Appwrite",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 8,
+          "title": "React ופיתוח Frontend מתקדם",
+          "questionId": "mc:mc_seed_875",
+          "conceptKey": "lesson_23::useNavigate",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 9,
+          "title": "TypeScript ופטרנים מתקדמים ב-React",
+          "questionId": "mc:mc_seed_1060",
+          "conceptKey": "lesson_26::Todo.ts",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 10,
+          "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
+          "questionId": "fill:fill_seed_629",
+          "conceptKey": "lesson_25::grid",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 11,
+          "title": "פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO",
+          "questionId": "fill:fill_seed_917",
+          "conceptKey": "lesson_nextjs::page",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 12,
+          "title": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
+          "questionId": "mc:mc_seed_1567",
+          "conceptKey": "react_blueprint::Error Boundaries",
+          "kind": "mc",
+          "covered": true
+        },
+        {
+          "index": 13,
+          "title": "Frameworks צד-שרת — Nest.js modules + dependency injection",
+          "questionId": "fill:fill_seed_891",
+          "conceptKey": "lesson_nestjs::dependency injection",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 14,
+          "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+          "questionId": "fill:fill_seed_1",
+          "conceptKey": "ai_development::AI",
+          "kind": "fill",
+          "covered": true
+        },
+        {
+          "index": 15,
+          "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
+          "questionId": "mc:mc_seed_1171",
+          "conceptKey": "lesson_ai_engineering::retrieval ranking",
+          "kind": "mc",
+          "covered": true
+        }
+      ],
+      "missingModules": [],
+      "kindMix": {
+        "fill": 24,
+        "mc": 31
+      }
+    }
+  ]
+}

@@ -2,7 +2,7 @@ import { exposeRuntimeInfo } from "./core/runtime.js";
 import { installHTMLSanitizer } from "./core/sanitize.js";
 import * as scoring from "./core/scoring.js";
 import * as streak from "./core/streak.js";
-import * as questionPrerequisites from "./core/question-prerequisites.js";
+import * as questionPrerequisites from "./core/question-prerequisites.js?v=question-prereq-v2";
 import * as mistakeAgent from "./core/mistake-agent.js";
 import * as learningEvidence from "./core/learning-evidence.js";
 import * as confidenceCalibration from "./core/confidence-calibration.js";
