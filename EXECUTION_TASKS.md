@@ -165,7 +165,7 @@
 > נוצר בעקבות מיזוג הענפים והרצות `npm test`, `npm run build`, `npm run validate:strict`, `npm run qa:questions:strict`.
 
 - [V] P-0.2.1 — Merge local repair branches into `main`: `codex/svcollege-prereq-gates` + `codex/svcollege-term-clarity`
-- [ ] P-0.2.2 — Push `main` to GitHub after explicit approval; current local state is `main...origin/main [ahead 6]`
+- [V] P-0.2.2 — Push `main` to GitHub after explicit approval; `main` now includes `6c6a92c` (`Finish SVCollege portal coverage`)
 - [V] P-0.2.3 — Close `qa:questions:strict` blocker: 252 SVCollege question aids previously reported `missingGlossaryTerms`; now 0 issues / ready:true
 - [V] P-0.2.4 — Add glossary aliases for terms inferred by `QUESTION_QA_CHECKLIST.json` until `missingGlossaryTerms = 0`
 - [V] P-0.2.5 — Add automated smoke for mastery-proof gate: no concept can show 100 / mastered until highest available challenge question is solved
