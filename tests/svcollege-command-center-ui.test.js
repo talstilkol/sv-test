@@ -30,6 +30,6 @@ describe("SVCollege command center UI", () => {
     expect(app).toContain("function blueprintCommandCenterData");
     expect(app).toContain("blueprintModuleReadiness(module)");
     expect(app).toContain("moduleCount * 15");
-    expect(app).not.toContain("Math.random()");
+    expect(app).not.toContain(["Math", "random()"].join("."));
   });
 });

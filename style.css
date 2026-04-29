@@ -16328,6 +16328,210 @@ button.grandma-crumb:hover {
   background: rgba(255,255,255,0.025);
 }
 
+/* ========== PORTAL-WIDE ONE-LINE + COMPARISON AID ========== */
+.portal-decision-aid {
+  margin: 0 auto 1rem;
+  width: min(100% - 2rem, 1280px);
+  padding: 0.95rem;
+  border-color: rgba(34, 211, 238, 0.2);
+  background: linear-gradient(135deg, rgba(10, 14, 24, 0.9), rgba(15, 18, 32, 0.82));
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+}
+
+.portal-aid-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.portal-aid-kicker {
+  display: inline-flex;
+  margin-bottom: 0.28rem;
+  color: #67e8f9;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.portal-aid-head h2 {
+  margin: 0;
+  color: var(--text-bright);
+  font-size: 1.15rem;
+}
+
+.portal-aid-head p {
+  margin: 0.25rem 0 0;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.portal-aid-count {
+  flex: 0 0 auto;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  border-radius: 999px;
+  color: #fde68a;
+  background: rgba(251, 191, 36, 0.08);
+  font-size: 0.78rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.portal-aid-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(360px, 1.1fr);
+  gap: 0.8rem;
+  align-items: start;
+}
+
+.portal-aid-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.portal-aid-row {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,0.035);
+  overflow: hidden;
+}
+
+.portal-aid-row[open] {
+  border-color: rgba(34, 211, 238, 0.36);
+  background: rgba(34, 211, 238, 0.07);
+}
+
+.portal-aid-row summary {
+  display: grid;
+  grid-template-columns: auto minmax(70px, 0.38fr) minmax(150px, 1fr);
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.72rem 0.8rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.portal-aid-row summary::-webkit-details-marker {
+  display: none;
+}
+
+.portal-aid-row summary:hover,
+.portal-aid-row summary:focus-visible {
+  color: var(--text-bright);
+  outline: none;
+}
+
+.portal-aid-index {
+  display: inline-grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 999px;
+  color: #facc15;
+  background: rgba(251, 191, 36, 0.11);
+  font-weight: 900;
+  direction: ltr;
+}
+
+.portal-aid-term {
+  color: var(--text-bright);
+  font-weight: 900;
+}
+
+.portal-aid-one-line {
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.portal-aid-row p {
+  margin: 0;
+  padding: 0 3.25rem 0.78rem 0.8rem;
+  color: var(--text-primary);
+  line-height: 1.55;
+}
+
+.portal-aid-compare {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,0.032);
+  overflow: hidden;
+}
+
+.portal-aid-compare h4 {
+  margin: 0;
+  padding: 0.72rem 0.85rem;
+  color: #fde68a;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.portal-aid-table-wrap {
+  overflow-x: auto;
+}
+
+.portal-aid-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 460px;
+}
+
+.portal-aid-table th,
+.portal-aid-table td {
+  padding: 0.62rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  text-align: right;
+  vertical-align: top;
+}
+
+.portal-aid-table th {
+  color: var(--text-bright);
+  font-size: 0.82rem;
+  background: rgba(255,255,255,0.035);
+}
+
+.portal-aid-table td {
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.portal-aid-table td:first-child {
+  color: #67e8f9;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .portal-decision-aid {
+    width: calc(100% - 1rem);
+    padding: 0.8rem;
+  }
+
+  .portal-aid-head,
+  .portal-aid-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-aid-head {
+    display: grid;
+  }
+
+  .portal-aid-count {
+    justify-self: start;
+  }
+
+  .portal-aid-row summary {
+    grid-template-columns: auto 1fr;
+  }
+
+  .portal-aid-one-line {
+    grid-column: 1 / -1;
+    padding-inline-start: 2.5rem;
+  }
+}
+
 /* ========== STAGES (MC + Fill always visible) ========== */
 .concept-stages {
   margin-top: 1.1rem;

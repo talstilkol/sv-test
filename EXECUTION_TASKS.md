@@ -18,7 +18,7 @@
 
 | Phase | בוצע / סך | אחוז |
 |---|:-:|:-:|
-| Finish Line 1: SVCollege Full Portal Coverage | 128/142 | **90%** 🚧 |
+| Finish Line 1: SVCollege Full Portal Coverage | 129/143 | **90%** 🚧 |
 | Phase 0: Status (DONE) | 25/25 | 100% ✅ |
 | Phase 1: Foundation | 60/62 | **97%** 🚧 |
 | Phase 2: Core Learning | 68/70 | **97%** 🚧 |
@@ -30,7 +30,7 @@
 | Phase 8: XP Economy + Experience Store | 23/54 | **43%** 🚧 |
 | Phase 9: Exam Intelligence + Reliability Hardening | 8/40 | **20%** 🚧 |
 | Phase 10: Exam OS v2 + Content Factory | 0/40 | 0% |
-| **TOTAL** | **392/624** | **63%** |
+| **TOTAL** | **393/625** | **63%** |
 
 ### Finish Line 1 Override — 2026-04-28
 
@@ -259,6 +259,7 @@
 - [V] P-1.4.8 — Course Blueprints tab: add readiness dashboard, gaps, next action and exam readiness
 - [V] P-1.4.9 — Reports / History / Export / PDF flows: include SVCollege readiness status
 - [~] P-1.4.10 — Mobile drawer and right-side tree: expose all SVCollege lessons and tabs without overflow/overlap
+- [V] P-1.4.11 — Apply portal-wide one-line + comparison principle: every major tab gets concise "מה זה" rows and "מתי להשתמש במה" comparison table
 
 ### P-1.5 — Site Health Gate For Every Tab
 - [~] P-1.5.1 — Add Playwright smoke suite for every top tab (manual desktop browser smoke passed; automated suite pending)
@@ -1652,6 +1653,11 @@
                    - Fixed undefined readiness/tab coverage fields in the export
                    - `npm run svcollege:student-export:strict` passes
                    - Finish Line 1 count updated to 128/142; total plan count updated to 392/624
+2026-04-29 15:32 — Portal-wide one-line + comparison aid shipped:
+                   - Added a shared decision-aid panel under the page title for all major tabs
+                   - Every tab now exposes concise "מה זה" rows with click-to-expand details and a "מתי להשתמש במה" table
+                   - Added `tests/portal-decision-aid.test.js`
+                   - Finish Line 1 count updated to 129/143; total plan count updated to 393/625
 ```
 
 ---
