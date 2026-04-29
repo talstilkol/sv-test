@@ -12,10 +12,16 @@ describe("service worker cache freshness", () => {
   const html = read("index.html");
 
   it("uses a fresh cache version for concept sprint assets", () => {
-    expect(sw).toContain('const CACHE_VERSION = "lumen-v2.4.29"');
+    expect(sw).toContain('const CACHE_VERSION = "lumen-v2.4.30"');
     expect(html).toContain("style.css?v=concept-sprint-v2");
     expect(html).toContain("app.js?v=concept-sprint-v2");
     expect(html).toContain("/src/main.js?v=core-bootstrap-v2");
+    expect(sw).toContain("/style.css?v=concept-sprint-v2");
+    expect(sw).toContain("/app.js?v=concept-sprint-v2");
+    expect(sw).toContain("/src/main.js?v=core-bootstrap-v2");
+    expect(sw).toContain("/src/core/question-prerequisites.js?v=question-prereq-v2");
+    expect(sw).toContain("/src/core/outcome-loop.js");
+    expect(sw).toContain("/src/core/concept-tags.js");
   });
 
   it("loads versioned JS/CSS through network-first reload before cached fallback", () => {

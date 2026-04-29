@@ -14,6 +14,41 @@ const JSON_PATH = path.join(ROOT, "SVCOLLEGE_STUDENT_READINESS_EXPORT.json");
 const MD_PATH = path.join(ROOT, "SVCOLLEGE_STUDENT_READINESS_EXPORT.md");
 const REPORT_DATE = "2026-04-29";
 const REPORT_VERSION = "svcollege-student-readiness-export-v1";
+const LEARNER_OUTCOME_LOOP = Object.freeze({
+  protocol: Object.freeze({
+    cohortSize: 10,
+    durationDays: 7,
+    checkpoints: Object.freeze([
+      "D0 baseline exam",
+      "D1 retention check",
+      "D7 final exam and module mastery review",
+      "qualitative feedback review",
+    ]),
+  }),
+  trackedMetrics: Object.freeze([
+    "D1 retention",
+    "D7 retention",
+    "module mastery",
+    "average wrong-to-correct recovery time",
+    "repeated misconception rate",
+    "student got stuck feedback",
+  ]),
+  feedbackSignal:
+    "student_stuck events include lesson, question, prerequisite and viewport metadata; free-form answer text is not stored.",
+  unavailablePolicy:
+    "Pilot outcomes remain unknown/unavailable until real learner evidence exists.",
+});
+const STUDENT_PROMOTION_GATE = Object.freeze({
+  rule:
+    "A module is ready for students only after content, practice, tab health, smoke evidence and first-user feedback evidence all pass.",
+  requiredEvidence: Object.freeze([
+    "content",
+    "practice",
+    "tabHealth",
+    "smoke",
+    "feedback",
+  ]),
+});
 
 function buildExport() {
   const readinessReport = readiness.buildReport();
@@ -63,6 +98,8 @@ function buildExport() {
         "npm run exam:flows:strict",
       ],
     },
+    learnerOutcomeLoop: LEARNER_OUTCOME_LOOP,
+    studentPromotionGate: STUDENT_PROMOTION_GATE,
   };
 }
 
@@ -99,6 +136,20 @@ function toMarkdown(report) {
     `- Module coverage: ${report.teacherWeeklyProgress.moduleCoverage}`,
     `- Tab coverage: ${report.teacherWeeklyProgress.tabCoverage}`,
     `- Recommended review agenda: ${report.teacherWeeklyProgress.recommendedReviewAgenda.join(", ")}`,
+    "",
+    "## Learner Outcome Loop",
+    "",
+    `- Pilot cohort: ${report.learnerOutcomeLoop.protocol.cohortSize} real students`,
+    `- Pilot duration: ${report.learnerOutcomeLoop.protocol.durationDays} days`,
+    `- Checkpoints: ${report.learnerOutcomeLoop.protocol.checkpoints.join(" → ")}`,
+    `- Metrics: ${report.learnerOutcomeLoop.trackedMetrics.join(", ")}`,
+    `- Feedback signal: ${report.learnerOutcomeLoop.feedbackSignal}`,
+    `- Missing evidence policy: ${report.learnerOutcomeLoop.unavailablePolicy}`,
+    "",
+    "## Student Promotion Gate",
+    "",
+    `- Rule: ${report.studentPromotionGate.rule}`,
+    `- Required evidence: ${report.studentPromotionGate.requiredEvidence.join(", ")}`,
     "",
     "### Evidence Commands",
     "",

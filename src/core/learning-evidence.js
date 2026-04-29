@@ -10,6 +10,7 @@ export const LEARNING_EVENT_TYPES = Object.freeze({
   CLIP_VIEW: "clip_view",
   FLASHCARD_REVIEW: "flashcard_review",
   LESSON_WRAP: "lesson_wrap",
+  STUDENT_STUCK: "student_stuck",
 });
 
 const VALID_EVENT_TYPES = new Set(Object.values(LEARNING_EVENT_TYPES));
@@ -58,6 +59,25 @@ function safeNumber(value, fallback = null) {
 function boolOrNull(value) {
   if (value === true || value === false) return value;
   return null;
+}
+
+function safeList(value, maxItems = 20, maxText = 180) {
+  if (Array.isArray(value)) return value.map((item) => safeText(item, maxText)).filter(Boolean).slice(0, maxItems);
+  return String(value || "")
+    .split("|")
+    .map((item) => safeText(item, maxText))
+    .filter(Boolean)
+    .slice(0, maxItems);
+}
+
+function safeViewport(value) {
+  const viewport = value && typeof value === "object" ? value : {};
+  return {
+    width: safeNumber(viewport.width, null),
+    height: safeNumber(viewport.height, null),
+    devicePixelRatio: safeNumber(viewport.devicePixelRatio, null),
+    orientation: safeText(viewport.orientation, 30),
+  };
 }
 
 function isoTimestamp(timestamp) {
@@ -111,6 +131,12 @@ export function normalizeLearningEvent(input = {}) {
     masteryBefore: safeNumber(input.masteryBefore, null),
     masteryAfter: safeNumber(input.masteryAfter, null),
     advanced: boolOrNull(input.advanced),
+    feedbackId: safeText(input.feedbackId, 120),
+    feedbackCode: safeText(input.feedbackCode, 80),
+    conceptKeys: safeList(input.conceptKeys, 16, 180),
+    prerequisiteKeys: safeList(input.prerequisiteKeys, 16, 180),
+    terms: safeList(input.terms, 16, 80),
+    viewport: safeViewport(input.viewport),
   };
 }
 
@@ -161,6 +187,7 @@ export function summarizeLearningEvidence(state, { now = Date.now(), topN = 8 } 
     flashcards: 0,
     lessonWraps: 0,
     masteryChanges: 0,
+    stuckFeedback: 0,
     accuracyPct: 0,
     conceptFunnels: [],
     days: [],
@@ -188,6 +215,7 @@ export function summarizeLearningEvidence(state, { now = Date.now(), topN = 8 } 
     if (event.type === LEARNING_EVENT_TYPES.FLASHCARD_REVIEW) summary.flashcards += 1;
     if (event.type === LEARNING_EVENT_TYPES.LESSON_WRAP) summary.lessonWraps += 1;
     if (event.type === LEARNING_EVENT_TYPES.MASTERY_CHANGE) summary.masteryChanges += 1;
+    if (event.type === LEARNING_EVENT_TYPES.STUDENT_STUCK) summary.stuckFeedback += 1;
 
     const conceptKey = event.conceptKey || (event.lessonId && event.conceptName ? `${event.lessonId}::${event.conceptName}` : "");
     if (!conceptKey) return;
@@ -243,6 +271,12 @@ function anonymizedEvent(event = {}) {
     masteryBefore: safeNumber(event.masteryBefore, null),
     masteryAfter: safeNumber(event.masteryAfter, null),
     advanced: boolOrNull(event.advanced),
+    feedbackId: safeText(event.feedbackId, 120),
+    feedbackCode: safeText(event.feedbackCode, 80),
+    conceptKeys: safeList(event.conceptKeys, 16, 180),
+    prerequisiteKeys: safeList(event.prerequisiteKeys, 16, 180),
+    terms: safeList(event.terms, 16, 80),
+    viewport: safeViewport(event.viewport),
   };
 }
 
@@ -294,6 +328,7 @@ export function buildLearningEvidenceMarkdownReport(
     `| Remediations | ${summary.remediations} |`,
     `| Reviews + flashcards | ${summary.reviews + summary.flashcards} |`,
     `| Exams | ${summary.exams} |`,
+    `| Student stuck feedback | ${summary.stuckFeedback} |`,
     "",
     "## Last 7 Active Days",
     "",

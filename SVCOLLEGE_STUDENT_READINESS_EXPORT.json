@@ -69,5 +69,37 @@
       "npm run exam:mock-variants:strict",
       "npm run exam:flows:strict"
     ]
+  },
+  "learnerOutcomeLoop": {
+    "protocol": {
+      "cohortSize": 10,
+      "durationDays": 7,
+      "checkpoints": [
+        "D0 baseline exam",
+        "D1 retention check",
+        "D7 final exam and module mastery review",
+        "qualitative feedback review"
+      ]
+    },
+    "trackedMetrics": [
+      "D1 retention",
+      "D7 retention",
+      "module mastery",
+      "average wrong-to-correct recovery time",
+      "repeated misconception rate",
+      "student got stuck feedback"
+    ],
+    "feedbackSignal": "student_stuck events include lesson, question, prerequisite and viewport metadata; free-form answer text is not stored.",
+    "unavailablePolicy": "Pilot outcomes remain unknown/unavailable until real learner evidence exists."
+  },
+  "studentPromotionGate": {
+    "rule": "A module is ready for students only after content, practice, tab health, smoke evidence and first-user feedback evidence all pass.",
+    "requiredEvidence": [
+      "content",
+      "practice",
+      "tabHealth",
+      "smoke",
+      "feedback"
+    ]
   }
 }

@@ -162,4 +162,35 @@ describe("learning evidence", () => {
     expect(report).toContain("| Accuracy | 100% |");
     expect(report).toContain("Array | lesson_11 | JS Foundations");
   });
+
+  it("stores student-stuck feedback as structured metadata without answer text", () => {
+    let state = emptyLearningEvidenceState();
+    state = appendLearningEvent(state, {
+      type: LEARNING_EVENT_TYPES.STUDENT_STUCK,
+      timestamp: Date.UTC(2026, 3, 29, 9),
+      source: "stuck-feedback:trainer",
+      lessonId: "lesson_nextjs",
+      conceptKey: "lesson_nextjs::Server Component",
+      conceptKeys: ["lesson_nextjs::Server Component"],
+      prerequisiteKeys: ["lesson_16::module.exports"],
+      terms: ["server"],
+      questionId: "q-nextjs-1",
+      viewport: { width: 390, height: 844, devicePixelRatio: 3, orientation: "portrait" },
+      selectedAnswer: "private answer text",
+    });
+
+    const summary = summarizeLearningEvidence(state, { now: Date.UTC(2026, 3, 29, 12) });
+    const exported = anonymizedLearningEvidenceExport(state, { now: Date.UTC(2026, 3, 29, 12) });
+
+    expect(summary.stuckFeedback).toBe(1);
+    expect(exported.events[0]).toMatchObject({
+      type: "student_stuck",
+      lessonId: "lesson_nextjs",
+      conceptKeys: ["lesson_nextjs::Server Component"],
+      prerequisiteKeys: ["lesson_16::module.exports"],
+      terms: ["server"],
+      viewport: { width: 390, height: 844, devicePixelRatio: 3, orientation: "portrait" },
+    });
+    expect(JSON.stringify(exported)).not.toContain("private answer text");
+  });
 });

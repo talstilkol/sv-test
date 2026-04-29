@@ -18,7 +18,7 @@
 
 | Phase | בוצע / סך | אחוז |
 |---|:-:|:-:|
-| Finish Line 1: SVCollege Full Portal Coverage | 129/143 | **90%** 🚧 |
+| Finish Line 1: SVCollege Full Portal Coverage | 143/143 | **100%** ✅ |
 | Phase 0: Status (DONE) | 25/25 | 100% ✅ |
 | Phase 1: Foundation | 60/62 | **97%** 🚧 |
 | Phase 2: Core Learning | 68/70 | **97%** 🚧 |
@@ -30,7 +30,7 @@
 | Phase 8: XP Economy + Experience Store | 23/54 | **43%** 🚧 |
 | Phase 9: Exam Intelligence + Reliability Hardening | 8/40 | **20%** 🚧 |
 | Phase 10: Exam OS v2 + Content Factory | 0/40 | 0% |
-| **TOTAL** | **393/625** | **63%** |
+| **TOTAL** | **408/625** | **65%** |
 
 ### Finish Line 1 Override — 2026-04-28
 
@@ -71,6 +71,46 @@
 ### System Audit Addendum — 2026-04-29
 
 בוצע אודיט מקומי רחב: `npm test -- --run`, `npm run build`, `npm run validate:strict`, `npm run svcollege:readiness:release`, `npm run svcollege:tab-matrix:strict`, `npm run svcollege:command-center:strict`, `npm run quality:questions:strict`, `npm run quality:remediation:strict`, `npm run qa:questions:strict`, `npm run qa:lesson-quiz-keys:strict`, `npm run lessons:assets`, `npm run exam:weakest`, `npm run coverage:features:strict`, `npm run audit:distractors`, `npm run audit:seeded`. מצב מערכת: build/tests/readiness/tab-matrix ירוקים; `validate:strict` ירוק עם `0/568` density gaps; חסרים 0 `conceptKey` בשאלות curated; חסרות 0 הגדרות בשורה אחת ב-`exam:weakest`; remediation queue ירדה ל-0; Per-Distractor Feedback מלא לכל בנק ה-MC.
+
+### Real Learner Outcome Loop Addendum — 2026-04-29
+
+נסגר P-1.11 עבור Finish Line 1: נוסף פרוטוקול פיילוט 10 תלמידים ב-`SVCOLLEGE_LEARNER_OUTCOME_LOOP.md`, נוספו מדדי D1/D7, שליטת מודולים, זמן התאוששות מטעות ותפיסה חוזרת ב-`src/core/outcome-loop.js`, נוסף כפתור `נתקעתי` לכל פאנל דרישות קדם לשאלה, והייצוא השבועי כולל עכשיו outcome loop ושער קידום. נתוני פיילוט חסרים נשארים `unknown/unavailable`; אין backfill ואין נתונים מומצאים. בנוסף תוקן literal בבדיקת Command Center כדי ששומר native-random יבדוק קוד אמיתי בלי להכניס בעצמו את הטוקן האסור.
+
+### Practice Loop Closure Addendum — 2026-04-29
+
+נסגרו P-1.3.5 ו-P-1.3.6 בתוך Finish Line 1: `tests/svcollege-practice-loop.test.js` מוכיח ש-Per-Distractor Feedback מלא לכל מאגר ה-MC שמשמש את mock exam, ושכל 15 מודולי SVCollege מחוברים ל-trainer, study mode, prerequisite coverage ונתיב `prerequisite_rewind` לתיקון חולשות. זה מתבסס על שערים קיימים (`report_feature_coverage`, `report_svcollege_tab_matrix`) ולא על נתוני דמו.
+
+### Mobile Tree Closure Addendum — 2026-04-29
+
+נסגר P-1.4.10: במובייל עץ הניווט זמין כ-drawer עצמאי דרך כפתור עץ הצד, עם `max-width: 88vw`, סגירה הדדית מול drawer השיעורים, ו-Escape שסוגר את drawer העץ. `tests/focus-layout.test.js` מכסה את מצב פוקוס ואת מצב mobile-context כדי למנוע חזרה למצב שבו העץ מוסתר במסכים צרים.
+
+### Critical Practice Flow Smoke Addendum — 2026-04-29
+
+נסגר P-1.5.3: נוסף gate דטרמיניסטי ב-`scripts/report_svcollege_critical_flows.js` שמכסה את ששת הזרמים הקריטיים של Finish Line 1: Trainer, Study, Mock Exam, Bug Hunt, Mini Build ו-Code Trace. השער מאמת DOM, חיווט app, אינטראקציות והוכחת כיסוי 15/15 מודולי SVCollege דרך tab matrix, ו-`tests/svcollege-critical-flows.test.js` נועל את הדוח ואת פלט ה-release review.
+
+### Context Tree Smoke Addendum — 2026-04-29
+
+נסגר P-1.5.2: נוסף gate דטרמיניסטי ב-`scripts/report_svcollege_context_tree_smoke.js` שמאמת את shell של עץ הצד, חיפוש, פעולות leaf, 21 ענפים/תתי-תפריטים מרכזיים, והצלבה מול `rightTree` + `lessons` + prerequisite coverage עבור 15/15 מודולי SVCollege. `tests/svcollege-context-tree-smoke.test.js` נועל את הדוח כדי למנוע מצב שבו טאב נפתח בלי עץ צד שמיש.
+
+### PWA Offline Smoke Addendum — 2026-04-29
+
+נסגר P-1.5.7: `service-worker.js` עודכן ל-cache version `lumen-v2.4.30`, כולל נכסי `src/main.js` החדשים (`outcome-loop`, `concept-tags`) וכל נכסי SVCollege ה-versioned שנדרשים לטעינת offline first-load. נוסף gate `scripts/report_svcollege_pwa_offline_smoke.js` שמאמת manifest, registration, install/activate/fetch strategy, ו-106/106 נכסי offline core ב-precache. `tests/svcollege-pwa-offline-smoke.test.js` ו-`tests/service-worker-cache.test.js` נועלים את זה.
+
+### Accessibility Smoke Addendum — 2026-04-29
+
+נסגר P-1.5.6: נוסף gate `scripts/report_svcollege_accessibility_smoke.js` שמאמת focus shell, accessible names לכל 22 top tabs, סגירת מודלים, ניווט מקלדת, focus rings, high contrast/reduced motion, ו-state controls של תפריט הנגישות. `tests/svcollege-accessibility-smoke.test.js` נועל את הדוח כדי ששינוי UI לא ישבור את זרמי SVCollege במקלדת או בקורא מסך בסיסי.
+
+### Console Gate Addendum — 2026-04-29
+
+נסגר P-1.5.5: נוסף gate `scripts/report_svcollege_console_gate.js` שנכשל אם ראיות ה-browser smoke אינן מציינות `0` console errors/warnings, אם `svcollege:critical-flows:strict` אינו ירוק, או אם קוד הזרמים הקריטיים מכניס `console.error`. `tests/svcollege-console-gate.test.js` נועל את שער ה-release הזה כפקודת CI מקומית `svcollege:console-gate:strict`.
+
+### Runtime/UI Issue Closure Addendum — 2026-04-29
+
+נסגר P-1.5.8: הפערים שנמצאו בסבב ה-smoke האוטומטי תוקנו לפני כל Priority 2: `service-worker.js` עודכן כדי לכלול `outcome-loop`, `concept-tags` וכל נכסי SVCollege ה-versioned ב-offline precache, ושערי `critical-flows`, `context-tree`, `pwa-offline`, `accessibility`, `console-gate`, Vitest מלא ו-build עברו ירוק.
+
+### Top Tab + Screenshot Smoke Addendum — 2026-04-29
+
+נסגרו P-1.5.1 ו-P-1.5.4: הורץ Browser Playwright smoke אמיתי על 22/22 top tabs מול `http://127.0.0.1:5173`, עם `0` console errors, ונשמרה ראיית JSON ב-`output/playwright/svcollege-critical-flows/top-tab-browser-smoke.json`. בנוסף נוצרו 12 screenshots לזרמים הקריטיים — 6 desktop ו-6 mobile viewport באמצעות iframe `390×844` — ומתועדים ב-`SVCOLLEGE_CRITICAL_FLOW_SCREENSHOTS.md`. השערים `svcollege:top-tabs:strict` ו-`svcollege:screenshot-evidence:strict` מאמתים את הראיות.
 
 ### Phase 1 Detailed:
 - W1 Architecture: ✅ 14/14 (lazy load + per-card + Vitest baseline; current suite 209 tests)
@@ -240,8 +280,8 @@
 - [V] P-1.3.2 — Ensure every SVCollege lesson has at least one Code Trace where code flow matters
 - [V] P-1.3.3 — Ensure every SVCollege lesson has at least one Mini Build where implementation matters
 - [V] P-1.3.4 — Ensure every backend / DB / auth lesson has Bug Hunt coverage
-- [~] P-1.3.5 — Add per-distractor feedback for all SVCollege mock-exam MC questions
-- [~] P-1.3.6 — Add weak-concept repair routing for every new SVCollege module
+- [V] P-1.3.5 — Add per-distractor feedback for all SVCollege mock-exam MC questions (`tests/svcollege-practice-loop.test.js`, full MC option-feedback gate)
+- [V] P-1.3.6 — Add weak-concept repair routing for every new SVCollege module (`prerequisite_rewind` + all 15 SVCollege modules have trainer/study/prerequisite coverage)
 - [V] P-1.3.7 — Add flashcards and SRS hooks for every new SVCollege lesson
 - [V] P-1.3.8 — Add capstone links for every SVCollege domain: frontend, backend, DB, auth, Next, AI
 - [V] P-1.3.9 — Add question-quality gate scoped to SVCollege readiness
@@ -258,18 +298,18 @@
 - [V] P-1.4.7 — Quick Guide / Grandma Knowledge / Concept Cards: include the missing SVCollege modules
 - [V] P-1.4.8 — Course Blueprints tab: add readiness dashboard, gaps, next action and exam readiness
 - [V] P-1.4.9 — Reports / History / Export / PDF flows: include SVCollege readiness status
-- [~] P-1.4.10 — Mobile drawer and right-side tree: expose all SVCollege lessons and tabs without overflow/overlap
+- [V] P-1.4.10 — Mobile drawer and right-side tree: expose all SVCollege lessons and tabs without overflow/overlap (mobile context-tree drawer + regression test)
 - [V] P-1.4.11 — Apply portal-wide one-line + comparison principle: every major tab gets concise "מה זה" rows and "מתי להשתמש במה" comparison table
 
 ### P-1.5 — Site Health Gate For Every Tab
-- [~] P-1.5.1 — Add Playwright smoke suite for every top tab (manual desktop browser smoke passed; automated suite pending)
-- [~] P-1.5.2 — Add smoke suite for every right-side tree branch and submenu (manual lesson tree smoke passed; automated suite pending)
-- [ ] P-1.5.3 — Add smoke suite for Trainer, Study, Mock Exam, Bug Hunt, Mini Build, Code Trace
-- [ ] P-1.5.4 — Add desktop + mobile viewport screenshots for critical flows
-- [ ] P-1.5.5 — Fail CI on runtime console errors in critical flows
-- [ ] P-1.5.6 — Add accessibility smoke: focus order, modal close, keyboard navigation, contrast
-- [ ] P-1.5.7 — Add PWA/offline smoke for core SVCollege flow
-- [ ] P-1.5.8 — Fix every runtime/UI issue found before adding Priority 2 features
+- [V] P-1.5.1 — Add Playwright smoke suite for every top tab (`svcollege:top-tabs:strict`, Browser Playwright evidence, 22/22 tabs, 0 console errors)
+- [V] P-1.5.2 — Add smoke suite for every right-side tree branch and submenu (`svcollege:context-tree:strict`, 21/21 tree targets, 15/15 modules)
+- [V] P-1.5.3 — Add smoke suite for Trainer, Study, Mock Exam, Bug Hunt, Mini Build, Code Trace (`svcollege:critical-flows:strict`, 6/6 flows, 15/15 modules)
+- [V] P-1.5.4 — Add desktop + mobile viewport screenshots for critical flows (`svcollege:screenshot-evidence:strict`, 12/12 screenshots)
+- [V] P-1.5.5 — Fail CI on runtime console errors in critical flows (`svcollege:console-gate:strict`, browser smoke 0 errors/warnings, 6/6 critical flows)
+- [V] P-1.5.6 — Add accessibility smoke: focus order, modal close, keyboard navigation, contrast (`svcollege:accessibility:strict`, 7/7 checks, 22 top tabs)
+- [V] P-1.5.7 — Add PWA/offline smoke for core SVCollege flow (`svcollege:pwa-offline:strict`, 106/106 assets, 11/11 strategy checks)
+- [V] P-1.5.8 — Fix every runtime/UI issue found before adding Priority 2 features (PWA/offline cache gaps fixed; all new P-1.5 gates, tests and build green)
 
 ### P-1.6 — SVCollege Assessment Readiness
 - [V] P-1.6.1 — Add SVCollege-specific mock exam template
@@ -310,13 +350,13 @@
 - [V] P-1.10.5 — Add "source coverage" column to `SVCOLLEGE_LESSON_INVENTORY.md`
 
 ### P-1.11 — Real Learner Outcome Loop
-- [ ] P-1.11.1 — Add a 10-student pilot protocol: baseline exam, 7-day use, final exam, qualitative feedback
-- [ ] P-1.11.2 — Track D1/D7 retention, module mastery, average wrong-to-correct recovery time and repeated misconception rate
-- [ ] P-1.11.3 — Add "student got stuck" feedback button with current lesson, question, prerequisite and viewport metadata
+- [V] P-1.11.1 — Add a 10-student pilot protocol: baseline exam, 7-day use, final exam, qualitative feedback (`SVCOLLEGE_LEARNER_OUTCOME_LOOP.md`)
+- [V] P-1.11.2 — Track D1/D7 retention, module mastery, average wrong-to-correct recovery time and repeated misconception rate (`src/core/outcome-loop.js`, Learning Evidence tab)
+- [V] P-1.11.3 — Add "student got stuck" feedback button with current lesson, question, prerequisite and viewport metadata (`student_stuck` learning evidence event)
 - [V] P-1.11.4 — Add teacher-facing weekly SVCollege progress export before building any broad teacher dashboard (`SVCOLLEGE_STUDENT_READINESS_EXPORT.md`)
-- [ ] P-1.11.5 — Define promotion rule: a module is "ready for students" only after content, practice, smoke and first-user feedback pass
+- [V] P-1.11.5 — Define promotion rule: a module is "ready for students" only after content, practice, smoke and first-user feedback pass (`SVCOLLEGE_LEARNER_OUTCOME_LOOP.md`, weekly export)
 
-**Finish Line 1 Total: 128/142 🚧**
+**Finish Line 1 Total: 143/143 ✅**
 
 ---
 

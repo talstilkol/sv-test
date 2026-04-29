@@ -39,4 +39,22 @@ describe("SVCollege student/teacher readiness export", () => {
     expect(markdown).toContain("## Teacher Weekly Progress");
     expect(markdown).not.toContain("undefined%");
   });
+
+  it("adds the real learner outcome loop and promotion gate to the weekly export", () => {
+    const report = exporter.buildExport();
+    const markdown = exporter.toMarkdown(report);
+
+    expect(report.learnerOutcomeLoop.protocol.cohortSize).toBe(10);
+    expect(report.learnerOutcomeLoop.trackedMetrics).toEqual(expect.arrayContaining([
+      "D1 retention",
+      "D7 retention",
+      "module mastery",
+      "student got stuck feedback",
+    ]));
+    expect(report.learnerOutcomeLoop.unavailablePolicy).toContain("unknown/unavailable");
+    expect(report.studentPromotionGate.requiredEvidence).toEqual(expect.arrayContaining(["feedback"]));
+    expect(report.studentPromotionGate.rule).toContain("first-user feedback");
+    expect(markdown).toContain("## Learner Outcome Loop");
+    expect(markdown).toContain("## Student Promotion Gate");
+  });
 });

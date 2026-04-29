@@ -75,5 +75,6 @@ All checks verified that the tab button was uniquely resolvable, the tab opened,
 
 ## Remaining Work
 
-- Add automated Playwright/browser smoke command when the project gets a stable browser-test dependency.
+- 2026-04-29: automated Browser Playwright top-tab smoke evidence added at `output/playwright/svcollege-critical-flows/top-tab-browser-smoke.json`; `svcollege:top-tabs:strict` verifies `22/22` tabs and `0` console errors.
+- 2026-04-29: desktop + mobile critical-flow screenshot evidence added in `SVCOLLEGE_CRITICAL_FLOW_SCREENSHOTS.md`; `svcollege:screenshot-evidence:strict` verifies `12/12` PNG artifacts.
 - Keep `npm run svcollege:tab-matrix:strict`, `npm run svcollege:readiness:release`, and `npm run svcollege:command-center:strict` green after every content change.

@@ -46,11 +46,23 @@ describe("focus learning layout", () => {
     expect(app).toContain('const FOCUS_MODE_KEY = "lumenportal:learning-focus:v1"');
     expect(app).toContain("function setLearningFocusMode");
     expect(app).toContain('document.body.classList.toggle("learning-focus-mode", enabled)');
-    expect(app).toContain('document.body.classList.toggle("focus-menu-open", open)');
+    expect(app).toContain('const className = focusEnabled ? "focus-menu-open" : "mobile-context-open"');
+    expect(app).toContain("document.body.classList.toggle(className, open)");
     expect(css).toContain("body.learning-focus-mode .top-tabs-bar");
     expect(css).toContain("body.learning-focus-mode .context-tree-panel");
     expect(css).toContain("transform: translateX(105%)");
     expect(css).toContain("body.learning-focus-mode.focus-menu-open .context-tree-panel");
     expect(css).toContain("transform: translateX(0)");
+  });
+
+  it("exposes the context tree as a separate mobile drawer without overlapping the lesson drawer", () => {
+    expect(app).toContain('window.matchMedia("(max-width: 900px)")');
+    expect(app).toContain("function syncContextTreeToggleVisibility");
+    expect(app).toContain('document.body.classList.remove("mobile-context-open")');
+    expect(app).toContain('document.body.classList.toggle(className, open)');
+    expect(css).toContain("body.mobile-context-open .context-tree-panel");
+    expect(css).toContain("width: min(390px, 88vw)");
+    expect(css).toContain("max-width: 88vw");
+    expect(css).toContain("@media (min-width: 901px)");
   });
 });

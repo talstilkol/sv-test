@@ -1,0 +1,210 @@
+{
+  "reportVersion": "svcollege-top-tab-browser-smoke-v1",
+  "date": "2026-04-29",
+  "browserSurface": "same-origin iframe DOM click harness",
+  "topTabs": 22,
+  "passedTabs": 22,
+  "failedTabs": 0,
+  "results": [
+    {
+      "id": "open-guide",
+      "dataTab": "guide",
+      "ariaLabel": "פתח מדריך מקוצר",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "📖 מדריך מקוצר",
+      "errors": []
+    },
+    {
+      "id": "open-grandma-knowledge",
+      "dataTab": "grandma-knowledge",
+      "ariaLabel": "פתח ידע מורחב ברמת סבתא",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "👵 אטלס ידע מורחב — ברמת סבתא",
+      "errors": []
+    },
+    {
+      "id": "open-programming-basics",
+      "dataTab": "programming-basics",
+      "ariaLabel": "פתח אבני בסיס של התכנות",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🧱 אבני הבסיס של התכנות",
+      "errors": []
+    },
+    {
+      "id": "open-programming-principles",
+      "dataTab": "programming-principles",
+      "ariaLabel": "פתח עקרונות יסוד לתכנות טוב",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🧭 עקרונות היסוד של תכנות טוב",
+      "errors": []
+    },
+    {
+      "id": "open-programming-museum",
+      "dataTab": "programming-museum",
+      "ariaLabel": "פתח מוזיאון היסטורי לשפות התכנות",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🏛️ מוזיאון שפות התכנות",
+      "errors": []
+    },
+    {
+      "id": "open-language-tools",
+      "dataTab": "language-tools",
+      "ariaLabel": "פתח השוואת שפות וכלי פיתוח",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🧮 השוואת שפות וכלי פיתוח",
+      "errors": []
+    },
+    {
+      "id": "open-reward-store",
+      "dataTab": "reward-store",
+      "ariaLabel": "פתח חנות חוויות עם מטבעות למידה",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🛒 חנות חוויות",
+      "errors": []
+    },
+    {
+      "id": "open-flashcards",
+      "dataTab": "flashcards",
+      "ariaLabel": "פתח כרטיסיות חזרה לפי SRS",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🃏 כרטיסיות חזרה",
+      "errors": []
+    },
+    {
+      "id": "open-codeblocks",
+      "dataTab": "codeblocks",
+      "ariaLabel": "פתח בלוקי קוד",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "💻 למד בלוקי קוד",
+      "errors": []
+    },
+    {
+      "id": "open-trace",
+      "dataTab": "trace",
+      "ariaLabel": "פתח Code Trace — חיזוי פלט קוד",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🔬 Code Trace",
+      "errors": []
+    },
+    {
+      "id": "open-mock-exam",
+      "dataTab": "mock-exam",
+      "ariaLabel": "פתח מבחן מדומה — Mock Exam עם טיימר",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "📝 מבחן מדומה",
+      "errors": []
+    },
+    {
+      "id": "open-gap-matrix",
+      "dataTab": "gap-matrix",
+      "ariaLabel": "פתח מטריצת פערים — ראה היכן יש חולשות",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "📊 מטריצת פערים",
+      "errors": []
+    },
+    {
+      "id": "open-learning-evidence",
+      "dataTab": "learning-evidence",
+      "ariaLabel": "פתח ראיות למידה — מדדי שיפור ותיקון טעויות",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "📈 ראיות למידה",
+      "errors": []
+    },
+    {
+      "id": "open-capstones",
+      "dataTab": "capstones",
+      "ariaLabel": "פתח מסלול פרויקטי גמר",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🏗️ פרויקטי גמר",
+      "errors": []
+    },
+    {
+      "id": "open-blueprints",
+      "dataTab": "blueprints",
+      "ariaLabel": "פתח יישור SVCollege",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🧾 יישור SVCollege — AI & Full Stack",
+      "errors": []
+    },
+    {
+      "id": "open-comparator",
+      "dataTab": "comparator",
+      "ariaLabel": "פתח השוואות — Side-by-Side",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "⚖️ השוואות זוגות",
+      "errors": []
+    },
+    {
+      "id": "open-trainer",
+      "dataTab": "trainer",
+      "ariaLabel": "פתח מאמן ידע + דוח",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🧠 מאמן הידע",
+      "errors": []
+    },
+    {
+      "id": "open-concept-sprint",
+      "dataTab": "concept-sprint",
+      "ariaLabel": "פתח מושגים נטו — אבחון מהיר לפי מושג",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "⚡ מושגים נטו",
+      "errors": []
+    },
+    {
+      "id": "open-study-mode",
+      "dataTab": "study",
+      "ariaLabel": "פתח מצב לימוד מותאם",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🎯 לימוד מותאם",
+      "errors": []
+    },
+    {
+      "id": "open-knowledge-map",
+      "dataTab": "km",
+      "ariaLabel": "פתח מפת ידע",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "🗺️ מפת ידע אישית",
+      "errors": []
+    },
+    {
+      "id": "open-code-anatomy",
+      "dataTab": "anatomy",
+      "ariaLabel": "פתח פירוק קוד",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "📐 פירוק קוד",
+      "errors": []
+    },
+    {
+      "id": "open-home",
+      "dataTab": "home",
+      "ariaLabel": "חזרה לעמוד הבית — רשימת שיעורים",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "ברוכים הבאים לפורטל המומחים",
+      "errors": []
+    }
+  ],
+  "consoleErrors": 0,
+  "logs": []
+}

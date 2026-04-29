@@ -6814,6 +6814,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========== MOBILE MENU ===========
   if (mobileToggle) {
     mobileToggle.addEventListener("click", () => {
+      document.body.classList.remove("mobile-context-open");
+      document.body.classList.remove("focus-menu-open");
+      focusSideToggle?.setAttribute("aria-expanded", "false");
       sidebar.classList.toggle("open");
       mobileToggle.setAttribute(
         "aria-expanded",
@@ -6824,19 +6827,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // =========== Learning focus mode ===========
   const FOCUS_MODE_KEY = "lumenportal:learning-focus:v1";
+  const mobileContextQuery = typeof window.matchMedia === "function"
+    ? window.matchMedia("(max-width: 900px)")
+    : null;
+
+  function isMobileLayout() {
+    return Boolean(mobileContextQuery && mobileContextQuery.matches);
+  }
+
+  function syncContextTreeToggleVisibility() {
+    const focusEnabled = document.body.classList.contains("learning-focus-mode");
+    const mobileEnabled = isMobileLayout();
+    if (focusSideToggle) {
+      focusSideToggle.hidden = !(focusEnabled || mobileEnabled);
+      const open = focusEnabled
+        ? document.body.classList.contains("focus-menu-open")
+        : document.body.classList.contains("mobile-context-open");
+      focusSideToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    if (!focusEnabled && !mobileEnabled) {
+      document.body.classList.remove("mobile-context-open", "focus-menu-open");
+    }
+  }
 
   function setLearningFocusMode(enabled) {
     document.body.classList.toggle("learning-focus-mode", enabled);
-    document.body.classList.remove("focus-menu-open");
+    document.body.classList.remove("focus-menu-open", "mobile-context-open");
     focusModeToggle?.setAttribute("aria-pressed", enabled ? "true" : "false");
     focusModeToggle?.setAttribute(
       "aria-label",
       enabled ? "צא ממצב פוקוס וחזור לתצוגה מלאה" : "הפעל מצב פוקוס ללמידה במסך מלא",
     );
-    if (focusSideToggle) {
-      focusSideToggle.hidden = !enabled;
-      focusSideToggle.setAttribute("aria-expanded", "false");
-    }
+    syncContextTreeToggleVisibility();
     try {
       localStorage.setItem(FOCUS_MODE_KEY, enabled ? "1" : "0");
     } catch (_) {}
@@ -6851,15 +6873,35 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   focusSideToggle?.addEventListener("click", () => {
-    const open = !document.body.classList.contains("focus-menu-open");
-    document.body.classList.toggle("focus-menu-open", open);
+    const focusEnabled = document.body.classList.contains("learning-focus-mode");
+    const className = focusEnabled ? "focus-menu-open" : "mobile-context-open";
+    const open = !document.body.classList.contains(className);
+    document.body.classList.toggle(className, open);
+    if (!focusEnabled) {
+      sidebar.classList.remove("open");
+      mobileToggle?.setAttribute("aria-expanded", "false");
+    }
     focusSideToggle.setAttribute("aria-expanded", open ? "true" : "false");
   });
+
+  if (mobileContextQuery) {
+    const onMobileContextChange = () => syncContextTreeToggleVisibility();
+    if (typeof mobileContextQuery.addEventListener === "function") {
+      mobileContextQuery.addEventListener("change", onMobileContextChange);
+    } else if (typeof mobileContextQuery.addListener === "function") {
+      mobileContextQuery.addListener(onMobileContextChange);
+    }
+  }
+  syncContextTreeToggleVisibility();
 
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
     if (document.body.classList.contains("focus-menu-open")) {
       document.body.classList.remove("focus-menu-open");
+      focusSideToggle?.setAttribute("aria-expanded", "false");
+    }
+    if (document.body.classList.contains("mobile-context-open")) {
+      document.body.classList.remove("mobile-context-open");
       focusSideToggle?.setAttribute("aria-expanded", "false");
     }
   });
@@ -10440,6 +10482,15 @@ document.addEventListener("DOMContentLoaded", () => {
         openLessonConcept(btn.dataset.qPrereqLesson, btn.dataset.qPrereqConcept);
       });
     });
+    root.querySelectorAll("[data-stuck-feedback]").forEach((btn) => {
+      if (btn.dataset.boundStuckFeedback === "1") return;
+      btn.dataset.boundStuckFeedback = "1";
+      btn.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        recordStudentStuckFeedback(btn);
+      });
+    });
   }
 
   function fallbackQuestionConceptKeys(question, lesson, concept, questionIndex) {
@@ -10527,6 +10578,31 @@ document.addEventListener("DOMContentLoaded", () => {
       </article>`;
   }
 
+  function renderStuckFeedbackButton({ question, lesson, concept, mode, focusKeys, orderedKeys, terms }) {
+    const primaryKey = focusKeys[0] || (lesson && concept ? conceptKey(lesson.id, concept.conceptName) : "");
+    const fallback = splitGraphConceptKey(primaryKey);
+    const lessonId = lesson?.id || fallback.lessonId || "";
+    const conceptName = concept?.conceptName || fallback.conceptName || "";
+    const kind = question?.kind || question?.type || "question";
+    const questionId = questionIdentity(question || {}, lessonId, conceptName, kind);
+    const prerequisiteKeys = orderedKeys.filter((key) => !focusKeys.includes(key));
+    const termNames = (terms || []).map((item) => item.term).filter(Boolean);
+    return `
+      <button type="button"
+        class="q-stuck-feedback"
+        data-stuck-feedback="1"
+        data-stuck-mode="${esc(mode)}"
+        data-stuck-kind="${esc(kind)}"
+        data-stuck-lesson="${esc(lessonId)}"
+        data-stuck-question-id="${esc(questionId)}"
+        data-stuck-concept-keys="${esc(focusKeys.join("|"))}"
+        data-stuck-prerequisite-keys="${esc(prerequisiteKeys.join("|"))}"
+        data-stuck-terms="${esc(termNames.join("|"))}">
+        <span>נתקעתי</span>
+        <small>שמור הקשר לשיפור השאלה</small>
+      </button>`;
+  }
+
   function renderQuestionPrereqPanel({ question, lesson, concept = null, questionIndex = null, mode = "quiz" }) {
     const focusKeys = uniqueQuestionKeys(
       inferQuestionConceptKeys(question, lesson, concept, questionIndex, 5)
@@ -10553,6 +10629,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ]).slice(0, mode === "mock" ? 6 : 8);
     const terms = inferQuestionGlossaryTerms(question, mode === "mock" ? 4 : 6);
 
+    const stuckButton = renderStuckFeedbackButton({ question, lesson, concept, mode, focusKeys, orderedKeys, terms });
+
     if (!orderedKeys.length && !terms.length) {
       return `
         <aside class="q-prereq-panel compact">
@@ -10561,6 +10639,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <span>לא נמצאה מפת תלות</span>
           </div>
           <p class="q-prereq-empty">השאלה לא מחוברת עדיין למושג ממופה. כדאי להוסיף conceptKey כדי להציג עזרה מדויקת.</p>
+          ${stuckButton}
         </aside>`;
     }
 
@@ -10587,6 +10666,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="q-prereq-note">אם לא למדת מושג כאן, קרא את ההסבר הקצר לפני בחירת תשובה.</div>
         <div class="q-prereq-list">${conceptHTML}</div>
         ${termsHTML}
+        ${stuckButton}
       </aside>`;
   }
 
@@ -18690,6 +18770,24 @@ document.addEventListener("DOMContentLoaded", () => {
       : null;
   }
 
+  function outcomeLoopCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.outcomeLoop
+      ? window.LUMEN_CORE.outcomeLoop
+      : null;
+  }
+
+  function currentViewportMetadata() {
+    const visualViewport = window.visualViewport || null;
+    const width = Math.round(visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0);
+    const height = Math.round(visualViewport?.height || window.innerHeight || document.documentElement.clientHeight || 0);
+    return {
+      width,
+      height,
+      devicePixelRatio: Number(window.devicePixelRatio || 1),
+      orientation: width >= height ? "landscape" : "portrait",
+    };
+  }
+
   function getLearningEvidenceInstallKey(timestamp = Date.now()) {
     const core = learningEvidenceCore();
     if (!core) return "";
@@ -18766,12 +18864,73 @@ document.addEventListener("DOMContentLoaded", () => {
     return normalized;
   }
 
+  function recordStudentStuckFeedback(button) {
+    const core = outcomeLoopCore();
+    const timestamp = Date.now();
+    const payload = core && typeof core.buildStuckFeedbackEvent === "function"
+      ? core.buildStuckFeedbackEvent({
+          timestamp,
+          mode: button?.dataset?.stuckMode || "question",
+          kind: button?.dataset?.stuckKind || "",
+          lessonId: button?.dataset?.stuckLesson || "",
+          questionId: button?.dataset?.stuckQuestionId || "",
+          conceptKeys: button?.dataset?.stuckConceptKeys || "",
+          prerequisiteKeys: button?.dataset?.stuckPrerequisiteKeys || "",
+          terms: button?.dataset?.stuckTerms || "",
+          viewport: currentViewportMetadata(),
+        })
+      : {
+          type: "student_stuck",
+          timestamp,
+          source: "stuck-feedback:question",
+          lessonId: button?.dataset?.stuckLesson || "",
+          questionId: button?.dataset?.stuckQuestionId || "",
+          conceptKeys: String(button?.dataset?.stuckConceptKeys || "").split("|").filter(Boolean),
+          prerequisiteKeys: String(button?.dataset?.stuckPrerequisiteKeys || "").split("|").filter(Boolean),
+          terms: String(button?.dataset?.stuckTerms || "").split("|").filter(Boolean),
+          viewport: currentViewportMetadata(),
+          feedbackCode: "blocked_prerequisite",
+        };
+    const event = recordLearningEvidence("student_stuck", payload);
+    if (button) {
+      button.classList.add("saved");
+      button.disabled = true;
+      button.innerHTML = "<span>נרשם</span><small>המורה יראה הקשר אנונימי</small>";
+    }
+    renderLearningEvidence();
+    return event;
+  }
+
+  function svcollegeOutcomeModules() {
+    const modules = typeof SVCOLLEGE_EXAM_MODULES !== "undefined" ? SVCOLLEGE_EXAM_MODULES : [];
+    const keys = allConcepts()
+      .map(({ lesson, concept }) => conceptKey(lesson.id, concept.conceptName))
+      .sort((a, b) => a.localeCompare(b));
+    return modules.map((module) => ({
+      id: module.id,
+      label: module.label,
+      conceptKeys: keys.filter((key) => module.filter(key)),
+    }));
+  }
+
+  function localOutcomeMetrics(state) {
+    const core = outcomeLoopCore();
+    if (!core || typeof core.buildOutcomeMetrics !== "function") return null;
+    return core.buildOutcomeMetrics({
+      events: Array.isArray(state?.events) ? state.events : [],
+      scores,
+      modules: svcollegeOutcomeModules(),
+      now: Date.now(),
+    });
+  }
+
   function renderLearningEvidence() {
     const container = document.getElementById("learning-evidence-content");
     const core = learningEvidenceCore();
     if (!container || !core) return;
     const state = loadLearningEvidenceState();
     const summary = core.summarizeLearningEvidence(state, { now: Date.now(), topN: 10 });
+    const outcome = localOutcomeMetrics(state);
     const statCards = [
       { label: "אירועים", value: summary.totalEvents, hint: "כל פעולת למידה שנרשמה מקומית" },
       { label: "תשובות", value: summary.answers, hint: `${summary.correct} נכונות · ${summary.wrong} שגויות` },
@@ -18779,6 +18938,12 @@ document.addEventListener("DOMContentLoaded", () => {
       { label: "תיקוני טעות", value: summary.remediations, hint: "הסבר/אסוציאציה אחרי טעות" },
       { label: "חזרות", value: summary.reviews + summary.flashcards, hint: "כרטיסיות וחזרות SRS" },
       { label: "ימי פעילות", value: summary.activeDays, hint: `${summary.last7Days} אירועים ב-7 ימים` },
+      { label: "D1", value: outcome?.retention?.d1?.label || "unknown/unavailable", hint: `יום יעד: ${outcome?.retention?.d1?.day || "unknown/unavailable"}` },
+      { label: "D7", value: outcome?.retention?.d7?.label || "unknown/unavailable", hint: `יום יעד: ${outcome?.retention?.d7?.day || "unknown/unavailable"}` },
+      { label: "שליטת מודולים", value: outcome?.moduleMastery?.averagePct === null || !outcome ? "unknown/unavailable" : `${outcome.moduleMastery.averagePct}%`, hint: outcome?.moduleMastery?.label || "unknown/unavailable" },
+      { label: "טעות→תיקון", value: outcome?.recovery?.label || "unknown/unavailable", hint: "זמן ממוצע עד תשובה נכונה באותו מושג" },
+      { label: "תפיסה חוזרת", value: outcome?.repeatedMisconceptions?.label || "unknown/unavailable", hint: "שגיאות חוזרות לפני תיקון נכון" },
+      { label: "נתקעתי", value: outcome?.stuckFeedback?.label || "0", hint: "לחיצות אנונימיות עם lesson/question/prerequisite/viewport" },
     ];
 
     const funnelsHtml = summary.conceptFunnels.length
@@ -18816,6 +18981,15 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         `).join("")
       : `<div class="le-empty">אין עדיין היסטוריית ימים.</div>`;
+    const moduleRows = outcome?.moduleMastery?.modules?.length
+      ? outcome.moduleMastery.modules.map((item) => `
+          <div class="le-module-row">
+            <span>${esc(item.label)}</span>
+            <strong>${esc(item.labelValue)}</strong>
+            <small>${item.masteryPct === null ? "unknown/unavailable" : `${item.masteryPct}%`}</small>
+          </div>
+        `).join("")
+      : `<div class="le-empty">אין עדיין מדדי שליטת מודולים.</div>`;
 
     container.innerHTML = `
       <section class="le-section" id="le-kpis">
@@ -18828,6 +19002,14 @@ document.addEventListener("DOMContentLoaded", () => {
             </article>
           `).join("")}
         </div>
+      </section>
+
+      <section class="le-section" id="le-outcomes">
+        <div class="le-section-head">
+          <h2>Outcome Loop לפיילוט SVCollege</h2>
+          <p>D1/D7, שליטת מודולים, זמן תיקון טעות ותפיסות חוזרות מחושבים רק מאירועים מקומיים קיימים. חסר נתון נשאר unknown/unavailable.</p>
+        </div>
+        <div class="le-module-list">${moduleRows}</div>
       </section>
 
       <section class="le-section" id="le-funnels">

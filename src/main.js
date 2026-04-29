@@ -5,6 +5,7 @@ import * as streak from "./core/streak.js";
 import * as questionPrerequisites from "./core/question-prerequisites.js?v=question-prereq-v2";
 import * as mistakeAgent from "./core/mistake-agent.js";
 import * as learningEvidence from "./core/learning-evidence.js";
+import * as outcomeLoop from "./core/outcome-loop.js";
 import * as confidenceCalibration from "./core/confidence-calibration.js";
 import * as confusionBlockers from "./core/confusion-blockers.js";
 import * as conceptTags from "./core/concept-tags.js";
@@ -24,6 +25,7 @@ window.LUMEN_CORE = Object.freeze({
   questionPrerequisites,
   mistakeAgent,
   learningEvidence,
+  outcomeLoop,
   confidenceCalibration,
   confusionBlockers,
   conceptTags,
