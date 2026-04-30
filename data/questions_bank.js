@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.3";
+var QUESTIONS_BANK_VERSION = "2.1.4";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -46,6 +46,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 11 sub-batch: filter, find and forEach MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.4",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 11 sub-batch: function, Index, let and map MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -457,6 +463,68 @@ var QUESTIONS_BANK = {
       ],
       correctIndex: 1,
       explanation: "Arrow function בקיצור — בלי גוף, מחזירה אוטומטית את הביטוי.",
+    },
+    {
+      id: "mc_l11_function_manual_001", topicId: "topic_functions", conceptKey: "lesson_11::function", level: 4,
+      question: "מה יודפס?\n\nfunction add(a, b) {\n  return a + b;\n}\nconsole.log(add(2, 3));",
+      options: ["5", "23", "undefined", "NaN"],
+      correctIndex: 0,
+      explanation: "הפונקציה מקבלת שני פרמטרים, מחזירה את הסכום שלהם, וקריאה עם 2 ו-3 מחזירה 5.",
+      optionFeedback: [
+        "✅ נכון: return מחזיר את תוצאת a + b.",
+        "❌ חיבור מספרים מחזיר סכום מספרי, לא שרשור מחרוזות.",
+        "❌ יש כאן return מפורש, לכן לא מוחזר undefined.",
+        "❌ שני הערכים הם מספרים תקינים ולכן לא מתקבל NaN.",
+      ],
+    },
+    {
+      id: "mc_l11_function_manual_002", topicId: "topic_functions", conceptKey: "lesson_11::function", level: 6,
+      question: "איזה משפט מסביר נכון למה משתמשים בפונקציה?",
+      options: [
+        "כדי לארוז פעולה לשימוש חוזר עם פרמטרים וערך חזרה אפשרי",
+        "כדי שכל קוד שבתוכה ירוץ אוטומטית בלי קריאה",
+        "כדי לשמור רשימת ערכים לפי אינדקסים",
+        "כדי ליצור ערך שיכול להיות רק true או false",
+      ],
+      correctIndex: 0,
+      explanation: "פונקציה היא בלוק קוד שניתן לקרוא לו שוב, להעביר אליו פרמטרים, ולקבל ממנו ערך בעזרת return.",
+      optionFeedback: [
+        "✅ נכון: זה תפקיד הליבה של function.",
+        "❌ פונקציה לא רצה מעצמה; צריך לקרוא לה בשם עם סוגריים.",
+        "❌ רשימת ערכים לפי אינדקסים היא Array.",
+        "❌ true/false הם boolean, לא function.",
+      ],
+    },
+    {
+      id: "mc_l11_index_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::Index", level: 5,
+      question: "מה יודפס?\n\nconst colors = ['Red', 'Blue', 'Green'];\nconsole.log(colors[colors.length - 1]);",
+      options: ["Green", "Blue", "undefined", "Red"],
+      correctIndex: 0,
+      explanation: "colors.length הוא 3, ולכן length - 1 הוא 2. colors[2] הוא האיבר האחרון: Green.",
+      optionFeedback: [
+        "✅ נכון: האינדקס האחרון הוא תמיד length - 1.",
+        "❌ Blue נמצא באינדקס 1.",
+        "❌ undefined היה מתקבל עם colors[colors.length], כלומר אינדקס 3.",
+        "❌ Red נמצא באינדקס 0.",
+      ],
+    },
+    {
+      id: "mc_l11_map_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::map", level: 6,
+      question: "איזה משפט נכון לגבי map?",
+      options: [
+        "היא מחזירה מערך חדש באותו אורך אחרי טרנספורמציה של כל איבר",
+        "היא מוחקת מהמקור את האיברים שלא עברו תנאי",
+        "היא מתאימה רק להרצת console.log על כל איבר בלי לשמור תוצאה",
+        "היא מחזירה רק את האיבר הראשון שעומד בתנאי",
+      ],
+      correctIndex: 0,
+      explanation: "map מפעילה callback על כל איבר ומחזירה מערך חדש של תוצאות באותו סדר ואורך.",
+      optionFeedback: [
+        "✅ נכון: map היא מתודת projection שמייצרת מערך חדש מקביל.",
+        "❌ זה מתאר סינון, וגם filter לא מוחקת מהמקור.",
+        "❌ זה שימוש שמתאים יותר ל-forEach; map מיועדת לשמור מערך תוצאות.",
+        "❌ זה מתאר find.",
+      ],
     },
 
     // ===== Topic 5 — Objects =====
@@ -2452,6 +2520,41 @@ var QUESTIONS_BANK = {
       hint: "ערך ההחזרה של forEach כשהיא מסיימת לרוץ.",
       explanation: "forEach מריצה פעולה לכל איבר, אבל ערך ההחזרה שלה הוא undefined.",
     },
+    {
+      id: "fill_l11_index_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::Index", level: 3,
+      code: "const colors = ['Red', 'Blue', 'Green'];\nconst firstColor = ____;\nconsole.log(firstColor); // 'Red'",
+      answer: "colors[0]",
+      hint: "האיבר הראשון במערך נמצא באינדקס 0.",
+      explanation: "מערכים ב-JavaScript מתחילים מאינדקס 0, לכן colors[0] שולף את Red.",
+    },
+    {
+      id: "fill_l11_index_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::Index", level: 5,
+      code: "const colors = ['Red', 'Blue', 'Green'];\nconst lastColor = ____;\nconsole.log(lastColor); // 'Green'",
+      answer: "colors[colors.length - 1]",
+      hint: "האינדקס האחרון הוא תמיד length פחות 1.",
+      explanation: "colors.length הוא 3, אבל האינדקס האחרון הוא 2. הביטוי length - 1 שולף את האיבר האחרון בלי לנחש את האורך.",
+    },
+    {
+      id: "fill_l11_let_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::let", level: 3,
+      code: "____ score = 0;\nscore = score + 10;\nconsole.log(score); // 10",
+      answer: "let",
+      hint: "מילת מפתח למשתנה שאפשר לעדכן אחר כך.",
+      explanation: "let מאפשר להצהיר משתנה שניתן לשינוי בתוך ה-scope שלו.",
+    },
+    {
+      id: "fill_l11_let_manual_002", topicId: "topic_variables", conceptKey: "lesson_11::let", level: 5,
+      code: "let counter = 1;\n____;\nconsole.log(counter); // 2",
+      answer: "counter = counter + 1",
+      hint: "עדכן את המשתנה הקיים, בלי להצהיר עליו מחדש.",
+      explanation: "משתנה שהוגדר עם let ניתן להצבה מחדש, ולכן אפשר לעדכן את counter לערך חדש.",
+    },
+    {
+      id: "fill_l11_map_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::map", level: 4,
+      code: "const prices = [10, 20];\nconst withTax = prices.____(price => price + 5);\nconsole.log(withTax); // [15, 25]",
+      answer: "map",
+      hint: "מתודה שמחזירה מערך חדש באותו אורך אחרי שינוי כל איבר.",
+      explanation: "map מפעילה את ה-callback על כל מחיר ומחזירה מערך חדש עם התוצאות.",
+    },
 
     // ===== Functions =====
     {
@@ -2460,6 +2563,13 @@ var QUESTIONS_BANK = {
       answer: "return",
       hint: "מילת המפתח שמחזירה ערך מהפונקציה.",
       explanation: "ללא return הפונקציה מחזירה undefined.",
+    },
+    {
+      id: "fill_l11_function_manual_001", topicId: "topic_functions", conceptKey: "lesson_11::function", level: 4,
+      code: "function greet(name) {\n  return 'Hello ' + name;\n}\nconst message = ____;\nconsole.log(message); // 'Hello Tal'",
+      answer: "greet('Tal')",
+      hint: "קרא לפונקציה בשם שלה עם הערך Tal כארגומנט.",
+      explanation: "פונקציה רצה רק כשקוראים לה. הקריאה greet('Tal') מחזירה את המחרוזת שנשמרת ב-message.",
     },
 
     // ===== DOM =====

@@ -12,11 +12,11 @@
   "summary": {
     "readyForAuthoring": true,
     "totalConcepts": 568,
-    "gapConcepts": 535,
-    "mcGapCount": 534,
-    "fillGapCount": 529,
-    "strictMcDeficit": 1516,
-    "strictFillDeficit": 970,
+    "gapConcepts": 531,
+    "mcGapCount": 531,
+    "fillGapCount": 525,
+    "strictMcDeficit": 1512,
+    "strictFillDeficit": 964,
     "batches": 27,
     "missingPlannedKeys": 0
   },
@@ -30,74 +30,6 @@
       "sourceEvidenceStatus": "lesson-data-present",
       "status": "not-started",
       "items": [
-        {
-          "key": "lesson_11::function",
-          "lessonId": "lesson_11",
-          "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-          "conceptName": "function",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 1,
-          "mcDeficit": 2,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 11 - Arrays, Functions, and Scope",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_11::Index",
-          "lessonId": "lesson_11",
-          "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-          "conceptName": "Index",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 2,
-          "mcDeficit": 1,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 11 - Arrays, Functions, and Scope",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_11::let",
-          "lessonId": "lesson_11",
-          "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-          "conceptName": "let",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-fill",
-          "mcCurrent": 3,
-          "mcDeficit": 0,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 11 - Arrays, Functions, and Scope",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_11::map",
-          "lessonId": "lesson_11",
-          "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-          "conceptName": "map",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 2,
-          "mcDeficit": 1,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 11 - Arrays, Functions, and Scope",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
         {
           "key": "lesson_11::number",
           "lessonId": "lesson_11",
@@ -454,21 +386,7 @@
           "sourceEvidence": "שיעור 12 - תרגול מתודות מערך",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        }
-      ],
-      "conceptCount": 25,
-      "mcDeficit": 62,
-      "fillDeficit": 39
-    },
-    {
-      "id": "QMAN-002",
-      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-      "priority": "P0-manual-mc-fill",
-      "owner": "unknown/unavailable",
-      "reviewer": "unknown/unavailable",
-      "sourceEvidenceStatus": "lesson-data-present",
-      "status": "not-started",
-      "items": [
+        },
         {
           "key": "lesson_12::map",
           "lessonId": "lesson_12",
@@ -536,7 +454,21 @@
           "sourceEvidence": "שיעור 12 - תרגול מתודות מערך",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        },
+        }
+      ],
+      "conceptCount": 25,
+      "mcDeficit": 70,
+      "fillDeficit": 41
+    },
+    {
+      "id": "QMAN-002",
+      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "priority": "P0-manual-mc-fill",
+      "owner": "unknown/unavailable",
+      "reviewer": "unknown/unavailable",
+      "sourceEvidenceStatus": "lesson-data-present",
+      "status": "not-started",
+      "items": [
         {
           "key": "lesson_12::יצירת מערך חדש מתוך קיים",
           "lessonId": "lesson_12",
@@ -893,21 +825,7 @@
           "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        }
-      ],
-      "conceptCount": 25,
-      "mcDeficit": 69,
-      "fillDeficit": 40
-    },
-    {
-      "id": "QMAN-003",
-      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-      "priority": "P0-manual-mc-fill",
-      "owner": "unknown/unavailable",
-      "reviewer": "unknown/unavailable",
-      "sourceEvidenceStatus": "lesson-data-present",
-      "status": "not-started",
-      "items": [
+        },
         {
           "key": "lesson_13::Method",
           "lessonId": "lesson_13",
@@ -975,7 +893,21 @@
           "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        },
+        }
+      ],
+      "conceptCount": 25,
+      "mcDeficit": 67,
+      "fillDeficit": 39
+    },
+    {
+      "id": "QMAN-003",
+      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "priority": "P0-manual-mc-fill",
+      "owner": "unknown/unavailable",
+      "reviewer": "unknown/unavailable",
+      "sourceEvidenceStatus": "lesson-data-present",
+      "status": "not-started",
+      "items": [
         {
           "key": "lesson_13::querySelector",
           "lessonId": "lesson_13",
@@ -1147,9 +1079,9 @@
           "manualReviewDate": "unknown/unavailable"
         }
       ],
-      "conceptCount": 14,
-      "mcDeficit": 38,
-      "fillDeficit": 26
+      "conceptCount": 10,
+      "mcDeficit": 28,
+      "fillDeficit": 19
     },
     {
       "id": "QMAN-004",
