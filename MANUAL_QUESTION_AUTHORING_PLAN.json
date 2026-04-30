@@ -12,218 +12,17 @@
   "summary": {
     "readyForAuthoring": true,
     "totalConcepts": 568,
-    "gapConcepts": 553,
-    "mcGapCount": 552,
-    "fillGapCount": 546,
-    "strictMcDeficit": 1554,
-    "strictFillDeficit": 995,
-    "batches": 28,
+    "gapConcepts": 542,
+    "mcGapCount": 541,
+    "fillGapCount": 536,
+    "strictMcDeficit": 1532,
+    "strictFillDeficit": 981,
+    "batches": 27,
     "missingPlannedKeys": 0
   },
   "batches": [
     {
       "id": "QMAN-001",
-      "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-      "priority": "P0-manual-mc-fill",
-      "owner": "unknown/unavailable",
-      "reviewer": "unknown/unavailable",
-      "sourceEvidenceStatus": "lesson-data-present",
-      "status": "not-started",
-      "items": [
-        {
-          "key": "lesson_25::search",
-          "lessonId": "lesson_25",
-          "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-          "conceptName": "search",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_25::Tailwind installation",
-          "lessonId": "lesson_25",
-          "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-          "conceptName": "Tailwind installation",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_25::validation",
-          "lessonId": "lesson_25",
-          "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-          "conceptName": "validation",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_html_css_foundations::accessibility basics",
-          "lessonId": "lesson_html_css_foundations",
-          "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "conceptName": "accessibility basics",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 1,
-          "mcDeficit": 2,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_html_css_foundations::box model",
-          "lessonId": "lesson_html_css_foundations",
-          "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "conceptName": "box model",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 2,
-          "mcDeficit": 1,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_html_css_foundations::cascade and specificity",
-          "lessonId": "lesson_html_css_foundations",
-          "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "conceptName": "cascade and specificity",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 2,
-          "mcDeficit": 1,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_html_css_foundations::CSS selector",
-          "lessonId": "lesson_html_css_foundations",
-          "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "conceptName": "CSS selector",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 2,
-          "mcDeficit": 1,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_html_css_foundations::HTML document",
-          "lessonId": "lesson_html_css_foundations",
-          "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "conceptName": "HTML document",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 1,
-          "mcDeficit": 2,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_html_css_foundations::HTML form",
-          "lessonId": "lesson_html_css_foundations",
-          "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "conceptName": "HTML form",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc",
-          "mcCurrent": 1,
-          "mcDeficit": 2,
-          "fillCurrent": 0,
-          "fillDeficit": 0,
-          "requiresFill": false,
-          "sourceEvidence": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_html_css_foundations::label",
-          "lessonId": "lesson_html_css_foundations",
-          "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "conceptName": "label",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 1,
-          "mcDeficit": 2,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_html_css_foundations::semantic HTML",
-          "lessonId": "lesson_html_css_foundations",
-          "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "conceptName": "semantic HTML",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 1,
-          "mcDeficit": 2,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        }
-      ],
-      "conceptCount": 11,
-      "mcDeficit": 22,
-      "fillDeficit": 14
-    },
-    {
-      "id": "QMAN-002",
       "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -662,7 +461,7 @@
       "fillDeficit": 37
     },
     {
-      "id": "QMAN-003",
+      "id": "QMAN-002",
       "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -1101,7 +900,7 @@
       "fillDeficit": 42
     },
     {
-      "id": "QMAN-004",
+      "id": "QMAN-003",
       "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -1472,7 +1271,7 @@
       "fillDeficit": 37
     },
     {
-      "id": "QMAN-005",
+      "id": "QMAN-004",
       "moduleTitle": "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -1911,7 +1710,7 @@
       "fillDeficit": 40
     },
     {
-      "id": "QMAN-006",
+      "id": "QMAN-005",
       "moduleTitle": "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
       "priority": "P0-manual-mc",
       "owner": "unknown/unavailable",
@@ -2163,7 +1962,7 @@
       "fillDeficit": 22
     },
     {
-      "id": "QMAN-007",
+      "id": "QMAN-006",
       "moduleTitle": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -2602,7 +2401,7 @@
       "fillDeficit": 48
     },
     {
-      "id": "QMAN-008",
+      "id": "QMAN-007",
       "moduleTitle": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -3041,7 +2840,7 @@
       "fillDeficit": 47
     },
     {
-      "id": "QMAN-009",
+      "id": "QMAN-008",
       "moduleTitle": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -3480,7 +3279,7 @@
       "fillDeficit": 50
     },
     {
-      "id": "QMAN-010",
+      "id": "QMAN-009",
       "moduleTitle": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -3528,7 +3327,7 @@
       "fillDeficit": 4
     },
     {
-      "id": "QMAN-011",
+      "id": "QMAN-010",
       "moduleTitle": "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -3967,7 +3766,7 @@
       "fillDeficit": 44
     },
     {
-      "id": "QMAN-012",
+      "id": "QMAN-011",
       "moduleTitle": "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -4355,7 +4154,7 @@
       "fillDeficit": 39
     },
     {
-      "id": "QMAN-013",
+      "id": "QMAN-012",
       "moduleTitle": "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -4692,7 +4491,7 @@
       "fillDeficit": 32
     },
     {
-      "id": "QMAN-014",
+      "id": "QMAN-013",
       "moduleTitle": "React ופיתוח Frontend מתקדם",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -5131,7 +4930,7 @@
       "fillDeficit": 47
     },
     {
-      "id": "QMAN-015",
+      "id": "QMAN-014",
       "moduleTitle": "React ופיתוח Frontend מתקדם",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -5570,7 +5369,7 @@
       "fillDeficit": 46
     },
     {
-      "id": "QMAN-016",
+      "id": "QMAN-015",
       "moduleTitle": "React ופיתוח Frontend מתקדם",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -6009,7 +5808,7 @@
       "fillDeficit": 48
     },
     {
-      "id": "QMAN-017",
+      "id": "QMAN-016",
       "moduleTitle": "React ופיתוח Frontend מתקדם",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -6074,7 +5873,7 @@
       "fillDeficit": 4
     },
     {
-      "id": "QMAN-018",
+      "id": "QMAN-017",
       "moduleTitle": "TypeScript ופטרנים מתקדמים ב-React",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -6513,7 +6312,7 @@
       "fillDeficit": 46
     },
     {
-      "id": "QMAN-019",
+      "id": "QMAN-018",
       "moduleTitle": "TypeScript ופטרנים מתקדמים ב-React",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -6952,7 +6751,7 @@
       "fillDeficit": 50
     },
     {
-      "id": "QMAN-020",
+      "id": "QMAN-019",
       "moduleTitle": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -7187,7 +6986,7 @@
       "fillDeficit": 21
     },
     {
-      "id": "QMAN-021",
+      "id": "QMAN-020",
       "moduleTitle": "פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -7507,7 +7306,7 @@
       "fillDeficit": 31
     },
     {
-      "id": "QMAN-022",
+      "id": "QMAN-021",
       "moduleTitle": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -7810,7 +7609,7 @@
       "fillDeficit": 29
     },
     {
-      "id": "QMAN-023",
+      "id": "QMAN-022",
       "moduleTitle": "Frameworks צד-שרת — Nest.js modules + dependency injection",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -8096,7 +7895,7 @@
       "fillDeficit": 28
     },
     {
-      "id": "QMAN-024",
+      "id": "QMAN-023",
       "moduleTitle": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -8246,7 +8045,7 @@
       "fillDeficit": 16
     },
     {
-      "id": "QMAN-025",
+      "id": "QMAN-024",
       "moduleTitle": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -8583,7 +8382,7 @@
       "fillDeficit": 34
     },
     {
-      "id": "QMAN-026",
+      "id": "QMAN-025",
       "moduleTitle": "Unmapped / deferred",
       "priority": "P2-deferred",
       "owner": "unknown/unavailable",
@@ -9022,7 +8821,7 @@
       "fillDeficit": 49
     },
     {
-      "id": "QMAN-027",
+      "id": "QMAN-026",
       "moduleTitle": "Unmapped / deferred",
       "priority": "P2-deferred",
       "owner": "unknown/unavailable",
@@ -9461,7 +9260,7 @@
       "fillDeficit": 50
     },
     {
-      "id": "QMAN-028",
+      "id": "QMAN-027",
       "moduleTitle": "Unmapped / deferred",
       "priority": "P2-deferred",
       "owner": "unknown/unavailable",

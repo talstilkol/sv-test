@@ -16,6 +16,86 @@
 // Where missing, trainer falls back to question.explanation.
 
 var OPTION_FEEDBACK = {
+  // ============== HTML / CSS Foundations ==============
+  mc_html_css_doc_002: [
+    "✅ נכון. head מכיל metadata כמו title, meta וקישורי משאבים.",
+    "❌ body מכיל את התוכן שהמשתמש רואה, לא את metadata של הדף.",
+    "❌ main הוא landmark לתוכן המרכזי בתוך body.",
+    "❌ footer הוא אזור סיום/מידע תחתון, לא מקום ל-meta title.",
+  ],
+  mc_html_css_doc_003: [
+    "✅ נכון. lang ו-dir עוזרים לדפדפן ולקורא מסך להבין עברית וכיוון RTL.",
+    "❌ grid מופעל דרך CSS, לא דרך lang או dir.",
+    "❌ localStorage אינו קשור להגדרות שפה וכיוון במסמך.",
+    "❌ CSS selectors לא מוחלפים על ידי מאפייני html.",
+  ],
+  mc_html_css_semantic_003: [
+    "✅ נכון. header/main/footer נותנים מבנה סמנטי ברור לעמוד.",
+    "❌ div בלבד יכול להיראות תקין, אבל לא מוסיף תפקידים סמנטיים.",
+    "❌ span מיועד בעיקר לטקסט inline, לא למבנה עמוד ותפריטים.",
+    "❌ style מיועד ל-CSS, לא לעטיפת תוכן סמנטי.",
+  ],
+  mc_html_css_semantic_004: [
+    "✅ נכון. nav ו-main כבר חושפים תפקידי ניווט ותוכן מרכזי לכלי נגישות.",
+    "❌ ARIA אינו מייצר CSS; הוא מוסיף מידע נגישותי.",
+    "❌ div לא מקבל landmark אוטומטי רק כי הוא עטוף בדף.",
+    "❌ semantic HTML לא מבטל צורך בתפעול מקלדת תקין.",
+  ],
+  mc_html_css_form_004: [
+    "✅ נכון. button type=\"submit\" בתוך form מפעיל שליחת טופס טבעית.",
+    "❌ button type=\"button\" לא שולח form בלי handler מפורש.",
+    "❌ div אינו כפתור סמנטי ולא מפעיל submit בלי JavaScript ונגישות ידנית.",
+    "❌ input בשם כזה לא מפעיל שליחה; name רק מגדיר מפתח נתון.",
+  ],
+  mc_html_css_form_005: [
+    "✅ נכון. label, id/name/type=email ו-required יוצרים שדה תקין וברור.",
+    "❌ input בלי name לא שולח מפתח ברור, ובלי label הוא פחות נגיש.",
+    "❌ placeholder הוא רמז זמני ואינו תחליף ל-label.",
+    "❌ contenteditable אינו מחליף input סמנטי לשדה אימייל בטופס.",
+  ],
+  mc_html_css_label_002: [
+    "✅ נכון. placeholder הוא רמז זמני; label נותן שם יציב ונגיש לשדה.",
+    "❌ name הוא המפתח שנשלח לשרת; placeholder לא עושה זאת.",
+    "❌ cascade שייך לבחירת כלל CSS מנצח, לא לתוויות שדה.",
+    "❌ id של input נשאר מאפיין נפרד; placeholder לא מחליף אותו.",
+  ],
+  mc_html_css_label_003: [
+    "✅ נכון. for של label צריך להתאים ל-id של input.",
+    "❌ name נשלח לשרת; class של form לא מחבר label לשדה.",
+    "❌ placeholder ו-action לא יוצרים קשר נגיש בין label ל-input.",
+    "❌ type ו-method שייכים לסוג שדה ושליחת form, לא לחיבור label.",
+  ],
+  mc_html_css_selector_003: [
+    "✅ נכון. .card יציב יותר כי הוא לא תלוי בכל שרשרת ה-nesting.",
+    "❌ CSS כן תומך ב-selectors עמוקים, אבל הם שבירים יותר.",
+    "❌ class selector הוא כלל CSS; הוא לא שולח request לשרת.",
+    "❌ selector קצר לא מוחק specificity, הוא רק שומר אותה נמוכה וברורה יותר.",
+  ],
+  mc_html_css_cascade_003: [
+    "✅ נכון. בודקים specificity, סדר הופעה ו-selector לפני שמוסיפים !important.",
+    "❌ יופי צבע אינו מסביר למה כלל CSS מפסיד.",
+    "❌ החלפת כל ה-HTML ב-div פוגעת בסמנטיקה ולא פותרת cascade נכון.",
+    "❌ npm install לא מסדר סדר הופעה או specificity של CSS.",
+  ],
+  mc_html_css_box_004: [
+    "✅ נכון. margin הוא הרווח החיצוני מחוץ ל-border.",
+    "❌ content הוא האזור הפנימי שבו נמצא התוכן עצמו.",
+    "❌ הרווח בין content ל-border הוא padding.",
+    "❌ selector בוחר אלמנטים; הוא לא חלק מה-box model.",
+  ],
+  mc_html_css_a11y_002: [
+    "✅ נכון. קודם משתמשים ב-HTML סמנטי ו-labels; ARIA משלים רק כשצריך.",
+    "❌ ARIA לא מצדיק מחיקת labels מטפסים.",
+    "❌ ARIA אינו כלי צבע של Tailwind.",
+    "❌ פוקוס מקלדת נשאר דרישת נגישות בסיסית.",
+  ],
+  mc_html_css_a11y_003: [
+    "✅ נכון. כפתור אייקון צריך שם נגיש, והאייקון עצמו יכול להיות aria-hidden.",
+    "❌ צבע רקע לא נותן לקורא מסך שם לכפתור.",
+    "❌ placeholder שייך לשדות קלט, לא לשם נגיש של כפתור.",
+    "❌ display:grid לא מספק שם נגיש או תפקיד נכון.",
+  ],
+
   // ============== Variables / Let / Const ==============
   mc_var_001: [
     "❌ 5 הוא הערך ההתחלתי — אבל השורה x = 8 מעדכנת את הערך, ואחר-כך console.log רץ.",
@@ -577,6 +657,60 @@ var OPTION_FEEDBACK = {
     "❌ rounded שייך ל-border-radius, לא לצבע או padding.",
     "❌ React Router לא משפיע על border-radius.",
     "❌ rounded-t-lg מעגל רק את הפינות העליונות; לא את כל ארבע הפינות.",
+  ],
+  mc_l25_search_001: [
+    "✅ נכון. search מסנן את רשימת הסרטים לפי query שהמשתמש מקליד.",
+    "❌ צבע רקע שייך ל-bg color, לא לפונקציית חיפוש.",
+    "❌ התקנת Tailwind היא setup של הפרויקט, לא חיפוש בתוך רשימה.",
+    "❌ Link שייך לניווט; search מסנן נתונים מוצגים.",
+  ],
+  mc_l25_search_002: [
+    "✅ נכון. toLowerCase בשני הצדדים ו-includes נותנים חיפוש שאינו תלוי באותיות גדולות/קטנות.",
+    "❌ map כאן משנה כותרות במקום להחזיר רשימה מסוננת.",
+    "❌ push מוסיף פריט למערך ואינו מחפש.",
+    "❌ השמה בתוך תנאי length אינה סינון תקין וגם לא בודקת התאמה לשם הסרט.",
+  ],
+  mc_l25_search_003: [
+    "✅ נכון. debounce/useMemo מפחיתים עבודה כשהסינון יקר או כשהחיפוש קורא API.",
+    "❌ ברשימה קטנה וקבועה אין בדרך כלל צורך באופטימיזציה כזו.",
+    "❌ debounce לא מחליף את הקשר בין input controlled ל-state.",
+    "❌ filter אמור להחזיר מערך חדש; mutation של המקור אינה מטרת החיפוש.",
+  ],
+  mc_l25_tailwind_install_001: [
+    "✅ נכון. מתחילים בהתקנת tailwindcss, postcss ו-autoprefixer כתלויות dev.",
+    "❌ main.jsx הוא entry חשוב; לא מוחקים אותו כחלק מההתקנה.",
+    "❌ className יעבוד רק אחרי שה-config וה-CSS מחוברים נכון.",
+    "❌ Tailwind מותקן בתוך פרויקט React/Vite; הוא לא מחליף את React.",
+  ],
+  mc_l25_tailwind_install_002: [
+    "✅ נכון. content אומר ל-Tailwind איפה לחפש classes כדי לבנות CSS רלוונטי.",
+    "❌ אסור לשמור סודות API בקובצי CSS או config ציבוריים.",
+    "❌ React Router אינו תלוי ב-content של Tailwind.",
+    "❌ content לא מוחק HTML; הוא מגדיר קבצים לסריקת class names.",
+  ],
+  mc_l25_tailwind_install_003: [
+    "✅ נכון. צריך config, directives ב-CSS, וייבוא ה-CSS ל-entry כדי שה-utilities יעבדו.",
+    "❌ README לא מפעיל את Tailwind בזמן build.",
+    "❌ localStorage לא מייצר CSS utilities.",
+    "❌ קובץ JSON ב-public לא מחבר את Tailwind ל-Vite.",
+  ],
+  mc_l25_validation_001: [
+    "✅ נכון. validation עוצרת קלט לא תקין לפני הוספה או שליחה.",
+    "❌ rounded הוא עיצוב פינות, לא בדיקת קלט.",
+    "❌ התקנת חבילות אינה חלק מבדיקת כל הקלדה בטופס.",
+    "❌ route שייך לניווט, לא לתקינות שדה.",
+  ],
+  mc_l25_validation_002: [
+    "✅ נכון. error ב-state ו-conditional rendering מציגים שגיאה רק כשצריך.",
+    "❌ הוספת פריט לא תקין ואז הסתרה לא מתקנת את הנתון.",
+    "❌ מחיקת כל הרשימה היא תגובה הרסנית ולא validation.",
+    "❌ className לבד לא שומר הודעת שגיאה או לוגיקת תקינות.",
+  ],
+  mc_l25_validation_003: [
+    "✅ נכון. בדיקות בדפדפן ניתנות לעקיפה, ולכן שרת אמיתי חייב לאמת שוב.",
+    "❌ React יכול להחזיק error state בלי בעיה.",
+    "❌ Tailwind לא קשור לבדיקות אורך או פורמט.",
+    "❌ controlled input עדיין יכול לשלוח form; validation קובעת אם לאפשר זאת.",
   ],
 
   // ============== SVCollege Release Blocker — AI Development Tools ==============

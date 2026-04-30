@@ -5,12 +5,12 @@ Date: 2026-04-30
 ## Summary
 
 - Ready for authoring: yes
-- Gap concepts: 553/568
-- MC gap concepts: 552
-- Fill gap concepts: 546
-- Strict MC questions still required: 1554
-- Strict Fill questions still required: 995
-- Batches: 28
+- Gap concepts: 542/568
+- MC gap concepts: 541
+- Fill gap concepts: 536
+- Strict MC questions still required: 1532
+- Strict Fill questions still required: 981
+- Batches: 27
 
 ## Policy
 
@@ -20,30 +20,7 @@ Date: 2026-04-30
 
 ## Batches
 
-### QMAN-001 — יסודות האינטרנט — HTML בסיסי + HTML/CSS
-
-- Status: not-started
-- Owner: unknown/unavailable
-- Reviewer: unknown/unavailable
-- Concepts: 11
-- MC deficit: 22
-- Fill deficit: 14
-
-| Concept key | Priority | MC deficit | Fill deficit | Review date |
-|---|---|---:|---:|---|
-| `lesson_25::search` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_25::Tailwind installation` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_25::validation` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_html_css_foundations::accessibility basics` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
-| `lesson_html_css_foundations::box model` | P0-manual-mc-fill | 1 | 1 | unknown/unavailable |
-| `lesson_html_css_foundations::cascade and specificity` | P0-manual-mc-fill | 1 | 2 | unknown/unavailable |
-| `lesson_html_css_foundations::CSS selector` | P0-manual-mc-fill | 1 | 1 | unknown/unavailable |
-| `lesson_html_css_foundations::HTML document` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
-| `lesson_html_css_foundations::HTML form` | P0-manual-mc | 2 | 0 | unknown/unavailable |
-| `lesson_html_css_foundations::label` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
-| `lesson_html_css_foundations::semantic HTML` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
-
-### QMAN-002 — JavaScript בסיסי ודינמיקה בדפדפן
+### QMAN-001 — JavaScript בסיסי ודינמיקה בדפדפן
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -80,7 +57,7 @@ Date: 2026-04-30
 | `lesson_11::toString` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_11::undefined` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
 
-### QMAN-003 — JavaScript בסיסי ודינמיקה בדפדפן
+### QMAN-002 — JavaScript בסיסי ודינמיקה בדפדפן
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -117,7 +94,7 @@ Date: 2026-04-30
 | `lesson_13::getElementById` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_13::getElementsByClassName` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-004 — JavaScript בסיסי ודינמיקה בדפדפן
+### QMAN-003 — JavaScript בסיסי ודינמיקה בדפדפן
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -150,7 +127,7 @@ Date: 2026-04-30
 | `lesson_13::super` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::Value` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-005 — JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier
+### QMAN-004 — JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -187,7 +164,7 @@ Date: 2026-04-30
 | `lesson_tooling_git::GitHub workflow` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
 | `lesson_tooling_git::npm scripts` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 
-### QMAN-006 — JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier
+### QMAN-005 — JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -213,7 +190,7 @@ Date: 2026-04-30
 | `react_blueprint::State Management` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `react_blueprint::Testing Strategies` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-007 — פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware
+### QMAN-006 — פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -250,7 +227,7 @@ Date: 2026-04-30
 | `lesson_16::package.json` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
 | `lesson_16::require` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-008 — פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware
+### QMAN-007 — פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -287,7 +264,7 @@ Date: 2026-04-30
 | `lesson_17::method` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_17::middleware` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
 
-### QMAN-009 — פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware
+### QMAN-008 — פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -324,7 +301,7 @@ Date: 2026-04-30
 | `lesson_18::server` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_18::server-side storage` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-010 — פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware
+### QMAN-009 — פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -338,7 +315,7 @@ Date: 2026-04-30
 | `lesson_18::username` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_18::validation` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-011 — בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle
+### QMAN-010 — בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -375,7 +352,7 @@ Date: 2026-04-30
 | `lesson_20::NoSQL` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_20::Props` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-012 — בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle
+### QMAN-011 — בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -409,7 +386,7 @@ Date: 2026-04-30
 | `lesson_sql_orm::table` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_sql_orm::transaction` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-013 — אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde
+### QMAN-012 — אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -440,7 +417,7 @@ Date: 2026-04-30
 | `lesson_auth_security::Supabase Auth` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_auth_security::XSS boundary` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-014 — React ופיתוח Frontend מתקדם
+### QMAN-013 — React ופיתוח Frontend מתקדם
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -477,7 +454,7 @@ Date: 2026-04-30
 | `lesson_22::addPost` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_22::array reference` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-015 — React ופיתוח Frontend מתקדם
+### QMAN-014 — React ופיתוח Frontend מתקדם
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -514,7 +491,7 @@ Date: 2026-04-30
 | `lesson_23::MainScreen` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_23::Path` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-016 — React ופיתוח Frontend מתקדם
+### QMAN-015 — React ופיתוח Frontend מתקדם
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -551,7 +528,7 @@ Date: 2026-04-30
 | `lesson_24::side effect` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_24::state update` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-017 — React ופיתוח Frontend מתקדם
+### QMAN-016 — React ופיתוח Frontend מתקדם
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -566,7 +543,7 @@ Date: 2026-04-30
 | `lesson_24::useMemo` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
 | `lesson_24::useRef` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 
-### QMAN-018 — TypeScript ופטרנים מתקדמים ב-React
+### QMAN-017 — TypeScript ופטרנים מתקדמים ב-React
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -603,7 +580,7 @@ Date: 2026-04-30
 | `lesson_26::type annotation` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_26::Type Safety` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-019 — TypeScript ופטרנים מתקדמים ב-React
+### QMAN-018 — TypeScript ופטרנים מתקדמים ב-React
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -640,7 +617,7 @@ Date: 2026-04-30
 | `lesson_27::Union Type` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_27::User` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-020 — מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI
+### QMAN-019 — מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -665,7 +642,7 @@ Date: 2026-04-30
 | `lesson_design_systems::theme tokens` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `react_blueprint::Component Architecture` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-021 — פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO
+### QMAN-020 — פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -695,7 +672,7 @@ Date: 2026-04-30
 | `lesson_nextjs::SSR` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_nextjs::Vercel deploy` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-022 — תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing
+### QMAN-021 — תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -724,7 +701,7 @@ Date: 2026-04-30
 | `lesson_devops_deploy::Vercel deploy` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_devops_deploy::volume` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-023 — Frameworks צד-שרת — Nest.js modules + dependency injection
+### QMAN-022 — Frameworks צד-שרת — Nest.js modules + dependency injection
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -752,7 +729,7 @@ Date: 2026-04-30
 | `lesson_nestjs::testing module` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_nestjs::validation pipe` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-024 — AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI
+### QMAN-023 — AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -772,7 +749,7 @@ Date: 2026-04-30
 | `ai_development::Copilot` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `ai_development::Hallucinations` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-025 — הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning
+### QMAN-024 — הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -803,7 +780,7 @@ Date: 2026-04-30
 | `lesson_ai_engineering::vector store` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_ai_engineering::Vercel AI SDK` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
-### QMAN-026 — Unmapped / deferred
+### QMAN-025 — Unmapped / deferred
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -840,7 +817,7 @@ Date: 2026-04-30
 | `lesson_19::find` | P2-deferred | 3 | 2 | unknown/unavailable |
 | `lesson_19::for` | P2-deferred | 3 | 2 | unknown/unavailable |
 
-### QMAN-027 — Unmapped / deferred
+### QMAN-026 — Unmapped / deferred
 
 - Status: not-started
 - Owner: unknown/unavailable
@@ -877,7 +854,7 @@ Date: 2026-04-30
 | `lesson_19::var` | P2-deferred | 3 | 2 | unknown/unavailable |
 | `lesson_19::while` | P2-deferred | 3 | 2 | unknown/unavailable |
 
-### QMAN-028 — Unmapped / deferred
+### QMAN-027 — Unmapped / deferred
 
 - Status: not-started
 - Owner: unknown/unavailable

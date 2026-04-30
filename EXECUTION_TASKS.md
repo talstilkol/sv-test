@@ -32,9 +32,9 @@
 | שער | מצב חי |
 |---|---|
 | `finish-line:pre-release` | 17/18 עברו; חסום על `questions:coverage-targets:strict` |
-| `QUESTION_COVERAGE_TARGETS` | `mcGapCount: 552`, `fillGapCount: 546`, `ready:false` |
-| `MANUAL_QUESTION_AUTHORING_PLAN` | `1554` שאלות MC ידניות ו-`995` Fill ידניות עדיין נדרשות ליעד strict |
-| התקדמות כתיבה ידנית | QMAN-001 התחיל: `lesson_25::add/delete movie`, `lesson_25::bg color`, `lesson_25::navbar`, `lesson_25::padding`, `lesson_25::rating`, `lesson_25::rounded` קיבלו יחד `18` MC ו-`12` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
+| `QUESTION_COVERAGE_TARGETS` | `mcGapCount: 541`, `fillGapCount: 536`, `ready:false` |
+| `MANUAL_QUESTION_AUTHORING_PLAN` | `1532` שאלות MC ידניות ו-`981` Fill ידניות עדיין נדרשות ליעד strict |
+| התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה הושלמה ככיסוי authored: `40` MC ו-`26` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
 | `QUESTION_ACTIVITY_AUTHORING_PLAN` | `222` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
 
 ## משימות שנותרו לבצע — ראשונות
@@ -45,7 +45,7 @@
 
 ### 📊 סיכום התקדמות > Forward Execution Plan — 2026-04-30 > Gate סופי לסגירת Finish Line 1
 
-- [!] FWD-9.4 — `npm run questions:coverage-targets:strict` — חסום עד השלמת `1,554` MC ידניות ו-`995` Fill ידניות לפי [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md).
+- [!] FWD-9.4 — `npm run questions:coverage-targets:strict` — חסום עד השלמת `1,532` MC ידניות ו-`981` Fill ידניות לפי [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md).
 
 ## בעבודה / חלקיות (6)
 

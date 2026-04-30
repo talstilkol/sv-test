@@ -16,20 +16,20 @@
     "fillTargetPerCodeConcept": 2
   },
   "sourceMix": {
-    "curatedMC": 150,
+    "curatedMC": 172,
     "ignoredGeneratedMC": 0,
-    "curatedFill": 141,
+    "curatedFill": 155,
     "ignoredGeneratedFill": 0
   },
   "summary": {
     "totalConcepts": 568,
-    "mcReadyConcepts": 16,
-    "mcGapCount": 552,
+    "mcReadyConcepts": 27,
+    "mcGapCount": 541,
     "codeExampleConcepts": 568,
-    "fillReadyConcepts": 22,
-    "fillGapCount": 546,
-    "handCuratedMcPromotionBacklog": 552,
-    "handCuratedFillPromotionBacklog": 546,
+    "fillReadyConcepts": 32,
+    "fillGapCount": 536,
+    "handCuratedMcPromotionBacklog": 541,
+    "handCuratedFillPromotionBacklog": 536,
     "ready": false
   },
   "gaps": {
@@ -3023,33 +3023,6 @@
         }
       },
       {
-        "key": "lesson_25::Tailwind installation",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "Tailwind installation",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::search",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "search",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::validation",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "validation",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_26::TypeScript",
         "lessonTitle": "שיעור 26 — TypeScript + React+TS",
         "conceptName": "TypeScript",
@@ -4172,78 +4145,6 @@
         "mc": {
           "curated": 0,
           "total": 0
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::HTML document",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "HTML document",
-        "mc": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::semantic HTML",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "semantic HTML",
-        "mc": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::HTML form",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "HTML form",
-        "mc": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::label",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "label",
-        "mc": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::CSS selector",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "CSS selector",
-        "mc": {
-          "curated": 2,
-          "total": 2
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::cascade and specificity",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "cascade and specificity",
-        "mc": {
-          "curated": 2,
-          "total": 2
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::box model",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "box model",
-        "mc": {
-          "curated": 2,
-          "total": 2
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::accessibility basics",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "accessibility basics",
-        "mc": {
-          "curated": 1,
-          "total": 1
         }
       },
       {
@@ -7966,33 +7867,6 @@
         }
       },
       {
-        "key": "lesson_25::Tailwind installation",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "Tailwind installation",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::search",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "search",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::validation",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "validation",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_26::TypeScript",
         "lessonTitle": "שיעור 26 — TypeScript + React+TS",
         "conceptName": "TypeScript",
@@ -9106,69 +8980,6 @@
         "fill": {
           "curated": 0,
           "total": 0
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::HTML document",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "HTML document",
-        "fill": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::semantic HTML",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "semantic HTML",
-        "fill": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::label",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "label",
-        "fill": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::CSS selector",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "CSS selector",
-        "fill": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::cascade and specificity",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "cascade and specificity",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::box model",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "box model",
-        "fill": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_html_css_foundations::accessibility basics",
-        "lessonTitle": "HTML/CSS Foundations — יסודות HTML ו-CSS",
-        "conceptName": "accessibility basics",
-        "fill": {
-          "curated": 1,
-          "total": 1
         }
       },
       {
