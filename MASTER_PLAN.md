@@ -75,6 +75,12 @@
 | BUG-AUDIT-029 | [ ] | P1 | להוציא את `data/questions_bank_seeded.js` מהנתיב הפעיל לגמרי: להשאיר כארכיון legacy או למחוק אחרי שהפריטים השימושיים נכתבו מחדש ידנית. |
 | BUG-AUDIT-030 | [ ] | P1 | להוסיף gate שמוודא שאין פונקציות runtime מסוג `generatedMC`, `makeCodeFill`, `ensureSeededBank` או סקריפטי seed פעילים לפני release. |
 | BUG-AUDIT-031 | [ ] | P0 | לכתוב ולסקור ידנית שאלות Trainer/Mock Exam ל-`עיצוב רספונסיבי ו-CSS מתקדם` ול-`AI למפתחים` עד ש-`svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict` ו-`exam:mock-variants:strict` ירוקים בלי generated bank. |
+| BUG-AUDIT-032 | [ ] | P1 | לבצע reconciliation קבוע לדוחות ישנים מול live gates: דוח Kimi 2.6 הראה שחלק מ-`AUDIT_2026` מיושן אחרי Vite/PWA/a11y/theme/tests, ולכן אין לסמן בעיה כפתוחה בלי פקודת אימות עדכנית. |
+| BUG-AUDIT-033 | [ ] | P1 | לסמן דוחות audit ישנים כ-`historical/superseded` או להוסיף בראשם מצב עדכני, כדי שלא ימשיכו לספור `683` remediation issues או `0 tests` אחרי שהשערים החיים אומרים אחרת. |
+| BUG-AUDIT-034 | [ ] | P1 | לתקן תאריכי generated reports שנתקעים על `2026-04-28`; כל דוח שנכתב מחדש חייב לשקף run date/version אמיתיים או metadata שמצהיר שהוא historical. |
+| BUG-AUDIT-035 | [ ] | P1 | להוסיף source-of-truth report שמפריד בין Feature Coverage, Manual Question Coverage, SVCollege Release Readiness, Activity Coverage ו-Historical Audit כדי למנוע סתירות בין דוחות. |
+| BUG-AUDIT-036 | [ ] | P2 | להוסיף SEO backlog לא חוסם אחרי Finish Line 1: OG tags, JSON-LD, canonical/social metadata ובדיקת preview, בלי לעכב את הכנת המבחן. |
+| BUG-AUDIT-037 | [ ] | P2 | להחליט telemetry אמיתי: Bug Agent local-only נשאר ברירת מחדל; Sentry/Plausible/analytics רק עם חשבון אמיתי, privacy notice, PII policy ואישור מפורש. |
 
 ---
 
@@ -446,6 +452,50 @@ Output as a JS object matching the bank schema.
 6. **P2 — Simulators:** להוסיף סימולטור קטן ודטרמיניסטי לכל שכבה.
 7. **P2 — Polish:** בדיקות מובייל, RTL, reduced motion וצילומי מסך.
 8. **P2 — Release:** לעדכן גרסה, changelog, ולסגור בדיקות.
+
+### 11.14 עדכון מוזיאון — מסמכי 2026-04-30 ורעיונות נוספים
+
+מקורות שהוטמעו ברשימת המשימות: `/Users/tal/Desktop/חומרים לשיעור/museum-missing-materials-detailed-fa0e5d.md`, `/Users/tal/Desktop/חומרים לשיעור/museum-expansion-recommendations-fa0e5d.md`, `/Users/tal/.windsurf/plans/museum-remaining-wings-improvements-fa0e5d.md`. הפירוט התפעולי נמצא ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md) תחת `P2 — Museum Expansion Backlog from 2026-04-30 review`.
+
+כללי ביצוע מחייבים:
+
+1. לא מתחילים מוזיאון לפני ש-Finish Line 1 ירוק.
+2. כל שאלה, בדיקת צפייה, טענה היסטורית וחומר לימוד במוזיאון נכתבים ידנית ועוברים QA ידני.
+3. אין generator, אין seeded fallback, אין נתוני דמו, אין placeholders ואין `Math.random()`.
+4. טיפים/המלצות/אתגרים יומיים יהיו דטרמיניסטיים לפי התקדמות התלמיד, לא אקראיים.
+5. XP/coins הם תגמול למידה מקומי בלבד; הם לא כסף אמיתי, לא קיצור לציון ולא מחליפים mastery.
+6. כל אגף מתקדם חייב dependency graph: XP נדרש + מושגי יסוד שחייבים להכיר לפני פתיחה.
+7. כל "ראשון", תאריך, התפתחות טכנולוגית או טענה היסטורית מקבלים מקור או `unknown/unavailable`.
+
+Backlog שהועלה ל-`EXECUTION_TASKS.md`:
+
+| תחום | מה נוסף |
+|---|---|
+| שער המוזיאון | מפה אינטראקטיבית, מסלולים מומלצים, dashboard התקדמות, חיפוש, tip queue דטרמיניסטי |
+| XP וגישה | טאבים לכל מוזיאון, דמי כניסה ראשוניים, דמי אגף נוספים, פתיחה לפי XP + mastery |
+| שכבות המחשב | מתג חשמלי, שערים לוגיים, ממיר ביטים, טיפוסים, X-Ray פקודה, קוד עד CPU, חדר פשרות |
+| שפות תכנות | כרטיסי שושלות מלאים, חדר פשרות, השוואות ישירות, מסלול משפה למוצר |
+| Full-Stack | אולמות עומק ל-UI, Browser, Async, Node, API, DB, React, Quality/Tests/AI Review |
+| מוצר | תבניות לפני/בזמן/לפני השקה/אחרי השקה, rollout, telemetry וסימולטור מוצר |
+| טעויות ו-Debug | סימני זיהוי לכל סוג טעות ו-Root Cause Simulator |
+| חוזים ונתונים | חוזי function/component/API/DB/validation, בעלות חוזים, מסלול נתון מלא, Contract Breaker |
+| AI | RAG, LLM internals, AI feature, סיכונים, סוגי מודלים ודוגמאות מהקורס |
+| אגפים חדשים | DevOps, Security, Performance, Design Systems |
+| Video Studio | QA ל-63 סרטונים, מסלולי צפייה, שאלות צפייה ידניות, הערות, המלצות וסטטיסטיקות מקומיות |
+| דרכון תלמיד | חותמות, מסלולים, גלריה, תעודות, מצב לפני מבחן ואתגרים דטרמיניסטיים |
+| קישורים | כל אולם מחובר לשיעור, שאלה, סרטון, תרגול, דרכון ושורש טעות |
+| QA | RTL, מובייל, keyboard-only, reduced motion, visual smoke, data-shape tests, build/test gates |
+
+רעיונות נוספים שנוספו לתוכנית:
+
+1. **מסלול טעות למוזיאון:** תשובה שגויה בשיעור מפנה לאולם שמסביר את שורש הבלבול.
+2. **Museum Minimal Mode:** מצב קריאה חסכוני עם breadcrumb, מושג, מקור וקישור חזרה לשיעור.
+3. **Evidence Drawer:** פאנל מקורות לכל אולם עם תאריך בדיקה, סוג מקור ורמת ודאות.
+4. **Dependency Unlock Graph:** גרף שמראה אילו מושגי יסוד ו-XP פותחים כל אגף מתקדם.
+5. **Teacher Museum Trail:** מסלול שמורה יכול להקצות לפי חולשה אמיתית של תלמיד.
+6. **Offline Expedition Pack:** חבילת מוזיאון אופליין למסלול אחד עם תרשימים, סרטונים ושאלות ידניות בלבד.
+7. **Before/After Debug Wall:** קיר באגים שמראה סימפטום, contract שנשבר, תיקון ובדיקה.
+8. **Source Freshness Review:** תור סקירה לטענות טכניות/היסטוריות שעלולות להתיישן.
 
 ---
 

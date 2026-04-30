@@ -92,6 +92,46 @@
 
 רענון אודיט שלישי באותו יום לפני ניתוק הבנק האוטומטי הראה runtime/smoke ירוקים. לאחר ניתוק ידני בלבד, השערים `critical-flows`, `full-portal-smoke` ו-`console-gate` כבר אינם ירוקים כי הם תלויים בכיסוי Trainer/Mock Exam ידני לשני המודולים החסרים. זהו status drift מתועד, לא regression UI: אין להחזיר את ה-seeded bank כדי להפוך אותם לירוקים.
 
+### Kimi 2.6 Consolidated Issues Reconciliation — 2026-04-30
+
+נבדק דוח `LumenPortal — רשימת כל הבעיות המאוגדת` מול הקוד והשערים החיים. הדוח שימושי כ-checklist, אבל אינו מקור אמת לבד: חלק גדול ממנו נכתב מול `AUDIT_2026` הישן וכבר נסגר או השתנה בעקבות Vite, PWA, accessibility smoke, theme, feature gates ומדיניות שאלות ידניות בלבד.
+
+ממצאים חיים מהריצה הנוכחית:
+
+- `npm run svcollege:pwa-offline:strict` עבר: `181/181` assets, `13/13` strategy checks.
+- `npm run svcollege:accessibility:strict` עבר: `7/7` checks, `23` top tabs.
+- `npm run performance:budget:strict` עבר: `8/8` checks.
+- `npm run coverage:features:strict` עבר: `24/24` modules, כולל anti-patterns `22/22`, war stories `31/30`, mini builds `23/21`, code trace `89/85`, metaphors `250/250`, stage-zero `8/8`, real-object aids `50/50`.
+- `npm run quality:remediation:strict` עבר: `0` queued issues; `QUESTION_REMEDIATION_QUEUE.md/json` עודכן ל-`0`.
+- `npm run questions:coverage-targets:strict` נכשל בכוונה לפי מדיניות ידנית בלבד: `567` MC gaps, `561` Fill gaps.
+- `npm run svcollege:readiness:release` נכשל: `2` release blockers — `עיצוב רספונסיבי ו-CSS מתקדם`, `AI למפתחים`.
+- חיפוש `Math.random()` בקוד הפעיל נשאר ללא התאמות.
+
+סיווג מהיר:
+
+- `C1/C2` Reverse Q&A / ELI5 — לא לפתוח מחדש; יש `levelText(...)` ו-tests ל-variant rendering.
+- `I1/I2` build tool / monolith — Vite קיים, אבל פירוק `app.js` ו-code-splitting עדיין פתוחים ב-`FWD-8.1`, `FWD-8.2`, `BUG-AUDIT-005`, `BUG-AUDIT-022`.
+- `I3` a11y אפס — מיושן; יש aria labels ו-gate ירוק. נשארה משימת keyboard-only עמוקה ב-`FWD-5.3`, `BUG-AUDIT-004`.
+- `I4` PWA לא קיים — מיושן; gate ירוק.
+- `I5/I6` performance/mobile — לא חסימה נוכחית לפי gates, אבל visual/mobile smoke נשארים חובה אחרי כל שינוי UI.
+- `I7` Analytics/Error tracking — לא לפתוח Sentry/Plausible בלי החלטת פרטיות וחשבון אמיתי; כרגע יש Bug Agent מקומי וצריך export deterministic ב-`BUG-AUDIT-009`.
+- `I8` SEO — meta description קיים; OG/JSON-LD נשארים P2 בלבד ולא חוסמים Exam Edition.
+- `I9` dark-only theme — מיושן; יש light/system + `prefers-color-scheme`.
+- `I10` אין בדיקות — מיושן; קיימים Vitest וגייטים רבים. נשארה בעיית אמינות דוחות היסטוריים, לא "0 tests".
+- `T1-T6` content inflation הישן — מיושן לפי `coverage:features:strict`, אבל אסור להשתמש בזה כדי לעקוף את השער הידני של שאלות.
+- `T7-T34`, `D`, `Q`, `M` — הרבה כבר נסגרו או נדחו; כל AI-generated personalized work חסום עד מדיניות ידנית/פרטיות, ולא יוצר שאלות אוטומטיות.
+- `683 remediation issues` — מיושן כארטיפקט; report regenerated to `0`. הבעיה האמיתית עכשיו היא `questions:coverage-targets:strict` ולא remediation queue.
+
+משימות שנוספו/חודדו בעקבות הדוח:
+
+- [ ] KIMI-AUDIT-1 — להוסיף לדוחות ישנים banner `historical / superseded` כדי ש-AUDIT_2026 לא ייראה כמו מצב production נוכחי.
+- [ ] KIMI-AUDIT-2 — לתקן scripts של דוחות generated כך שהתאריך/גרסת הדוח לא יישארו תקועים על `2026-04-28` אחרי ריצה חדשה.
+- [ ] KIMI-AUDIT-3 — להוסיף `report:source-of-truth` שמסכם live gates מול historic audit ומונע סתירות כמו `FEATURE_COVERAGE 100%` מול `questions:coverage-targets red`.
+- [ ] KIMI-AUDIT-4 — להוסיף SEO backlog לא חוסם: OG tags, JSON-LD, canonical/meta social only after Finish Line 1.
+- [ ] KIMI-AUDIT-5 — להגדיר החלטת telemetry אמיתית: local-only Bug Agent עכשיו; Sentry/Plausible רק עם חשבון אמיתי, privacy notice ו-PII policy.
+- [ ] KIMI-AUDIT-6 — לעדכן את `SYSTEM_BUG_AUDIT_REPORT.md` עם reconciliation הזה בריצה הבאה.
+- [ ] KIMI-AUDIT-7 — אם Kimi/סוכן אחר ממשיך, עליו להריץ live gates לפני סימון בעיה כפתוחה; אין להסתמך על AUDIT ישן בלי אימות.
+
 ### Forward Execution Plan — 2026-04-30
 
 מקור אמת קדימה: שאלות וחומר לימוד נוצרים ידנית בלבד, עוברים QA ידני, ורק אז נכנסים ל-`data/questions_bank.js` או לקבצי פעילות אמיתיים. אין generator, אין seeded fallback, אין נתוני pilot/pricing/usage מומצאים, ואין `Math.random()`.
@@ -170,6 +210,109 @@
 - [ ] FWD-8.3 — להמשיך Sync מול Supabase אמיתי: auth, conflict handling, recovery, export/import.
 - [ ] FWD-8.4 — להמשיך מוזיאון/חנות/קהילה רק אם חומר חובה למבחן לא נחסם, ורק אחרי gates ירוקים.
 - [ ] FWD-8.5 — כל pricing/usage/post-exam premium נשאר `unknown/unavailable` עד שיש ראיות אמת.
+
+#### P2 — Museum Expansion Backlog from 2026-04-30 review
+
+מקורות: `/Users/tal/Desktop/חומרים לשיעור/museum-missing-materials-detailed-fa0e5d.md`, `/Users/tal/Desktop/חומרים לשיעור/museum-expansion-recommendations-fa0e5d.md`, `/Users/tal/.windsurf/plans/museum-remaining-wings-improvements-fa0e5d.md`. הרשימה הזו לא פותחת עבודה לפני Finish Line 1. כל שאלה, בדיקת צפייה, טענה היסטורית או חומר לימוד חייבים להיכתב ידנית ולעבור QA ידני; אין generators, אין seeded fallback, אין `Math.random()`.
+
+- [ ] MUSEUM-FWD-0.1 — להגדיר source-of-truth חדש לנתוני מוזיאון מחוץ ל-`app.js`: schema לאגף, אולם, מוצג, מקור, תלות מושגים, מחיר XP/coins, דרכון, סרטון, בדיקת ידע ידנית.
+- [ ] MUSEUM-FWD-0.2 — להוסיף gate שמונע פרסום מוזיאון אם יש אולם עם טענה היסטורית/טכנית ללא source או `unknown/unavailable`.
+- [ ] MUSEUM-FWD-0.3 — להוסיף gate שמונע שימוש בכל שם/תיאור שמרמז על "random"; טיפים/המלצות יהיו תור דטרמיניסטי לפי מצב התקדמות ולא אקראיים.
+- [ ] MUSEUM-FWD-0.4 — להגדיר כלל UI: המוזיאון לא דוחף chrome כפול למסכי שיעור ולא מקטין את שטח התוכן של SVCollege.
+- [ ] MUSEUM-FWD-0.5 — להגדיר כלל מסחרי: XP/coins הם תגמול למידה מקומי בלבד, לא כסף אמיתי, לא shortcut לציון, ולא מחליפים mastery.
+
+- [ ] MUSEUM-FWD-1.1 — שער המוזיאון: לבנות מפה אינטראקטיבית של כל האגפים עם סטטוס פתוח/נעול, חיבורים בין אגפים וזום נגיש.
+- [ ] MUSEUM-FWD-1.2 — שער המוזיאון: להוסיף טאבים לכל מוזיאון/אגף עם דמי כניסה ראשוניים ב-XP/coins ודמי אגף נוספים, בלי לנעול חומר חובה למבחן.
+- [ ] MUSEUM-FWD-1.3 — שער המוזיאון: להוסיף מסלולים מומלצים ידניים: מתחילים, לפני מבחן, בניית מוצר, Debug, React/Full-Stack, AI במוצר.
+- [ ] MUSEUM-FWD-1.4 — שער המוזיאון: להוסיף dashboard התקדמות לאגפים, חותמות, אולמות שביקרו, סרטונים שנצפו ומשימות הבנה.
+- [ ] MUSEUM-FWD-1.5 — שער המוזיאון: להוסיף חיפוש מוזיאון לפי טקסט, תג, אגף, מושג וקישור ישיר לתוצאה.
+- [ ] MUSEUM-FWD-1.6 — שער המוזיאון: להחליף "טיפ אקראי" ב-`deterministicNextTip` לפי progression queue, עם היסטוריית טיפים שכבר נראו.
+
+- [ ] MUSEUM-FWD-2.1 — אגף שכבות המחשב: סימולטור מתג חשמלי ON/OFF עם ויזואליזציה של אות, מתח/זרם וסף החלטה.
+- [ ] MUSEUM-FWD-2.2 — אגף שכבות המחשב: סימולטור שערים לוגיים AND/OR/NOT עם שני קלטים, פלט וטבלת אמת.
+- [ ] MUSEUM-FWD-2.3 — אגף שכבות המחשב: ממיר ביטים דטרמיניסטי ל-decimal/ASCII/Hex, overflow ו-UTF-8.
+- [ ] MUSEUM-FWD-2.4 — אגף שכבות המחשב: סימולטור טיפוסים שמראה איך אותם bits מתפרשים כ-number/string/boolean.
+- [ ] MUSEUM-FWD-2.5 — אגף שכבות המחשב: X-Ray לפקודת מכונה עם opcode, operand, register ו-fetch-decode-execute.
+- [ ] MUSEUM-FWD-2.6 — אגף שכבות המחשב: תרשים קוד עד הרצה: Source → Compiler/Interpreter → Binary/Runtime → Loader → Memory → CPU.
+- [ ] MUSEUM-FWD-2.7 — אגף שכבות המחשב: חדר מחירים/פשרות שמראה מה כל שכבה מסתירה, המחיר, מתי לצלול, ודוגמת באג.
+- [ ] MUSEUM-FWD-2.8 — אגף שכבות המחשב: השוואות חזותיות Vanilla JS מול Framework, Stack מול Heap, ופעולה זהה בשכבות שונות.
+
+- [ ] MUSEUM-FWD-3.1 — מוזיאון שפות: כרטיס שושלת ידני לכל שפה: C, C++, Java, Python, JavaScript, TypeScript, Rust, Go, Swift, Ruby, PHP, SQL, HTML/CSS, Assembly.
+- [ ] MUSEUM-FWD-3.2 — לכל כרטיס שפה: בעיה שנפתרה, פתרון, מחיר/פשרה, שנת יצירה עם מקור, דוגמת קוד קצרה, וקישור לשיעור.
+- [ ] MUSEUM-FWD-3.3 — להוסיף חדר פשרות: מהירות/בטיחות, שליטה/נוחות, קריאות/ביצועים, ניידות/אינטגרציה, פרודוקטיביות/גמישות, פשטות/כוח.
+- [ ] MUSEUM-FWD-3.4 — להוסיף השוואות ישירות: C/Rust, JavaScript/TypeScript, React/DOM ישיר, SQL/Document DB, Monolith/Microservices.
+- [ ] MUSEUM-FWD-3.5 — להוסיף מסלול "משפה למוצר": שפה → ספרייה → framework → אקו-סיסטם → מוצר, עם דוגמאות מקוריות ידניות בלבד.
+
+- [ ] MUSEUM-FWD-4.1 — אגף Full-Stack: להשלים אולם UI/HTML/CSS: semantic HTML, layout systems, responsive, accessibility, states.
+- [ ] MUSEUM-FWD-4.2 — אגף Full-Stack: להשלים Browser Runtime: DOM update, event loop, storage, rendering.
+- [ ] MUSEUM-FWD-4.3 — אגף Full-Stack: להשלים Async/Network: promise lifecycle, fetch, HTTP lifecycle, loading/error states.
+- [ ] MUSEUM-FWD-4.4 — אגף Full-Stack: להשלים Node/npm/modules: package.json, module systems, filesystem, environment.
+- [ ] MUSEUM-FWD-4.5 — אגף Full-Stack: להשלים API/HTTP/Express: route design, middleware, status codes, validation, auth boundary.
+- [ ] MUSEUM-FWD-4.6 — אגף Full-Stack: להשלים Database/Mongo/Mongoose: schema, collection/document, query operators, indexing, transactions.
+- [ ] MUSEUM-FWD-4.7 — אגף Full-Stack: להשלים React Product: lifecycle, props/state, hooks, router, context.
+- [ ] MUSEUM-FWD-4.8 — אגף Full-Stack: להשלים Quality/Tests/AI Review: unit, integration, smoke, regression, AI review תחת policy.
+- [ ] MUSEUM-FWD-4.9 — לכל תחום Full-Stack להוסיף תרשים קלט → עיבוד → פלט → נקודות כשל → כלים.
+
+- [ ] MUSEUM-FWD-5.1 — אגף מוצר: להוסיף תבניות לפני פיתוח: problem, persona, KPI, scope, wireframe, data model, risk list.
+- [ ] MUSEUM-FWD-5.2 — אגף מוצר: להוסיף תבניות בזמן פיתוח: RACI, task breakdown, owner/deadline.
+- [ ] MUSEUM-FWD-5.3 — אגף מוצר: להוסיף checklists לפני השקה: build, accessibility, performance, content, errors, security.
+- [ ] MUSEUM-FWD-5.4 — אגף מוצר: להוסיף rollout, monitoring, support, analytics ו-feedback collection.
+- [ ] MUSEUM-FWD-5.5 — אגף מוצר: להוסיף אחרי השקה bug triage, version planning, debt, telemetry, UX improvements.
+- [ ] MUSEUM-FWD-5.6 — אגף מוצר: לבנות סימולטור מוצר דטרמיניסטי שמוביל מרעיון עד שדרוג/החלפה.
+
+- [ ] MUSEUM-FWD-6.1 — אגף טעויות: להשלים סימני זיהוי, דוגמאות ובדיקה ראשונה ל-Syntax, Runtime, Scope/Closure, Async, React State, API, Database, Release.
+- [ ] MUSEUM-FWD-6.2 — אגף טעויות: לבנות Root Cause Simulator שמוביל symptom → layer → contract → fix → test.
+- [ ] MUSEUM-FWD-6.3 — לחבר כל טעות לשיעור, מושג, אולם שורש, שאלה ידנית ותרגול תיקון.
+
+- [ ] MUSEUM-FWD-7.1 — אגף חוזים ונתונים: להגדיר Function Contract, Component Props Contract, API Contract, DB Schema Contract, Validation Contract.
+- [ ] MUSEUM-FWD-7.2 — להוסיף טבלת בעלות חוזים: Frontend, Backend, Database, Product, QA.
+- [ ] MUSEUM-FWD-7.3 — להוסיף מסלול נתון מלא: input → validation → state → JSON → API → DB → response → render.
+- [ ] MUSEUM-FWD-7.4 — לבנות Contract Breaker שמראה חוזה שנשבר, סימפטום, בדיקה ותיקון.
+
+- [ ] MUSEUM-FWD-8.1 — אגף AI: לבנות חדר RAG: sources, chunks, embeddings, vector DB, retrieval, answer, citations.
+- [ ] MUSEUM-FWD-8.2 — אגף AI: לבנות חדר LLM Internals: tokens, context window, attention, inference, hallucination.
+- [ ] MUSEUM-FWD-8.3 — אגף AI: לבנות חדר AI Feature במוצר: prompt, sources, policy, tools, logs, evals.
+- [ ] MUSEUM-FWD-8.4 — אגף AI: לבנות חדר סיכונים: מידע שגוי, פרטיות, הרשאות, עלות, latency, bias.
+- [ ] MUSEUM-FWD-8.5 — אגף AI: להשלים טבלת סוגי מודלים והבחנה בין local model, open weights, open source, hosted API ו-commercial product.
+
+- [ ] MUSEUM-FWD-9.1 — אגף DevOps/Deployment: להוסיף אולמות Version Control, CI/CD, Environments, Monitoring, Containers, Cloud.
+- [ ] MUSEUM-FWD-9.2 — אגף Security: להוסיף Authentication, Authorization, Input Validation, Data Protection, API Security, Common Vulnerabilities.
+- [ ] MUSEUM-FWD-9.3 — אגף Performance: להוסיף Network, Rendering, Database, Memory Management, Profiling.
+- [ ] MUSEUM-FWD-9.4 — אגף Design Systems: להוסיף Typography, Color, Spacing, Components, Documentation.
+
+- [ ] MUSEUM-FWD-10.1 — Video Studio: לבדוק ידנית את כל 63 הסרטונים: חומר רקע, ידע מקדים, סקריפט, prompt, הוראות בחירה, מקור, שאלת בדיקה ידנית.
+- [ ] MUSEUM-FWD-10.2 — Video Studio: להוסיף מסלולים מסכמים: לפני מבחן, Full-Stack, Debug, AI במוצר.
+- [ ] MUSEUM-FWD-10.3 — Video Studio: להוסיף בדיקת ידע ידנית אחרי צפייה לכל סרטון, עם הסבר לכל תשובה וללא generator.
+- [ ] MUSEUM-FWD-10.4 — Video Studio: להוסיף הערות פרטיות, סימוני זמן, ייצוא הערות וחיפוש בהערות.
+- [ ] MUSEUM-FWD-10.5 — Video Studio: להוסיף המלצות דטרמיניסטיות לפי אגפים שביקרו, טעויות ידועות ושאלות שטעית בהן.
+- [ ] MUSEUM-FWD-10.6 — Video Studio: להוסיף סטטיסטיקות צפייה מקומיות ללא PII וללא נתוני שימוש מומצאים.
+
+- [ ] MUSEUM-FWD-11.1 — דרכון תלמיד: להשלים חותמות ביקור לכל אולם עם משימת הבנה, שאלה ידנית ותוצר קצר.
+- [ ] MUSEUM-FWD-11.2 — דרכון תלמיד: להוסיף שמירת סטטוס, גלריית חותמות, מסלולי ביקור ותעודות מקומיות.
+- [ ] MUSEUM-FWD-11.3 — דרכון תלמיד: להוסיף אתגרים יומיים דטרמיניסטיים ולא תחרות/ליגה ציבורית עד שיש מדיניות פרטיות ונתוני אמת.
+- [ ] MUSEUM-FWD-11.4 — דרכון תלמיד: להוסיף מצב "לפני מבחן" שמציג רק מושגים, טעויות, שאלות בדיקה וסרטונים קצרים.
+
+- [ ] MUSEUM-FWD-12.1 — קישורים: מכל אולם לשיעורים הרלוונטיים.
+- [ ] MUSEUM-FWD-12.2 — קישורים: מכל טעות לאולם השורש שמסביר אותה.
+- [ ] MUSEUM-FWD-12.3 — קישורים: מכל מושג לבלוק קוד, שאלה, סרטון ותרגול.
+- [ ] MUSEUM-FWD-12.4 — קישורים: מכל תחום Full-Stack לשלב מוצר ולבעל תפקיד בצוות.
+- [ ] MUSEUM-FWD-12.5 — קישורים: מכל סרטון לידע מקדים, שאלת בדיקה ידנית ותעודת דרכון.
+
+- [ ] MUSEUM-FWD-13.1 — QA מוזיאון: RTL מלא לטבלאות, תרשימים וכרטיסים במובייל.
+- [ ] MUSEUM-FWD-13.2 — QA מוזיאון: keyboard-only לכל טאבים, מודלים, כפתורי unlock ומסלולי ביקור.
+- [ ] MUSEUM-FWD-13.3 — QA מוזיאון: reduced-motion לכל אנימציה, זום, מעבר כרטיסים ותרשימים.
+- [ ] MUSEUM-FWD-13.4 — QA מוזיאון: visual overlap smoke לכל אגף מרכזי בדסקטופ ובמובייל.
+- [ ] MUSEUM-FWD-13.5 — QA מוזיאון: data-shape tests לכל אגף: route, goal, source, video, diagram, prerequisites, xpPrice.
+- [ ] MUSEUM-FWD-13.6 — QA מוזיאון: `museum:access-smoke:strict`, `svcollege:pwa-offline:strict`, `npm test -- --run`, `npm run build` לפני סימון DONE.
+
+- [ ] MUSEUM-FWD-14.1 — רעיון נוסף: "מסלול טעות למוזיאון" — כל תשובה שגויה בשיעור יכולה לפתוח אולם מוזיאון רלוונטי שמסביר את שורש הבלבול.
+- [ ] MUSEUM-FWD-14.2 — רעיון נוסף: "Museum Minimal Mode" — מצב קריאה שמציג רק breadcrumb, מושג, מקור וקישור חזרה לשיעור.
+- [ ] MUSEUM-FWD-14.3 — רעיון נוסף: "Evidence Drawer" — פאנל מקורות בכל אולם עם תאריך בדיקה, סוג מקור ורמת ודאות.
+- [ ] MUSEUM-FWD-14.4 — רעיון נוסף: "Dependency Unlock Graph" — גרף שמראה אילו מושגי יסוד פותחים איזה אגף מתקדם ובאיזה XP.
+- [ ] MUSEUM-FWD-14.5 — רעיון נוסף: "Teacher Museum Trail" — מסלול שמורה יכול לשלוח לתלמיד לפי חולשה, ללא נתוני דמו.
+- [ ] MUSEUM-FWD-14.6 — רעיון נוסף: "Offline Expedition Pack" — חבילת מוזיאון אופליין למסלול אחד עם סרטונים/תרשימים/שאלות ידניות בלבד.
+- [ ] MUSEUM-FWD-14.7 — רעיון נוסף: "Before/After Debug Wall" — קיר שמראה באג לפני ואחרי תיקון, כולל contract שנשבר.
+- [ ] MUSEUM-FWD-14.8 — רעיון נוסף: "Source Freshness Review" — תור סקירה תקופתי לטענות היסטוריות/טכניות שמסומנות כרגישות לשינוי.
 
 #### Gate סופי לסגירת Finish Line 1
 
