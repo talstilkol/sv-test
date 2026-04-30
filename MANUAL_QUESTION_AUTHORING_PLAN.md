@@ -5,11 +5,11 @@ Date: 2026-04-30
 ## Summary
 
 - Ready for authoring: yes
-- Gap concepts: 557/568
-- MC gap concepts: 556
-- Fill gap concepts: 550
-- Strict MC questions still required: 1566
-- Strict Fill questions still required: 1003
+- Gap concepts: 553/568
+- MC gap concepts: 552
+- Fill gap concepts: 546
+- Strict MC questions still required: 1554
+- Strict Fill questions still required: 995
 - Batches: 28
 
 ## Policy
@@ -25,16 +25,12 @@ Date: 2026-04-30
 - Status: not-started
 - Owner: unknown/unavailable
 - Reviewer: unknown/unavailable
-- Concepts: 15
-- MC deficit: 34
-- Fill deficit: 22
+- Concepts: 11
+- MC deficit: 22
+- Fill deficit: 14
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_25::navbar` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_25::padding` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_25::rating` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_25::rounded` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_25::search` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_25::Tailwind installation` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_25::validation` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |

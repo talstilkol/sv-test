@@ -16,20 +16,20 @@
     "fillTargetPerCodeConcept": 2
   },
   "sourceMix": {
-    "curatedMC": 138,
+    "curatedMC": 150,
     "ignoredGeneratedMC": 0,
-    "curatedFill": 133,
+    "curatedFill": 141,
     "ignoredGeneratedFill": 0
   },
   "summary": {
     "totalConcepts": 568,
-    "mcReadyConcepts": 12,
-    "mcGapCount": 556,
+    "mcReadyConcepts": 16,
+    "mcGapCount": 552,
     "codeExampleConcepts": 568,
-    "fillReadyConcepts": 18,
-    "fillGapCount": 550,
-    "handCuratedMcPromotionBacklog": 556,
-    "handCuratedFillPromotionBacklog": 550,
+    "fillReadyConcepts": 22,
+    "fillGapCount": 546,
+    "handCuratedMcPromotionBacklog": 552,
+    "handCuratedFillPromotionBacklog": 546,
     "ready": false
   },
   "gaps": {
@@ -3023,36 +3023,9 @@
         }
       },
       {
-        "key": "lesson_25::padding",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "padding",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::rounded",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "rounded",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_25::Tailwind installation",
         "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
         "conceptName": "Tailwind installation",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::rating",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "rating",
         "mc": {
           "curated": 0,
           "total": 0
@@ -3071,15 +3044,6 @@
         "key": "lesson_25::validation",
         "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
         "conceptName": "validation",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::navbar",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "navbar",
         "mc": {
           "curated": 0,
           "total": 0
@@ -8002,36 +7966,9 @@
         }
       },
       {
-        "key": "lesson_25::padding",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "padding",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::rounded",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "rounded",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_25::Tailwind installation",
         "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
         "conceptName": "Tailwind installation",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::rating",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "rating",
         "fill": {
           "curated": 0,
           "total": 0
@@ -8050,15 +7987,6 @@
         "key": "lesson_25::validation",
         "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
         "conceptName": "validation",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::navbar",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "navbar",
         "fill": {
           "curated": 0,
           "total": 0
