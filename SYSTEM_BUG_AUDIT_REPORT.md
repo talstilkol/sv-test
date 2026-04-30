@@ -3,107 +3,113 @@
 ## Scope
 
 Audit target: LumenPortal / SVCollege AI & Full Stack portal.
-Last refreshed: 2026-04-30 after live strict gates and report regeneration.
+Last refreshed: 2026-04-30 after live strict gates, static scans, full tests, and production build.
 
-This report is based only on repo evidence, current generated reports, strict gates, and task files. No fabricated learner metrics, fake pilot results, invented production telemetry, or automatic question generation were used.
+This report uses only repo evidence and live command output. It does not invent learner metrics, pilot outcomes, telemetry, production usage, or generated questions. Manual-only question policy remains active.
 
-## Current Gate Evidence
+## Gate Evidence
 
 | Check | Result |
-|---|---:|
-| `npm run finish-line:pre-release:write` | Not ready; 17/18 passed; only blocker is `questions:coverage-targets:strict` |
-| `npm run master-plan:brutal-audit:write` | 240 items audited: DONE 17, FAKED 0, PARTIAL 7, NOT DONE 216 |
-| `npm run questions:coverage-targets:strict` | Failed as expected: `mcGapCount: 486`, `fillGapCount: 481`, `ready:false` |
-| `npm run questions:manual-authoring-plan:write` | Ready for authoring; strict deficits now `1,388` MC and `893` Fill |
-| `npm run questions:activity-authoring-plan:strict` | Failed as expected: `totalGaps: 222`, `svcollegePriorityGaps: 0`, `ready:false` |
-| `npm run quality:remediation:strict` | Passed; remediation queue is 0 |
-| `npm run quality:questions:strict` | Passed; 559 manual questions, 0 blockers, 0 warnings, 17 notes |
-| `npm run questions:reuse-audit:strict` | Passed; 1,195 question/activity rows, 384 concept tags, 0 duplicate identities |
-| `npm run svcollege:readiness:release` | Passed |
-| `npm run svcollege:tab-matrix:strict` | Passed |
-| `npm run svcollege:critical-flows:strict` | Passed |
-| `npm run svcollege:command-center:strict` | Passed |
-| `npm run svcollege:student-export:strict` | Passed |
-| `npm run svcollege:accessibility:strict` | Passed, 7/7 |
-| `npm run svcollege:visual-overlap:strict` | Passed, 9/9 |
-| `npm run svcollege:console-gate:strict` | Passed, 5/5 |
-| `npm run svcollege:pwa-offline:strict` | Passed, 181/181 assets |
-| `npm run svcollege:critical-flows:strict` | Passed, 6/6 |
-| `npm run svcollege:full-portal-smoke:strict` | Passed, 9/9 |
-| `npm run svcollege:top-tabs:strict` | Passed, 23/23 |
-| `npm run svcollege:context-tree:strict` | Passed, 21/21 |
-| `npm run performance:budget:strict` | Passed, 8/8 |
-| `npm run exam:accessibility:strict` | Passed, 7/7 |
-| `npm run profile:backup-restore:strict` | Passed, 5/5 |
-| `npm run sync:alpha:strict` | Passed, 6/6 local alpha checks |
-| `npm run reward-store:smoke:strict` | Passed, 7/7 |
-| `npm run economy:anti-cheat:strict` | Passed, 8/8 |
-| `npm run level100:release-gate:strict` | Passed, 7/7 |
-| `npm run content-factory:pipeline:strict` | Passed, 8/8 |
-| `npm run content:schema-contract:strict` | Passed, 9/9 |
-| `npm run ai-tutor:alpha:strict` | Passed, 7/7 |
-| `npm run metrics:dashboard:strict` | Passed, ready true, questionQualityIndex 100, totalQuestions 559; generated markdown still has older date metadata |
-| `npm run pilot:readiness:strict` | Passed as readiness only; no real pilot outcomes are claimed |
-| `npm run museum:access-smoke:strict` | Passed, 9/9 |
-| `npm run museum:evidence-fields:strict` | Passed, 5/5 |
-| `npm run portal:boundary:strict` | Passed, 6/6 |
-| `npm run phase6:release-readiness:strict` | Passed, 6/6 |
-| `npm test -- --run` | Passed: 152 test files, 622 tests |
-| `npm run build` | Passed; output includes `dist/app.js` 1.6 MB, `dist/style.css` 594 KB, `dist/assets/index-DDEpfRTZ.css` 454 KB, `dist/assets/core-hrllUkwp.js` 138 KB |
-| `rg -n "Math\\.random" app.js src scripts tests data --glob '!output/**'` | No matches |
-| Static active-source scan | No `eval(` or `new Function`; found active inventory needing review: `app.js` has 154 `innerHTML` matches, 1 `document.write`, and 164 `localStorage` matches |
+|---|---|
+| `npm run finish-line:pre-release` | Failed as expected: `17/18` passed; only failed gate is manual question coverage. |
+| `npm run questions:coverage-targets:strict` | Failed: `mcGapCount: 486`, `fillGapCount: 481`, `ready:false`. |
+| `npm run questions:manual-authoring-plan:strict` | Passed as plan readiness: `1,388` MC and `893` Fill still required; `25` batches. |
+| `npm run questions:activity-authoring-plan:strict` | Failed as expected: `222` total activity gaps; `svcollegePriorityGaps: 0`; `ready:false`. |
+| `npm run validate:strict` | Passed: `316` MC + `243` Fill = `559` manual curated questions. |
+| `npm run qa:questions:strict` | Passed: `559` total questions, `56` deterministic sample, 0 prerequisite issues. |
+| `npm run quality:questions:strict` | Passed: 0 blockers, 0 warnings, `17` notes. |
+| `npm run quality:remediation:strict` | Passed, but queue still contains `17` note-level remediation items: 12 generic wording, 4 fill ambiguity, 1 option-length balance. |
+| `npm run questions:reuse-audit:strict` | Passed: `1,215` question/activity rows, `384` concept tags, 0 duplicate identities. |
+| `npm run questions:blocker-map:strict` | Passed: 0 release blockers, 0 release MC/Fill deficit for mapped target modules. |
+| `npm run guard:no-auto-questions` | Passed: 5/5, no active auto-question generation route detected. |
+| `npm run svcollege:readiness:release` | Passed: 100% average, 15/15 covered, 0 gaps. |
+| `npm run svcollege:tab-matrix:strict` | Passed: 100% strict coverage. |
+| `npm run svcollege:command-center:strict` | Passed: 100% readiness, 0 blockers. |
+| `npm run svcollege:student-export:strict` | Passed; weakest counters still show `withoutQuestions: 121`, `withoutHardQuestion: 140`, `codeConceptsWithoutProof: 132`. |
+| `npm run svcollege:critical-flows:strict` | Passed: 6/6 flows. |
+| `npm run svcollege:context-tree:strict` | Passed: 21/21 targets. |
+| `npm run svcollege:pwa-offline:strict` | Passed: 181/181 cached assets, 13/13 strategy checks. |
+| `npm run svcollege:accessibility:strict` | Passed: 7/7. |
+| `npm run svcollege:visual-overlap:strict` | Passed: 9/9. |
+| `npm run svcollege:full-portal-smoke:strict` | Passed: 9/9, desktop/mobile ready. |
+| `npm run svcollege:top-tabs:strict` | Passed: 23/23 tabs, 0 console errors. |
+| `npm run svcollege:console-gate:strict` | Passed: 5/5. |
+| `npm run exam:flows:strict` | Passed: 0 blockers. |
+| `npm run exam:mock-variants:strict` | Passed: 3 variants, 0 blockers. |
+| `npm run exam:release-freeze:strict` | Passed: 17/17, frozen true. |
+| `npm run level100:release-gate:strict` | Passed: 7/7. |
+| `npm run sync:alpha:strict` | Passed: 6/6 alpha checks; this is not live backend proof. |
+| `npm run ai-tutor:alpha:strict` | Passed: 7/7 alpha checks. |
+| `npm run pilot:readiness:strict` | Passed readiness checks only; no real 10-student outcome data claimed. |
+| `npm run phase6:release-readiness:strict` | Passed: 6/6. |
+| `npm run metrics:dashboard:strict` | Passed: 6/6, questionQualityIndex 100, totalQuestions 559. |
+| `npm run performance:budget:strict` | Passed: 8/8. |
+| `npm run exam:accessibility:strict` | Passed: 7/7. |
+| `npm run content:schema-contract:strict` | Passed: 9/9. |
+| `npm run profile:backup-restore:strict` | Passed: 5/5. |
+| `npm run museum:access-smoke:strict` | Passed: 9/9. Museum work remains non-priority until Finish Line 1 is green. |
+| `npm run museum:evidence-fields:strict` | Passed: 5/5. |
+| `npm run portal:boundary:strict` | Passed: 6/6. |
+| `npm run reward-store:smoke:strict` | Passed: 7/7. |
+| `npm run economy:anti-cheat:strict` | Passed: 8/8. |
+| `npm run master-plan:brutal-audit:write` | Active plan after adding this audit: `243` items, `DONE 17`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 219`. |
+| `npm test -- --run` | Passed: 152 test files, 622 tests. |
+| `npm run build` | Passed. Main outputs: `dist/index.html` 102.10 KB, `dist/assets/index-DDEpfRTZ.css` 465.34 KB, `dist/assets/core-hrllUkwp.js` 141.36 KB. |
+| `rg -n "Math\\.random" app.js src scripts tests data --glob '!output/**'` | No matches. |
+| `rg -n "\\beval\\s*\\(|new Function\\b" app.js src scripts --glob '!output/**'` | No matches. |
+| Active DOM/storage scan | `app.js` has 152 `.innerHTML =` assignments, 1 `document.write`, 2 active `insertAdjacentHTML` calls, and 140 `localStorage`/`sessionStorage` matches. |
+| Stale report scan | 18 report files still show 2026-04-28/2026-04-29 metadata even after live gates exist. |
 
 ## Executive Summary
 
-The system is not currently blocked by SVCollege chrome, tab matrix, PWA, console errors, visual overlap, command center, export, tests, or build-level release readiness. Those live gates pass.
+The core SVCollege portal gates are green: readiness, tab matrix, command center, critical flows, top tabs, context tree, console gate, PWA offline, visual overlap, accessibility, tests, and build all pass.
 
-The main current blocker is honest learning coverage under the manual-only policy. `questions:coverage-targets:strict` still fails with `486` concepts missing enough MC coverage and `481` concepts missing enough Fill coverage. `MANUAL_QUESTION_AUTHORING_PLAN.md` says `1,388` MC questions and `893` Fill questions still need to be manually authored and reviewed to reach strict density across all 568 concepts.
+The release is still not honestly complete because the manual-only question density gate is red. The system currently has `486` concepts missing enough MC coverage and `481` concepts missing enough Fill coverage. The authoring plan still requires `1,388` manually written MC questions and `893` manually written Fill questions.
 
-The second major issue is planning debt. `BRUTAL_MASTER_PLAN_AUDIT.md` now audits the active plan at 240 items: only 17 are verified DONE, 7 are PARTIAL, and 216 are NOT DONE. The good news is that the current strict audit reports `FAKED: 0`; the remaining problem is volume and verification, not known pretending in the current active slice.
-
-The third issue is source-of-truth drift. Some live strict gates are green, while their generated markdown files still show older dates, older question totals, or historical scopes. Those reports are useful evidence only after their metadata and scope are made explicit.
+The next blocker class is not runtime breakage; it is proof depth and source-of-truth hygiene: 222 deferred activity gaps, 219 NOT DONE plan items, 7 PARTIAL plan items, stale report metadata, and large trust-boundary inventories around HTML injection and browser storage.
 
 ## Findings
 
-| ID | Severity | Area | Problem | Evidence | Recommended Fix |
+| ID | Severity | Area | Problem | Evidence | Recommendation |
 |---|---|---|---|---|---|
-| SYS-AUDIT-001 | P0 | Manual question coverage | Finish Line 1 is not release-ready because strict manual MC/Fill density is still incomplete. | `questions:coverage-targets:strict`: `mcGapCount: 486`, `fillGapCount: 481`; `FINISH_LINE_PRERELEASE_REPORT.md`: 17/18 passed, 1 failed. | Continue `MANUAL_QUESTION_AUTHORING_PLAN.md` batches. A batch is DONE only after manual authoring, manual review, full option feedback, QA, source lesson verification, and strict gates. |
-| SYS-AUDIT-002 | P0 | Manual authoring capacity | The remaining strict deficit is large: `1,388` MC and `893` Fill questions. | `MANUAL_QUESTION_AUTHORING_PLAN.md`. | Assign real owner/reviewer per batch. Keep owner/reviewer as `unknown/unavailable` until a real person is assigned. |
-| SYS-AUDIT-003 | P1 | Activity practice depth | 222 non-priority concepts still lack Trace/Build/Bug activity coverage. | `questions:activity-authoring-plan:strict`: `totalGaps: 222`, `svcollegePriorityGaps: 0`. | Defer non-priority activity gaps until Finish Line 1 question coverage is green, then author real Trace/Build/Bug tasks with browser smoke. |
-| SYS-AUDIT-004 | P1 | Plan truth | The active master plan still has 216 NOT DONE and 7 PARTIAL items. | `BRUTAL_MASTER_PLAN_AUDIT.md`: 240 items, DONE 17, FAKED 0, PARTIAL 7, NOT DONE 216. | Keep `master-plan:brutal-audit:write` as a regular gate and do not use phase totals as release truth. |
-| SYS-AUDIT-005 | P1 | Keyboard accessibility | Keyboard navigation is still partial in the active task board. | `EXECUTION_TASKS.md`: `P1.2.2` remains `[~]`; `FWD-5.3` is open. | Add keyboard-only tests for Escape, Enter, Arrow navigation, tab movement, answer submit, focus return, and focus-visible states. |
-| SYS-AUDIT-006 | P1 | Frontend maintainability | `app.js` modularization and view extraction remain partial. | `EXECUTION_TASKS.md`: `P3.10.3`, `AUDIT-FIX-28`, `AUDIT-FIX-29` remain `[~]`. | After Finish Line 1 coverage is green, continue extracting lesson renderer, chrome/menu, settings, bug log, and question panels into small modules. |
-| SYS-AUDIT-007 | P1 | Sync reliability | Cross-device sync is only alpha/local-gate proven; real auth/live backend is not fully proven. | `sync:alpha:strict` passes; `EXECUTION_TASKS.md` keeps `AUDIT-FIX-27` partial. | Test with a real Supabase project, real auth, conflict handling, recovery, and import/export. Missing credentials remain `unknown/unavailable`. |
-| SYS-AUDIT-008 | P1 | Real learner outcomes | The learner outcome loop is readiness-only; there are no real D1/D7 retention or pilot outcome results. | `pilot:readiness:strict` passes, but outcome data is not present. | Run the 10-student pilot, record D1/D7 retention, mastery movement, stuck events, and promotion outcomes. Do not backfill. |
-| SYS-AUDIT-009 | P1 | Security hardening | Security inventory, CSP, and localStorage trust-boundary work are open. | `EXECUTION_TASKS.md`: `FWD-7.5`, `FWD-7.6`, `FWD-7.7`, `FWD-7.8` open. | Audit `.innerHTML`/`document.write` data paths, add sanitizer/DOM API fixes, add CSP in report-only first, and document localStorage as non-authoritative. |
-| SYS-AUDIT-010 | P1 | Report source of truth | Historical audits and generated reports can drift from live gates. | Existing tasks `KIMI-AUDIT-1..7`, `FWD-7.10`; old report sections previously had stale 567/561 and stale release failures. | Add historical/superseded banners and a source-of-truth report that reconciles live gates against old audits. |
-| SYS-AUDIT-011 | P1 | Bug Agent operations | The in-app Bug Agent is local-only and lacks a deterministic export/report loop for developer triage. | `EXECUTION_TASKS.md`: `BUG-AUDIT-009`/`FWD-8.10` style work remains open. | Add local export/report command, no PII, no fake telemetry, and deterministic cleanup when a bug is no longer reproducible. |
-| SYS-AUDIT-012 | P2 | Browser E2E depth | Many strict gates pass, but production-like E2E flows are still a backlog item. | `EXECUTION_TASKS.md`: `FWD-8.9`, `BUG-AUDIT-050` open. | Add Playwright E2E for open lesson, concept navigation, question bank, MC/Fill, progress, home navigation, and offline reload. |
-| SYS-AUDIT-013 | P2 | PWA cache governance | PWA passes now, but cache version and asset expectations are still manually coordinated. | `svcollege:pwa-offline:strict` passes; `FWD-7.3`/`BUG-AUDIT-016` open. | Derive cache expectations from one source or add one preflight that fails on drift. |
-| SYS-AUDIT-014 | P2 | Legacy generated archive | The legacy seeded bank remains an archive risk even though active loaders no longer use it. | `guard:no-auto-questions` passes; `data/questions_bank_seeded.js` is archive-only. | Keep it non-active or delete it after any useful items are rewritten manually and reviewed. |
-| SYS-AUDIT-015 | P2 | SEO and telemetry | SEO and external analytics/error tracking are deferred and must not use fake accounts or fake telemetry. | `KIMI-AUDIT-4`, `KIMI-AUDIT-5`, `FWD-8.10` open. | Add OG/JSON-LD/canonical later. Add Sentry/Plausible only with real account, privacy notice, PII policy, and explicit approval. |
-| SYS-AUDIT-016 | P1 | Report metadata drift | Generated markdown reports can show stale dates after live gates are rerun. Some counters were corrected during this audit by running write commands, but date drift remains. | `FEATURE_COVERAGE_REPORT.md` starts with `2026-04-28`; `QUESTION_REMEDIATION_QUEUE.md` starts with `2026-04-28`; `METRICS_DASHBOARD_REPORT.md` starts with `2026-04-29` even after reporting 559 current questions. | Add report-run metadata, scope labels, and a single source-of-truth summary. Reports that are historical should say so in the first lines. |
-| SYS-AUDIT-017 | P1 | XSS / DOM trust boundary | Active source still has many HTML injection surfaces that need a reviewed allowlist. This is an inventory finding, not proof of exploitation. | Active scan: `app.js` has 154 `innerHTML` matches and `document.write` at `app.js:29081`; `src/core/sanitize*.js` exists but coverage is not proven for every path. | Create an allowlist with owner, data origin, escaping method, and smoke test for each path. Prefer DOM APIs or `esc(...)`; add a static gate for new unreviewed assignments. |
-| SYS-AUDIT-018 | P1 | Local progress authority | Progress, XP, evidence, bug log, settings, and sync-adjacent state rely heavily on browser storage. | Active scan: `app.js` has 164 `localStorage` matches; current sync/pilot gates are readiness or alpha only. | Document localStorage as non-authoritative learning state. Verified exam/progress claims require backend/auth proof; keep missing data `unknown/unavailable`. |
-| SYS-AUDIT-019 | P2 | Payload and CSS debt | Performance budgets pass, but the built payload still has large legacy assets that will slow iteration and mobile UX. | `npm run build`: `dist/app.js` 1.6 MB, `dist/style.css` 594 KB, `dist/assets/index-DDEpfRTZ.css` 454 KB. | After Finish Line 1, split routes/features/styles, remove unused legacy CSS, and add measured thresholds to the performance gate. |
-| SYS-AUDIT-020 | P1 | Question count scope drift | Question-related reports have different valid scopes, and stale generated files can make those scopes look contradictory. | After `quality:questions:write` and `metrics:dashboard:write`, both files show 559 current manual questions; strict coverage still correctly reports 486 MC and 481 Fill concept gaps because it measures per-concept density, not total count. | Normalize report labels: active manual bank, historical/generated archive, concept-level coverage, and dashboard display scope must be separate fields. Add a gate that fails when generated report files are stale after strict runs. |
-| SYS-AUDIT-021 | P1 | Test maintainability | Two tests used frozen question-count constants and failed immediately after a valid manual question batch. This was fixed in the current audit by asserting deterministic invariants instead of exact stale totals. | `finish-line:pre-release:write` initially failed `npm test -- --run` after the 430-question bank; fixed `tests/question-quality-report.test.js` and `tests/question-reuse-audit.test.js`; rerun passed 152 files / 622 tests. | Keep tests tied to invariants: manual count equals total, concept buckets sum to audited questions, no legacy generated rows, no duplicate identities. Avoid hardcoded totals unless the test is explicitly a threshold. |
+| SYS-AUDIT-001 | P0 | Manual question coverage | Finish Line 1 is blocked by incomplete manual MC/Fill density. | `questions:coverage-targets:strict`: `486` MC gaps, `481` Fill gaps. | Continue manual authoring batches only. No generators. Batch is done only after source review, option feedback, QA, and strict gates. |
+| SYS-AUDIT-002 | P0 | Manual authoring capacity | Remaining manual question workload is large. | `questions:manual-authoring-plan:strict`: `1,388` MC and `893` Fill still required. | Work batch-by-batch from `MANUAL_QUESTION_AUTHORING_PLAN.md`; keep owner/reviewer as `unknown/unavailable` until real people are assigned. |
+| SYS-AUDIT-003 | P1 | Activity coverage | 222 Trace/Build/Bug activity gaps remain outside current SVCollege priority. | `questions:activity-authoring-plan:strict`: `totalGaps: 222`, `svcollegePriorityGaps: 0`. | Defer until question coverage is green, then author real Trace/Build/Bug tasks and add browser smoke per batch. |
+| SYS-AUDIT-004 | P1 | Plan truth | Most active plan items are still not verified done. | `BRUTAL_MASTER_PLAN_AUDIT`: 243 items, 17 DONE, 7 PARTIAL, 219 NOT DONE, 0 FAKED. | Keep brutal audit as release gate; do not report phase completion without item-level evidence. |
+| SYS-AUDIT-005 | P1 | Keyboard accessibility | Keyboard-only coverage is still listed as partial/open even though static accessibility smoke passes. | `EXECUTION_TASKS.md`: keyboard-only tasks remain open/partial. | Add tests for Escape, Enter, Arrow, focus return, tab movement, concept navigation, and answer submit. |
+| SYS-AUDIT-006 | P1 | Frontend maintainability | `app.js`/view extraction remains incomplete. | Active tasks `P3.10.3`, `AUDIT-FIX-28`, `AUDIT-FIX-29` remain partial. | After Finish Line 1, split lesson renderer, chrome/menu, settings, bug log, and question panels into small modules with tests. |
+| SYS-AUDIT-007 | P1 | Sync reliability | Sync is alpha/readiness-proven only, not real backend proof. | `sync:alpha:strict` passes 6/6; live Supabase/auth conflict handling is still partial. | Test against real Supabase/auth, conflicts, recovery, and import/export. Missing credentials remain `unknown/unavailable`. |
+| SYS-AUDIT-008 | P1 | Learner outcomes | Pilot readiness is green, but no real D1/D7 or 10-student outcomes exist. | `pilot:readiness:strict` passes readiness only. | Run the real pilot and record D1/D7 retention, mastery movement, stuck feedback, and promotion outcomes without backfill. |
+| SYS-AUDIT-009 | P1 | DOM trust boundary | HTML injection surface needs reviewed allowlist. This is inventory, not proof of exploit. | `app.js`: 152 `.innerHTML =`, 1 `document.write`, 2 `insertAdjacentHTML`. | Create allowlist with owner, data origin, escaping/sanitizer method, and smoke. Prefer DOM APIs/`esc(...)`; add gate for new unreviewed sinks. |
+| SYS-AUDIT-010 | P1 | Storage trust boundary | Browser storage is heavily used for progress, XP, evidence, bug log, settings, and profile state. | `app.js`: 140 `localStorage`/`sessionStorage` matches. | Document local state as non-authoritative. Verified exam/mastery claims require backend/auth proof. |
+| SYS-AUDIT-011 | P1 | Report source of truth | Reports can look contradictory because generated markdown metadata is stale. | 18 report files still show 2026-04-28/2026-04-29 headers. | Add run date/scope/version metadata and a source-of-truth report reconciling live gates vs historical reports. |
+| SYS-AUDIT-012 | P1 | Question quality notes | Quality gates pass, but 17 note-level question issues remain visible. | `quality:remediation:strict`: 12 generic wording, 4 fill ambiguity, 1 option-length balance. | Treat notes as review backlog; fix opportunistically during nearby manual batches. |
+| SYS-AUDIT-013 | P1 | Bug Agent operations | Local Bug Agent lacks a complete deterministic developer triage/export loop. | Active backlog still asks for export/report and cleanup of fixed bugs. | Add local export/report command, no PII, deterministic reproduction status, and automatic removal only after a live check proves fixed. |
+| SYS-AUDIT-014 | P2 | Browser E2E depth | Static/smoke gates pass, but production-like Playwright flows are still backlog. | `FWD-8.9`/`BUG-AUDIT-050` remain open. | Add E2E: open lesson, switch concept, open question bank, answer MC/Fill, progress, home, offline reload. |
+| SYS-AUDIT-015 | P2 | PWA governance | PWA offline passes, but cache expectations are still a drift risk. | `svcollege:pwa-offline:strict` passes; cache-version unification remains open. | Derive cache expectations from one manifest/source or add one drift gate. |
+| SYS-AUDIT-016 | P2 | Legacy archive | `questions_bank_seeded.js` is inactive but still present as a legacy archive. | `guard:no-auto-questions` passes; file remains in repo. | Keep inactive or delete only after useful content is manually rewritten and reviewed. |
+| SYS-AUDIT-017 | P2 | Payload/CSS debt | Performance budget passes, but CSS/html/core chunks are still sizable for a study app. | Build outputs: CSS 465.34 KB, HTML 102.10 KB, core JS 141.36 KB. | After Finish Line 1, split CSS/features, lazy-load non-study surfaces, and set measured thresholds. |
+| SYS-AUDIT-018 | P2 | SEO/telemetry | SEO and external telemetry remain deferred and must not be faked. | Backlog items still open; no real account/privacy policy evidence. | Add OG/JSON-LD/canonical later. Add Sentry/Plausible only with real account, privacy notice, PII policy, and approval. |
+| SYS-AUDIT-019 | P2 | Museum/store scope | Museum/store gates pass but are not Finish Line 1 priority. | Museum/economy gates pass; user assigned museum ownership elsewhere. | Keep museum/store/community behind Finish Line 1 unless directly blocking exam preparation. |
+| SYS-AUDIT-020 | P1 | Student export weak counters | SVCollege export is ready, but weak counters show remaining proof gaps. | `withoutQuestions: 121`, `withoutHardQuestion: 140`, `codeConceptsWithoutProof: 132`. | Use these counters to prioritize manual question/code-proof authoring after current QMAN order. |
+| SYS-AUDIT-021 | P1 | Test-count fragility | Previous frozen count failures are fixed, but generated report tests must remain invariant-based. | Recent fix moved tests away from hardcoded totals; 622 tests pass. | Keep tests checking invariants, not exact question totals, unless a threshold is explicitly intended. |
+| SYS-AUDIT-022 | P1 | Historical audit ingestion | Kimi/AUDIT reports are useful input but can be stale. | Live gates now contradict older claims about tests, PWA, a11y, Vite, and question remediation. | Every external/historical claim must be verified with a live command before entering active backlog. |
 
 ## Not Current Blockers
 
-- SVCollege release readiness, tab matrix, critical flows, command center, student export, mock variants, top tabs, context tree, full portal smoke, console gate, PWA offline, accessibility, visual overlap, performance budget, tests, and build are currently green.
-- Question remediation is not currently open: `quality:remediation:strict` passes with 0 remediation items.
-- Native randomness is not currently found in active source: no `Math.random()` matches in `app.js`, `src`, `scripts`, `tests`, or `data` outside output artifacts.
-- No active `eval(` or `new Function` usages were found in `app.js`, `src`, or `scripts`.
-- The current brutal plan audit reports `FAKED: 0`; the remaining issue is `PARTIAL`/`NOT DONE` backlog and proof depth.
+- No `Math.random()` found in active `app.js`, `src`, `scripts`, `tests`, or `data`.
+- No active `eval(` or `new Function` found in `app.js`, `src`, or `scripts`.
+- SVCollege readiness, tab matrix, command center, critical flows, top tabs, context tree, console gate, PWA offline, accessibility, visual overlap, full portal smoke, tests, and build are green.
+- The current active plan audit reports `FAKED: 0`.
+- No active auto-question generator path was detected by `guard:no-auto-questions`.
 
 ## Recommended Execution Order
 
-1. Finish `QMAN-001` onward: manual MC/Fill authoring and review until `questions:coverage-targets:strict` is green.
-2. Keep all SVCollege gates green after every manual batch.
-3. Keep question/report tests based on invariants so every manual batch can increase counts without breaking unrelated gates.
-4. Add keyboard-only and production-like browser E2E for the learning flow.
-5. Fix report metadata/scope drift so every green gate can be traced to the right current source.
-6. Inventory the active `innerHTML`/`document.write`/`localStorage` trust boundaries before adding more UI surface.
-7. Run a real 10-student pilot before claiming learner outcome improvements.
-8. Only after Finish Line 1 is green, resume modularization, Sync live-backend proof, museum/store/community, SEO, telemetry, and payload optimization.
+1. Continue QMAN manual MC/Fill authoring until `questions:coverage-targets:strict` is green.
+2. Keep `validate:strict`, `qa:questions:strict`, `quality:questions:strict`, `questions:reuse-audit:strict`, and SVCollege gates green after every batch.
+3. Use student-export weak counters and manual authoring plan to decide the next concepts, without generating questions automatically.
+4. Fix report metadata/scope drift and add a source-of-truth reconciliation gate.
+5. Add keyboard-only and production-like browser E2E for the learning flow.
+6. Inventory all active HTML sinks and storage trust boundaries before adding more UI.
+7. Run the real 10-student pilot before claiming outcomes.
+8. Only after Finish Line 1 is green: activity gaps, modularization, live sync proof, SEO/telemetry, museum/store/community, and payload optimization.

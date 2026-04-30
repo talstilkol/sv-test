@@ -18,14 +18,14 @@
 | מדד | כמות |
 |---|---:|
 | בוצעו | 749 |
-| סך משימות מסומנות | 909 |
-| בוצעו מתוך סך הכול | 749/909 (82%) |
-| נותרו פעילות: פתוחות + חלקיות + חסומות | 145 |
-| פתוחות | 138 |
+| סך משימות מסומנות | 912 |
+| בוצעו מתוך סך הכול | 749/912 (82%) |
+| נותרו פעילות: פתוחות + חלקיות + חסומות | 148 |
+| פתוחות | 141 |
 | בעבודה / חלקיות | 6 |
 | חסומות | 1 |
 | נדחו / לאחר Finish Line 1 | 15 |
-| נותרו כולל נדחות | 160 |
+| נותרו כולל נדחות | 163 |
 
 ## מצב Finish Line 1
 
@@ -36,7 +36,7 @@
 | `MANUAL_QUESTION_AUTHORING_PLAN` | `1388` שאלות MC ידניות ו-`893` Fill ידניות עדיין נדרשות ליעד strict |
 | התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה + תתי-batch Lesson 11 + שלושה תתי-batch Lesson 12 + ארבעה תתי-batch Lesson 13 הושלמו ככיסוי authored: `184` MC ו-`114` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
 | `QUESTION_ACTIVITY_AUTHORING_PLAN` | `222` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
-| `BRUTAL_MASTER_PLAN_AUDIT` | `240` פריטים: `DONE 17`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 216` |
+| `BRUTAL_MASTER_PLAN_AUDIT` | `243` פריטים: `DONE 17`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 219` |
 
 ## משימות שנותרו לבצע — ראשונות
 
@@ -81,11 +81,14 @@
 
 ### 📊 סיכום התקדמות > Live System Bug Audit Addendum — 2026-04-30
 
-- [ ] SYS-AUDIT-016 — לתקן drift במטאדאטה של דוחות generated: `FEATURE_COVERAGE_REPORT.md`, `QUESTION_REMEDIATION_QUEUE.md` ו-`METRICS_DASHBOARD_REPORT.md` צריכים run date/scope אמיתי או סימון historical.
-- [ ] SYS-AUDIT-017 — לבצע allowlist מלא ל-154 מופעי `innerHTML` ול-`document.write` אחד ב-`app.js`, כולל data origin, escaping/sanitizer, owner ו-smoke.
-- [ ] SYS-AUDIT-018 — להגדיר trust boundary לכל 164 מופעי `localStorage` ב-`app.js`: progress/XP/evidence מקומיים אינם ראיית ציון מאומתת בלי backend/auth אמיתי.
-- [ ] SYS-AUDIT-019 — אחרי Finish Line 1 לפרק payload ו-CSS לפי feature; build עובר אבל עדיין מוציא `dist/app.js` 1.6MB, `dist/style.css` 594KB ו-`dist/assets/index-DDEpfRTZ.css` 454KB.
+- [ ] SYS-AUDIT-016 — לתקן drift במטאדאטה של דוחות generated: נמצאו `18` דוחות עם תאריך `2026-04-28`/`2026-04-29`; כל דוח צריך run date/scope אמיתי או סימון historical.
+- [ ] SYS-AUDIT-017 — לבצע allowlist מלא ל-`152` מופעי `innerHTML`, `document.write` אחד ו-`2` `insertAdjacentHTML` פעילים ב-`app.js`, כולל data origin, escaping/sanitizer, owner ו-smoke.
+- [ ] SYS-AUDIT-018 — להגדיר trust boundary לכל `140` מופעי `localStorage`/`sessionStorage` ב-`app.js`: progress/XP/evidence מקומיים אינם ראיית ציון מאומתת בלי backend/auth אמיתי.
+- [ ] SYS-AUDIT-019 — אחרי Finish Line 1 לפרק payload ו-CSS לפי feature; build עובר אבל עדיין מוציא `dist/assets/index-DDEpfRTZ.css` 465.34KB, `dist/index.html` 102.10KB ו-`dist/assets/core-hrllUkwp.js` 141.36KB.
 - [ ] SYS-AUDIT-020 — לאחד scope של דוחות שאלות: active manual bank, archive/generated, concept-density coverage ו-dashboard display, ולהוסיף gate שמזהה דוח stale.
+- [ ] SYS-AUDIT-021 — לטפל ב-`17` הערות איכות שנותרו ב-`quality:remediation:strict`: `12` ניסוחים גנריים, `4` Fill ambiguity ו-`1` option-length balance.
+- [ ] SYS-AUDIT-022 — להשתמש ב-weak counters מ-`svcollege:student-export:strict` לתיעדוף כתיבה: `withoutQuestions: 121`, `withoutHardQuestion: 140`, `codeConceptsWithoutProof: 132`.
+- [ ] SYS-AUDIT-023 — כל דוח Kimi/AUDIT חיצוני הוא input בלבד; claim נכנס ל-backlog פעיל רק אחרי live gate שמוכיח שהוא עדיין נכון.
 
 ### 📊 סיכום התקדמות > Forward Execution Plan — 2026-04-30 > P0 — כיסוי שאלות ידני מלא לכל הפורטל
 
@@ -274,7 +277,7 @@
 
 ## משימות שהושלמו — בסוף
 
-בוצעו 749 מתוך 909 משימות מסומנות. הפירוט המלא עבר לארכיון: [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
+בוצעו 749 מתוך 912 משימות מסומנות. הפירוט המלא עבר לארכיון: [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
 
 ### הושלם בסבב הנוכחי
 

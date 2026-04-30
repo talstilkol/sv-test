@@ -16,7 +16,7 @@
 
 > **עדכון Exam Sprint 2026-04-29:** נוסף P-0.3 ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md): ספרינט 7 ימים לפני מבחן. הוא מתמקד ב-weakest 10, no-repeat simulation, harder-after-correct, wrong-answer repair, smoke מובייל/פוקוס, וגיבוש `Exam Edition RC`.
 
-> **עדכון System Bug Audit 2026-04-30:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `240` פריטים: `DONE 17`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 216`.
+> **עדכון System Bug Audit 2026-04-30:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `243` פריטים: `DONE 17`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 219`.
 
 > **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `486` פערי MC ו-`481` פערי Fill ידניים; `MANUAL_QUESTION_AUTHORING_PLAN.md` דורש עדיין `1,388` MC ו-`893` Fill ידניות. הבנק הידני הפעיל עומד על `316` MC ו-`243` Fill.
 
@@ -47,7 +47,7 @@
 | SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `486` פערי MC ו-`481` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |
 | SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,388` MC ו-`893` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |
 | SYS-AUDIT-003 | [ ] | P1 | להשאיר `222` פערי Trace/Build/Bug לא-עדיפותיים אחרי Finish Line 1, ואז לסגור אותם עם תוכן ידני ו-browser smoke. |
-| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `240` פריטים יש `216` NOT DONE ו-`7` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |
+| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `243` פריטים יש `219` NOT DONE ו-`7` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |
 | SYS-AUDIT-005 | [ ] | P1 | להשלים keyboard-only coverage ל-Escape/Enter/Arrow, focus return, מעבר טאבים, מעבר מושגים ו-submit answer. |
 | SYS-AUDIT-006 | [ ] | P1 | להמשיך פירוק `app.js`/views רק אחרי Finish Line 1 ירוק, עם tests לכל slice. |
 | SYS-AUDIT-007 | [ ] | P1 | להוכיח Cross-device Sync מול backend/auth אמיתי; עד אז זה alpha מקומי בלבד. |
@@ -55,16 +55,19 @@
 | SYS-AUDIT-009 | [ ] | P1 | לבצע security inventory ל-`.innerHTML`/`document.write`, CSP מדורג ו-trust boundary ל-localStorage. |
 | SYS-AUDIT-010 | [ ] | P1 | להוסיף source-of-truth report שמבדיל live gates מדוחות historical/superseded. |
 | SYS-AUDIT-011 | [ ] | P1 | להוסיף export/report deterministic ללוג Bug Agent, ללא PII וללא telemetry מזויפת. |
-| SYS-AUDIT-012 | [ ] | P2 | להוסיף Playwright E2E production-like לזרימות ליבה: שיעור, מושג, בנק שאלות, MC/Fill, progress, בית ו-offline reload. |
-| SYS-AUDIT-013 | [ ] | P2 | לרכז cache version וציפיות assets ממקור אחד כדי למנוע drift ב-PWA. |
-| SYS-AUDIT-014 | [ ] | P2 | להשאיר `data/questions_bank_seeded.js` כארכיון לא פעיל או למחוק רק אחרי שכל פריט שימושי נכתב מחדש ידנית ונבדק. |
-| SYS-AUDIT-015 | [ ] | P2 | אחרי Finish Line 1 בלבד: SEO, telemetry חיצוני, payload optimization, מוזיאון/חנות/קהילה. |
-| SYS-AUDIT-016 | [ ] | P1 | לתקן drift במטאדאטה של דוחות generated: `FEATURE_COVERAGE_REPORT.md` ו-`QUESTION_REMEDIATION_QUEUE.md` עדיין מתחילים ב-`2026-04-28`, ו-`METRICS_DASHBOARD_REPORT.md` ב-`2026-04-29` למרות counter עדכני; כל דוח חייב run date/scope אמיתי או סימון historical. |
-| SYS-AUDIT-017 | [ ] | P1 | לבצע allowlist מלא ל-154 מופעי `innerHTML` ול-`document.write` אחד ב-`app.js`, עם data origin, escaping/sanitizer, owner ו-smoke לכל נתיב פעיל. |
-| SYS-AUDIT-018 | [ ] | P1 | להגדיר trust boundary לכל 164 מופעי `localStorage` ב-`app.js`: progress/XP/evidence מקומיים הם עזר לימודי בלבד ולא ראיית ציון מאומתת בלי backend/auth אמיתי. |
-| SYS-AUDIT-019 | [ ] | P2 | אחרי Finish Line 1: לפרק payload ו-CSS לפי feature. build נוכחי עובר אבל עדיין מוציא `dist/app.js` 1.6MB, `dist/style.css` 594KB ו-`dist/assets/index-DDEpfRTZ.css` 454KB. |
-| SYS-AUDIT-020 | [ ] | P1 | לאחד scope של דוחות שאלות: להפריד active manual bank, archive/generated, concept-density coverage ו-dashboard display, ולהוסיף gate שמזהה קובץ דוח stale אחרי strict/write. |
-| SYS-AUDIT-021 | [V] | P1 | תוקנו טסטים עם ספירות frozen אחרי באטצ' ידני: `tests/question-quality-report.test.js` ו-`tests/question-reuse-audit.test.js` עברו לבדוק invariants במקום hardcoded totals; `npm test -- --run` ירוק. |
+| SYS-AUDIT-012 | [ ] | P1 | לטפל ב-17 הערות איכות שנותרו ב-`quality:remediation:strict`: 12 ניסוחים גנריים, 4 Fill ambiguity ו-1 option-length balance. |
+| SYS-AUDIT-013 | [ ] | P1 | להשלים Bug Agent developer loop: export/report מקומי, ללא PII, ניקוי באג רק אחרי live check שמוכיח שהוא תוקן. |
+| SYS-AUDIT-014 | [ ] | P2 | להוסיף Playwright E2E production-like לזרימות ליבה: שיעור, מושג, בנק שאלות, MC/Fill, progress, בית ו-offline reload. |
+| SYS-AUDIT-015 | [ ] | P2 | לרכז cache version וציפיות assets ממקור אחד כדי למנוע drift ב-PWA. |
+| SYS-AUDIT-016 | [ ] | P2 | להשאיר `data/questions_bank_seeded.js` כארכיון לא פעיל או למחוק רק אחרי שכל פריט שימושי נכתב מחדש ידנית ונבדק. |
+| SYS-AUDIT-017 | [ ] | P2 | אחרי Finish Line 1 בלבד: SEO, telemetry חיצוני, payload optimization, מוזיאון/חנות/קהילה. |
+| SYS-AUDIT-018 | [ ] | P1 | לתקן drift במטאדאטה של דוחות generated: נמצאו 18 דוחות עם תאריך `2026-04-28`/`2026-04-29`; כל דוח חייב run date/scope אמיתי או סימון historical. |
+| SYS-AUDIT-019 | [ ] | P1 | לבצע allowlist מלא ל-152 מופעי `innerHTML`, `document.write` אחד ו-2 `insertAdjacentHTML` פעילים ב-`app.js`, עם data origin, escaping/sanitizer, owner ו-smoke לכל נתיב פעיל. |
+| SYS-AUDIT-020 | [ ] | P1 | להגדיר trust boundary לכל 140 מופעי `localStorage`/`sessionStorage` ב-`app.js`: progress/XP/evidence מקומיים הם עזר לימודי בלבד ולא ראיית ציון מאומתת בלי backend/auth אמיתי. |
+| SYS-AUDIT-021 | [ ] | P2 | אחרי Finish Line 1: לפרק payload ו-CSS לפי feature. build נוכחי עובר אבל עדיין מוציא `dist/assets/index-DDEpfRTZ.css` 465.34KB, `dist/index.html` 102.10KB ו-`dist/assets/core-hrllUkwp.js` 141.36KB. |
+| SYS-AUDIT-022 | [ ] | P1 | להשתמש ב-weak counters מ-`svcollege:student-export:strict` לתיעדוף: `withoutQuestions: 121`, `withoutHardQuestion: 140`, `codeConceptsWithoutProof: 132`. |
+| SYS-AUDIT-023 | [ ] | P1 | כל דוח Kimi/AUDIT חיצוני הוא input בלבד; claim נכנס ל-backlog פעיל רק אחרי live gate שמוכיח שהוא עדיין נכון. |
+| SYS-AUDIT-024 | [V] | P1 | תוקנו טסטים עם ספירות frozen אחרי באטצ' ידני: `tests/question-quality-report.test.js` ו-`tests/question-reuse-audit.test.js` עברו לבדוק invariants במקום hardcoded totals; `npm test -- --run` ירוק. |
 
 ## 0B. Historical System Bug Audit Backlog — 2026-04-30
 
@@ -96,7 +99,7 @@
 | BUG-AUDIT-020 | [V] | P1 | `questions:activity-authoring-plan:strict` הוקשח ונכשל עכשיו על `ready:false`; פערי Trace/Build/Bug לא יכולים להיראות ירוקים לפני authoring ידני אמיתי. |
 | BUG-AUDIT-021 | [ ] | P0 | לכתוב/לסקור ידנית MC/Fill במקום להסתמך על legacy generated bank; אחרי תת-batch רביעי של Lesson 13 `questions:coverage-targets` מציג אמת: `486` פערי MC ו-`481` פערי Fill ידניים. |
 | BUG-AUDIT-022 | [ ] | P2 | אחרי סגירת Finish Line 1 לפרק payload frontend: לצמצם stylesheet גלובלי גדול ו-core chunk גדול באמצעות חלוקת styles/modules לפי feature עם smoke tests. |
-| BUG-AUDIT-023 | [ ] | P0 | לתקן overclaim בסטטוס התוכנית: `BRUTAL_MASTER_PLAN_AUDIT.md` מצא עכשיו `240` פריטים, מתוכם `17` DONE, `7` PARTIAL, `216` NOT DONE ו-`0` FAKED. אין להציג Phase כ-100% עד שכל פריט PARTIAL מקבל ראיה אמיתית או מסומן מחדש. |
+| BUG-AUDIT-023 | [ ] | P0 | לתקן overclaim בסטטוס התוכנית: `BRUTAL_MASTER_PLAN_AUDIT.md` מצא עכשיו `243` פריטים, מתוכם `17` DONE, `7` PARTIAL, `219` NOT DONE ו-`0` FAKED. אין להציג Phase כ-100% עד שכל פריט PARTIAL מקבל ראיה אמיתית או מסומן מחדש. |
 | BUG-AUDIT-024 | [ ] | P0 | להוריד ל-PARTIAL/NOT DONE כל `[V]` שתלוי בפיילוט, D1/D7, real usage, pricing, post-exam review או learner outcome אמיתי עד שיש נתוני אמת. |
 | BUG-AUDIT-025 | [ ] | P1 | להפוך את `brutal-master-plan-audit` לשער קבוע לפני release: כל `FAKED` חייב להיות 0, וכל `PARTIAL` חייב להיות מוצדק עם owner וקריטריון סגירה. |
 | BUG-AUDIT-026 | [ ] | P1 | למנוע drift בזמן batch חלקי: cache version, HTML script version, service-worker tests ודוחות smoke צריכים להיגזר ממקור אחד או להיבדק ב-gate אחד. |
