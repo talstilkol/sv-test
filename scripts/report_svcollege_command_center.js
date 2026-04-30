@@ -12,7 +12,7 @@ const REPORT_DATE = "2026-04-28";
 const JSON_PATH = path.join(ROOT, "SVCOLLEGE_COMMAND_CENTER.json");
 const MD_PATH = path.join(ROOT, "SVCOLLEGE_COMMAND_CENTER.md");
 const LESSONS_MANIFEST_PATH = path.join(ROOT, "lessons", "manifest.json");
-const PARALLEL_PROMPTS_PATH = path.join(ROOT, "SVCOLLEGE_PARALLEL_SESSION_PROMPTS.md");
+const AGENT_HANDOFF_PATH = path.join(ROOT, "docs", "plans", "04_AGENT_HANDOFF.md");
 const ASSET_RE = /\.(pdf|mp4|docx|pptx)$/i;
 
 const LESSON_FILE_BY_ID = Object.freeze({
@@ -217,8 +217,8 @@ function countBy(items, key) {
 }
 
 function parseParallelSessions() {
-  if (!fs.existsSync(PARALLEL_PROMPTS_PATH)) return [];
-  const text = fs.readFileSync(PARALLEL_PROMPTS_PATH, "utf8");
+  if (!fs.existsSync(AGENT_HANDOFF_PATH)) return [];
+  const text = fs.readFileSync(AGENT_HANDOFF_PATH, "utf8");
   return text
     .split(/\r?\n/)
     .filter((line) => /^\| [0-8] /.test(line))
@@ -275,7 +275,12 @@ function buildDocsStatus() {
     "SVCOLLEGE_TAB_MATRIX.json",
     "SVCOLLEGE_BROWSER_SMOKE.md",
     "SVCOLLEGE_LESSON_INVENTORY.md",
-    "SVCOLLEGE_PARALLEL_SESSION_PROMPTS.md",
+    "docs/plans/00_CANONICAL_INDEX.md",
+    "docs/plans/01_FINISH_LINE_1.md",
+    "docs/plans/02_MANUAL_CONTENT_GOVERNANCE.md",
+    "docs/plans/03_DEFERRED_BACKLOG.md",
+    "docs/plans/04_AGENT_HANDOFF.md",
+    "docs/plans/05_LEGACY_DOC_MIGRATION.md",
     "lessons/manifest.json",
   ];
 

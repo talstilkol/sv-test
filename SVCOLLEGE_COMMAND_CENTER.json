@@ -2195,7 +2195,7 @@
         ]
       },
       "activities": {
-        "count": 16,
+        "count": 25,
         "files": [
           {
             "file": "data/questions_trace.js",
@@ -3668,81 +3668,8 @@
     "currentFinishLineScope": "Finish Line 1 can be exam-ready before the 10-student pilot; broad student-ready promotion still requires first-user feedback."
   },
   "parallelSessions": {
-    "total": 9,
-    "sessions": [
-      {
-        "session": "0 Coordinator",
-        "branch": "codex/svcollege-coordination",
-        "model": "GPT-5.5",
-        "intelligence": "xhigh",
-        "openWhen": "T0",
-        "ownership": "תוכניות, דוחות, מיזוג, wiring משותף"
-      },
-      {
-        "session": "1 SQL/ORM",
-        "branch": "codex/svcollege-sql-orm",
-        "model": "GPT-5.5",
-        "intelligence": "high",
-        "openWhen": "T0+10",
-        "ownership": "SQL/PostgreSQL/Prisma/Drizzle content"
-      },
-      {
-        "session": "2 Auth",
-        "branch": "codex/svcollege-auth",
-        "model": "GPT-5.5",
-        "intelligence": "xhigh",
-        "openWhen": "T0+10",
-        "ownership": "Auth/security content"
-      },
-      {
-        "session": "3 Next.js",
-        "branch": "codex/svcollege-nextjs",
-        "model": "GPT-5.5",
-        "intelligence": "high",
-        "openWhen": "T0+10",
-        "ownership": "Next.js content"
-      },
-      {
-        "session": "4 DevOps",
-        "branch": "codex/svcollege-devops",
-        "model": "GPT-5.4",
-        "intelligence": "high",
-        "openWhen": "T0+10",
-        "ownership": "DevOps/Docker/CI content"
-      },
-      {
-        "session": "5 Nest.js",
-        "branch": "codex/svcollege-nestjs",
-        "model": "GPT-5.5",
-        "intelligence": "high",
-        "openWhen": "T0+10",
-        "ownership": "Nest.js content"
-      },
-      {
-        "session": "6 AI Engineering",
-        "branch": "codex/svcollege-ai-engineering",
-        "model": "GPT-5.5",
-        "intelligence": "xhigh",
-        "openWhen": "T0+10",
-        "ownership": "AI SDK/RAG/Agents content"
-      },
-      {
-        "session": "8 Question Quality",
-        "branch": "codex/svcollege-question-quality",
-        "model": "GPT-5.4",
-        "intelligence": "high",
-        "openWhen": "אחרי 1-6",
-        "ownership": "validators, prerequisites, feedback"
-      },
-      {
-        "session": "7 All Tabs QA",
-        "branch": "codex/svcollege-tab-health",
-        "model": "GPT-5.4",
-        "intelligence": "high",
-        "openWhen": "אחרי integration",
-        "ownership": "smoke/e2e/tests + small fixes"
-      }
-    ],
+    "total": 0,
+    "sessions": [],
     "nextOpenRule": "Limited mode active: do not open the full train. All 15 SVCollege modules are covered and desktop/mobile all-tabs smoke passed; continue only with question-depth hardening, hard-question feedback, or regression fixes unless the user re-enables wider merging."
   },
   "docs": [
@@ -3783,7 +3710,27 @@
       "exists": true
     },
     {
-      "file": "SVCOLLEGE_PARALLEL_SESSION_PROMPTS.md",
+      "file": "docs/plans/00_CANONICAL_INDEX.md",
+      "exists": true
+    },
+    {
+      "file": "docs/plans/01_FINISH_LINE_1.md",
+      "exists": true
+    },
+    {
+      "file": "docs/plans/02_MANUAL_CONTENT_GOVERNANCE.md",
+      "exists": true
+    },
+    {
+      "file": "docs/plans/03_DEFERRED_BACKLOG.md",
+      "exists": true
+    },
+    {
+      "file": "docs/plans/04_AGENT_HANDOFF.md",
+      "exists": true
+    },
+    {
+      "file": "docs/plans/05_LEGACY_DOC_MIGRATION.md",
       "exists": true
     },
     {

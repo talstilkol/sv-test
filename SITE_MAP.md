@@ -141,9 +141,12 @@
 
 | קובץ | תכלית |
 |---|---|
-| [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md) | איפיון V5.1 (2,580 שורות) — 12 שיטות יצירה |
-| [EXECUTION_TASKS.md](EXECUTION_TASKS.md) | 209+ משימות עם V/[ ] |
-| [PROMPTS_PHASE2.md](PROMPTS_PHASE2.md) | פרומפטים ל-Track E/F/G/H |
+| [docs/plans/00_CANONICAL_INDEX.md](docs/plans/00_CANONICAL_INDEX.md) | אינדקס התוכנית הקומפקטי והמחייב לסוכנים |
+| [EXECUTION_TASKS.md](EXECUTION_TASKS.md) | תוכנית ביצוע חיה לפי gates |
+| [MASTER_PLAN.md](MASTER_PLAN.md) | backlog חי ו-bug audit |
+| [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md) | איפיון היסטורי לקריאה בלבד |
+| [docs/plans/04_AGENT_HANDOFF.md](docs/plans/04_AGENT_HANDOFF.md) | פרומפט המשך לסוכן הבא |
+| [docs/plans/05_LEGACY_DOC_MIGRATION.md](docs/plans/05_LEGACY_DOC_MIGRATION.md) | מפת הגירה שמסבירה מה נשמר מכל קובץ תכנון ישן שנמחק |
 | [SITE_MAP.md](SITE_MAP.md) | מסמך זה |
 
 ---

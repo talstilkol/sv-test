@@ -160,6 +160,10 @@
 
 נקראו `/Users/tal/.windsurf/plans/lumenportal-full-audit-report-f5798c.md` ו-`/Users/tal/.windsurf/plans/lumenportal-improvement-plan-f5798c.md`. הדוחות טובים כ-backlog ביקורת, אבל אינם מקור אמת: הם כוללים טענות שכבר השתנו במצב החי, למשל Vite/build כבר קיים, PWA/a11y/theme/tests כבר מכוסים חלקית בשערים, `questions_bank_seeded.js` אינו נטען ב-runtime, ומספרי tests/שורות אינם עדכניים. לכן הוטמעו רק משימות שאפשר לאמת ב-live gates: security inventory ל-`innerHTML`, CSP מדורג, trust boundary ל-localStorage, keyboard/a11y hardening, visual smoke, offline UX, modularization ו-E2E. לא אומצה המלצת HMAC hardcoded ל-localStorage כי היא יוצרת תחושת אבטחה מזויפת בלי backend/auth אמיתי.
 
+### Planning Docs Cleanup — 2026-04-30
+
+בוצע צמצום תיעוד תכנוני: נוספה שכבת אינדקס חדשה ב-`docs/plans/` עם 6 קבצי Markdown קנוניים (`00_CANONICAL_INDEX`, `01_FINISH_LINE_1`, `02_MANUAL_CONTENT_GOVERNANCE`, `03_DEFERRED_BACKLOG`, `04_AGENT_HANDOFF`, `05_LEGACY_DOC_MIGRATION`). `05_LEGACY_DOC_MIGRATION.md` הוא מפת ההגירה שמוכיחה לכל קובץ שנמחק איפה נשמר התוכן העדכני והרלוונטי שלו, ומה נמחק כי הוא מיושן/סותר את מדיניות השאלות הידניות. קבצי legacy ישנים שנמחקו: `PRODUCT_SPEC.md`, `MASTER_PLAN_V2.md`, `MASTER_PLAN_V3.md`, `COORDINATION.md`, `PROMPTS.md`, `PROMPTS_PHASE2.md`, `COMPETITIVE_ANALYSIS.md`, `SVCOLLEGE_PARALLEL_SESSION_PROMPTS.md`, `AUDIT_2026.md`, `AUDIT_2026-04-28.md`, `AUDIT_SEEDED_QA_2026-04-28.md`, `AUDIT_DISTRACTORS_2026-04-28.md`. דוחות ושערים חיים לא נמחקו אם scripts/tests קוראים מהם.
+
 ### Forward Execution Plan — 2026-04-30
 
 מקור אמת קדימה: שאלות וחומר לימוד נוצרים ידנית בלבד, עוברים QA ידני, ורק אז נכנסים ל-`data/questions_bank.js` או לקבצי פעילות אמיתיים. אין generator, אין seeded fallback, אין נתוני pilot/pricing/usage מומצאים, ואין `Math.random()`.
@@ -241,6 +245,7 @@
 - [ ] FWD-7.8 — להגדיר trust boundary ל-localStorage: התקדמות מקומית אינה ראיית ציון מאומתת; אימות מאסטר אמיתי דורש backend/auth אמיתי.
 - [ ] FWD-7.9 — להוסיף Offline UX indicator ודוח cache effectiveness מקומי: online/offline, cache version, assets חסרים ו-last update.
 - [ ] FWD-7.10 — להוסיף reconciliation gate לדוחות חיצוניים/היסטוריים: claim מ-AUDIT/Kimi לא נכנס כפתוח עד שפקודת live gate מאמתת אותו.
+- [V] FWD-7.11 — לצמצם קבצי תכנון ישנים לשכבת `docs/plans/` קנונית ולהסיר legacy docs שאינם נקראים על ידי gates חיים.
 
 #### P2 — רק אחרי Finish Line 1 ירוק
 

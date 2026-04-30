@@ -2,7 +2,9 @@
 
 > תאריך: 2026-04-28 · גרסה: 5.4 · סטטוס: מסמך פעיל
 >
-> מסמך זה מאחד ומחליף את: PRODUCT_SPEC.md, MASTER_PLAN.md, MASTER_PLAN_V2.md, MASTER_PLAN_V3.md, COORDINATION.md.
+> מסמך זה הוא מסמך איפיון היסטורי פעיל-לקריאה בלבד. אינדקס התוכנית הקומפקטי והמחייב לסוכנים נמצא ב-[docs/plans/00_CANONICAL_INDEX.md](docs/plans/00_CANONICAL_INDEX.md).
+>
+> קבצי legacy ישנים כמו PRODUCT_SPEC.md, MASTER_PLAN_V2.md, MASTER_PLAN_V3.md ו-COORDINATION.md נמחקו; התוכן הרלוונטי שלהם מרוכז ב-`docs/plans/` ובמקורות האמת החיים.
 > מבוסס על: כל הסבבים של דיון, AUDITs, COMPETITIVE_ANALYSIS, ועבודת Tracks A-D.
 
 ---

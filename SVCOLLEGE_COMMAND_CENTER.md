@@ -88,7 +88,7 @@
 | אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde | 1/1 | 44 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
 | React ופיתוח Frontend מתקדם | 5/5 | 55 | 76 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
 | TypeScript ופטרנים מתקדמים ב-React | 2/2 | 12 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI | 3/3 | 56 | 16 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI | 3/3 | 56 | 25 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
 | פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO | 1/1 | 44 | 22 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
 | תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing | 2/2 | 39 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
 | Frameworks צד-שרת — Nest.js modules + dependency injection | 1/1 | 38 | 20 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
@@ -105,20 +105,10 @@
 
 ## Parallel Sessions
 
-- Total planned sessions: 9
+- Total planned sessions: 0
 - Rule: Limited mode active: do not open the full train. All 15 SVCollege modules are covered and desktop/mobile all-tabs smoke passed; continue only with question-depth hardening, hard-question feedback, or regression fixes unless the user re-enables wider merging.
 
-| Session | Branch | Model | Intelligence | Open when | Ownership |
-|---|---|---:|---:|---|---|
-| 0 Coordinator | `codex/svcollege-coordination` | GPT-5.5 | xhigh | T0 | תוכניות, דוחות, מיזוג, wiring משותף |
-| 1 SQL/ORM | `codex/svcollege-sql-orm` | GPT-5.5 | high | T0+10 | SQL/PostgreSQL/Prisma/Drizzle content |
-| 2 Auth | `codex/svcollege-auth` | GPT-5.5 | xhigh | T0+10 | Auth/security content |
-| 3 Next.js | `codex/svcollege-nextjs` | GPT-5.5 | high | T0+10 | Next.js content |
-| 4 DevOps | `codex/svcollege-devops` | GPT-5.4 | high | T0+10 | DevOps/Docker/CI content |
-| 5 Nest.js | `codex/svcollege-nestjs` | GPT-5.5 | high | T0+10 | Nest.js content |
-| 6 AI Engineering | `codex/svcollege-ai-engineering` | GPT-5.5 | xhigh | T0+10 | AI SDK/RAG/Agents content |
-| 8 Question Quality | `codex/svcollege-question-quality` | GPT-5.4 | high | אחרי 1-6 | validators, prerequisites, feedback |
-| 7 All Tabs QA | `codex/svcollege-tab-health` | GPT-5.4 | high | אחרי integration | smoke/e2e/tests + small fixes |
+- No session table found.
 
 ## Canonical Docs
 
@@ -133,7 +123,12 @@
 | `SVCOLLEGE_TAB_MATRIX.json` | yes |
 | `SVCOLLEGE_BROWSER_SMOKE.md` | yes |
 | `SVCOLLEGE_LESSON_INVENTORY.md` | yes |
-| `SVCOLLEGE_PARALLEL_SESSION_PROMPTS.md` | yes |
+| `docs/plans/00_CANONICAL_INDEX.md` | yes |
+| `docs/plans/01_FINISH_LINE_1.md` | yes |
+| `docs/plans/02_MANUAL_CONTENT_GOVERNANCE.md` | yes |
+| `docs/plans/03_DEFERRED_BACKLOG.md` | yes |
+| `docs/plans/04_AGENT_HANDOFF.md` | yes |
+| `docs/plans/05_LEGACY_DOC_MIGRATION.md` | yes |
 | `lessons/manifest.json` | yes |
 
 ## Commands

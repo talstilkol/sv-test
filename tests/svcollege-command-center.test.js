@@ -24,6 +24,14 @@ describe("SVCollege command center", () => {
     expect(report.sourceAssets.total).toBe(36);
     expect(report.sourceAssets.rootAssets).toBe(0);
     expect(report.docs.every((doc) => doc.exists)).toBe(true);
+    expect(report.docs.map((doc) => doc.file)).toEqual(expect.arrayContaining([
+      "docs/plans/00_CANONICAL_INDEX.md",
+      "docs/plans/01_FINISH_LINE_1.md",
+      "docs/plans/02_MANUAL_CONTENT_GOVERNANCE.md",
+      "docs/plans/03_DEFERRED_BACKLOG.md",
+      "docs/plans/04_AGENT_HANDOFF.md",
+      "docs/plans/05_LEGACY_DOC_MIGRATION.md",
+    ]));
     expect(report.commands).toEqual(expect.arrayContaining([
       "npm run svcollege:readiness:write",
       "npm run svcollege:tab-matrix:write",
@@ -130,17 +138,12 @@ describe("SVCollege command center", () => {
     expect(report.redFirstQueue).toEqual([]);
   });
 
-  it("extracts the parallel-session opening board", () => {
+  it("keeps broad parallel sessions closed after the handoff consolidation", () => {
     const report = commandCenter.buildReport();
-    const sessions = report.parallelSessions.sessions.map((session) => session.session);
 
-    expect(report.parallelSessions.total).toBe(9);
-    expect(sessions).toEqual(expect.arrayContaining([
-      "0 Coordinator",
-      "1 SQL/ORM",
-      "8 Question Quality",
-      "7 All Tabs QA",
-    ]));
+    expect(report.parallelSessions.total).toBe(0);
+    expect(report.parallelSessions.sessions).toEqual([]);
+    expect(report.docs.map((doc) => doc.file)).not.toContain("SVCOLLEGE_PARALLEL_SESSION_PROMPTS.md");
     expect(report.parallelSessions.nextOpenRule).toContain("All 15 SVCollege modules are covered");
   });
 

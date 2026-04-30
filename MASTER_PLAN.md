@@ -94,6 +94,7 @@
 | BUG-AUDIT-048 | [ ] | P1 | להוסיף Offline UX indicator ודוח cache effectiveness מקומי בלבד: מצב offline, assets חסרים, cache version, last update. אין analytics חיצוני בלי privacy policy ואישור מפורש. |
 | BUG-AUDIT-049 | [ ] | P1 | להפוך את דוחות Kimi/AUDIT חיצוניים ל-input בלבד: כל claim חייב live gate עדכני. הדוח `f5798c` כולל טענות מיושנות על Vite, a11y, seeded bank ומספרי tests ולכן לא ייספר כמקור אמת ללא אימות. |
 | BUG-AUDIT-050 | [ ] | P2 | להוסיף Playwright E2E production-like לזרימות ליבה: פתיחת שיעור, מעבר מושג, פתיחת בנק שאלות, מענה MC/Fill ידני, שמירת התקדמות, חזרה לבית וטעינה offline. |
+| BUG-AUDIT-051 | [V] | P1 | צומצמה שכבת התכנון ל-`docs/plans/` עם אינדקס קנוני, Finish Line, מדיניות תוכן ידנית, backlog דחוי, agent handoff ומפת הגירה `05_LEGACY_DOC_MIGRATION.md`; קבצי legacy ישנים נמחקו רק אחרי שהתוכן העדכני והרלוונטי שלהם נשמר או סומן כמיושן, ובלי למחוק דוחות/gates חיים. |
 
 ---
 
