@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.9";
+var QUESTIONS_BANK_VERSION = "2.1.10";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -82,6 +82,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 12 sub-batch: array, index, map and filter MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.10",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 12 sub-batch: forEach, spread, uppercase and lowercase MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -1524,6 +1530,222 @@ var QUESTIONS_BANK = {
         "❌ const לא משנה את התנהגות filter.",
         "❌ filter לא מוחקת מהמקור.",
         "❌ filter עובדת על מערכים של אובייקטים, strings, numbers ועוד.",
+      ],
+    },
+    {
+      id: "mc_l12_foreach_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::forEach", level: 3,
+      question: "מה התפקיד הנכון של forEach?",
+      options: [
+        "להריץ פעולה על כל איבר בלי לבנות מערך תוצאות חדש",
+        "להחזיר מערך חדש באותו אורך כמו המקור",
+        "להחזיר רק את האיברים שעברו תנאי",
+        "להפוך מחרוזת לאותיות קטנות",
+      ],
+      correctIndex: 0,
+      explanation: "forEach מריצה callback לכל איבר ומתאימה ל-side effects כמו הדפסה או עדכון DOM. ערך ההחזרה שלה אינו מערך חדש.",
+      optionFeedback: [
+        "✅ נכון: forEach מיועדת לפעולה לכל איבר.",
+        "❌ זה תיאור של map.",
+        "❌ זה תיאור של filter.",
+        "❌ זה תיאור של toLowerCase, לא forEach.",
+      ],
+    },
+    {
+      id: "mc_l12_foreach_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::forEach", level: 5,
+      question: "מה יודפס בסוף?\n\nconst names = ['Dana', 'Avi'];\nconst result = names.forEach((name) => console.log(name));\nconsole.log(result);",
+      options: [
+        "Dana ואז Avi ואז undefined",
+        "2",
+        "'Dana,Avi'",
+        "TypeError לפני ההדפסה הראשונה",
+      ],
+      correctIndex: 0,
+      explanation: "ה-callback מדפיס את השמות, אבל forEach עצמה מחזירה undefined.",
+      optionFeedback: [
+        "✅ נכון: הפעולה רצה לכל שם, ואז result הוא undefined.",
+        "❌ 2 הוא אורך המערך, אבל result אינו length.",
+        "❌ אין כאן join שמחזיר מחרוזת מחוברת.",
+        "❌ הקוד תקין; אין TypeError.",
+      ],
+    },
+    {
+      id: "mc_l12_foreach_manual_003", topicId: "topic_arrays", conceptKey: "lesson_12::forEach", level: 6,
+      question: "מתי forEach היא בחירה חלשה יחסית?",
+      options: [
+        "כשצריך לשמור מערך חדש של ערכים מחושבים",
+        "כשצריך לשלוח console.log לכל איבר",
+        "כשצריך לבצע side effect לכל איבר",
+        "כשלא צריך להשתמש בערך ההחזרה",
+      ],
+      correctIndex: 0,
+      explanation: "אם המטרה היא מערך חדש של תוצאות, map מתאימה יותר. forEach טובה לפעולות, לא להחזרת תוצאה.",
+      optionFeedback: [
+        "✅ נכון: במקרה כזה עדיף map.",
+        "❌ הדפסה לכל איבר היא שימוש טבעי ב-forEach.",
+        "❌ side effects הם תחום מתאים ל-forEach.",
+        "❌ אם לא צריך ערך החזרה, forEach יכולה להיות בחירה מתאימה.",
+      ],
+    },
+    {
+      id: "mc_l12_spread_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::spread", level: 3,
+      question: "מה עושה spread (`...`) כשהוא מופעל בתוך מערך חדש?",
+      options: [
+        "פורש את איברי המערך הקיים לתוך המערך החדש",
+        "מוחק את המערך הקיים אחרי הפריסה",
+        "ממיר את המערך למחרוזת אחת",
+        "מסנן אוטומטית איברים כפולים",
+      ],
+      correctIndex: 0,
+      explanation: "spread פותח iterable לאיברים בודדים. בתוך [] הוא מאפשר ליצור עותק או מיזוג של מערכים.",
+      optionFeedback: [
+        "✅ נכון: האיברים נפרסים לתוך מערך חדש.",
+        "❌ spread לא מוחק את המקור.",
+        "❌ המרה למחרוזת היא פעולה אחרת כמו toString או join.",
+        "❌ spread לא מבצע unique או סינון כפילויות.",
+      ],
+    },
+    {
+      id: "mc_l12_spread_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::spread", level: 5,
+      question: "מה יודפס?\n\nconst arr1 = [1, 2];\nconst copy = [...arr1];\ncopy.push(3);\nconsole.log(arr1.join(','));",
+      options: [
+        "'1,2'",
+        "'1,2,3'",
+        "'3'",
+        "undefined",
+      ],
+      correctIndex: 0,
+      explanation: "copy הוא מערך חדש ברמה הראשונה. push על copy לא משנה את arr1.",
+      optionFeedback: [
+        "✅ נכון: המקור נשאר עם 1 ו-2 בלבד.",
+        "❌ זה היה קורה אם copy היה אותו reference כמו arr1.",
+        "❌ push לא מחק את הערכים הקודמים.",
+        "❌ join מחזיר מחרוזת, לא undefined.",
+      ],
+    },
+    {
+      id: "mc_l12_spread_manual_003", topicId: "topic_arrays", conceptKey: "lesson_12::spread", level: 6,
+      question: "מה המגבלה החשובה של spread בשכפול אובייקטים או מערכים מקוננים?",
+      options: [
+        "הוא עושה shallow copy ולכן הפניות פנימיות עדיין משותפות",
+        "הוא תמיד עושה deep clone לכל עומק",
+        "הוא עובד רק על numbers",
+        "הוא משנה את כל הערכים למחרוזות",
+      ],
+      correctIndex: 0,
+      explanation: "spread מעתיק את השכבה הראשונה. אובייקטים או מערכים פנימיים נשארים references משותפים.",
+      optionFeedback: [
+        "✅ נכון: זו הסכנה המרכזית ב-nested data.",
+        "❌ deep clone דורש כלי אחר כמו structuredClone במקרים מתאימים.",
+        "❌ spread עובד על iterables ו-objects בהקשרים המתאימים, לא רק numbers.",
+        "❌ spread לא ממיר טיפוסים למחרוזת.",
+      ],
+    },
+    {
+      id: "mc_l12_uppercase_manual_001", topicId: "topic_strings", conceptKey: "lesson_12::uppercase", level: 3,
+      question: "מה מחזירה `toUpperCase()`?",
+      options: [
+        "מחרוזת חדשה שבה האותיות הומרו לגדולות",
+        "אותה מחרוזת מקורית אחרי שינוי במקום",
+        "מערך של אותיות",
+        "boolean שמציין אם כל האותיות גדולות",
+      ],
+      correctIndex: 0,
+      explanation: "מחרוזות ב-JavaScript הן immutable, ולכן toUpperCase מחזירה ערך string חדש.",
+      optionFeedback: [
+        "✅ נכון: הפעולה מחזירה מחרוזת חדשה.",
+        "❌ strings לא משתנות במקום.",
+        "❌ התוצאה היא string, לא array.",
+        "❌ אין כאן בדיקת true/false.",
+      ],
+    },
+    {
+      id: "mc_l12_uppercase_manual_002", topicId: "topic_strings", conceptKey: "lesson_12::uppercase", level: 5,
+      question: "מה יודפס?\n\nconst name = 'tal cohen';\nconst upper = name.toUpperCase();\nconsole.log(upper);\nconsole.log(name);",
+      options: [
+        "TAL COHEN ואז המקור נשאר tal cohen",
+        "המשתנה name נמחק אחרי הקריאה",
+        "הקונסול מדפיס רק שורה אחת",
+        "נזרקת שגיאה כי strings לא תומכות במתודות",
+      ],
+      correctIndex: 0,
+      explanation: "upper מקבל מחרוזת חדשה באותיות גדולות. name המקורי נשאר כפי שהיה.",
+      optionFeedback: [
+        "✅ נכון: הערך החדש גדול, המקור נשאר קטן.",
+        "❌ קריאה ל-toUpperCase לא מוחקת משתנים.",
+        "❌ יש שתי קריאות console.log ולכן יודפסו שתי שורות.",
+        "❌ strings כן תומכות במתודות כמו toUpperCase.",
+      ],
+    },
+    {
+      id: "mc_l12_uppercase_manual_003", topicId: "topic_strings", conceptKey: "lesson_12::uppercase", level: 6,
+      question: "למה לפעמים מנרמלים שני צדדים עם `toUpperCase()` לפני השוואה?",
+      options: [
+        "כדי שהבדיקה לא תיפול רק בגלל הבדל בין אותיות גדולות וקטנות",
+        "כדי להפוך מערך למערך חדש",
+        "כדי למחוק רווחים מתוך המחרוזת",
+        "כדי לשנות את המקור ולחסוך משתנה חדש",
+      ],
+      correctIndex: 0,
+      explanation: "נרמול case מאפשר השוואה case-insensitive. צריך לזכור שהפעולה מחזירה מחרוזת חדשה.",
+      optionFeedback: [
+        "✅ נכון: שני הצדדים מקבלים אותו case לפני ההשוואה.",
+        "❌ זה תפקיד של map/spread בהקשרים של מערכים.",
+        "❌ toUpperCase לא מוחקת רווחים.",
+        "❌ היא לא משנה את המקור.",
+      ],
+    },
+    {
+      id: "mc_l12_lowercase_manual_001", topicId: "topic_strings", conceptKey: "lesson_12::lowercase", level: 3,
+      question: "מה מחזירה `toLowerCase()`?",
+      options: [
+        "מחרוזת חדשה שבה האותיות הומרו לקטנות",
+        "מערך חדש עם כל התווים",
+        "undefined אחרי מעבר על כל תו",
+        "המספר של האותיות במחרוזת",
+      ],
+      correctIndex: 0,
+      explanation: "toLowerCase מחזירה string חדש באותיות קטנות. המקור לא משתנה.",
+      optionFeedback: [
+        "✅ נכון: זו המרה למחרוזת חדשה באותיות קטנות.",
+        "❌ התוצאה אינה מערך.",
+        "❌ זו לא פעולה מסוג forEach.",
+        "❌ אורך המחרוזת מתקבל מ-length.",
+      ],
+    },
+    {
+      id: "mc_l12_lowercase_manual_002", topicId: "topic_strings", conceptKey: "lesson_12::lowercase", level: 5,
+      question: "למה הקוד הבא מוצא את React?\n\nconst search = 'REACT';\nconst items = ['React', 'Vue'];\nconst found = items.filter((item) => item.toLowerCase() === search.toLowerCase());",
+      options: [
+        "כי שני הצדדים מושווים אחרי נרמול ל-'react'",
+        "כי filter משנה את items לאותיות קטנות",
+        "כי toLowerCase מחזירה תמיד true",
+        "כי includes רץ אוטומטית גם בלי לכתוב אותו",
+      ],
+      correctIndex: 0,
+      explanation: "item וגם search מומרים לאותיות קטנות לפני ההשוואה, ולכן React ו-REACT מתאימים.",
+      optionFeedback: [
+        "✅ נכון: ההשוואה נעשית על ערכים מנורמלים.",
+        "❌ filter לא משנה את המערך המקורי.",
+        "❌ toLowerCase מחזירה string, לא boolean.",
+        "❌ אין כאן קריאה ל-includes.",
+      ],
+    },
+    {
+      id: "mc_l12_lowercase_manual_003", topicId: "topic_strings", conceptKey: "lesson_12::lowercase", level: 6,
+      question: "מה חשוב לזכור לגבי `toLowerCase()` בחיפוש משתמשים?",
+      options: [
+        "היא עוזרת לנרמל case, אבל עדיין צריך לשמור או להשתמש בערך המוחזר",
+        "היא מעדכנת את כל המחרוזות במערך המקורי במקום",
+        "היא מסירה תווים שאינם אותיות",
+        "היא מחזירה אינדקס של התאמה ראשונה",
+      ],
+      correctIndex: 0,
+      explanation: "כמו כל פעולת string רגילה כאן, הערך המקורי לא משתנה. צריך להשתמש בתוצאה שהוחזרה.",
+      optionFeedback: [
+        "✅ נכון: בלי להשתמש בערך המוחזר הנרמול לא משפיע על הבדיקה.",
+        "❌ strings לא משתנות במקום, וגם המערך המקורי לא מתעדכן אוטומטית.",
+        "❌ הפעולה משנה case בלבד, לא מנקה תווים.",
+        "❌ אינדקס התאמה קשור ל-indexOf/findIndex, לא ל-toLowerCase.",
       ],
     },
 
@@ -3954,6 +4176,62 @@ var QUESTIONS_BANK = {
       answer: "user.points >= 5",
       hint: "כתוב תנאי שמחזיר true רק למשתמש עם מספיק נקודות.",
       explanation: "filter צריכה predicate שמחזיר boolean. התנאי user.points >= 5 משאיר רק משתמשים שהגיעו לסף.",
+    },
+    {
+      id: "fill_l12_foreach_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::forEach", level: 3,
+      code: "const names = ['Dana', 'Avi', 'Tal'];\nnames.____((name, index) => {\n  console.log(`${index + 1}. ${name}`);\n});",
+      answer: "forEach",
+      hint: "מתודה שמריצה פעולה על כל איבר בלי להחזיר מערך חדש.",
+      explanation: "forEach עוברת על כל שם ומריצה את ה-callback. כאן הפעולה היא הדפסה עם אינדקס.",
+    },
+    {
+      id: "fill_l12_foreach_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::forEach", level: 5,
+      code: "const names = ['Dana', 'Avi'];\nconst result = names.forEach((name) => console.log(name));\nconsole.log(typeof result); // '____'",
+      answer: "undefined",
+      hint: "ערך ההחזרה של forEach כשלא מחזירים מערך.",
+      explanation: "forEach מיועדת לפעולה לכל איבר. הערך שחוזר ממנה הוא undefined, ולכן typeof result הוא 'undefined'.",
+    },
+    {
+      id: "fill_l12_spread_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::spread", level: 4,
+      code: "const arr1 = [1, 2, 3];\nconst arr2 = [4, 5, 6];\nconst merged = [____arr1, arr2[0], arr2[1], arr2[2]];",
+      answer: "...",
+      hint: "הסימן שפורש איברי מערך לתוך מערך חדש.",
+      explanation: "שלוש נקודות לפני arr1 פורשות את איבריו לתוך merged, במקום להכניס את arr1 כמערך מקונן.",
+    },
+    {
+      id: "fill_l12_spread_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::spread", level: 6,
+      code: "const original = [{ score: 1 }];\nconst copy = [...original];\ncopy[0].score = 9;\nconsole.log(original[0].score === copy[0].score); // ____",
+      answer: "true",
+      hint: "spread מעתיק רק את השכבה הראשונה; האובייקט הפנימי עדיין משותף.",
+      explanation: "המערך עצמו הועתק, אבל האובייקט שבתוכו נשאר אותו reference. לכן שני הצדדים קוראים את אותו score אחרי השינוי.",
+    },
+    {
+      id: "fill_l12_uppercase_manual_001", topicId: "topic_strings", conceptKey: "lesson_12::uppercase", level: 4,
+      code: "const name = 'tal cohen';\nconst upper = name.____();\nconsole.log(upper); // 'TAL COHEN'",
+      answer: "toUpperCase",
+      hint: "מתודת string שמחזירה מחרוזת חדשה באותיות גדולות.",
+      explanation: "toUpperCase מחזירה string חדש באותיות גדולות. name המקורי לא משתנה.",
+    },
+    {
+      id: "fill_l12_uppercase_manual_002", topicId: "topic_strings", conceptKey: "lesson_12::uppercase", level: 5,
+      code: "const command = 'move';\nconst normalized = command.toUpperCase();\nconsole.log(normalized === 'MOVE'); // ____",
+      answer: "true",
+      hint: "אחרי ההמרה לאותיות גדולות, normalized שווה למחרוזת הגדולה.",
+      explanation: "toUpperCase החזירה 'MOVE', ולכן ההשוואה מול 'MOVE' מחזירה true.",
+    },
+    {
+      id: "fill_l12_lowercase_manual_001", topicId: "topic_strings", conceptKey: "lesson_12::lowercase", level: 4,
+      code: "const input = 'JavaScript';\nconst normalized = input.____();\nconsole.log(normalized); // 'javascript'",
+      answer: "toLowerCase",
+      hint: "מתודת string שמחזירה מחרוזת חדשה באותיות קטנות.",
+      explanation: "toLowerCase מחזירה גרסה קטנה של המחרוזת בלי לשנות את input המקורי.",
+    },
+    {
+      id: "fill_l12_lowercase_manual_002", topicId: "topic_strings", conceptKey: "lesson_12::lowercase", level: 6,
+      code: "const normalized = 'REACT'.toLowerCase();\nconsole.log(normalized === 'react'); // ____",
+      answer: "true",
+      hint: "בדוק מה הערך אחרי נרמול לאותיות קטנות.",
+      explanation: "toLowerCase מחזירה את 'react', ולכן ההשוואה מול 'react' מחזירה true.",
     },
 
     // ===== Objects / OOP =====

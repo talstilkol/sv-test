@@ -3,17 +3,17 @@
   "date": "2026-04-30",
   "source": "repo",
   "summary": {
-    "total": 450,
-    "mc": 247,
-    "fill": 203,
-    "manual": 450,
+    "total": 470,
+    "mc": 259,
+    "fill": 211,
+    "manual": 470,
     "blockerQuestions": 0,
     "warningQuestions": 0,
-    "noteQuestions": 7,
-    "cleanQuestions": 443,
+    "noteQuestions": 10,
+    "cleanQuestions": 460,
     "blockerIssues": 0,
     "warningIssues": 0,
-    "noteIssues": 8,
+    "noteIssues": 11,
     "questionQualityIndex": 100
   },
   "questionQuality": {
@@ -1670,6 +1670,32 @@
       "issueCodes": [],
       "status": "clean"
     },
+    "fill_l12_foreach_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_foreach_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "fill_l12_index_manual_001": {
       "score": 92,
       "difficulty": 3,
@@ -1700,6 +1726,32 @@
       ],
       "status": "note"
     },
+    "fill_l12_lowercase_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_lowercase_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "fill_l12_map_manual_001": {
       "score": 100,
       "difficulty": 4,
@@ -1716,6 +1768,58 @@
     "fill_l12_map_manual_002": {
       "score": 100,
       "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_spread_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_spread_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_uppercase_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_uppercase_manual_002": {
+      "score": 100,
+      "difficulty": 5,
       "clarity": 100,
       "distractorQuality": null,
       "issueCounts": {
@@ -4525,6 +4629,47 @@
       "issueCodes": [],
       "status": "clean"
     },
+    "mc_l12_foreach_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_foreach_manual_002": {
+      "score": 92,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "length-cue"
+      ],
+      "status": "note"
+    },
+    "mc_l12_foreach_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "mc_l12_index_manual_001": {
       "score": 100,
       "difficulty": 2,
@@ -4567,6 +4712,47 @@
       ],
       "status": "note"
     },
+    "mc_l12_lowercase_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_lowercase_manual_002": {
+      "score": 92,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "generic-wording"
+      ],
+      "status": "note"
+    },
+    "mc_l12_lowercase_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "mc_l12_map_manual_001": {
       "score": 100,
       "difficulty": 3,
@@ -4607,6 +4793,86 @@
         "generic-wording"
       ],
       "status": "note"
+    },
+    "mc_l12_spread_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_spread_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_spread_manual_003": {
+      "score": 92,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "generic-wording"
+      ],
+      "status": "note"
+    },
+    "mc_l12_uppercase_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_uppercase_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_uppercase_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
     },
     "mc_l25_add_delete_001": {
       "score": 100,
@@ -5905,6 +6171,16 @@
       "priority": 2
     },
     {
+      "id": "mc_l12_lowercase_manual_002",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::lowercase",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 3 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
       "id": "fill_l12_index_manual_002",
       "kind": "fill",
       "source": "manual",
@@ -5925,6 +6201,16 @@
       "priority": 2
     },
     {
+      "id": "mc_l12_foreach_manual_002",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::forEach",
+      "severity": "note",
+      "code": "length-cue",
+      "message": "Option length spread is high (1..29); check that the correct answer is not visually cued.",
+      "priority": 2
+    },
+    {
       "id": "mc_l12_filter_manual_001",
       "kind": "mc",
       "source": "manual",
@@ -5939,6 +6225,16 @@
       "kind": "mc",
       "source": "manual",
       "conceptKey": "lesson_12::map",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 2 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
+      "id": "mc_l12_spread_manual_003",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::spread",
       "severity": "note",
       "code": "generic-wording",
       "message": "Option 2 uses broad wording that can cue test-taking instead of knowledge.",

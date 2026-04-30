@@ -16,20 +16,20 @@
     "fillTargetPerCodeConcept": 2
   },
   "sourceMix": {
-    "curatedMC": 247,
+    "curatedMC": 259,
     "ignoredGeneratedMC": 0,
-    "curatedFill": 203,
+    "curatedFill": 211,
     "ignoredGeneratedFill": 0
   },
   "summary": {
     "totalConcepts": 568,
-    "mcReadyConcepts": 57,
-    "mcGapCount": 511,
+    "mcReadyConcepts": 61,
+    "mcGapCount": 507,
     "codeExampleConcepts": 568,
-    "fillReadyConcepts": 62,
-    "fillGapCount": 506,
-    "handCuratedMcPromotionBacklog": 511,
-    "handCuratedFillPromotionBacklog": 506,
+    "fillReadyConcepts": 66,
+    "fillGapCount": 502,
+    "handCuratedMcPromotionBacklog": 507,
+    "handCuratedFillPromotionBacklog": 502,
     "ready": false
   },
   "gaps": {
@@ -113,42 +113,6 @@
         "mc": {
           "curated": 1,
           "total": 1
-        }
-      },
-      {
-        "key": "lesson_12::forEach",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "forEach",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::spread",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "spread",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::uppercase",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "uppercase",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::lowercase",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "lowercase",
-        "mc": {
-          "curated": 0,
-          "total": 0
         }
       },
       {
@@ -4711,42 +4675,6 @@
         "key": "lesson_11::arrow function",
         "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
         "conceptName": "arrow function",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::forEach",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "forEach",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::spread",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "spread",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::uppercase",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "uppercase",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::lowercase",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "lowercase",
         "fill": {
           "curated": 0,
           "total": 0
