@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.4";
+var QUESTIONS_BANK_VERSION = "2.1.5";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -52,6 +52,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 11 sub-batch: function, Index, let and map MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.5",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 11 sub-batch: number, object and Pointer MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -524,6 +530,153 @@ var QUESTIONS_BANK = {
         "❌ זה מתאר סינון, וגם filter לא מוחקת מהמקור.",
         "❌ זה שימוש שמתאים יותר ל-forEach; map מיועדת לשמור מערך תוצאות.",
         "❌ זה מתאר find.",
+      ],
+    },
+    {
+      id: "mc_l11_number_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::number", level: 3,
+      question: "איזה ערך הוא number אמיתי ב-JavaScript?",
+      options: [
+        "מספר 25 ללא מרכאות",
+        "טקסט שמכיל את הספרות 25",
+        "ביטוי שמתחיל מטקסט ומוסיף 2",
+        "טקסט שמכיל את הספרות 3.14",
+      ],
+      correctIndex: 0,
+      explanation: "מספר בלי מרכאות הוא number. מרכאות הופכות את הערך ל-string, גם אם הוא נראה כמו מספר.",
+      optionFeedback: [
+        "✅ נכון: 25 ללא מרכאות הוא ערך number שאפשר לחשב איתו ישירות.",
+        "❌ ספרות שנשמרות כטקסט אינן number עד שממירים אותן.",
+        "❌ הביטוי עם מחרוזת יכול להוביל לשרשור, לא לחישוב מספרי נקי.",
+        "❌ גם מספר עשרוני שנשמר כטקסט הוא string.",
+      ],
+    },
+    {
+      id: "mc_l11_number_manual_002", topicId: "topic_variables", conceptKey: "lesson_11::number", level: 5,
+      question: "מה יודפס?\n\nconst items = 5;\nconst price = 20.5;\nconsole.log(items * price);",
+      options: ["102.5", "'520.5'", "25.5", "NaN"],
+      correctIndex: 0,
+      explanation: "שני הערכים הם numbers, ולכן פעולת הכפל מחזירה חישוב מספרי: 102.5.",
+      optionFeedback: [
+        "✅ נכון: 5 כפול 20.5 שווה 102.5.",
+        "❌ אין כאן חיבור מחרוזות, אלא כפל מספרי.",
+        "❌ 25.5 היה מתאים לחיבור, לא לכפל.",
+        "❌ שני הערכים מספריים תקינים, לכן לא מתקבל NaN.",
+      ],
+    },
+    {
+      id: "mc_l11_number_manual_003", topicId: "topic_variables", conceptKey: "lesson_11::number", level: 6,
+      question: "למה הקוד הבא מסוכן ללמידת חישובים?\n\nconst input = '5';\nconsole.log(input + 10);",
+      options: [
+        "כי input הוא string ולכן + עלול לשרשר במקום לחשב",
+        "כי JavaScript לא תומך במספרים עשרוניים",
+        "כי const ממיר את input לערך לוגי",
+        "כי console.log משנה את סוג הערך",
+      ],
+      correctIndex: 0,
+      explanation: "כאשר צד אחד הוא string, האופרטור + יכול לבצע שרשור. לכן ממירים קלט מספרי בעזרת Number לפני חישוב.",
+      optionFeedback: [
+        "✅ נכון: זה בדיוק הבאג שהחומר מזהיר ממנו סביב קלט כמו '5'.",
+        "❌ JavaScript כן תומך במספרים עשרוניים תחת number.",
+        "❌ const לא משנה את סוג הערך; הוא רק מונע הצבה מחדש של המשתנה.",
+        "❌ console.log רק מדפיס; הוא לא ממיר את הערך.",
+      ],
+    },
+    {
+      id: "mc_l11_object_manual_001", topicId: "topic_objects", conceptKey: "lesson_11::object", level: 3,
+      question: "איזה תיאור מתאים לאובייקט ב-JavaScript?",
+      options: [
+        "אוסף של זוגות key-value שמייצג ישות אחת",
+        "רשימה מסודרת שניגשים אליה רק לפי אינדקס מספרי",
+        "טיפוס שמחזיק רק true או false",
+        "פעולה שחייבת להחזיר ערך בעזרת return",
+      ],
+      correctIndex: 0,
+      explanation: "אובייקט מאגד מאפיינים תחת שמות, למשל hero.name או car.color, ולכן מתאים לייצוג ישות עם פרטים.",
+      optionFeedback: [
+        "✅ נכון: key-value הוא המבנה המרכזי של object.",
+        "❌ זה מתאר Array יותר מאשר object.",
+        "❌ true/false הם boolean.",
+        "❌ פעולה עם return היא function.",
+      ],
+    },
+    {
+      id: "mc_l11_object_manual_002", topicId: "topic_objects", conceptKey: "lesson_11::object", level: 5,
+      question: "מה יודפס?\n\nconst hero = { name: 'Batman', city: 'Gotham' };\nconsole.log(hero.city);",
+      options: ["Gotham", "Batman", "city", "undefined"],
+      correctIndex: 0,
+      explanation: "hero.city ניגש למאפיין city באובייקט ומחזיר את הערך השמור בו.",
+      optionFeedback: [
+        "✅ נכון: city הוא המפתח, והערך שלו הוא Gotham.",
+        "❌ Batman הוא הערך של המפתח name.",
+        "❌ dot notation מחזירה את הערך של המאפיין, לא את שם המפתח.",
+        "❌ המאפיין city קיים באובייקט ולכן לא מתקבל undefined.",
+      ],
+    },
+    {
+      id: "mc_l11_object_manual_003", topicId: "topic_objects", conceptKey: "lesson_11::object", level: 6,
+      question: "איזה שינוי מותר למרות שהאובייקט הוגדר עם const?",
+      options: [
+        "hero.city = 'Tel Aviv'",
+        "להחליף את המשתנה כולו לאובייקט חדש",
+        "להצהיר שוב על אותו שם משתנה באותו scope",
+        "מחיקת כל המאפיינים מתבצעת אוטומטית",
+      ],
+      correctIndex: 0,
+      explanation: "const מונע הצבה מחדש של המשתנה, אבל לא מקפיא את תוכן האובייקט. שינוי מאפיין עדיין אפשרי.",
+      optionFeedback: [
+        "✅ נכון: אפשר לשנות מאפיין פנימי של אובייקט const.",
+        "❌ זו הצבה מחדש למשתנה const ולכן תגרום לשגיאה.",
+        "❌ אי אפשר להצהיר שוב על אותו const באותו scope.",
+        "❌ JavaScript לא מוחק מאפיינים אוטומטית בגלל const.",
+      ],
+    },
+    {
+      id: "mc_l11_pointer_manual_001", topicId: "topic_objects", conceptKey: "lesson_11::Pointer", level: 4,
+      question: "מה Pointer מייצג לפי שיעור 11?",
+      options: [
+        "כתובת או הפניה שמובילה לנתון האמיתי בזיכרון",
+        "מספר האינדקס הראשון במערך",
+        "פונקציה שמחזירה undefined",
+        "טקסט שמוקף במרכאות",
+      ],
+      correctIndex: 0,
+      explanation: "Pointer הוא הרעיון של משתנה שמחזיק הפניה למיקום הנתון, ולא בהכרח את כל הנתון עצמו.",
+      optionFeedback: [
+        "✅ נכון: זה תיאור ההפניה שהחומר מציג.",
+        "❌ אינדקס הוא מיקום במערך, לא pointer לזיכרון.",
+        "❌ פונקציה יכולה להחזיר undefined, אבל זה לא תפקיד pointer.",
+        "❌ טקסט במרכאות הוא string.",
+      ],
+    },
+    {
+      id: "mc_l11_pointer_manual_002", topicId: "topic_objects", conceptKey: "lesson_11::Pointer", level: 5,
+      question: "מה יודפס?\n\nconst a = { power: 100 };\nconst b = a;\nb.power = 80;\nconsole.log(a.power);",
+      options: ["80", "100", "undefined", "שגיאה"],
+      correctIndex: 0,
+      explanation: "b הוא מצביע נוסף לאותו אובייקט. שינוי דרך b משנה את האובייקט שאליו גם a מצביע.",
+      optionFeedback: [
+        "✅ נכון: שני המשתנים מפנים לאותו אובייקט.",
+        "❌ 100 היה נשאר רק אם היה נוצר עותק חדש ולא הפניה משותפת.",
+        "❌ המאפיין power קיים לאורך כל הקוד.",
+        "❌ שינוי מאפיין באובייקט const מותר; רק הצבה מחדש של a אסורה.",
+      ],
+    },
+    {
+      id: "mc_l11_pointer_manual_003", topicId: "topic_objects", conceptKey: "lesson_11::Pointer", level: 6,
+      question: "איזה משפט מונע בלבול בין Pointer לבין העתקה מלאה?",
+      options: [
+        "השמה של אובייקט למשתנה אחר מעתיקה הפניה, לא יוצרת אובייקט עצמאי",
+        "כל השמה של אובייקט יוצרת עותק עמוק אוטומטי",
+        "Pointer קיים רק במספרים ולא באובייקטים",
+        "אם משתמשים ב-const אין שום שינוי אפשרי באובייקט",
+      ],
+      correctIndex: 0,
+      explanation: "בשיעור ההבדל הוא קריטי: אובייקטים ומערכים עוברים בהפניה, ולכן צריך ליצור עותק במפורש כשלא רוצים שיתוף.",
+      optionFeedback: [
+        "✅ נכון: זה כלל העבודה שמסביר את באגי By Reference.",
+        "❌ JavaScript לא יוצר עותק עמוק אוטומטי בהשמה רגילה.",
+        "❌ number הוא primitive שעובר לפי ערך; pointer רלוונטי לאובייקטים/מערכים.",
+        "❌ const לא מקפיא מאפיינים פנימיים.",
       ],
     },
 
@@ -2555,6 +2708,20 @@ var QUESTIONS_BANK = {
       hint: "מתודה שמחזירה מערך חדש באותו אורך אחרי שינוי כל איבר.",
       explanation: "map מפעילה את ה-callback על כל מחיר ומחזירה מערך חדש עם התוצאות.",
     },
+    {
+      id: "fill_l11_number_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::number", level: 3,
+      code: "const items = 5;\nconst price = 20.5;\nconst total = items * price;\nconsole.log(typeof total); // ____",
+      answer: "number",
+      hint: "כפל בין שני ערכים מספריים מחזיר טיפוס מספרי.",
+      explanation: "items ו-price הם numbers, ולכן total הוא תוצאה מספרית.",
+    },
+    {
+      id: "fill_l11_number_manual_002", topicId: "topic_variables", conceptKey: "lesson_11::number", level: 5,
+      code: "const priceText = '20';\nconst price = ____;\nconsole.log(price + 5); // 25",
+      answer: "Number(priceText)",
+      hint: "המר מחרוזת מספרית לערך מספרי לפני חיבור.",
+      explanation: "Number(priceText) הופך את הטקסט '20' לערך מספרי, ולכן החיבור עם 5 מחזיר 25 ולא שרשור.",
+    },
 
     // ===== Functions =====
     {
@@ -2570,6 +2737,34 @@ var QUESTIONS_BANK = {
       answer: "greet('Tal')",
       hint: "קרא לפונקציה בשם שלה עם הערך Tal כארגומנט.",
       explanation: "פונקציה רצה רק כשקוראים לה. הקריאה greet('Tal') מחזירה את המחרוזת שנשמרת ב-message.",
+    },
+    {
+      id: "fill_l11_object_manual_001", topicId: "topic_objects", conceptKey: "lesson_11::object", level: 3,
+      code: "const hero = { name: 'Batman', city: 'Gotham' };\nconst place = ____;\nconsole.log(place); // 'Gotham'",
+      answer: "hero.city",
+      hint: "גש למאפיין city בעזרת dot notation.",
+      explanation: "Object שומר זוגות key-value. hero.city שולף את הערך של המפתח city.",
+    },
+    {
+      id: "fill_l11_object_manual_002", topicId: "topic_objects", conceptKey: "lesson_11::object", level: 5,
+      code: "const car = { color: 'Red' };\ncar.____ = 200;\nconsole.log(car);",
+      answer: "speed",
+      hint: "שם מאפיין חדש שמתאים לדוגמת הרכב בשיעור.",
+      explanation: "אפשר להוסיף לאובייקט מאפיין חדש באמצעות dot notation גם אחרי יצירתו.",
+    },
+    {
+      id: "fill_l11_pointer_manual_001", topicId: "topic_objects", conceptKey: "lesson_11::Pointer", level: 4,
+      code: "const pointerA = { power: 100 };\nconst ____ = pointerA;\nconsole.log(pointerA.power); // 100",
+      answer: "pointerB",
+      hint: "שם המשתנה השני שמצביע לאותו אובייקט.",
+      explanation: "pointerB לא יוצר עצם חדש; הוא עוד משתנה שמחזיק הפניה לאותו אובייקט של pointerA.",
+    },
+    {
+      id: "fill_l11_pointer_manual_002", topicId: "topic_objects", conceptKey: "lesson_11::Pointer", level: 6,
+      code: "const user = { name: 'Dana' };\nconst copy = user;\ncopy.name = 'Rina';\nconst result = user.name === 'Rina' ? '____' : 'copyOnly';",
+      answer: "sharedReference",
+      hint: "בחר שם שמסמן שהמשתנים חולקים את אותה הפניה.",
+      explanation: "copy ו-user מפנים לאותו אובייקט, ולכן שינוי דרך copy נראה גם דרך user.",
     },
 
     // ===== DOM =====

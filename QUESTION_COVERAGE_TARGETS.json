@@ -16,20 +16,20 @@
     "fillTargetPerCodeConcept": 2
   },
   "sourceMix": {
-    "curatedMC": 192,
+    "curatedMC": 201,
     "ignoredGeneratedMC": 0,
-    "curatedFill": 172,
+    "curatedFill": 178,
     "ignoredGeneratedFill": 0
   },
   "summary": {
     "totalConcepts": 568,
-    "mcReadyConcepts": 37,
-    "mcGapCount": 531,
+    "mcReadyConcepts": 40,
+    "mcGapCount": 528,
     "codeExampleConcepts": 568,
-    "fillReadyConcepts": 43,
-    "fillGapCount": 525,
-    "handCuratedMcPromotionBacklog": 531,
-    "handCuratedFillPromotionBacklog": 525,
+    "fillReadyConcepts": 46,
+    "fillGapCount": 522,
+    "handCuratedMcPromotionBacklog": 528,
+    "handCuratedFillPromotionBacklog": 522,
     "ready": false
   },
   "gaps": {
@@ -107,15 +107,6 @@
         }
       },
       {
-        "key": "lesson_11::Pointer",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "Pointer",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_11::undefined",
         "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
         "conceptName": "undefined",
@@ -125,27 +116,9 @@
         }
       },
       {
-        "key": "lesson_11::number",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "number",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_11::string",
         "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
         "conceptName": "string",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_11::object",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "object",
         "mc": {
           "curated": 0,
           "total": 0
@@ -4888,27 +4861,9 @@
         }
       },
       {
-        "key": "lesson_11::Pointer",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "Pointer",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_11::undefined",
         "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
         "conceptName": "undefined",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_11::number",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "number",
         "fill": {
           "curated": 0,
           "total": 0
@@ -4921,15 +4876,6 @@
         "fill": {
           "curated": 1,
           "total": 1
-        }
-      },
-      {
-        "key": "lesson_11::object",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "object",
-        "fill": {
-          "curated": 0,
-          "total": 0
         }
       },
       {
