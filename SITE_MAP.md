@@ -147,6 +147,7 @@
 | [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md) | איפיון היסטורי לקריאה בלבד |
 | [docs/plans/04_AGENT_HANDOFF.md](docs/plans/04_AGENT_HANDOFF.md) | פרומפט המשך לסוכן הבא |
 | [docs/plans/05_LEGACY_DOC_MIGRATION.md](docs/plans/05_LEGACY_DOC_MIGRATION.md) | מפת הגירה שמסבירה מה נשמר מכל קובץ תכנון ישן שנמחק |
+| [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md) | ארכיון פירוט המשימות שהושלמו והלוג ההיסטורי |
 | [SITE_MAP.md](SITE_MAP.md) | מסמך זה |
 
 ---

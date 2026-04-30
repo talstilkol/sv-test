@@ -3734,6 +3734,10 @@
       "exists": true
     },
     {
+      "file": "docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md",
+      "exists": true
+    },
+    {
       "file": "lessons/manifest.json",
       "exists": true
     }

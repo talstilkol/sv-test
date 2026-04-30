@@ -12,12 +12,14 @@ This folder is the compact handoff layer for agents. It replaces the old scatter
 4. `docs/plans/03_DEFERRED_BACKLOG.md` — what waits until Finish Line 1 is green.
 5. `docs/plans/04_AGENT_HANDOFF.md` — prompt for the next agent.
 6. `docs/plans/05_LEGACY_DOC_MIGRATION.md` — proof that deleted legacy docs were migrated or intentionally retired.
+7. `docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md` — detailed historical execution log moved out of the active board.
 
 ## Live Source Of Truth
 
 | Area | File |
 |---|---|
 | Current execution state | `EXECUTION_TASKS.md` |
+| Completed task detail archive | `docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md` |
 | Backlog and bug audit items | `MASTER_PLAN.md` |
 | Pre-release gate summary | `FINISH_LINE_PRERELEASE_REPORT.md` |
 | Manual question batch plan | `MANUAL_QUESTION_AUTHORING_PLAN.md` |

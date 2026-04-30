@@ -129,6 +129,7 @@
 | `docs/plans/03_DEFERRED_BACKLOG.md` | yes |
 | `docs/plans/04_AGENT_HANDOFF.md` | yes |
 | `docs/plans/05_LEGACY_DOC_MIGRATION.md` | yes |
+| `docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md` | yes |
 | `lessons/manifest.json` | yes |
 
 ## Commands

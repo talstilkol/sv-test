@@ -54,7 +54,10 @@ function addCheck(checks, id, label, passed, detail) {
 
 function buildReport() {
   const app = read("app.js");
-  const tasks = read("EXECUTION_TASKS.md");
+  const tasks = [
+    read("EXECUTION_TASKS.md"),
+    read("docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md"),
+  ].join("\n");
   const rewardLogId = functionBody(app, "rewardLogId");
   const awardLearningReward = functionBody(app, "awardLearningReward");
   const purchaseStoreItem = functionBody(app, "purchaseStoreItem");
@@ -134,9 +137,9 @@ function buildReport() {
   addCheck(
     checks,
     "tasks-registers-gate",
-    "Execution task register contains P8.7.4",
+    "Execution task register or completed archive contains P8.7.4",
     tasks.includes("P8.7.4") && tasks.includes("anti-cheat checks"),
-    "EXECUTION_TASKS.md must keep the anti-cheat task visible and traceable.",
+    "The active task board or completed archive must keep the anti-cheat task visible and traceable.",
   );
 
   const failed = checks.filter((check) => !check.passed);

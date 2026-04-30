@@ -281,6 +281,7 @@ function buildDocsStatus() {
     "docs/plans/03_DEFERRED_BACKLOG.md",
     "docs/plans/04_AGENT_HANDOFF.md",
     "docs/plans/05_LEGACY_DOC_MIGRATION.md",
+    "docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md",
     "lessons/manifest.json",
   ];
 
