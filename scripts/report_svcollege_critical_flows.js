@@ -42,7 +42,7 @@ const FLOW_DEFINITIONS = Object.freeze([
     label: "Bug Hunt",
     tabCell: "bugHunt",
     dom: Object.freeze(["data-action=\"bug-answer\"", "class=\"bug-hunt-panel\""]),
-    app: Object.freeze(["function renderBugHuntPanel(concept)", "data-action=\"bug-answer\"", "maybeRecordCodeProof"]),
+    app: Object.freeze(["function renderBugHuntPanel(lesson, concept)", "data-action=\"bug-answer\"", "maybeRecordCodeProof"]),
     interactions: Object.freeze(["data-bug-result", "bug-option", "actualKind: \"bug\"", "mode: \"bug-hunt\""]),
   }),
   Object.freeze({
@@ -50,7 +50,7 @@ const FLOW_DEFINITIONS = Object.freeze([
     label: "Mini Build",
     tabCell: "miniBuild",
     dom: Object.freeze(["data-action=\"mb-check\"", "class=\"mini-build-panel\""]),
-    app: Object.freeze(["function renderMiniBuildPanel(concept)", "data-action=\"mb-check\"", "maybeRecordCodeProof"]),
+    app: Object.freeze(["function renderMiniBuildPanel(lesson, concept)", "data-action=\"mb-check\"", "maybeRecordCodeProof"]),
     interactions: Object.freeze(["data-mb-tests", "data-mb-ref", "data-mb-hint", "actualKind: \"build\"", "mode: \"mini-build\""]),
   }),
   Object.freeze({

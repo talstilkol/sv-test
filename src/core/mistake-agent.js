@@ -1,4 +1,4 @@
-export const MISTAKE_AGENT_VERSION = 2;
+export const MISTAKE_AGENT_VERSION = 3;
 
 const MISCONCEPTION_CARDS = Object.freeze({
   zeroBasedIndex: {
@@ -215,10 +215,63 @@ export function emptyMistakeAgentState() {
     concepts: {},
     topics: {},
     misconceptions: {},
+    namedWeaknesses: {},
     teachBacks: [],
     retestQueue: [],
     log: [],
   };
+}
+
+function modeCountsToList(modes = {}) {
+  return Object.entries(modes || {})
+    .filter(([, count]) => Number(count || 0) > 0)
+    .sort(([aMode, aCount], [bMode, bCount]) =>
+      (Number(bCount || 0) - Number(aCount || 0)) || String(aMode).localeCompare(String(bMode)),
+    )
+    .map(([mode, count]) => ({ mode, count: Number(count || 0) }));
+}
+
+function countKeys(value = {}) {
+  return Object.keys(value || {}).filter((key) => Number(value[key] || 0) > 0);
+}
+
+function namedWeaknessFromMisconception(misconception = {}, { minCount = 2, minModes = 2 } = {}) {
+  const modes = modeCountsToList(misconception.modes || {});
+  const concepts = countKeys(misconception.concepts || {});
+  if (Number(misconception.count || 0) < minCount || modes.length < minModes) return null;
+  return {
+    id: `weak-${safeText(misconception.id || "conceptGap", 80)}`,
+    misconceptionId: safeText(misconception.id || "conceptGap", 80),
+    name: `חולשה חוזרת: ${safeText(misconception.label || "פער מושגי", 140)}`,
+    label: safeText(misconception.label || "פער מושגי", 140),
+    count: Number(misconception.count || 0),
+    modes,
+    concepts,
+    topics: countKeys(misconception.topics || {}),
+    rootCause: safeText(misconception.rootCause || "", 600),
+    repair: safeText(misconception.repair || "", 600),
+    microDrill: safeText(misconception.microDrill || "", 600),
+    firstSeen: misconception.firstSeen || null,
+    lastSeen: misconception.lastSeen || null,
+  };
+}
+
+export function namedWeaknessClusters(state, { minCount = 2, minModes = 2, limit = 12 } = {}) {
+  const max = Math.max(1, Number(limit) || 12);
+  const fromState = Object.values(state?.namedWeaknesses || {});
+  const computed = fromState.length
+    ? fromState
+    : Object.values(state?.misconceptions || {})
+        .map((item) => namedWeaknessFromMisconception(item, { minCount, minModes }))
+        .filter(Boolean);
+  return computed
+    .filter((item) => Number(item.count || 0) >= minCount && (item.modes || []).length >= minModes)
+    .sort((a, b) =>
+      (Number(b.count || 0) - Number(a.count || 0)) ||
+      String(b.lastSeen || "").localeCompare(String(a.lastSeen || "")) ||
+      String(a.id).localeCompare(String(b.id)),
+    )
+    .slice(0, max);
 }
 
 function stableMistakeId(input) {
@@ -430,6 +483,7 @@ export function updateMistakeState(state, record, { maxLog = 80 } = {}) {
     concepts: { ...(base.concepts || {}) },
     topics: { ...(base.topics || {}) },
     misconceptions: { ...(base.misconceptions || {}) },
+    namedWeaknesses: { ...(base.namedWeaknesses || {}) },
     teachBacks: Array.isArray(base.teachBacks) ? [...base.teachBacks] : [],
     retestQueue: Array.isArray(base.retestQueue) ? [...base.retestQueue] : [],
     log: Array.isArray(base.log) ? [...base.log] : [],
@@ -510,7 +564,13 @@ export function updateMistakeState(state, record, { maxLog = 80 } = {}) {
       ...(existingMisconception.topics || {}),
       [topicKey]: ((existingMisconception.topics || {})[topicKey] || 0) + 1,
     },
+    modes: {
+      ...(existingMisconception.modes || {}),
+      [record.mode || "question"]: ((existingMisconception.modes || {})[record.mode || "question"] || 0) + 1,
+    },
   };
+  const namedWeakness = namedWeaknessFromMisconception(next.misconceptions[misconception.id]);
+  if (namedWeakness) next.namedWeaknesses[misconception.id] = namedWeakness;
 
   next.log.unshift({
     conceptKey: record.conceptKey,
@@ -540,6 +600,7 @@ export function appendTeachBackResponse(state, prompt, response, { timestamp = D
     concepts: { ...(base.concepts || {}) },
     topics: { ...(base.topics || {}) },
     misconceptions: { ...(base.misconceptions || {}) },
+    namedWeaknesses: { ...(base.namedWeaknesses || {}) },
     teachBacks: Array.isArray(base.teachBacks) ? [...base.teachBacks] : [],
     retestQueue: Array.isArray(base.retestQueue) ? [...base.retestQueue] : [],
     log: Array.isArray(base.log) ? [...base.log] : [],
@@ -592,6 +653,7 @@ export function scheduleAdaptiveRetests(
     concepts: { ...(base.concepts || {}) },
     topics: { ...(base.topics || {}) },
     misconceptions: { ...(base.misconceptions || {}) },
+    namedWeaknesses: { ...(base.namedWeaknesses || {}) },
     teachBacks: Array.isArray(base.teachBacks) ? [...base.teachBacks] : [],
     retestQueue: Array.isArray(base.retestQueue) ? [...base.retestQueue] : [],
     log: Array.isArray(base.log) ? [...base.log] : [],
@@ -601,10 +663,22 @@ export function scheduleAdaptiveRetests(
   const misconception = record.misconception || MISCONCEPTION_CARDS.conceptGap;
   const stages = [
     {
-      stage: "near_transfer",
+      stage: "recovery_drill_1",
       dueAt: timestamp + nearTransferDelayMs,
-      label: "שאלת תיקון קרובה",
-      purpose: "לבדוק מיד אם ההסבר תיקן את שורש הטעות.",
+      label: "תרגול תיקון 1/3",
+      purpose: "שאלה קצרה ראשונה לפני חזרה למצב קשה.",
+    },
+    {
+      stage: "recovery_drill_2",
+      dueAt: timestamp + nearTransferDelayMs,
+      label: "תרגול תיקון 2/3",
+      purpose: "שאלה קצרה שנייה שמוודאת שהדפוס לא חוזר.",
+    },
+    {
+      stage: "recovery_drill_3",
+      dueAt: timestamp + nearTransferDelayMs,
+      label: "תרגול תיקון 3/3",
+      purpose: "שאלה קצרה שלישית לפני שמחזירים את הלומד לאתגר קשה.",
     },
     {
       stage: "delayed_review",
@@ -673,6 +747,7 @@ export function recordRetestOutcome(
     concepts: { ...(base.concepts || {}) },
     topics: { ...(base.topics || {}) },
     misconceptions: { ...(base.misconceptions || {}) },
+    namedWeaknesses: { ...(base.namedWeaknesses || {}) },
     teachBacks: Array.isArray(base.teachBacks) ? [...base.teachBacks] : [],
     retestQueue: Array.isArray(base.retestQueue) ? [...base.retestQueue] : [],
     log: Array.isArray(base.log) ? [...base.log] : [],

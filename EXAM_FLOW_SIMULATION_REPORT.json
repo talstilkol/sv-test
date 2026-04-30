@@ -8,14 +8,14 @@
     "sampleProfile": "clean-local-learner"
   },
   "summary": {
-    "questionBankSize": 2840,
+    "questionBankSize": 216,
     "blockers": 0,
     "blockerCodes": [],
     "passed": true
   },
   "noRepeat": {
     "requested": 100,
-    "bankSize": 2840,
+    "bankSize": 216,
     "answered": 100,
     "unique": 100,
     "exhaustedBeforeLimit": false,
@@ -24,7 +24,7 @@
     "passed": true
   },
   "harderAfterCorrect": {
-    "checked": 160,
+    "checked": 34,
     "failures": [],
     "failureCount": 0,
     "passed": true

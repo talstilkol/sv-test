@@ -34,7 +34,7 @@ describe("concept sprint assessment", () => {
     expect(app).toContain("function submitConceptSprintAnswer");
     expect(app).toContain("applyAnswer(q.lesson.id, q.concept.conceptName");
     expect(app).toContain('mode: "concept-sprint"');
-    expect(app).toContain("renderMistakeAgentFeedback(result.mistake)");
+    expect(app).toContain('renderWrongAnswerCoachCard({ mode: "concept-sprint"');
     expect(app).toContain("openConceptSprintBtn?.addEventListener(\"click\", openConceptSprint)");
     expect(app).toContain("window.LUMEN_OPEN_CONCEPT_SPRINT = openConceptSprint");
     expect(app).toContain('initialTabFromUrl === "concept-sprint"');
@@ -59,7 +59,10 @@ describe("concept sprint assessment", () => {
 
   it("applies XP bonus or penalty without allowing negative XP", () => {
     expect(app).toContain("const delta = passed ? mode.bonus + correct * 6 : -mode.penalty");
-    expect(app).toContain("awardXP(delta)");
+    expect(app).toContain("awardLearningReward({");
+    expect(app).toContain("source: `concept-sprint:${mode.id || mode.title}`");
+    expect(app).toContain("questionId: `concept-sprint:${stableQuestionHash(rewardSeed)}`");
+    expect(app).toContain("coins: coinDelta");
     expect(app).toContain("const newXP = Math.max(0, getXP() + amount)");
   });
 

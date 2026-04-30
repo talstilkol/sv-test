@@ -1,13 +1,13 @@
-# Question Quality Report — 2026-04-28
+# Question Quality Report — 2026-04-30
 
 Full-bank deterministic QA for MC and Fill questions. This report creates a `questionQuality` object for every question id and a remediation queue for warnings and notes.
 
 ## Summary
 
-- Total questions: 2760
-- Mix: 1665 MC, 1095 Fill
-- Source mix: 213 curated, 2547 seeded
-- Clean: 2760
+- Total questions: 216
+- Mix: 105 MC, 111 Fill
+- Source mix: 216 manual
+- Clean: 216
 - Notes only: 0
 - Warning questions: 0
 - Blocker questions: 0

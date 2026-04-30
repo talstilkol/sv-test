@@ -14,17 +14,14 @@ const REPORT_VERSION = "exam-flow-simulation-v1";
 
 function loadQuestionBanks() {
   const sandbox = { window: {}, console };
-  ["questions_bank.js", "questions_bank_seeded.js"].forEach((file) => {
+  ["questions_bank.js"].forEach((file) => {
     const code = fs.readFileSync(path.join(DATA_DIR, file), "utf8");
     vm.runInNewContext(code, sandbox, { filename: file });
   });
   const curated = sandbox.QUESTIONS_BANK || { mc: [], fill: [] };
-  const seeded = sandbox.QUESTIONS_BANK_SEEDED || { mc: [], fill: [] };
   return [
     ...(curated.mc || []).map((q) => ({ ...q, kind: "mc", source: "curated" })),
     ...(curated.fill || []).map((q) => ({ ...q, kind: "fill", source: "curated" })),
-    ...(seeded.mc || []).map((q) => ({ ...q, kind: "mc", source: "seeded" })),
-    ...(seeded.fill || []).map((q) => ({ ...q, kind: "fill", source: "seeded" })),
   ].filter((q) => q && q.conceptKey);
 }
 

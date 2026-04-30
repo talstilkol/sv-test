@@ -1,0 +1,77 @@
+{
+  "reportVersion": "content-schema-contract-report-v1",
+  "date": "2026-04-29",
+  "contractVersion": "content-schema-contract-v1",
+  "entities": [
+    "Lesson",
+    "Concept",
+    "MCQuestion",
+    "FillQuestion",
+    "TraceQuestion",
+    "BugQuestion",
+    "BuildQuestion"
+  ],
+  "summary": {
+    "checks": 9,
+    "passed": 9,
+    "failed": 0,
+    "ready": true
+  },
+  "checks": [
+    {
+      "id": "contract-versioned",
+      "passed": true,
+      "status": "pass",
+      "detail": "Contract must expose a stable version."
+    },
+    {
+      "id": "required-entities",
+      "passed": true,
+      "status": "pass",
+      "detail": "Contract must define: Lesson, Concept, MCQuestion, FillQuestion, TraceQuestion, BugQuestion, BuildQuestion."
+    },
+    {
+      "id": "lesson-concept-fields",
+      "passed": true,
+      "status": "pass",
+      "detail": "Lesson and Concept must keep stable identity and difficulty fields."
+    },
+    {
+      "id": "question-fields",
+      "passed": true,
+      "status": "pass",
+      "detail": "MC and Fill question contracts must expose routing, prompt and answer fields."
+    },
+    {
+      "id": "code-practice-fields",
+      "passed": true,
+      "status": "pass",
+      "detail": "Trace, Bug and Build contracts must support code-proof routing."
+    },
+    {
+      "id": "documented",
+      "passed": true,
+      "status": "pass",
+      "detail": "CONTENT_SCHEMA_CONTRACT.md must document entities and gates."
+    },
+    {
+      "id": "strict-gates-wired",
+      "passed": true,
+      "status": "pass",
+      "detail": "Schema contract must be backed by strict validation scripts."
+    },
+    {
+      "id": "validator-fields",
+      "passed": true,
+      "status": "pass",
+      "detail": "validate_bank.js must enforce core question field invariants."
+    },
+    {
+      "id": "prerequisite-and-density-gates",
+      "passed": true,
+      "status": "pass",
+      "detail": "QA and coverage gates must enforce prerequisite and density contracts."
+    }
+  ],
+  "failures": []
+}

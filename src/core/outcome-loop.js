@@ -30,6 +30,14 @@ export const PROMOTION_REQUIRED_EVIDENCE = Object.freeze([
   "feedback",
 ]);
 
+const EXAM_EVENT_TYPES = new Set([
+  "mock_exam",
+  "final_exam",
+  "exam_score",
+  "exam_result",
+  "assessment",
+]);
+
 function safeText(value, max = 160) {
   return String(value ?? "").trim().slice(0, max);
 }
@@ -225,6 +233,142 @@ function moduleMastery(scores = {}, modules = []) {
   };
 }
 
+function eventScorePct(event) {
+  const direct = safeNumber(
+    event.scorePct ?? event.scorePercent ?? event.accuracyPct ?? event.percent ?? event.score,
+    null,
+  );
+  if (direct !== null && direct >= 0 && direct <= 100) return Math.round(direct);
+  const correct = safeNumber(event.correctCount ?? event.correctAnswers, null);
+  const total = safeNumber(event.totalCount ?? event.totalQuestions, null);
+  if (correct !== null && total !== null && total > 0) {
+    return Math.round(Math.max(0, Math.min(100, (correct / total) * 100)));
+  }
+  return null;
+}
+
+function isExamScoreEvent(event) {
+  if (EXAM_EVENT_TYPES.has(event.type)) return true;
+  const source = safeText(event.source, 120).toLowerCase();
+  return source.includes("mock-exam") || source.includes("mock_exam") || source.includes("exam");
+}
+
+function examScoreUplift(events) {
+  const scores = events
+    .filter(isExamScoreEvent)
+    .map((event) => ({
+      timestamp: event.timestamp,
+      day: event.day,
+      scorePct: eventScorePct(event),
+      source: safeText(event.source || event.type, 120),
+    }))
+    .filter((event) => event.scorePct !== null)
+    .sort((a, b) => a.timestamp - b.timestamp || a.source.localeCompare(b.source));
+  if (scores.length < 2) {
+    return {
+      status: "unknown",
+      firstScorePct: null,
+      latestScorePct: null,
+      upliftPctPoints: null,
+      attempts: scores.length,
+      label: "unknown/unavailable",
+    };
+  }
+  const first = scores[0];
+  const latest = scores[scores.length - 1];
+  const uplift = latest.scorePct - first.scorePct;
+  return {
+    status: "measured",
+    firstScorePct: first.scorePct,
+    latestScorePct: latest.scorePct,
+    upliftPctPoints: uplift,
+    attempts: scores.length,
+    firstDay: first.day,
+    latestDay: latest.day,
+    label: `${uplift >= 0 ? "+" : ""}${uplift} pp`,
+  };
+}
+
+function masteryVelocity(events) {
+  const changes = events
+    .filter((event) => event.type === "mastery_change")
+    .map((event) => ({
+      timestamp: event.timestamp,
+      day: event.day,
+      conceptKey: event.conceptKey,
+      before: safeNumber(event.masteryBefore, null),
+      after: safeNumber(event.masteryAfter, null),
+    }))
+    .filter((event) => event.before !== null && event.after !== null && event.after > event.before);
+  if (!changes.length) {
+    return {
+      status: "unknown",
+      changes: 0,
+      gainedLevels: null,
+      activeDays: null,
+      levelsPerActiveDay: null,
+      masteredConcepts: 0,
+      label: "unknown/unavailable",
+    };
+  }
+  const days = new Set(changes.map((event) => event.day).filter(Boolean));
+  const activeDays = Math.max(1, days.size);
+  const gainedLevels = changes.reduce((sum, event) => sum + Math.max(0, event.after - event.before), 0);
+  const masteredConcepts = changes.filter((event) => event.after >= 7).length;
+  const levelsPerActiveDay = Math.round((gainedLevels / activeDays) * 10) / 10;
+  return {
+    status: "measured",
+    changes: changes.length,
+    gainedLevels,
+    activeDays,
+    levelsPerActiveDay,
+    masteredConcepts,
+    label: `${levelsPerActiveDay} levels/day`,
+  };
+}
+
+function questionQualityIndex(questionQuality = null) {
+  const summary = questionQuality && typeof questionQuality === "object" ? questionQuality.summary || questionQuality : null;
+  if (!summary) {
+    return {
+      status: "unknown",
+      indexPct: null,
+      totalQuestions: null,
+      blockerIssues: null,
+      warningIssues: null,
+      label: "unknown/unavailable",
+    };
+  }
+  const total = safeNumber(summary.total ?? summary.totalQuestions, null);
+  const blockerIssues = safeNumber(summary.blockerIssues, null);
+  const warningIssues = safeNumber(summary.warningIssues, null);
+  const directIndex = safeNumber(summary.questionQualityIndex ?? summary.indexPct, null);
+  const cleanQuestions = safeNumber(summary.cleanQuestions, null);
+  const noteQuestions = safeNumber(summary.noteQuestions, 0);
+  const derivedIndex = total && cleanQuestions !== null
+    ? Math.round(((cleanQuestions + noteQuestions) / total) * 1000) / 10
+    : null;
+  const indexPct = directIndex !== null ? directIndex : derivedIndex;
+  if (indexPct === null) {
+    return {
+      status: "unknown",
+      indexPct: null,
+      totalQuestions: total,
+      blockerIssues,
+      warningIssues,
+      label: "unknown/unavailable",
+    };
+  }
+  return {
+    status: blockerIssues > 0 ? "blocked" : "measured",
+    indexPct,
+    totalQuestions: total,
+    blockerIssues,
+    warningIssues,
+    label: `${indexPct}%`,
+  };
+}
+
 export function buildStuckFeedbackEvent(input = {}) {
   const timestamp = safeNumber(input.timestamp, Date.now());
   const lessonId = safeText(input.lessonId, 90);
@@ -296,6 +440,35 @@ export function buildOutcomeMetrics({ events = [], scores = {}, modules = [], no
       count: stuckFeedback,
       label: String(stuckFeedback),
     },
+  };
+}
+
+export function buildMetricsDashboard({
+  events = [],
+  scores = {},
+  modules = [],
+  questionQuality = null,
+  now = Date.now(),
+} = {}) {
+  const normalizedEvents = normalizeEvents(events);
+  const outcome = buildOutcomeMetrics({ events: normalizedEvents, scores, modules, now });
+  return {
+    version: OUTCOME_LOOP_VERSION,
+    dataPolicy: "Use real local learner evidence and repository QA reports only; missing metrics stay unknown/unavailable.",
+    retention: outcome.retention,
+    moduleMastery: outcome.moduleMastery,
+    masteryVelocity: masteryVelocity(normalizedEvents),
+    examScoreUplift: examScoreUplift(normalizedEvents),
+    questionQualityIndex: questionQualityIndex(questionQuality),
+    stuckFeedback: outcome.stuckFeedback,
+    readyForDecisions: Boolean(
+      outcome.retention.d1.status !== "unknown" &&
+        outcome.retention.d7.status !== "unknown" &&
+        outcome.moduleMastery.averagePct !== null &&
+        masteryVelocity(normalizedEvents).status === "measured" &&
+        examScoreUplift(normalizedEvents).status === "measured" &&
+        questionQualityIndex(questionQuality).status !== "unknown",
+    ),
   };
 }
 

@@ -11,6 +11,7 @@ export const LEARNING_EVENT_TYPES = Object.freeze({
   FLASHCARD_REVIEW: "flashcard_review",
   LESSON_WRAP: "lesson_wrap",
   STUDENT_STUCK: "student_stuck",
+  FEATURE_ERROR: "feature_error",
 });
 
 const VALID_EVENT_TYPES = new Set(Object.values(LEARNING_EVENT_TYPES));
@@ -133,6 +134,9 @@ export function normalizeLearningEvent(input = {}) {
     advanced: boolOrNull(input.advanced),
     feedbackId: safeText(input.feedbackId, 120),
     feedbackCode: safeText(input.feedbackCode, 80),
+    featureId: safeText(input.featureId || input.feature || "", 80),
+    errorCode: safeText(input.errorCode || input.errorName || "", 80),
+    severity: safeText(input.severity || "", 30),
     conceptKeys: safeList(input.conceptKeys, 16, 180),
     prerequisiteKeys: safeList(input.prerequisiteKeys, 16, 180),
     terms: safeList(input.terms, 16, 80),
@@ -248,6 +252,42 @@ export function summarizeLearningEvidence(state, { now = Date.now(), topN = 8 } 
   return summary;
 }
 
+export function summarizeFeatureErrorTelemetry(state, { topN = 8 } = {}) {
+  const events = Array.isArray(state && state.events) ? state.events : [];
+  const sessions = new Set();
+  const featureErrors = events.filter((event) => event.type === LEARNING_EVENT_TYPES.FEATURE_ERROR);
+  const byFeature = new Map();
+
+  events.forEach((event) => {
+    if (event.sessionId) sessions.add(event.sessionId);
+  });
+  featureErrors.forEach((event) => {
+    const featureId = safeText(event.featureId || event.source || "unknown/unavailable", 80);
+    const current = byFeature.get(featureId) || {
+      featureId,
+      count: 0,
+      lastSeen: 0,
+      codes: {},
+    };
+    const code = safeText(event.errorCode || "unknown/unavailable", 80);
+    current.count += 1;
+    current.lastSeen = Math.max(current.lastSeen, safeNumber(event.timestamp, 0) || 0);
+    current.codes[code] = (current.codes[code] || 0) + 1;
+    byFeature.set(featureId, current);
+  });
+
+  const sessionCount = sessions.size;
+  return {
+    version: LEARNING_EVIDENCE_VERSION,
+    sessions: sessionCount,
+    featureErrors: featureErrors.length,
+    errorsPer1000Sessions: sessionCount ? Math.round((featureErrors.length / sessionCount) * 1000) : 0,
+    byFeature: [...byFeature.values()]
+      .sort((a, b) => b.count - a.count || b.lastSeen - a.lastSeen || a.featureId.localeCompare(b.featureId))
+      .slice(0, Math.max(1, safeNumber(topN, 8))),
+  };
+}
+
 function anonymizedEvent(event = {}) {
   const sessionId = safeText(event.sessionId, 80);
   return {
@@ -273,6 +313,9 @@ function anonymizedEvent(event = {}) {
     advanced: boolOrNull(event.advanced),
     feedbackId: safeText(event.feedbackId, 120),
     feedbackCode: safeText(event.feedbackCode, 80),
+    featureId: safeText(event.featureId, 80),
+    errorCode: safeText(event.errorCode, 80),
+    severity: safeText(event.severity, 30),
     conceptKeys: safeList(event.conceptKeys, 16, 180),
     prerequisiteKeys: safeList(event.prerequisiteKeys, 16, 180),
     terms: safeList(event.terms, 16, 80),

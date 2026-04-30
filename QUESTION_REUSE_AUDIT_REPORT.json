@@ -1,0 +1,4615 @@
+{
+  "reportVersion": "question-reuse-audit-v1",
+  "date": "2026-04-29",
+  "target": "SVCollege question reuse by learner profile contract and concept tag",
+  "summary": {
+    "questions": 863,
+    "conceptTags": 374,
+    "missingConceptKey": 0,
+    "duplicateIdentityIssues": 0,
+    "profileContractChecks": 9,
+    "failedProfileContractChecks": 0,
+    "profileExports": 0,
+    "failedProfileExports": 0,
+    "legacyGeneratedFiltered": 0,
+    "ready": true
+  },
+  "profileContractChecks": [
+    {
+      "id": "local profile selector",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "id": "profile scope prefix",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "id": "answered questions key",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "id": "answered state by concept",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "id": "profile-scoped localStorage",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "id": "unanswered selector",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "id": "exhaustion fallback explicit",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "id": "progress export carries answered IDs",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "id": "progress import restores answered IDs",
+      "passed": true,
+      "failures": []
+    }
+  ],
+  "profileExports": [],
+  "conceptBuckets": [
+    {
+      "conceptKey": "ai_development::AI Code Review",
+      "total": 2,
+      "kinds": {
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "ai_development::Prompt Engineering",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_11::Array",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_11::arrow function",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::boolean",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_11::By Reference",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_11::By Value",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_11::filter",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::find",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_11::forEach",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::function",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::Index",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_11::let",
+      "total": 4,
+      "kinds": {
+        "mc": 3,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_11::map",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_11::number",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_11::object",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::Pointer",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_11::pop",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::push",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::reduce",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_11::scope",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_11::shift",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::sort",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_11::splice",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_11::spread",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_11::string",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_11::toString",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::undefined",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::unshift",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_11::var",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_12::array",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_12::filter",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_12::forEach",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_12::index",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_12::lowercase",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_12::map",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_12::spread",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_12::uppercase",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_12::יצירת מערך חדש (new array)",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_12::יצירת מערך חדש מתוך קיים",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_12::סינון לפי תנאי",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_12::עבודה עם ערכים לפי אינדקס",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_13::appendChild",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::attribute",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::class",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::constructor",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::createElement",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::document",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::Document Object Model",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_13::DOM",
+      "total": 2,
+      "kinds": {
+        "trace": 1,
+        "bug": 1
+      },
+      "sources": {
+        "curated": 1,
+        "svcollege-curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::extends",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_13::getElementById",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::getElementsByClassName",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::getElementsByTagName",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::getItem",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::inheritance",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_13::innerHTML",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_13::instance",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::localStorage",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::method",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_13::Method",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::new",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::Object",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 2
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::Property",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::querySelector",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::querySelectorAll",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::removeChild",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::replaceChild",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::sessionStorage",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::setAttribute",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::setItem",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_13::style",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_13::super",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_13::Value",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_15::anonymous function",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_15::Asynchronous",
+      "total": 5,
+      "kinds": {
+        "mc": 1,
+        "fill": 2,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_15::catch",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_15::catch (Promise)",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_15::Closure",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "trace": 2
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_15::Error",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_15::Error Object",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_15::Exception",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_15::fetch",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_15::Promise",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_15::reject",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_15::resolve",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_15::Scope",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_15::setTimeout",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_15::Synchronous",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_15::then",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_15::throw",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_15::try",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_16::cd",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::CLI",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::Command Line Interface",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::dependencies",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::dir",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::File System",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_16::fs",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_16::fs.appendFile",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::fs.open",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::fs.readFile",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::fs.rename",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::fs.unlink",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::fs.writeFile",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::JSON",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::mkdir",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::module",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::module.exports",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::node file.js",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::Node.js",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "trace": 3
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::npm",
+      "total": 2,
+      "kinds": {
+        "trace": 2
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_16::npm init",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::npm install",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::npm start",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::package.json",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::require",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::type nul",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_16::V8",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::1xx-2xx-3xx",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::4xx-5xx",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::app",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::app.get",
+      "total": 3,
+      "kinds": {
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::app.listen",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::app.post",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::app.use",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::body",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::body-parser",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Client",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Create",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::CRUD",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Delete",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Domain",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::event.preventDefault",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Express",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::form",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::GET",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::headers",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::HTTP",
+      "total": 3,
+      "kinds": {
+        "trace": 3
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::JSON",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_17::method",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::middleware",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "trace": 1,
+        "bug": 1
+      },
+      "sources": {
+        "curated": 2,
+        "svcollege-curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_17::Path",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::port",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::POST",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Protocol",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Query Parameters",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Read",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Request",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Response",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::REST API",
+      "total": 3,
+      "kinds": {
+        "trace": 1,
+        "build": 2
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Route",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Server",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::static files",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::Status Codes",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_17::Update",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_17::URL",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_18::Express",
+      "total": 2,
+      "kinds": {
+        "trace": 2
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_18::POST",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_18::route",
+      "total": 3,
+      "kinds": {
+        "trace": 2,
+        "build": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_19::event",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "fill": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_19::forEach",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_19::function",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_19::if/else",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_19::script",
+      "total": 2,
+      "kinds": {
+        "trace": 2
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_19::switch",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_20::$eq",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_20::$gt",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_20::$gte",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_20::$lt",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_20::$lte",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_20::Collection",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_20::findOne",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_20::MongoDB",
+      "total": 4,
+      "kinds": {
+        "trace": 4
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_20::Mongoose",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_20::Schema",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_21::className",
+      "total": 1,
+      "kinds": {
+        "bug": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 1
+    },
+    {
+      "conceptKey": "lesson_21::Component",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_21::export default",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_21::JSX",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_21::map",
+      "total": 3,
+      "kinds": {
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_21::props",
+      "total": 5,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_21::rendering",
+      "total": 2,
+      "kinds": {
+        "trace": 1,
+        "bug": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_22::controlled input",
+      "total": 2,
+      "kinds": {
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_22::Hook",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_22::immutable",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_22::passing function as prop",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_22::props",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_22::re-render",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_22::setState",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "trace": 2
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_22::useState",
+      "total": 8,
+      "kinds": {
+        "mc": 1,
+        "fill": 2,
+        "trace": 1,
+        "bug": 1,
+        "build": 3
+      },
+      "sources": {
+        "curated": 8
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_23::BrowserRouter",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_23::Context API",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_23::dynamic route",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_23::Link",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 2
+    },
+    {
+      "conceptKey": "lesson_23::Prop Drilling",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_23::Provider",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_23::Router",
+      "total": 1,
+      "kinds": {
+        "build": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_23::useContext",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_23::useNavigate",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_23::useParams",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_24::cleanup",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_24::dependency array",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "trace": 1,
+        "bug": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_24::fetching data",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_24::side effect",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_24::useEffect",
+      "total": 5,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_24::useMemo",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_24::useRef",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_25::flex",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_25::grid",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_25::responsive design",
+      "total": 2,
+      "kinds": {
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 1,
+        "svcollege-curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_25::rounded",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_25::Tailwind CSS",
+      "total": 1,
+      "kinds": {
+        "bug": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_25::utility classes",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_26::array type",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_26::Function Prop Type",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_26::interface",
+      "total": 1,
+      "kinds": {
+        "fill": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_26::interface vs type",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_26::optional field",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_26::readonly",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_26::Strongly Typed",
+      "total": 1,
+      "kinds": {
+        "bug": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_26::type alias",
+      "total": 2,
+      "kinds": {
+        "fill": 2
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_26::type annotation",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "fill": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_26::TypeScript",
+      "total": 3,
+      "kinds": {
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 2,
+        "svcollege-curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_26::Typing State",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_26::union",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_26::void",
+      "total": 1,
+      "kinds": {
+        "mc": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_27::CRUD",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_27::extends interface",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_27::Transaction",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_27::Type Narrowing",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_27::Union Type",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::agent loop",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::chunking",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::embeddings",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::evaluation",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::fine-tuning boundary",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3,
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::guardrails",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::hallucination check",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::LangChain",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::model selection",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::OpenAI API",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::prompt messages",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::RAG",
+      "total": 5,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::retrieval ranking",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::streaming response",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::structured output",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::token budget",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::tool calling",
+      "total": 6,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::vector store",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::Vercel AI SDK",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_auth_security::access token",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::authentication",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_auth_security::authorization",
+      "total": 6,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_auth_security::bcrypt",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::cookie",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_auth_security::CORS",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::CSRF",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::Firebase Auth",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::JWT",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::Kinde/Appwrite",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::middleware guard",
+      "total": 5,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 5
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::OAuth",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::password hashing",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::provider auth",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::refresh token",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_auth_security::secure cookie",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::session",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::Supabase Auth",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_auth_security::XSS boundary",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_closures::closure",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_closures::closure in setTimeout",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_closures::lexical scope",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_closures::scope chain",
+      "total": 1,
+      "kinds": {
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_closures::stale closure",
+      "total": 2,
+      "kinds": {
+        "trace": 1,
+        "bug": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_design_systems::accessible primitive",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_design_systems::asChild slot",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "fill": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_design_systems::cn helper",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "fill": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_design_systems::component registry",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "fill": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_design_systems::component variants",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_design_systems::cva",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "fill": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_design_systems::design system testing",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "fill": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_design_systems::design tokens",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "fill": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_design_systems::form field composition",
+      "total": 6,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_design_systems::Radix primitives",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 2
+      },
+      "sources": {
+        "svcollege-curated": 3,
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_design_systems::shadcn/UI",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "fill": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_design_systems::theme tokens",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "fill": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::build command",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::CD",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::CI",
+      "total": 6,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 6
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::container",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::Docker",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::Docker Compose",
+      "total": 6,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::Dockerfile",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::environment variables",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::health check",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::image",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::preview deployment",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::production readiness",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::release checklist",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::service",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::smoke test",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::Vercel deploy",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::volume",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_html_css_foundations::accessibility basics",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_html_css_foundations::box model",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_html_css_foundations::cascade and specificity",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_html_css_foundations::CSS selector",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_html_css_foundations::HTML document",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_html_css_foundations::HTML form",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "fill": 2,
+        "build": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_html_css_foundations::label",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_html_css_foundations::semantic HTML",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 3
+    },
+    {
+      "conceptKey": "lesson_nestjs::controller",
+      "total": 5,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nestjs::decorator",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nestjs::dependency injection",
+      "total": 5,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nestjs::DTO",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nestjs::exception filter",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nestjs::guard",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nestjs::interceptor",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nestjs::middleware",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nestjs::module",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nestjs::Nest.js",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nestjs::pipe",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nestjs::provider",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nestjs::repository pattern",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nestjs::service",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nestjs::testing module",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nestjs::validation pipe",
+      "total": 5,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nextjs::API route",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::App Router",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::client component",
+      "total": 5,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 5
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::dynamic route",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::file-system routing",
+      "total": 5,
+      "kinds": {
+        "mc": 2,
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2,
+        "svcollege-curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nextjs::image optimization",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::ISR",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nextjs::layout",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::metadata API",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_nextjs::Next.js",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::page",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::route handler",
+      "total": 5,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nextjs::SEO",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::server action",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_nextjs::server component",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::SSG",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::SSR",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_nextjs::Vercel deploy",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::column",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::CRUD",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "fill": 2,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 4
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::database",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::Drizzle",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_sql_orm::foreign key",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::JOIN",
+      "total": 6,
+      "kinds": {
+        "mc": 2,
+        "fill": 2,
+        "trace": 1,
+        "bug": 1
+      },
+      "sources": {
+        "svcollege-curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_sql_orm::migration",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::ORM",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::PostgreSQL",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2,
+        "curated": 1
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::primary key",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_sql_orm::Prisma",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::relation",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::row",
+      "total": 3,
+      "kinds": {
+        "mc": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 1,
+        "svcollege-curated": 2
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_sql_orm::schema",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "build": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::SQL",
+      "total": 5,
+      "kinds": {
+        "mc": 2,
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 5
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_sql_orm::table",
+      "total": 2,
+      "kinds": {
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 2
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_sql_orm::transaction",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "svcollege-curated": 3
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_tooling_git::branch",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_tooling_git::commit",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_tooling_git::ESLint",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_tooling_git::Git",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_tooling_git::GitHub workflow",
+      "total": 2,
+      "kinds": {
+        "mc": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 2
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_tooling_git::npm scripts",
+      "total": 5,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1,
+        "bug": 1,
+        "build": 1
+      },
+      "sources": {
+        "curated": 4,
+        "svcollege-curated": 1
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_tooling_git::Prettier",
+      "total": 3,
+      "kinds": {
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 5
+    },
+    {
+      "conceptKey": "lesson_tooling_git::pull request",
+      "total": 3,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 3
+      },
+      "maxLevel": 4
+    },
+    {
+      "conceptKey": "lesson_tooling_git::repository",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_tooling_git::staging area",
+      "total": 4,
+      "kinds": {
+        "mc": 2,
+        "fill": 1,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 4
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_tooling_git::working tree",
+      "total": 4,
+      "kinds": {
+        "mc": 1,
+        "fill": 1,
+        "trace": 2
+      },
+      "sources": {
+        "curated": 3,
+        "svcollege-curated": 1
+      },
+      "maxLevel": 6
+    }
+  ],
+  "duplicateIdentityIssues": [],
+  "missingConceptKey": []
+}

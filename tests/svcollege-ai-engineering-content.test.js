@@ -96,10 +96,10 @@ describe("SVCollege AI Engineering content", () => {
 
     expect(questions.mc).toHaveLength(28);
     expect(questions.fill).toHaveLength(10);
-    expect(context.SVCOLLEGE_AI_ENGINEERING_TRACES).toHaveLength(3);
+    expect(context.SVCOLLEGE_AI_ENGINEERING_TRACES).toHaveLength(17);
     expect(context.SVCOLLEGE_AI_ENGINEERING_BUILDS).toHaveLength(3);
     expect(questions.bugHunt).toHaveLength(3);
-    expect(allPracticeItems(context)).toHaveLength(47);
+    expect(allPracticeItems(context)).toHaveLength(61);
 
     questions.mc.forEach((question) => {
       expect(question.options).toHaveLength(4);
@@ -113,6 +113,35 @@ describe("SVCollege AI Engineering content", () => {
 
     allPracticeItems(context).forEach((item) => {
       expectPracticeMetadata(item);
+    });
+  });
+
+  it("adds trace activity to the next required AI Engineering authoring gaps", () => {
+    const context = loadContext();
+    const tracedConcepts = context.SVCOLLEGE_AI_ENGINEERING_TRACES.map((item) => item.conceptKey);
+
+    expect(tracedConcepts).toEqual(
+      expect.arrayContaining([
+        "lesson_ai_engineering::agent loop",
+        "lesson_ai_engineering::chunking",
+        "lesson_ai_engineering::embeddings",
+        "lesson_ai_engineering::fine-tuning boundary",
+        "lesson_ai_engineering::guardrails",
+        "lesson_ai_engineering::hallucination check",
+        "lesson_ai_engineering::LangChain",
+        "lesson_ai_engineering::model selection",
+        "lesson_ai_engineering::prompt messages",
+        "lesson_ai_engineering::retrieval ranking",
+        "lesson_ai_engineering::streaming response",
+        "lesson_ai_engineering::structured output",
+        "lesson_ai_engineering::token budget",
+        "lesson_ai_engineering::vector store",
+      ]),
+    );
+    context.SVCOLLEGE_AI_ENGINEERING_TRACES.slice(3).forEach((trace) => {
+      expect(trace.steps).toHaveLength(3);
+      expect(trace.code).toContain("\n");
+      expectPracticeMetadata(trace);
     });
   });
 

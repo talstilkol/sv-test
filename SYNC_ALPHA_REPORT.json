@@ -1,0 +1,57 @@
+{
+  "reportVersion": "sync-alpha-gate-v1",
+  "date": "2026-04-29",
+  "target": "Sync Alpha",
+  "policy": "Cloud sync remains optional, credential-gated, privacy-noted, and deterministic last-write-wins.",
+  "summary": {
+    "checks": 6,
+    "passed": 6,
+    "failed": 0,
+    "ready": true
+  },
+  "checks": [
+    {
+      "id": "auth-token-required",
+      "label": "Sync requires authenticated token",
+      "passed": true,
+      "status": "pass",
+      "detail": "Remote writes must derive user_id from a real authenticated token."
+    },
+    {
+      "id": "cloud-progress-row",
+      "label": "Cloud progress uses one snapshot row",
+      "passed": true,
+      "status": "pass",
+      "detail": "Sync Alpha writes one user_progress snapshot row."
+    },
+    {
+      "id": "last-write-wins",
+      "label": "Conflict policy is deterministic last-write-wins",
+      "passed": true,
+      "status": "pass",
+      "detail": "Conflict resolution must stay deterministic."
+    },
+    {
+      "id": "session-token-ui",
+      "label": "Access token is session-only in UI",
+      "passed": true,
+      "status": "pass",
+      "detail": "Access token must not be saved to persistent localStorage."
+    },
+    {
+      "id": "privacy-note-visible",
+      "label": "Sync privacy notice is visible",
+      "passed": true,
+      "status": "pass",
+      "detail": "The UI must tell the learner what sync stores and how conflicts are resolved."
+    },
+    {
+      "id": "policy-doc",
+      "label": "Sync Alpha policy exists",
+      "passed": true,
+      "status": "pass",
+      "detail": "SYNC_ALPHA_POLICY.md must keep the privacy and conflict contract explicit."
+    }
+  ],
+  "blockers": []
+}

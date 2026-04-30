@@ -251,7 +251,7 @@ function buildCoverage() {
       optionFeedbackCoveredIds.size,
       mcBank.length,
       "MC questions",
-      ["data/option_feedback.js", "data/questions_bank.js", "data/questions_bank_seeded.js"],
+      ["data/option_feedback.js", "data/questions_bank.js"],
       {
         enforceStrict: false,
         details: {

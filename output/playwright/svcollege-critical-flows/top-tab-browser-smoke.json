@@ -2,8 +2,8 @@
   "reportVersion": "svcollege-top-tab-browser-smoke-v1",
   "date": "2026-04-29",
   "browserSurface": "same-origin iframe DOM click harness",
-  "topTabs": 22,
-  "passedTabs": 22,
+  "topTabs": 23,
+  "passedTabs": 23,
   "failedTabs": 0,
   "results": [
     {
@@ -193,6 +193,15 @@
       "buttonCount": 1,
       "activeAfterClick": true,
       "title": "📐 פירוק קוד",
+      "errors": []
+    },
+    {
+      "id": "open-settings",
+      "dataTab": "settings",
+      "ariaLabel": "פתח הגדרות מערכת",
+      "buttonCount": 1,
+      "activeAfterClick": true,
+      "title": "⚙️ הגדרות",
       "errors": []
     },
     {

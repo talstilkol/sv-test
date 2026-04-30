@@ -1,6 +1,6 @@
 # Exam Flow Simulation Report — 2026-04-29
 
-- Question bank size: 2840
+- Question bank size: 216
 - Blockers: 0
 - Overall: PASS
 
@@ -13,7 +13,7 @@
 
 ## Harder After Correct
 
-- Concepts checked: 160
+- Concepts checked: 34
 - Failures: 0
 
 ## Wrong Answer Repair

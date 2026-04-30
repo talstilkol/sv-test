@@ -1,11 +1,12 @@
 // data/questions_bank_seeded.js
+// LEGACY ARCHIVE ONLY — not loaded by the portal and not counted as readiness.
 // 🤖 AUTO-GENERATED — do not edit by hand.
 // Generated: 2026-04-29T11:17:16.493Z
 // Run: node scripts/seed_questions.js
 //
-// These are *draft* questions automatically derived from concept explanations.
-// They expand the live bank coverage so every concept has at least 3 MC + 2 Fill.
-// Promote any of these to data/questions_bank.js to mark them as hand-curated.
+// These are legacy draft questions automatically derived from concept explanations.
+// They do not expand live coverage. A human must rewrite/review a useful item into
+// data/questions_bank.js before it can become learner-facing.
 var QUESTIONS_BANK_SEEDED = {
   "mc": [
     {

@@ -13,6 +13,16 @@ let isScoreMastered;
 let questionChallengeLevel;
 let masteryProofThreshold;
 let qualifiesForMasteryProof;
+let conceptRequiresCodeProof;
+let requiresOneLineMasteryCheckpoint;
+let validateOneLineMasteryProof;
+let hasOneLineMasteryProof;
+let requiresScratchMasteryCheckpoint;
+let validateScratchMasteryProof;
+let hasScratchMasteryProof;
+let isExamCriticalConcept;
+let spacedReviewPriority;
+let buildSpacedReviewSchedule;
 
 beforeAll(async () => {
   ({
@@ -28,6 +38,16 @@ beforeAll(async () => {
     questionChallengeLevel,
     masteryProofThreshold,
     qualifiesForMasteryProof,
+    conceptRequiresCodeProof,
+    requiresOneLineMasteryCheckpoint,
+    validateOneLineMasteryProof,
+    hasOneLineMasteryProof,
+    requiresScratchMasteryCheckpoint,
+    validateScratchMasteryProof,
+    hasScratchMasteryProof,
+    isExamCriticalConcept,
+    spacedReviewPriority,
+    buildSpacedReviewSchedule,
   } = await import("../src/core/scoring.js"));
 });
 
@@ -213,5 +233,78 @@ describe("Mastery proof gate", () => {
       concept,
       availableLevels: [2, 5],
     })).toBe(false);
+  });
+
+  it("requires a one-line checkpoint for conceptual mastery topics only", () => {
+    expect(conceptRequiresCodeProof({ codeExample: "const x = 1;" })).toBe(true);
+    expect(conceptRequiresCodeProof({ miniBuilds: [{ id: "build-array" }] })).toBe(true);
+    expect(requiresOneLineMasteryCheckpoint({ conceptName: "Array" })).toBe(true);
+    expect(requiresOneLineMasteryCheckpoint({ conceptName: "Array", codeExample: "arr.map(fn)" })).toBe(false);
+    expect(requiresScratchMasteryCheckpoint({ conceptName: "Array", codeExample: "arr.map(fn)" })).toBe(true);
+    expect(requiresScratchMasteryCheckpoint({ conceptName: "Array" })).toBe(false);
+  });
+
+  it("validates a real one-line mastery explanation deterministically", () => {
+    const passed = validateOneLineMasteryProof("Array שומר רשימה מסודרת של ערכים לפי אינדקס", {
+      conceptName: "Array",
+    });
+    expect(passed).toMatchObject({ passed: true, normalized: "Array שומר רשימה מסודרת של ערכים לפי אינדקס" });
+    expect(hasOneLineMasteryProof({ oneLineProof: passed })).toBe(true);
+    expect(validateOneLineMasteryProof("לא יודע", { conceptName: "Array" }).passed).toBe(false);
+    expect(validateOneLineMasteryProof("קצר מדי", { conceptName: "Array" }).passed).toBe(false);
+    expect(validateOneLineMasteryProof("שורה אחת טובה\nאבל יש עוד שורה", { conceptName: "Array" }).passed).toBe(false);
+  });
+
+  it("validates a write-from-scratch code checkpoint for implementation mastery", () => {
+    const concept = {
+      conceptName: "map",
+      codeExample: "const doubled = numbers.map((n) => n * 2);",
+    };
+    const passed = validateScratchMasteryProof("const names = users.map((user) => user.name);", concept);
+    expect(passed).toMatchObject({ passed: true });
+    expect(hasScratchMasteryProof({ scratchProof: passed })).toBe(true);
+    expect(validateScratchMasteryProof("רק הסבר מילולי בלי קוד", concept).passed).toBe(false);
+    expect(validateScratchMasteryProof(concept.codeExample, concept).passed).toBe(false);
+  });
+
+  it("prioritizes spaced review for exam-critical weak concepts first", () => {
+    const now = 1_800_000_000_000;
+    const critical = { conceptName: "map", difficulty: 8, codeExample: "items.map(fn)" };
+    const regular = { conceptName: "label", difficulty: 3 };
+    expect(isExamCriticalConcept(critical)).toBe(true);
+    expect(isExamCriticalConcept(regular)).toBe(false);
+
+    const criticalPriority = spacedReviewPriority({
+      concept: critical,
+      conceptKey: "lesson_11::map",
+      now,
+      score: {
+        level: 2,
+        attempts: 4,
+        correct: 1,
+        weakReports: 1,
+        srsState: { due: now - 86_400_000 },
+      },
+    });
+    const regularPriority = spacedReviewPriority({
+      concept: regular,
+      conceptKey: "lesson_11::label",
+      now,
+      score: {
+        level: 4,
+        attempts: 4,
+        correct: 3,
+        weakReports: 0,
+        srsState: { due: now - 86_400_000 },
+      },
+    });
+    expect(criticalPriority).toBeGreaterThan(regularPriority);
+
+    const schedule = buildSpacedReviewSchedule([
+      { conceptKey: "lesson_11::label", concept: regular, score: { level: 4, attempts: 4, correct: 3, srsState: { due: now - 86_400_000 } } },
+      { conceptKey: "lesson_11::map", concept: critical, score: { level: 2, attempts: 4, correct: 1, weakReports: 1, srsState: { due: now - 86_400_000 } } },
+    ], { now });
+    expect(schedule[0].conceptKey).toBe("lesson_11::map");
+    expect(schedule[0].examCritical).toBe(true);
   });
 });

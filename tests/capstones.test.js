@@ -41,6 +41,18 @@ function loadCapstones() {
   return context.CAPSTONE_PROJECTS || [];
 }
 
+function loadGuidedBuilds() {
+  const context = {};
+  context.window = context;
+  context.global = context;
+  vm.runInNewContext(
+    fs.readFileSync(path.join(ROOT, "data/guided_builds.js"), "utf8"),
+    context,
+    { filename: "data/guided_builds.js" },
+  );
+  return context.GUIDED_BUILDS || [];
+}
+
 function loadLessonMap() {
   const map = {};
   LESSON_FILES.forEach(([lessonId, file, globalName]) => {
@@ -59,6 +71,7 @@ function loadLessonMap() {
 
 describe("capstone project track", () => {
   const capstones = loadCapstones();
+  const guidedBuilds = loadGuidedBuilds();
 
   it("ships the planned capstone briefs", () => {
     expect(capstones.map((item) => item.id)).toEqual([
@@ -97,6 +110,46 @@ describe("capstone project track", () => {
           (concept) => String(concept.conceptName || "").toLowerCase() === conceptName.toLowerCase(),
         );
         if (!found) missing.push(`${project.id}: ${key}`);
+      });
+    });
+
+    expect(missing).toEqual([]);
+  });
+
+  it("adds guided from-zero-to-feature builds for React, Node, Next and TypeScript", () => {
+    expect(guidedBuilds.map((item) => item.id)).toEqual([
+      "guided_react_task_filter",
+      "guided_node_notes_api",
+      "guided_nextjs_dashboard_route",
+      "guided_typescript_model_guard",
+    ]);
+
+    guidedBuilds.forEach((track) => {
+      expect(track.outcome).toBeTruthy();
+      expect(track.conceptKeys.length).toBeGreaterThanOrEqual(5);
+      expect(track.steps.length).toBe(4);
+      expect(track.completionProof.length).toBeGreaterThanOrEqual(3);
+      track.steps.forEach((step) => {
+        expect(step.goal).toBeTruthy();
+        expect(step.files.length).toBeGreaterThanOrEqual(1);
+        expect(step.checks.length).toBeGreaterThanOrEqual(3);
+      });
+    });
+  });
+
+  it("links every guided build concept to a real lesson concept", () => {
+    const lessons = loadLessonMap();
+    const missing = [];
+
+    guidedBuilds.forEach((track) => {
+      track.conceptKeys.forEach((key) => {
+        const [lessonId, ...nameParts] = key.split("::");
+        const conceptName = nameParts.join("::");
+        const lesson = lessons[lessonId];
+        const found = (lesson?.concepts || []).some(
+          (concept) => String(concept.conceptName || "").toLowerCase() === conceptName.toLowerCase(),
+        );
+        if (!found) missing.push(`${track.id}: ${key}`);
       });
     });
 

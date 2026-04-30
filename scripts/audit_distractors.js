@@ -7,7 +7,7 @@ const vm = require("vm");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
-const REPORT_PATH = path.join(ROOT, "AUDIT_DISTRACTORS_2026-04-28.md");
+const REPORT_PATH = path.join(ROOT, "AUDIT_DISTRACTORS_2026-04-30.md");
 const SAMPLE_SIZE = 50;
 
 function stableHash(input) {
@@ -22,16 +22,14 @@ function stableHash(input) {
 
 function loadBanks() {
   const sandbox = { window: {}, console };
-  ["questions_bank.js", "questions_bank_seeded.js"].forEach((file) => {
+  ["questions_bank.js"].forEach((file) => {
     const code = fs.readFileSync(path.join(DATA_DIR, file), "utf8");
     vm.runInNewContext(code, sandbox, { filename: file });
   });
 
   const curated = (sandbox.QUESTIONS_BANK && sandbox.QUESTIONS_BANK.mc) || [];
-  const seeded = (sandbox.QUESTIONS_BANK_SEEDED && sandbox.QUESTIONS_BANK_SEEDED.mc) || [];
   return [
-    ...curated.map((q) => ({ ...q, source: "curated" })),
-    ...seeded.map((q) => ({ ...q, source: "seeded" })),
+    ...curated.map((q) => ({ ...q, source: "manual" })),
   ];
 }
 
@@ -176,8 +174,7 @@ function auditQuestion(q) {
 function summarize(audits) {
   const summary = {
     total: audits.length,
-    curated: audits.filter((item) => item.question.source === "curated").length,
-    seeded: audits.filter((item) => item.question.source === "seeded").length,
+    manual: audits.filter((item) => item.question.source === "manual").length,
     blocker: 0,
     warning: 0,
     note: 0,
@@ -201,14 +198,14 @@ function formatIssueList(issues) {
 function buildReport(audits) {
   const summary = summarize(audits);
   const lines = [
-    "# Distractor Objectivity Audit — 2026-04-28",
+    "# Distractor Objectivity Audit — 2026-04-30",
     "",
-    "דגימה דטרמיניסטית של 50 שאלות MC מתוך המאגר המאוחד. לא נעשה שימוש באקראיות; הבחירה נעשית לפי hash יציב של `id + conceptKey + question`, כדי שהדוח יהיה ניתן לשחזור.",
+    "דגימה דטרמיניסטית של 50 שאלות MC מתוך המאגר הידני. לא נעשה שימוש באקראיות; הבחירה נעשית לפי hash יציב של `id + conceptKey + question`, כדי שהדוח יהיה ניתן לשחזור.",
     "",
     "## Summary",
     "",
     `- Total audited: ${summary.total}`,
-    `- Source mix: ${summary.curated} curated, ${summary.seeded} seeded`,
+    `- Source mix: ${summary.manual} manual`,
     `- Clean questions: ${summary.clean}`,
     `- Blockers: ${summary.blocker}`,
     `- Warnings: ${summary.warning}`,
@@ -243,7 +240,7 @@ function buildReport(audits) {
     summary.blocker === 0
       ? "- No blocker-level distractor defects were found in the deterministic 50-question audit sample."
       : "- Fix blocker-level rows before promoting the affected questions.",
-    "- Warning/note rows should be reviewed during the broader 10% seeded QA pass.",
+    "- Warning/note rows should be reviewed manually before release.",
     "",
   );
 

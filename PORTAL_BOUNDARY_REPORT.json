@@ -1,0 +1,57 @@
+{
+  "reportVersion": "portal-boundary-v1",
+  "date": "2026-04-29",
+  "target": "SVCollege AI & Full Stack portal boundary",
+  "policy": "Future school mappings are separate portal specs; this active portal remains SVCollege AI & Full Stack.",
+  "summary": {
+    "checks": 6,
+    "passed": 6,
+    "failed": 0,
+    "ready": true
+  },
+  "checks": [
+    {
+      "id": "single-primary-blueprint",
+      "label": "Only one primary course blueprint",
+      "passed": true,
+      "status": "pass",
+      "detail": "Found 1 primary blueprint declarations."
+    },
+    {
+      "id": "svcollege-primary-blueprint",
+      "label": "Primary blueprint is SVCollege AI & Full Stack",
+      "passed": true,
+      "status": "pass",
+      "detail": "Primary blueprint must stay svcollege_fullstack_ai."
+    },
+    {
+      "id": "no-active-secondary-provider",
+      "label": "No active non-SVCollege provider",
+      "passed": true,
+      "status": "pass",
+      "detail": "SVCollege provider declarations: 1."
+    },
+    {
+      "id": "navigation-names-svcollege",
+      "label": "Top navigation keeps SVCollege alignment explicit",
+      "passed": true,
+      "status": "pass",
+      "detail": "The active alignment UI must name SVCollege AI & Full Stack."
+    },
+    {
+      "id": "boundary-policy-doc",
+      "label": "Boundary policy document exists",
+      "passed": true,
+      "status": "pass",
+      "detail": "PORTAL_BOUNDARY_POLICY.md must define the split rule."
+    },
+    {
+      "id": "release-freeze-script",
+      "label": "Exam Edition freeze remains wired",
+      "passed": true,
+      "status": "pass",
+      "detail": "Exam Edition freeze script must remain available."
+    }
+  ],
+  "blockers": []
+}

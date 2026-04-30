@@ -8,20 +8,20 @@
   ],
   "reportScope": "weekly-progress",
   "summary": {
-    "readyForExamPractice": true,
-    "blockers": 0,
-    "readinessAverage": 100,
+    "readyForExamPractice": false,
+    "blockers": 7,
+    "readinessAverage": 96.7,
     "coveredModules": 15,
     "totalModules": 15,
-    "tabCoverage": 100,
-    "tabCells": "225/225",
+    "tabCoverage": 98.2,
+    "tabCells": "221/225",
     "weakestCriticalCounters": {
       "totalConcepts": 498,
-      "withoutQuestions": 0,
-      "withoutHardQuestion": 0,
+      "withoutQuestions": 131,
+      "withoutHardQuestion": 170,
       "withoutDefinition": 0,
       "withoutPrerequisiteEntry": 0,
-      "codeConceptsWithoutProof": 0
+      "codeConceptsWithoutProof": 142
     },
     "mockVariants": 3,
     "flowSimulationPassed": true
@@ -29,38 +29,38 @@
   "nextActions": [
     {
       "conceptKey": "react_blueprint::Performance Optimization",
-      "riskScore": 27,
-      "action": "לבדוק ידנית בסימולציית תלמיד נקייה."
-    },
-    {
-      "conceptKey": "lesson_15::Closure",
-      "riskScore": 25,
-      "action": "לבדוק ידנית בסימולציית תלמיד נקייה."
+      "riskScore": 172,
+      "action": "להוסיף שאלת עומק ברמה 6/7 עם הסבר ודיסטרקטורים."
     },
     {
       "conceptKey": "react_blueprint::State Management",
-      "riskScore": 25,
-      "action": "לבדוק ידנית בסימולציית תלמיד נקייה."
+      "riskScore": 170,
+      "action": "להוסיף שאלת עומק ברמה 6/7 עם הסבר ודיסטרקטורים."
     },
     {
-      "conceptKey": "react_blueprint::Testing Strategies",
-      "riskScore": 25,
-      "action": "לבדוק ידנית בסימולציית תלמיד נקייה."
+      "conceptKey": "lesson_25::add/delete movie",
+      "riskScore": 169,
+      "action": "להוסיף שאלת עומק ברמה 6/7 עם הסבר ודיסטרקטורים."
     },
     {
-      "conceptKey": "lesson_25::responsive design",
-      "riskScore": 24,
-      "action": "לבדוק ידנית בסימולציית תלמיד נקייה."
+      "conceptKey": "react_blueprint::Composition vs Inheritance",
+      "riskScore": 168,
+      "action": "להוסיף שאלת עומק ברמה 6/7 עם הסבר ודיסטרקטורים."
+    },
+    {
+      "conceptKey": "react_blueprint::Code Splitting",
+      "riskScore": 168,
+      "action": "להוסיף שאלת עומק ברמה 6/7 עם הסבר ודיסטרקטורים."
     }
   ],
   "teacherWeeklyProgress": {
-    "status": "ready-for-exam-practice",
+    "status": "blocked",
     "moduleCoverage": "15/15",
-    "tabCoverage": "225/225",
+    "tabCoverage": "221/225",
     "recommendedReviewAgenda": [
       "react_blueprint::Performance Optimization",
-      "lesson_15::Closure",
-      "react_blueprint::State Management"
+      "react_blueprint::State Management",
+      "lesson_25::add/delete movie"
     ],
     "evidenceCommands": [
       "npm run svcollege:readiness:release",

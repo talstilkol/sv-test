@@ -12,19 +12,21 @@ describe("SVCollege module × tab matrix", () => {
     expect(first.summary.strictTabs).toBeGreaterThanOrEqual(14);
   });
 
-  it("keeps every SVCollege module connected to every strict portal tab", () => {
+  it("keeps manual-question tab gaps visible instead of treating generated coverage as ready", () => {
     const report = tabMatrix.buildReport();
 
-    expect(report.summary.ready).toBe(true);
-    expect(report.summary.strictCoverage).toBe(100);
-    expect(report.summary.strictGaps).toBe(0);
-    expect(report.strictGaps).toEqual([]);
+    expect(report.summary.ready).toBe(false);
+    expect(report.summary.strictCoverage).toBe(98.2);
+    expect(report.summary.strictGaps).toBe(4);
+    expect(report.strictGaps).toEqual([
+      "עיצוב רספונסיבי ו-CSS מתקדם::trainer",
+      "עיצוב רספונסיבי ו-CSS מתקדם::mockExam",
+      "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI::trainer",
+      "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI::mockExam",
+    ]);
 
     report.modules.forEach((module) => {
-      expect(module.coverage).toBe(100);
-      expect(module.gaps).toEqual([]);
       expect(module.counts.lessons).toBeGreaterThan(0);
-      expect(module.counts.mc + module.counts.fill).toBeGreaterThan(0);
       expect(module.counts.trace).toBeGreaterThan(0);
       expect(module.counts.bug).toBeGreaterThan(0);
       expect(module.counts.build).toBeGreaterThan(0);

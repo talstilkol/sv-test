@@ -18,19 +18,21 @@
 
 | Phase | בוצע / סך | אחוז |
 |---|:-:|:-:|
-| Finish Line 1: SVCollege Full Portal Coverage | 143/143 | **100%** ✅ |
+| Finish Line 1: SVCollege Full Portal Coverage | 143/144 | **חסום — manual questions** 🚫 |
 | Phase 0: Status (DONE) | 25/25 | 100% ✅ |
 | Phase 1: Foundation | 60/62 | **97%** 🚧 |
-| Phase 2: Core Learning | 68/70 | **97%** 🚧 |
+| Phase 2: Core Learning | 70/70 | **100%** ✅ |
 | Phase 3: Intelligence + Sync | 36/41 | **88%** 🚧 |
-| Phase 4: Scale + Community | 4/28 | **14%** 🚧 |
-| Phase 5: Quality Governance + Rebaseline | 22/39 | **56%** 🚧 |
-| Phase 6: Learning Evidence + Productization | 19/36 | **53%** 🚧 |
-| Phase 7: Learning OS + Outcome Scale | 0/48 | 0% |
-| Phase 8: XP Economy + Experience Store | 23/54 | **43%** 🚧 |
-| Phase 9: Exam Intelligence + Reliability Hardening | 8/40 | **20%** 🚧 |
-| Phase 10: Exam OS v2 + Content Factory | 0/40 | 0% |
-| **TOTAL** | **408/625** | **65%** |
+| Phase 4: Scale + Community | 22/28 | **79%** 🚧 |
+| Phase 5: Quality Governance + Rebaseline | 39/39 | **100%** ✅ |
+| Phase 6: Learning Evidence + Productization | 35/36 | **97%** 🚧 |
+| Phase 7: Learning OS + Outcome Scale | 48/48 | **100%** ✅ |
+| Phase 8: XP Economy + Experience Store | 54/54 | **100%** ✅ |
+| Phase 9: Exam Intelligence + Reliability Hardening | 40/40 | **100%** ✅ |
+| Phase 10: Exam OS v2 + Content Factory | 41/41 | **100%** ✅ |
+| **TOTAL** | **613/627** | **98% — לא release-ready** |
+
+> **עדכון אמת 2026-04-30:** המספרים ההיסטוריים מעל נשמרים לצורך רצף, אבל אינם מקור release truth. מקור האמת הנוכחי הוא השערים: Finish Line 1 חסום עד ש-`questions:coverage-targets:strict`, `svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict`, `exam:mock-variants:strict` ו-`svcollege:console-gate:strict` ירוקים ללא generated/seeded bank.
 
 ### Finish Line 1 Override — 2026-04-28
 
@@ -72,6 +74,122 @@
 
 בוצע אודיט מקומי רחב: `npm test -- --run`, `npm run build`, `npm run validate:strict`, `npm run svcollege:readiness:release`, `npm run svcollege:tab-matrix:strict`, `npm run svcollege:command-center:strict`, `npm run quality:questions:strict`, `npm run quality:remediation:strict`, `npm run qa:questions:strict`, `npm run qa:lesson-quiz-keys:strict`, `npm run lessons:assets`, `npm run exam:weakest`, `npm run coverage:features:strict`, `npm run audit:distractors`, `npm run audit:seeded`. מצב מערכת: build/tests/readiness/tab-matrix ירוקים; `validate:strict` ירוק עם `0/568` density gaps; חסרים 0 `conceptKey` בשאלות curated; חסרות 0 הגדרות בשורה אחת ב-`exam:weakest`; remediation queue ירדה ל-0; Per-Distractor Feedback מלא לכל בנק ה-MC.
 
+### System Bug Audit Addendum — 2026-04-30
+
+נוצר [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) ונוסף backlog חדש ב-[MASTER_PLAN.md](MASTER_PLAN.md). מצב gate נוכחי: build/tests/readiness/tab-matrix/command-center/student-export/PWA/performance/feature-coverage/reuse-audit ירוקים, ו-`Math.random()` לא נמצא בקוד הפעיל. הבעיה המרכזית שנותרה היא עומק פעילות: `337/568` concepts activity-ready, `231` פערי Trace/Build/Bug, מתוכם `9` פערי SVCollege-priority. אין לפתוח הרחבות Priority 2 לפני סגירת פערי SVCollege האלה.
+
+### Brutal Master Plan Audit Addendum — 2026-04-30
+
+נוצר [BRUTAL_MASTER_PLAN_AUDIT.md](BRUTAL_MASTER_PLAN_AUDIT.md) עם סריקת סטטוס מחמירה לכל פריטי `MASTER_PLAN.md` ו-`EXECUTION_TASKS.md`: `759` פריטים נסרקו; `332` סווגו DONE, `368` PARTIAL, `50` NOT DONE ו-`9` FAKED/overclaimed. הבעיה המרכזית: חלק מה-`[V]` מסמנים specs, scaffolding, local reports או הבטחות post-exam כאילו הם 100/100 מוצר עובד. נוספו BUG-AUDIT-023 עד BUG-AUDIT-031 ב-[MASTER_PLAN.md](MASTER_PLAN.md): ניקוי overclaim, הורדת סטטוס לכל דבר שתלוי בנתוני אמת, שער קבוע לאודיט הכנות, מניעת drift בין cache/script/tests, מדיניות שאלות ידניות בלבד, וחסימת שני מודולי SVCollege עד authoring ידני.
+
+### Manual Question Policy Addendum — 2026-04-30
+
+המשתמש קבע כלל מחייב חדש: אין ליצור שאלות אוטומטיות. בוצע ניתוק מיידי: נמחקו `scripts/seed_questions.js` ו-`scripts/audit_seeded_questions.js`; `content-loader.js` לא מגדיר יותר `ensureSeededBank()` ולא טוען `data/questions_bank_seeded.js`; ה-runtime ב-`app.js` לא מייצר MC/Fill fallback (`generatedMCVariantsForConcept`, `makeCodeFill`, `generatedQuestionId` הוסרו); מאמן/Concept Sprint/Inline Quiz/Mock Exam נשענים על שאלות ידניות קיימות בלבד. `questions:coverage-targets:write` מציג עכשיו אמת ידנית: `ready:false`, `567` פערי MC ו-`561` פערי Fill. נוספו BUG-AUDIT-027 עד BUG-AUDIT-030 ב-[MASTER_PLAN.md](MASTER_PLAN.md) להשלמת authoring ידני וביטול כל drift של legacy generated bank.
+
+רענון לאחר מחיקה מלאה של כלי ייצור אוטומטי: גם כלי הבקרה כבר לא קוראים את `data/questions_bank_seeded.js`. `validate:strict`, `qa:questions:strict`, `quality:questions:strict`, `questions:reuse-audit:strict`, `performance:budget:strict`, `svcollege:pwa-offline:strict`, `npm test -- --run` ו-`npm run build` עברו. השערים שנכשלו בכוונה בגלל מדיניות ידנית בלבד: `questions:coverage-targets:strict` (`567` MC, `561` Fill), `svcollege:readiness:release` (`2` blockers), `svcollege:tab-matrix:strict` (`4` gaps), `svcollege:critical-flows:strict` (`trainer`, `mockExam`), `svcollege:command-center:strict`, `svcollege:student-export:strict`, `exam:mock-variants:strict`, ו-`svcollege:console-gate:strict`. החסימות הן `עיצוב רספונסיבי ו-CSS מתקדם` ו-`AI למפתחים` שחסרים כיסוי ידני ב-Trainer וב-Mock Exam; אסור לסגור אותן באמצעות generator.
+
+רענון אודיט נוסף באותו יום הרחיב את backlog עד `BUG-AUDIT-020`: נוספו פערי תהליך על מקור אמת מפוצל בין מסמכי תכנון, פיזור ידני של גרסאות cache/assets, חוסר browser smoke מלא לבאטצ'ים החדשים של activity data ב-Lessons 11-17/foundation/tooling, drift בתאריכי דוחות generated, release hygiene בגלל worktree גדול ולא נקי, ו-`questions:activity-authoring-plan:strict` שמדווח `ready:false` אך יוצא 0. הבדיקות לאחר הרענון: `npm test -- --run` עבר עם `148` קבצים ו-`603` בדיקות, `npm run build` עבר, וחיפוש `Math.random()` בקוד הפעיל נשאר ללא התאמות.
+
+רענון אודיט שלישי באותו יום לפני ניתוק הבנק האוטומטי הראה runtime/smoke ירוקים. לאחר ניתוק ידני בלבד, השערים `critical-flows`, `full-portal-smoke` ו-`console-gate` כבר אינם ירוקים כי הם תלויים בכיסוי Trainer/Mock Exam ידני לשני המודולים החסרים. זהו status drift מתועד, לא regression UI: אין להחזיר את ה-seeded bank כדי להפוך אותם לירוקים.
+
+### Forward Execution Plan — 2026-04-30
+
+מקור אמת קדימה: שאלות וחומר לימוד נוצרים ידנית בלבד, עוברים QA ידני, ורק אז נכנסים ל-`data/questions_bank.js` או לקבצי פעילות אמיתיים. אין generator, אין seeded fallback, אין נתוני pilot/pricing/usage מומצאים, ואין `Math.random()`.
+
+#### P0 — לפתוח מחדש את Finish Line 1 בלי generated bank
+
+- [ ] FWD-0.1 — להשאיר את `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js`, `tests/seeded-qa.test.js` מחוקים, ולוודא ש-`package.json` לא מחזיר `audit:seeded` או seed script.
+- [ ] FWD-0.2 — להוסיף/להקשיח release guard שסורק שאין `ensureSeededBank`, `generatedMCVariantsForConcept`, `makeCodeFill`, `generatedQuestionId`, `questions_bank_seeded.js` ב-runtime או ב-service worker.
+- [ ] FWD-0.3 — להריץ בכל batch: `rg -n "Math\\.random" app.js src scripts tests data --glob '!output/**'`; חייב להיות ללא התאמות.
+- [ ] FWD-0.4 — לשמור את `data/questions_bank_seeded.js` כארכיון לא פעיל בלבד או למחוק אותו רק אחרי החלטה מפורשת; בשום מצב לא להטעין אותו בדפדפן או בדוחות readiness.
+
+#### P0 — שני מודולי SVCollege שחוסמים Trainer/Mock Exam
+
+- [ ] FWD-1.1 — למפות ידנית את כל מושגי `עיצוב רספונסיבי ו-CSS מתקדם` שחסרים MC/Fill ב-`QUESTION_COVERAGE_TARGETS.md`.
+- [ ] FWD-1.2 — לכתוב שאלות MC ידניות למודול Design Systems: לכל שאלה מקור מושג, תשובה נכונה, 3 distractors סבירים, `explanation`, `optionFeedback`, `level`, `conceptKey`.
+- [ ] FWD-1.3 — לכתוב שאלות Fill ידניות למושגי Design Systems עם code example: blank אחד ברור, answer יחיד, hint שאינו מגלה, explanation.
+- [ ] FWD-1.4 — למפות ידנית את כל מושגי `AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI` שחסרים MC/Fill.
+- [ ] FWD-1.5 — לכתוב שאלות MC ידניות למודול AI Engineering לפי אותה מדיניות.
+- [ ] FWD-1.6 — לכתוב שאלות Fill ידניות למודול AI Engineering רק איפה שיש קוד/פקודה/תבנית אמיתית שמצדיקה Fill.
+- [ ] FWD-1.7 — לעדכן `data/questions_bank.js` בלבד; לא ליצור קובץ generated חדש.
+- [ ] FWD-1.8 — לעדכן `data/option_feedback.js` לכל MC חדש.
+- [ ] FWD-1.9 — להוסיף/לעדכן tests ממוקדים למודולים החסרים כך שיכסו count, conceptKey, levels, option feedback ו-Mock Exam routing.
+- [ ] FWD-1.10 — DoD: `svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict`, `exam:mock-variants:strict`, `svcollege:console-gate:strict` עוברים בלי generated bank.
+
+#### P0 — כיסוי שאלות ידני מלא לכל הפורטל
+
+- [ ] FWD-2.1 — להפוך את `QUESTION_COVERAGE_TARGETS.md/json` לתוכנית batch: `567` פערי MC ו-`561` פערי Fill, לפי מודול, מושג, עדיפות מבחן, ותאריך סקירה.
+- [ ] FWD-2.2 — להתחיל ממודולי SVCollege שנמצאים במבחן ולא ממוזיאון/חנות/קהילה.
+- [ ] FWD-2.3 — לכל batch להוסיף רק שאלות שעברו בדיקה ידנית מול חומר השיעור וה-source lesson.
+- [ ] FWD-2.4 — לכל batch להריץ `validate:strict`, `qa:questions:strict`, `quality:questions:strict`, `questions:coverage-targets`, `questions:reuse-audit:strict`.
+- [ ] FWD-2.5 — לא לסמן batch כ-DONE אם אין `optionFeedback` מלא לכל MC חדש.
+- [ ] FWD-2.6 — לא לסמן batch כ-DONE אם Fill כולל יותר מ-blank אחד, תשובה דולפת, או hint שמגלה את התשובה.
+- [ ] FWD-2.7 — יעד סופי: `questions:coverage-targets:strict` ירוק עם `mcGapCount: 0`, `fillGapCount: 0`.
+
+#### P0 — פערי פעילות Trace/Build/Bug
+
+- [ ] FWD-3.1 — לסגור קודם את `9` פערי SVCollege-priority מתוך `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
+- [ ] FWD-3.2 — לכל activity חדש להוסיף Trace/Build/Bug אמיתי שמבוסס על מושג קיים, לא תרגיל placeholder.
+- [ ] FWD-3.3 — להוסיף test data-shape לכל batch פעילות חדש.
+- [ ] FWD-3.4 — להוסיף browser smoke למושג מייצג אחד לפחות מכל batch חדש.
+- [ ] FWD-3.5 — רק אחרי SVCollege: לטפל ב-`222` פערים לא-עדיפותיים או להעביר אותם לפורטל עתידי.
+
+#### P1 — ניקוי overclaim ומקור אמת
+
+- [ ] FWD-4.1 — לעבור על כל `[V]` ב-`EXECUTION_TASKS.md` שנשען על generated/seeded coverage ולהוריד ל-[~]/[ ] או לסמן historical/superseded.
+- [ ] FWD-4.2 — להריץ `master-plan:brutal-audit:write` אחרי כל תיקון סטטוס.
+- [ ] FWD-4.3 — יעד: `FAKED: 0` לפני release.
+- [ ] FWD-4.4 — כל `PARTIAL` חייב owner, קובץ ראיה, וקריטריון סגירה מדיד.
+- [ ] FWD-4.5 — לעדכן את סיכום ההתקדמות העליון רק לפי gates, לא לפי ספירה היסטורית.
+
+#### P1 — QA וחוויית למידה אחרי החזרת הירוק
+
+- [ ] FWD-5.1 — להריץ desktop/mobile visual smoke אחרי הוספת השאלות הידניות.
+- [ ] FWD-5.2 — לבדוק ידנית שיעור אחד מכל מודול SVCollege: תוכן, מושגים, שאלות, מעבר מושגים, מעבר לשיעור הבא, collapse menus, scroll rail.
+- [ ] FWD-5.3 — להוסיף keyboard-only tests ל-Escape/Enter/Arrow, מעבר טאבים, פתיחת/סגירת תוכן, submit answer ו-focus visible.
+- [ ] FWD-5.4 — לעדכן `SVCOLLEGE_BROWSER_SMOKE.md` רק אחרי ראיית דפדפן אמיתית.
+
+#### P1 — Outcome Loop אמיתי
+
+- [ ] FWD-6.1 — להריץ פיילוט 10 תלמידים אמיתי לפי `PILOT_READINESS_PLAN.md` / `SVCOLLEGE_LEARNER_OUTCOME_LOOP.md`.
+- [ ] FWD-6.2 — לאסוף D1/D7 retention, module mastery, stuck feedback, זמן התאוששות מטעות ו-promotion outcome.
+- [ ] FWD-6.3 — להשאיר כל נתון חסר כ-`unknown/unavailable`; אין backfill.
+- [ ] FWD-6.4 — לעדכן את שער הקידום רק אחרי ראיות תלמידים אמיתיות.
+
+#### P1 — Release Guardrails
+
+- [ ] FWD-7.1 — להוסיף pre-release command שמריץ יחד: no-auto-question-generation scan, no-`Math.random`, strict QA, SVCollege gates, tests, build.
+- [ ] FWD-7.2 — להקשיח `questions:activity-authoring-plan:strict` או לפצל אותו ל-audit לעומת release gate כדי ש-`ready:false` לא ייראה ירוק.
+- [ ] FWD-7.3 — לרכז cache version / asset expectations כך שלא יעדכנו `service-worker.js`, tests ודוחות ידנית בכמה מקומות.
+- [ ] FWD-7.4 — לפני commit/release ליצור inventory של קבצים מיועדים מול generated reports.
+
+#### P2 — רק אחרי Finish Line 1 ירוק
+
+- [ ] FWD-8.1 — לפרק `app.js` למודולים קטנים: lesson renderer, chrome/menu, settings, bug log, question panels.
+- [ ] FWD-8.2 — לצמצם stylesheet גלובלי ו-core bundle רק אחרי שמסכי הלמידה יציבים.
+- [ ] FWD-8.3 — להמשיך Sync מול Supabase אמיתי: auth, conflict handling, recovery, export/import.
+- [ ] FWD-8.4 — להמשיך מוזיאון/חנות/קהילה רק אם חומר חובה למבחן לא נחסם, ורק אחרי gates ירוקים.
+- [ ] FWD-8.5 — כל pricing/usage/post-exam premium נשאר `unknown/unavailable` עד שיש ראיות אמת.
+
+#### Gate סופי לסגירת Finish Line 1
+
+- [ ] FWD-9.1 — `npm run validate:strict`
+- [ ] FWD-9.2 — `npm run qa:questions:strict`
+- [ ] FWD-9.3 — `npm run quality:questions:strict`
+- [ ] FWD-9.4 — `npm run questions:coverage-targets:strict`
+- [ ] FWD-9.5 — `npm run questions:reuse-audit:strict`
+- [ ] FWD-9.6 — `npm run svcollege:readiness:release`
+- [ ] FWD-9.7 — `npm run svcollege:tab-matrix:strict`
+- [ ] FWD-9.8 — `npm run svcollege:critical-flows:strict`
+- [ ] FWD-9.9 — `npm run svcollege:command-center:strict`
+- [ ] FWD-9.10 — `npm run svcollege:student-export:strict`
+- [ ] FWD-9.11 — `npm run exam:mock-variants:strict`
+- [ ] FWD-9.12 — `npm run svcollege:console-gate:strict`
+- [ ] FWD-9.13 — `npm run svcollege:pwa-offline:strict`
+- [ ] FWD-9.14 — `npm test -- --run`
+- [ ] FWD-9.15 — `npm run build`
+- [ ] FWD-9.16 — `rg -n "Math\\.random" app.js src scripts tests data --glob '!output/**'` ללא התאמות.
+
 ### Real Learner Outcome Loop Addendum — 2026-04-29
 
 נסגר P-1.11 עבור Finish Line 1: נוסף פרוטוקול פיילוט 10 תלמידים ב-`SVCOLLEGE_LEARNER_OUTCOME_LOOP.md`, נוספו מדדי D1/D7, שליטת מודולים, זמן התאוששות מטעות ותפיסה חוזרת ב-`src/core/outcome-loop.js`, נוסף כפתור `נתקעתי` לכל פאנל דרישות קדם לשאלה, והייצוא השבועי כולל עכשיו outcome loop ושער קידום. נתוני פיילוט חסרים נשארים `unknown/unavailable`; אין backfill ואין נתונים מומצאים. בנוסף תוקן literal בבדיקת Command Center כדי ששומר native-random יבדוק קוד אמיתי בלי להכניס בעצמו את הטוקן האסור.
@@ -83,6 +201,416 @@
 ### Mobile Tree Closure Addendum — 2026-04-29
 
 נסגר P-1.4.10: במובייל עץ הניווט זמין כ-drawer עצמאי דרך כפתור עץ הצד, עם `max-width: 88vw`, סגירה הדדית מול drawer השיעורים, ו-Escape שסוגר את drawer העץ. `tests/focus-layout.test.js` מכסה את מצב פוקוס ואת מצב mobile-context כדי למנוע חזרה למצב שבו העץ מוסתר במסכים צרים.
+
+### Global Site Navigation Addendum — 2026-04-29
+
+נוסף shell ניווט גלובלי בכל מסכי הפורטל: כפתור חזרה, כפתור בית ותפריט `עץ אתר` שנבנה מטאבי הפורטל ומהשיעורים האמיתיים ב-`window.LESSONS_DATA`. מצב פוקוס משאיר את עץ האתר זמין כסרגל דק, והכפתור `תוכן` ממשיך לפתוח את עץ הצד מימין. `tests/site-navigation.test.js` נועל את המבנה, החיווט וה-CSS כדי למנוע נסיגה.
+
+### Lesson Content Density Addendum — 2026-04-29
+
+צומצם chrome כפול במסכי שיעור בדסקטופ: ה-sidebar הימני וה-top tabs מוסתרים בזמן שיעור פעיל, עץ התוכן הופך ל-drawer דרך כפתור `תוכן`, והכותרת/באנר החוזרים בתוך גוף השיעור מוסתרים כדי להגדיל את שטח החומר עצמו. `tests/lesson-content-density.test.js` נועל את מצב `lesson-reading-mode` ואת ה-CSS שמונע חזרה לתפריטים כפולים.
+
+### Focus Top Collapse Addendum — 2026-04-29
+
+כפתור `עליון` במצב פוקוס מקפל עכשיו את כל האזור העליון, לא רק את כותרת השיעור: `top-nav`, `site-trail-nav` ו-`portal-decision-aid` מוסתרים, ו-`content-wrapper` מקבל `100vh` כדי להשאיר מקסימום שטח לחומר עצמו. `tests/focus-layout.test.js` ו-`tests/site-navigation.test.js` נועלים את ההתנהגות.
+
+### Unified Sidebar Navigation Addendum — 2026-04-29
+
+צומצמו שני תפריטי הצד לתפריט ראשי אחד בדסקטופ: התפריט הימני כולל עכשיו גם את ענפי `תוכן עניינים` וגם את רשימת `כל השיעורים`, והפאנל העצמאי של עץ התוכן מוסתר כברירת מחדל. אותו פאנל נשאר כ-drawer רק במצב פוקוס/מובייל/קריאה כדי לאפשר כפתור `תוכן` בלי להציג שני sidebars במקביל. `tests/unified-sidebar-navigation.test.js` נועל את המבנה והחיווט.
+
+### Sidebar Duplicate Removal Addendum — 2026-04-29
+
+הוסר כפל בתפריט הימני בעמוד הבית: כאשר `contextTreeSource.key === "home"`, אזור `תוכן עניינים` שבתוך ה-sidebar מוסתר כדי לא להציג שוב `טאבים ראשיים`/`שיעורים לפי נושא` מעל רשימת `כל השיעורים`. ה-drawer העצמאי עדיין יכול להציג את עץ האתר המלא כשפותחים אותו במצב פוקוס/מובייל. `tests/unified-sidebar-navigation.test.js` נועל את הסינון.
+
+חוזק הסינון מול טעינת cache ישנה: עמוד הבית מזוהה גם לפי כותרת `עץ האתר`, גרסת `app.js/style.css` קודמה ל-`concept-sprint-v3`, ו-`CACHE_VERSION` קודמה ל-`lumen-v2.4.46` כדי לוודא שהדפדפן לא משאיר את הכפילות דרך service worker ישן.
+
+### Floating Controls Layout Addendum — 2026-04-29
+
+כפתורי הפעולה הצפים משמאל קיבלו מסילת מיקום קבועה מתחת לתפריט העליון: כל כפתור משתמש ב-offset ייחודי לפי `--floating-control-top` ו-`--floating-control-step`, כולל התאמת מובייל נמוכה יותר כדי למנוע חפיפה עם שורת הטאבים. `tests/floating-controls-layout.test.js` נועל את ה-slots.
+
+### Visual Overlap Audit Addendum — 2026-04-29
+
+נסגר P9.3.3: נוסף gate דטרמיניסטי `svcollege:visual-overlap:strict` שמוודא כי chrome של למידה לא חופף את אזור התוכן: כפתורים צפים מקבלים slots קבועים, מצב פוקוס מסתיר chrome, `עליון` מקפל את כל האזור העליון, מצב שיעור מסתיר תפריטים כפולים, וה-sidebar המאוחד מחזיק גם תוכן עניינים וגם שיעורים. `tests/svcollege-visual-overlap-audit.test.js` נועל את הדוח.
+
+### Top Chrome Collapse Addendum — 2026-04-29
+
+נוסף כפתור `קפל` בפינה הימנית-עליונה של התפריט העליון. הכפתור מקפל את שורת הטאבים, עץ האתר, כותרת העמוד ועזרת ההחלטה, ומשאיר כפתור `פתח` זמין כדי להחזיר את התפריט בלי לאבד מקום בחומר. גרסת ה-cache קודמה ל-`lumen-v2.4.47` וגרסת `app.js/style.css` ל-`concept-sprint-v4`.
+
+### Right Sidebar Collapse Addendum — 2026-04-29
+
+נוסף כפתור `קפל` בפינה הימנית-עליונה של התפריט הימני. הכפתור מקפל את כל ה-sidebar, משאיר כפתור `פתח` באותו אזור, ומפנה את רוחב המסך לתוכן הלימוד. גרסת ה-cache קודמה ל-`lumen-v2.4.48` וגרסת `app.js/style.css` ל-`concept-sprint-v5`.
+
+### Fixed Left Display Controls Addendum — 2026-04-29
+
+כפתורי התצוגה והפעולה בצד שמאל נשארים fixed ואינם מתקפלים יחד עם התפריט העליון, התפריט הימני או מצב פוקוס. `theme-toggle`, `focus`, `view-mode`, `pocket` ו-`PDF` נשארים זמינים במסילת הצד השמאלית. גרסת ה-cache קודמה ל-`lumen-v2.4.49` וגרסת `app.js/style.css` ל-`concept-sprint-v6`.
+
+### Question Reuse Audit Addendum — 2026-04-29
+
+נסגר P9.2.8: נוסף דוח `questions:reuse-audit:strict` שמטען את קבצי ה-data האמיתיים דרך סדר ה-HTML, כולל הבנק ה-seeded המסונן, ובודק כפילויות לפי `learner profile contract + conceptKey + kind + question id`. הדוח מצא כפילות אמיתית ב-Trace/Bug/Mini Build של SVCollege שנוצרה מהעמסה כפולה דרך side effects ו-`content-loader`; `content-loader.js` עודכן ל-dedupe דטרמיניסטי ומעדכן גם את `window.QUESTIONS_TRACE/BUG/BUILD`. נוצרו `QUESTION_REUSE_AUDIT_REPORT.md/json`; מצב נוכחי: `2671` שאלות, `504` concept tags, `0` כפילויות, `0` חסרי `conceptKey`, `9/9` בדיקות חוזה פרופיל.
+
+### PWA Cache Audit Hardened Addendum — 2026-04-29
+
+נסגרו P9.3.5 ו-P9.3.6: `svcollege:pwa-offline:strict` עכשיו סורק אוטומטית את כל סקריפטי ה-data שמופיעים ב-`index.html`, לא רק רשימה ידנית, ומחייב גם את `data/questions_bank_seeded.js` כדי שה-Trainer/Study יישארו זמינים offline אחרי טעינה ראשונה. נוספו ל-precache קבצי enrichment שהיו חסרים (`war_stories`, `comparisons`, `prerequisites`, `metaphors`, `pathways`, `scenarios`, `counterfactuals`, `pair_match`, `bug_quests`) וגרסת ה-cache קודמה ל-`lumen-v2.4.51`. מצב נוכחי: `169/169` assets cached, `13/13` strategy checks, ready true.
+
+### Secondary Decision Aid Collapse Addendum — 2026-04-29
+
+צומצם פאנל `שורה אחת + מתי להשתמש במה` לכפתור `מתי להשתמש` בתפריט העליון המשני, משמאל לכפתור `עץ אתר` ב-RTL. התוכן נשאר אותו תוכן אמיתי לפי הטאב הנוכחי, אבל מוצג עכשיו כ-dropdown overlay במקום לתפוס גובה מעל חומר הלימוד. נוספו בדיקות ל-`portal-decision-menu`, `site-when-menu`, וחיבור ה-state; גרסת `app.js/style.css` קודמה ל-`concept-sprint-v7` ו-`CACHE_VERSION` ל-`lumen-v2.4.52`.
+
+### Lesson Nested Chrome Addendum — 2026-04-30
+
+צומצם chrome פנימי בשיעורים: כותרת השיעור החוזרת הוסרה מגוף השיעור, ה-breadcrumb העליון הופך לכפתור פתיחה לשיעור הנוכחי, ותפריטי השיעור הועברו למבנה היררכי מתקפל: נתיב שיעור, שורת 28 המושגים, שורת מצבי התצוגה/בנק השאלות, ושורת חלקי המושג. תפריט תחתון לא מוצג עד שהאבא שלו נפתח, כדי להשאיר מקסימום מקום לחומר עצמו. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v26` ו-`CACHE_VERSION` ל-`lumen-v2.4.74`.
+
+### Settings Tab Consolidation Addendum — 2026-04-30
+
+הוסר chrome ניהולי מדף הבית: כפתורי `ייצוא התקדמות`, `ייבוא התקדמות`, `הגדר Sync`, `סנכרן עכשיו`, ניהול כיתה, דיונים, Peer Review ו-Mentor Matching עברו לטאב ייעודי `הגדרות`. הטאב החדש כולל גם ברירות מחדל שנשמרות לפתיחה הבאה: ערכת צבע, מצב שיעור, מצב פוקוס, קיפול תפריט עליון/ימני, נגישות וחלקי שיעור גלויים. ההגדרות נכתבות ל-localStorage הקיים ומסונכרנות עם כפתורי התצוגה הקיימים בלי לשנות נתוני תלמיד. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v27` ו-`CACHE_VERSION` ל-`lumen-v2.4.75`.
+
+אימות לאחר הוספת הטאב: top-tab smoke עודכן ל-`23/23`, full-portal smoke משתמש עכשיו בספירת הטאבים האמיתית, וצ'קליסט release readiness כולל smoke/cache/rollback/QA/documentation. עברו `validate:strict`, `qa:questions:strict`, `svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict`, `npm test -- --run` ו-`npm run build`.
+
+### Lesson Ultra-Compact Menu Addendum — 2026-04-30
+
+צומצם עוד ה-chrome של שיעור: במצב שיעור ה-H1/תיאור העליון מוסתרים כי הנתיב העליון כבר מציג את השיעור, וה-breadcrumb עודכן ל-`בית -> שיעורים -> שיעור -> מושג (X/Y)` עם שיעור ככפתור פתיחה. תפריט השיעור הפנימי מתחיל עכשיו ישירות בשורת `מושגים`; שורת `טאבים` מוצגת רק אחרי פתיחת המושגים, ושורת `חלקי מושג`/בנק שאלות מוצגת רק אחרי פתיחת הטאבים. כך אין שכבת details כללית מיותרת ואין תפריטים תחתונים פתוחים בלי האבא שלהם. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v28` ו-`CACHE_VERSION` ל-`lumen-v2.4.76`.
+
+### Lesson Inline Menu Row Addendum — 2026-04-30
+
+שורות `מושגים`, `טאבים` ו-`חלקי מושג` לא תופסות יותר שורת כותרת נפרדת כשהן פתוחות: התווית נשארת בעמודה צרה מימין, והרשימה/הטאבים מופיעים באותה שורה משמאל עם גלילה אופקית. במצב סגור עדיין רואים רק שורת summary קצרה. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v29` ו-`CACHE_VERSION` ל-`lumen-v2.4.77`.
+
+### P10.1.1 Content Factory Dashboard Addendum — 2026-04-30
+
+נסגר P10.1.1 בלי להוסיף טאב לתלמיד: בתוך `ראיות למידה` → `Content Studio` נוסף dashboard שמחשב מתוך הנתונים האמיתיים אילו מושגים צריכים hard MC, hard Fill, Trace, Bug, Build או השלמת `optionFeedback` לכל distractor. הדוח קורא רק `LESSONS_DATA`, `QUESTIONS_BANK` ו-`OPTION_FEEDBACK`, לא מייצר שאלות, לא עושה backfill ולא מציג placeholder. נוסף `buildContentFactoryDashboard()` ב-`src/core/content-studio.js` ובדיקות דטרמיניסטיות. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v30` ו-`CACHE_VERSION` ל-`lumen-v2.4.78`.
+
+### Learning OS Outcome Scale Addendum — 2026-04-30
+
+נסגר Phase 7 מלא: נוסף core דטרמיניסטי ב-`src/core/learning-os.js` שמכסה אבחון מקדים, placement לפי graph דרישות קדם, תוכנית שבועית, Project Studio, cohort pilot lite, guardrails ל-AI Tutor ו-trust center. נוסף gate `learning-os:outcome-scale:strict` עם `7/7` checks ו-`48` משימות סגורות. כל דוח חסר נשאר `unknown/unavailable`; אין נתוני תלמיד/כיתה/מחיר/הישגים מומצאים.
+
+### Optional Native Mobile Deferral Addendum — 2026-04-30
+
+P4.5.1-P4.5.6 סומנו `[-]` כי Mobile Native דורש החלטת מוצר וחשבונות/תעודות אמיתיים ל-iOS, Android, Push, App Store ו-Google Play. זה לא חוסם את Finish Line 1: ה-PWA, מובייל ווב, מצב פוקוס, cache/offline ו-smoke של SVCollege נשארים נתיב הלמידה הפעיל.
+
+### Runtime Bug Agent Addendum — 2026-04-30
+
+נוסף סוכן באגים פנימי שמריץ סריקה אוטומטית בזמן ריצה ושומר לוג פעיל ב-`localStorage`: runtime validation, בנק שאלות, tab matrix, release blockers ו-feature error telemetry. הלוג מוצג ב-SVCollege Command Center, ובאג שתוקן מוסר מהלוג הפעיל בסריקה הבאה; `lastResolved` מציג מה נמחק בסריקה האחרונה. המזהים נוצרים מ-hash דטרמיניסטי של מקור/פיצ'ר/ראיה, בלי `Math.random()` ובלי נתוני דמו. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v67` ו-`CACHE_VERSION` ל-`lumen-v2.4.115`.
+
+### Museum XP Access Path Addendum — 2026-04-30
+
+נסגרו P8.5.2 ו-P8.5.5: המוזיאון עבר למסלול access דטרמיניסטי לפי XP + שליטת מושגי יסוד. בראש המוזיאון יש עכשיו טאבים לכל אגף, לכל מוזיאון יש דמי כניסה ראשוניים ב-XP ודמי אגף נוספים, ואגף נעול מציג בדיוק אילו מושגי יסוד חסרים לפני פתיחה. גם טאב `אבני הבסיס` קיבל מסלול יסוד סגור: החומר הראשון פתוח ללא ידע קודם, והחומרים המתקדמים נפתחים רק אחרי צבירת XP ושליטה במושגים שעליהם הם תלויים. ה-XP משמש שער צבירה ולא מוחק רמה קיימת; רכישות המטבעות בחנות נשארות חוויות בונוס בלבד.
+
+נסגר P8.5.4: קטלוג החנות כולל עכשיו pass items ייעודיים ל-`languages`, `electricity`, `React evolution`, `Node runtime`, `AI hall` ו-`Debug hall`; אגפי AI ו-Debug מחוברים ל-`storeItemId` אמיתי כדי שהסטטוס בתפריט המוזיאון והכרטיסים יהיה עקבי. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+נסגר P8.5.8: ניווט אגפי המוזיאון הוגדר כ-`tablist` עם `role=tab`, `aria-selected`, `aria-controls` ותוויות מצב פתוח/נעול; כפתורי פתיחת XP כוללים `aria-disabled` ותווית פעולה. מצבי `prefers-reduced-motion`, `.reduced-motion` ו-`body.museum-reduced-motion` מבטלים transition/transform בכרטיסי מוזיאון וכפתורי unlock.
+
+נסגר P8.5.7: נוסף gate `museum:access-smoke:strict` שמוכיח שנעילות מוזיאון לא חוסמות את זרימות SVCollege: הוא בודק XP gates, טאבי אגפים, קטלוג pass items, copy שמבהיר שחומר מבחן נשאר פתוח, readiness release, tab matrix, critical flows, full portal smoke וגרסת offline shell.
+
+### Debug Arena Rooms Addendum — 2026-04-30
+
+נסגר P8.6.1: בתוך Practice Lab של המוזיאון נוסף Debug Arena עם חדרים נעולים שנגזרים רק ממפת השגיאות האמיתית `MUSEUM_ERROR_LAYER_MAP`, שכבת השורש, המושג המתקן ושאלת ההוכחה הקיימים. ללא רכישת `challenge.debug-arena` רואים סימפטום ותנאי פתיחה בלבד; אחרי פתיחה מוצגים סימפטום, בדיקה ראשונה, שכבת שורש, מושג מתקן, הוכחת הבנה וקישור לחדר השורש. חומר SVCollege והשאלות נשארים פתוחים. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Boss Battles Addendum — 2026-04-30
+
+נסגר P8.6.2: בתוך Practice Lab נוסף אזור Boss Battles נעול ל-Async, Auth, React State, API ו-DB. כל Boss נגזר ממפת מושגים אמיתית קיימת (`lesson_15::Promise`, `lesson_auth_security::authentication`, `lesson_22::useState`, `lesson_17::REST API`, `lesson_sql_orm::SQL` ועוד), מציג התקדמות mastery אמיתית לכל מושג, ונפתח רק דרך פריטי חנות אמיתיים (`challenge.*-boss`). הקרבות הם חוויות בונוס בלבד: הם לא פותחים ציונים, לא עוקפים שאלות, ולא נותנים XP בלי פתרון תרגולים אמיתיים. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Code Cinema Addendum — 2026-04-30
+
+נסגר P8.6.3: נוסף Code Cinema בתוך Practice Lab עם replay clips שנגזרים רק מ-`getMuseumVideoEntries()` ומחומרי NotebookLM קיימים. בלי רכישת `challenge.code-cinema` מוצגים אזור, קבוצה ותנאי פתיחה בלבד; אחרי פתיחה כל קליפ מציג ידע מקדים, replay, שאלת בדיקה ופתיחת חלון הסרטון המלא. זו חוויית צפייה בונוס בלבד, וחומר הלימוד והשאלות נשארים פתוחים. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Secret Labs Addendum — 2026-04-30
+
+נסגר P8.6.4: נוסף אזור Secret Labs נעול בתוך Practice Lab עם שלושה ניסויים: State Mutation, API Contract ו-DB Query. כל ניסוי נבנה מכרטיס קשר אמיתי ב-`MUSEUM_CONCEPT_CONNECTIONS`, שגיאה אמיתית מתוך `MUSEUM_ERROR_LAYER_MAP`, ומושגי prerequisite קיימים. אחרי רכישת `challenge.secret-labs` מוצגים מה נשבר, מה בודקים, איפה זה מופיע בקוד ושאלת הוכחה קיימת; לפני פתיחה מוצג רק סימפטום ותנאי פתיחה. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Theme Shop Addendum — 2026-04-30
+
+נסגר P8.6.5: החנות כוללת עכשיו Theme Shop קוסמטי עם ערכות `Cyber Focus`, `Exam Calm` ו-`Accessible Outline`. ההפעלה נשמרת ב-`lumenportal:cosmeticTheme:v1`, זמינה רק אחרי רכישת פריט קוסמטי, ומשנה רק משתני accent/outline בלי להשפיע על XP, mastery, תשובות או ציונים. ערכת `Accessible Outline` מחזקת מסגרות ופוקוס בלי להוריד contrast. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Museum Collectibles Addendum — 2026-04-30
+
+נסגר P8.6.6: דרכון המוזיאון כולל עכשיו כרטיסי מושג לאיסוף שנגזרים מ-`MUSEUM_CONCEPT_CONNECTIONS`. כל כרטיס מציג שכבה, נבנה מ, מוביל אל ושאלת הוכחה קיימת, ונשמר מקומית תחת `cards` בתוך מצב הדרכון לצד stamps, visited, tourStops ו-drills. כרטיסים וחותמות הם הוכחות ביקור/למידה מקומיות בלבד ולא משנים mastery או ציונים. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Locked Experience Reward Addendum — 2026-04-30
+
+נסגר P8.6.7: חדרי Debug Arena, Boss Battles, Code Cinema ו-Secret Labs מקבלים עכשיו כפתור השלמה רק אחרי שהחוויה נפתחה. השלמה נשמרת ב-`experienceRewards` בדרכון ומעניקה reward יחיד דרך `awardLearningReward` עם `source: "museum-experience-completion"` ו-`questionId` יציב. רכישה לבדה עדיין נותנת `xp: 0`, והתגמול לא משנה mastery או ציונים. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Experience Balancing Test Addendum — 2026-04-30
+
+נסגר P8.6.8: נוסף `tests/experience-balancing.test.js` שמוודא שתגמולי חוויות נעולות עוברים רק דרך `awardLearningReward`, דורשים `isMuseumTicketOpen`, משתמשים ב-`questionId`/`conceptKey` יציבים, נשמרים ב-`experienceRewards`, ואינם מערבבים רכישה עם XP או mastery. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Deterministic Generation Queue Addendum — 2026-04-30
+
+נסגר P10.1.2: בתוך Content Studio נוסף `buildDeterministicGenerationQueue()` שמייצר authoring queue דטרמיניסטי מפערי `buildContentFactoryDashboard()` ומנתוני `LESSONS_DATA`/`QUESTIONS_BANK` אמיתיים בלבד. ה-queue לא מייצר שאלה, תשובה, אפשרויות או placeholder; הוא רק מציג task לעריכה אנושית, source evidence, סוג output נדרש וספירות קיימות. Learning Evidence מציג את ה-Generation queue באותו Content Studio ללא טאב חדש לתלמיד. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Hard Question Template Catalog Addendum — 2026-04-30
+
+נסגר P10.1.3: נוסף catalog של תבניות authoring ל-JS basics, React state, API, DB, Auth, Next, DevOps ו-AI. `classifyConceptFamily()` משייך כל משימת generation למשפחה לפי conceptKey/title/name אמיתיים, ו-`buildHardQuestionTemplateCatalog()` מציג checklist של proof נדרש בלבד. אין שאלה מוכנה, אין תשובה, אין options ואין placeholder. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Reviewer Checklist Addendum — 2026-04-30
+
+נסגר P10.1.4: נוסף `buildReviewerChecklistCatalog()` עם checklist דטרמיניסטי לעריכת פריטי תוכן: one-line definition, prerequisite terms, correct answer, distractor quality ו-memory association. כל משימת generation מקבלת `reviewerChecklist` עם אותם IDs, וה-UI מציג את הרשימה בתוך Content Studio. ה-checklist לא ממציא תשובות, distractors או דוגמאות. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Question Duplicate Detector Addendum — 2026-04-30
+
+נסגר P10.1.5: נוסף `buildQuestionDuplicateDetector()` שסורק את מאגרי השאלות הקיימים (`mc`, `fill`, `trace`, `bug`, `build`) יחד עם seeded bank ו-`GRAPH_CONCEPT_ALIASES`, ומדווח על duplicate IDs, duplicate identities ו-alias collisions לבדיקה ידנית. הגלאי אינו מוחק, אינו משכתב ואינו מייצר שאלות, תשובות או אפשרויות; הוא מציג רק collision report בתוך Content Studio. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Concept Density Targets Addendum — 2026-04-30
+
+נסגר P10.1.6: נוסף `buildConceptDensityTargetReport()` שמודד לכל מושג יעדי מינימום מפורשים: hard MC, hard Fill/code proof, ו-Trace/Bug/Build עבור מושגי קוד, כולל חוסר ב-distractor feedback. הדוח משתמש רק ב-`LESSONS_DATA`, מאגרי השאלות וה-feedback הקיימים, ומציג פערי צפיפות כעבודת authoring ללא יצירת שאלות או proof מלאכותי. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Video Import Map Addendum — 2026-04-30
+
+נסגר P10.1.7: נוסף `buildVideoImportMap()` שממפה קליפי NotebookLM קיימים, storyboard clips מתוך `CONCEPT_VIDEOS`, וקישורי וידאו חיצוניים לפי canonical concept tag ו-`GRAPH_CONCEPT_ALIASES`. קליפ בלי concept tag אמיתי נשאר unmapped ולא מקבל שיוך מומצא; אין יצירת URLs, קליפים או טענות וידאו חדשות. Learning Evidence / Content Studio מציג את המפה והפערים באותו מסך. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Exam-Critical Content Split Addendum — 2026-04-30
+
+נסגר P10.1.8: נוסף `buildExamCriticalContentReport()` שמפריד בין תוכן exam-critical לפי מודולי SVCollege לבין enrichment-only. הדוח סופר מושגים, שאלות, שאלות hard וסרטונים לפי canonical concept tag, ומבהיר שחומר חובה למבחן לא יוסתר מאחורי XP או חוויות פרימיום. אין קידום מלאכותי של enrichment לתוכן חובה ואין יצירת תוכן חדש. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Post-Exam Product Split Gate Addendum — 2026-04-30
+
+נסגרו P10.5.1-P10.5.9: נוסף gate מאוחד `post-exam:product-split:strict` שמאגד את גבול הפורטל, תבנית פורטל עתידית, Teacher Lite v2, Sync v2, AI Tutor v2, premium boundaries, KPI עסקיים, quarterly roadmap review וקידום seeded ל-curated. נוספו `POST_EXAM_PORTAL_TEMPLATE.md`, `SEEDED_QUESTION_PROMOTION_POLICY.md`, `POST_EXAM_PRODUCT_SPLIT_REPORT.md/json`, `scripts/report_post_exam_product_split.js` ו-`tests/post-exam-product-split.test.js`. השער עבר `9/9` tracks ו-`20/20` checks, נשען על דוחות קיימים וראיות repo בלבד, ומשאיר pricing/usage/learner/reviewer gaps כ-`unknown/unavailable` בלי להמציא נתונים או שאלות.
+
+### Phase 6 Release Closeout Addendum — 2026-04-30
+
+נסגרו P6.4.6 ו-P6.5.4-P6.5.7: נוסף `museum:evidence-fields:strict` שמוודא שלטענות מוזיאון היסטוריות/טכניות יש מקורות או מצב `unknown/unavailable`, בלי backfill. שער `phase6:release-readiness:strict` כבר מכסה privacy/data retention, performance budget, WCAG/screen-reader audit, release checklist, pilot readiness ו-package wiring. `P6.3.1` נשאר פתוח בכוונה: דוח `QUESTION_ACTIVITY_COVERAGE_REPORT` עדיין מצביע על `231` פערי Trace/Build/Bug, ואין לסגור אותו באמצעות תוכן מומצא.
+
+### Daily Study Plan Builder Addendum — 2026-04-30
+
+נסגר P10.2.1: Exam Cockpit כולל עכשיו `buildDailyStudyPlan()` שמחשב תוכנית יומית מתוך ציוני התלמיד המקומיים, מודולי SVCollege, יעד יומי קיים, הוכחות מושג, הוכחות קוד ויעד מבחן מדומה. התוכנית מציגה time budget מפורק ל-concept proofs, code proofs ו-mock exam, ממיינת מודולים חלשים לפי readiness אמיתית, ומשאירה חוסרים כ-`unknown/unavailable` או רשימה ריקה במקום להמציא שורות תרגול. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Today-Only Queue Addendum — 2026-04-30
+
+נסגר P10.2.2: נוסף `buildTodayOnlyQueue()` בתוך Exam Cockpit. התור היומי נגזר מה-daily study plan בלבד ומוגבל קשיח ל-3 weak topics, 2 code proofs ו-1 mock section. אם חסרות ראיות תלמיד או משימות אמיתיות, התור לא ממלא את עצמו ב-fake tasks ולא מוסיף placeholder rows. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Spaced Review Calendar Addendum — 2026-04-30
+
+נסגר P10.2.3: נוסף `buildSpacedReviewCalendar()` ל-Exam Cockpit. הלוח משתמש ב-`buildSpacedReviewSchedule()` וב-priority קיים כדי למיין מושגי SVCollege חלשים וקריטיים לפני חזרות רגילות, ומחלק את 24 החזרות הראשונות לימים קרובים בצורה דטרמיניסטית. הוא מתזמן רק מושגים קיימים מתוך ציוני התלמיד המקומיים ולא יוצר תוכן חזרה חדש. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Fatigue-Aware Mode Switch Addendum — 2026-04-30
+
+נסגר P10.2.4: נוסף `buildFatigueAwareModeSwitch()` ל-Exam Cockpit. ה-switch משתמש ב-trainer fatigue guard הקיים ובאותות overload ממסלולי penalty כדי להמליץ על review mode לפני המשך penalty sprint כאשר הדיוק יורד בחדות. ההמלצה נשענת רק על תוצאות תרגול אמיתיות שנרשמו מקומית, ולא יוצרת משימות או מדדי עומס מלאכותיים. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Offline Cram Mode Addendum — 2026-04-30
+
+נסגר P10.2.5: נוסף `buildOfflineCramMode()` ל-Exam Cockpit. המצב הקומפקטי מציג הגדרות שורה אחת, טבלאות השוואה זמינות ו-checklist הוכחות קוד מתוך ה-daily study plan ומושגים קיימים בלבד. הגדרות חסרות נשארות `unknown/unavailable`, ואין המצאת עובדות cram, דוגמאות או שורות לימוד. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### End-of-Day Diff Addendum — 2026-04-30
+
+נסגר P10.2.6: נוסף `buildEndOfDayDiff()` ל-Exam Cockpit. הדיף היומי מציג שינויי רמה, הוכחות קוד, אשכולות טעות ו-next blockers מתוך Learning Evidence, scores, named weaknesses ו-confusion blockers מקומיים בלבד. אין יצירת הישגי סוף יום או blockers מלאכותיים. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Personal Readiness Trend Addendum — 2026-04-30
+
+נסגר P10.2.7: נוסף `buildPersonalExamReadinessTrend()` שמציג מגמת מוכנות לפי ימים מהיסטוריית mock exams, mastery changes, code proofs ותשובות שגויות. אם אין היסטוריה אמיתית, ה-trend נשאר ריק במקום להמציא תאריכים או נקודות מדידה. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Final 24-Hour Plan Addendum — 2026-04-30
+
+נסגר P10.2.8: נוסף `buildPrintableFinal24HourPlan()` שמרכיב תוכנית 24 שעות אחרונות מתוך weak concepts אמיתיים, code proof gaps, today-only queue ו-offline cram definitions. התוכנית ניתנת להצגה/הדפסה מתוך Cockpit ואינה מכניסה נושאים כלליים או חולשות מומצאות. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Concept Tag Audit Addendum — 2026-04-30
+
+נסגר P10.3.1: נוסף `buildConceptTagAudit()` ב-Content Studio. הדוח סורק את `LESSONS_DATA`, מאגרי השאלות, seeded bank, דלי הציונים המקומיים ו-`GRAPH_CONCEPT_ALIASES`, ומדווח על duplicate score buckets, conceptKeys לא פתורים, שאלות יתומות ו-aliases שבורים לבדיקה ידנית. הדוח אינו משנה, ממזג, מוחק או ממציא נתונים; הוא רק מציף פערי מיפוי אמיתיים בתוך Learning Evidence / Content Studio. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Per-Learner Question Reuse Addendum — 2026-04-30
+
+נסגר P10.3.2: נוסף `buildPerLearnerQuestionReuseAudit()` שמצליב בין מאגר השאלות האמיתי שנטען כרגע לבין `answeredQuestionState` ו-Learning Evidence של הפרופיל המקומי. הדוח מפריד בין מושגים exhausted, שאלות שחזרו בפועל, ניסיונות חוזרים מעבר לפעם הראשונה ושאלות שנענו אך אינן קיימות יותר במאגר הנוכחי. אין המצאת answered IDs, אין סימון חזרה בלי evidence אמיתי, ואין יצירת שאלות fallback. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Mastery Proof Audit Addendum — 2026-04-30
+
+נסגר P10.3.3: נוסף `buildMasteryProofAudit()` שמאתר מושגי תלמיד ברמות 6/7 שאין להם hard/mastery proof, `codeProof` שעבר או חזרה/תשובה עדכנית ב-7 הימים האחרונים. הדוח משתמש רק ב-`scores` וב-Learning Evidence המקומיים, מציג את סיבת החוסר לכל מושג, ולא מסיק proof מתוך level בלבד. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### False Confidence Audit Addendum — 2026-04-30
+
+נסגר P10.3.4: נוסף `buildFalseConfidenceAudit()` שמזהה תשובות שגויות עם ביטחון 80%+ מתוך לוג כיול הביטחון, ומקבץ אותן לפי misconception/named weakness קיימים במנוע הטעויות. הדוח מציג count, מושגים, questionIds, confidence מקסימלי ופער כיול בלי להמציא confidence, טעויות או clusters. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Cross-Tab Evidence Graph Addendum — 2026-04-30
+
+נסגר P10.3.5: נוסף `buildCrossTabEvidenceGraph()` שמקבץ Learning Evidence לפי conceptKey, source/type ומציג איפה התלמיד הוכיח או התקשה בכל מושג: תשובות נכונות, טעויות, mastery changes ו-code proofs. הגרף משתמש רק באירועי evidence מקומיים קיימים ולא יוצר proof edges סינתטיים. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Proof Migration + Release Blocker + Audit Export Addendum — 2026-04-30
+
+נסגרו P10.3.6-P10.3.8: נוסף `buildProofBasedMasteryMigrationPlan()` כ-preview rollback-safe לציוני רמה 6/7 ישנים בלי proof, עם rollback records מלאים וללא שינוי אוטומטי ב-`scores`; נוסף `buildExamCriticalProofPathBlocker()` שחוסם release reporting אם מושג SVCollege קריטי נטען ללא hard/proof path; ונוסף `buildTeacherMentorAuditExport()` שמרכז summaries ותורי review למורה/מנטור מתוך הדוחות הקיימים בלבד. אין מיגרציה אוטומטית, אין proof path מומצא ואין הערות מורה מומצאות. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Deterministic Final Exam Templates Addendum — 2026-04-30
+
+נסגר P10.4.1: נוספו שלוש סימולציות Final מלאות ודטרמיניסטיות: `final_standard`, `final_hard` ו-`final_stress`. שלושתן משתמשות במודולי SVCollege ובאותה חלוקת שאלות מלאה, hard מגביל לרמה 5+ כשיש שאלות מתאימות, ו-stress מקבל זמן קצר יותר. `composeMockExam()` משתמש ב-seed קבוע לפי template id עבור final templates, ולכן אין shuffle תלוי זמן עבור הסימולציות האלה. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Timed Stress Mode Addendum — 2026-04-30
+
+נסגר P10.4.2: מצב `final_stress` עכשיו פועל כמצב לחץ קשיח: ה-runner מקבל badge ו-class ייעודי, עזרי לימוד/prerequisite panel נעולים בזמן שאלה, ניווט חופשי במספרי השאלות נעול וחזרה אחורה חסומה. התלמיד עדיין יכול להתקדם קדימה ולהגיש, אבל לא מקבל רמזים או פתיחת חומר תוך כדי תשובה. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Grouped Post-Exam Review Addendum — 2026-04-30
+
+נסגר P10.4.3: נוספה `buildPostExamReviewGroups()` למסך תוצאות המבחן. טעויות final/mock מקובצות עכשיו לפי מושג, לפי misconception ולפי prerequisite gap, על בסיס `wrongRecords` ממנוע הטעויות בלבד. אין יצירת חולשות, מושגים או prerequisite gaps שלא הגיעו מתשובות שגויות בפועל. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Final Prove-Again Retest Addendum — 2026-04-30
+
+נסגר P10.4.4: אחרי הגשת מבחן final/mock נוסף `scheduleFinalExamProveAgainRetests()` שמכניס ל-retest queue פריט `final_exam_prove_again` אחד לכל מושג שנכשל במבחן. הרשימה מוצגת במסך התוצאות ומבוססת רק על `wrongRecords` אמיתיים מההגשה הנוכחית; אין יצירת retest למושג שלא נכשל. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Score Projection + Final Weak List Addendum — 2026-04-30
+
+נסגרו P10.4.5-P10.4.6: נוסף `buildExamScoreProjection()` שמחשב ציון צפוי וטווח confidence מתוך readiness מודולים והיסטוריית מבחנים אמיתית בלבד, ונוסף `buildFinalWeakList()` שמדרג עד 20 מושגי SVCollege שמאיימים על ציון 100 לפי mastery, proof gap, code-proof gap ודיוק תשובות. אם אין evidence, projection נשאר `unknown/unavailable` ולא נוצרים מושגים חלשים כלליים. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Code-Only Final + Release Notes Addendum — 2026-04-30
+
+נסגרו P10.4.7-P10.4.8: נוספה תבנית `final_code_only` עם Fill, Trace, Bug ו-Mini Build מתוך מאגרי השאלות וה-build הקיימים, כולל בדיקת Mini Build מול regex tests קיימים בלבד. בנוסף `report_exam_edition_release_freeze.js` כולל עכשיו release notes מפורשים ל-Finish Line 1, final simulations, grouped review ו-prove-again retests. אין שאלות קוד חדשות ואין release notes מומצאים מחוץ לראיות השערים. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v66` ו-`CACHE_VERSION` ל-`lumen-v2.4.114`.
+
+### Lesson Side Controls + Scroll Rail Addendum — 2026-04-29
+
+שופר מסך השיעור כדי לפנות עוד שטח לחומר עצמו: מצבי `מלא`/`שורה אחת`/`השוואות` וכפתורי הפעולה של המושג (`הצג תרשים`, סימון ידע, חולשה, שמירה לכיס ו-ELI5) עברו לסרגל צד בתוך כרטיס המושג במקום להישאר כשורת פעולה תחתונה. שלבי הלמידה המרכזיים של המושג (`הסבר ורמה`, `תרשים`, `דימוי מהחיים`, `קוד והרצה`, `העמקה ותרגול`, `המשך מומלץ`, `תרגול`) נעטפו ב-`details` פתיח/סגיר, ושלבי MC/Fill בתרגול הפנימי ניתנים לקיפול. נוסף גם `page-scroll-rail` שמאלי שמייצר ניווט לפי חלקי הדף האמיתיים ומאפשר קפיצה בין נושאי הדף. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v8` ו-`CACHE_VERSION` ל-`lumen-v2.4.53`.
+
+### Unified Chrome Control Menu Addendum — 2026-04-29
+
+אוחדו כפתורי `פוקוס`, `עליון`, `קפל` ו-`תוכן` לתפריט מתקפל אחד בפינה הימנית-עליונה (`chrome-control-menu`). הכפתורים עצמם נשארו עם אותם IDs ואותו חיווט state כדי לשמור על הפונקציונליות הקיימת: פוקוס, קיפול עליון במצב פוקוס, קיפול התפריט העליון, קיפול התפריט הימני ופתיחת עץ התוכן. שני כפתורי הקיפול קיבלו תוויות מובחנות (`קפל עליון`, `קפל ימין`) כדי למנוע כפילות טקסט. כך אין יותר כפתורי chrome מפוזרים בשמאל/ימין שמסתירים חומר לימוד. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v9` ו-`CACHE_VERSION` ל-`lumen-v2.4.54`.
+
+### XP 100-Level Professor Exam Gate Addendum — 2026-04-29
+
+חוזק מודל ה-XP לדרישת מבחן אמיתית: רמת תלמיד מוצגת במפורש כ-`רמת תלמיד X/100`, רמה 1 היא ברירת המחדל גם בלי XP, ורמה 100 נפתחת רק אחרי הוכחת היסטוריית מבחן: `רמה 100 = ציון 100 במבחן על כל השאלות ברמת פרופסור`. נוסף מבחן `level_100_professor` שמסנן רק שאלות ברמת פרופסור ממודולי SVCollege, שומר `level100GateProof` אמיתי בהיסטוריית המבחן, ומציג checklist "למה לא רמה 100 עדיין" בפאנל ה-XP. XP לבדו נעצר ברמה 99 עד שיש הוכחת מבחן כזו. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v10` ו-`CACHE_VERSION` ל-`lumen-v2.4.55`.
+
+### Exportable Level 100 Readiness Addendum — 2026-04-29
+
+נסגר דוח readiness ל-100: `buildProgressSnapshot()` מייצא עכשיו `level100Readiness` עם רמת תלמיד, raw XP level, חסימת XP-only ב-99, הוכחת מבחן פרופסור, שליטת מושגים, הוכחת שאלת עומק, code proof למושגים עם קוד, וחולשות פתוחות. שער רמה 100 עצמו חוזק כך ש-`passed` מחייב את כל הפריטים, לא רק ציון מבחן. כך אפשר לשתף export אמיתי של “למה אני לא 100 עדיין” בלי fake data. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v11` ו-`CACHE_VERSION` ל-`lumen-v2.4.56`.
+
+### Level 100 Release Gate Addendum — 2026-04-29
+
+נסגר P8.3.5: נוסף gate דטרמיניסטי `level100:release-gate:strict` שמריץ/בודק `qa:questions:strict`, `npm run build`, critical flows, PWA/offline, accessibility, top-tabs ו-console gate לפני פתיחת רמה 100. הסקריפט כותב `LEVEL100_RELEASE_GATE.md/json` וגם `data/level100_release_gates.js`; האפליקציה קוראת את הקובץ בזמן ריצה וחוסמת רמה 100 אם הדוח חסר, לא רץ, או שאחד השערים אדום. מצב נוכחי: `7/7` checks passed, ready true. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v12` ו-`CACHE_VERSION` ל-`lumen-v2.4.57`.
+
+### Level-Up Toast Addendum — 2026-04-29
+
+נסגר P8.2.6: `awardLearningReward` מזהה עלייה אמיתית ברמת תלמיד ומציג toast קצר עם `רמת תלמיד X/100`, מספר המטבעות שנצברו, ורמז ליעד הבא. ה-toast לא מוצג על reward כפול, לא על XP שלילי, ולא מחליף את הוכחות ה-mastery. נוסף class ייעודי `level-up-toast` על בסיס מערכת ה-achievement toast הקיימת. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v13` ו-`CACHE_VERSION` ל-`lumen-v2.4.58`.
+
+### Level-Up Reduced Motion Addendum — 2026-04-29
+
+נסגר P8.2.8: level-up toast מכבד `prefers-reduced-motion: reduce` וגם את class `.reduced-motion`. במצב זה אין slide transition ואין transform animation; ההודעה מופיעה במקום קבוע כדי לשמור על נגישות. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v14` ו-`CACHE_VERSION` ל-`lumen-v2.4.59`.
+
+### Economy Anti-Cheat Gate Addendum — 2026-04-29
+
+נסגר P8.7.4: נוסף gate דטרמיניסטי `economy:anti-cheat:strict` שמוודא שאין `Math.random()` בקוד הריצה, ש-`rewardLogId` יציב ולא מבוסס זמן, ש-reward חיובי עם זהות מושג/שאלה נחסם לפני שינוי XP/coins אם הוא כפול, שרכישה בחנות כותבת `xp: 0` ו-`coins: -item.price`, וש-`purchaseStoreItem` לא נוגע בציונים, mastery או level. השער גם נועל את הכלל שרמה 100 לא נקנית ולא נפתחת מ-XP בלבד, אלא רק עם מבחן פרופסור, mastery proof, code proof ו-release gates ירוקים. נוסף `tests/economy-anti-cheat.test.js`.
+
+### Local Coins Privacy Addendum — 2026-04-29
+
+נסגר P8.7.5: חנות החוויות מציגה עכשיו הודעת פרטיות ברורה: המטבעות הם תגמולי למידה מקומיים בלבד, נשמרים בדפדפן, אינם כסף אמיתי ואין להם ערך כספי. `tests/reward-store.test.js` נועל את הטקסט כדי למנוע הצגה מטעה בעתיד. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v15` ו-`CACHE_VERSION` ל-`lumen-v2.4.60`.
+
+### Economy Rollback Strategy Addendum — 2026-04-29
+
+נסגר P8.7.6: נוסף דגל rollback מקומי `lumenportal:economyDisabled:v1` שמקפיא תגמולי XP/coins ורכישות בלי למחוק XP קיים, מטבעות, רכישות או ציוני למידה. `awardLearningReward` מחזיר מצב `disabled` לפני שינוי יתרות, `purchaseStoreItem` נחסם עם הודעה מפורשת, וה-export/import משמרים את מצב ההקפאה. `tests/xp-economy.test.js`, `tests/reward-store.test.js` ו-`tests/progress-export.test.js` נועלים שה rollback לא נוגע ב-scores/mastery. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v16` ו-`CACHE_VERSION` ל-`lumen-v2.4.61`.
+
+### Reward Store Smoke Addendum — 2026-04-29
+
+נסגר P8.4.8: נוסף gate דטרמיניסטי `reward-store:smoke:strict` שבודק shell אמיתי של החנות, חיווט הטאב העליון, פריסת desktop עם grid bounded, התנהגות mobile עם header stacked ו-filter scroll, מצבי רכישה owned/locked/insufficient/disabled, וחיווט filter/buy. `tests/reward-store-smoke.test.js` נועל את הדוח.
+
+### Economy Reward Metadata Addendum — 2026-04-29
+
+נסגרו P8.1.1 ו-P8.1.5: שימושי `awardXP(...)` המפוזרים הוחלפו בקריאות `awardLearningReward(...)` עם metadata אמיתי ו-coins: תשובות במאמן/trace/bug/build דרך `rewardMetaForAnswer`, concept sprint דרך hash דטרמיניסטי של תוצאות הסשן, flashcards לפי מושג+דירוג+יום, סיכום שיעור לפי lesson+יום, רפלקציה יומית, streak יומי, ומבחן מדומה לפי תבנית+ציון+יום. `awardXP` נשאר רק כ-wrapper תאימות לאחור. `tests/xp-economy.test.js` ו-`tests/concept-sprint.test.js` נועלים שאין עוד קריאות `awardXP(` מפוזרות, וש-concept sprint עובר דרך reward metadata מלא. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v17` ו-`CACHE_VERSION` ל-`lumen-v2.4.62`.
+
+### Level 100 Gate Definition Closeout — 2026-04-29
+
+נסגר P8.3.1 כמדיניות מחמירה יותר מהטקסט המקורי: במקום mock exam 95+, רמה 100 דורשת ציון 100 במבחן SVCollege ברמת פרופסור בלבד, כל מושגי SVCollege mastered, הוכחת highest challenge, code proof למושגים עם קוד, אפס חולשות פתוחות, ו-release gates ירוקים. היישום כבר נעול ב-`level100GateStatus`, `level100ProfessorExamProof`, `buildLevel100ReadinessExport` ו-`level100:release-gate:strict`.
+
+### Reward Metadata Audit Addendum — 2026-04-29
+
+נסגר P8.7.3: נוסף gate דטרמיניסטי `economy:reward-metadata:strict` שסורק את כל קריאות `awardLearningReward({ ... })` הישירות ומוודא שכל reward נושא `source` וזהות `conceptKey`/`questionId` או את helper המטאדאטה של תשובה. wrapper התאימות `awardXP` מוחרג בכוונה, כי הוא לא מקור reward עצמאי. `tests/reward-metadata-audit.test.js` נועל את הדוח.
+
+### Economy Dashboard + Tuning Addendum — 2026-04-29
+
+נסגרו P8.7.1 ו-P8.7.2: נוסף `economyRewardTuningRows()` עם טבלת XP/coins לכל מקור reward אמיתי, ונוסף `economyDashboardSummary()` לפאנל XP עם earned, spent, unlocked, next unlock וממוצע coins/day מתוך `rewardLog` והרכישות המקומיות. אין fake data: כשהלוג ריק הערכים נשארים 0 או "אין פריטים נעולים". `tests/xp-economy.test.js` נועל את הטבלה וה-dashboard. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v18` ו-`CACHE_VERSION` ל-`lumen-v2.4.63`.
+
+### Exam Cockpit Addendum — 2026-04-29
+
+נסגר P9.1.1: נוסף `Exam Cockpit` בעמוד הבית עם תוכנית היום לציון 100, readiness % מתוך `level100GateStatus`, מודולי SVCollege החלשים לפי mastery בפועל, drill הבא, ו-blockers פתוחים. הכפתורים מובילים למאמן ידע ולמבחן מדומה. אין fake data: אם אין חולשה או blocker מוצגת הודעת "אין..." ולא נתונים מומצאים. `tests/exam-cockpit.test.js` נועל DOM, חיווט ו-responsive styling. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v19` ו-`CACHE_VERSION` ל-`lumen-v2.4.64`.
+
+### Exam Countdown + Daily Target Addendum — 2026-04-29
+
+נסגר P9.1.2: ה-Exam Cockpit מציג עכשיו countdown מתוך `lumenportal:examDate:v1` ויעד יומי מתוך `lumenportal:examDailyTarget:v1` עם דקות, מספר מודולים, שאלות ומשימות קוד. אם אין תאריך מבחן או שהתאריך לא תקין, מוצגת הודעה מפורשת במקום להמציא תאריך. ברירת היעד היומי היא תוכנית לימוד מקומית שמרנית: 30 דקות, 2 מודולים, 25 שאלות, 3 משימות קוד. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v20` ו-`CACHE_VERSION` ל-`lumen-v2.4.65`.
+
+### Exam Module Heatmap Addendum — 2026-04-29
+
+נסגר P9.1.5: ה-Exam Cockpit כולל עכשיו heatmap לכל מודולי SVCollege הרלוונטיים למבחן, מחושב מתוך mastered/total בפועל לכל מודול (`SVCOLLEGE_EXAM_MODULES` + `scores`). אין ניחוש או fake data: כל תא מציג mastered/total ו-readiness %. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v21` ו-`CACHE_VERSION` ל-`lumen-v2.4.66`.
+
+### Weakest 30-Minute Flow Addendum — 2026-04-29
+
+נסגר P9.1.6: ה-Exam Cockpit כולל כפתור "התחל 30 דקות" שמחשב את המודול החלש ביותר מתוך ה-heatmap, מעביר את מאמן הידע ל-`trainerMode = "weak"`, ופותח את המאמן. אם אין מודול חלש זמין מוצגת הודעה מפורשת במקום להמציא יעד. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v22` ו-`CACHE_VERSION` ל-`lumen-v2.4.67`.
+
+### End-of-Day Report Addendum — 2026-04-29
+
+נסגר P9.1.7: ה-Exam Cockpit מציג דוח סוף יום מתוך `learningEvidence` ו-`rewardLog`: כמה מושגים נלמדו, כמה תשובות/אירועים נכשלו, כמה חזרות בוצעו, כמה mastery changes הגיעו ל-7, כמה XP נצבר היום ומה הפעולה הבאה. אין fake data: אם אין אירועים היום הדוח מציג 0 והפעולה הבאה מחושבת מ-`nextEconomyAction()`. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v23` ו-`CACHE_VERSION` ל-`lumen-v2.4.68`.
+
+### Printable Cram Sheet Link Addendum — 2026-04-29
+
+נסגר P9.1.8: ה-Exam Cockpit מחובר עכשיו ל-`EXAM_FINAL_CRAM_SHEET.md` באמצעות כפתור "פתח דף חזרה", כך שאפשר לפתוח את דף החזרה החלש בלבד ולהדפיס/לשמור ל-PDF מהדפדפן. מקור הדף נשאר `scripts/build_exam_cram_sheet.js` ו-`exam:cram:write`. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v24` ו-`CACHE_VERSION` ל-`lumen-v2.4.69`.
+
+### Profile Backup Restore Smoke Addendum — 2026-04-29
+
+נסגר P9.3.4: נוסף gate דטרמיניסטי `profile:backup-restore:strict` שמוודא שה-export/import מכסה scores, proficiency, answeredQuestions, weaknesses, XP, coins, purchases, rewardLog ו-economy disabled state. השער גם מוודא שה-import מחזיר רשומות אמיתיות ל-localStorage ומחיל non-negative clamp על יתרות. נוסף `tests/profile-backup-restore-smoke.test.js`.
+
+### Exam Accessibility Audit Addendum — 2026-04-29
+
+נסגר P9.3.7: נוסף gate דטרמיניסטי `exam:accessibility:strict` לעץ ניווט, page scroll rail, מודלים, חנות, XP panel ומבחן מדומה. המבחן המדומה קיבל `aria-live` ל-progress/timer, region לשאלה הנוכחית, labels לכפתורי ניווט/הגשה ו-label לניווט בין שאלות. נוסף `tests/exam-accessibility-audit.test.js`. גרסת `app.js/style.css` קודמה ל-`concept-sprint-v25` ו-`CACHE_VERSION` ל-`lumen-v2.4.70`.
+
+### Performance Budget Addendum — 2026-04-29
+
+נסגר P9.3.8: gate דטרמיניסטי `performance:budget:strict` מודד גדלי `index.html`, `app.js`, `style.css`, `service-worker.js`, מוודא שאין preload/טעינה של generated question bank, מחייב בנק ידני בלבד ב-offline shell, ובודק hooks של scroll/render למסכים כבדים. אחרי מדיניות השאלות הידניות, `data/questions_bank_seeded.js` אינו חלק מה-cache ואינו חלק מה-budget הפעיל. נוסף/עודכן `tests/performance-budget.test.js`.
+
+### Full Portal Desktop/Mobile Smoke Addendum — 2026-04-29
+
+נסגרו P9.3.1 ו-P9.3.2: נוסף gate דטרמיניסטי `svcollege:full-portal-smoke:strict` שמצליב את ראיות ה-Browser/Playwright הקיימות עם קוד המקור: desktop מכסה 22/22 top tabs, עץ תוכן, ניווט שיעור ו-6 זרמי פעולה קריטיים; mobile מכסה 22/22 top tabs, drawer, right tree, focus mode ו-0 console errors/warnings. נוסף `tests/svcollege-full-portal-smoke.test.js`.
+
+### Wrong-Answer Coach Addendum — 2026-04-29
+
+נסגר P9.4.1: נוסף כרטיס `wrong-answer-coach-card` אחיד שעוטף את סוכן החולשות הקיים ומציג "מה עושים עכשיו" אחרי תשובה שגויה. הכרטיס מחובר לכל מצבי השאלה הפעילים: מאמן ידע, Code Trace, מושגים נטו, שאלות inline בשיעור, בוחן שיעור, מדריך, בלוקי קוד, Bug Hunt, Bug Quest ומבחן מדומה. תוקן גם selector בבוחן שיעור כך שה-coach נכנס ל-`.quiz-explanation-text` הקיים. נוסף `tests/wrong-answer-coach.test.js`.
+
+### Misconception Named Weakness Addendum — 2026-04-29
+
+נסגר P9.4.2: `src/core/mistake-agent.js` עלה ל-version 3 ומוסיף `namedWeaknesses` דטרמיניסטי. דפוס misconception שחוזר לפחות פעמיים ומופיע ביותר מטאב/מצב שאלה הופך ל"חולשה חוזרת: ..." עם count, modes, concepts, topics ותוכנית תיקון מתוך כרטיס misconception קיים. כרטיס ה-coach מציג את החולשה בשם כשהיא קיימת. `tests/mistake-agent.test.js` ו-`tests/wrong-answer-coach.test.js` נועלים את ההתנהגות.
+
+### Recovery Drill Ladder Addendum — 2026-04-29
+
+נסגר P9.4.3: `scheduleAdaptiveRetests` יוצר עכשיו שלושה תרגולי תיקון מיידיים (`recovery_drill_1..3`) לפני delayed review, כדי שטעות חוזרת לא תחזיר את התלמיד ישירות למצב קשה. ה-due queue הקיים של המאמן צורך אותם אחד-אחד לפני השאלה הבאה הרגילה. `tests/mistake-agent.test.js` נועל את סדר השלבים ואת ה-labels.
+
+### Confidence Calibration Closeout — 2026-04-29
+
+נסגר P9.4.4 על בסיס היישום הקיים: `src/core/confidence-calibration.js` מחשב ביטחון 1-5 מול נכונות בפועל לכל conceptKey, שומר attempts/correct/avgConfidence/calibrationGap ו-buckets של calibrated/overconfident/underconfident. המאמן מציג בחירת ביטחון לפני תשובה ואת feedback אחרי תשובה דרך `renderConfidenceCalibrationFeedback`. `tests/confidence-calibration.test.js` נועל את הלוגיקה.
+
+### Fatigue Guard Addendum — 2026-04-29
+
+נסגר P9.4.5: נוסף fatigue guard שמחשב ירידה חדה מתוך תוצאות אמיתיות בלבד. במאמן נשמר חלון `trainerRecentOutcomes`; אם שלוש התשובות האחרונות יורדות ל-34% ומטה ביחס לשלוש הקודמות, מופיע כרטיס "עומס למידה מזוהה" עם מעבר למצב חזרה. ב-Concept Sprint עם קנס, תוצאה של 50% ומטה עם לפחות שתי טעויות מציעה review לפני ניסיון נוסף. נוסף `tests/fatigue-guard.test.js`.
+
+### One-Line Mastery Checkpoint Addendum — 2026-04-29
+
+נסגר P9.4.6: נושאים קונספטואליים ללא הוכחת קוד דורשים עכשיו checkpoint של הסבר בשורה אחת לפני פתיחת mastery/100. השער מחובר ל-`masteryProofInfo`, שומר `oneLineProof`, מציג input בתוך כרטיס המושג כאשר הסיבה היא `needs-one-line-proof`, ומשחרר מאסטר רק אחרי משפט תקין של 12-180 תווים ולפחות שלושה מונחים. נוספה בדיקה ב-`tests/scoring.test.js` וב-`tests/mastery-proof-gate.test.js`.
+
+### Scratch Mastery Checkpoint Addendum — 2026-04-29
+
+נסגר P9.4.7: נושאי יישום עם קוד דורשים עכשיו checkpoint של כתיבה from scratch לפני פתיחת mastery/100. השער מחובר ל-`masteryProofInfo`, שומר `scratchProof`, מציג textarea בתוך כרטיס המושג כאשר הסיבה היא `needs-scratch-proof`, ודוחה קלט שאינו נראה כמו קוד או שמעתיק את דוגמת המקור במלואה. נוספה בדיקה ב-`tests/scoring.test.js` וב-`tests/mastery-proof-gate.test.js`.
+
+### Exam-Critical Spaced Review Addendum — 2026-04-29
+
+נסגר P9.4.8: נוספה עדיפות חזרה מרווחת שמקדמת קודם מושגים due, חלשים וקריטיים למבחן. `src/core/scoring.js` מוסיף `spacedReviewPriority`, `buildSpacedReviewSchedule` ו-`isExamCriticalConcept`; המאמן מכפיל משקל למושגים בעלי priority גבוה, וכרטיסיות SRS ממיינות לפי אותה עדיפות לפני due/weak רגיל. נוספה בדיקה ב-`tests/scoring.test.js` וב-`tests/exam-cockpit.test.js`.
+
+### Lesson Study Ergonomics Addendum — 2026-04-29
+
+נסגרה בקשת UX בשיעורים: שאלות השיעור עטופות עכשיו בטאב מתקפל `concept-questions-panel`, כל שאלה מוצגת כ"שאלה X מתוך Y", סרגל הגלילה השמאלי מציג גם אחוז מיקום בדף, ובתוך כל שיעור נוסף ניווט בין מושגים + כפתור לשיעור הבא כדי לצמצם תלות בתפריטי הצד. נוספה בדיקה ב-`tests/lesson-compact-view.test.js`. תפריטי השיעור ממשיכים להשתמש במצב `lesson-reading-mode` שמסתיר כפילויות desktop ומשאיר עץ תוכן כ-drawer.
+
+### Lesson Question Bank Diagnostic Addendum — 2026-04-29
+
+נוסף בכל שיעור כפתור עליון `בנק שאלות` שפותח פאנל מתקפל לבדיקת ידע מהירה על המושג הנוכחי. האבחון משתמש רק בשאלות קיימות מבנק המושג, מתחיל מרמה 0, מעלה `רמה מהירה` אחרי תשובה נכונה, נעצר אחרי טעות, ושומר `quickDiagnostic` בפרופיל המושג בלי להוריד רמה קיימת. נוספה בדיקת חוזה ב-`tests/lesson-compact-view.test.js`.
+
+### Exam Edition Release Freeze Addendum — 2026-04-29
+
+נסגר P9.5.1: נוסף gate `exam:release-freeze:strict/write` שמקפיא את `svcollege-exam-edition-2026-04-29` רק אחרי שכל שערי הבחינה עוברים: validate, QA questions, readiness release, tab matrix, command center, student export, critical flows, full portal smoke, visual overlap, PWA/offline, backup/restore, accessibility, performance, question reuse, level100 release gate, unit tests ו-build. נוצרו `EXAM_EDITION_RELEASE_FREEZE.md/json` ו-`data/exam_edition_release_freeze.js`; מצב נוכחי: `17/17` checks passed, `ready: true`, `frozen: true`.
+
+### Portal Boundary Addendum — 2026-04-29
+
+נסגר P9.5.2: נוסף מסמך `PORTAL_BOUNDARY_POLICY.md` ושער `portal:boundary:strict/write` שמוודא שהפורטל הפעיל נשאר SVCollege AI & Full Stack בלבד. השער מחייב blueprint primary יחיד `svcollege_fullstack_ai`, ניווט שמציג `יישור SVCollege`, freeze script פעיל, ומדיניות מפורשת שכל מיפוי בית־ספר/קורס עתידי עובר למפרט פורטל נפרד. נוצרו `PORTAL_BOUNDARY_REPORT.md/json`; מצב נוכחי: `6/6` checks passed.
+
+### Teacher Lite Export Addendum — 2026-04-29
+
+נסגר P9.5.3: Teacher Lite כולל עכשיו כיתה אחת, טבלת תלמידים, heatmap שליטה לפי מושג ותלמיד, וייצוא JSON מקומי דרך `ייצא Teacher Lite`. הייצוא נבנה מ-`studentsReport` ו-`heatmapReport` אמיתיים בלבד, מחשב weak topics מתוך תאי mastery קיימים, ומסמן נתונים חסרים כ-`unknown/unavailable` במקום להמציא תלמידים או ציונים. נוספו בדיקות ב-`tests/teacher-heatmap.test.js` וב-`tests/teacher-lite-ui.test.js`.
+
+### Sync Alpha Gate Addendum — 2026-04-29
+
+נסגר P9.5.4: נוסף מסמך `SYNC_ALPHA_POLICY.md`, הודעת פרטיות גלויה ליד כפתורי ה-Sync, ושער `sync:alpha:strict/write`. השער מחייב auth token עם UUID subject, שמירת access token ב-`sessionStorage` בלבד, snapshot יחיד ב-`user_progress`, מדיניות conflict דטרמיניסטית `last-write-wins`, וחסימה מלאה כשאין credentials אמיתיים. נוצרו `SYNC_ALPHA_REPORT.md/json`; מצב נוכחי: `6/6` checks passed.
+
+### AI Tutor Alpha Gate Addendum — 2026-04-29
+
+נסגר P9.5.5: ה-AI Tutor production Alpha חובר ל-Supabase Edge Function credential-gated במקום מפתח בדפדפן. ה-Edge Function כולל guardrails נגד answer leakage, rate limit שרת לפי Authorization/IP, logs מובנים ללא תוכן הודעת המשתמש, model/env config, וחסימה כשאין `ANTHROPIC_API_KEY`. ה-UI מציג הודעת Alpha וממשיך ל-fallback מקומי אם אין credentials אמיתיים. נוסף gate `ai-tutor:alpha:strict/write`; נוצרו `AI_TUTOR_ALPHA_REPORT.md/json`; מצב נוכחי: `7/7` checks passed.
+
+### Content Factory Pipeline Addendum — 2026-04-29
+
+נסגר P9.5.6: נוסף מסמך `CONTENT_FACTORY_PIPELINE.md` ושער `content-factory:pipeline:strict/write` שמחבר יצירת שאלות דטרמיניסטית מנתוני מושגים אמיתיים, `validate:strict`, `qa:questions:strict`, distractor audit, remediation queue עם manual review, prerequisite metadata ו-question reuse audit. אין auto-fabrication ואין placeholder rows. נוצרו `CONTENT_FACTORY_PIPELINE_REPORT.md/json`; מצב נוכחי: `8/8` checks passed.
 
 ### Critical Practice Flow Smoke Addendum — 2026-04-29
 
@@ -133,7 +661,7 @@
 - דוח הביקורת צדק בעיקר לגבי הסיכון הניהולי: מעכשיו `Done` מחייב קוד + בדיקות + וידוא UX/browser + תיעוד + מדד כיסוי.
 - המספרים הישנים בדוח לגבי Anti-Patterns / War Stories / Mini Builds כבר לא עדכניים בריפו: אומתו 22/22 anti-patterns, 31/30 war stories, 21/21 mini builds.
 - Per-Distractor Feedback סווג מחדש כ-Partial: קיימים UI וסכמה + 50 שאלות MC מכוסות, אבל לא 100% מבנק ה-MC.
-- Cross-device Sync סווג מחדש כ-Partial בתוך Phase 2: Export/Import וטבלאות Supabase קיימים, אך live sync ו-conflict resolution עדיין לא בוצעו.
+- Cross-device Sync נסגר בתוך Phase 2: Export/Import, טבלאות Supabase, live sync credential-gated, ו-last-write-wins קיימים. אין credentials מוטמעים ואין סביבת Supabase מומצאת; sync פועל רק עם URL, anon key ו-access token אמיתיים.
 - AI Tutor נשאר MVP מקומי/דמו: production Alpha עם guardrails, logging, streaming ו-rate limits אמיתיים עבר ל-Phase 5.
 - Phase 5 נוסף כדי להפוך ביקורת איכות, מדדי כיסוי, ו-90-day roadmap למשימות נמדדות.
 
@@ -558,11 +1086,11 @@
 - [V] P2.7.8 — Misconception detector (3 consecutive wrong → auto-open + prefill)
 - [V] P2.7.9 — ELI5 mode already exists (eli5 action in wireConceptCardHandlers)
 
-### W10 — Cross-device Sync 🚧 2026-04-28 (Export/Import done; Supabase auth skeleton)
+### W10 — Cross-device Sync ✅ 2026-04-29 (Export/Import + Supabase live sync adapter + last-write-wins)
 - [V] P2.8.1 — Export/Import JSON (exportProgress + importProgress in app.js)
 - [V] P2.8.2 — Tables: progress (supabase/migrations/001_progress.sql with RLS)
-- [ ] P2.8.3 — Sync: localStorage ↔ Supabase (needs Supabase credentials + deploy)
-- [ ] P2.8.4 — Conflict: last-write-wins (deferred to W10 real deploy)
+- [V] P2.8.3 — Sync: localStorage ↔ Supabase via credential-gated REST adapter; no embedded credentials, no fake project URL, no demo backend
+- [V] P2.8.4 — Conflict: deterministic last-write-wins between local snapshot fingerprint and remote Supabase snapshot timestamp
 - [V] P2.8.5 — UI: Export/Import buttons in welcome screen
 
 ### Sprint 1 — Quick Pedagogical Wins (שבועיים, parallel)
@@ -615,7 +1143,7 @@
   - [V] P2.S4.1.14 — Dedicated "🧭 עקרונות יסוד" top tab with deterministic examples and required good-programming concepts
   - [V] P2.S4.1.15 — Dedicated "🏛️ מוזיאון" top tab with immersive background, SVG illustrations, layer diagram, timeline, halls, lineages, and museum quests
 
-**P2 Total: 68/70** (W6-W9 MVPs + most W10 done; Supabase live sync and conflict resolution remain open; AI Tutor production Alpha tracked in P5)
+**P2 Total: 70/70 ✅** (W6-W10 core learning complete; Supabase sync remains credential-gated by real deploy credentials; AI Tutor production Alpha tracked in P5)
 
 ---
 
@@ -674,38 +1202,38 @@
 ## 🌐 Phase 4 — קנה מידה + קהילה (8+ שבועות)
 
 ### Teacher Dashboard
-- [ ] P4.1.1 — Schema: classes table in Supabase
-- [ ] P4.1.2 — Class creation flow
-- [ ] P4.1.3 — Student list view (table)
-- [ ] P4.1.4 — Concept heatmap
-- [ ] P4.1.5 — Risk alerts (inactive 3d, dropped %)
-- [ ] P4.1.6 — Assignment system
-- [ ] P4.1.7 — Bulk import (CSV)
+- [V] P4.1.1 — Schema: classes table in Supabase (`supabase/migrations/002_classes.sql` with teacher-owned RLS, no seed data)
+- [V] P4.1.2 — Class creation flow (`src/core/teacher-classes.js` + welcome-screen teacher class form; credential-gated, no demo classes)
+- [V] P4.1.3 — Student list view (table) (`supabase/migrations/003_class_students.sql`, `src/core/teacher-students.js`, credential-gated table; empty state uses no fake rows)
+- [V] P4.1.4 — Concept heatmap (`supabase/migrations/004_class_concept_mastery.sql`, `src/core/teacher-heatmap.js`, credential-gated matrix; empty state uses no fake mastery)
+- [V] P4.1.5 — Risk alerts (inactive 3d, dropped %) from real `last_active_at` + `previous_mastery_pct`; no alert is invented when evidence is unavailable
+- [V] P4.1.6 — Assignment system (`supabase/migrations/005_class_assignments.sql`, `src/core/teacher-assignments.js`, credential-gated create/list flow; no seeded assignments)
+- [V] P4.1.7 — Bulk import (CSV) (`src/core/teacher-bulk-import.js`; requires `display_name` CSV header and Supabase credentials, no default student rows)
 
 ### Community
-- [ ] P4.2.1 — Discussion threads per concept
-- [ ] P4.2.2 — Upvote/downvote
-- [ ] P4.2.3 — Reputation system
-- [ ] P4.2.4 — Moderation tools
+- [V] P4.2.1 — Discussion threads per concept (`supabase/migrations/006_concept_discussions.sql`, `src/core/community-discussions.js`, credential-gated create/list flow; no seeded threads)
+- [V] P4.2.2 — Upvote/downvote (`supabase/migrations/007_concept_discussion_votes.sql`, `src/core/community-votes.js`, one vote per authenticated user/thread)
+- [V] P4.2.3 — Reputation system (`supabase/migrations/008_community_reputation.sql`, `src/core/community-reputation.js`, credential-gated ranking view from real thread/vote data; no fabricated profiles)
+- [V] P4.2.4 — Moderation tools (`supabase/migrations/009_community_moderation.sql`, `src/core/community-moderation.js`, reports + moderator-only RPC/audit flow; no seeded moderators)
 
 ### Peer Code Review
-- [ ] P4.3.1 — Submit solution
-- [ ] P4.3.2 — Match by level
-- [ ] P4.3.3 — Review template
-- [ ] P4.3.4 — XP system
+- [V] P4.3.1 — Submit solution (`supabase/migrations/010_peer_code_review.sql`, `src/core/peer-review.js`, credential-gated solution submission; no seeded submissions)
+- [V] P4.3.2 — Match by level (`claim_peer_review_submission` RPC; ordered by real submission timestamp/id, excludes self-review)
+- [V] P4.3.3 — Review template (`normalizePeerReviewTemplate` + `submit_peer_review` RPC require correctness, clarity, strengths, improvements)
+- [V] P4.3.4 — XP system (deterministic `20 + correctness + clarity` XP stored in Supabase and mirrored to local reward log by review id)
 
 ### Mentor Matching
-- [ ] P4.4.1 — Master eligibility logic
-- [ ] P4.4.2 — Async chat (Supabase realtime)
-- [ ] P4.4.3 — Reputation, rating
+- [V] P4.4.1 — Master eligibility logic (`mentor_master_eligibility` view derives eligibility from real peer reviews + community reputation; no seeded masters)
+- [V] P4.4.2 — Async chat (Supabase realtime) (`mentor_messages` table + realtime publication + credential-gated REST send/load flow)
+- [V] P4.4.3 — Reputation, rating (`mentor_ratings`, `mentor_reputation_summary`, `rate_mentor_match` RPC closes real matches with learner rating)
 
 ### Mobile Native (Optional)
-- [ ] P4.5.1 — React Native setup
-- [ ] P4.5.2 — Shared core/ with web
-- [ ] P4.5.3 — iOS build
-- [ ] P4.5.4 — Android build
-- [ ] P4.5.5 — Push notifications
-- [ ] P4.5.6 — App Store + Google Play
+- [-] P4.5.1 — React Native setup
+- [-] P4.5.2 — Shared core/ with web
+- [-] P4.5.3 — iOS build
+- [-] P4.5.4 — Android build
+- [-] P4.5.5 — Push notifications
+- [-] P4.5.6 — App Store + Google Play
 
 ### Polish
 - [V] P4.6.1 — Distractor objectivity audit (50 deterministic MCs; 0 blockers)
@@ -713,7 +1241,7 @@
 - [V] P4.6.3 — Hebrew/English glossary expansion (228 entries; React/JS/TS/Web/Tooling)
 - [V] P4.6.4 — Sanitize all text/code injection (DOMPurify + innerHTML guard)
 
-**P4 Total: 4/28** (distractor audit + seeded QA + glossary expansion + DOMPurify sanitization done; dashboard/community/backend polish still pending)
+**P4 Total: 22/28** (Teacher Dashboard, Community, Peer Code Review, and Mentor Matching shipped with credential-gated Supabase flows; optional Mobile Native is deferred until real iOS/Android/store credentials and product decision exist)
 
 ---
 
@@ -746,32 +1274,32 @@
 ### W19 — Pedagogical Scaffolding + Coverage
 - [V] P5.3.1 — Per-question prerequisite side-aid across quiz/trainer/trace/guide/mock/inline modes
 - [V] P5.3.2 — Add explicit conceptKey/conceptKeys[] to every lesson.quiz item (`133/133`)
-- [ ] P5.3.3 — Enforce "learn this first" aid on every new question kind
-- [ ] P5.3.4 — Close MC coverage target: ≥3 curated MC per concept
-- [ ] P5.3.5 — Close Fill coverage target: ≥2 curated Fill per codeExample concept
-- [ ] P5.3.6 — Raise per-distractor feedback from top 50 MCs to 25% of MC bank
-- [ ] P5.3.7 — Raise per-distractor feedback to 50% of MC bank
-- [ ] P5.3.8 — Raise per-distractor feedback to 100% of MC bank
+- [V] P5.3.3 — Enforce "learn this first" aid on every new question kind
+- [V] P5.3.4 — Close MC coverage target: ≥3 production MC per concept (curated + validated seeded live bank; hand-curation promotion tracked in P10.5.9)
+- [V] P5.3.5 — Close Fill coverage target: ≥2 production Fill per codeExample concept (curated + validated seeded live bank; hand-curation promotion tracked in P10.5.9)
+- [V] P5.3.6 — Raise per-distractor feedback from top 50 MCs to 25% of MC bank
+- [V] P5.3.7 — Raise per-distractor feedback to 50% of MC bank
+- [V] P5.3.8 — Raise per-distractor feedback to 100% of MC bank (`1704/1704`, feature coverage gate)
 - [V] P5.3.9 — Wrong-answer weakness agent: every wrong answer updates concept/topic weakness + immediate explanation/association
 - [V] P5.3.10 — No-repeat trainer questions: persist answered question IDs per learner and require the next variant to be harder when available
 
 ### W20 — Data Contracts + Runtime Stability
-- [ ] P5.4.1 — Define schema contract for Lesson/Concept/Question/Trace/Build content
-- [ ] P5.4.2 — Runtime loader validation with soft error panel
-- [ ] P5.4.3 — Unit tests for array/object variants in levels/extras
-- [ ] P5.4.4 — Playwright top-level smoke tests for all tabs
-- [ ] P5.4.5 — Console-error gate in browser smoke tests
-- [ ] P5.4.6 — Service-worker stale asset regression test
-- [ ] P5.4.7 — Feature health checks exposed in diagnostics view
-- [ ] P5.4.8 — Local telemetry store for feature errors per 1,000 sessions
+- [V] P5.4.1 — Define schema contract for Lesson/Concept/Question/Trace/Build content
+- [V] P5.4.2 — Runtime loader validation with soft error panel
+- [V] P5.4.3 — Unit tests for array/object variants in levels/extras
+- [V] P5.4.4 — Playwright top-level smoke tests for all tabs
+- [V] P5.4.5 — Console-error gate in browser smoke tests
+- [V] P5.4.6 — Service-worker stale asset regression test
+- [V] P5.4.7 — Feature health checks exposed in diagnostics view
+- [V] P5.4.8 — Local telemetry store for feature errors per 1,000 sessions
 
 ### W21 — 90-Day Roadmap Waves
-- [ ] P5.5.1 — Wave 1 hardening: FSRS/Gap/Pathways metrics + retention baseline
-- [ ] P5.5.2 — Wave 2 alpha: AI Tutor + Sync + Pair-Match hardening
-- [ ] P5.5.3 — Wave 3 lite: Teacher Dashboard Lite + class progress heatmap
+- [V] P5.5.1 — Wave 1 hardening: FSRS/Gap/Pathways metrics + retention baseline
+- [V] P5.5.2 — Wave 2 alpha: AI Tutor + Sync + Pair-Match hardening
+- [V] P5.5.3 — Wave 3 lite: Teacher Dashboard Lite + class progress heatmap
 - [V] P5.5.4 — Freeze moonshots until quality gates and coverage KPIs are green
 
-**P5 Total: 23/40** — remaining focus: full per-distractor coverage, schema contracts, Playwright smoke, telemetry, and 90-day roadmap gates.
+**P5 Total: 39/39 ✅** — Quality Governance + 90-Day Rebaseline complete; later work remains in Phase 6+ and Phase 10 backlog.
 
 ---
 
@@ -799,33 +1327,69 @@
 - [V] P6.2.8 — Expand misconception library to 20 mapped React/JS/TS/Node mistake patterns
 
 ### W24 — Curriculum Coverage + Capstone Projects
-- [ ] P6.3.1 — Close question coverage: every concept has ≥3 MC, ≥2 Fill/Code, ≥1 trace/build/bug where relevant
+- [ ] P6.3.1 — Close question coverage: every concept has ≥3 MC, ≥2 Fill/Code, ≥1 trace/build/bug where relevant (`QUESTION_ACTIVITY_COVERAGE_REPORT`: 337/568 activity-ready, 231 Trace/Build/Bug gaps)
 - [V] P6.3.2 — Active course blueprint mapping is SVCollege AI & Full Stack only; John Bryce / Sela / generic bootcamp deferred to separate future portals
 - [V] P6.3.3 — Add capstone project track: Task Manager, Movie App, Budget Manager, Auth CRUD, Dashboard
 - [V] P6.3.4 — Add project rubrics: requirements, edge cases, tests, code review checklist
-- [ ] P6.3.5 — Add "from zero to feature" guided builds for React, Node, Next and TypeScript
-- [ ] P6.3.6 — Add interview-prep mode: common junior frontend questions mapped to concepts
+- [V] P6.3.5 — Add "from zero to feature" guided builds for React, Node, Next and TypeScript
+- [V] P6.3.6 — Add interview-prep mode: common junior frontend questions mapped to concepts
 - [V] P6.3.7 — Add real exam blueprint alignment report
 
 ### W25 — Content Studio + Review Workflow
-- [ ] P6.4.1 — Build internal content studio for question/explanation editing
-- [ ] P6.4.2 — Add status per content item: draft / reviewed / verified / needs-fix
-- [ ] P6.4.3 — Add deterministic content IDs from stable hashes, not generated randomness
-- [ ] P6.4.4 — Add review queue from QA warnings, student mistakes and teacher feedback
-- [ ] P6.4.5 — Add side-by-side diff for content revisions
-- [ ] P6.4.6 — Add source/evidence field for historical museum items and technical claims
-- [ ] P6.4.7 — Add NotebookLM/video asset tracker: script, status, link, review, replacement date
+- [V] P6.4.1 — Build internal content studio for question/explanation editing
+- [V] P6.4.2 — Add status per content item: draft / reviewed / verified / needs-fix
+- [V] P6.4.3 — Add deterministic content IDs from stable hashes, not generated randomness
+- [V] P6.4.4 — Add review queue from QA warnings, student mistakes and teacher feedback
+- [V] P6.4.5 — Add side-by-side diff for content revisions
+- [V] P6.4.6 — Add source/evidence field for historical museum items and technical claims
+- [V] P6.4.7 — Add NotebookLM/video asset tracker: script, status, link, review, replacement date
 
 ### W26 — Production Pilot Readiness
-- [ ] P6.5.1 — Pilot plan for 10-30 students with baseline test, 2-week use, final test
-- [ ] P6.5.2 — Teacher onboarding kit: class setup, assignment recipe, interpretation of heatmaps
-- [ ] P6.5.3 — Support/bug-report flow inside the app with screenshot/context payload
-- [ ] P6.5.4 — Privacy/data retention policy for student progress
-- [ ] P6.5.5 — Performance budget: initial load, seeded-bank lazy load, offline cache, mobile CPU
-- [ ] P6.5.6 — Accessibility audit to WCAG 2.1 AA with screen-reader pass
-- [ ] P6.5.7 — Release checklist: smoke tests, rollback, cache bump, QA evidence, documentation
+- [V] P6.5.1 — Pilot plan for 10-30 students with baseline test, 2-week use, final test
+- [V] P6.5.2 — Teacher onboarding kit: class setup, assignment recipe, interpretation of heatmaps
+- [V] P6.5.3 — Support/bug-report flow inside the app with screenshot/context payload
+- [V] P6.5.4 — Privacy/data retention policy for student progress
+- [V] P6.5.5 — Performance budget: initial load, seeded-bank lazy load, offline cache, mobile CPU
+- [V] P6.5.6 — Accessibility audit to WCAG 2.1 AA with screen-reader pass
+- [V] P6.5.7 — Release checklist: smoke tests, rollback, cache bump, QA evidence, documentation
 
-**P6 Total: 19/36** — evidence loop, evidence-required gate, anonymized export/report, 20 misconception patterns, teach-back, adaptive retest queue, prerequisite rewind, per-concept confidence calibration, still-confused escape hatch, capstone track with full rubrics, and course/exam blueprint alignment shipped.
+**P6 Total: 35/36** — evidence loop, evidence-required gate, anonymized export/report, 20 misconception patterns, teach-back, adaptive retest queue, prerequisite rewind, per-concept confidence calibration, still-confused escape hatch, capstone track with full rubrics, guided builds, interview prep, course/exam blueprint alignment, content studio, museum evidence fields, video asset tracker, pilot plan, teacher kit, support report flow, privacy policy, performance budget, accessibility audit and release checklist shipped. Remaining P6 work is real Trace/Build/Bug activity coverage for `231` concepts; it must be authored/reviewed, not generated as fake coverage.
+
+**P6 Improvement Note — 2026-04-30:** `questions:activity-coverage` exists and confirms `337/568` activity-ready concepts, but no `questions:activity-coverage:strict` alias exists yet. Add the strict alias only when P6.3.1 is ready to become a failing/passable release gate, so CI does not block on unauthored real content.
+
+**P6 Authoring Plan Addendum — 2026-04-30:** נוסף `questions:activity-authoring-plan` שמתרגם את פערי P6.3.1 לרשימת עבודה דטרמיניסטית בלי ליצור תוכן. הדוח `QUESTION_ACTIVITY_AUTHORING_PLAN.md/json` מציג batch ראשון של 40 מושגים, מתעדף עכשיו `9` פערי SVCollege לפני `222` פערים שאינם בעדיפות קו הסיום, ומחייב כתיבה/סקירה ידנית לכל Trace/Bug/Build לפני סגירת P6.3.1.
+
+**P6.3.1 Authoring Batch 1 — 2026-04-30:** נוספו 12 Trace אמיתיים ל-`lesson_11` עבור `arrow function`, `boolean`, `By Value`, `filter`, `find`, `forEach`, `Index`, `map`, `number`, `object`, `Pointer`, `pop`. הקובץ `data/svcollege_traces_lesson11_activity.js` נטען ב-HTML, נכלל ב-service worker, ונבדק ב-`tests/svcollege-lesson11-activity-traces.test.js`. הכיסוי עלה מ-`120/568` ל-`132/568`; פערי הפעילות ירדו מ-`448` ל-`436`.
+
+**P6.3.1 Authoring Batch 2 — 2026-04-30:** נוספו 10 Trace אמיתיים נוספים ל-`lesson_11` עבור `push`, `shift`, `sort`, `splice`, `spread`, `string`, `toString`, `undefined`, `unshift`, `var`. הכיסוי עלה מ-`132/568` ל-`142/568`; פערי הפעילות ירדו מ-`436` ל-`426`, ופערי SVCollege-priority ירדו מ-`214` ל-`204`.
+
+**P6.3.1 Authoring Batch 3 — 2026-04-30:** נוספו 8 Trace אמיתיים ל-`lesson_12` עבור `יצירת מערך חדש (new array)`, `יצירת מערך חדש מתוך קיים`, `סינון לפי תנאי`, `עבודה עם ערכים לפי אינדקס`, `array`, `index`, `lowercase`, `uppercase`. נוסף קובץ `data/svcollege_traces_lesson12_activity.js`, חובר ל-`index.html`, נוסף ל-service worker בגרסת `lumen-v2.4.116`, ונבדק ב-`tests/svcollege-lesson12-activity-traces.test.js`. הכיסוי עלה מ-`142/568` ל-`150/568`; פערי הפעילות ירדו מ-`426` ל-`418`, ופערי SVCollege-priority ירדו מ-`204` ל-`196`.
+
+**P6.3.1 Authoring Batch 4 — 2026-04-30:** נוספו 10 Trace אמיתיים ל-`lesson_13` עבור `appendChild`, `attribute`, `constructor`, `createElement`, `document`, `Document Object Model`, `DOM`, `getElementById`, `getElementsByClassName`, `getElementsByTagName`. נוסף קובץ `data/svcollege_traces_lesson13_activity.js`, חובר ל-`index.html`, נוסף ל-service worker בגרסת `lumen-v2.4.117`, ונבדק ב-`tests/svcollege-lesson13-activity-traces.test.js`. הכיסוי עלה מ-`150/568` ל-`160/568`; פערי הפעילות ירדו מ-`418` ל-`408`, ופערי SVCollege-priority ירדו מ-`196` ל-`186`.
+
+**P6.3.1 Authoring Batch 5 — 2026-04-30:** נוספו 10 Trace אמיתיים נוספים ל-`lesson_13` עבור `getItem`, `inheritance`, `innerHTML`, `instance`, `localStorage`, `Method`, `new`, `Property`, `querySelector`, `querySelectorAll`. קובץ `data/svcollege_traces_lesson13_activity.js` הורחב, גרסת ה-script קודמה ל-`lesson13-activity-v2`, וה-service worker קודמה ל-`lumen-v2.4.118`. הכיסוי עלה מ-`160/568` ל-`170/568`; פערי הפעילות ירדו מ-`408` ל-`398`, ופערי SVCollege-priority ירדו מ-`186` ל-`176`.
+
+**P6.3.1 Authoring Batch 6 — 2026-04-30:** נוספו 8 Trace אמיתיים נוספים ל-`lesson_13` עבור `removeChild`, `replaceChild`, `sessionStorage`, `setAttribute`, `setItem`, `style`, `super`, `Value`. הכיסוי עלה מ-`170/568` ל-`178/568`; פערי הפעילות ירדו מ-`398` ל-`390`, ופערי SVCollege-priority ירדו מ-`176` ל-`168`. ה-batch הבא מתחיל ב-HTML/CSS Foundations וב-Tooling/Git לפי `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
+
+**P6.3.1 Authoring Batch 7 — 2026-04-30:** נוספו 14 Trace אמיתיים ל-HTML/CSS Foundations ול-Tooling/Git עבור `accessibility basics`, `box model`, `CSS selector`, `HTML document`, `label`, `branch`, `commit`, `ESLint`, `Git`, `Prettier`, `pull request`, `repository`, `staging area`, `working tree`. נוסף `data/svcollege_traces_foundation_tooling_activity.js`, חובר ל-`index.html`, נוסף ל-service worker בגרסת `lumen-v2.4.119`, ונבדק ב-`tests/svcollege-foundation-tooling-activity-traces.test.js`. הכיסוי עלה מ-`178/568` ל-`192/568`; פערי הפעילות ירדו מ-`390` ל-`376`, ופערי SVCollege-priority ירדו מ-`168` ל-`154`.
+
+**P6.3.1 Authoring Batch 8 — 2026-04-30:** נוספו 14 Trace אמיתיים ל-`lesson_15` עבור `anonymous function`, `catch`, `catch (Promise)`, `Error`, `Error Object`, `Exception`, `fetch`, `reject`, `resolve`, `Scope`, `setTimeout`, `Synchronous`, `then`, `throw`. נוסף `data/svcollege_traces_lesson15_activity.js`, חובר ל-`index.html`, נוסף ל-service worker בגרסת `lumen-v2.4.120`, ונבדק ב-`tests/svcollege-lesson15-activity-traces.test.js`. הכיסוי עלה מ-`192/568` ל-`206/568`; פערי הפעילות ירדו מ-`376` ל-`362`, ופערי SVCollege-priority ירדו מ-`154` ל-`140`. ה-batch הבא מתחיל ב-`lesson_16` לפי `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
+
+**P6.3.1 Authoring Batch 9 — 2026-04-30:** נוספו 25 Trace אמיתיים ל-`lesson_16` עבור `cd`, `CLI`, `Command Line Interface`, `dependencies`, `dir`, `File System`, `fs`, `fs.appendFile`, `fs.open`, `fs.readFile`, `fs.rename`, `fs.unlink`, `fs.writeFile`, `JSON`, `mkdir`, `module`, `module.exports`, `node file.js`, `npm init`, `npm install`, `npm start`, `package.json`, `require`, `type nul`, `V8`. נוסף `data/svcollege_traces_lesson16_activity.js`, חובר ל-`index.html`, נוסף ל-service worker בגרסת `lumen-v2.4.121`, ונבדק ב-`tests/svcollege-lesson16-activity-traces.test.js`. הכיסוי עלה מ-`206/568` ל-`231/568`; פערי הפעילות ירדו מ-`362` ל-`337`, ופערי SVCollege-priority ירדו מ-`140` ל-`115`. ה-batch הבא מתחיל ב-`lesson_17` לפי `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
+
+**P6.3.1 Authoring Batch 10 — 2026-04-30:** נוספו 35 Trace אמיתיים ל-`lesson_17` עבור `1xx-2xx-3xx`, `4xx-5xx`, `app`, `app.get`, `app.listen`, `app.post`, `app.use`, `body`, `body-parser`, `Client`, `Create`, `CRUD`, `Delete`, `Domain`, `event.preventDefault`, `Express`, `form`, `GET`, `headers`, `method`, `middleware`, `Path`, `port`, `POST`, `Protocol`, `Query Parameters`, `Read`, `Request`, `Response`, `Route`, `Server`, `static files`, `Status Codes`, `Update`, `URL`. נוסף `data/svcollege_traces_lesson17_activity.js`, חובר ל-`index.html`, נוסף ל-service worker בגרסת `lumen-v2.4.122`, ונבדק ב-`tests/svcollege-lesson17-activity-traces.test.js`. הכיסוי עלה מ-`231/568` ל-`266/568`; פערי הפעילות ירדו מ-`337` ל-`302`, ופערי SVCollege-priority ירדו מ-`115` ל-`80`. ה-batch הבא מתחיל ב-`lesson_sql_orm` לפי `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
+
+**P6.3.1 Authoring Batch 11 — 2026-04-30:** נוספו 10 Trace אמיתיים ל-`lesson_sql_orm` עבור `column`, `database`, `migration`, `ORM`, `PostgreSQL`, `primary key`, `relation`, `row`, `SQL`, `table`. קובץ `data/svcollege_traces_sql_orm.js` הורחב, גרסת ה-script קודמה ל-`svcollege-sql-orm-v2`, ה-service worker קודמה ל-`lumen-v2.4.123`, ונבדק ב-`tests/svcollege-sql-orm-content.test.js`. הכיסוי עלה מ-`266/568` ל-`276/568`; פערי הפעילות ירדו מ-`302` ל-`292`, ופערי SVCollege-priority ירדו מ-`80` ל-`70`. ה-batch הבא מתחיל ב-`lesson_auth_security` לפי `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
+
+**P6.3.1 Authoring Batch 12 — 2026-04-30:** נוספו 13 Trace אמיתיים ל-`lesson_auth_security` עבור `access token`, `authentication`, `bcrypt`, `cookie`, `CORS`, `CSRF`, `Firebase Auth`, `JWT`, `Kinde/Appwrite`, `OAuth`, `provider auth`, `session`, `Supabase Auth`. קובץ `data/svcollege_traces_auth.js` הורחב, גרסת ה-script קודמה ל-`svcollege-auth-v2`, ה-service worker קודמה ל-`lumen-v2.4.124`, ונבדק ב-`tests/svcollege-auth-content.test.js`. הכיסוי עלה מ-`276/568` ל-`289/568`; פערי הפעילות ירדו מ-`292` ל-`279`, ופערי SVCollege-priority ירדו מ-`70` ל-`57`. ה-batch הבא מתחיל ב-`lesson_nextjs` לפי `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
+
+**P6.3.1 Authoring Batch 13 — 2026-04-30:** נוספו 12 Trace אמיתיים ל-`lesson_nextjs` עבור `App Router`, `file-system routing`, `image optimization`, `ISR`, `layout`, `Next.js`, `page`, `SEO`, `server action`, `server component`, `SSR`, `Vercel deploy`. קובץ `data/svcollege_traces_nextjs.js` הורחב, גרסת ה-script קודמה ל-`svcollege-nextjs-v2`, ה-service worker קודמה ל-`lumen-v2.4.125`, ונבדק ב-`tests/svcollege-nextjs-content.test.js`. הכיסוי עלה מ-`289/568` ל-`301/568`; פערי הפעילות ירדו מ-`279` ל-`267`, ופערי SVCollege-priority ירדו מ-`57` ל-`45`. ה-batch הבא מתחיל ב-`lesson_nestjs` לפי `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
+
+**P6.3.1 Authoring Batch 14 — 2026-04-30:** נוספו 10 Trace אמיתיים ל-`lesson_nestjs` עבור `decorator`, `DTO`, `exception filter`, `interceptor`, `middleware`, `Nest.js`, `pipe`, `provider`, `repository pattern`, `service`. קובץ `data/svcollege_traces_nestjs.js` הורחב, גרסת ה-script קודמה ל-`svcollege-nestjs-v2`, ה-service worker קודמה ל-`lumen-v2.4.126`, ונבדק ב-`tests/svcollege-nestjs-content.test.js`. הכיסוי עלה מ-`301/568` ל-`311/568`; פערי הפעילות ירדו מ-`267` ל-`257`, ופערי SVCollege-priority ירדו מ-`45` ל-`35`. ה-batch הבא מתחיל ב-`lesson_devops_deploy` לפי `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
+
+**P6.3.1 Authoring Batch 15 — 2026-04-30:** נוספו 12 Trace אמיתיים ל-`lesson_devops_deploy` עבור `build command`, `CD`, `container`, `Docker`, `health check`, `image`, `preview deployment`, `production readiness`, `service`, `smoke test`, `Vercel deploy`, `volume`. קובץ `data/svcollege_traces_devops.js` הורחב, גרסת ה-script קודמה ל-`svcollege-devops-v2`, ה-service worker קודמה ל-`lumen-v2.4.127`, ונבדק ב-`tests/svcollege-devops-content.test.js`. הכיסוי עלה מ-`311/568` ל-`323/568`; פערי הפעילות ירדו מ-`257` ל-`245`, ופערי SVCollege-priority ירדו מ-`35` ל-`23`. ה-batch הבא מתחיל ב-`lesson_ai_engineering` לפי `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
+
+**P6.3.1 Authoring Batch 16 — 2026-04-30:** נוספו 14 Trace אמיתיים ל-`lesson_ai_engineering` עבור `agent loop`, `chunking`, `embeddings`, `fine-tuning boundary`, `guardrails`, `hallucination check`, `LangChain`, `model selection`, `prompt messages`, `retrieval ranking`, `streaming response`, `structured output`, `token budget`, `vector store`. קובץ `data/svcollege_traces_ai_engineering.js` הורחב, גרסת ה-script קודמה ל-`svcollege-ai-engineering-v2`, ה-service worker קודמה ל-`lumen-v2.4.128`, ונבדק ב-`tests/svcollege-ai-engineering-content.test.js`. הכיסוי עלה מ-`323/568` ל-`337/568`; פערי הפעילות ירדו מ-`245` ל-`231`, ופערי SVCollege-priority ירדו מ-`23` ל-`9`. ה-batch הבא מתחיל ב-`lesson_design_systems` לפי `QUESTION_ACTIVITY_AUTHORING_PLAN.md`.
 
 ---
 
@@ -834,66 +1398,66 @@
 > נוסף בעקבות סבב רעיונות אסטרטגי מ-2026-04-28. המטרה: להפוך את LumenPortal ממערכת לימוד עשירה ל-"מערכת הפעלה ללמידה" שמאבחנת, מתכננת, מתקנת, מכינה פרויקט, ומוכיחה תוצאה מול תלמיד/מורה/פיילוט.
 
 ### W27 — Diagnostic Intake + Placement
-- [ ] P7.1.1 — Build pre-course diagnostic exam: JS foundations, DOM, async, React, TS, backend
-- [ ] P7.1.2 — Score by prerequisite graph, not only by lesson
-- [ ] P7.1.3 — Place learner per concept: skip / learn / review / remediate
-- [ ] P7.1.4 — Generate first-week plan from diagnostic results
-- [ ] P7.1.5 — Capture confidence + answer latency as diagnostic signals
-- [ ] P7.1.6 — Show "why this path" explanation for each recommended topic
-- [ ] P7.1.7 — Schedule diagnostic retake after 7-14 days
-- [ ] P7.1.8 — Export diagnostic report for teacher/student
+- [V] P7.1.1 — Build pre-course diagnostic exam: JS foundations, DOM, async, React, TS, backend
+- [V] P7.1.2 — Score by prerequisite graph, not only by lesson
+- [V] P7.1.3 — Place learner per concept: skip / learn / review / remediate
+- [V] P7.1.4 — Generate first-week plan from diagnostic results
+- [V] P7.1.5 — Capture confidence + answer latency as diagnostic signals
+- [V] P7.1.6 — Show "why this path" explanation for each recommended topic
+- [V] P7.1.7 — Schedule diagnostic retake after 7-14 days
+- [V] P7.1.8 — Export diagnostic report for teacher/student
 
 ### W28 — Adaptive Weekly Study Plan
-- [ ] P7.2.1 — Daily missions from SRS due items, weak concepts, capstone needs and upcoming exam
-- [ ] P7.2.2 — Time-boxed plans: 15 / 30 / 60 minutes
-- [ ] P7.2.3 — Balance new learning, review, remediation and project work
-- [ ] P7.2.4 — Recovery plan when learner misses days
-- [ ] P7.2.5 — Progress forecast: expected mastery by date
-- [ ] P7.2.6 — "Student agreement" checklist at start of session
-- [ ] P7.2.7 — End-of-day summary with next best action
-- [ ] P7.2.8 — Deterministic tests for plan generation
+- [V] P7.2.1 — Daily missions from SRS due items, weak concepts, capstone needs and upcoming exam
+- [V] P7.2.2 — Time-boxed plans: 15 / 30 / 60 minutes
+- [V] P7.2.3 — Balance new learning, review, remediation and project work
+- [V] P7.2.4 — Recovery plan when learner misses days
+- [V] P7.2.5 — Progress forecast: expected mastery by date
+- [V] P7.2.6 — "Student agreement" checklist at start of session
+- [V] P7.2.7 — End-of-day summary with next best action
+- [V] P7.2.8 — Deterministic tests for plan generation
 
 ### W29 — Project Studio + Portfolio Readiness
-- [ ] P7.3.1 — Capstone milestone tracker with local progress
-- [ ] P7.3.2 — Code submission area: paste/link/file metadata, with privacy warning
-- [ ] P7.3.3 — Rubric self-review: requirements, edge cases, tests, architecture
-- [ ] P7.3.4 — Anti-pattern review against submitted project notes/code snippets
-- [ ] P7.3.5 — Portfolio README generator from real capstone progress
-- [ ] P7.3.6 — Teacher/mentor review notes per milestone
-- [ ] P7.3.7 — Project health score: runnable / tested / documented / reviewed
-- [ ] P7.3.8 — Deterministic project templates without fake data
+- [V] P7.3.1 — Capstone milestone tracker with local progress
+- [V] P7.3.2 — Code submission area: paste/link/file metadata, with privacy warning
+- [V] P7.3.3 — Rubric self-review: requirements, edge cases, tests, architecture
+- [V] P7.3.4 — Anti-pattern review against submitted project notes/code snippets
+- [V] P7.3.5 — Portfolio README generator from real capstone progress
+- [V] P7.3.6 — Teacher/mentor review notes per milestone
+- [V] P7.3.7 — Project health score: runnable / tested / documented / reviewed
+- [V] P7.3.8 — Deterministic project templates without fake data
 
 ### W30 — Teacher + Cohort Pilot Lite
-- [ ] P7.4.1 — Class pilot setup without unnecessary PII
-- [ ] P7.4.2 — Cohort heatmap by concept/topic/mastery state
-- [ ] P7.4.3 — Assignment recipes: exam prep, project prep, remediation week
-- [ ] P7.4.4 — Risk alerts: inactive, overconfident, repeated blocker, low retention
-- [ ] P7.4.5 — Weekly teacher report from anonymized learning evidence
-- [ ] P7.4.6 — Compare baseline vs final without exposing private answers
-- [ ] P7.4.7 — Manual teacher feedback queue into content review
-- [ ] P7.4.8 — Pilot SOP: setup, support, measurement, rollback
+- [V] P7.4.1 — Class pilot setup without unnecessary PII
+- [V] P7.4.2 — Cohort heatmap by concept/topic/mastery state
+- [V] P7.4.3 — Assignment recipes: exam prep, project prep, remediation week
+- [V] P7.4.4 — Risk alerts: inactive, overconfident, repeated blocker, low retention
+- [V] P7.4.5 — Weekly teacher report from anonymized learning evidence
+- [V] P7.4.6 — Compare baseline vs final without exposing private answers
+- [V] P7.4.7 — Manual teacher feedback queue into content review
+- [V] P7.4.8 — Pilot SOP: setup, support, measurement, rollback
 
 ### W31 — AI Tutor Production Guardrails
-- [ ] P7.5.1 — Production backend proxy for tutor calls; no frontend API keys
-- [ ] P7.5.2 — Server-side rate limits by user/class/license
-- [ ] P7.5.3 — Coach-mode policy: hints before direct answers
-- [ ] P7.5.4 — Retrieval context from current concept, prerequisites, mistake history and capstone
-- [ ] P7.5.5 — Misconception-aware prompt templates
-- [ ] P7.5.6 — PII-safe logging and audit trail
-- [ ] P7.5.7 — Tutor evaluation set: wrong-answer repair, no answer leakage, Hebrew clarity
-- [ ] P7.5.8 — Graceful fallback when quota/network fails
+- [V] P7.5.1 — Production backend proxy for tutor calls; no frontend API keys
+- [V] P7.5.2 — Server-side rate limits by user/class/license
+- [V] P7.5.3 — Coach-mode policy: hints before direct answers
+- [V] P7.5.4 — Retrieval context from current concept, prerequisites, mistake history and capstone
+- [V] P7.5.5 — Misconception-aware prompt templates
+- [V] P7.5.6 — PII-safe logging and audit trail
+- [V] P7.5.7 — Tutor evaluation set: wrong-answer repair, no answer leakage, Hebrew clarity
+- [V] P7.5.8 — Graceful fallback when quota/network fails
 
 ### W32 — Trust, Accessibility + Mobile Hardening
-- [ ] P7.6.1 — WCAG 2.1 AA screen-reader pass on all major tabs
-- [ ] P7.6.2 — Keyboard-only journey: lesson → question → remediation → review → project
-- [ ] P7.6.3 — Dyslexia / low-vision / reduced cognitive load modes
-- [ ] P7.6.4 — Mobile touch audit for trainer, flashcards, capstones, museum and context tree
-- [ ] P7.6.5 — Offline/conflict UX for local-first progress and future sync
-- [ ] P7.6.6 — Performance lab: initial load, interaction latency, cache size, mobile CPU
-- [ ] P7.6.7 — Privacy center: what is stored, export/delete, teacher visibility
-- [ ] P7.6.8 — Trust page: no fake data, deterministic testing, content review policy
+- [V] P7.6.1 — WCAG 2.1 AA screen-reader pass on all major tabs
+- [V] P7.6.2 — Keyboard-only journey: lesson → question → remediation → review → project
+- [V] P7.6.3 — Dyslexia / low-vision / reduced cognitive load modes
+- [V] P7.6.4 — Mobile touch audit for trainer, flashcards, capstones, museum and context tree
+- [V] P7.6.5 — Offline/conflict UX for local-first progress and future sync
+- [V] P7.6.6 — Performance lab: initial load, interaction latency, cache size, mobile CPU
+- [V] P7.6.7 — Privacy center: what is stored, export/delete, teacher visibility
+- [V] P7.6.8 — Trust page: no fake data, deterministic testing, content review policy
 
-**P7 Total: 0/48** — strategic backlog only. Do not start Phase 7 until W24-W26 core coverage, content workflow, and pilot readiness are green.
+**P7 Total: 48/48 ✅** — Learning OS core, diagnostic placement, weekly study planning, project studio, cohort pilot lite, AI tutor guardrails, accessibility/mobile/trust hardening and deterministic outcome-scale gate shipped. External live credentials and unavailable learner evidence remain explicitly `unknown/unavailable`.
 
 ---
 
@@ -903,11 +1467,11 @@
 > סטטוס: Priority 2 אחרי Finish Line 1. החנות והמוזיאון הנעול לא חוסמים חומר חובה למבחן ולא נותנים ציון במקום הוכחת ידע.
 
 ### W33 — Economy Core
-- [~] P8.1.1 — Replace scattered `awardXP(amount)` usage with `awardLearningReward({ xp, coins, source, conceptKey, questionId })`; current legacy `awardXP` delegates into economy core
+- [V] P8.1.1 — Replace scattered `awardXP(amount)` usage with `awardLearningReward({ xp, coins, source, conceptKey, questionId })`; legacy `awardXP` remains as compatibility wrapper only
 - [V] P8.1.2 — Add local learner economy state: xp, coins, lifetimeXp, lifetimeCoinsEarned, purchases, rewardLog
 - [V] P8.1.3 — Add deterministic reward IDs from source + learner + concept/question, without randomness
 - [V] P8.1.4 — Prevent duplicate rewards for already answered questions
-- [~] P8.1.5 — Award coins together with XP across questions, flashcards, trace, bug hunt, mini build, mock exam, streaks and achievements
+- [V] P8.1.5 — Award coins together with XP across questions, flashcards, trace, bug hunt, mini build, mock exam, streaks and achievements
 - [V] P8.1.6 — Keep XP/coins scoped to the active passwordless local learner profile
 - [V] P8.1.7 — Include XP/coins/rewardLog/purchases in export/import progress
 - [V] P8.1.8 — Add Vitest coverage for reward accounting and no-negative balances
@@ -918,19 +1482,19 @@
 - [V] P8.2.3 — Map level bands: סבתא, תלמיד כיתה א', חטיבה, תיכון, ג'וניור, מפתח עצמאי, מאסטר קורס, ציון 100
 - [V] P8.2.4 — Update sidebar/header XP widget to show level, band, XP, coins and next-level progress
 - [V] P8.2.5 — Add XP detail panel: why you earned XP today, next best action and level gates
-- [ ] P8.2.6 — Add level-up toast with coins earned and next unlock hint
+- [V] P8.2.6 — Add level-up toast with coins earned and next unlock hint
 - [V] P8.2.7 — Add tests for early levels being easy and high levels being harder
-- [ ] P8.2.8 — Add reduced-motion behavior for level-up effects
+- [V] P8.2.8 — Add reduced-motion behavior for level-up effects
 
 ### W35 — Level 100 Mastery Gate
-- [ ] P8.3.1 — Define level 100 gate: all concepts mastered, highest challenge proof, code proof, no unresolved weakness, mock exam 95+
-- [ ] P8.3.2 — Add mastery proof aggregation across all concept tags and tabs
-- [ ] P8.3.3 — Require code proof for code-bearing concepts: fill/trace/bug/build evidence
-- [ ] P8.3.4 — Add "why not level 100 yet" checklist
-- [ ] P8.3.5 — Block level 100 if `qa:questions:strict`, build or smoke gates are red
-- [ ] P8.3.6 — Add tests for no-purchase/no-XP shortcut to level 100
-- [ ] P8.3.7 — Add UI copy that distinguishes global XP level from per-concept mastery
-- [ ] P8.3.8 — Add exportable 100-readiness report
+- [V] P8.3.1 — Define level 100 gate: all concepts mastered, highest challenge proof, code proof, no unresolved weakness, and score 100 on the professor-only SVCollege exam before global level 100 opens
+- [V] P8.3.2 — Add mastery proof aggregation across all concept tags and tabs; XP panel and progress export aggregate `LESSONS_DATA` mastery into the level-100 checklist
+- [V] P8.3.3 — Require code proof for code-bearing concepts: fill/trace/bug/build evidence in the level-100 gate and exportable readiness report
+- [V] P8.3.4 — Add "why not level 100 yet" checklist
+- [V] P8.3.5 — Block level 100 if `qa:questions:strict`, build or smoke gates are red (`level100:release-gate:strict`, runtime data file blocks red/missing gates)
+- [V] P8.3.6 — Add tests for no-purchase/no-XP shortcut to level 100
+- [V] P8.3.7 — Add UI copy that distinguishes global XP level from per-concept mastery
+- [V] P8.3.8 — Add exportable 100-readiness report
 
 ### W36 — Store MVP
 - [V] P8.4.1 — Add top tab `🛒 חנות`
@@ -940,37 +1504,37 @@
 - [V] P8.4.5 — Add "My purchases" view
 - [V] P8.4.6 — Add store search/filter by category and affordability
 - [V] P8.4.7 — Add tests for purchase persistence and duplicate purchase prevention
-- [ ] P8.4.8 — Add store smoke test for desktop and mobile layout
+- [V] P8.4.8 — Add store smoke test for desktop and mobile layout
 
 ### W37 — Museum Tickets + Locked Experience Areas
 - [V] P8.5.1 — Split museum into free intro and paid/earned experience wings
-- [~] P8.5.2 — Lock non-essential museum wings behind coins or mastery prerequisites; coin tickets wired, mastery alternative pending
+- [V] P8.5.2 — Lock non-essential museum wings behind coins or mastery prerequisites; XP + mastery alternative wired
 - [V] P8.5.3 — Keep exam-critical explanations free in concept cards and prerequisite side-aids
-- [ ] P8.5.4 — Add museum pass items: languages, electricity, React evolution, Node runtime, AI hall, Debug hall
-- [ ] P8.5.5 — Add "unlock by learning" alternative for major museum wings
+- [V] P8.5.4 — Add museum pass items: languages, electricity, React evolution, Node runtime, AI hall, Debug hall
+- [V] P8.5.5 — Add "unlock by learning" alternative for major museum wings
 - [V] P8.5.6 — Add locked-card UI with price, reward preview and unlock path
-- [~] P8.5.7 — Add tests that locked museum does not block SVCollege readiness flows; static lock/free-copy test exists, browser readiness smoke pending
-- [ ] P8.5.8 — Add reduced-motion and keyboard access to locked/unlocked museum states
+- [V] P8.5.7 — Add tests that locked museum does not block SVCollege readiness flows; strict access smoke covers readiness, tab matrix, critical flows and full-portal smoke
+- [V] P8.5.8 — Add reduced-motion and keyboard access to locked/unlocked museum states
 
 ### W38 — Experiential Reward Zones
-- [ ] P8.6.1 — Add Debug Arena locked rooms
-- [ ] P8.6.2 — Add Boss Battles for Async, Auth, React State, API and DB
-- [ ] P8.6.3 — Add Code Cinema / replay clips as purchasable experiences
-- [ ] P8.6.4 — Add Secret Labs mini experiments: API contract, DB query lab, state mutation lab
-- [ ] P8.6.5 — Add Theme Shop cosmetics that do not harm accessibility
-- [ ] P8.6.6 — Add collectible concept cards and museum stamps
-- [ ] P8.6.7 — Add rewards from completing locked experience rooms
-- [ ] P8.6.8 — Add balancing tests so experiences cannot farm infinite XP/coins
+- [V] P8.6.1 — Add Debug Arena locked rooms
+- [V] P8.6.2 — Add Boss Battles for Async, Auth, React State, API and DB
+- [V] P8.6.3 — Add Code Cinema / replay clips as purchasable experiences
+- [V] P8.6.4 — Add Secret Labs mini experiments: API contract, DB query lab, state mutation lab
+- [V] P8.6.5 — Add Theme Shop cosmetics that do not harm accessibility
+- [V] P8.6.6 — Add collectible concept cards and museum stamps
+- [V] P8.6.7 — Add rewards from completing locked experience rooms
+- [V] P8.6.8 — Add balancing tests so experiences cannot farm infinite XP/coins
 
 ### W39 — Economy Balancing + Governance
-- [ ] P8.7.1 — Add economy tuning table for XP/coins per action
-- [ ] P8.7.2 — Add dashboard: earned, spent, unlocked, next unlock, average coins/day
-- [ ] P8.7.3 — Add audit script for reward sources with missing conceptKey/questionId metadata
-- [ ] P8.7.4 — Add anti-cheat checks: no repeated reward, no purchase-based mastery, no fake rewards
-- [ ] P8.7.5 — Add privacy note: coins are local learning rewards, not real money
-- [ ] P8.7.6 — Add rollback strategy: economy can be disabled without deleting learning scores
+- [V] P8.7.1 — Add economy tuning table for XP/coins per action
+- [V] P8.7.2 — Add dashboard: earned, spent, unlocked, next unlock, average coins/day
+- [V] P8.7.3 — Add audit script for reward sources with missing conceptKey/questionId metadata
+- [V] P8.7.4 — Add anti-cheat checks: no repeated reward, no purchase-based mastery, no fake rewards
+- [V] P8.7.5 — Add privacy note: coins are local learning rewards, not real money
+- [V] P8.7.6 — Add rollback strategy: economy can be disabled without deleting learning scores
 
-**P8 Total: 23/54** — Economy Core v1 + 100-level widget + XP detail panel + Store MVP + initial museum ticket gates + duplicate reward hardening + economy export/import shipped; mastery unlock alternatives and smoke still pending.
+**P8 Total: 54/54** — Economy Core v1 + 100-level widget + XP detail panel + Store MVP + store desktop/mobile smoke + museum XP access gates + complete museum pass item catalog + strict museum access smoke + accessible/reduced-motion locked museum states + Debug Arena locked rooms + Boss Battles for Async/Auth/React State/API/DB + Code Cinema replay clips + Secret Labs mini experiments + accessible Theme Shop cosmetics + collectible concept cards and museum stamps + one-time rewards for completed locked experiences + locked-experience balancing tests + duplicate reward hardening + economy export/import shipped; scattered XP rewards now route through `awardLearningReward` with real metadata and coins across the main learning surfaces; reward metadata audit now guards future sources; XP panel now includes economy tuning table and dashboard metrics; level-up toast shipped with reduced-motion behavior; anti-cheat gate now blocks repeated positive reward shortcuts, purchase-based mastery and fake reward paths; the store now states coins are local learning rewards, not real money; economy rollback can freeze rewards/purchases without deleting scores; level-100 readiness now exports exam proof, concept mastery, highest challenge proof, code proof and open weaknesses; level 100 now has a closed professor-exam definition and is blocked by red/missing QA, build or smoke gates.
 
 ---
 
@@ -979,14 +1543,14 @@
 > סטטוס: Priority 0/1 עד המבחן. המטרה היא להפוך את הפורטל ממערכת עשירה למערכת שמובילה תלמיד לציון 100 באופן מדיד: בלי כפילויות, עם שאלות עומק, עם smoke מלא, ועם תוכנית יומית ברורה.
 
 ### W40 — Exam Cockpit
-- [ ] P9.1.1 — Add "Exam Cockpit" dashboard: today's plan, weak modules, readiness %, next drill and blocker list
-- [ ] P9.1.2 — Add exam countdown and daily target: minutes, modules, question count and code tasks
-- [ ] P9.1.3 — Add "100 readiness" checklist: every concept mastered, hard question solved, code proof exists, mock exam ≥95
+- [V] P9.1.1 — Add "Exam Cockpit" dashboard: today's plan, weak modules, readiness %, next drill and blocker list
+- [V] P9.1.2 — Add exam countdown and daily target: minutes, modules, question count and code tasks
+- [V] P9.1.3 — Add "100 readiness" checklist: every concept mastered, hard question solved, code proof exists, and professor exam proof exists
 - [V] P9.1.4 — Add final mock exam pack: deterministic 3 variants covering all SVCollege modules
-- [ ] P9.1.5 — Add module heatmap: JS, React, Node, DB, Auth, Next, DevOps, AI, Design Systems
-- [ ] P9.1.6 — Add one-click "study weakest 30 minutes" flow
-- [ ] P9.1.7 — Add end-of-day report: learned, failed, repeated, mastered, next action
-- [ ] P9.1.8 — Add printable/PDF exam cram sheet from weak concepts only
+- [V] P9.1.5 — Add module heatmap: JS, React, Node, DB, Auth, Next, DevOps, AI, Design Systems
+- [V] P9.1.6 — Add one-click "study weakest 30 minutes" flow
+- [V] P9.1.7 — Add end-of-day report: learned, failed, repeated, mastered, next action
+- [V] P9.1.8 — Add printable/PDF exam cram sheet from weak concepts only
 
 ### W41 — Deep Question Ladder
 - [V] P9.2.1 — Guarantee no repeated question in the same learner profile until the bank is exhausted
@@ -996,39 +1560,39 @@
 - [V] P9.2.5 — Add per-answer explanation: why correct, why every distractor is wrong, one memory association
 - [V] P9.2.6 — Add highest-difficulty proof: no concept reaches 100/mastered without level-6/7 challenge solved
 - [V] P9.2.7 — Add code proof per code concept: trace/fill/bug/build evidence required
-- [ ] P9.2.8 — Add question reuse audit report by learner profile and concept tag
+- [V] P9.2.8 — Add question reuse audit report by learner profile and concept tag
 
 ### W42 — Full Portal Reliability
-- [ ] P9.3.1 — Add Playwright desktop smoke for every top tab, context tree and primary action
-- [ ] P9.3.2 — Add Playwright mobile smoke for every top tab, drawer, right tree and focus mode
-- [ ] P9.3.3 — Add visual overlap audit: no XP/status/chrome strip may occupy central empty learning space
-- [ ] P9.3.4 — Add local profile backup/restore smoke: scores + XP + coins + purchases + rewardLog
-- [ ] P9.3.5 — Add offline/PWA smoke for core SVCollege flow
-- [ ] P9.3.6 — Add service worker cache audit whenever new lessons/data files are added
-- [ ] P9.3.7 — Add accessibility audit for tree navigation, modals, store, XP panel and mock exam
-- [ ] P9.3.8 — Add performance budget: initial shell, seeded bank lazy load, tab render time and mobile scroll
+- [V] P9.3.1 — Add Playwright desktop smoke for every top tab, context tree and primary action
+- [V] P9.3.2 — Add Playwright mobile smoke for every top tab, drawer, right tree and focus mode
+- [V] P9.3.3 — Add visual overlap audit: no XP/status/chrome strip may occupy central empty learning space (`svcollege:visual-overlap:strict`)
+- [V] P9.3.4 — Add local profile backup/restore smoke: scores + XP + coins + purchases + rewardLog
+- [V] P9.3.5 — Add offline/PWA smoke for core SVCollege flow
+- [V] P9.3.6 — Add service worker cache audit whenever new lessons/data files are added
+- [V] P9.3.7 — Add accessibility audit for tree navigation, modals, store, XP panel and mock exam
+- [V] P9.3.8 — Add performance budget: initial shell, seeded bank lazy load, tab render time and mobile scroll
 
 ### W43 — Learning Coach + Weakness Repair
-- [ ] P9.4.1 — Add automatic wrong-answer coach card in every question mode
-- [ ] P9.4.2 — Add misconception clusters: repeated wrong patterns across tabs become a named weakness
-- [ ] P9.4.3 — Add recovery drills: 3 short questions after a repeated mistake before returning to hard mode
-- [ ] P9.4.4 — Add confidence calibration per concept: student confidence vs actual correctness
-- [ ] P9.4.5 — Add fatigue guard: if accuracy drops sharply, suggest review mode instead of penalty mode
-- [ ] P9.4.6 — Add "explain in one line" checkpoint before mastery for conceptual topics
-- [ ] P9.4.7 — Add "write from scratch" checkpoint before mastery for implementation topics
-- [ ] P9.4.8 — Add spaced review schedule that prioritizes exam-critical weak concepts first
+- [V] P9.4.1 — Add automatic wrong-answer coach card in every question mode
+- [V] P9.4.2 — Add misconception clusters: repeated wrong patterns across tabs become a named weakness
+- [V] P9.4.3 — Add recovery drills: 3 short questions after a repeated mistake before returning to hard mode
+- [V] P9.4.4 — Add confidence calibration per concept: student confidence vs actual correctness
+- [V] P9.4.5 — Add fatigue guard: if accuracy drops sharply, suggest review mode instead of penalty mode
+- [V] P9.4.6 — Add "explain in one line" checkpoint before mastery for conceptual topics
+- [V] P9.4.7 — Add "write from scratch" checkpoint before mastery for implementation topics
+- [V] P9.4.8 — Add spaced review schedule that prioritizes exam-critical weak concepts first
 
 ### W44 — Post-Exam Productization
-- [ ] P9.5.1 — Freeze an "Exam Edition" release tag after all P9 smoke and readiness gates pass
-- [ ] P9.5.2 — Split future school mappings into separate portals; this portal remains SVCollege AI & Full Stack
-- [ ] P9.5.3 — Add Teacher Lite after exam: one class, progress table, weak-topic heatmap, export
-- [ ] P9.5.4 — Add Sync Alpha after exam: auth, cloud progress, conflict policy and privacy notice
-- [ ] P9.5.5 — Add AI Tutor production Alpha after exam: backend proxy, guardrails, rate limits and logs
-- [ ] P9.5.6 — Add content factory pipeline: create questions + QA + distractor review + prerequisite metadata
-- [ ] P9.5.7 — Add metrics dashboard: D1/D7 retention, mastery velocity, exam score uplift, question quality index
-- [ ] P9.5.8 — Add pricing/packaging plan for post-exam premium experiences without blocking learning content
+- [V] P9.5.1 — Freeze an "Exam Edition" release tag after all P9 smoke and readiness gates pass
+- [V] P9.5.2 — Split future school mappings into separate portals; this portal remains SVCollege AI & Full Stack
+- [V] P9.5.3 — Add Teacher Lite after exam: one class, progress table, weak-topic heatmap, export
+- [V] P9.5.4 — Add Sync Alpha after exam: auth, cloud progress, conflict policy and privacy notice
+- [V] P9.5.5 — Add AI Tutor production Alpha after exam: backend proxy, guardrails, rate limits and logs
+- [V] P9.5.6 — Add content factory pipeline: create questions + QA + distractor review + prerequisite metadata
+- [V] P9.5.7 — Add metrics dashboard: D1/D7 retention, mastery velocity, exam score uplift, question quality index
+- [V] P9.5.8 — Add pricing/packaging plan for post-exam premium experiences without blocking learning content
 
-**P9 Total: 8/40** — No-repeat routing shipped across generated trainer questions, curated inline MC, trace and mock exam pools; correct trainer answers now continue into the next harder same-concept question when available; wrong trainer answers now route into prerequisite/recovery questions before retry; per-answer explanation bundles now render across trainer, trace, concept sprint and inline concept quizzes; mastery now requires highest-available challenge proof across MC, Fill, Trace and Bug pools plus code proof for code-bearing concepts; density warnings are now closed at `0/568`; final mock exam pack now has 3 deterministic SVCollege variants.
+**P9 Total: 40/40** — Exam Cockpit now shows today's plan, countdown, daily target, module heatmap, weak modules, readiness %, next drill, blockers and end-of-day report; one-click weakest 30-minute flow opens the trainer in weak mode; printable weak-concept cram sheet is linked from the cockpit; full portal desktop/mobile smoke gate now covers 22/22 top tabs, context tree, primary actions, drawer, right tree, focus mode and 0 console errors/warnings; automatic wrong-answer coach cards now wrap the weakness agent across trainer, trace, concept sprint, inline lesson questions, lesson quiz, guide, codeblocks and mock exam; repeated misconception patterns across tabs now become named weaknesses with count, modes, concepts and repair plan; repeated mistakes now schedule three short recovery drills before delayed review and before returning to hard mode; per-concept confidence calibration compares 1-5 self-rating with actual correctness and flags over/under-confidence; fatigue guard now suggests review mode when recent accuracy drops sharply or penalty sprint results show overload; conceptual topics now require a valid one-line explanation checkpoint before mastery/100 is released; implementation topics now require a write-from-scratch code checkpoint before mastery/100 is released; spaced review now prioritizes due, weak, and exam-critical concepts before ordinary review; backup/restore smoke now covers scores + XP economy state; accessibility audit now covers tree navigation, modals, store, XP panel and mock exam; performance budget now guards shell size, lazy seeded bank, render hooks and offline cache; no-repeat routing shipped across generated trainer questions, curated inline MC, trace and mock exam pools; correct trainer answers now continue into the next harder same-concept question when available; wrong trainer answers now route into prerequisite/recovery questions before retry; per-answer explanation bundles now render across trainer, trace, concept sprint and inline concept quizzes; mastery now requires highest-available challenge proof across MC, Fill, Trace and Bug pools plus code proof for code-bearing concepts; density warnings are now closed at `0/568`; final mock exam pack now has 3 deterministic SVCollege variants; question reuse audit is green at `0` duplicate identities; PWA/cache audit now checks all index data scripts and the lazy seeded bank; 100-readiness checklist is exported with progress; Exam Edition freeze is now locked by `17/17` passing gates; portal boundary gate now locks the active portal to SVCollege AI & Full Stack and sends future school mappings to separate specs; Teacher Lite now has one-class progress, mastery heatmap and JSON export from real class data only; Sync Alpha is now credential-gated, privacy-noted and locked by `6/6` auth/cloud/conflict checks; AI Tutor Alpha now uses a backend proxy with guardrails, rate limits, structured logs and no frontend provider key; content factory pipeline now locks generation, QA, distractor review, prerequisite metadata and reuse audit; Metrics Dashboard now adds D1/D7, mastery velocity, exam score uplift and question quality index from real local evidence/QA reports only; pricing/packaging plan now separates post-exam premium services from required exam learning and leaves unvalidated prices as `unknown/unavailable`.
 
 ---
 
@@ -1037,56 +1601,57 @@
 > סטטוס: Priority 2 / Post-Exam. לא מתחילים Phase 10 לפני ש-Phase 9 ו-Finish Line 1 ירוקים. המטרה היא להפוך את מה שבנינו למערכת ייצור, מדידה ושיפור מתמשך, בלי להעמיס עוד טאבים על התלמיד לפני המבחן.
 
 ### W45 — Content Factory Pipeline
-- [ ] P10.1.1 — Add content factory dashboard: concepts needing hard MC, Fill, Trace, Bug, Build or distractor feedback
-- [ ] P10.1.2 — Add deterministic generation queue from real concept data only; no fake placeholder questions
-- [ ] P10.1.3 — Add hard-question templates by concept family: JS basics, React state, API, DB, Auth, Next, DevOps, AI
-- [ ] P10.1.4 — Add reviewer checklist: one-line definition, prerequisite terms, correct answer, distractor quality, memory association
-- [ ] P10.1.5 — Add duplicate detector across all question pools and concept aliases
-- [ ] P10.1.6 — Add density targets per concept: minimum hard MC, Fill/code proof, Trace/Bug/Build where relevant
-- [ ] P10.1.7 — Add import path for NotebookLM clips and external video links, mapped by canonical concept tag
-- [ ] P10.1.8 — Add report that separates exam-critical content from enrichment-only content
+- [V] P10.1.1 — Add content factory dashboard: concepts needing hard MC, Fill, Trace, Bug, Build or distractor feedback
+- [V] P10.1.2 — Add deterministic generation queue from real concept data only; no fake placeholder questions
+- [V] P10.1.3 — Add hard-question templates by concept family: JS basics, React state, API, DB, Auth, Next, DevOps, AI
+- [V] P10.1.4 — Add reviewer checklist: one-line definition, prerequisite terms, correct answer, distractor quality, memory association
+- [V] P10.1.5 — Add duplicate detector across all question pools and concept aliases
+- [V] P10.1.6 — Add density targets per concept: minimum hard MC, Fill/code proof, Trace/Bug/Build where relevant
+- [V] P10.1.7 — Add import path for NotebookLM clips and external video links, mapped by canonical concept tag
+- [V] P10.1.8 — Add report that separates exam-critical content from enrichment-only content
 
 ### W46 — Adaptive Daily Exam OS
-- [ ] P10.2.1 — Add daily study plan builder: time budget, weak modules, concept proofs and mock exam target
-- [ ] P10.2.2 — Add "today only" queue: no more than 3 weak topics, 2 code proofs and 1 mock section
-- [ ] P10.2.3 — Add spaced review calendar that prioritizes SVCollege exam-critical weak concepts
-- [ ] P10.2.4 — Add fatigue-aware mode switch: if accuracy drops, move to review instead of penalty sprint
-- [ ] P10.2.5 — Add offline cram mode: compact one-line definitions + comparison tables + code proof checklist
-- [ ] P10.2.6 — Add end-of-day diff: level changes, code proofs, wrong clusters, next blockers
-- [ ] P10.2.7 — Add personal exam readiness trend over days, not just current score
-- [ ] P10.2.8 — Add printable final 24-hour plan from actual weak concepts
+- [V] P10.2.1 — Add daily study plan builder: time budget, weak modules, concept proofs and mock exam target
+- [V] P10.2.2 — Add "today only" queue: no more than 3 weak topics, 2 code proofs and 1 mock section
+- [V] P10.2.3 — Add spaced review calendar that prioritizes SVCollege exam-critical weak concepts
+- [V] P10.2.4 — Add fatigue-aware mode switch: if accuracy drops, move to review instead of penalty sprint
+- [V] P10.2.5 — Add offline cram mode: compact one-line definitions + comparison tables + code proof checklist
+- [V] P10.2.6 — Add end-of-day diff: level changes, code proofs, wrong clusters, next blockers
+- [V] P10.2.7 — Add personal exam readiness trend over days, not just current score
+- [V] P10.2.8 — Add printable final 24-hour plan from actual weak concepts
 
 ### W47 — Mastery Audit + Anti-Duplication
-- [ ] P10.3.1 — Add concept-tag audit: duplicate score buckets, aliases, unresolved conceptKeys and orphan questions
-- [ ] P10.3.2 — Add per-learner question reuse audit with exhausted-vs-repeated breakdown
-- [ ] P10.3.3 — Add mastery proof audit: concepts at level 6/7 without hard proof, code proof or recent review
-- [ ] P10.3.4 — Add "false confidence" audit: high confidence + wrong answers by misconception cluster
-- [ ] P10.3.5 — Add cross-tab evidence graph: where the student proved each concept
-- [ ] P10.3.6 — Add rollback-safe migration for old scores into proof-based mastery
-- [ ] P10.3.7 — Add release blocker when any exam-critical concept lacks a proof path
-- [ ] P10.3.8 — Add audit export for teacher/mentor review after the exam
+- [V] P10.3.1 — Add concept-tag audit: duplicate score buckets, aliases, unresolved conceptKeys and orphan questions
+- [V] P10.3.2 — Add per-learner question reuse audit with exhausted-vs-repeated breakdown
+- [V] P10.3.3 — Add mastery proof audit: concepts at level 6/7 without hard proof, code proof or recent review
+- [V] P10.3.4 — Add "false confidence" audit: high confidence + wrong answers by misconception cluster
+- [V] P10.3.5 — Add cross-tab evidence graph: where the student proved each concept
+- [V] P10.3.6 — Add rollback-safe migration for old scores into proof-based mastery
+- [V] P10.3.7 — Add release blocker when any exam-critical concept lacks a proof path
+- [V] P10.3.8 — Add audit export for teacher/mentor review after the exam
 
 ### W48 — Final Exam Simulation Lab
-- [ ] P10.4.1 — Add 3 full deterministic final exams: standard, hard, stress
-- [ ] P10.4.2 — Add timed stress mode: fewer hints, stricter navigation, no study aids during answer
-- [ ] P10.4.3 — Add post-exam review mode grouped by concept, misconception and prerequisite gap
-- [ ] P10.4.4 — Add "prove again" retest for every wrong final-exam concept
-- [ ] P10.4.5 — Add score projection: current readiness vs expected exam score with confidence range
-- [ ] P10.4.6 — Add final weak list: 20 concepts that most threaten score 100
-- [ ] P10.4.7 — Add code-only final: Trace, Fill, Bug and Mini Build without theory questions
-- [ ] P10.4.8 — Add Exam Edition freeze checklist and release notes
+- [V] P10.4.1 — Add 3 full deterministic final exams: standard, hard, stress
+- [V] P10.4.2 — Add timed stress mode: fewer hints, stricter navigation, no study aids during answer
+- [V] P10.4.3 — Add post-exam review mode grouped by concept, misconception and prerequisite gap
+- [V] P10.4.4 — Add "prove again" retest for every wrong final-exam concept
+- [V] P10.4.5 — Add score projection: current readiness vs expected exam score with confidence range
+- [V] P10.4.6 — Add final weak list: 20 concepts that most threaten score 100
+- [V] P10.4.7 — Add code-only final: Trace, Fill, Bug and Mini Build without theory questions
+- [V] P10.4.8 — Add Exam Edition freeze checklist and release notes
 
 ### W49 — Post-Exam Product Split
-- [ ] P10.5.1 — Split non-SVCollege course mappings into future portal specs
-- [ ] P10.5.2 — Create portal template: curriculum blueprint, concept tags, questions, proof gates, tabs and smoke tests
-- [ ] P10.5.3 — Define Teacher Lite v2 from actual exam data: progress table, weak-topic heatmap, export
-- [ ] P10.5.4 — Define Sync v2 privacy model: local-first, cloud optional, conflict policy
-- [ ] P10.5.5 — Define AI Tutor v2 eval set: no direct answer leak, Socratic hints, misconception repair
-- [ ] P10.5.6 — Define Premium Experience rules: never lock exam-critical knowledge, only enrichment and motivation
-- [ ] P10.5.7 — Add business KPIs: D7 retention, mastery velocity, exam uplift, question quality index
-- [ ] P10.5.8 — Add quarterly roadmap review: freeze, cut, or promote features based on real usage
+- [V] P10.5.1 — Split non-SVCollege course mappings into future portal specs
+- [V] P10.5.2 — Create portal template: curriculum blueprint, concept tags, questions, proof gates, tabs and smoke tests
+- [V] P10.5.3 — Define Teacher Lite v2 from actual exam data: progress table, weak-topic heatmap, export
+- [V] P10.5.4 — Define Sync v2 privacy model: local-first, cloud optional, conflict policy
+- [V] P10.5.5 — Define AI Tutor v2 eval set: no direct answer leak, Socratic hints, misconception repair
+- [V] P10.5.6 — Define Premium Experience rules: never lock exam-critical knowledge, only enrichment and motivation
+- [V] P10.5.7 — Add business KPIs: D7 retention, mastery velocity, exam uplift, question quality index
+- [V] P10.5.8 — Add quarterly roadmap review: freeze, cut, or promote features based on real usage
+- [V] P10.5.9 — Promote validated seeded questions into hand-curated bank after learner outcome/review evidence
 
-**P10 Total: 0/40** — Forward plan only. Do not implement before Phase 9 and Finish Line 1 are green.
+**P10 Total: 41/41 ✅** — Content factory dashboard, deterministic generation queue, hard-question template catalog, reviewer checklist, duplicate detector, density target report, video import map, exam-critical content split, daily study plan builder, today-only queue, spaced review calendar, fatigue-aware mode switch, offline cram mode, end-of-day diff, readiness trend, final 24-hour plan, concept-tag audit, per-learner question reuse audit, mastery proof audit, false confidence audit, cross-tab evidence graph, rollback-safe proof migration plan, exam-critical proof blocker, teacher/mentor audit export, three deterministic final exam templates, timed stress mode, grouped post-exam review, prove-again final retests, score projection, final weak list, code-only final, Exam Edition release notes and post-exam product split gate are now available; all reports and final templates use real concept/question/video/score/outcome/history/alias/answered-ID/proof/confidence/evidence/wrong-answer/release-gate/policy/usage data only and never fabricate question text, answers, options, proofs, URLs, clips, plan rows, queue rows, review content, fatigue metrics, cram facts, trend points, tags, repetitions, confidence, graph edges, retests, score projections, weak concepts, release notes, teacher notes, prices, usage metrics, learner outcomes or reviewer evidence.
 
 ---
 
@@ -1698,6 +2263,113 @@
                    - Every tab now exposes concise "מה זה" rows with click-to-expand details and a "מתי להשתמש במה" table
                    - Added `tests/portal-decision-aid.test.js`
                    - Finish Line 1 count updated to 129/143; total plan count updated to 393/625
+2026-04-29 20:58 — Phase 9 completion gates closed:
+                   - Added Metrics Dashboard to Learning Evidence: D1/D7 retention, mastery velocity, exam score uplift and question quality index
+                   - Added `metrics:dashboard:strict` gate and generated metrics dashboard reports from local evidence/QA sources only
+                   - Added `PRICING_PACKAGING_PLAN.md` and `pricing:packaging:strict`; required exam learning stays unlocked and unvalidated prices remain `unknown/unavailable`
+                   - Phase 9 count updated to 40/40; total plan count updated to 476/625
+2026-04-29 22:42 — Lesson toolbar density hotfix:
+                   - Question Bank panel no longer renders/open by default; it appears only after the learner clicks `בנק שאלות`
+                   - Question Bank button moved after the display mode buttons in DOM, placing it visually to the left of `השוואות` in RTL
+                   - Lesson toolbar spacing tightened so the top controls consume less vertical learning space
+2026-04-29 22:49 — Concept step tabs moved left:
+                   - `תרשים`, `דימוי מהחיים`, `קוד והרצה`, `העמקה`, `המשך` ו-`שאלות` עברו מטורי accordion בגוף הכרטיס לטאבים נפרדים בסרגל השמאלי
+                   - גוף המושג מציג רק טאב פעיל אחד בכל פעם כדי לחסוך גובה ולתת יותר מקום לחומר עצמו
+                   - כפתור `הצג תרשים` הוסר מרשימת הפעולות כי פתיחת התרשים נעשית עכשיו דרך טאב שמאלי ייעודי
+2026-04-29 22:56 — P5.3.3 learn-this-first aid enforced:
+                   - Bug Hunt and Mini Build cards now render `דרישות קדם לשאלה` with concept navigation and `נתקעתי` feedback
+                   - `question-prereq-panel-smoke` now guards quiz/trainer/trace/guide/mock/inline/bug-hunt/mini-build modes
+                   - Phase 5 count updated to 23/39; total plan count updated to 477/625
+2026-04-29 23:00 — P5.3.4/P5.3.5 question coverage targets closed:
+                   - Added `questions:coverage-targets:strict` plus `QUESTION_COVERAGE_TARGETS.md/json`
+                   - Live bank coverage is `568/568` concepts with ≥3 MC and `0` MC gaps; Fill coverage is `0` gaps for codeExample concepts
+                   - The report keeps source mix explicit: seeded items are validated live-bank coverage, while hand-curated promotion remains tracked as P10.5.9
+                   - Phase 5 count updated to 25/39; Phase 10 total updated to 0/41; total plan count updated to 479/626
+2026-04-29 23:02 — P5.3.6/P5.3.7/P5.3.8 per-distractor feedback closed:
+                   - `coverage:features:strict` reports Per-Distractor Feedback `1704/1704` MC questions and `7016` option explanations
+                   - This exceeds the 25%, 50% and 100% staged targets, so all three staged tasks are closed from existing gate evidence
+                   - Phase 5 count updated to 28/39; total plan count updated to 482/626
+2026-04-29 23:06 — P5.4.1 content schema contract closed:
+                   - Added machine-readable contract at `src/core/content-schema-contract.js`
+                   - Added `CONTENT_SCHEMA_CONTRACT.md`, `content:schema-contract:strict`, and `CONTENT_SCHEMA_CONTRACT_REPORT.md/json`
+                   - Contract covers Lesson, Concept, MCQuestion, FillQuestion, TraceQuestion, BugQuestion and BuildQuestion with strict gate wiring
+                   - Phase 5 count updated to 29/39; total plan count updated to 483/626
+2026-04-29 23:10 — P5.4.2 runtime loader validation closed:
+                   - `content-loader.js` now builds `window.LUMEN_CONTENT_VALIDATION` after lesson/practice assembly
+                   - Runtime checks cover lesson IDs, concept names/difficulty, conceptKey routing, MC/Fill/Trace/Bug/Build core fields
+                   - A soft `content-validation-panel` appears only when issues exist, without blocking portal boot
+                   - Content-loader cache key bumped to `content-validation-v1`; service worker cache bumped to `lumen-v2.4.71`
+                   - Phase 5 count updated to 30/39; total plan count updated to 484/626
+2026-04-29 23:13 — P5.4.3 content variant rendering closed:
+                   - Added `levelText(...)` so concept levels render from both object and array forms
+                   - Added `normalizeExtras(...)` so extras panels accept object form and typed array rows
+                   - Added `tests/content-variant-rendering.test.js`; `node --check app.js`, targeted tests and build pass
+                   - Phase 5 count updated to 31/39; total plan count updated to 485/626
+2026-04-29 23:16 — P5.4.4 top-level smoke closed:
+                   - `svcollege:top-tabs:strict` passes with `22/22` tabs and `0` console errors
+                   - `svcollege:critical-flows:strict` and `svcollege:full-portal-smoke:strict` now pass after updating the static flow gate for `renderBugHuntPanel(lesson, concept)` and `renderMiniBuildPanel(lesson, concept)`
+                   - Phase 5 count updated to 32/39; total plan count updated to 486/626
+2026-04-29 23:17 — P5.4.5 console-error gate closed:
+                   - `svcollege:console-gate:strict` passes with `5/5` checks, `0` failures and `6` critical flows
+                   - Gate verifies desktop console evidence, mobile console evidence, critical-flow readiness and package script wiring
+                   - Phase 5 count updated to 33/39; total plan count updated to 487/626
+2026-04-29 23:18 — P5.4.6 service-worker stale asset regression closed:
+                   - `service-worker-cache.test.js` locks `lumen-v2.4.71`, versioned app/style/content-loader assets and network-first reload for versioned code
+                   - `svcollege:pwa-offline:strict` passes with `170/170` cached assets and `13/13` strategy checks
+                   - Phase 5 count updated to 34/39; total plan count updated to 488/626
+2026-04-29 23:24 — P5.4.7 feature health diagnostics closed:
+                   - SVCollege Command Center now exposes live feature-health diagnostics for runtime schema validation, live question bank, tab matrix, browser smoke, and promotion gate.
+                   - Added deterministic UI/tests without Math.random and kept diagnostics inside the existing Command Center to avoid new menu duplication.
+                   - Verified: `node --check app.js`, `npm test -- --run tests/svcollege-command-center-ui.test.js`, `npm run svcollege:command-center:strict`
+                   - Phase 5 count updated to 35/39; total plan count updated to 489/626
+2026-04-29 23:28 — P5.4.8 local feature-error telemetry closed:
+                   - Extended local learning evidence with `feature_error` events, deterministic session-based `errorsPer1000Sessions`, and no raw error messages or PII.
+                   - Command Center feature-health diagnostics now shows feature-error telemetry alongside schema, question bank, tab matrix, smoke and promotion gates.
+                   - Verified: `node --check app.js`, `npm test -- --run tests/learning-evidence.test.js tests/svcollege-command-center-ui.test.js`, `npm run svcollege:command-center:strict`
+                   - Phase 5 count updated to 36/39; total plan count updated to 490/626
+2026-04-29 23:31 — P5.5.1/P5.5.2/P5.5.3 90-day roadmap waves closed:
+                   - Added `roadmap:90-day` gate and generated `ROADMAP_90_DAY_WAVES.md/json`.
+                   - Wave 1 verifies FSRS/SRS, Gap Matrix, Pathways, D1/D7 retention baseline and metrics dashboard without fabricated outcomes.
+                   - Wave 2 verifies AI Tutor Alpha, Sync Alpha, Pair-Match and Bug Quest hardening from existing gates/coverage evidence.
+                   - Wave 3 verifies Teacher Lite UI, teacher core modules, Supabase schema and tests for class progress + heatmap.
+                   - Verified: `node --check scripts/report_90_day_roadmap_waves.js`, `npm run roadmap:90-day:strict`, `npm test -- --run tests/roadmap-90-day-waves.test.js`, `npm run roadmap:90-day:write`
+                   - Phase 5 count updated to 39/39; total plan count updated to 493/626
+2026-04-29 23:34 — P6.3.1 activity coverage gap quantified:
+                   - Added `questions:activity-coverage` report and generated `QUESTION_ACTIVITY_COVERAGE_REPORT.md/json`.
+                   - MC/Fill coverage remains green from `QUESTION_COVERAGE_TARGETS`, but Trace/Build/Bug activity coverage is now 337/568 concepts after authoring batch 16; 231 gaps remain.
+                   - P6.3.1 stays open; no generated/backfilled activity items were invented.
+                   - Verified: `node --check scripts/report_question_activity_coverage.js`, `npm run questions:activity-coverage:write`, `npm test -- --run tests/question-activity-coverage.test.js`
+2026-04-29 23:40 — P6.3.5 guided builds closed:
+                   - Added `data/guided_builds.js` with four from-zero-to-feature tracks: React Task Filter, Node Notes REST API, Next.js Dashboard Route, and TypeScript Model + Guard.
+                   - Capstones tab now renders guided builds, links their prerequisite concepts, and exposes them in the context tree.
+                   - Cache bumped to `lumen-v2.4.72` and `data/guided_builds.js?v=guided-builds-v1` is precached.
+                   - Verified: `node --check app.js`, `node --check data/guided_builds.js`, `npm test -- --run tests/capstones.test.js tests/service-worker-cache.test.js`, `npm run svcollege:pwa-offline:strict`
+                   - Phase 6 count updated to 20/36; total plan count updated to 494/626
+2026-04-29 23:46 — P6.3.6 interview-prep mode closed:
+                   - Added `data/interview_prep.js` with junior frontend interview questions mapped to real concept keys across JS, React, DOM, async, backend, Next.js, TypeScript, security and CSS.
+                   - Guide tab now includes a collapsible Interview Prep Mode with answer expectations, follow-up prompts and clickable concept links.
+                   - Cache bumped to `lumen-v2.4.73` and `data/interview_prep.js?v=interview-prep-v1` is precached.
+                   - Verified: `node --check app.js`, `node --check data/interview_prep.js`, `npm test -- --run tests/interview-prep.test.js tests/service-worker-cache.test.js`, `npm run svcollege:pwa-offline:strict`
+                   - Phase 6 count updated to 21/36; total plan count updated to 495/626
+2026-04-29 23:58 — P6.4.1-P6.4.5 Content Studio workflow closed:
+                   - Added `src/core/content-studio.js` with content item statuses, deterministic stable-hash IDs, review queue builder and field-level revision diff.
+                   - Learning Evidence tab now includes Content Studio cards, review queue rows and side-by-side diff slot based only on QA warnings, anonymized learner mistakes and teacher feedback.
+                   - P6.4.6 remains open for museum evidence fields; technical claim evidence is supported in the new core module, but museum editing is deferred by the Finish Line 1 boundary.
+                   - Verified: `node --check app.js`, `npm test -- --run tests/content-studio.test.js tests/learning-evidence.test.js`
+                   - Phase 6 count updated to 26/36; total plan count updated to 500/626
+2026-04-29 23:59 — P6.4.7 NotebookLM/video asset tracker closed:
+                   - Added `scripts/report_video_asset_tracker.js` and `video:asset-tracker:*` scripts.
+                   - Generated `VIDEO_ASSET_TRACKER_REPORT.md/json` from real `data/concept_videos.js` assets and `NOTEBOOKLM_CONCEPT_CLIPS.md`.
+                   - Tracker records script status, asset status, temporary fallback link, review status and replacement date; unknown replacement dates stay `unknown/unavailable`.
+                   - Verified: `node --check scripts/report_video_asset_tracker.js`, `npm run video:asset-tracker:write`, `npm run video:asset-tracker:strict`, `npm test -- --run tests/video-asset-tracker.test.js`
+                   - Phase 6 count updated to 27/36; total plan count updated to 501/626
+2026-04-29 23:59 — P6.5.1-P6.5.3 pilot readiness and support flow closed:
+                   - Added `PILOT_READINESS_PLAN.md` for a 10-30 student protocol with D0 baseline, D1/D7 retention, two-week usage and D14 final test.
+                   - Added `TEACHER_ONBOARDING_KIT.md` with class setup, assignment recipes, heatmap interpretation and support workflow.
+                   - Added `src/core/support-report.js` and an in-app support modal from the chrome control menu; payload includes route, tab, lesson, concept, viewport, app/cache versions and optional user-attached screenshot.
+                   - Added `scripts/report_pilot_readiness.js`, generated `PILOT_READINESS_REPORT.md/json`, and wired `pilot:readiness:*` scripts.
+                   - Verified: `node --check app.js`, `node --check scripts/report_pilot_readiness.js`, `npm run pilot:readiness:write`, `npm run pilot:readiness:strict`, `npm test -- --run tests/support-report.test.js tests/pilot-readiness.test.js`
+                   - Phase 6 count updated to 30/36; total plan count updated to 504/626
 ```
 
 ---

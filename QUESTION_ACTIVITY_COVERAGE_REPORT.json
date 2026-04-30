@@ -1,0 +1,1871 @@
+{
+  "reportVersion": "question-activity-coverage-v1",
+  "date": "2026-04-30",
+  "policy": {
+    "deterministic": true,
+    "noFakeData": true,
+    "rule": "A code-bearing concept is activity-ready only when it has at least one Trace, Mini Build, or Bug Hunt item tied to its real conceptKey."
+  },
+  "sourceMix": {
+    "trace": 326,
+    "build": 43,
+    "bug": 33
+  },
+  "summary": {
+    "concepts": 568,
+    "relevantConcepts": 568,
+    "activityReadyConcepts": 337,
+    "activityGapCount": 231,
+    "ready": false
+  },
+  "gaps": [
+    {
+      "key": "ai_development::AI",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "AI",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::Cursor",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "Cursor",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::Windsurf",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "Windsurf",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::Claude Code",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "Claude Code",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::ChatGPT",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "ChatGPT",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::Copilot",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "Copilot",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::Prompt Engineering",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "Prompt Engineering",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::AI Pair Programming",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "AI Pair Programming",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::AI Code Review",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "AI Code Review",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::AI Limitations",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "AI Limitations",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::Hallucinations",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "Hallucinations",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "ai_development::Context Window",
+      "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+      "conceptName": "Context Window",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_18::Node.js",
+      "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
+      "conceptName": "Node.js",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_18::server",
+      "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
+      "conceptName": "server",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_18::GET",
+      "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
+      "conceptName": "GET",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_18::form",
+      "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
+      "conceptName": "form",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_18::validation",
+      "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
+      "conceptName": "validation",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_18::username",
+      "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
+      "conceptName": "username",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_18::email",
+      "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
+      "conceptName": "email",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_18::password",
+      "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
+      "conceptName": "password",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_18::server-side storage",
+      "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
+      "conceptName": "server-side storage",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::console.log",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "console.log",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::alert",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "alert",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::DOM",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "DOM",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::Data Types",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "Data Types",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::let",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "let",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::var",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "var",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::const",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "const",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::camelCase",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "camelCase",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::switch",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "switch",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::debugger",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "debugger",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::network",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "network",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::parameter",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "parameter",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::return",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "return",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::arrow function",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "arrow function",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::while",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "while",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::for",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "for",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::break",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "break",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::continue",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "continue",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::do while",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "do while",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::array",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "array",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::filter",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "filter",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::map",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "map",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::find",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "find",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::reduce",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "reduce",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::spread",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "spread",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::object",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "object",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::nested object",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "nested object",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::array of objects",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "array of objects",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::destructuring",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "destructuring",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::class",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "class",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::method",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "method",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::inheritance",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "inheritance",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::try",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "try",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::catch",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "catch",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::throw",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "throw",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::localStorage",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "localStorage",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::sessionStorage",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "sessionStorage",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::cookies",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "cookies",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::closure",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "closure",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::promise",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "promise",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::fetch",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "fetch",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::scope",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "scope",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::event",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "event",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::event object",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "event object",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::hoisting",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "hoisting",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_19::event loop",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "event loop",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::Database",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "Database",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::SQL",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "SQL",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::NoSQL",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "NoSQL",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::MongoDB Atlas",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "MongoDB Atlas",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::Cluster",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "Cluster",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::Connection String",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "Connection String",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::Collection",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "Collection",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::Document",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "Document",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::Props",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "Props",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::Value",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "Value",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::JSON",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "JSON",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::Schema",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "Schema",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::Model",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "Model",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::insertOne",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "insertOne",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::insertMany",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "insertMany",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::find",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "find",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::findOne",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "findOne",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::findOneAndUpdate",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "findOneAndUpdate",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::update",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "update",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::updateMany",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "updateMany",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::deleteOne",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "deleteOne",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::deleteMany",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "deleteMany",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::$eq",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "$eq",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::$gt",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "$gt",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::$gte",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "$gte",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::$lt",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "$lt",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::$lte",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "$lte",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_20::$ne",
+      "lessonTitle": "Database, MongoDB, Mongoose",
+      "conceptName": "$ne",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::React",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "React",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::Client Side",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "Client Side",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::React Native",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "React Native",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::Vite",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "Vite",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::npm create vite@latest",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "npm create vite@latest",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::npm install",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "npm install",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::npm run dev",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "npm run dev",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::index.html",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "index.html",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::main.jsx",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "main.jsx",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::App.jsx",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "App.jsx",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::App.css",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "App.css",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::RFC",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "RFC",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::{}",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "{}",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::import",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "import",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::export default",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "export default",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::inline style",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "inline style",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_21::CSS import",
+      "lessonTitle": "שיעור 21 — React בסיסי",
+      "conceptName": "CSS import",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::Hook",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "Hook",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::state",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "state",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::mutable",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "mutable",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::reference",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "reference",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::array reference",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "array reference",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::object reference",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "object reference",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::onChange",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "onChange",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::props",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "props",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::parent component",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "parent component",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::child component",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "child component",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::passing function as prop",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "passing function as prop",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::addPost",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "addPost",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_22::deletePost",
+      "lessonTitle": "שיעור 22 — useState, Immutable State",
+      "conceptName": "deletePost",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::URL",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "URL",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::Route",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "Route",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::Path",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "Path",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::BrowserRouter",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "BrowserRouter",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::Routes",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "Routes",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::element",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "element",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::Link",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "Link",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::to",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "to",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::dynamic route",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "dynamic route",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::createContext",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "createContext",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::value",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "value",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::MainScreen",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "MainScreen",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::AddPost",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "AddPost",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_23::PostList",
+      "lessonTitle": "שיעור 23 — Router, Context API",
+      "conceptName": "PostList",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::side effect",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "side effect",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::fetching data",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "fetching data",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::fetch",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "fetch",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::state update",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "state update",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::infinite loop",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "infinite loop",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::expensive calculation",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "expensive calculation",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::memoization",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "memoization",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::ref",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "ref",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::ref.current",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "ref.current",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::DOM element",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "DOM element",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_24::focus",
+      "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
+      "conceptName": "focus",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_25::padding",
+      "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+      "conceptName": "padding",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_25::bg color",
+      "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+      "conceptName": "bg color",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_25::Tailwind installation",
+      "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+      "conceptName": "Tailwind installation",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_25::rating",
+      "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+      "conceptName": "rating",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_25::search",
+      "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+      "conceptName": "search",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_25::add/delete movie",
+      "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+      "conceptName": "add/delete movie",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_25::validation",
+      "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+      "conceptName": "validation",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_25::navbar",
+      "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+      "conceptName": "navbar",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::Compiler",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "Compiler",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::tsc",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "tsc",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::.ts",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": ".ts",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::.js",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": ".js",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::tsconfig.json",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "tsconfig.json",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::type annotation",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "type annotation",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::string",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "string",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::number",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "number",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::boolean",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "boolean",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::tuple",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "tuple",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::enum",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "enum",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::void",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "void",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::readonly",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "readonly",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::type alias",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "type alias",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::React + TypeScript",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "React + TypeScript",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::Type Safety",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "Type Safety",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::Typing Props",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "Typing Props",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::Function Prop Type",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "Function Prop Type",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::models folder",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "models folder",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::Todo.ts",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "Todo.ts",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::interface",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "interface",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::interface vs type",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "interface vs type",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::never",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "never",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_26::any",
+      "lessonTitle": "שיעור 26 — TypeScript + React+TS",
+      "conceptName": "any",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::type",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "type",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::enum",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "enum",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::interface",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "interface",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::Book",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "Book",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::Genre",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "Genre",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::BaseUser",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "BaseUser",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::GuestUser",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "GuestUser",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::RegisteredUser",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "RegisteredUser",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::User",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "User",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::Income",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "Income",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::Expense",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "Expense",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::Category",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "Category",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::Amount",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "Amount",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::Budget Summary",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "Budget Summary",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_27::Category Breakdown",
+      "lessonTitle": "שיעור 27 — שיעורי בית TS + Budget Manager",
+      "conceptName": "Category Breakdown",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_closures::closure variables",
+      "lessonTitle": "Closures — סגירות (הגורם השכיח לבאגים ב-React)",
+      "conceptName": "closure variables",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_closures::closure in event handlers",
+      "lessonTitle": "Closures — סגירות (הגורם השכיח לבאגים ב-React)",
+      "conceptName": "closure in event handlers",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_closures::closure in useEffect",
+      "lessonTitle": "Closures — סגירות (הגורם השכיח לבאגים ב-React)",
+      "conceptName": "closure in useEffect",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_design_systems::shadcn/UI",
+      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
+      "conceptName": "shadcn/UI",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_design_systems::Radix primitives",
+      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
+      "conceptName": "Radix primitives",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_design_systems::design tokens",
+      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
+      "conceptName": "design tokens",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_design_systems::cn helper",
+      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
+      "conceptName": "cn helper",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_design_systems::cva",
+      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
+      "conceptName": "cva",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_design_systems::asChild slot",
+      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
+      "conceptName": "asChild slot",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_design_systems::theme tokens",
+      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
+      "conceptName": "theme tokens",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_design_systems::component registry",
+      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
+      "conceptName": "component registry",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "lesson_design_systems::design system testing",
+      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
+      "conceptName": "design system testing",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "react_blueprint::Component Architecture",
+      "lessonTitle": "React Architect Blueprint",
+      "conceptName": "Component Architecture",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "react_blueprint::State Management",
+      "lessonTitle": "React Architect Blueprint",
+      "conceptName": "State Management",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "react_blueprint::Data Flow",
+      "lessonTitle": "React Architect Blueprint",
+      "conceptName": "Data Flow",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "react_blueprint::Composition vs Inheritance",
+      "lessonTitle": "React Architect Blueprint",
+      "conceptName": "Composition vs Inheritance",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "react_blueprint::Container vs Presentational",
+      "lessonTitle": "React Architect Blueprint",
+      "conceptName": "Container vs Presentational",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "react_blueprint::Lifting State Up",
+      "lessonTitle": "React Architect Blueprint",
+      "conceptName": "Lifting State Up",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "react_blueprint::Code Splitting",
+      "lessonTitle": "React Architect Blueprint",
+      "conceptName": "Code Splitting",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "react_blueprint::Performance Optimization",
+      "lessonTitle": "React Architect Blueprint",
+      "conceptName": "Performance Optimization",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "react_blueprint::Error Boundaries",
+      "lessonTitle": "React Architect Blueprint",
+      "conceptName": "Error Boundaries",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "react_blueprint::Testing Strategies",
+      "lessonTitle": "React Architect Blueprint",
+      "conceptName": "Testing Strategies",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::Task Manager",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "Task Manager",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::variables",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "variables",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::conditions",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "conditions",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::arrays",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "arrays",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::functions",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "functions",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::DOM",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "DOM",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::events",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "events",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::localStorage",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "localStorage",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::objects",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "objects",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::try/catch",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "try/catch",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::fetch",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "fetch",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    },
+    {
+      "key": "workbook_taskmanager::async/await",
+      "lessonTitle": "חוברת תרגול JavaScript — Task Manager",
+      "conceptName": "async/await",
+      "trace": 0,
+      "build": 0,
+      "bug": 0
+    }
+  ]
+}

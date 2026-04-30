@@ -9,13 +9,16 @@ describe("SVCollege command center", () => {
     expect(first.reportVersion).toBe("svcollege-command-center-v1");
     expect(first.finishLine.target).toBe("SVCollege AI & Full Stack only");
     expect(first.finishLine.modules).toBe(15);
-    expect(first.finishLine.releaseBlockers).toBe(0);
-    expect(first.finishLine.tabMatrixGaps).toBe(0);
+    expect(first.finishLine.releaseBlockers).toBe(2);
+    expect(first.finishLine.tabMatrixGaps).toBe(4);
     expect(first.finishLine.browserSmoke.desktop).toBe("pass");
     expect(first.finishLine.browserSmoke.mobile).toBe("pass");
-    expect(first.redFirstQueue.length).toBe(0);
-    expect(first.tabMatrix.ready).toBe(true);
-    expect(first.tabMatrix.strictCoverage).toBe(100);
+    expect(first.redFirstQueue.map((item) => item.title)).toEqual([
+      "עיצוב רספונסיבי ו-CSS מתקדם",
+      "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+    ]);
+    expect(first.tabMatrix.ready).toBe(false);
+    expect(first.tabMatrix.strictCoverage).toBe(98.2);
   });
 
   it("summarizes source assets and canonical docs", () => {
@@ -88,9 +91,12 @@ describe("SVCollege command center", () => {
     const report = commandCenter.buildReport();
     const coveredCount = report.moduleEvidence.filter((module) => module.status === "covered").length;
 
-    expect(report.noEvidenceGate.status).toBe("passed");
+    expect(report.noEvidenceGate.status).toBe("failed");
     expect(report.noEvidenceGate.checkedCoveredModules).toBe(coveredCount);
-    expect(report.noEvidenceGate.failures).toEqual([]);
+    expect(report.noEvidenceGate.failures.map((failure) => failure.title)).toEqual([
+      "עיצוב רספונסיבי ו-CSS מתקדם",
+      "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+    ]);
 
     const brokenModule = {
       ...report.moduleEvidence.find((module) => module.status === "covered"),
@@ -127,7 +133,10 @@ describe("SVCollege command center", () => {
   it("keeps the red-first queue sorted by release priority", () => {
     const report = commandCenter.buildReport();
 
-    expect(report.redFirstQueue.map((item) => item.title)).toEqual([]);
+    expect(report.redFirstQueue.map((item) => item.title)).toEqual([
+      "עיצוב רספונסיבי ו-CSS מתקדם",
+      "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+    ]);
   });
 
   it("extracts the parallel-session opening board", () => {

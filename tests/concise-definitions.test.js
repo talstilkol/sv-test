@@ -249,7 +249,7 @@ describe("concise concept definitions", () => {
     expect(badRows.map((concept) => concept.conceptName)).toEqual([]);
   });
 
-  it("filters generated seeded questions that repeat boilerplate definitions", async () => {
+  it("does not expose generated seeded question loading", () => {
     const badQuestion = {
       id: "bad_seed",
       conceptKey: "lesson_19::array",
@@ -271,11 +271,10 @@ describe("concise concept definitions", () => {
       },
     });
 
-    await context.ensureSeededBank();
-
+    expect(context.ensureSeededBank).toBeUndefined();
     expect(context.QUESTIONS_BANK.mc.some((question) => question.id === "bad_seed")).toBe(false);
-    expect(context.QUESTIONS_BANK.mc.some((question) => question.id === "good_seed")).toBe(true);
-    expect(context.QUESTIONS_BANK._seededFiltered).toEqual({ mc: 1, fill: 1 });
+    expect(context.QUESTIONS_BANK.mc.some((question) => question.id === "good_seed")).toBe(false);
+    expect(context.QUESTIONS_BANK._manualOnly).toBe(true);
   });
 
   it("keeps SVCollege concise definitions present and short", () => {

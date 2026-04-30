@@ -48,6 +48,20 @@ function htmlVersionedAssets(html) {
   return assets;
 }
 
+function htmlScriptAssets(html) {
+  const assets = [];
+  const re = /<script\s+[^>]*src="([^"]+)"/g;
+  let match = re.exec(html);
+  while (match) {
+    const raw = match[1].startsWith("/") ? match[1] : `/${match[1]}`;
+    if ((raw.startsWith("/data/") || raw === "/content-loader.js" || raw.startsWith("/src/")) && !assets.includes(raw)) {
+      assets.push(raw);
+    }
+    match = re.exec(html);
+  }
+  return assets;
+}
+
 const REQUIRED_STATIC_ASSETS = Object.freeze([
   "/index.html",
   "/manifest.json",
@@ -105,8 +119,9 @@ function buildReport() {
   const main = read("src/main.js");
 
   const versionedAssets = htmlVersionedAssets(html);
+  const scriptAssets = htmlScriptAssets(html);
   const mainImports = extractModuleImports(main).map(toAssetPath);
-  const requiredAssets = [...new Set([...REQUIRED_STATIC_ASSETS, ...versionedAssets, ...mainImports])];
+  const requiredAssets = [...new Set([...REQUIRED_STATIC_ASSETS, ...scriptAssets, ...versionedAssets, ...mainImports])];
   const assetResults = requiredAssets.map((asset) => {
     const inPrecache = sw.includes(`"${asset}"`);
     const exists = fileExistsForAsset(asset);
@@ -127,13 +142,15 @@ function buildReport() {
     ["standalone display", manifest.display === "standalone"],
     ["rtl hebrew manifest", manifest.lang === "he" && manifest.dir === "rtl"],
     ["maskable icons", (manifest.icons || []).some((icon) => String(icon.purpose || "").includes("maskable"))],
-    ["service worker registration", html.includes("app.js?v=concept-sprint-v2") && sw.includes('self.addEventListener("install"') && read("app.js").includes('.register("service-worker.js", { scope: "/" })')],
-    ["cache version", sw.includes('const CACHE_VERSION = "lumen-v2.4.30"')],
+    ["service worker registration", html.includes("app.js?v=concept-sprint-v68") && sw.includes('self.addEventListener("install"') && read("app.js").includes('.register("service-worker.js", { scope: "/" })')],
+    ["cache version", sw.includes('const CACHE_VERSION = "lumen-v2.4.129"')],
     ["install precache", sw.includes("cache.addAll(SHELL_ASSETS.map")],
     ["activate cleanup", sw.includes('self.addEventListener("activate"') && sw.includes("caches.delete(k)")],
     ["navigation fallback", sw.includes('caches.match("/index.html")')],
     ["versioned network-first", sw.includes("function networkFirstVersionedAsset") && sw.includes('fetch(new Request(request, { cache: "reload" }))')],
     ["same-origin GET guard", sw.includes('request.method !== "GET"') && sw.includes("url.origin !== self.location.origin")],
+    ["index script assets precached", scriptAssets.every((asset) => sw.includes(`"${asset}"`))],
+    ["manual-only bank policy", !sw.includes('"/data/questions_bank_seeded.js"') && !html.includes("questions_bank_seeded.js")],
   ].map(([id, passed]) => ({
     id,
     passed: Boolean(passed),
@@ -196,6 +213,7 @@ if (require.main === module) run();
 module.exports = {
   REQUIRED_STATIC_ASSETS,
   buildReport,
+  htmlScriptAssets,
   run,
   toMarkdown,
 };

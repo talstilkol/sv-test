@@ -1,10 +1,10 @@
 # Master Plan — בניית מאגר שאלות מלא לכל 434 המושגים
 
-> **המטרה:** להגיע למצב שבו לכל מושג ב-19 השיעורים יש ✅ **3 שאלות אמריקניות** ו-✅ **2 שאלות השלמת קוד**, כך שהתלמיד יכול להגיע מרמה 1 (סבתא) לרמה 7 (מאסטר) בכל מושג בלי הפסקת שאלות מיוצרות אוטומטית.
+> **המטרה:** להגיע למצב שבו לכל מושג ב-19 השיעורים יש ✅ **3 שאלות אמריקניות** ו-✅ **2 שאלות השלמת קוד**, כך שהתלמיד יכול להגיע מרמה 1 (סבתא) לרמה 7 (מאסטר) באמצעות שאלות ידניות בלבד שעברו בדיקה קפדנית.
 
 > **עדכון 2026-04-28:** מסמך זה הוא תוכנית legacy ממוקדת בנק שאלות. תוכנית האב הפעילה היא [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md), והביצוע היומי נמצא ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md). קו הסיום הראשון גובר על המסמך הזה: כיסוי מלא של `SVCollege — קורס AI & Full Stack` בכל הפורטל לפני הרחבות אחרות.
 
-> **עדכון Finish Line 1:** מיפוי מודול×טאב כבר ירוק: `SVCOLLEGE_TAB_MATRIX.md` מדווח `225/225` תאים קשיחים, `0` פערי טאב, ו־`15/15` מודולי SVCollege מכוסים. העבודה שנותרה לפני סגירת קו הסיום היא smoke בדפדפן, הגדלת עומק שאלות למושגים ש-`validate:strict` מסמן, ודרישות קדם/פידבק לכל שאלה קשה.
+> **עדכון Finish Line 1:** אחרי ביטול הבנק האוטומטי, מיפוי מודול×טאב כבר לא ירוק מלא: `SVCOLLEGE_TAB_MATRIX.md` מדווח `221/225` תאים קשיחים, `4` פערי טאב, ו־`15/15` מודולי SVCollege קיימים אבל `2` מודולים חסומים לכיסוי Trainer/Mock Exam ידני. אין לסגור את קו הסיום עד שהפערים נסגרים בשאלות ידניות שעברו בדיקה.
 
 > **עדכון XP Economy 2026-04-29:** תוכנית החנות והכלכלה החדשה נמצאת ב-[XP_REWARD_STORE_MASTER_PLAN.md](XP_REWARD_STORE_MASTER_PLAN.md). היא מוסיפה 100 רמות XP לא לינאריות, Coins, חנות חוויות, כרטיסים למוזיאון ושער רמה 100 שמחייב שליטה מלאה. היא Priority 2 ואינה חוסמת חומר חובה למבחן.
 
@@ -15,6 +15,12 @@
 > **עדכון Exam Week 2026-04-29:** נוסף [EXAM_WEEK_OPERATING_PLAN.md](EXAM_WEEK_OPERATING_PLAN.md). זהו מסמך הפעלה יומי עד המבחן: בדיקות בוקר, סגירת 10 מושגים חלשים ביום, סימולציית תלמיד בערב, ושער Exam Edition. הוא לא מוסיף scope חדש, אלא מונע סטייה מהיעד הראשון.
 
 > **עדכון Exam Sprint 2026-04-29:** נוסף P-0.3 ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md): ספרינט 7 ימים לפני מבחן. הוא מתמקד ב-weakest 10, no-repeat simulation, harder-after-correct, wrong-answer repair, smoke מובייל/פוקוס, וגיבוש `Exam Edition RC`.
+
+> **עדכון System Bug Audit 2026-04-30:** נוסף [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md). אחרי מדיניות manual-only, `validate:strict`, QA, tests ו-build עוברים, אבל release gates של SVCollege אדומים: `2` release blockers, `4` tab gaps, `2` critical-flow failures, ו-`questions:coverage-targets:strict` נכשל עם `567` MC ו-`561` Fill פערים ידניים. משימות התיקון נרשמו בסעיף `0A` למטה.
+
+> **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `567` פערי MC ו-`561` פערי Fill ידניים.
+
+> **עדכון Forward Execution 2026-04-30:** רשימת המשימות התפעולית המעודכנת נמצאת ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md) תחת `Forward Execution Plan — 2026-04-30`. סדר העבודה המחייב: קודם שני מודולי SVCollege שחסרים Trainer/Mock Exam ידניים, אחר כך כל backlog השאלות הידניות, אחר כך פערי Trace/Build/Bug, ורק בסוף מוזיאון/חנות/קהילה/Sync/פירוק frontend.
 
 ## 0. עדכון אסטרטגי לתוכנית
 
@@ -29,6 +35,46 @@
 7. השיפור הבא לפני פיצ'רי פרימיום: Exam Cockpit + Deep Question Ladder + Full Portal Reliability. מטרתם להעלות סיכוי לציון 100, לא להגדיל את מספר הטאבים.
 8. אחרי Exam Edition יציב: Content Factory + Mastery Audit + Final Simulation Lab. המטרה היא להפוך את המערכת למכונה שמייצרת איכות מדידה, לא רק למסך לימוד נוסף.
 9. בשבעת ימי ההכנה למבחן: לא מודדים התקדמות לפי מספר פיצ'רים, אלא לפי מספר מושגים מסוכנים שהפכו למוכחים בשאלת עומק וקוד.
+
+---
+
+## 0A. System Bug Audit Backlog — 2026-04-30
+
+מקור: [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md). העיקרון המחייב: לסגור קודם פערים שמחזקים הכנה אמיתית למבחן SVCollege, ורק אחר כך הרחבות מוזיאון/חנות/קהילה.
+
+| ID | סטטוס | עדיפות | משימה |
+|---|---|---:|---|
+| BUG-AUDIT-001 | [ ] | P0 | לסגור `231/568` פערי פעילות Trace/Build/Bug באמצעות תוכן אמיתי בלבד, לפי [QUESTION_ACTIVITY_AUTHORING_PLAN.md](QUESTION_ACTIVITY_AUTHORING_PLAN.md). |
+| BUG-AUDIT-002 | [ ] | P0 | לתת קדימות ל-`9` פערי SVCollege לפני כל הרחבת Priority 2. |
+| BUG-AUDIT-003 | [ ] | P1 | להשאיר `222` פערים לא-עדיפותיים ב-deferred עד סגירת SVCollege, ואז לשייך אותם לפורטל מתאים. |
+| BUG-AUDIT-004 | [ ] | P1 | להשלים בדיקות keyboard-only ל-Esc/Enter/Arrow, ניווט מושגים, מעבר שיעור, פתיחת/סגירת טאבים ומצבי focus. |
+| BUG-AUDIT-005 | [ ] | P1 | להמשיך פירוק `app.js` למודולי `src/` קטנים: lesson renderer, chrome/menu, settings, bug log, question panels. |
+| BUG-AUDIT-006 | [ ] | P1 | לסגור Cross-device Sync מול Supabase אמיתי: auth, conflict handling, recovery, export/import. נתונים חסרים נשארים `unknown/unavailable`. |
+| BUG-AUDIT-007 | [ ] | P2 | ליישב סטטוס Per-Distractor Feedback: אם `coverage:features:strict` מוכיח `1704/1704`, לסמן את המשימה הישנה כסגורה/מוחלפת. |
+| BUG-AUDIT-008 | [ ] | P2 | לסמן מסמכי audit ישנים כ-historical כדי שלא ייראו כבאגים פעילים. |
+| BUG-AUDIT-009 | [ ] | P1 | להוסיף export/report deterministic ללוג Bug Agent כדי שניתן יהיה לראות, לתקן ולנקות באגים בלי טלמטריה מזויפת. |
+| BUG-AUDIT-010 | [ ] | P1 | לשמור `svcollege:pwa-offline:strict` כחובה בכל שינוי שמוסיף `data/` או `src/core/` scripts. |
+| BUG-AUDIT-011 | [ ] | P1 | להוסיף gate חוסם ל-activity coverage רק אחרי שיש יעד ריאלי ותוכן אמיתי שמאפשר מעבר. |
+| BUG-AUDIT-012 | [ ] | P2 | להריץ browser visual smoke/overlap אחרי כל שינוי UI, לא רק בדיקות יחידה. |
+| BUG-AUDIT-013 | [ ] | P2 | להוסיף smoke בדפדפן לטאב Trace/Build/Bug עבור מושגים מייצגים מכל batch activity חדש. |
+| BUG-AUDIT-014 | [ ] | P1 | להריץ פיילוט 10 תלמידים אמיתי ולמדוד D1/D7, stuck events, mastery movement ו-promotion outcomes. |
+| BUG-AUDIT-015 | [ ] | P1 | לאחד מקור אמת תפעולי: `EXECUTION_TASKS.md` לביצוע שוטף, `MASTER_PLAN.md` ל-backlog, ולסמן סעיפים legacy/historical כדי למנוע status drift. |
+| BUG-AUDIT-016 | [ ] | P2 | לרכז או לגזור אוטומטית את גרסת cache וציפיות assets מתוך `service-worker.js`/`index.html` במקום לעדכן כמה קבצים ידנית. |
+| BUG-AUDIT-017 | [ ] | P1 | להוסיף browser smoke דטרמיניסטי למושג אחד לפחות מכל batch activity חדש ב-Lessons 11-17, SQL/ORM וב-foundation/tooling, כולל Trace/Build/Bug לא ריקים. |
+| BUG-AUDIT-018 | [ ] | P2 | לרכז metadata של דוחות generated או לגזור תאריך מריצת release אחת, כדי שדוחות עם מספרים עדכניים לא יישארו עם תאריך ישן. |
+| BUG-AUDIT-019 | [ ] | P1 | לפני release/commit ליצור inventory של קבצים מיועדים, להפריד generated artifacts, ולא לשחרר מתוך worktree מלוכלך ללא בעלות ברורה. |
+| BUG-AUDIT-020 | [ ] | P1 | להפריד בין `questions:activity-authoring-plan` כדוח audit לבין gate חוסם אמיתי, או לשנות strict כך שייכשל על `ready:false` כשה-P6.3.1 אמור לחסום release. |
+| BUG-AUDIT-021 | [ ] | P0 | לכתוב/לסקור ידנית MC/Fill במקום להסתמך על legacy generated bank; `questions:coverage-targets` עכשיו מציג אמת: `567` פערי MC ו-`561` פערי Fill ידניים. |
+| BUG-AUDIT-022 | [ ] | P2 | אחרי סגירת Finish Line 1 לפרק payload frontend: לצמצם stylesheet גלובלי גדול ו-core chunk גדול באמצעות חלוקת styles/modules לפי feature עם smoke tests. |
+| BUG-AUDIT-023 | [ ] | P0 | לתקן overclaim בסטטוס התוכנית: `BRUTAL_MASTER_PLAN_AUDIT.md` מצא 759 פריטים, מתוכם 332 DONE, 368 PARTIAL, 50 NOT DONE ו-9 FAKED. אין להציג Phase כ-100% עד שכל פריט FAKED/PARTIAL מקבל ראיה אמיתית או מסומן מחדש. |
+| BUG-AUDIT-024 | [ ] | P0 | להוריד ל-PARTIAL/NOT DONE כל `[V]` שתלוי בפיילוט, D1/D7, real usage, pricing, post-exam review או learner outcome אמיתי עד שיש נתוני אמת. |
+| BUG-AUDIT-025 | [ ] | P1 | להפוך את `brutal-master-plan-audit` לשער קבוע לפני release: כל `FAKED` חייב להיות 0, וכל `PARTIAL` חייב להיות מוצדק עם owner וקריטריון סגירה. |
+| BUG-AUDIT-026 | [ ] | P1 | למנוע drift בזמן batch חלקי: cache version, HTML script version, service-worker tests ודוחות smoke צריכים להיגזר ממקור אחד או להיבדק ב-gate אחד. |
+| BUG-AUDIT-027 | [ ] | P0 | לנקות כל gate ישן שעדיין מציג legacy generated/seeded כשווה ערך לחומר ידני; release לא ירוק עד ש-`validate:strict` ו-`questions:coverage-targets:strict` משקפים ידני בלבד. |
+| BUG-AUDIT-028 | [ ] | P0 | ליצור תוכנית authoring ידנית מלאה ל-`567` MC ו-`561` Fill: batch לפי מודול SVCollege, reviewer, source evidence, ותאריך בדיקה. |
+| BUG-AUDIT-029 | [ ] | P1 | להוציא את `data/questions_bank_seeded.js` מהנתיב הפעיל לגמרי: להשאיר כארכיון legacy או למחוק אחרי שהפריטים השימושיים נכתבו מחדש ידנית. |
+| BUG-AUDIT-030 | [ ] | P1 | להוסיף gate שמוודא שאין פונקציות runtime מסוג `generatedMC`, `makeCodeFill`, `ensureSeededBank` או סקריפטי seed פעילים לפני release. |
+| BUG-AUDIT-031 | [ ] | P0 | לכתוב ולסקור ידנית שאלות Trainer/Mock Exam ל-`עיצוב רספונסיבי ו-CSS מתקדם` ול-`AI למפתחים` עד ש-`svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict` ו-`exam:mock-variants:strict` ירוקים בלי generated bank. |
 
 ---
 

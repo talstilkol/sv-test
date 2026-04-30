@@ -1,0 +1,322 @@
+{
+  "reportVersion": "video-asset-tracker-v1",
+  "date": "2026-04-29",
+  "source": {
+    "data": "data/concept_videos.js",
+    "scriptDoc": "NOTEBOOKLM_CONCEPT_CLIPS.md"
+  },
+  "policy": {
+    "deterministic": true,
+    "noFakeLinks": true,
+    "noInventedReplacementDates": true,
+    "replacementDateWhenUnknown": "unknown/unavailable",
+    "originalClipProduction": "tracked separately from temporary fallback links"
+  },
+  "summary": {
+    "totalAssets": 10,
+    "validConceptKeys": 10,
+    "scriptsDocumented": 10,
+    "fallbackLinksAvailable": 10,
+    "readyForProductionReview": 10,
+    "missingTrackerFields": 0,
+    "ready": true
+  },
+  "rows": [
+    {
+      "conceptKey": "lesson_12::map",
+      "title": "map — מערך נכנס, מערך חדש יוצא",
+      "validConceptKey": true,
+      "script": {
+        "source": "NOTEBOOKLM_CONCEPT_CLIPS.md",
+        "status": "documented",
+        "expectedFilename": "lesson_12__map__notebooklm_v1.mp4"
+      },
+      "asset": {
+        "status": "pending-original-notebooklm-export",
+        "linkStatus": "temporary-fallback-linked",
+        "link": "https://www.youtube.com/watch?v=xNQH1NbZQ0E",
+        "linkSource": "YouTube — Bro Code",
+        "replacementDate": "unknown/unavailable"
+      },
+      "review": {
+        "status": "ready-for-production-review",
+        "checklist": [
+          "60-90 seconds",
+          "Hebrew narration",
+          "matches course code",
+          "no invented data",
+          "mobile-readable captions",
+          "exam takeaway sentence"
+        ]
+      },
+      "scenes": 4
+    },
+    {
+      "conceptKey": "lesson_15::Promise",
+      "title": "Promise — תוצאה עתידית עם שלושה מצבים",
+      "validConceptKey": true,
+      "script": {
+        "source": "NOTEBOOKLM_CONCEPT_CLIPS.md",
+        "status": "documented",
+        "expectedFilename": "lesson_15__Promise__notebooklm_v1.mp4"
+      },
+      "asset": {
+        "status": "pending-original-notebooklm-export",
+        "linkStatus": "temporary-fallback-linked",
+        "link": "https://www.youtube.com/watch?v=Xs1EMmBLpn4",
+        "linkSource": "YouTube — Lydia Hallie",
+        "replacementDate": "unknown/unavailable"
+      },
+      "review": {
+        "status": "ready-for-production-review",
+        "checklist": [
+          "60-90 seconds",
+          "Hebrew narration",
+          "matches course code",
+          "no invented data",
+          "mobile-readable captions",
+          "exam takeaway sentence"
+        ]
+      },
+      "scenes": 4
+    },
+    {
+      "conceptKey": "lesson_17::REST API",
+      "title": "REST API — בקשה, route, תגובה",
+      "validConceptKey": true,
+      "script": {
+        "source": "NOTEBOOKLM_CONCEPT_CLIPS.md",
+        "status": "documented",
+        "expectedFilename": "lesson_17__REST_API__notebooklm_v1.mp4"
+      },
+      "asset": {
+        "status": "pending-original-notebooklm-export",
+        "linkStatus": "temporary-fallback-linked",
+        "link": "https://www.youtube.com/watch?v=lsMQRaeKNDk",
+        "linkSource": "YouTube — IBM Technology",
+        "replacementDate": "unknown/unavailable"
+      },
+      "review": {
+        "status": "ready-for-production-review",
+        "checklist": [
+          "60-90 seconds",
+          "Hebrew narration",
+          "matches course code",
+          "no invented data",
+          "mobile-readable captions",
+          "exam takeaway sentence"
+        ]
+      },
+      "scenes": 4
+    },
+    {
+      "conceptKey": "lesson_21::JSX",
+      "title": "JSX — תחביר שנראה כמו HTML אבל הוא JavaScript",
+      "validConceptKey": true,
+      "script": {
+        "source": "NOTEBOOKLM_CONCEPT_CLIPS.md",
+        "status": "documented",
+        "expectedFilename": "lesson_21__JSX__notebooklm_v1.mp4"
+      },
+      "asset": {
+        "status": "pending-original-notebooklm-export",
+        "linkStatus": "temporary-fallback-linked",
+        "link": "https://www.youtube.com/watch?v=FO4couzuJIk",
+        "linkSource": "YouTube — Harry Wolff",
+        "replacementDate": "unknown/unavailable"
+      },
+      "review": {
+        "status": "ready-for-production-review",
+        "checklist": [
+          "60-90 seconds",
+          "Hebrew narration",
+          "matches course code",
+          "no invented data",
+          "mobile-readable captions",
+          "exam takeaway sentence"
+        ]
+      },
+      "scenes": 4
+    },
+    {
+      "conceptKey": "lesson_22::controlled input",
+      "title": "Controlled Input — השדה מקבל ערך מ-state",
+      "validConceptKey": true,
+      "script": {
+        "source": "NOTEBOOKLM_CONCEPT_CLIPS.md",
+        "status": "documented",
+        "expectedFilename": "lesson_22__controlled_input__notebooklm_v1.mp4"
+      },
+      "asset": {
+        "status": "pending-original-notebooklm-export",
+        "linkStatus": "temporary-fallback-linked",
+        "link": "https://www.youtube.com/watch?v=IkMND33x0qQ",
+        "linkSource": "YouTube — Net Ninja",
+        "replacementDate": "unknown/unavailable"
+      },
+      "review": {
+        "status": "ready-for-production-review",
+        "checklist": [
+          "60-90 seconds",
+          "Hebrew narration",
+          "matches course code",
+          "no invented data",
+          "mobile-readable captions",
+          "exam takeaway sentence"
+        ]
+      },
+      "scenes": 4
+    },
+    {
+      "conceptKey": "lesson_22::immutable",
+      "title": "Immutable State — הפניה חדשה במקום שינוי במקום",
+      "validConceptKey": true,
+      "script": {
+        "source": "NOTEBOOKLM_CONCEPT_CLIPS.md",
+        "status": "documented",
+        "expectedFilename": "lesson_22__immutable__notebooklm_v1.mp4"
+      },
+      "asset": {
+        "status": "pending-original-notebooklm-export",
+        "linkStatus": "temporary-fallback-linked",
+        "link": "https://www.youtube.com/watch?v=uedgForV5GM",
+        "linkSource": "YouTube — Web Dev Cody",
+        "replacementDate": "unknown/unavailable"
+      },
+      "review": {
+        "status": "ready-for-production-review",
+        "checklist": [
+          "60-90 seconds",
+          "Hebrew narration",
+          "matches course code",
+          "no invented data",
+          "mobile-readable captions",
+          "exam takeaway sentence"
+        ]
+      },
+      "scenes": 4
+    },
+    {
+      "conceptKey": "lesson_22::useState",
+      "title": "useState — מהלחיצה ועד render חדש",
+      "validConceptKey": true,
+      "script": {
+        "source": "NOTEBOOKLM_CONCEPT_CLIPS.md",
+        "status": "documented",
+        "expectedFilename": "lesson_22__useState__notebooklm_v1.mp4"
+      },
+      "asset": {
+        "status": "pending-original-notebooklm-export",
+        "linkStatus": "temporary-fallback-linked",
+        "link": "https://www.youtube.com/watch?v=rsqSAoOFmMI",
+        "linkSource": "YouTube — Web Dev Cody",
+        "replacementDate": "unknown/unavailable"
+      },
+      "review": {
+        "status": "ready-for-production-review",
+        "checklist": [
+          "60-90 seconds",
+          "Hebrew narration",
+          "matches course code",
+          "no invented data",
+          "mobile-readable captions",
+          "exam takeaway sentence"
+        ]
+      },
+      "scenes": 4
+    },
+    {
+      "conceptKey": "lesson_23::Router",
+      "title": "React Router — URL שמחליף מסך בלי reload מלא",
+      "validConceptKey": true,
+      "script": {
+        "source": "NOTEBOOKLM_CONCEPT_CLIPS.md",
+        "status": "documented",
+        "expectedFilename": "lesson_23__Router__notebooklm_v1.mp4"
+      },
+      "asset": {
+        "status": "pending-original-notebooklm-export",
+        "linkStatus": "temporary-fallback-linked",
+        "link": "https://www.youtube.com/watch?v=4NpGzBEySvI",
+        "linkSource": "YouTube — Leigh Halliday",
+        "replacementDate": "unknown/unavailable"
+      },
+      "review": {
+        "status": "ready-for-production-review",
+        "checklist": [
+          "60-90 seconds",
+          "Hebrew narration",
+          "matches course code",
+          "no invented data",
+          "mobile-readable captions",
+          "exam takeaway sentence"
+        ]
+      },
+      "scenes": 4
+    },
+    {
+      "conceptKey": "lesson_24::dependency array",
+      "title": "Dependency Array — רשימת הסיבות להריץ אפקט",
+      "validConceptKey": true,
+      "script": {
+        "source": "NOTEBOOKLM_CONCEPT_CLIPS.md",
+        "status": "documented",
+        "expectedFilename": "lesson_24__dependency_array__notebooklm_v1.mp4"
+      },
+      "asset": {
+        "status": "pending-original-notebooklm-export",
+        "linkStatus": "temporary-fallback-linked",
+        "link": "https://www.youtube.com/watch?v=QQYeipc_cik",
+        "linkSource": "YouTube — Lama Dev",
+        "replacementDate": "unknown/unavailable"
+      },
+      "review": {
+        "status": "ready-for-production-review",
+        "checklist": [
+          "60-90 seconds",
+          "Hebrew narration",
+          "matches course code",
+          "no invented data",
+          "mobile-readable captions",
+          "exam takeaway sentence"
+        ]
+      },
+      "scenes": 4
+    },
+    {
+      "conceptKey": "lesson_24::useEffect",
+      "title": "useEffect — אחרי שהמסך מוכן",
+      "validConceptKey": true,
+      "script": {
+        "source": "NOTEBOOKLM_CONCEPT_CLIPS.md",
+        "status": "documented",
+        "expectedFilename": "lesson_24__useEffect__notebooklm_v1.mp4"
+      },
+      "asset": {
+        "status": "pending-original-notebooklm-export",
+        "linkStatus": "temporary-fallback-linked",
+        "link": "https://www.youtube.com/watch?v=QQYeipc_cik",
+        "linkSource": "YouTube — Lama Dev",
+        "replacementDate": "unknown/unavailable"
+      },
+      "review": {
+        "status": "ready-for-production-review",
+        "checklist": [
+          "60-90 seconds",
+          "Hebrew narration",
+          "matches course code",
+          "no invented data",
+          "mobile-readable captions",
+          "exam takeaway sentence"
+        ]
+      },
+      "scenes": 4
+    }
+  ],
+  "gaps": {
+    "missingScripts": [],
+    "missingLinks": [],
+    "invalidConceptKeys": [],
+    "missingTrackerFields": []
+  }
+}

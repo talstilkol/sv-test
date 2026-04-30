@@ -12,10 +12,14 @@ describe("portal-wide one-line and comparison aid", () => {
   const html = read("index.html");
   const css = read("style.css");
 
-  it("adds a reusable decision aid container below the page title", () => {
+  it("adds a reusable decision aid menu in the secondary top nav", () => {
+    expect(html).toContain('id="portal-decision-menu"');
     expect(html).toContain('id="portal-decision-aid"');
+    expect(html).toContain("מתי להשתמש");
     expect(html).toContain('aria-label="מבט מהיר והשוואות לפי טאב"');
+    expect(app).toContain('const portalDecisionMenu = document.getElementById("portal-decision-menu")');
     expect(app).toContain('const portalDecisionAid = document.getElementById("portal-decision-aid")');
+    expect(app).toContain('portalDecisionMenu.dataset.ready = "true"');
   });
 
   it("defines one-line rows and comparison tables for the main portal tabs", () => {
@@ -82,6 +86,7 @@ describe("portal-wide one-line and comparison aid", () => {
   it("styles the compact rows and comparison table consistently", () => {
     [
       ".portal-decision-aid",
+      ".site-when-menu .portal-decision-aid",
       ".portal-aid-head",
       ".portal-aid-grid",
       ".portal-aid-row",

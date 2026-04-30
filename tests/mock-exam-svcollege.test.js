@@ -32,10 +32,10 @@ describe("SVCollege mock exam integration", () => {
     expect(app).toContain("lesson_design_systems::");
   });
 
-  it("loads the seeded bank before composing an exam", () => {
+  it("composes exams from the manually loaded bank without generated-bank preload", () => {
     expect(app).toContain("const begin = () => {");
     expect(app).toContain("const questions = composeMockExam(template)");
-    expect(app).toContain("window.ensureSeededBank().then(begin).catch(begin)");
+    expect(app).not.toContain("window.ensureSeededBank().then(begin).catch(begin)");
     expect(app).toContain("begin();");
   });
 

@@ -7,16 +7,19 @@
     "covered": 15,
     "partial": 0,
     "gap": 0,
-    "green": 15,
-    "amber": 0,
+    "green": 13,
+    "amber": 2,
     "red": 0,
-    "averageReadiness": 100,
-    "finishLineReady": true
+    "averageReadiness": 96.7,
+    "finishLineReady": false
   },
   "validation": {
     "failures": []
   },
-  "releaseBlockers": [],
+  "releaseBlockers": [
+    "עיצוב רספונסיבי ו-CSS מתקדם (covered, 75%)",
+    "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI (covered, 75%)"
+  ],
   "modules": [
     {
       "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
@@ -57,8 +60,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 66,
-        "fill": 40,
+        "mc": 11,
+        "fill": 8,
         "trace": 7,
         "miniBuild": 2,
         "bugHunt": 1,
@@ -71,8 +74,8 @@
     {
       "title": "עיצוב רספונסיבי ו-CSS מתקדם",
       "status": "covered",
-      "readiness": 100,
-      "level": "green",
+      "readiness": 75,
+      "level": "amber",
       "lessonIds": [
         "lesson_25"
       ],
@@ -97,12 +100,12 @@
         "declaredStatus": 100,
         "lessonCoverage": 100,
         "conceptCoverage": 100,
-        "questionCoverage": 100,
+        "questionCoverage": 0,
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 42,
-        "fill": 25,
+        "mc": 0,
+        "fill": 0,
         "trace": 5,
         "miniBuild": 1,
         "bugHunt": 1,
@@ -145,8 +148,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 211,
-        "fill": 100,
+        "mc": 29,
+        "fill": 26,
         "trace": 15,
         "miniBuild": 4,
         "bugHunt": 1,
@@ -209,8 +212,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 198,
-        "fill": 102,
+        "mc": 42,
+        "fill": 30,
         "trace": 14,
         "miniBuild": 5,
         "bugHunt": 1,
@@ -255,8 +258,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 224,
-        "fill": 105,
+        "mc": 7,
+        "fill": 5,
         "trace": 15,
         "miniBuild": 3,
         "bugHunt": 1,
@@ -329,9 +332,9 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 107,
-        "fill": 50,
-        "trace": 8,
+        "mc": 21,
+        "fill": 21,
+        "trace": 18,
         "miniBuild": 3,
         "bugHunt": 2,
         "pairMatchPairs": 8,
@@ -403,7 +406,7 @@
       "counts": {
         "mc": 28,
         "fill": 16,
-        "trace": 3,
+        "trace": 16,
         "miniBuild": 3,
         "bugHunt": 3,
         "pairMatchPairs": 0,
@@ -453,8 +456,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 268,
-        "fill": 151,
+        "mc": 19,
+        "fill": 11,
         "trace": 25,
         "miniBuild": 14,
         "bugHunt": 11,
@@ -497,8 +500,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 140,
-        "fill": 78,
+        "mc": 8,
+        "fill": 4,
         "trace": 10,
         "miniBuild": 1,
         "bugHunt": 2,
@@ -563,8 +566,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 87,
-        "fill": 51,
+        "mc": 18,
+        "fill": 13,
         "trace": 7,
         "miniBuild": 3,
         "bugHunt": 3,
@@ -634,8 +637,8 @@
       },
       "counts": {
         "mc": 29,
-        "fill": 14,
-        "trace": 3,
+        "fill": 15,
+        "trace": 15,
         "miniBuild": 3,
         "bugHunt": 3,
         "pairMatchPairs": 0,
@@ -705,9 +708,9 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 51,
-        "fill": 29,
-        "trace": 3,
+        "mc": 24,
+        "fill": 15,
+        "trace": 15,
         "miniBuild": 3,
         "bugHunt": 3,
         "pairMatchPairs": 0,
@@ -773,7 +776,7 @@
       "counts": {
         "mc": 24,
         "fill": 14,
-        "trace": 3,
+        "trace": 13,
         "miniBuild": 3,
         "bugHunt": 3,
         "pairMatchPairs": 0,
@@ -785,8 +788,8 @@
     {
       "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
       "status": "covered",
-      "readiness": 100,
-      "level": "green",
+      "readiness": 75,
+      "level": "amber",
       "lessonIds": [
         "ai_development"
       ],
@@ -809,12 +812,12 @@
         "declaredStatus": 100,
         "lessonCoverage": 100,
         "conceptCoverage": 100,
-        "questionCoverage": 100,
+        "questionCoverage": 0,
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 34,
-        "fill": 17,
+        "mc": 0,
+        "fill": 0,
         "trace": 1,
         "miniBuild": 1,
         "bugHunt": 1,
@@ -887,7 +890,7 @@
       "counts": {
         "mc": 28,
         "fill": 14,
-        "trace": 3,
+        "trace": 17,
         "miniBuild": 3,
         "bugHunt": 3,
         "pairMatchPairs": 0,

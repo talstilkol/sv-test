@@ -42,6 +42,7 @@ All checks verified that the tab button was uniquely resolvable, the tab opened,
 | מאמן ידע + דוח | Pass |
 | לימוד מותאם | Pass |
 | פירוק קוד | Pass |
+| הגדרות | Pass |
 
 ## Navigation Checks
 
@@ -50,7 +51,7 @@ All checks verified that the tab button was uniquely resolvable, the tab opened,
 | Click LumenPortal logo → home screen | Pass |
 | Click lesson 11 in right lesson tree | Pass |
 | Lesson concept tree appears after lesson open | Pass |
-| Mobile 390×844: all 22 top tabs open with populated `main` content | Pass |
+| Mobile 390×844: all 23 top tabs open with populated `main` content | Pass |
 | Mobile 390×844: context tree remains active while switching tabs | Pass |
 | Mobile 390×844: focus mode hides top tabs and uses side context tree | Pass |
 
@@ -60,7 +61,7 @@ All checks verified that the tab button was uniquely resolvable, the tab opened,
 |---|---|
 | Viewport | `390×844` via Playwright CLI |
 | URL | `http://127.0.0.1:4183/?v=exam-smoke` |
-| Top tabs | `22/22` opened; `0` empty-content failures |
+| Top tabs | `23/23` opened; `0` empty-content failures |
 | Focus mode | `body.learning-focus-mode`; top tabs hidden |
 | Console | `0` errors, `0` warnings |
 | Question flow evidence | `npm run exam:flows:strict` passed: no-repeat, harder-after-correct, wrong-answer repair |
@@ -72,9 +73,10 @@ All checks verified that the tab button was uniquely resolvable, the tab opened,
 | Lesson quiz | Opened `lesson_11`; found `10` `.quiz-question .q-prereq-panel` panels | Pass |
 | Knowledge trainer | Opened `#open-trainer`; first trainer card showed `דרישות קדם לשאלה` with `8 מושגים · 5 מונחים` | Pass |
 | Mock exam | Opened SVCollege mock exam, accepted start dialog; `#mx-question .q-prereq-panel` showed `6 מושגים · 4 מונחים` | Pass |
+| New code question kinds | Source wiring audit verifies `guide`, `inline`, `bug-hunt`, `mini-build`, `trace`, `trainer`, `mock`, and `quiz` modes render `renderQuestionPrereqPanel` and bind stuck-feedback navigation | Pass |
 
 ## Remaining Work
 
-- 2026-04-29: automated Browser Playwright top-tab smoke evidence added at `output/playwright/svcollege-critical-flows/top-tab-browser-smoke.json`; `svcollege:top-tabs:strict` verifies `22/22` tabs and `0` console errors.
+- 2026-04-29: automated Browser Playwright top-tab smoke evidence added at `output/playwright/svcollege-critical-flows/top-tab-browser-smoke.json`; `svcollege:top-tabs:strict` verifies `23/23` tabs and `0` console errors.
 - 2026-04-29: desktop + mobile critical-flow screenshot evidence added in `SVCOLLEGE_CRITICAL_FLOW_SCREENSHOTS.md`; `svcollege:screenshot-evidence:strict` verifies `12/12` PNG artifacts.
 - Keep `npm run svcollege:tab-matrix:strict`, `npm run svcollege:readiness:release`, and `npm run svcollege:command-center:strict` green after every content change.

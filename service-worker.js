@@ -2,7 +2,7 @@
 // Caches the app shell + primary lessons for offline use.
 // Cache strategy: cache-first for static assets, network-first for HTML.
 
-const CACHE_VERSION = "lumen-v2.4.30";
+const CACHE_VERSION = "lumen-v2.4.129";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 // Resources that MUST be available offline (the App Shell + core data)
@@ -11,11 +11,11 @@ const SHELL_ASSETS = [
   "/index.html",
   "/manifest.json",
   "/style.css",
-  "/style.css?v=concept-sprint-v2",
+  "/style.css?v=concept-sprint-v68",
   "/app.js",
-  "/app.js?v=concept-sprint-v2",
+  "/app.js?v=concept-sprint-v68",
   "/content-loader.js",
-  "/content-loader.js?v=svcollege-devops-v1",
+  "/content-loader.js?v=content-validation-v1",
   "/src/main.js",
   "/src/main.js?v=core-bootstrap-v2",
   "/src/core/runtime.js",
@@ -27,7 +27,23 @@ const SHELL_ASSETS = [
   "/src/core/question-prerequisites.js?v=question-prereq-v2",
   "/src/core/mistake-agent.js",
   "/src/core/learning-evidence.js",
+  "/src/core/content-studio.js",
   "/src/core/outcome-loop.js",
+  "/src/core/bug-agent.js",
+  "/src/core/support-report.js",
+  "/src/core/progress-sync.js",
+  "/src/core/teacher-classes.js",
+  "/src/core/teacher-students.js",
+  "/src/core/teacher-heatmap.js",
+  "/src/core/teacher-risk-alerts.js",
+  "/src/core/teacher-assignments.js",
+  "/src/core/teacher-bulk-import.js",
+  "/src/core/community-discussions.js",
+  "/src/core/community-votes.js",
+  "/src/core/community-reputation.js",
+  "/src/core/community-moderation.js",
+  "/src/core/peer-review.js",
+  "/src/core/mentor-matching.js",
   "/src/core/confidence-calibration.js",
   "/src/core/confusion-blockers.js",
   "/src/core/concept-tags.js",
@@ -59,21 +75,28 @@ const SHELL_ASSETS = [
   "/data/extended_explanations.js",
   "/data/questions_trace.js",
   "/data/svcollege_traces_sql_orm.js",
-  "/data/svcollege_traces_sql_orm.js?v=svcollege-sql-orm-v1",
+  "/data/svcollege_traces_sql_orm.js?v=svcollege-sql-orm-v2",
   "/data/svcollege_traces_auth.js",
-  "/data/svcollege_traces_auth.js?v=svcollege-auth-v1",
+  "/data/svcollege_traces_auth.js?v=svcollege-auth-v2",
   "/data/svcollege_traces_nextjs.js",
-  "/data/svcollege_traces_nextjs.js?v=svcollege-nextjs-v1",
+  "/data/svcollege_traces_nextjs.js?v=svcollege-nextjs-v2",
   "/data/svcollege_traces_nestjs.js",
-  "/data/svcollege_traces_nestjs.js?v=svcollege-nestjs-v1",
+  "/data/svcollege_traces_nestjs.js?v=svcollege-nestjs-v2",
   "/data/svcollege_traces_devops.js",
-  "/data/svcollege_traces_devops.js?v=svcollege-devops-v1",
+  "/data/svcollege_traces_devops.js?v=svcollege-devops-v2",
   "/data/svcollege_traces_ai_engineering.js",
-  "/data/svcollege_traces_ai_engineering.js?v=svcollege-ai-engineering-v1",
+  "/data/svcollege_traces_ai_engineering.js?v=svcollege-ai-engineering-v2",
   "/data/svcollege_traces_design_systems.js",
   "/data/svcollege_traces_design_systems.js?v=svcollege-design-systems-v1",
   "/data/svcollege_traces_bridge.js",
   "/data/svcollege_traces_bridge.js?v=svcollege-bridge-v1",
+  "/data/svcollege_traces_lesson11_activity.js?v=lesson11-activity-v1",
+  "/data/svcollege_traces_lesson12_activity.js?v=lesson12-activity-v1",
+  "/data/svcollege_traces_lesson13_activity.js?v=lesson13-activity-v2",
+  "/data/svcollege_traces_foundation_tooling_activity.js?v=foundation-tooling-activity-v1",
+  "/data/svcollege_traces_lesson15_activity.js?v=lesson15-activity-v1",
+  "/data/svcollege_traces_lesson16_activity.js?v=lesson16-activity-v1",
+  "/data/svcollege_traces_lesson17_activity.js?v=lesson17-activity-v1",
   "/data/questions_bug.js",
   "/data/svcollege_questions_bridge.js",
   "/data/svcollege_questions_bridge.js?v=svcollege-bridge-v1",
@@ -95,6 +118,7 @@ const SHELL_ASSETS = [
   "/data/svcollege_builds_bridge.js",
   "/data/svcollege_builds_bridge.js?v=svcollege-bridge-v1",
   "/data/lesson_quiz_keys.js",
+  "/data/level100_release_gates.js?v=level100-gate-v1",
   "/data/animations.js",
   "/data/what_if.js",
   "/data/concept_comics.js",
@@ -104,6 +128,7 @@ const SHELL_ASSETS = [
   "/data/concept_videos.js",
   "/data/option_feedback.js",
   "/data/quick_guide.js",
+  "/data/interview_prep.js?v=interview-prep-v1",
   "/data/grandma_knowledge.js",
   "/data/grandma_visuals.js",
   "/data/code_blocks.js",
@@ -116,8 +141,12 @@ const SHELL_ASSETS = [
   "/data/anti_patterns.js",
   "/data/mnemonics.js",
   "/data/flashcards.js",
+  "/data/war_stories.js",
+  "/data/comparisons.js",
+  "/data/prerequisites.js",
   "/data/capstones.js",
   "/data/capstones.js?v=capstones-v2",
+  "/data/guided_builds.js?v=guided-builds-v1",
   "/data/course_blueprints.js",
   "/data/course_blueprints.js?v=svcollege-only-v1",
   "/data/svcollege_prerequisites_sql_orm.js",
@@ -134,6 +163,12 @@ const SHELL_ASSETS = [
   "/data/svcollege_prerequisites_ai_engineering.js?v=svcollege-ai-engineering-v1",
   "/data/svcollege_prerequisites_design_systems.js",
   "/data/svcollege_prerequisites_design_systems.js?v=svcollege-design-systems-v1",
+  "/data/metaphors.js",
+  "/data/pathways.js",
+  "/data/scenarios.js",
+  "/data/counterfactuals.js",
+  "/data/pair_match.js",
+  "/data/bug_quests.js",
   // Lessons 11-27 + new
   "/data/lesson11.js",
   "/data/lesson12.js",
@@ -247,7 +282,7 @@ self.addEventListener("fetch", (event) => {
       if (cached) return cached;
       return fetch(request)
         .then((res) => {
-          // Optionally cache new GET requests for next time (e.g., lazy seeded bank)
+          // Optionally cache same-origin GET requests for repeat offline study.
           if (res.ok && (url.pathname.endsWith(".js") || url.pathname.endsWith(".css"))) {
             const clone = res.clone();
             caches.open(STATIC_CACHE).then((c) => c.put(request, clone)).catch(() => {});

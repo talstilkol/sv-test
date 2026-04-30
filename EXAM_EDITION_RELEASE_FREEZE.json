@@ -1,0 +1,154 @@
+{
+  "reportVersion": "exam-edition-release-freeze-v1",
+  "date": "2026-04-29",
+  "releaseTag": "svcollege-exam-edition-2026-04-29",
+  "commit": "901cc13",
+  "target": "SVCollege AI & Full Stack Exam Edition",
+  "policy": "Exam Edition can be frozen only when all P9 smoke, readiness, export, accessibility, performance, build and test gates pass.",
+  "summary": {
+    "checks": 17,
+    "passed": 17,
+    "failed": 0,
+    "ready": true,
+    "frozen": true
+  },
+  "checks": [
+    {
+      "id": "validate-strict",
+      "label": "validate:strict",
+      "command": "npm run validate:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "qa-questions-strict",
+      "label": "qa:questions:strict",
+      "command": "npm run qa:questions:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "readiness-release",
+      "label": "svcollege:readiness:release",
+      "command": "npm run svcollege:readiness:release",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "tab-matrix-strict",
+      "label": "svcollege:tab-matrix:strict",
+      "command": "npm run svcollege:tab-matrix:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "command-center-strict",
+      "label": "svcollege:command-center:strict",
+      "command": "npm run svcollege:command-center:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "student-export-strict",
+      "label": "svcollege:student-export:strict",
+      "command": "npm run svcollege:student-export:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "critical-flows-strict",
+      "label": "svcollege:critical-flows:strict",
+      "command": "npm run svcollege:critical-flows:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "full-portal-smoke-strict",
+      "label": "svcollege:full-portal-smoke:strict",
+      "command": "npm run svcollege:full-portal-smoke:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "visual-overlap-strict",
+      "label": "svcollege:visual-overlap:strict",
+      "command": "npm run svcollege:visual-overlap:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "pwa-offline-strict",
+      "label": "svcollege:pwa-offline:strict",
+      "command": "npm run svcollege:pwa-offline:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "profile-backup-restore-strict",
+      "label": "profile:backup-restore:strict",
+      "command": "npm run profile:backup-restore:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "exam-accessibility-strict",
+      "label": "exam:accessibility:strict",
+      "command": "npm run exam:accessibility:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "performance-budget-strict",
+      "label": "performance:budget:strict",
+      "command": "npm run performance:budget:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "questions-reuse-audit-strict",
+      "label": "questions:reuse-audit:strict",
+      "command": "npm run questions:reuse-audit:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "level100-release-gate-strict",
+      "label": "level100:release-gate:strict",
+      "command": "npm run level100:release-gate:strict",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "unit-tests",
+      "label": "npm test -- --run",
+      "command": "npm test -- --run",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    },
+    {
+      "id": "build",
+      "label": "npm run build",
+      "command": "npm run build",
+      "passed": true,
+      "status": "pass",
+      "detail": "Gate passed."
+    }
+  ],
+  "blockers": []
+}

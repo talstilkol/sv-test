@@ -1,0 +1,114 @@
+{
+  "reportVersion": "level-100-release-gate-v1",
+  "date": "2026-04-29",
+  "target": "Level 100 release gate",
+  "policy": "Level 100 cannot open when QA, build or SVCollege smoke gates are red.",
+  "summary": {
+    "checks": 7,
+    "passed": 7,
+    "failed": 0,
+    "ready": true
+  },
+  "checks": [
+    {
+      "id": "qa-questions-strict",
+      "label": "qa:questions:strict",
+      "passed": true,
+      "status": "pass",
+      "command": "npm run qa:questions:strict",
+      "detail": "SVCollege prerequisite question QA gate passed.",
+      "summary": {
+        "totalQuestions": 2840,
+        "sampleSize": 284,
+        "svcollegePrerequisiteIssues": 0
+      }
+    },
+    {
+      "id": "build",
+      "label": "npm run build",
+      "passed": true,
+      "status": "pass",
+      "command": "npm run build",
+      "detail": "Command passed."
+    },
+    {
+      "id": "critical-flows",
+      "label": "svcollege:critical-flows:strict",
+      "passed": true,
+      "status": "pass",
+      "command": "npm run svcollege:critical-flows:strict",
+      "detail": "Report passed.",
+      "summary": {
+        "flows": 6,
+        "passed": 6,
+        "failed": 0,
+        "modules": 15,
+        "ready": true
+      }
+    },
+    {
+      "id": "pwa-offline",
+      "label": "svcollege:pwa-offline:strict",
+      "passed": true,
+      "status": "pass",
+      "command": "npm run svcollege:pwa-offline:strict",
+      "detail": "Report passed.",
+      "summary": {
+        "assets": 170,
+        "cachedAssets": 170,
+        "failedAssets": 0,
+        "strategyChecks": 13,
+        "failedStrategyChecks": 0,
+        "ready": true
+      }
+    },
+    {
+      "id": "accessibility",
+      "label": "svcollege:accessibility:strict",
+      "passed": true,
+      "status": "pass",
+      "command": "npm run svcollege:accessibility:strict",
+      "detail": "Report passed.",
+      "summary": {
+        "checks": 7,
+        "passed": 7,
+        "failed": 0,
+        "topTabs": 22,
+        "ready": true
+      }
+    },
+    {
+      "id": "top-tabs",
+      "label": "svcollege:top-tabs:strict",
+      "passed": true,
+      "status": "pass",
+      "command": "npm run svcollege:top-tabs:strict",
+      "detail": "Report passed.",
+      "summary": {
+        "expectedTabs": 22,
+        "evidenceTabs": 22,
+        "passedTabs": 22,
+        "failedTabs": 0,
+        "consoleErrors": 0,
+        "failures": 0,
+        "ready": true
+      }
+    },
+    {
+      "id": "console-gate",
+      "label": "svcollege:console-gate:strict",
+      "passed": true,
+      "status": "pass",
+      "command": "npm run svcollege:console-gate:strict",
+      "detail": "Report passed.",
+      "summary": {
+        "checks": 5,
+        "passed": 5,
+        "failed": 0,
+        "criticalFlows": 6,
+        "ready": true
+      }
+    }
+  ],
+  "blockers": []
+}

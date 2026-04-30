@@ -1,0 +1,64 @@
+{
+  "reportVersion": "ai-tutor-alpha-gate-v1",
+  "date": "2026-04-29",
+  "target": "AI Tutor Production Alpha",
+  "policy": "AI Tutor Alpha requires backend proxy, guardrails, server-side rate limits, structured logs, and credential-gated frontend calls.",
+  "summary": {
+    "checks": 7,
+    "passed": 7,
+    "failed": 0,
+    "ready": true
+  },
+  "checks": [
+    {
+      "id": "backend-proxy",
+      "label": "Backend proxy exists without frontend AI key",
+      "passed": true,
+      "status": "pass",
+      "detail": "AI provider key must stay in Supabase Edge Function env only."
+    },
+    {
+      "id": "guardrails",
+      "label": "Socratic guardrails block answer leakage",
+      "passed": true,
+      "status": "pass",
+      "detail": "Tutor must block copy-paste / answer-only bypass prompts."
+    },
+    {
+      "id": "server-rate-limit",
+      "label": "Server-side rate limit exists",
+      "passed": true,
+      "status": "pass",
+      "detail": "Edge Function must rate-limit requests before model calls."
+    },
+    {
+      "id": "structured-logs",
+      "label": "Structured tutor logs exist",
+      "passed": true,
+      "status": "pass",
+      "detail": "Logs must cover response, guardrail and rate-limit events without raw message logging."
+    },
+    {
+      "id": "credential-gated-ui",
+      "label": "UI calls production only with real sync credentials",
+      "passed": true,
+      "status": "pass",
+      "detail": "Frontend must fall back locally when credentials are unavailable."
+    },
+    {
+      "id": "visible-alpha-note",
+      "label": "Production Alpha note is visible",
+      "passed": true,
+      "status": "pass",
+      "detail": "Learner-facing UI must explain backend-backed alpha and fallback."
+    },
+    {
+      "id": "policy-doc",
+      "label": "AI Tutor Alpha policy exists",
+      "passed": true,
+      "status": "pass",
+      "detail": "AI_TUTOR_ALPHA_POLICY.md must document backend, guardrails, rate limits and logs."
+    }
+  ],
+  "blockers": []
+}

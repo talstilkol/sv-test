@@ -1,0 +1,187 @@
+{
+  "reportVersion": "roadmap-90-day-waves-v1",
+  "date": "2026-04-29",
+  "target": "Phase 5 90-day roadmap waves",
+  "policy": "A roadmap wave is closed only when repository evidence exists. Missing learner/pilot outcomes remain unknown/unavailable and are not backfilled.",
+  "summary": {
+    "waves": 3,
+    "readyWaves": 3,
+    "checks": 12,
+    "passed": 12,
+    "failed": 0,
+    "ready": true
+  },
+  "waves": [
+    {
+      "id": "wave-1-hardening",
+      "closes": "P5.5.1",
+      "label": "Wave 1 hardening: FSRS/Gap/Pathways metrics + retention baseline",
+      "ready": true,
+      "checks": [
+        {
+          "id": "fsrs-core",
+          "label": "FSRS/SRS core exists",
+          "passed": true,
+          "status": "pass",
+          "detail": "Spaced repetition must have deterministic core tests before roadmap scale.",
+          "evidence": [
+            "lib/srs.js",
+            "tests/srs.test.js"
+          ]
+        },
+        {
+          "id": "gap-matrix",
+          "label": "Gap Matrix is learner-facing",
+          "passed": true,
+          "status": "pass",
+          "detail": "Gap dashboard must be reachable and computed from real learner scores.",
+          "evidence": [
+            "app.js"
+          ]
+        },
+        {
+          "id": "pathways",
+          "label": "Pathways coverage is complete",
+          "passed": true,
+          "status": "pass",
+          "detail": "30/30 complete concepts",
+          "evidence": [
+            "data/pathways.js",
+            "FEATURE_COVERAGE_REPORT.json"
+          ]
+        },
+        {
+          "id": "retention-baseline",
+          "label": "D1/D7 retention baseline exists without fabricated outcomes",
+          "passed": true,
+          "status": "pass",
+          "detail": "Retention and metrics dashboard use local learning evidence; missing pilot evidence stays unknown/unavailable.",
+          "evidence": [
+            "src/core/outcome-loop.js",
+            "METRICS_DASHBOARD_REPORT.json"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    {
+      "id": "wave-2-alpha",
+      "closes": "P5.5.2",
+      "label": "Wave 2 alpha: AI Tutor + Sync + Pair-Match hardening",
+      "ready": true,
+      "checks": [
+        {
+          "id": "ai-tutor-alpha",
+          "label": "AI Tutor Alpha gate is ready",
+          "passed": true,
+          "status": "pass",
+          "detail": "7/7 AI Tutor Alpha checks passed.",
+          "evidence": [
+            "AI_TUTOR_ALPHA_REPORT.json",
+            "AI_TUTOR_ALPHA_POLICY.md",
+            "supabase/functions/ai-tutor/index.ts"
+          ]
+        },
+        {
+          "id": "sync-alpha",
+          "label": "Sync Alpha gate is ready",
+          "passed": true,
+          "status": "pass",
+          "detail": "6/6 Sync Alpha checks passed.",
+          "evidence": [
+            "SYNC_ALPHA_REPORT.json",
+            "SYNC_ALPHA_POLICY.md",
+            "src/core/progress-sync.js"
+          ]
+        },
+        {
+          "id": "pair-match",
+          "label": "Pair-Match feature coverage is done",
+          "passed": true,
+          "status": "pass",
+          "detail": "14/5 games; 110 pairs.",
+          "evidence": [
+            "data/pair_match.js",
+            "app.js",
+            "FEATURE_COVERAGE_REPORT.json"
+          ]
+        },
+        {
+          "id": "bug-quests",
+          "label": "Bug Quest hardening is tracked",
+          "passed": true,
+          "status": "pass",
+          "detail": "25/25 bugs.",
+          "evidence": [
+            "data/bug_quests.js",
+            "FEATURE_COVERAGE_REPORT.json"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    {
+      "id": "wave-3-lite",
+      "closes": "P5.5.3",
+      "label": "Wave 3 lite: Teacher Dashboard Lite + class progress heatmap",
+      "ready": true,
+      "checks": [
+        {
+          "id": "teacher-lite-ui",
+          "label": "Teacher Lite UI exposes one-class controls",
+          "passed": true,
+          "status": "pass",
+          "detail": "Teacher Lite must expose class, student table, heatmap and export controls.",
+          "evidence": [
+            "index.html",
+            "app.js",
+            "tests/teacher-lite-ui.test.js"
+          ]
+        },
+        {
+          "id": "teacher-core",
+          "label": "Teacher Lite core modules exist",
+          "passed": true,
+          "status": "pass",
+          "detail": "Teacher Lite needs real class/student/heatmap/risk modules, not local fake rosters.",
+          "evidence": [
+            "src/core/teacher-classes.js",
+            "src/core/teacher-students.js",
+            "src/core/teacher-heatmap.js",
+            "src/core/teacher-risk-alerts.js",
+            "src/core/teacher-assignments.js"
+          ]
+        },
+        {
+          "id": "teacher-schema",
+          "label": "Teacher Supabase schema is present",
+          "passed": true,
+          "status": "pass",
+          "detail": "Teacher Lite scale path requires real tables and RLS migrations.",
+          "evidence": [
+            "supabase/migrations/002_classes.sql",
+            "supabase/migrations/003_class_students.sql",
+            "supabase/migrations/004_class_concept_mastery.sql",
+            "supabase/migrations/005_class_assignments.sql"
+          ]
+        },
+        {
+          "id": "teacher-tests",
+          "label": "Teacher Lite tests cover class progress and heatmap",
+          "passed": true,
+          "status": "pass",
+          "detail": "Teacher Lite must be locked by module and UI tests.",
+          "evidence": [
+            "tests/teacher-classes.test.js",
+            "tests/teacher-students.test.js",
+            "tests/teacher-heatmap.test.js",
+            "tests/teacher-risk-alerts.test.js",
+            "tests/teacher-lite-ui.test.js"
+          ]
+        }
+      ],
+      "blockers": []
+    }
+  ],
+  "blockers": []
+}

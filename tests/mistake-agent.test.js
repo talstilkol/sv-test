@@ -7,6 +7,7 @@ import {
   inferMisconception,
   makeMistakeRecord,
   misconceptionCardIds,
+  namedWeaknessClusters,
   recordRetestOutcome,
   scheduleAdaptiveRetests,
   selectedAnswerText,
@@ -126,6 +127,7 @@ describe("mistake agent", () => {
       id: "zeroBasedIndex",
       count: 1,
       concepts: { "lesson_11::Array": 1 },
+      modes: { trainer: 1 },
     });
     expect(state.log[0]).toMatchObject({
       conceptKey: "lesson_11::Array",
@@ -134,6 +136,41 @@ describe("mistake agent", () => {
       correctAnswer: "arr[1]",
       mode: "trainer",
     });
+  });
+
+  it("promotes repeated misconception patterns across tabs into named weaknesses", () => {
+    const base = {
+      conceptKey: "lesson_11::Array",
+      topicMeta: { topic: "JavaScript Foundations", subtopic: "Arrays", emoji: "JS" },
+      concept: { conceptName: "Array" },
+      question: {
+        id: "q-index",
+        question: "איך ניגשים לאיבר השני במערך?",
+        options: ["arr[0]", "arr[1]", "arr[2]", "find()"],
+        correctIndex: 1,
+        explanation: "האינדקס מתחיל מ-0.",
+      },
+      kind: "mc",
+      selectedIdx: 2,
+      timestamp: 1_700_000_000_000,
+    };
+    const trainerRecord = makeMistakeRecord({ ...base, mode: "trainer" });
+    const quizRecord = makeMistakeRecord({ ...base, mode: "lesson-quiz", timestamp: 1_700_000_100_000 });
+
+    let state = updateMistakeState(emptyMistakeAgentState(), trainerRecord);
+    expect(namedWeaknessClusters(state)).toEqual([]);
+    state = updateMistakeState(state, quizRecord);
+
+    expect(state.namedWeaknesses.zeroBasedIndex).toMatchObject({
+      id: "weak-zeroBasedIndex",
+      name: "חולשה חוזרת: אינדקס מתחיל מ-0",
+      count: 2,
+    });
+    expect(state.namedWeaknesses.zeroBasedIndex.modes).toEqual([
+      { mode: "lesson-quiz", count: 1 },
+      { mode: "trainer", count: 1 },
+    ]);
+    expect(namedWeaknessClusters(state, { minCount: 2, minModes: 2 })).toHaveLength(1);
   });
 
   it("creates a teach-back prompt after repeated misconception mistakes and stores the response", () => {
@@ -181,7 +218,7 @@ describe("mistake agent", () => {
     expect(withResponse.misconceptions.zeroBasedIndex.teachBacks).toBe(1);
   });
 
-  it("schedules near-transfer and delayed retests and records outcomes", () => {
+  it("schedules three recovery drills before delayed review and records outcomes", () => {
     const timestamp = 1_700_000_000_000;
     const record = makeMistakeRecord({
       conceptKey: "lesson_11::Array",
@@ -205,10 +242,20 @@ describe("mistake agent", () => {
       delayedReviewDelayMs: 86_400_000,
     });
 
-    expect(state.retestQueue).toHaveLength(2);
-    expect(state.retestQueue.map((item) => item.stage)).toEqual(["near_transfer", "delayed_review"]);
-    expect(dueAdaptiveRetests(state, { now: timestamp, limit: 3 })).toHaveLength(1);
-    expect(dueAdaptiveRetests(state, { now: timestamp + 86_400_000, limit: 3 })).toHaveLength(2);
+    expect(state.retestQueue).toHaveLength(4);
+    expect(state.retestQueue.map((item) => item.stage)).toEqual([
+      "recovery_drill_1",
+      "recovery_drill_2",
+      "recovery_drill_3",
+      "delayed_review",
+    ]);
+    expect(state.retestQueue.slice(0, 3).map((item) => item.label)).toEqual([
+      "תרגול תיקון 1/3",
+      "תרגול תיקון 2/3",
+      "תרגול תיקון 3/3",
+    ]);
+    expect(dueAdaptiveRetests(state, { now: timestamp, limit: 3 })).toHaveLength(3);
+    expect(dueAdaptiveRetests(state, { now: timestamp + 86_400_000, limit: 4 })).toHaveLength(4);
 
     const near = state.retestQueue[0];
     state = recordRetestOutcome(state, near.id, true, { timestamp: timestamp + 1_000 });
@@ -218,6 +265,6 @@ describe("mistake agent", () => {
       attempts: 1,
       lastCorrect: true,
     });
-    expect(dueAdaptiveRetests(state, { now: timestamp + 1_000, limit: 3 })).toHaveLength(0);
+    expect(dueAdaptiveRetests(state, { now: timestamp + 1_000, limit: 3 })).toHaveLength(2);
   });
 });

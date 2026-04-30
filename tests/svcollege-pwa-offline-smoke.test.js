@@ -7,8 +7,8 @@ describe("SVCollege PWA offline smoke", () => {
 
     expect(second).toEqual(first);
     expect(first.reportVersion).toBe("svcollege-pwa-offline-smoke-v1");
-    expect(first.summary.assets).toBeGreaterThan(40);
-    expect(first.summary.strategyChecks).toBeGreaterThanOrEqual(10);
+    expect(first.summary.assets).toBeGreaterThan(150);
+    expect(first.summary.strategyChecks).toBeGreaterThanOrEqual(13);
   });
 
   it("keeps the core SVCollege offline shell fully precached", () => {
@@ -28,16 +28,28 @@ describe("SVCollege PWA offline smoke", () => {
     const assets = pwaOfflineSmoke.buildReport().assetResults.map((asset) => asset.asset);
 
     expect(assets).toEqual(expect.arrayContaining([
-      "/style.css?v=concept-sprint-v2",
-      "/app.js?v=concept-sprint-v2",
+      "/style.css?v=concept-sprint-v68",
+      "/app.js?v=concept-sprint-v68",
       "/src/main.js?v=core-bootstrap-v2",
       "/src/core/question-prerequisites.js?v=question-prereq-v2",
       "/src/core/outcome-loop.js",
+      "/src/core/bug-agent.js",
+      "/data/level100_release_gates.js?v=level100-gate-v1",
       "/src/core/concept-tags.js",
+      "/data/questions_bank.js",
       "/data/svcollege_questions_ai_engineering.js",
       "/data/svcollege_traces_design_systems.js",
       "/data/svcollege_builds_bridge.js",
       "/data/svcollege_prerequisites_devops.js",
+      "/data/war_stories.js",
+      "/data/comparisons.js",
+      "/data/prerequisites.js",
+      "/data/metaphors.js",
+      "/data/pathways.js",
+      "/data/scenarios.js",
+      "/data/counterfactuals.js",
+      "/data/pair_match.js",
+      "/data/bug_quests.js",
     ]));
   });
 });

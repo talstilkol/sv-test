@@ -94,10 +94,10 @@ describe("SVCollege DevOps content", () => {
 
     expect(questions.mc).toHaveLength(24);
     expect(questions.fill).toHaveLength(10);
-    expect(context.SVCOLLEGE_DEVOPS_TRACES).toHaveLength(3);
+    expect(context.SVCOLLEGE_DEVOPS_TRACES).toHaveLength(15);
     expect(context.SVCOLLEGE_DEVOPS_BUILDS).toHaveLength(3);
     expect(questions.bugHunt).toHaveLength(3);
-    expect(allPracticeItems(context)).toHaveLength(43);
+    expect(allPracticeItems(context)).toHaveLength(55);
 
     questions.mc.forEach((question) => {
       expect(question.options).toHaveLength(4);
@@ -111,6 +111,33 @@ describe("SVCollege DevOps content", () => {
 
     allPracticeItems(context).forEach((item) => {
       expectPracticeMetadata(item);
+    });
+  });
+
+  it("adds trace activity to the next required DevOps authoring gaps", () => {
+    const context = loadContext();
+    const tracedConcepts = context.SVCOLLEGE_DEVOPS_TRACES.map((item) => item.conceptKey);
+
+    expect(tracedConcepts).toEqual(
+      expect.arrayContaining([
+        "lesson_devops_deploy::build command",
+        "lesson_devops_deploy::CD",
+        "lesson_devops_deploy::container",
+        "lesson_devops_deploy::Docker",
+        "lesson_devops_deploy::health check",
+        "lesson_devops_deploy::image",
+        "lesson_devops_deploy::preview deployment",
+        "lesson_devops_deploy::production readiness",
+        "lesson_devops_deploy::service",
+        "lesson_devops_deploy::smoke test",
+        "lesson_devops_deploy::Vercel deploy",
+        "lesson_devops_deploy::volume",
+      ]),
+    );
+    context.SVCOLLEGE_DEVOPS_TRACES.slice(3).forEach((trace) => {
+      expect(trace.steps).toHaveLength(3);
+      expect(trace.code).toContain("\n");
+      expectPracticeMetadata(trace);
     });
   });
 

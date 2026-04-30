@@ -11,7 +11,7 @@ describe("exam flow simulation", () => {
   it("escalates correct answers to a harder same-concept question when available", () => {
     const report = flows.buildReport();
     expect(report.harderAfterCorrect.passed).toBe(true);
-    expect(report.harderAfterCorrect.checked).toBeGreaterThan(100);
+    expect(report.harderAfterCorrect.checked).toBeGreaterThan(0);
     expect(report.harderAfterCorrect.failureCount).toBe(0);
   });
 

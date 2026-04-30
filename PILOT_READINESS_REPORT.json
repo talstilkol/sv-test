@@ -1,0 +1,54 @@
+{
+  "reportVersion": "pilot-readiness-v1",
+  "date": "2026-04-29",
+  "summary": {
+    "checks": 6,
+    "passed": 6,
+    "failed": 0,
+    "ready": true
+  },
+  "policy": {
+    "noFakePilotResults": true,
+    "missingPilotResults": "unknown/unavailable",
+    "supportPayloadLocalOnly": true
+  },
+  "checks": [
+    {
+      "id": "pilot-cohort",
+      "passed": true,
+      "status": "pass",
+      "detail": "Pilot plan must define 10-30 learners, baseline and final-test timeline."
+    },
+    {
+      "id": "pilot-metrics",
+      "passed": true,
+      "status": "pass",
+      "detail": "Pilot plan must require D1/D7, mastery metrics and no fabricated missing data."
+    },
+    {
+      "id": "teacher-onboarding",
+      "passed": true,
+      "status": "pass",
+      "detail": "Teacher kit must cover setup, assignment recipes and heatmap interpretation."
+    },
+    {
+      "id": "support-ui",
+      "passed": true,
+      "status": "pass",
+      "detail": "App must expose a support report flow with screenshot and context payload."
+    },
+    {
+      "id": "support-payload-contract",
+      "passed": true,
+      "status": "pass",
+      "detail": "Support payload core must normalize context, screenshot and local-only privacy metadata."
+    },
+    {
+      "id": "package-gate",
+      "passed": true,
+      "status": "pass",
+      "detail": "Pilot readiness scripts must be wired."
+    }
+  ],
+  "failures": []
+}

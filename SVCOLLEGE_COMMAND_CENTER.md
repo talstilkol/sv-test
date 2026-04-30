@@ -5,11 +5,11 @@
 
 ## Finish Line
 
-- Ready: yes
-- Readiness: 100%
+- Ready: no
+- Readiness: 96.7%
 - Covered / Partial / Gap: 15/0/0
-- Release blockers: 0
-- Tab matrix gaps: 0
+- Release blockers: 2
+- Tab matrix gaps: 4
 - Desktop browser smoke: pass (SVCOLLEGE_BROWSER_SMOKE.md)
 - Mobile browser smoke: pass
 
@@ -36,7 +36,8 @@
 
 ## Red-First Queue
 
-- None
+1. **עיצוב רספונסיבי ו-CSS מתקדם** — covered, 75%, amber. Next: Maintain practice, mock-exam coverage and tab health.
+2. **AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI** — covered, 75%, amber. Next: Maintain practice, mock-exam coverage and tab health.
 
 ## Source Assets
 
@@ -51,16 +52,18 @@
 - Strict failures: 0
 - Evidence gate failures: 0
 - Course blueprint: 1/1 active blueprint
-- Per-distractor feedback: 1704/1704 MC questions (100%)
-- No-evidence gate: passed (0 failures)
-- Module × tab matrix: 100% (0 strict gaps, 0 support gaps)
+- Per-distractor feedback: 105/105 MC questions (100%)
+- No-evidence gate: failed (2 failures)
+- Module × tab matrix: 98.2% (4 strict gaps, 0 support gaps)
 
 ## No-Evidence Gate
 
-- Status: passed
+- Status: failed
 - Checked covered modules: 15
 - Rule: `covered` is forbidden without lesson + practice + tab + test evidence.
-- Failures: none
+- Failures:
+  - עיצוב רספונסיבי ו-CSS מתקדם: missing practice
+  - AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI: missing practice
 
 ## Promotion Rule
 
@@ -79,27 +82,27 @@
 
 | Module | Lessons | Questions | Activities | Tab evidence | Tests | Browser smoke |
 |---|---:|---:|---:|---|---:|---|
-| יסודות האינטרנט — HTML בסיסי + HTML/CSS | 2/2 | 110 | 12 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| עיצוב רספונסיבי ו-CSS מתקדם | 1/1 | 70 | 8 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| JavaScript בסיסי ודינמיקה בדפדפן | 3/3 | 360 | 45 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier | 4/4 | 335 | 46 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware | 3/3 | 385 | 52 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle | 2/2 | 263 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde | 1/1 | 133 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| React ופיתוח Frontend מתקדם | 5/5 | 460 | 76 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| TypeScript ופטרנים מתקדמים ב-React | 2/2 | 250 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI | 3/3 | 206 | 16 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO | 1/1 | 128 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing | 2/2 | 169 | 11 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| Frameworks צד-שרת — Nest.js modules + dependency injection | 1/1 | 114 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI | 1/1 | 60 | 4 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
-| הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning | 1/1 | 133 | 10 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| יסודות האינטרנט — HTML בסיסי + HTML/CSS | 2/2 | 19 | 12 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| עיצוב רספונסיבי ו-CSS מתקדם | 1/1 | 0 | 8 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| JavaScript בסיסי ודינמיקה בדפדפן | 3/3 | 55 | 45 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier | 4/4 | 72 | 46 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware | 3/3 | 12 | 52 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle | 2/2 | 42 | 33 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde | 1/1 | 44 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| React ופיתוח Frontend מתקדם | 5/5 | 30 | 76 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| TypeScript ופטרנים מתקדמים ב-React | 2/2 | 12 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI | 3/3 | 31 | 16 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO | 1/1 | 44 | 22 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing | 2/2 | 39 | 23 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| Frameworks צד-שרת — Nest.js modules + dependency injection | 1/1 | 38 | 20 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI | 1/1 | 0 | 4 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
+| הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning | 1/1 | 42 | 24 | mapped-through-course-blueprints | 12/12 | desktop-pass/mobile-pass |
 
 ## Module × Tab Matrix
 
-- Ready: yes
-- Strict coverage: 225/225 (100%)
-- Strict gaps: 0
+- Ready: no
+- Strict coverage: 221/225 (98.2%)
+- Strict gaps: 4
 - Support gaps: 0
 - Report: `SVCOLLEGE_TAB_MATRIX.md`
 

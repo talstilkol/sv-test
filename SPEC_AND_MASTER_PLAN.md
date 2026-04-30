@@ -151,6 +151,16 @@ Phase 10 הוא Priority 2 עד ש-Finish Line 1 ו-Phase 9 ירוקים.
 
 משימות הביצוע נמצאות ב-`EXECUTION_TASKS.md` תחת P-0.3. זהו Priority 0, אבל scope שלו הוא בדיקה, תיקון והכנה למבחן בלבד.
 
+## 0.9 System Bug Audit — 2026-04-30
+
+נוסף דוח מצב מקיף: [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md), וה-backlog שלו נרשם גם ב-[MASTER_PLAN.md](MASTER_PLAN.md) תחת `0A`.
+
+מסקנת האודיט: שערי release, build, tests, performance, feature coverage, SVCollege readiness, tab matrix, command center, student export ו-PWA ירוקים. הבעיה הפעילה המרכזית היא לא runtime crash אלא עומק למידה: `337/568` concepts הם activity-ready, ו-`231` concepts עדיין חסרים Trace/Build/Bug activity. מתוך זה `9` הם פערי SVCollege-priority ולכן הם קודמים לכל הרחבת מוזיאון/חנות/קהילה. אודיט כנות נוסף מצא גם overclaim בתוכנית: אין לסמן specs, scaffolding או נתוני פיילוט/usage שלא קיימים כ-DONE.
+
+רענון נוסף באותו יום הוסיף לפריטי האודיט גם סיכוני תהליך: פיצול מקור אמת בין מסמכי תכנון, פיזור גרסאות cache בין כמה קבצים, חוסר browser smoke מלא לבאטצ'ים החדשים של activity data ב-Lessons 11-17/foundation/tooling, drift בתאריכי דוחות generated, release hygiene בגלל worktree גדול ולא נקי, ו-strict gate שמדווח `ready:false` אבל יוצא 0.
+
+הוראת ביצוע: עד סגירת פערי SVCollege-priority, כל עבודה חדשה צריכה להתחבר לאחד מפריטי `BUG-AUDIT-001` עד `BUG-AUDIT-020` או ל-P6.3.1. נתוני פיילוט, sync ו-outcome שאין להם ראיה אמיתית נשארים `unknown/unavailable`.
+
 # חלק I — איפיון מוצר
 
 ## 1. חזון ועקרונות

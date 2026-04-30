@@ -96,10 +96,10 @@ describe("SVCollege Auth/Security content", () => {
 
     expect(questions.mc).toHaveLength(28);
     expect(questions.fill).toHaveLength(10);
-    expect(context.SVCOLLEGE_AUTH_TRACES).toHaveLength(3);
+    expect(context.SVCOLLEGE_AUTH_TRACES).toHaveLength(16);
     expect(context.SVCOLLEGE_AUTH_BUILDS).toHaveLength(3);
     expect(questions.bugHunt).toHaveLength(3);
-    expect(allPracticeItems(context)).toHaveLength(47);
+    expect(allPracticeItems(context)).toHaveLength(60);
 
     questions.mc.forEach((question) => {
       expect(question.options).toHaveLength(4);
@@ -113,6 +113,36 @@ describe("SVCollege Auth/Security content", () => {
 
     allPracticeItems(context).forEach((item) => {
       expectPracticeMetadata(item);
+    });
+  });
+
+  it("adds real trace activities for the Auth/Security P6.3.1 authoring batch", () => {
+    const context = loadContext();
+    const expectedKeys = [
+      "lesson_auth_security::access token",
+      "lesson_auth_security::authentication",
+      "lesson_auth_security::bcrypt",
+      "lesson_auth_security::cookie",
+      "lesson_auth_security::CORS",
+      "lesson_auth_security::CSRF",
+      "lesson_auth_security::Firebase Auth",
+      "lesson_auth_security::JWT",
+      "lesson_auth_security::Kinde/Appwrite",
+      "lesson_auth_security::OAuth",
+      "lesson_auth_security::provider auth",
+      "lesson_auth_security::session",
+      "lesson_auth_security::Supabase Auth",
+    ];
+    const traces = context.SVCOLLEGE_AUTH_TRACES.filter((item) =>
+      expectedKeys.includes(item.conceptKey),
+    );
+
+    expect(traces.map((item) => item.conceptKey)).toEqual(expectedKeys);
+    traces.forEach((trace) => {
+      expect(trace.id).toMatch(/^trace_svauth_/);
+      expect(trace.steps.length).toBeGreaterThanOrEqual(3);
+      expect(trace.explanation.length).toBeGreaterThan(30);
+      expect(trace.requiredConcepts).toContain(trace.conceptKey);
     });
   });
 

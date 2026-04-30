@@ -19,7 +19,7 @@
       href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css?v=concept-sprint-v2" />
+    <link rel="stylesheet" href="style.css?v=concept-sprint-v68" />
     <!-- P1.3 — PWA -->
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236366f1'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' fill='white' font-family='Arial,sans-serif'%3EL%3C/text%3E%3C/svg%3E" />
@@ -30,6 +30,32 @@
   </head>
   <body>
     <div class="app-container">
+      <details class="chrome-control-menu" id="chrome-control-menu">
+        <summary aria-label="פתח תפריט שליטה בתצוגה">שליטה</summary>
+        <div class="chrome-control-panel" role="group" aria-label="שליטה בתצוגה ובתפריטים">
+          <button class="focus-mode-toggle" id="focus-mode-toggle" type="button" aria-label="הפעל מצב פוקוס ללמידה במסך מלא" aria-pressed="false" title="מצב פוקוס">
+            <span aria-hidden="true">⛶</span>פוקוס
+          </button>
+          <button class="focus-top-toggle" id="focus-top-toggle" type="button" aria-label="קפל את כל האזור העליון במצב פוקוס" aria-pressed="false" hidden title="קפל עליון">
+            <span aria-hidden="true">⇧</span>עליון
+          </button>
+          <button class="top-chrome-collapse-btn" id="top-chrome-collapse-btn" type="button" aria-label="קפל תפריט עליון" aria-pressed="false" title="קפל תפריט עליון">
+            <span class="top-chrome-collapse-icon" aria-hidden="true">⇧</span>
+            <span class="top-chrome-collapse-label">קפל עליון</span>
+          </button>
+          <button class="sidebar-collapse-btn" id="sidebar-collapse-btn" type="button" aria-label="קפל תפריט ימני" aria-pressed="false" title="קפל תפריט ימני">
+            <span class="sidebar-collapse-icon" aria-hidden="true">⇥</span>
+            <span class="sidebar-collapse-label">קפל ימין</span>
+          </button>
+          <button class="focus-side-toggle" id="focus-side-toggle" type="button" aria-label="פתח עץ ניווט במצב פוקוס" aria-expanded="false" hidden title="עץ ניווט">
+            <span aria-hidden="true">☰</span>תוכן
+          </button>
+          <button class="support-report-menu-btn" id="support-report-btn" type="button" aria-label="פתח דיווח באג עם הקשר מסך" title="דווח באג">
+            <span aria-hidden="true">🛟</span>דווח באג
+          </button>
+        </div>
+      </details>
+
       <!-- Sidebar Navigation -->
       <nav class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -54,8 +80,22 @@
           <input type="text" id="search-input" placeholder="🔍 חיפוש מושג או שיעור..." />
         </div>
 
-        <div class="lessons-list" id="lessons-nav">
-          <!-- Lessons will be dynamically injected here -->
+        <div class="sidebar-scroll">
+          <section class="sidebar-context-tree" id="sidebar-context-tree" aria-label="תוכן עניינים בתוך התפריט הראשי">
+            <div class="sidebar-context-head">
+              <strong id="sidebar-context-title">תוכן עניינים</strong>
+              <span id="sidebar-context-count"></span>
+            </div>
+            <input type="text" id="sidebar-context-search" class="sidebar-context-search" placeholder="🔎 חיפוש בענף..." aria-label="חיפוש בעץ התוכן שבתפריט הראשי" />
+            <div id="sidebar-context-body" class="sidebar-context-body"></div>
+          </section>
+
+          <details class="sidebar-lessons-tree" open>
+            <summary>כל השיעורים</summary>
+            <div class="lessons-list" id="lessons-nav">
+              <!-- Lessons will be dynamically injected here -->
+            </div>
+          </details>
         </div>
 
         <div class="sidebar-footer">
@@ -81,14 +121,6 @@
 
       <!-- Mobile Menu Toggle -->
       <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="פתח/סגור תפריט שיעורים" aria-expanded="false">☰</button>
-
-      <!-- Focus mode controls -->
-      <button class="focus-mode-toggle" id="focus-mode-toggle" type="button" aria-label="הפעל מצב פוקוס ללמידה במסך מלא" aria-pressed="false" title="מצב פוקוס">
-        <span aria-hidden="true">⛶</span><span class="focus-label">פוקוס</span>
-      </button>
-      <button class="focus-side-toggle" id="focus-side-toggle" type="button" aria-label="פתח עץ ניווט במצב פוקוס" aria-expanded="false" hidden title="עץ ניווט">
-        <span aria-hidden="true">☰</span><span class="focus-label">תוכן</span>
-      </button>
 
       <!-- P1.2.4 — Theme toggle (Light/Dark/Auto) -->
       <button class="theme-toggle-btn" id="theme-toggle" aria-label="החלף בין מצב כהה לבהיר" title="החלף תצוגה (כהה/בהיר/אוטומטי)">
@@ -206,6 +238,8 @@
           </div>
         </div>
 
+      <nav class="page-scroll-rail" id="page-scroll-rail" aria-label="ניווט מהיר בתוך הדף" hidden></nav>
+
         <!-- Reverse Q&A modal -->
         <div class="modal-overlay" id="reverse-modal" hidden style="z-index:701">
           <div class="modal-card">
@@ -311,9 +345,35 @@
           <button class="top-tab" id="open-code-anatomy" data-tab="anatomy" aria-label="פתח פירוק קוד">
             <span class="emoji" aria-hidden="true">📐</span><span>פירוק קוד</span>
           </button>
+          <button class="top-tab" id="open-settings" data-tab="settings" aria-label="פתח הגדרות מערכת">
+            <span class="emoji" aria-hidden="true">⚙️</span><span>הגדרות</span>
+          </button>
           <button class="top-tab top-tab-home" id="open-home" data-tab="home" aria-label="חזרה לעמוד הבית — רשימת שיעורים">
             <span class="emoji" aria-hidden="true">🏠</span><span>שיעורים</span>
           </button>
+        </nav>
+
+        <nav class="site-trail-nav" id="site-trail-nav" aria-label="עץ אתר, חזרה ובית">
+          <button class="site-nav-btn" id="site-back-btn" type="button" aria-label="חזור אחורה במסלול הלמידה">
+            <span aria-hidden="true">←</span><span>חזרה</span>
+          </button>
+          <button class="site-nav-btn" id="site-home-btn" type="button" aria-label="חזרה לעמוד הבית">
+            <span aria-hidden="true">⌂</span><span>בית</span>
+          </button>
+          <details class="site-map-menu" id="site-map-menu">
+            <summary aria-label="פתח עץ אתר">עץ אתר</summary>
+            <div class="site-map-menu-body" id="site-map-menu-body" role="group" aria-label="עץ אתר"></div>
+          </details>
+          <details class="site-when-menu" id="portal-decision-menu">
+            <summary aria-label="פתח מתי להשתמש">מתי להשתמש</summary>
+            <section
+              class="portal-decision-aid glass-panel"
+              id="portal-decision-aid"
+              aria-label="מבט מהיר והשוואות לפי טאב"
+              style="display: none;"
+            ></section>
+          </details>
+          <div class="site-breadcrumb" id="site-breadcrumb" aria-live="polite">בית</div>
         </nav>
 
         <header class="top-nav">
@@ -324,13 +384,6 @@
             </p>
           </div>
         </header>
-
-        <section
-          class="portal-decision-aid glass-panel"
-          id="portal-decision-aid"
-          aria-label="מבט מהיר והשוואות לפי טאב"
-          style="display: none;"
-        ></section>
 
         <div class="content-wrapper" id="content-container">
           <!-- Welcome Screen -->
@@ -357,11 +410,9 @@
                   <span class="stat-label">שאלות במאגר</span>
                 </div>
               </div>
-              <!-- W10 — Export/Import progress -->
-              <div class="progress-sync-row">
-                <button class="km-btn-mini" id="btn-export-progress" title="ייצא את כל ההתקדמות שלך לקובץ JSON">⬇️ ייצוא התקדמות</button>
-                <button class="km-btn-mini" id="btn-import-progress" title="ייבא קובץ התקדמות JSON שייצאת בעבר">⬆️ ייבוא התקדמות</button>
-              </div>
+              <section class="exam-cockpit glass-panel" id="exam-cockpit" aria-label="Exam Cockpit">
+                <div class="exam-cockpit-empty">טוען תמונת מצב למבחן...</div>
+              </section>
               <div class="glow-orb"></div>
               <div class="glow-orb glow-orb-2"></div>
             </div>
@@ -406,6 +457,240 @@
                   <p>הסרגל הצדדי: רשימת השיעורים. בכל שיעור — תפריט מושגים אופקי + הסבר ברמה האישית + 2 שאלות אוטומטיות.</p>
                   <button class="ob-cta secondary" data-tour-action="dismiss-tour">הבנתי, נסגור את הסיור</button>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings View — default display, sync, export/import and advanced ops -->
+          <div class="settings-view" id="settings-view" style="display:none">
+            <div class="settings-shell glass-panel">
+              <div class="settings-head">
+                <div>
+                  <h2>⚙️ הגדרות</h2>
+                  <p>מרכז אחד להגדרות תצוגה, נגישות, סנכרון, ייבוא/ייצוא וכלי ניהול. ברירות המחדל נשמרות לפתיחה הבאה של המערכת.</p>
+                </div>
+                <div class="settings-status" id="settings-save-status" aria-live="polite">הגדרות מקומיות נשמרות בדפדפן.</div>
+              </div>
+
+              <div class="settings-grid">
+                <section class="settings-card" aria-label="ברירות מחדל לתצוגה">
+                  <h3>תצוגה וברירת מחדל</h3>
+                  <label for="settings-theme-default">ערכת צבע</label>
+                  <select id="settings-theme-default" data-settings-select="theme">
+                    <option value="auto">אוטומטי לפי המערכת</option>
+                    <option value="dark">כהה</option>
+                    <option value="light">בהיר</option>
+                  </select>
+                  <label for="settings-lesson-mode-default">מצב שיעור ברירת מחדל</label>
+                  <select id="settings-lesson-mode-default" data-settings-select="lesson-mode">
+                    <option value="one-line">שורה אחת</option>
+                    <option value="full">מלא</option>
+                    <option value="comparisons">השוואות</option>
+                  </select>
+                  <div class="settings-toggle-list">
+                    <button type="button" class="settings-toggle" data-settings-toggle="learning-focus">מצב פוקוס כברירת מחדל</button>
+                    <button type="button" class="settings-toggle" data-settings-toggle="top-chrome-collapsed">תפריט עליון מקופל בפתיחה</button>
+                    <button type="button" class="settings-toggle" data-settings-toggle="right-sidebar-collapsed">תפריט ימני מקופל בפתיחה</button>
+                    <button type="button" class="settings-toggle" data-settings-toggle="focus-top-collapsed">עליון מקופל בתוך פוקוס</button>
+                  </div>
+                </section>
+
+                <section class="settings-card" aria-label="הגדרות נגישות">
+                  <h3>נגישות</h3>
+                  <div class="settings-toggle-list">
+                    <button type="button" class="settings-toggle" data-settings-a11y="dyslexia-font">גופן לדיסלקטיים</button>
+                    <button type="button" class="settings-toggle" data-settings-a11y="reduce-motion">הפחת אנימציות</button>
+                    <button type="button" class="settings-toggle" data-settings-a11y="high-contrast">ניגודיות גבוהה</button>
+                    <button type="button" class="settings-toggle" data-settings-a11y="large-text">טקסט גדול</button>
+                  </div>
+                </section>
+
+                <section class="settings-card settings-card-wide" aria-label="חלקים גלויים בשיעור">
+                  <h3>חלקים גלויים בשיעור</h3>
+                  <div class="settings-toggle-list dense">
+                    <button type="button" class="settings-toggle" data-settings-vm="quiz">שאלון</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="code">קוד</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="code-explanation">הערות לקוד</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="explanation">הסבר רגיל</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="deep-dive">Deep Dive</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="extended">הסבר מורחב</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="extras">Extras / אנלוגיות</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="anti-patterns">דפוסי נגד</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="bug-hunt">ציד באגים</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="war-stories">סיפורי שטח</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="mnemonic">מנמוניקה</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="comparisons">השוואות</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="concept-comic">קומיקס מושג</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="concept-video">קליפ מושג</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="stage-zero">שבור ואז תקן</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="memory-palace">ארמון זיכרון</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="problem-first">בעיה קודם</button>
+                    <button type="button" class="settings-toggle" data-settings-vm="actions">כפתורי פעולה</button>
+                  </div>
+                </section>
+
+                <section class="settings-card settings-card-wide" aria-label="סנכרון וייצוא">
+                  <h3>סנכרון, ייבוא וייצוא</h3>
+                  <div class="progress-sync-row">
+                    <button class="km-btn-mini" id="btn-export-progress" title="ייצא את כל ההתקדמות שלך לקובץ JSON">⬇️ ייצוא התקדמות</button>
+                    <button class="km-btn-mini" id="btn-import-progress" title="ייבא קובץ התקדמות JSON שייצאת בעבר">⬆️ ייבוא התקדמות</button>
+                    <button class="km-btn-mini" id="btn-sync-config" title="הגדר Supabase URL, anon key ו-access token אמיתיים">הגדר Sync</button>
+                    <button class="km-btn-mini" id="btn-sync-now" title="סנכרן לפי last-write-wins בין הדפדפן ל-Supabase">סנכרן עכשיו</button>
+                    <button class="km-btn-mini" id="btn-sync-pull" title="משוך את snapshot ההתקדמות האחרון מ-Supabase">משוך</button>
+                    <button class="km-btn-mini" id="btn-sync-push" title="העלה את snapshot ההתקדמות המקומי ל-Supabase">העלה</button>
+                  </div>
+                  <div class="progress-sync-status" id="progress-sync-status" aria-live="polite">Sync לא מוגדר</div>
+                  <div class="progress-sync-privacy-note">
+                    Sync הוא אופציונלי: access token נשמר רק ב-sessionStorage, אין credentials מוטמעים, וקונפליקט מוכרע לפי last-write-wins.
+                  </div>
+                </section>
+
+                <section class="settings-card settings-card-wide" aria-label="ניהול מתקדם">
+                  <h3>ניהול מתקדם</h3>
+                  <details class="teacher-class-panel">
+                    <summary>ניהול כיתה למורה</summary>
+                    <div class="teacher-class-form">
+                      <label for="teacher-class-name">שם כיתה</label>
+                      <input id="teacher-class-name" type="text" autocomplete="off" />
+                      <label for="teacher-course-key">קורס</label>
+                      <input id="teacher-course-key" type="text" value="svcollege_fullstack_ai" autocomplete="off" />
+                      <button class="km-btn-mini" id="btn-create-class" type="button">צור כיתה</button>
+                    </div>
+                    <div class="teacher-class-status" id="teacher-class-status" aria-live="polite">נדרשים credentials אמיתיים של Supabase.</div>
+                    <div class="teacher-student-list">
+                      <label for="teacher-class-id">Class ID</label>
+                      <input id="teacher-class-id" type="text" autocomplete="off" />
+                      <button class="km-btn-mini" id="btn-load-class-students" type="button">טען תלמידים</button>
+                      <div class="teacher-student-status" id="teacher-student-status" aria-live="polite">לא נטענו תלמידים.</div>
+                      <label for="teacher-student-csv">CSV תלמידים</label>
+                      <input id="teacher-student-csv" type="file" accept=".csv,text/csv" />
+                      <button class="km-btn-mini" id="btn-import-class-students" type="button">ייבא CSV</button>
+                      <div class="teacher-bulk-status" id="teacher-bulk-status" aria-live="polite">לא בוצע ייבוא CSV.</div>
+                      <div class="teacher-student-table-wrap">
+                        <table class="teacher-student-table" aria-label="תלמידי כיתה">
+                          <thead><tr><th>תלמיד</th><th>סטטוס</th><th>הצטרפות</th><th>פעילות אחרונה</th></tr></thead>
+                          <tbody id="teacher-student-table-body"><tr><td colspan="4">אין נתונים טעונים.</td></tr></tbody>
+                        </table>
+                      </div>
+                      <button class="km-btn-mini" id="btn-load-concept-heatmap" type="button">טען Heatmap</button>
+                      <div class="teacher-heatmap-status" id="teacher-heatmap-status" aria-live="polite">לא נטען heatmap.</div>
+                      <div class="teacher-heatmap-wrap">
+                        <table class="teacher-heatmap-table" aria-label="Heatmap שליטה לפי מושג ותלמיד">
+                          <thead id="teacher-heatmap-head"><tr><th>מושג</th></tr></thead>
+                          <tbody id="teacher-heatmap-body"><tr><td>אין נתוני mastery טעונים.</td></tr></tbody>
+                        </table>
+                      </div>
+                      <button class="km-btn-mini" id="btn-export-teacher-lite" type="button">ייצא Teacher Lite</button>
+                      <div class="teacher-export-status" id="teacher-export-status" aria-live="polite">אין ייצוא כיתה מוכן.</div>
+                      <button class="km-btn-mini" id="btn-load-risk-alerts" type="button">טען סיכונים</button>
+                      <div class="teacher-risk-status" id="teacher-risk-status" aria-live="polite">לא נטענו סיכונים.</div>
+                      <div class="teacher-risk-list" id="teacher-risk-list" aria-label="התראות סיכון לכיתה"><div class="teacher-risk-empty">אין נתוני סיכון טעונים.</div></div>
+                      <div class="teacher-assignment-form">
+                        <label for="teacher-assignment-title">משימה</label>
+                        <input id="teacher-assignment-title" type="text" autocomplete="off" />
+                        <label for="teacher-assignment-type">סוג</label>
+                        <select id="teacher-assignment-type">
+                          <option value="concept_practice">תרגול מושג</option>
+                          <option value="mock_exam">מבחן מדומה</option>
+                          <option value="code_task">משימת קוד</option>
+                          <option value="reading">קריאה</option>
+                        </select>
+                        <label for="teacher-assignment-concept">מושג יעד</label>
+                        <input id="teacher-assignment-concept" type="text" autocomplete="off" />
+                        <label for="teacher-assignment-due">תאריך יעד</label>
+                        <input id="teacher-assignment-due" type="datetime-local" />
+                        <button class="km-btn-mini" id="btn-create-assignment" type="button">צור משימה</button>
+                        <button class="km-btn-mini" id="btn-load-assignments" type="button">טען משימות</button>
+                      </div>
+                      <div class="teacher-assignment-status" id="teacher-assignment-status" aria-live="polite">לא נטענו משימות.</div>
+                      <div class="teacher-assignment-list" id="teacher-assignment-list" aria-label="משימות כיתה"><div class="teacher-assignment-empty">אין משימות טעונות.</div></div>
+                    </div>
+                  </details>
+
+                  <details class="community-discussion-panel">
+                    <summary>דיונים לפי מושג</summary>
+                    <div class="community-discussion-form">
+                      <label for="community-concept-key">Concept key</label>
+                      <input id="community-concept-key" type="text" autocomplete="off" />
+                      <label for="community-thread-title">כותרת</label>
+                      <input id="community-thread-title" type="text" autocomplete="off" />
+                      <label for="community-thread-body">הודעה ראשונה</label>
+                      <textarea id="community-thread-body" rows="3"></textarea>
+                      <button class="km-btn-mini" id="btn-create-concept-thread" type="button">צור דיון</button>
+                      <button class="km-btn-mini" id="btn-load-concept-threads" type="button">טען דיונים</button>
+                    </div>
+                    <div class="community-discussion-status" id="community-discussion-status" aria-live="polite">לא נטענו דיונים.</div>
+                    <div class="community-thread-list" id="community-thread-list" aria-label="דיונים לפי מושג"><div class="community-thread-empty">אין דיונים טעונים.</div></div>
+                    <div class="community-reputation-panel" aria-label="Community reputation">
+                      <button class="km-btn-mini" id="btn-load-community-reputation" type="button">טען מוניטין</button>
+                      <div class="community-reputation-status" id="community-reputation-status" aria-live="polite">לא נטען מוניטין.</div>
+                      <div class="community-reputation-list" id="community-reputation-list" aria-label="טבלת מוניטין"><div class="community-reputation-empty">אין נתוני מוניטין טעונים.</div></div>
+                    </div>
+                    <div class="community-moderation-panel" aria-label="Community moderation">
+                      <button class="km-btn-mini" id="btn-load-moderation-reports" type="button">טען דיווחים</button>
+                      <div class="community-moderation-status" id="community-moderation-status" aria-live="polite">לא נטענו דיווחי moderation.</div>
+                      <div class="community-moderation-list" id="community-moderation-list" aria-label="דיווחי קהילה"><div class="community-moderation-empty">אין דיווחים טעונים.</div></div>
+                    </div>
+                  </details>
+
+                  <details class="peer-review-panel">
+                    <summary>Peer Code Review</summary>
+                    <div class="peer-review-form">
+                      <label for="peer-review-concept-key">Concept key</label>
+                      <input id="peer-review-concept-key" type="text" autocomplete="off" />
+                      <label for="peer-review-level">רמה</label>
+                      <select id="peer-review-level">
+                        <option value="beginner">beginner</option>
+                        <option value="intermediate">intermediate</option>
+                        <option value="advanced">advanced</option>
+                      </select>
+                      <label for="peer-review-solution">פתרון</label>
+                      <textarea id="peer-review-solution" rows="4"></textarea>
+                      <button class="km-btn-mini" id="btn-submit-peer-solution" type="button">שלח פתרון</button>
+                      <button class="km-btn-mini" id="btn-claim-peer-review" type="button">קבל Review</button>
+                    </div>
+                    <div class="peer-review-status" id="peer-review-status" aria-live="polite">לא נטען peer review.</div>
+                    <div class="peer-review-match" id="peer-review-match" aria-label="Peer review match"><div class="peer-review-empty">אין match פעיל.</div></div>
+                    <div class="peer-review-template">
+                      <label for="peer-review-match-id">Match ID</label>
+                      <input id="peer-review-match-id" type="text" autocomplete="off" />
+                      <label for="peer-review-correctness">Correctness</label>
+                      <select id="peer-review-correctness"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+                      <label for="peer-review-clarity">Clarity</label>
+                      <select id="peer-review-clarity"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+                      <label for="peer-review-strengths">מה עובד</label>
+                      <textarea id="peer-review-strengths" rows="2"></textarea>
+                      <label for="peer-review-improvements">מה לשפר</label>
+                      <textarea id="peer-review-improvements" rows="2"></textarea>
+                      <button class="km-btn-mini" id="btn-submit-peer-review" type="button">שלח Review</button>
+                    </div>
+                  </details>
+
+                  <details class="mentor-matching-panel">
+                    <summary>Mentor Matching</summary>
+                    <div class="mentor-matching-form">
+                      <label for="mentor-concept-key">Concept key</label>
+                      <input id="mentor-concept-key" type="text" autocomplete="off" />
+                      <button class="km-btn-mini" id="btn-load-mentor-eligibility" type="button">בדוק Eligibility</button>
+                      <button class="km-btn-mini" id="btn-register-mentor" type="button">הירשם כמנטור</button>
+                      <button class="km-btn-mini" id="btn-request-mentor" type="button">בקש מנטור</button>
+                      <label for="mentor-match-id">Match ID</label>
+                      <input id="mentor-match-id" type="text" autocomplete="off" />
+                      <label for="mentor-message-body">הודעה</label>
+                      <textarea id="mentor-message-body" rows="2"></textarea>
+                      <button class="km-btn-mini" id="btn-send-mentor-message" type="button">שלח הודעה</button>
+                      <button class="km-btn-mini" id="btn-load-mentor-messages" type="button">טען Chat</button>
+                      <label for="mentor-rating-score">Rating</label>
+                      <select id="mentor-rating-score"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+                      <label for="mentor-rating-feedback">Feedback</label>
+                      <textarea id="mentor-rating-feedback" rows="2"></textarea>
+                      <button class="km-btn-mini" id="btn-rate-mentor" type="button">דרג מנטור</button>
+                    </div>
+                    <div class="mentor-matching-status" id="mentor-matching-status" aria-live="polite">לא נטען mentor matching.</div>
+                    <div class="mentor-match-summary" id="mentor-match-summary" aria-label="Mentor match summary"><div class="mentor-match-empty">אין match פעיל.</div></div>
+                    <div class="mentor-message-list" id="mentor-message-list" aria-label="Mentor messages"><div class="mentor-message-empty">אין הודעות טעונות.</div></div>
+                  </details>
+                </section>
               </div>
             </div>
           </div>
@@ -874,18 +1159,18 @@
             <!-- Active exam runner -->
             <div class="mx-runner glass-panel" id="mx-runner" style="display:none">
               <div class="mx-runner-head">
-                <div class="mx-progress" id="mx-progress"></div>
-                <div class="mx-timer" id="mx-timer">⏱️ 00:00</div>
-                <button class="km-btn-mini danger" id="mx-quit">❌ עצור</button>
+                <div class="mx-progress" id="mx-progress" aria-live="polite"></div>
+                <div class="mx-timer" id="mx-timer" aria-live="polite">⏱️ 00:00</div>
+                <button class="km-btn-mini danger" id="mx-quit" aria-label="עצור מבחן מדומה">❌ עצור</button>
               </div>
-              <div class="mx-question" id="mx-question"></div>
+              <div class="mx-question" id="mx-question" role="region" aria-label="שאלת מבחן נוכחית"></div>
               <div class="mx-runner-foot">
-                <button class="km-btn-mini" id="mx-prev">▶ הקודמת</button>
-                <button class="km-btn-mini" id="mx-skip">⏭ דלג</button>
-                <button class="km-btn-mini" id="mx-next">הבאה ◀</button>
-                <button class="km-btn-mini primary" id="mx-submit">📤 הגש מבחן</button>
+                <button class="km-btn-mini" id="mx-prev" aria-label="עבור לשאלה הקודמת">▶ הקודמת</button>
+                <button class="km-btn-mini" id="mx-skip" aria-label="דלג על השאלה הנוכחית">⏭ דלג</button>
+                <button class="km-btn-mini" id="mx-next" aria-label="עבור לשאלה הבאה">הבאה ◀</button>
+                <button class="km-btn-mini primary" id="mx-submit" aria-label="הגש מבחן מדומה">📤 הגש מבחן</button>
               </div>
-              <div class="mx-question-nav" id="mx-question-nav"></div>
+              <div class="mx-question-nav" id="mx-question-nav" aria-label="ניווט בין שאלות המבחן"></div>
             </div>
 
             <!-- Result screen -->
@@ -928,6 +1213,59 @@
       </main>
     </div>
 
+    <div class="support-report-modal" id="support-report-modal" role="dialog" aria-modal="true" aria-labelledby="support-report-title" hidden>
+      <div class="support-report-backdrop" data-support-report-close></div>
+      <article class="support-report-card glass-panel" tabindex="-1">
+        <header class="support-report-head">
+          <div>
+            <span>Support payload</span>
+            <h2 id="support-report-title">דיווח באג</h2>
+          </div>
+          <button class="km-btn-mini" type="button" data-support-report-close aria-label="סגור דיווח באג">סגור</button>
+        </header>
+        <div class="support-report-grid">
+          <label>
+            סוג
+            <select id="support-report-type">
+              <option value="bug">באג</option>
+              <option value="content">תוכן</option>
+              <option value="ui">ממשק</option>
+              <option value="performance">ביצועים</option>
+              <option value="accessibility">נגישות</option>
+              <option value="support">תמיכה</option>
+            </select>
+          </label>
+          <label>
+            חומרה
+            <select id="support-report-severity">
+              <option value="medium">בינוני</option>
+              <option value="low">נמוך</option>
+              <option value="high">גבוה</option>
+              <option value="blocking">חוסם למידה</option>
+            </select>
+          </label>
+        </div>
+        <label class="support-report-field">
+          כותרת
+          <input id="support-report-title-input" type="text" autocomplete="off" />
+        </label>
+        <label class="support-report-field">
+          תיאור
+          <textarea id="support-report-description" rows="4"></textarea>
+        </label>
+        <label class="support-report-field">
+          צילום מסך
+          <input id="support-report-screenshot" type="file" accept="image/png,image/jpeg,image/webp" />
+        </label>
+        <div class="support-report-context" id="support-report-context"></div>
+        <div class="support-report-actions">
+          <button class="km-btn-mini primary" id="support-report-generate" type="button">צור payload</button>
+          <button class="km-btn-mini" id="support-report-copy" type="button">העתק JSON</button>
+        </div>
+        <textarea class="support-report-output" id="support-report-output" readonly aria-label="פלט JSON של דיווח באג"></textarea>
+      </article>
+    </div>
+
     <!-- Data Files -->
     <script src="data/lesson11.js"></script>
     <script src="data/lesson12.js"></script>
@@ -959,18 +1297,24 @@
     <script src="data/ai_development.js"></script>
     <script src="data/react_blueprint.js"></script>
     <script src="data/questions_bank.js"></script>
-    <!-- questions_bank_seeded.js (1.4MB) is loaded LAZILY by content-loader on demand -->
     <script src="data/concept_enrichment.js"></script>
     <script src="data/extended_explanations.js"></script>
     <script src="data/questions_trace.js"></script>
-    <script src="data/svcollege_traces_sql_orm.js?v=svcollege-sql-orm-v1"></script>
-    <script src="data/svcollege_traces_auth.js?v=svcollege-auth-v1"></script>
-    <script src="data/svcollege_traces_nextjs.js?v=svcollege-nextjs-v1"></script>
-    <script src="data/svcollege_traces_nestjs.js?v=svcollege-nestjs-v1"></script>
-    <script src="data/svcollege_traces_devops.js?v=svcollege-devops-v1"></script>
-    <script src="data/svcollege_traces_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
+    <script src="data/svcollege_traces_sql_orm.js?v=svcollege-sql-orm-v2"></script>
+    <script src="data/svcollege_traces_auth.js?v=svcollege-auth-v2"></script>
+    <script src="data/svcollege_traces_nextjs.js?v=svcollege-nextjs-v2"></script>
+    <script src="data/svcollege_traces_nestjs.js?v=svcollege-nestjs-v2"></script>
+    <script src="data/svcollege_traces_devops.js?v=svcollege-devops-v2"></script>
+    <script src="data/svcollege_traces_ai_engineering.js?v=svcollege-ai-engineering-v2"></script>
     <script src="data/svcollege_traces_design_systems.js?v=svcollege-design-systems-v1"></script>
     <script src="data/svcollege_traces_bridge.js?v=svcollege-bridge-v1"></script>
+    <script src="data/svcollege_traces_lesson11_activity.js?v=lesson11-activity-v1"></script>
+    <script src="data/svcollege_traces_lesson12_activity.js?v=lesson12-activity-v1"></script>
+    <script src="data/svcollege_traces_lesson13_activity.js?v=lesson13-activity-v2"></script>
+    <script src="data/svcollege_traces_foundation_tooling_activity.js?v=foundation-tooling-activity-v1"></script>
+    <script src="data/svcollege_traces_lesson15_activity.js?v=lesson15-activity-v1"></script>
+    <script src="data/svcollege_traces_lesson16_activity.js?v=lesson16-activity-v1"></script>
+    <script src="data/svcollege_traces_lesson17_activity.js?v=lesson17-activity-v1"></script>
     <!-- P1.4.3 — Bug Hunt questions -->
     <script src="data/questions_bug.js"></script>
     <script src="data/svcollege_questions_sql_orm.js?v=svcollege-sql-orm-v1"></script>
@@ -1004,6 +1348,7 @@
     <!-- P1.5.2 — Per-Distractor Feedback -->
     <script src="data/option_feedback.js"></script>
     <script src="data/quick_guide.js"></script>
+    <script src="data/interview_prep.js?v=interview-prep-v1"></script>
     <script src="data/grandma_knowledge.js"></script>
     <script src="data/grandma_visuals.js"></script>
     <script src="data/code_blocks.js"></script>
@@ -1037,11 +1382,13 @@
     <script src="data/bug_quests.js"></script>
     <!-- W24 — Capstone project track -->
     <script src="data/capstones.js?v=capstones-v2"></script>
+    <script src="data/guided_builds.js?v=guided-builds-v1"></script>
     <script src="data/course_blueprints.js?v=svcollege-only-v1"></script>
     <!-- P5.3.2 — Explicit lesson quiz concept routing -->
     <script src="data/lesson_quiz_keys.js"></script>
+    <script src="data/level100_release_gates.js?v=level100-gate-v1"></script>
     <!-- W9 — AI Tutor FAB + modal -->
-    <script src="content-loader.js?v=svcollege-devops-v1"></script>
+    <script src="content-loader.js?v=content-validation-v1"></script>
     <!-- Track A — Foundation libs (must load before app.js) -->
     <!-- W9 — AI Tutor FAB and Modal (injected before app.js) -->
     <script src="lib/rng.js"></script>
@@ -1051,7 +1398,7 @@
     <!-- P4.6.4 — HTML sanitization must patch legacy rendering before app.js -->
     <script src="lib/vendor/dompurify.min.js"></script>
     <script src="src/core/sanitize-early.js"></script>
-    <script src="app.js?v=concept-sprint-v2"></script>
+    <script src="app.js?v=concept-sprint-v68"></script>
     <script type="module" src="/src/main.js?v=core-bootstrap-v2"></script>
 
     <!-- W12 — Achievements overlay -->
@@ -1162,6 +1509,9 @@
         </div>
         <div class="ai-context-bar" id="ai-context-bar"></div>
         <div class="ai-response-area" id="ai-response" aria-live="polite"></div>
+        <div class="ai-production-note">
+          Alpha production משתמש ב-Supabase Edge Function רק עם credentials אמיתיים. אין מפתחות AI בדפדפן; אם אין חיבור, המאמן נשאר במענה מקומי.
+        </div>
         <div class="ai-input-row">
           <textarea class="ai-textarea" id="ai-input" placeholder="שאל שאלה על המושג הנוכחי..." rows="2" aria-label="שאלה למאמן AI"></textarea>
           <button class="ai-send-btn" id="ai-send" aria-label="שלח שאלה">שלח ↑</button>

@@ -21,7 +21,7 @@ const ACTIONS_BY_CODE = {
   "answer-visible-multiple": "review-fill-leakage",
   "one-character-answer": "review-fill-ambiguity",
   "missing-concept-key": "add-routing-metadata",
-  "missing-seeded-flag": "add-source-metadata",
+  "missing-generated-source-flag": "add-source-metadata",
   "missing-explanation": "add-explanation",
   "missing-hint": "add-fill-hint",
 };
@@ -33,7 +33,7 @@ const ACTION_GUIDANCE = {
   "review-fill-leakage": "Check whether the answer appears in visible code. If it gives the answer away or creates ambiguity, rewrite the code/hint with one clear blank.",
   "review-fill-ambiguity": "Confirm the one-character answer is uniquely determined by the prompt and hint. If not, rewrite the prompt.",
   "add-routing-metadata": "Add a real conceptKey from the lesson taxonomy so adaptive routing and prerequisites work.",
-  "add-source-metadata": "Add the missing seeded-source marker only when the item is actually from the seeded bank.",
+  "add-source-metadata": "Add source metadata only when the item is actually from a legacy review archive.",
   "add-explanation": "Add a concise explanation tied to the correct answer and the most likely misconception.",
   "add-fill-hint": "Add a hint that narrows the answer without revealing it.",
 };
@@ -145,7 +145,7 @@ function buildMarkdown(plan) {
     "## Workflow",
     "",
     "1. Take the next batch in order.",
-    "2. Open the source question in `data/questions_bank.js` or `data/questions_bank_seeded.js`.",
+    "2. Open the source question in `data/questions_bank.js` or the relevant curated SVCollege bank.",
     "3. Apply only the guidance listed for that row, using verified lesson content.",
     "4. Run `npm run quality:questions:write`.",
     "5. Run `npm run quality:questions:strict` and `npm test -- --run`.",

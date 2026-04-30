@@ -8,6 +8,7 @@ import {
   makeSessionId,
   normalizeLearningEvent,
   stableHash,
+  summarizeFeatureErrorTelemetry,
   summarizeLearningEvidence,
 } from "../src/core/learning-evidence.js";
 
@@ -192,5 +193,51 @@ describe("learning evidence", () => {
       viewport: { width: 390, height: 844, devicePixelRatio: 3, orientation: "portrait" },
     });
     expect(JSON.stringify(exported)).not.toContain("private answer text");
+  });
+
+  it("summarizes local feature errors per 1,000 deterministic sessions", () => {
+    let state = emptyLearningEvidenceState();
+    state = appendLearningEvent(state, {
+      type: LEARNING_EVENT_TYPES.VIEW,
+      timestamp: Date.UTC(2026, 3, 29, 8),
+      sessionId: "2026-04-29:session-a",
+      source: "course-blueprints",
+    });
+    state = appendLearningEvent(state, {
+      type: LEARNING_EVENT_TYPES.VIEW,
+      timestamp: Date.UTC(2026, 3, 29, 9),
+      sessionId: "2026-04-29:session-b",
+      source: "lesson",
+    });
+    state = appendLearningEvent(state, {
+      type: LEARNING_EVENT_TYPES.FEATURE_ERROR,
+      timestamp: Date.UTC(2026, 3, 29, 9, 5),
+      sessionId: "2026-04-29:session-b",
+      featureId: "lesson-question-bank",
+      errorCode: "RenderError",
+      severity: "error",
+      message: "raw message should not be required",
+    });
+
+    const telemetry = summarizeFeatureErrorTelemetry(state);
+    const exported = anonymizedLearningEvidenceExport(state, { now: Date.UTC(2026, 3, 29, 12) });
+
+    expect(telemetry).toMatchObject({
+      sessions: 2,
+      featureErrors: 1,
+      errorsPer1000Sessions: 500,
+    });
+    expect(telemetry.byFeature[0]).toMatchObject({
+      featureId: "lesson-question-bank",
+      count: 1,
+      codes: { RenderError: 1 },
+    });
+    expect(exported.events[0]).toMatchObject({
+      type: "feature_error",
+      featureId: "lesson-question-bank",
+      errorCode: "RenderError",
+      severity: "error",
+    });
+    expect(JSON.stringify(exported)).not.toContain("raw message should not be required");
   });
 });

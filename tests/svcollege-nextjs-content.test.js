@@ -95,10 +95,10 @@ describe("SVCollege Next.js content", () => {
 
     expect(questions.mc).toHaveLength(28);
     expect(questions.fill).toHaveLength(10);
-    expect(context.SVCOLLEGE_NEXTJS_TRACES).toHaveLength(3);
+    expect(context.SVCOLLEGE_NEXTJS_TRACES).toHaveLength(15);
     expect(context.SVCOLLEGE_NEXTJS_BUILDS).toHaveLength(3);
     expect(questions.bugHunt).toHaveLength(3);
-    expect(allPracticeItems(context)).toHaveLength(47);
+    expect(allPracticeItems(context)).toHaveLength(59);
 
     questions.mc.forEach((question) => {
       expect(question.options).toHaveLength(4);
@@ -112,6 +112,35 @@ describe("SVCollege Next.js content", () => {
 
     allPracticeItems(context).forEach((item) => {
       expectPracticeMetadata(item);
+    });
+  });
+
+  it("adds real trace activities for the Next.js P6.3.1 authoring batch", () => {
+    const context = loadContext();
+    const expectedKeys = [
+      "lesson_nextjs::App Router",
+      "lesson_nextjs::file-system routing",
+      "lesson_nextjs::image optimization",
+      "lesson_nextjs::ISR",
+      "lesson_nextjs::layout",
+      "lesson_nextjs::Next.js",
+      "lesson_nextjs::page",
+      "lesson_nextjs::SEO",
+      "lesson_nextjs::server action",
+      "lesson_nextjs::server component",
+      "lesson_nextjs::SSR",
+      "lesson_nextjs::Vercel deploy",
+    ];
+    const traces = context.SVCOLLEGE_NEXTJS_TRACES.filter((item) =>
+      expectedKeys.includes(item.conceptKey),
+    );
+
+    expect(traces.map((item) => item.conceptKey)).toEqual(expectedKeys);
+    traces.forEach((trace) => {
+      expect(trace.id).toMatch(/^trace_svnext_/);
+      expect(trace.steps.length).toBeGreaterThanOrEqual(3);
+      expect(trace.explanation.length).toBeGreaterThan(30);
+      expect(trace.requiredConcepts).toContain(trace.conceptKey);
     });
   });
 

@@ -68,15 +68,20 @@
     "modules": 15,
     "strictTabs": 15,
     "strictCells": 225,
-    "passedCells": 225,
-    "strictCoverage": 100,
-    "strictGaps": 0,
+    "passedCells": 221,
+    "strictCoverage": 98.2,
+    "strictGaps": 4,
     "supportTabs": 7,
     "supportPassed": 7,
     "supportGaps": 0,
-    "ready": true
+    "ready": false
   },
-  "strictGaps": [],
+  "strictGaps": [
+    "עיצוב רספונסיבי ו-CSS מתקדם::trainer",
+    "עיצוב רספונסיבי ו-CSS מתקדם::mockExam",
+    "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI::trainer",
+    "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI::mockExam"
+  ],
   "supportGaps": [],
   "supportTabs": [
     {
@@ -133,8 +138,8 @@
       "counts": {
         "lessons": 2,
         "concepts": 7,
-        "mc": 66,
-        "fill": 40,
+        "mc": 11,
+        "fill": 8,
         "trace": 7,
         "bug": 1,
         "build": 2,
@@ -177,7 +182,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 106
+          "metric": 19
         },
         {
           "id": "flashcards",
@@ -189,7 +194,7 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 106
+          "metric": 19
         },
         {
           "id": "codeTrace",
@@ -246,8 +251,8 @@
       "counts": {
         "lessons": 1,
         "concepts": 5,
-        "mc": 42,
-        "fill": 25,
+        "mc": 0,
+        "fill": 0,
         "trace": 5,
         "bug": 1,
         "build": 1,
@@ -289,8 +294,8 @@
         {
           "id": "trainer",
           "label": "מאמן",
-          "passed": true,
-          "metric": 67
+          "passed": false,
+          "metric": 0
         },
         {
           "id": "flashcards",
@@ -301,8 +306,8 @@
         {
           "id": "mockExam",
           "label": "מבחן",
-          "passed": true,
-          "metric": 67
+          "passed": false,
+          "metric": 0
         },
         {
           "id": "codeTrace",
@@ -347,8 +352,11 @@
           "metric": 1
         }
       ],
-      "coverage": 100,
-      "gaps": []
+      "coverage": 86.7,
+      "gaps": [
+        "trainer",
+        "mockExam"
+      ]
     },
     {
       "title": "JavaScript בסיסי ודינמיקה בדפדפן",
@@ -361,8 +369,8 @@
       "counts": {
         "lessons": 3,
         "concepts": 3,
-        "mc": 211,
-        "fill": 100,
+        "mc": 29,
+        "fill": 26,
         "trace": 15,
         "bug": 1,
         "build": 4,
@@ -405,7 +413,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 311
+          "metric": 55
         },
         {
           "id": "flashcards",
@@ -417,7 +425,7 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 311
+          "metric": 55
         },
         {
           "id": "codeTrace",
@@ -477,8 +485,8 @@
       "counts": {
         "lessons": 4,
         "concepts": 12,
-        "mc": 198,
-        "fill": 102,
+        "mc": 42,
+        "fill": 30,
         "trace": 14,
         "bug": 1,
         "build": 5,
@@ -521,7 +529,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 300
+          "metric": 72
         },
         {
           "id": "flashcards",
@@ -533,7 +541,7 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 300
+          "metric": 72
         },
         {
           "id": "codeTrace",
@@ -592,8 +600,8 @@
       "counts": {
         "lessons": 3,
         "concepts": 4,
-        "mc": 224,
-        "fill": 105,
+        "mc": 7,
+        "fill": 5,
         "trace": 15,
         "bug": 1,
         "build": 3,
@@ -636,7 +644,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 329
+          "metric": 12
         },
         {
           "id": "flashcards",
@@ -648,7 +656,7 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 329
+          "metric": 12
         },
         {
           "id": "codeTrace",
@@ -706,9 +714,9 @@
       "counts": {
         "lessons": 2,
         "concepts": 19,
-        "mc": 107,
-        "fill": 50,
-        "trace": 8,
+        "mc": 21,
+        "fill": 21,
+        "trace": 18,
         "bug": 2,
         "build": 3,
         "codeBlock": 2,
@@ -750,7 +758,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 157
+          "metric": 42
         },
         {
           "id": "flashcards",
@@ -762,13 +770,13 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 157
+          "metric": 42
         },
         {
           "id": "codeTrace",
           "label": "Code Trace",
           "passed": true,
-          "metric": 8
+          "metric": 18
         },
         {
           "id": "bugHunt",
@@ -821,7 +829,7 @@
         "concepts": 19,
         "mc": 28,
         "fill": 16,
-        "trace": 3,
+        "trace": 16,
         "bug": 3,
         "build": 3,
         "codeBlock": 1,
@@ -881,7 +889,7 @@
           "id": "codeTrace",
           "label": "Code Trace",
           "passed": true,
-          "metric": 3
+          "metric": 16
         },
         {
           "id": "bugHunt",
@@ -936,8 +944,8 @@
       "counts": {
         "lessons": 5,
         "concepts": 5,
-        "mc": 268,
-        "fill": 151,
+        "mc": 19,
+        "fill": 11,
         "trace": 25,
         "bug": 11,
         "build": 14,
@@ -980,7 +988,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 419
+          "metric": 30
         },
         {
           "id": "flashcards",
@@ -992,7 +1000,7 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 419
+          "metric": 30
         },
         {
           "id": "codeTrace",
@@ -1050,8 +1058,8 @@
       "counts": {
         "lessons": 2,
         "concepts": 4,
-        "mc": 140,
-        "fill": 78,
+        "mc": 8,
+        "fill": 4,
         "trace": 10,
         "bug": 2,
         "build": 1,
@@ -1094,7 +1102,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 218
+          "metric": 12
         },
         {
           "id": "flashcards",
@@ -1106,7 +1114,7 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 218
+          "metric": 12
         },
         {
           "id": "codeTrace",
@@ -1165,8 +1173,8 @@
       "counts": {
         "lessons": 3,
         "concepts": 14,
-        "mc": 87,
-        "fill": 51,
+        "mc": 18,
+        "fill": 13,
         "trace": 7,
         "bug": 3,
         "build": 3,
@@ -1209,7 +1217,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 138
+          "metric": 31
         },
         {
           "id": "flashcards",
@@ -1221,7 +1229,7 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 138
+          "metric": 31
         },
         {
           "id": "codeTrace",
@@ -1279,8 +1287,8 @@
         "lessons": 1,
         "concepts": 18,
         "mc": 29,
-        "fill": 14,
-        "trace": 3,
+        "fill": 15,
+        "trace": 15,
         "bug": 3,
         "build": 3,
         "codeBlock": 1,
@@ -1322,7 +1330,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 43
+          "metric": 44
         },
         {
           "id": "flashcards",
@@ -1334,13 +1342,13 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 43
+          "metric": 44
         },
         {
           "id": "codeTrace",
           "label": "Code Trace",
           "passed": true,
-          "metric": 3
+          "metric": 15
         },
         {
           "id": "bugHunt",
@@ -1392,9 +1400,9 @@
       "counts": {
         "lessons": 2,
         "concepts": 18,
-        "mc": 51,
-        "fill": 29,
-        "trace": 3,
+        "mc": 24,
+        "fill": 15,
+        "trace": 15,
         "bug": 3,
         "build": 3,
         "codeBlock": 1,
@@ -1436,7 +1444,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 80
+          "metric": 39
         },
         {
           "id": "flashcards",
@@ -1448,13 +1456,13 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 80
+          "metric": 39
         },
         {
           "id": "codeTrace",
           "label": "Code Trace",
           "passed": true,
-          "metric": 3
+          "metric": 15
         },
         {
           "id": "bugHunt",
@@ -1507,7 +1515,7 @@
         "concepts": 16,
         "mc": 24,
         "fill": 14,
-        "trace": 3,
+        "trace": 13,
         "bug": 3,
         "build": 3,
         "codeBlock": 1,
@@ -1567,7 +1575,7 @@
           "id": "codeTrace",
           "label": "Code Trace",
           "passed": true,
-          "metric": 3
+          "metric": 13
         },
         {
           "id": "bugHunt",
@@ -1618,8 +1626,8 @@
       "counts": {
         "lessons": 1,
         "concepts": 4,
-        "mc": 34,
-        "fill": 17,
+        "mc": 0,
+        "fill": 0,
         "trace": 1,
         "bug": 1,
         "build": 1,
@@ -1661,8 +1669,8 @@
         {
           "id": "trainer",
           "label": "מאמן",
-          "passed": true,
-          "metric": 51
+          "passed": false,
+          "metric": 0
         },
         {
           "id": "flashcards",
@@ -1673,8 +1681,8 @@
         {
           "id": "mockExam",
           "label": "מבחן",
-          "passed": true,
-          "metric": 51
+          "passed": false,
+          "metric": 0
         },
         {
           "id": "codeTrace",
@@ -1719,8 +1727,11 @@
           "metric": 1
         }
       ],
-      "coverage": 100,
-      "gaps": []
+      "coverage": 86.7,
+      "gaps": [
+        "trainer",
+        "mockExam"
+      ]
     },
     {
       "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
@@ -1733,7 +1744,7 @@
         "concepts": 19,
         "mc": 28,
         "fill": 14,
-        "trace": 3,
+        "trace": 17,
         "bug": 3,
         "build": 3,
         "codeBlock": 1,
@@ -1793,7 +1804,7 @@
           "id": "codeTrace",
           "label": "Code Trace",
           "passed": true,
-          "metric": 3
+          "metric": 17
         },
         {
           "id": "bugHunt",

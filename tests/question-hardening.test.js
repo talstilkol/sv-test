@@ -19,14 +19,9 @@ describe("question hardening and no-repeat flow", () => {
     expect(app).toContain("recordAnsweredQuestion(lessonId, conceptName, meta.question || {}");
   });
 
-  it("chooses unused harder generated variants before repeating a concept", () => {
-    expect(app).toContain("function generatedMCVariantsForConcept");
-    expect(app).toContain('{ variant: "describe"');
-    expect(app).toContain('{ variant: "name-match"');
-    expect(app).toContain('{ variant: "use-case"');
-    expect(app).toContain('{ variant: "mistake"');
-    expect(app).toContain('{ variant: "code-reason"');
-    expect(app).toContain('{ variant: "mastery"');
+  it("chooses unused harder manual variants before repeating a concept", () => {
+    expect(app).toContain("function manualQuestionPoolForConcept");
+    expect(app).toContain("function pickManualFillQuestionForConcept");
     expect(app).toContain("function pickUnusedHarderQuestion");
     expect(app).toContain("maxAnsweredChallengeForConcept(lessonId, conceptName) + 1");
     expect(app).toContain("!questionWasAnswered(question, lessonId, conceptName, kind)");
@@ -39,7 +34,7 @@ describe("question hardening and no-repeat flow", () => {
     expect(app).toContain("return pickUnansweredBankQuestion(candidates, lessonId, conceptName, \"trace\"");
     expect(app).toContain("const pickedCuratedSame = pickUnansweredBankQuestion(curatedSame");
     expect(app).toContain("const pickedCuratedAny = pickUnansweredBankQuestion(curatedAny");
-    expect(app).toContain("const pickedSeededSame = pickUnansweredBankQuestion(seededSame");
+    expect(app).not.toContain("pickedSeededSame");
     expect(app).toContain("function questionWasAnsweredForMock");
     expect(app).toContain("if (questionWasAnsweredForMock(kind, q)) exhausted.push(q)");
     expect(app).toContain("const ordered = rng.shuffle(unused).concat(rng.shuffle(exhausted))");
@@ -70,7 +65,8 @@ describe("question hardening and no-repeat flow", () => {
     expect(app).toContain("function renderPerAnswerExplanationBundle");
     expect(app).toContain("answer-explanation-bundle");
     expect(app).toContain("answer-option-rationales");
-    expect(app).toContain("function buildOptionFeedback");
+    expect(app).toContain("const supplied = Array.isArray(question.optionFeedback)");
+    expect(app).not.toContain("function buildOptionFeedback");
     expect(app).toContain("deepExplanation");
     expect(app).toContain("memoryAssociation");
     expect(app).toContain("למה כל אפשרות כן/לא");

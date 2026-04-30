@@ -29,16 +29,12 @@ function loadBlueprint() {
 function loadMainQuestions() {
   const sandbox = { window: {}, console };
   loadData("questions_bank.js", "QUESTIONS_BANK", sandbox);
-  loadData("questions_bank_seeded.js", "QUESTIONS_BANK_SEEDED", sandbox);
   const curated = sandbox.QUESTIONS_BANK || {};
-  const seeded = sandbox.QUESTIONS_BANK_SEEDED || {};
   return [
     ...(curated.mc || []).map((q) => ({ ...q, kind: "mc", source: "curated" })),
     ...(curated.fill || []).map((q) => ({ ...q, kind: "fill", source: "curated" })),
     ...(curated.trace || []).map((q) => ({ ...q, kind: "trace", source: "curated" })),
     ...(curated.bug || []).map((q) => ({ ...q, kind: "bug", source: "curated" })),
-    ...(seeded.mc || []).map((q) => ({ ...q, kind: "mc", source: "seeded" })),
-    ...(seeded.fill || []).map((q) => ({ ...q, kind: "fill", source: "seeded" })),
   ].filter((q) => q && q.conceptKey);
 }
 

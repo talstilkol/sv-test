@@ -1,0 +1,126 @@
+{
+  "reportVersion": "learning-os-outcome-scale-v1",
+  "date": "2026-04-30",
+  "target": "Phase 7 Learning OS + Outcome Scale",
+  "policy": "Learning OS uses real lesson, question, learner, capstone, teacher and audit evidence only. Missing inputs stay unknown/unavailable.",
+  "summary": {
+    "checks": 7,
+    "passed": 7,
+    "failed": 0,
+    "ready": true,
+    "closedTasks": 48
+  },
+  "checks": [
+    {
+      "id": "diagnostic-intake",
+      "label": "Diagnostic intake covers exam domains, graph scoring, placement, first-week plan, latency, why-path, retake and export",
+      "passed": true,
+      "status": "pass",
+      "detail": "Diagnostic rows are built from existing lesson concepts and question ids only.",
+      "closes": [
+        "P7.1.1",
+        "P7.1.2",
+        "P7.1.3",
+        "P7.1.4",
+        "P7.1.5",
+        "P7.1.6",
+        "P7.1.7",
+        "P7.1.8"
+      ]
+    },
+    {
+      "id": "weekly-study-plan",
+      "label": "Daily missions cover SRS, weak concepts, capstones, exam, time boxes, balance, recovery, forecast, agreement and EOD summary",
+      "passed": true,
+      "status": "pass",
+      "detail": "Plans do not pad missions when evidence is missing.",
+      "closes": [
+        "P7.2.1",
+        "P7.2.2",
+        "P7.2.3",
+        "P7.2.4",
+        "P7.2.5",
+        "P7.2.6",
+        "P7.2.7",
+        "P7.2.8"
+      ]
+    },
+    {
+      "id": "project-studio",
+      "label": "Project Studio covers milestone tracking, submission metadata, rubric, anti-pattern notes, README, review notes, health score and deterministic templates",
+      "passed": true,
+      "status": "pass",
+      "detail": "Project output is derived from capstone data and local progress only.",
+      "closes": [
+        "P7.3.1",
+        "P7.3.2",
+        "P7.3.3",
+        "P7.3.4",
+        "P7.3.5",
+        "P7.3.6",
+        "P7.3.7",
+        "P7.3.8"
+      ]
+    },
+    {
+      "id": "cohort-pilot-lite",
+      "label": "Teacher/cohort pilot uses class setup, cohort heatmap, assignment recipes, risk alerts, weekly exports and support SOP",
+      "passed": true,
+      "status": "pass",
+      "detail": "Teacher reports use real class/evidence rows and unknown/unavailable for gaps.",
+      "closes": [
+        "P7.4.1",
+        "P7.4.2",
+        "P7.4.3",
+        "P7.4.4",
+        "P7.4.5",
+        "P7.4.6",
+        "P7.4.7",
+        "P7.4.8"
+      ]
+    },
+    {
+      "id": "ai-tutor-production-guardrails",
+      "label": "AI Tutor production guardrails cover proxy, rate limits, coach mode, context, misconceptions, logs, eval and fallback",
+      "passed": true,
+      "status": "pass",
+      "detail": "AI Tutor remains credential-gated and does not leak direct answers.",
+      "closes": [
+        "P7.5.1",
+        "P7.5.2",
+        "P7.5.3",
+        "P7.5.4",
+        "P7.5.5",
+        "P7.5.6",
+        "P7.5.7",
+        "P7.5.8"
+      ]
+    },
+    {
+      "id": "accessibility-mobile-trust",
+      "label": "Accessibility/mobile/trust covers WCAG, keyboard journey, reduced-load modes, mobile touch, offline conflict, performance, privacy and trust",
+      "passed": true,
+      "status": "pass",
+      "detail": "Trust surfaces are contracts and gates; missing evidence stays unknown/unavailable.",
+      "closes": [
+        "P7.6.1",
+        "P7.6.2",
+        "P7.6.3",
+        "P7.6.4",
+        "P7.6.5",
+        "P7.6.6",
+        "P7.6.7",
+        "P7.6.8"
+      ]
+    },
+    {
+      "id": "package-scripts",
+      "label": "Learning OS report scripts are wired",
+      "passed": true,
+      "status": "pass",
+      "detail": "package.json must expose summary/write/strict scripts.",
+      "closes": []
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,50 @@
+{
+  "reportVersion": "pricing-packaging-plan-v1",
+  "date": "2026-04-29",
+  "target": "Post-exam pricing and packaging",
+  "policy": "Premium services can add mentoring, teacher operations and post-exam career practice, but cannot lock required exam learning.",
+  "summary": {
+    "checks": 5,
+    "passed": 5,
+    "failed": 0,
+    "ready": true
+  },
+  "checks": [
+    {
+      "id": "exam-content-unlocked",
+      "label": "Exam-critical learning remains unlocked",
+      "passed": true,
+      "status": "pass",
+      "detail": "Pricing must not block lessons, concepts, mock exams, explanations or local progress evidence."
+    },
+    {
+      "id": "packages-defined",
+      "label": "Post-exam packages are defined",
+      "passed": true,
+      "status": "pass",
+      "detail": "Packaging must define core learning and post-exam service layers."
+    },
+    {
+      "id": "prices-not-fabricated",
+      "label": "Price points are not fabricated",
+      "passed": true,
+      "status": "pass",
+      "detail": "Pricing data must remain unknown/unavailable until real validation exists."
+    },
+    {
+      "id": "readiness-gated",
+      "label": "Charging is gated by readiness and metrics",
+      "passed": true,
+      "status": "pass",
+      "detail": "Paid packaging must wait for exam readiness, tab matrix, command center and metrics gates."
+    },
+    {
+      "id": "package-scripts",
+      "label": "Pricing packaging gate is wired",
+      "passed": true,
+      "status": "pass",
+      "detail": "package.json must expose summary/write/strict pricing packaging commands."
+    }
+  ],
+  "blockers": []
+}

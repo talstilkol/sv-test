@@ -42,7 +42,9 @@ describe("mastery proof gate integration", () => {
     expect(app).toContain("function answerCountsAsCodeProof");
     expect(app).toContain("function maybeRecordCodeProof");
     expect(app).toContain("codeProofRequired");
-    expect(app).toContain("reason: info.blockedByCodeProof ? \"needs-code-proof\" : \"needs-highest-question\"");
+    expect(app).toContain("const gateReason = info.blockedByCodeProof");
+    expect(app).toContain("\"needs-code-proof\"");
+    expect(app).toContain("\"needs-highest-question\"");
     expect(app).toContain("כדי לקבל 100 במושג עם קוד צריך לפתור נכון גם משימת קוד");
   });
 
@@ -60,5 +62,23 @@ describe("mastery proof gate integration", () => {
     expect(app).toContain("if (isScoreMastered(sc))");
     expect(app).toContain("const masteryGateHTML = sc.masteryGatePending");
     expect(app).toContain("נשאר מבחן עומק");
+  });
+
+  it("requires a one-line checkpoint before conceptual topics become mastery", () => {
+    expect(scoring).toContain("requiresOneLineMasteryCheckpoint");
+    expect(scoring).toContain("validateOneLineMasteryProof");
+    expect(app).toContain("function completeOneLineMasteryCheckpoint");
+    expect(app).toContain("needs-one-line-proof");
+    expect(app).toContain("one-line-mastery-checkpoint");
+    expect(app).toContain("כדי לקבל 100 במושג קונספטואלי צריך לכתוב הסבר מדויק בשורה אחת לפני מאסטר");
+  });
+
+  it("requires write-from-scratch proof before implementation topics become mastery", () => {
+    expect(scoring).toContain("requiresScratchMasteryCheckpoint");
+    expect(scoring).toContain("validateScratchMasteryProof");
+    expect(app).toContain("function completeScratchMasteryCheckpoint");
+    expect(app).toContain("needs-scratch-proof");
+    expect(app).toContain("scratch-mastery-checkpoint");
+    expect(app).toContain("כדי לקבל 100 במושג יישומי צריך לכתוב פתרון קוד קצר from scratch לפני מאסטר");
   });
 });

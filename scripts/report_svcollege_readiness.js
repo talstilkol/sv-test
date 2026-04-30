@@ -106,7 +106,6 @@ function listQuestions(bank, kind) {
 
 function collectPractice() {
   const bank = readDataValue("questions_bank.js", "QUESTIONS_BANK") || {};
-  const seeded = readDataValue("questions_bank_seeded.js", "QUESTIONS_BANK_SEEDED") || {};
   const sqlOrmQuestions = readDataValue("svcollege_questions_sql_orm.js", "SVCOLLEGE_SQL_ORM_QUESTIONS") || {};
   const sqlOrmTraces = readDataValue("svcollege_traces_sql_orm.js", "SVCOLLEGE_SQL_ORM_TRACES") || [];
   const sqlOrmBuilds = readDataValue("svcollege_builds_sql_orm.js", "SVCOLLEGE_SQL_ORM_BUILDS") || [];
@@ -135,7 +134,6 @@ function collectPractice() {
   return {
     mc: [
       ...listQuestions(bank, "mc"),
-      ...listQuestions(seeded, "mc"),
       ...listQuestions(sqlOrmQuestions, "mc"),
       ...listQuestions(authQuestions, "mc"),
       ...listQuestions(nextjsQuestions, "mc"),
@@ -147,7 +145,6 @@ function collectPractice() {
     ],
     fill: [
       ...listQuestions(bank, "fill"),
-      ...listQuestions(seeded, "fill"),
       ...listQuestions(sqlOrmQuestions, "fill"),
       ...listQuestions(authQuestions, "fill"),
       ...listQuestions(nextjsQuestions, "fill"),

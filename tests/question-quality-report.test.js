@@ -7,7 +7,8 @@ describe("Question quality report", () => {
 
     expect(first).toEqual(second);
     expect(first.reportVersion).toBe("question-quality-v1");
-    expect(first.summary.total).toBeGreaterThan(1800);
+    expect(first.summary.total).toBe(216);
+    expect(first.summary.manual).toBe(216);
     expect(Object.keys(first.questionQuality)).toHaveLength(first.summary.total);
   });
 

@@ -22,6 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentLessonTitle = document.getElementById("current-lesson-title");
   const currentLessonDesc = document.getElementById("current-lesson-desc");
   const lessonBody = document.getElementById("lesson-body");
+  const siteBackBtn = document.getElementById("site-back-btn");
+  const siteHomeBtn = document.getElementById("site-home-btn");
+  const siteMapMenu = document.getElementById("site-map-menu");
+  const siteMapMenuBody = document.getElementById("site-map-menu-body");
+  const siteBreadcrumb = document.getElementById("site-breadcrumb");
   const levelTabs = document.querySelectorAll(".level-tab");
   const searchInput = document.getElementById("search-input");
   const quizSection = document.getElementById("quiz-section");
@@ -34,6 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileToggle = document.getElementById("mobile-toggle");
   const focusModeToggle = document.getElementById("focus-mode-toggle");
   const focusSideToggle = document.getElementById("focus-side-toggle");
+  const focusTopToggle = document.getElementById("focus-top-toggle");
+  const topChromeCollapseBtn = document.getElementById("top-chrome-collapse-btn");
+  const sidebarCollapseBtn = document.getElementById("sidebar-collapse-btn");
+  const pageScrollRail = document.getElementById("page-scroll-rail");
   const sidebar = document.getElementById("sidebar");
   const knowledgeMapView = document.getElementById("knowledge-map-view");
   const studyModeView = document.getElementById("study-mode-view");
@@ -46,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const programmingMuseumView = document.getElementById("programming-museum-view");
   const languageToolsView = document.getElementById("language-tools-view");
   const rewardStoreView = document.getElementById("reward-store-view");
+  const settingsView = document.getElementById("settings-view");
   const learningEvidenceView = document.getElementById("learning-evidence-view");
   const capstonesView = document.getElementById("capstones-view");
   const blueprintsView = document.getElementById("blueprints-view");
@@ -61,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const openProgrammingMuseumBtn = document.getElementById("open-programming-museum");
   const openLanguageToolsBtn = document.getElementById("open-language-tools");
   const openRewardStoreBtn = document.getElementById("open-reward-store");
+  const openSettingsBtn = document.getElementById("open-settings");
   const openLearningEvidenceBtn = document.getElementById("open-learning-evidence");
   const openCapstonesBtn = document.getElementById("open-capstones");
   const openBlueprintsBtn = document.getElementById("open-blueprints");
@@ -74,10 +85,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const contextTreeCount = document.getElementById("context-tree-count");
   const contextTreeSearch = document.getElementById("context-tree-search");
   const contextTreeBody = document.getElementById("context-tree-body");
+  const sidebarContextTree = document.getElementById("sidebar-context-tree");
+  const sidebarContextTitle = document.getElementById("sidebar-context-title");
+  const sidebarContextCount = document.getElementById("sidebar-context-count");
+  const sidebarContextSearch = document.getElementById("sidebar-context-search");
+  const sidebarContextBody = document.getElementById("sidebar-context-body");
   const localProfileSelect = document.getElementById("local-profile-select");
   const localProfileNameInput = document.getElementById("local-profile-name");
   const localProfileCreateBtn = document.getElementById("local-profile-create");
   const localProfileStatus = document.getElementById("local-profile-status");
+  const portalDecisionMenu = document.getElementById("portal-decision-menu");
   const portalDecisionAid = document.getElementById("portal-decision-aid");
 
   const utilityBar = document.getElementById("w12-top-bar");
@@ -498,6 +515,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "lumenportal:learning-focus:v1",
       "lumenportal:bankVersion:v1",
       "lumenportal:userId:v1",
+      "lumenportal:supabase:url:v1",
+      "lumenportal:supabase:anon-key:v1",
+      "lumenportal:sync:meta:v1",
     ]);
     const profileLocalKeys = new Set(["ob_tour_dismissed"]);
     const raw = {
@@ -682,6 +702,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentLessonId = null;
   let currentLevel = "grandma";
   let quizCompleted = {};
+  const siteNavigationStack = [];
+  let restoringSiteNavigation = false;
 
   // =========== PROFICIENCY STORE (V/X knowledge map) ===========
   // proficiency[conceptKey] = "v" | "x" | undefined
@@ -872,7 +894,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========== QUESTION BANK INDEX ===========
-  // Counts questions per (lessonId, conceptName), separating curated vs seeded
+  // Counts manually authored questions per (lessonId, conceptName).
   function bankCountsFor(lessonId, conceptName) {
     const bank = window.QUESTIONS_BANK || { mc: [], fill: [] };
     const key = resolveCanonicalConceptKey({ lessonId, conceptName }) || conceptKey(lessonId, conceptName);
@@ -885,8 +907,8 @@ document.addEventListener("DOMContentLoaded", () => {
       mcCurated: mcAll.filter((q) => !q._seeded).length,
       fillCurated: fillAll.filter((q) => !q._seeded).length,
     };
-    counts.mcSeeded = counts.mc - counts.mcCurated;
-    counts.fillSeeded = counts.fill - counts.fillCurated;
+    counts.mcSeeded = 0;
+    counts.fillSeeded = 0;
     return counts;
   }
   function bankByTopic(topicId) {
@@ -999,6 +1021,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (contextTreeSource.key !== key) {
       contextTreeQuery = "";
       if (contextTreeSearch) contextTreeSearch.value = "";
+      if (sidebarContextSearch) sidebarContextSearch.value = "";
     }
     contextTreeSource = {
       key,
@@ -1006,24 +1029,32 @@ document.addEventListener("DOMContentLoaded", () => {
       sections: sections || [],
     };
     renderContextTree();
+    queueSiteNavigationRefresh();
   }
 
   function renderContextTree() {
-    if (!contextTreeBody) return;
+    if (!contextTreeBody && !sidebarContextBody) return;
     const query = (contextTreeQuery || "").toLowerCase().trim();
     const sections = filterContextNodes(contextTreeSource.sections, query);
+    const isHomeContextTree = contextTreeSource.key === "home" || contextTreeSource.title === "עץ האתר";
+    const sidebarSections = isHomeContextTree ? [] : sections;
     contextTreeActions.clear();
 
     if (contextTreePanel) {
       contextTreePanel.hidden = false;
     }
     if (contextTreeTitle) contextTreeTitle.textContent = "תוכן עניינים";
+    if (sidebarContextTitle) sidebarContextTitle.textContent = "תוכן עניינים";
     if (contextTreeCount) {
       const count = countContextLeaves(sections);
       contextTreeCount.textContent = count ? `${count} פריטים` : "";
     }
+    if (sidebarContextCount) {
+      const count = countContextLeaves(sidebarSections);
+      sidebarContextCount.textContent = count ? `${count} פריטים` : "";
+    }
 
-    contextTreeBody.innerHTML = sections.length
+    const treeHtml = sections.length
       ? `
         <div class="ctx-map-head">
           <strong>${esc(contextTreeSource.title || "עץ ניווט")}</strong>
@@ -1037,16 +1068,39 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div class="ctx-empty">אין ענפים תואמים.</div>`;
 
-    contextTreeBody.querySelectorAll("[data-ctx-action]").forEach((el) => {
-      el.addEventListener("click", () => {
-        const action = contextTreeActions.get(el.getAttribute("data-ctx-action"));
-        if (typeof action === "function") action();
-        if (document.body.classList.contains("learning-focus-mode")) {
-          document.body.classList.remove("focus-menu-open");
-          focusSideToggle?.setAttribute("aria-expanded", "false");
-        }
+    const sidebarTreeHtml = sidebarSections.length
+      ? `
+        <div class="ctx-map-head">
+          <strong>${esc(contextTreeSource.title || "עץ ניווט")}</strong>
+          <span>נושא → תת נושא → תת תת נושא → מושג</span>
+        </div>
+        <div class="ctx-tree-root">${sidebarSections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
+      : "";
+
+    if (contextTreeBody) contextTreeBody.innerHTML = treeHtml;
+    if (sidebarContextBody) sidebarContextBody.innerHTML = sidebarTreeHtml;
+    if (sidebarContextTree) sidebarContextTree.hidden = !sidebarSections.length;
+
+    function wireContextTreeActions(root) {
+      if (!root) return;
+      root.querySelectorAll("[data-ctx-action]").forEach((el) => {
+        el.addEventListener("click", () => {
+          const action = contextTreeActions.get(el.getAttribute("data-ctx-action"));
+          if (typeof action === "function") action();
+          if (document.body.classList.contains("learning-focus-mode")) {
+            document.body.classList.remove("focus-menu-open");
+            focusSideToggle?.setAttribute("aria-expanded", "false");
+          }
+          if (document.body.classList.contains("mobile-context-open")) {
+            document.body.classList.remove("mobile-context-open");
+            focusSideToggle?.setAttribute("aria-expanded", "false");
+          }
+        });
       });
-    });
+    }
+
+    wireContextTreeActions(contextTreeBody);
+    wireContextTreeActions(sidebarContextBody);
   }
 
   function renderContextNode(node, path, depth = 0) {
@@ -1093,6 +1147,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   contextTreeSearch?.addEventListener("input", (e) => {
     contextTreeQuery = e.target.value || "";
+    if (sidebarContextSearch) sidebarContextSearch.value = contextTreeQuery;
+    renderContextTree();
+  });
+
+  sidebarContextSearch?.addEventListener("input", (e) => {
+    contextTreeQuery = e.target.value || "";
+    if (contextTreeSearch) contextTreeSearch.value = contextTreeQuery;
     renderContextTree();
   });
 
@@ -1255,6 +1316,195 @@ document.addEventListener("DOMContentLoaded", () => {
       { key: "home" },
     );
   }
+
+  function cleanSiteNavText(value = "") {
+    return String(value || "").replace(/\s+/g, " ").trim();
+  }
+
+  function isSiteViewVisible(el) {
+    return !!el && !el.hidden && el.style.display !== "none";
+  }
+
+  function activeTopTabButton() {
+    return Array.from(document.querySelectorAll(".top-tab")).find((tab) => tab.classList.contains("active")) || null;
+  }
+
+  function siteStateKey(state) {
+    if (!state) return "";
+    return `${state.type || ""}:${state.id || ""}`;
+  }
+
+  function currentSiteNavigationState() {
+    if (currentLessonId && isSiteViewVisible(activeLessonContainer)) {
+      const lesson = (window.LESSONS_DATA || []).find((item) => item.id === currentLessonId);
+      return {
+        type: "lesson",
+        id: currentLessonId,
+        label: cleanSiteNavText(lesson?.title || currentLessonTitle?.textContent || "שיעור"),
+      };
+    }
+
+    if (isSiteViewVisible(welcomeScreen)) {
+      return { type: "tab", id: "home", label: "שיעורים" };
+    }
+
+    const activeTab = activeTopTabButton();
+    if (activeTab) {
+      return {
+        type: "tab",
+        id: activeTab.dataset.tab || activeTab.id || "tab",
+        label: cleanSiteNavText(activeTab.textContent || activeTab.getAttribute("aria-label") || "טאב"),
+      };
+    }
+
+    return { type: "tab", id: "home", label: "שיעורים" };
+  }
+
+  function pushCurrentSiteNavigationState() {
+    if (restoringSiteNavigation) return;
+    const state = currentSiteNavigationState();
+    const key = siteStateKey(state);
+    if (!key) return;
+    const last = siteNavigationStack[siteNavigationStack.length - 1];
+    if (siteStateKey(last) === key) return;
+    siteNavigationStack.push(state);
+    if (siteNavigationStack.length > 30) siteNavigationStack.shift();
+  }
+
+  function renderSiteMapMenu() {
+    if (!siteMapMenuBody) return;
+    const state = currentSiteNavigationState();
+    const topTabs = Array.from(document.querySelectorAll(".top-tab"));
+    const tabItems = topTabs
+      .map((tab) => {
+        const id = tab.dataset.tab || tab.id || "";
+        const label = cleanSiteNavText(tab.textContent || tab.getAttribute("aria-label") || "");
+        if (!id || !label) return "";
+        const active = state.type === "tab" && state.id === id ? " active" : "";
+        return `<button class="site-map-item${active}" type="button" data-site-tab="${esc(id)}">${esc(label)}</button>`;
+      })
+      .join("");
+
+    const lessonGroups = groupedLessonNodes();
+    const lessonItems = lessonGroups.length
+      ? lessonGroups
+          .map((group) => {
+            const open = (group.children || []).some((lesson) => state.type === "lesson" && state.id === lesson.id) ? " open" : "";
+            const lessons = (group.children || [])
+              .map((lesson) => {
+                const active = state.type === "lesson" && state.id === lesson.id ? " active" : "";
+                return `<button class="site-map-item${active}" type="button" data-site-lesson="${esc(lesson.id)}"><span>${esc(lesson.label)}</span><small>${esc(lesson.meta || "")}</small></button>`;
+              })
+              .join("");
+            return `
+              <details class="site-map-branch" ${open}>
+                <summary>${esc(group.label || "שיעורים")}</summary>
+                <div class="site-map-grid">${lessons}</div>
+              </details>`;
+          })
+          .join("")
+      : `<div class="site-map-empty">אין שיעורים זמינים כרגע.</div>`;
+
+    siteMapMenuBody.innerHTML = `
+      <section class="site-map-section" aria-label="טאבים ראשיים">
+        <strong>טאבים ראשיים</strong>
+        <div class="site-map-grid">${tabItems}</div>
+      </section>
+      <section class="site-map-section" aria-label="שיעורים לפי נושא">
+        <strong>שיעורים לפי נושא</strong>
+        <div class="site-map-branches">${lessonItems}</div>
+      </section>`;
+
+    siteMapMenuBody.querySelectorAll("[data-site-tab]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tabId = btn.getAttribute("data-site-tab") || "";
+        const target = Array.from(document.querySelectorAll(".top-tab")).find((tab) => (tab.dataset.tab || tab.id || "") === tabId);
+        (target || document.getElementById("open-home"))?.click();
+        if (siteMapMenu) siteMapMenu.open = false;
+      });
+    });
+
+    siteMapMenuBody.querySelectorAll("[data-site-lesson]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lessonId = btn.getAttribute("data-site-lesson") || "";
+        if (lessonId) openLesson(lessonId);
+        if (siteMapMenu) siteMapMenu.open = false;
+      });
+    });
+  }
+
+  function updateSiteNavigation() {
+    const state = currentSiteNavigationState();
+    if (siteBreadcrumb) {
+      if (state.type === "lesson") {
+        const lesson = (window.LESSONS_DATA || []).find((item) => item.id === state.id);
+        const concepts = lesson?.concepts || [];
+        const conceptName = selectedConceptByLesson[state.id] || concepts[0]?.conceptName || "";
+        const conceptIndex = concepts.findIndex((item) => item.conceptName === conceptName);
+        const conceptCrumb = conceptName
+          ? ` -> <span class="site-breadcrumb-concept">${esc(conceptName)} (${esc(conceptIndex + 1)}/${esc(concepts.length)})</span>`
+          : "";
+        siteBreadcrumb.innerHTML = `בית -> שיעורים -> <button type="button" class="site-breadcrumb-lesson" data-site-current-lesson="${esc(state.id)}">${esc(state.label)}</button>${conceptCrumb}`;
+      } else {
+        siteBreadcrumb.innerHTML = `בית / ${esc(state.label)}`;
+      }
+    }
+    if (siteBackBtn) {
+      const isHome = state.type === "tab" && state.id === "home";
+      siteBackBtn.disabled = isHome && siteNavigationStack.length === 0 && window.history.length <= 1;
+    }
+  }
+
+  siteBreadcrumb?.addEventListener("click", (event) => {
+    const btn = event.target.closest("[data-site-current-lesson]");
+    if (!btn) return;
+    const lessonId = btn.getAttribute("data-site-current-lesson") || "";
+    if (lessonId) openLesson(lessonId);
+  });
+
+  function queueSiteNavigationRefresh() {
+    if (!siteBreadcrumb && !siteMapMenuBody) return;
+    requestAnimationFrame(() => {
+      renderSiteMapMenu();
+      updateSiteNavigation();
+    });
+  }
+
+  function restoreSiteNavigationState(state) {
+    if (!state) return;
+    restoringSiteNavigation = true;
+    try {
+      if (state.type === "lesson" && state.id) {
+        openLesson(state.id);
+      } else if (state.type === "tab") {
+        const target = Array.from(document.querySelectorAll(".top-tab")).find((tab) => (tab.dataset.tab || tab.id || "") === state.id);
+        (target || document.getElementById("open-home"))?.click();
+      }
+    } finally {
+      setTimeout(() => {
+        restoringSiteNavigation = false;
+        queueSiteNavigationRefresh();
+      }, 0);
+    }
+  }
+
+  siteBackBtn?.addEventListener("click", () => {
+    const previous = siteNavigationStack.pop();
+    if (previous) {
+      restoreSiteNavigationState(previous);
+      return;
+    }
+    const state = currentSiteNavigationState();
+    if (!(state.type === "tab" && state.id === "home")) {
+      document.getElementById("open-home")?.click();
+      return;
+    }
+    if (window.history.length > 1) window.history.back();
+  });
+
+  siteHomeBtn?.addEventListener("click", () => {
+    document.getElementById("open-home")?.click();
+  });
 
   const PROGRAMMING_BASICS_BLOCKS = [
     {
@@ -1829,6 +2079,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   let programmingBasicsTab = "foundations";
+  let programmingMuseumLocalWing = "";
   const PROGRAMMING_BASICS_TABS = [
     { id: "foundations", label: "אבנים", icon: "🧱" },
     { id: "electricity", label: "חשמל→ערך", icon: "⚡" },
@@ -1843,6 +2094,153 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: "museum", label: "מוזיאון", icon: "🏛️" },
     { id: "react-anatomy", label: "React למה?", icon: "⚛️" },
   ];
+
+  const XP_ACCESS_UNLOCKS_KEY = "lumenportal:xpAccessUnlocks:v1";
+  const FOUNDATION_CONCEPT_KEYS = [
+    "lesson_11::Array",
+    "lesson_11::Index",
+    "lesson_11::By Value",
+    "lesson_11::By Reference",
+    "lesson_11::function",
+    "lesson_11::object",
+    "lesson_11::boolean",
+    "lesson_11::number",
+    "lesson_11::string",
+    "lesson_11::let",
+    "lesson_11::var",
+    "lesson_11::scope",
+  ];
+  const PROGRAMMING_BASICS_ACCESS = {
+    foundations: {
+      title: "אבני יסוד ראשונות",
+      xpPrice: 0,
+      prerequisiteConceptKeys: [],
+      rule: "נקודת התחלה פתוחה: מושגים בסיסיים שלא דורשים ידע קודם.",
+    },
+    electricity: {
+      title: "חשמל → ערך",
+      xpPrice: 15,
+      prerequisiteConceptKeys: [],
+      rule: "שער יסוד מוקדם: נפתח אחרי תחילת צבירת XP.",
+    },
+    efficiency: {
+      title: "יעילות",
+      xpPrice: 60,
+      prerequisiteConceptKeys: ["lesson_11::Array", "lesson_11::function"],
+      rule: "נדרש להבין רשימות ופונקציות לפני שמדברים על עלות.",
+    },
+    builds: {
+      title: "בונים קוד",
+      xpPrice: 80,
+      prerequisiteConceptKeys: ["lesson_11::let", "lesson_11::function", "lesson_11::object"],
+      rule: "נפתח אחרי שליטה במשתנים, פונקציות ואובייקטים.",
+    },
+    menus: {
+      title: "תפריטים",
+      xpPrice: 90,
+      prerequisiteConceptKeys: ["lesson_11::Array", "lesson_11::object", "lesson_11::function"],
+      rule: "תפריט הוא מבנה נתונים + פעולה + מצב.",
+    },
+    patents: {
+      title: "פטנטים",
+      xpPrice: 120,
+      prerequisiteConceptKeys: ["lesson_11::scope", "lesson_11::function", "lesson_11::By Reference"],
+      rule: "רעיונות מתקדמים נפתחים רק אחרי הבנת scope ו-reference.",
+    },
+    tech: {
+      title: "טכנולוגיות",
+      xpPrice: 140,
+      prerequisiteConceptKeys: ["lesson_11::object", "lesson_11::function", "lesson_11::Array"],
+      rule: "טכנולוגיה היא שילוב של אבני יסוד, לא קסם.",
+    },
+    layers: {
+      title: "שכבות",
+      xpPrice: 150,
+      prerequisiteConceptKeys: ["lesson_11::By Value", "lesson_11::By Reference", "lesson_11::object"],
+      rule: "נדרש להבין מעבר ערכים, reference וגבולות אובייקט.",
+    },
+    languages: {
+      title: "שפות",
+      xpPrice: 170,
+      prerequisiteConceptKeys: FOUNDATION_CONCEPT_KEYS.slice(0, 8),
+      rule: "שפות מתקדמות נפתחות אחרי בסיס JS יציב.",
+    },
+    history: {
+      title: "היסטוריה",
+      xpPrice: 180,
+      prerequisiteConceptKeys: FOUNDATION_CONCEPT_KEYS.slice(0, 8),
+      rule: "היסטוריה מועילה רק כשהאבנים הטכניות מוכרות.",
+    },
+    museum: {
+      title: "מוזיאון",
+      xpPrice: 220,
+      prerequisiteConceptKeys: FOUNDATION_CONCEPT_KEYS,
+      rule: "המוזיאון המלא נפתח אחרי מסלול יסודות סגור.",
+    },
+    "react-anatomy": {
+      title: "React למה?",
+      xpPrice: 260,
+      prerequisiteConceptKeys: ["lesson_11::Array", "lesson_11::function", "lesson_11::object", "lesson_11::By Reference", "lesson_11::scope"],
+      rule: "React תלוי ב-state, פונקציות, אובייקטים ו-reference.",
+    },
+  };
+
+  const MUSEUM_XP_ACCESS = {
+    stack: {
+      entryXP: 25,
+      wingXP: 20,
+      prerequisiteConceptKeys: [],
+      rule: "המוזיאון הראשון פתוח מוקדם: חשמל, bit, byte ושכבות.",
+    },
+    languages: {
+      entryXP: 50,
+      wingXP: 35,
+      prerequisiteConceptKeys: ["lesson_11::Array", "lesson_11::function", "lesson_11::let"],
+      rule: "שפות תכנות דורשות שליטה ברשימה, פעולה ומשתנה.",
+    },
+    fullstack: {
+      entryXP: 90,
+      wingXP: 70,
+      prerequisiteConceptKeys: ["lesson_11::Array", "lesson_11::function", "lesson_11::object", "lesson_11::By Reference"],
+      rule: "Full-Stack נפתח רק אחרי אבני JS שמחזיקות UI, API ונתונים.",
+    },
+    product: {
+      entryXP: 80,
+      wingXP: 45,
+      prerequisiteConceptKeys: ["lesson_11::function", "lesson_11::object"],
+      rule: "מוצר דורש הבנת פעולה, מצב וחוזה.",
+    },
+    errors: {
+      entryXP: 100,
+      wingXP: 60,
+      prerequisiteConceptKeys: ["lesson_11::scope", "lesson_11::undefined", "lesson_11::boolean"],
+      rule: "Debug מתקדם דורש הבנת scope, undefined ותנאים.",
+    },
+    contracts: {
+      entryXP: 120,
+      wingXP: 80,
+      prerequisiteConceptKeys: ["lesson_11::object", "lesson_11::By Value", "lesson_11::By Reference"],
+      rule: "חוזים ונתונים דורשים אובייקטים והבדל בין ערך ל-reference.",
+    },
+    ai: {
+      entryXP: 160,
+      wingXP: 100,
+      prerequisiteConceptKeys: FOUNDATION_CONCEPT_KEYS,
+      rule: "AI הוא חומר מתקדם: קודם מוכיחים שליטה בכל מושגי היסוד.",
+    },
+    videos: {
+      entryXP: 140,
+      wingXP: 70,
+      prerequisiteConceptKeys: FOUNDATION_CONCEPT_KEYS.slice(0, 8),
+      rule: "סרטוני עומק נפתחים אחרי בסיס למידה יציב.",
+    },
+    passport: {
+      entryXP: 70,
+      wingXP: 30,
+      prerequisiteConceptKeys: ["lesson_11::Array", "lesson_11::function"],
+      rule: "דרכון תלמיד נפתח אחרי התחלת שליטה במסלול היסוד.",
+    },
+  };
 
   const PROGRAMMING_BUILD_EXAMPLES = [
     {
@@ -6827,6 +7225,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // =========== Learning focus mode ===========
   const FOCUS_MODE_KEY = "lumenportal:learning-focus:v1";
+  const FOCUS_TOP_COLLAPSED_KEY = "lumenportal:learning-focus-top-collapsed:v1";
+  const TOP_CHROME_COLLAPSED_KEY = "lumenportal:top-chrome-collapsed:v1";
+  const RIGHT_SIDEBAR_COLLAPSED_KEY = "lumenportal:right-sidebar-collapsed:v1";
   const mobileContextQuery = typeof window.matchMedia === "function"
     ? window.matchMedia("(max-width: 900px)")
     : null;
@@ -6838,16 +7239,79 @@ document.addEventListener("DOMContentLoaded", () => {
   function syncContextTreeToggleVisibility() {
     const focusEnabled = document.body.classList.contains("learning-focus-mode");
     const mobileEnabled = isMobileLayout();
+    const readingEnabled = document.body.classList.contains("lesson-reading-mode");
     if (focusSideToggle) {
-      focusSideToggle.hidden = !(focusEnabled || mobileEnabled);
+      focusSideToggle.hidden = !(focusEnabled || mobileEnabled || readingEnabled);
       const open = focusEnabled
         ? document.body.classList.contains("focus-menu-open")
         : document.body.classList.contains("mobile-context-open");
       focusSideToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      focusSideToggle.setAttribute("aria-label", open ? "קפל תוכן עניינים" : "פתח תוכן עניינים");
+      focusSideToggle.setAttribute("title", open ? "קפל תוכן" : "פתח תוכן");
     }
-    if (!focusEnabled && !mobileEnabled) {
+    if (!focusEnabled && !mobileEnabled && !readingEnabled) {
       document.body.classList.remove("mobile-context-open", "focus-menu-open");
     }
+  }
+
+  function setLearningFocusTopCollapsed(collapsed) {
+    const enabled = Boolean(collapsed);
+    document.body.classList.toggle("learning-focus-top-collapsed", enabled);
+    focusTopToggle?.setAttribute("aria-pressed", enabled ? "true" : "false");
+    focusTopToggle?.setAttribute(
+      "aria-label",
+      enabled ? "פתח את האזור העליון במצב פוקוס" : "קפל את כל האזור העליון במצב פוקוס",
+    );
+    focusTopToggle?.setAttribute("title", enabled ? "פתח עליון" : "קפל עליון");
+    try {
+      localStorage.setItem(FOCUS_TOP_COLLAPSED_KEY, enabled ? "1" : "0");
+    } catch (_) {}
+  }
+
+  function setTopChromeCollapsed(collapsed) {
+    const enabled = Boolean(collapsed);
+    document.body.classList.toggle("top-chrome-collapsed", enabled);
+    topChromeCollapseBtn?.setAttribute("aria-pressed", enabled ? "true" : "false");
+    topChromeCollapseBtn?.setAttribute(
+      "aria-label",
+      enabled ? "פתח תפריט עליון" : "קפל תפריט עליון",
+    );
+    topChromeCollapseBtn?.setAttribute("title", enabled ? "פתח תפריט עליון" : "קפל תפריט עליון");
+    const label = topChromeCollapseBtn?.querySelector(".top-chrome-collapse-label");
+    if (label) label.textContent = enabled ? "פתח עליון" : "קפל עליון";
+    const icon = topChromeCollapseBtn?.querySelector(".top-chrome-collapse-icon");
+    if (icon) icon.textContent = enabled ? "⇩" : "⇧";
+    try {
+      localStorage.setItem(TOP_CHROME_COLLAPSED_KEY, enabled ? "1" : "0");
+    } catch (_) {}
+  }
+
+  function setRightSidebarCollapsed(collapsed) {
+    const enabled = Boolean(collapsed);
+    document.body.classList.toggle("right-sidebar-collapsed", enabled);
+    sidebarCollapseBtn?.setAttribute("aria-pressed", enabled ? "true" : "false");
+    sidebarCollapseBtn?.setAttribute(
+      "aria-label",
+      enabled ? "פתח תפריט ימני" : "קפל תפריט ימני",
+    );
+    sidebarCollapseBtn?.setAttribute("title", enabled ? "פתח תפריט ימני" : "קפל תפריט ימני");
+    const label = sidebarCollapseBtn?.querySelector(".sidebar-collapse-label");
+    if (label) label.textContent = enabled ? "פתח ימין" : "קפל ימין";
+    const icon = sidebarCollapseBtn?.querySelector(".sidebar-collapse-icon");
+    if (icon) icon.textContent = enabled ? "⇤" : "⇥";
+    if (enabled) {
+      sidebar?.classList.remove("open");
+      mobileToggle?.setAttribute("aria-expanded", "false");
+    }
+    try {
+      localStorage.setItem(RIGHT_SIDEBAR_COLLAPSED_KEY, enabled ? "1" : "0");
+    } catch (_) {}
+  }
+
+  function syncFocusTopToggleVisibility() {
+    const focusEnabled = document.body.classList.contains("learning-focus-mode");
+    if (focusTopToggle) focusTopToggle.hidden = !focusEnabled;
+    if (!focusEnabled) document.body.classList.remove("learning-focus-top-collapsed");
   }
 
   function setLearningFocusMode(enabled) {
@@ -6859,6 +7323,14 @@ document.addEventListener("DOMContentLoaded", () => {
       enabled ? "צא ממצב פוקוס וחזור לתצוגה מלאה" : "הפעל מצב פוקוס ללמידה במסך מלא",
     );
     syncContextTreeToggleVisibility();
+    syncFocusTopToggleVisibility();
+    if (enabled) {
+      try {
+        setLearningFocusTopCollapsed(localStorage.getItem(FOCUS_TOP_COLLAPSED_KEY) === "1");
+      } catch (_) {
+        setLearningFocusTopCollapsed(false);
+      }
+    }
     try {
       localStorage.setItem(FOCUS_MODE_KEY, enabled ? "1" : "0");
     } catch (_) {}
@@ -6866,6 +7338,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   try {
     if (localStorage.getItem(FOCUS_MODE_KEY) === "1") setLearningFocusMode(true);
+    if (localStorage.getItem(TOP_CHROME_COLLAPSED_KEY) === "1") setTopChromeCollapsed(true);
+    if (localStorage.getItem(RIGHT_SIDEBAR_COLLAPSED_KEY) === "1") setRightSidebarCollapsed(true);
   } catch (_) {}
 
   focusModeToggle?.addEventListener("click", () => {
@@ -6882,10 +7356,29 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileToggle?.setAttribute("aria-expanded", "false");
     }
     focusSideToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    focusSideToggle.setAttribute("aria-label", open ? "קפל תוכן עניינים" : "פתח תוכן עניינים");
+    focusSideToggle.setAttribute("title", open ? "קפל תוכן" : "פתח תוכן");
+  });
+
+  focusTopToggle?.addEventListener("click", () => {
+    setLearningFocusTopCollapsed(!document.body.classList.contains("learning-focus-top-collapsed"));
+  });
+
+  topChromeCollapseBtn?.addEventListener("click", () => {
+    setTopChromeCollapsed(!document.body.classList.contains("top-chrome-collapsed"));
+  });
+
+  sidebarCollapseBtn?.addEventListener("click", () => {
+    setRightSidebarCollapsed(!document.body.classList.contains("right-sidebar-collapsed"));
   });
 
   if (mobileContextQuery) {
-    const onMobileContextChange = () => syncContextTreeToggleVisibility();
+    const onMobileContextChange = () => {
+      syncContextTreeToggleVisibility();
+      if (isMobileLayout()) {
+        document.body.classList.remove("right-sidebar-collapsed");
+      }
+    };
     if (typeof mobileContextQuery.addEventListener === "function") {
       mobileContextQuery.addEventListener("change", onMobileContextChange);
     } else if (typeof mobileContextQuery.addListener === "function") {
@@ -6893,6 +7386,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   syncContextTreeToggleVisibility();
+  syncFocusTopToggleVisibility();
 
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
@@ -7231,6 +7725,21 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
     applyA11y();
+    window.LUMEN_VIEW_SETTINGS = {
+      getViewModeState: () => ({ ...state }),
+      setViewModeToggle(key, value) {
+        if (!TOGGLES.includes(key)) return;
+        state[key] = Boolean(value);
+        applyState();
+        panel.querySelectorAll(".vm-preset").forEach((b) => b.classList.remove("vm-preset-active"));
+      },
+      getA11yState: () => ({ ...a11yState }),
+      setA11yToggle(key, value) {
+        if (!A11Y_TOGGLES.includes(key)) return;
+        a11yState[key] = Boolean(value);
+        applyA11y();
+      },
+    };
 
     // ----- Glossary modal -----
     const glossaryModal = document.getElementById("glossary-modal");
@@ -7605,6 +8114,171 @@ document.addEventListener("DOMContentLoaded", () => {
     window.viewModeRefreshJumper = rebuildJumper;
   })();
 
+  // =========== SETTINGS TAB ===========
+  function initSettingsTab() {
+    if (!settingsView) return;
+    const status = document.getElementById("settings-save-status");
+    const themeSelect = document.getElementById("settings-theme-default");
+    const lessonModeSelect = document.getElementById("settings-lesson-mode-default");
+    const VM_KEY = "lumenportal:viewMode:v1";
+    const A11Y_KEY = "lumenportal:a11y:v1";
+    const LESSON_MODE_KEY = "lumenportal:lessonCompactMode:v1";
+    const vmKeys = [
+      "quiz", "code", "code-explanation", "explanation", "deep-dive",
+      "extended", "extras", "anti-patterns", "bug-hunt", "war-stories",
+      "mnemonic", "comparisons", "concept-comic", "concept-video",
+      "stage-zero", "memory-palace", "problem-first", "actions",
+    ];
+    const a11yKeys = ["dyslexia-font", "reduce-motion", "high-contrast", "large-text"];
+    const chromeToggleMap = {
+      "learning-focus": FOCUS_MODE_KEY,
+      "top-chrome-collapsed": TOP_CHROME_COLLAPSED_KEY,
+      "right-sidebar-collapsed": RIGHT_SIDEBAR_COLLAPSED_KEY,
+      "focus-top-collapsed": FOCUS_TOP_COLLAPSED_KEY,
+    };
+
+    const readJson = (key, fallback) => {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(key) || "null");
+        return parsed && typeof parsed === "object" ? parsed : fallback;
+      } catch (_) {
+        return fallback;
+      }
+    };
+    const writeStatus = (message = "נשמר לפתיחה הבאה.") => {
+      if (!status) return;
+      status.textContent = message;
+      status.classList.add("saved");
+      setTimeout(() => status.classList.remove("saved"), 900);
+    };
+    const setPressed = (button, pressed) => {
+      button.setAttribute("aria-pressed", pressed ? "true" : "false");
+      button.classList.toggle("active", Boolean(pressed));
+    };
+    const refreshSettingsControls = () => {
+      if (themeSelect) {
+        const saved = localStorage.getItem(THEME_KEY);
+        themeSelect.value = themeStates.includes(saved) ? saved : currentTheme;
+      }
+      if (lessonModeSelect) {
+        const saved = localStorage.getItem(LESSON_MODE_KEY);
+        lessonModeSelect.value = ["one-line", "full", "comparisons"].includes(saved) ? saved : "one-line";
+      }
+      settingsView.querySelectorAll("[data-settings-toggle]").forEach((button) => {
+        const key = button.getAttribute("data-settings-toggle") || "";
+        setPressed(button, localStorage.getItem(chromeToggleMap[key]) === "1");
+      });
+      const vmState = window.LUMEN_VIEW_SETTINGS?.getViewModeState?.() || readJson(VM_KEY, {});
+      settingsView.querySelectorAll("[data-settings-vm]").forEach((button) => {
+        const key = button.getAttribute("data-settings-vm") || "";
+        setPressed(button, vmState[key] !== false);
+      });
+      const a11yState = window.LUMEN_VIEW_SETTINGS?.getA11yState?.() || readJson(A11Y_KEY, {});
+      settingsView.querySelectorAll("[data-settings-a11y]").forEach((button) => {
+        const key = button.getAttribute("data-settings-a11y") || "";
+        setPressed(button, a11yState[key] === true);
+      });
+    };
+
+    themeSelect?.addEventListener("change", () => {
+      const next = themeStates.includes(themeSelect.value) ? themeSelect.value : "auto";
+      currentTheme = next;
+      try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
+      applyTheme(next);
+      refreshSettingsControls();
+      writeStatus("ערכת התצוגה נשמרה.");
+    });
+
+    lessonModeSelect?.addEventListener("change", () => {
+      const next = ["one-line", "full", "comparisons"].includes(lessonModeSelect.value)
+        ? lessonModeSelect.value
+        : "one-line";
+      try { localStorage.setItem(LESSON_MODE_KEY, next); } catch (_) {}
+      if (typeof setLessonCompactMode === "function") setLessonCompactMode(next);
+      refreshSettingsControls();
+      writeStatus("מצב שיעור ברירת מחדל נשמר.");
+    });
+
+    settingsView.querySelectorAll("[data-settings-toggle]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.getAttribute("data-settings-toggle") || "";
+        const storageKey = chromeToggleMap[key];
+        if (!storageKey) return;
+        const enabled = localStorage.getItem(storageKey) !== "1";
+        if (key === "learning-focus") setLearningFocusMode(enabled);
+        else if (key === "top-chrome-collapsed") setTopChromeCollapsed(enabled);
+        else if (key === "right-sidebar-collapsed") setRightSidebarCollapsed(enabled);
+        else if (key === "focus-top-collapsed") {
+          try { localStorage.setItem(storageKey, enabled ? "1" : "0"); } catch (_) {}
+          if (document.body.classList.contains("learning-focus-mode")) setLearningFocusTopCollapsed(enabled);
+        }
+        refreshSettingsControls();
+        writeStatus("ברירת המחדל של ה-chrome נשמרה.");
+      });
+    });
+
+    settingsView.querySelectorAll("[data-settings-vm]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.getAttribute("data-settings-vm") || "";
+        if (!vmKeys.includes(key)) return;
+        const current = window.LUMEN_VIEW_SETTINGS?.getViewModeState?.() || readJson(VM_KEY, {});
+        const nextValue = current[key] === false;
+        if (window.LUMEN_VIEW_SETTINGS?.setViewModeToggle) {
+          window.LUMEN_VIEW_SETTINGS.setViewModeToggle(key, nextValue);
+        } else {
+          const nextState = { ...Object.fromEntries(vmKeys.map((item) => [item, true])), ...current, [key]: nextValue };
+          try { localStorage.setItem(VM_KEY, JSON.stringify(nextState)); } catch (_) {}
+          document.body.classList.toggle(`view-hide-${key}`, !nextValue);
+        }
+        refreshSettingsControls();
+        writeStatus("חלקי השיעור נשמרו.");
+      });
+    });
+
+    settingsView.querySelectorAll("[data-settings-a11y]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.getAttribute("data-settings-a11y") || "";
+        if (!a11yKeys.includes(key)) return;
+        const current = window.LUMEN_VIEW_SETTINGS?.getA11yState?.() || readJson(A11Y_KEY, {});
+        const nextValue = current[key] !== true;
+        if (window.LUMEN_VIEW_SETTINGS?.setA11yToggle) {
+          window.LUMEN_VIEW_SETTINGS.setA11yToggle(key, nextValue);
+        } else {
+          const nextState = { ...Object.fromEntries(a11yKeys.map((item) => [item, false])), ...current, [key]: nextValue };
+          try { localStorage.setItem(A11Y_KEY, JSON.stringify(nextState)); } catch (_) {}
+          document.body.classList.toggle(`a11y-${key}`, nextValue);
+        }
+        refreshSettingsControls();
+        writeStatus("הגדרת הנגישות נשמרה.");
+      });
+    });
+
+    window.refreshSettingsPanel = refreshSettingsControls;
+    refreshSettingsControls();
+  }
+
+  function openSettings() {
+    hideAllViews();
+    setPortalDecisionAid("settings");
+    currentLessonId = null;
+    currentLessonTitle.textContent = "⚙️ הגדרות";
+    currentLessonDesc.textContent = "ברירות מחדל לתצוגה, נגישות, סנכרון, ייבוא/ייצוא וכלי ניהול במקום אחד.";
+    if (settingsView) settingsView.style.display = "block";
+    openSettingsBtn?.classList.add("active");
+    setContextTree("הגדרות", [
+      { label: "תצוגה וברירת מחדל", meta: "ערכת צבע, מצב שיעור, chrome", active: true },
+      { label: "נגישות", meta: "גופן, תנועה, ניגודיות, גודל טקסט" },
+      { label: "חלקים גלויים בשיעור", meta: "מה מוצג כברירת מחדל" },
+      { label: "סנכרון, ייבוא וייצוא", meta: "JSON ו-Supabase Sync" },
+      { label: "ניהול מתקדם", meta: "כיתה, קהילה, peer review, mentor" },
+    ], { key: "settings" });
+    window.refreshSettingsPanel?.();
+    scrollToTop();
+    sidebar.classList.remove("open");
+  }
+
+  initSettingsTab();
+
   // =========== INIT SIDEBAR ===========
   function initSidebar() {
     if (!window.LESSONS_DATA) return;
@@ -7652,6 +8326,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const bank = window.QUESTIONS_BANK || { mc: [], fill: [] };
       statBank.textContent = (bank.mc || []).length + (bank.fill || []).length;
     }
+    updateExamCockpit();
 
     // Onboarding tour visibility — hide if dismissed previously
     const tour = document.querySelector(".onboarding-tour");
@@ -7660,10 +8335,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateProgress();
+    renderSiteMapMenu();
+    updateSiteNavigation();
   }
 
   // =========== ONBOARDING TOUR ===========
   document.addEventListener("click", (e) => {
+    const cockpitAction = e.target?.closest("[data-exam-cockpit-action]")?.dataset?.examCockpitAction;
+    if (cockpitAction) {
+      e.preventDefault();
+      if (cockpitAction === "trainer") openTrainer();
+      if (cockpitAction === "mock") openMockExam();
+      if (cockpitAction === "weakest30") startWeakestThirtyMinuteFlow();
+      if (cockpitAction === "cram") window.open("EXAM_FINAL_CRAM_SHEET.md", "_blank", "noopener");
+      return;
+    }
     const action = e.target?.dataset?.tourAction;
     if (!action) return;
     e.preventDefault();
@@ -7786,16 +8472,28 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!portalDecisionAid) return;
     portalDecisionAid.innerHTML = renderPortalDecisionAid(key);
     portalDecisionAid.style.display = "block";
+    if (portalDecisionMenu) {
+      portalDecisionMenu.dataset.ready = "true";
+    }
   }
 
   function hidePortalDecisionAid() {
     if (!portalDecisionAid) return;
+    if (portalDecisionMenu) {
+      portalDecisionMenu.open = false;
+      portalDecisionMenu.dataset.ready = "false";
+    }
     portalDecisionAid.style.display = "none";
     portalDecisionAid.innerHTML = "";
   }
 
   function hideAllViews() {
+    pushCurrentSiteNavigationState();
+    document.body.classList.remove("lesson-reading-mode");
+    document.body.classList.remove("mobile-context-open");
+    syncContextTreeToggleVisibility();
     hidePortalDecisionAid();
+    hidePageScrollRail();
     welcomeScreen.style.display = "none";
     activeLessonContainer.style.display = "none";
     if (knowledgeMapView) knowledgeMapView.style.display = "none";
@@ -7809,6 +8507,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (programmingMuseumView) programmingMuseumView.style.display = "none";
     if (languageToolsView) languageToolsView.style.display = "none";
     if (rewardStoreView) rewardStoreView.style.display = "none";
+    if (settingsView) settingsView.style.display = "none";
     if (learningEvidenceView) learningEvidenceView.style.display = "none";
     if (capstonesView) capstonesView.style.display = "none";
     if (blueprintsView) blueprintsView.style.display = "none";
@@ -7829,6 +8528,690 @@ document.addEventListener("DOMContentLoaded", () => {
     document
       .querySelectorAll(".lesson-nav-btn")
       .forEach((b) => b.classList.remove("active"));
+    queueSiteNavigationRefresh();
+  }
+
+  function getExamDailyTarget() {
+    let stored = null;
+    try { stored = JSON.parse(localStorage.getItem(EXAM_DAILY_TARGET_KEY) || "null"); } catch {}
+    const target = stored && typeof stored === "object" ? stored : {};
+    return {
+      minutes: Math.max(0, Number(target.minutes) || 30),
+      modules: Math.max(0, Number(target.modules) || 2),
+      questions: Math.max(0, Number(target.questions) || 25),
+      codeTasks: Math.max(0, Number(target.codeTasks) || 3),
+    };
+  }
+
+  function getExamCountdownSummary(now = new Date()) {
+    let rawDate = "";
+    try { rawDate = String(localStorage.getItem(EXAM_DATE_KEY) || "").trim(); } catch {}
+    if (!rawDate) {
+      return { configured: false, label: "לא הוגדר תאריך מבחן", daysLeft: null };
+    }
+    const target = new Date(rawDate);
+    if (Number.isNaN(target.getTime())) {
+      return { configured: false, label: "תאריך מבחן לא תקין", daysLeft: null };
+    }
+    const today = new Date(now);
+    const diffMs = target.setHours(0, 0, 0, 0) - today.setHours(0, 0, 0, 0);
+    const daysLeft = Math.ceil(diffMs / 86400000);
+    return {
+      configured: true,
+      label: daysLeft >= 0 ? `${daysLeft} ימים למבחן` : `המבחן עבר לפני ${Math.abs(daysLeft)} ימים`,
+      daysLeft,
+    };
+  }
+
+  function buildEndOfDayReport(now = new Date()) {
+    const day = new Date(now).toISOString().slice(0, 10);
+    const events = (loadLearningEvidenceState().events || [])
+      .filter((event) => new Date(event.timestamp || 0).toISOString().slice(0, 10) === day);
+    const rewards = readRewardLog()
+      .filter((entry) => String(entry.at || "").slice(0, 10) === day);
+    const learnedConcepts = new Set(events.map((event) => event.conceptKey || "").filter(Boolean));
+    const failed = events.filter((event) => event.type === "wrong_answer_aid" || event.correct === false).length;
+    const repeated = events.filter((event) => ["review", "flashcard_review"].includes(event.type)).length;
+    const mastered = events.filter((event) => event.type === "mastery_change" && Number(event.masteryAfter || 0) >= 7).length;
+    const rewardXP = rewards.reduce((sum, entry) => sum + (Number(entry.xp) || 0), 0);
+    return {
+      learned: learnedConcepts.size,
+      failed,
+      repeated,
+      mastered,
+      rewardXP,
+      nextAction: nextEconomyAction().title,
+    };
+  }
+
+  function buildExamModuleReadinessRows() {
+    return (Array.isArray(SVCOLLEGE_EXAM_MODULES) ? SVCOLLEGE_EXAM_MODULES : [])
+      .map((module) => {
+        const concepts = [];
+        (window.LESSONS_DATA || []).forEach((lesson) => {
+          (lesson.concepts || []).forEach((concept) => {
+            const key = conceptKey(lesson.id, concept.conceptName);
+            if (module.filter(key)) concepts.push({ lesson, concept, key });
+          });
+        });
+        const mastered = concepts.filter((item) => isScoreMastered(getScore(item.lesson.id, item.concept.conceptName))).length;
+        const attempted = concepts.filter((item) => (getScore(item.lesson.id, item.concept.conceptName).attempts || 0) > 0).length;
+        return {
+          id: module.id,
+          label: module.label,
+          total: concepts.length,
+          mastered,
+          attempted,
+          concepts,
+          readiness: concepts.length ? Math.round((mastered / concepts.length) * 100) : 0,
+        };
+      })
+      .filter((module) => module.total > 0)
+      .sort((a, b) => a.readiness - b.readiness || b.total - a.total || a.label.localeCompare(b.label));
+  }
+
+  function buildDailyStudyPlan() {
+    const target = getExamDailyTarget();
+    const modules = buildExamModuleReadinessRows();
+    const weakModules = modules.slice(0, Math.max(1, target.modules || 1));
+    const weakConcepts = weakModules.flatMap((module) =>
+      module.concepts
+        .map((item) => {
+          const score = getScore(item.lesson.id, item.concept.conceptName);
+          return {
+            moduleId: module.id,
+            moduleLabel: module.label,
+            key: item.key,
+            lessonId: item.lesson.id,
+            lessonTitle: item.lesson.title,
+            conceptName: item.concept.conceptName,
+            level: Number(score.level) || 1,
+            attempts: Number(score.attempts) || 0,
+            weakReports: Number(score.weakReports) || 0,
+            mastered: isScoreMastered(score),
+            codeProofRequired: conceptRequiresCodeProof(item.concept),
+            codeProofSatisfied: scoreHasCodeProof(score),
+            priority: spacedReviewPriorityForScore(score, item.concept, item.key),
+          };
+        })
+        .filter((item) => !item.mastered),
+    ).sort((a, b) => {
+      if (b.priority !== a.priority) return b.priority - a.priority;
+      if (a.level !== b.level) return a.level - b.level;
+      return a.key.localeCompare(b.key);
+    });
+    const conceptProofs = weakConcepts.slice(0, Math.max(1, Math.min(6, target.questions || 6)));
+    const codeProofs = weakConcepts.filter((item) => item.codeProofRequired && !item.codeProofSatisfied).slice(0, Math.max(1, target.codeTasks || 1));
+    const averageReadiness = modules.length
+      ? Math.round(modules.reduce((sum, module) => sum + module.readiness, 0) / modules.length)
+      : 0;
+    const mockExamTarget = averageReadiness >= 90
+      ? "level_100_professor"
+      : "svcollege_fullstack";
+    const timeBudget = {
+      minutes: target.minutes,
+      weakModules: Math.min(weakModules.length, target.modules),
+      conceptProofMinutes: Math.max(5, Math.round(target.minutes * 0.45)),
+      codeProofMinutes: Math.max(5, Math.round(target.minutes * 0.3)),
+      mockExamMinutes: Math.max(5, target.minutes - Math.round(target.minutes * 0.45) - Math.round(target.minutes * 0.3)),
+    };
+
+    return {
+      policy: "Daily study plan uses current local scores, SVCollege modules, concept proofs and configured daily target only. Missing learner evidence remains unknown/unavailable; no fake plan rows are generated.",
+      timeBudget,
+      weakModules,
+      conceptProofs,
+      codeProofs,
+      mockExamTarget,
+      averageReadiness,
+      label: weakModules.length
+        ? `${timeBudget.minutes} דקות · ${weakModules[0].label} ראשון · ${conceptProofs.length} הוכחות מושג · ${codeProofs.length} הוכחות קוד`
+        : "אין מודולים חלשים זמינים. עבור למבחן פרופסור כדי לאמת רמה 100.",
+    };
+  }
+
+  function buildTodayOnlyQueue() {
+    const plan = buildDailyStudyPlan();
+    const weakTopics = plan.conceptProofs.slice(0, 3).map((item, index) => ({
+      order: index + 1,
+      type: "weak-topic",
+      label: item.conceptName,
+      moduleLabel: item.moduleLabel,
+      conceptKey: item.key,
+      reason: `level ${item.level} · priority ${item.priority}`,
+    }));
+    const codeProofs = plan.codeProofs.slice(0, 2).map((item, index) => ({
+      order: weakTopics.length + index + 1,
+      type: "code-proof",
+      label: item.conceptName,
+      moduleLabel: item.moduleLabel,
+      conceptKey: item.key,
+      reason: "requires Fill/Trace/Bug/Build proof",
+    }));
+    const mockSections = [{
+      order: weakTopics.length + codeProofs.length + 1,
+      type: "mock-section",
+      label: plan.mockExamTarget === "level_100_professor" ? "מבחן פרופסור" : "SVCollege Full Stack",
+      moduleLabel: "Mock exam",
+      conceptKey: plan.mockExamTarget,
+      reason: `${plan.averageReadiness}% readiness`,
+    }];
+    const items = [...weakTopics, ...codeProofs, ...mockSections];
+    return {
+      policy: "Today-only queue is capped at 3 weak topics, 2 code proofs and 1 mock section from the current daily study plan. It never pads the queue with fake tasks.",
+      limits: { weakTopics: 3, codeProofs: 2, mockSections: 1 },
+      counts: {
+        weakTopics: weakTopics.length,
+        codeProofs: codeProofs.length,
+        mockSections: mockSections.length,
+        total: items.length,
+      },
+      items,
+    };
+  }
+
+  function dateKeyFromTimestamp(timestamp) {
+    return new Date(timestamp).toISOString().slice(0, 10);
+  }
+
+  function buildSpacedReviewCalendar(now = Date.now()) {
+    const items = buildExamModuleReadinessRows().flatMap((module) =>
+      module.concepts.map((item) => {
+        const score = getScore(item.lesson.id, item.concept.conceptName);
+        return {
+          moduleLabel: module.label,
+          lessonTitle: item.lesson.title,
+          conceptName: item.concept.conceptName,
+          conceptKey: item.key,
+          concept: item.concept,
+          score,
+        };
+      }),
+    );
+    const core = scoringCore();
+    const schedule = core && typeof core.buildSpacedReviewSchedule === "function"
+      ? core.buildSpacedReviewSchedule(items, { now, limit: 24 })
+      : items
+          .map((item) => ({
+            ...item,
+            priority: spacedReviewPriorityForScore(item.score, item.concept, item.conceptKey),
+            examCritical: isExamCriticalConcept(item.concept),
+          }))
+          .filter((item) => item.priority > 0)
+          .sort((a, b) => b.priority - a.priority || String(a.conceptKey).localeCompare(String(b.conceptKey)))
+          .slice(0, 24);
+    const dayMs = 86400000;
+    const rows = schedule.map((item, index) => {
+      const dayOffset = index < 8 ? 0 : index < 16 ? 1 : 2;
+      return {
+        order: index + 1,
+        day: dateKeyFromTimestamp(now + dayOffset * dayMs),
+        priority: item.priority,
+        examCritical: Boolean(item.examCritical || isExamCriticalConcept(item.concept)),
+        moduleLabel: item.moduleLabel || "unknown/unavailable",
+        lessonTitle: item.lessonTitle || "unknown/unavailable",
+        conceptName: item.conceptName || item.concept?.conceptName || item.conceptKey,
+        conceptKey: item.conceptKey || "unknown/unavailable",
+      };
+    });
+    const days = Array.from(new Set(rows.map((row) => row.day))).map((day) => ({
+      day,
+      items: rows.filter((row) => row.day === day),
+    }));
+    return {
+      policy: "Spaced review calendar is ordered by SVCollege exam-critical weak concept priority from current local scores. It schedules only existing concepts and never creates review content.",
+      total: rows.length,
+      examCritical: rows.filter((row) => row.examCritical).length,
+      days,
+      rows,
+    };
+  }
+
+  function buildFatigueAwareModeSwitch() {
+    const trainerStatus = trainerFatigueGuardStatus();
+    const shouldSwitchToReview = Boolean(trainerStatus);
+    return {
+      policy: "Fatigue-aware mode switch uses real recent trainer outcomes and penalty-sprint overload signals only. When accuracy drops, review mode is recommended before more penalty practice.",
+      source: trainerStatus?.source || "trainer",
+      shouldSwitchToReview,
+      recommendedMode: shouldSwitchToReview ? "review" : "current",
+      blockedMode: shouldSwitchToReview ? "penalty-sprint" : "",
+      message: trainerStatus?.message || "אין כרגע ירידת דיוק חדה בחלון התרגול האחרון.",
+      previousPct: trainerStatus?.previousPct ?? null,
+      recentPct: trainerStatus?.recentPct ?? null,
+    };
+  }
+
+  function buildOfflineCramMode() {
+    const plan = buildDailyStudyPlan();
+    const definitions = plan.conceptProofs.slice(0, 12).map((item) => {
+      const ref = findConceptByKey(item.key);
+      const concept = ref?.concept || {};
+      return {
+        conceptKey: item.key,
+        conceptName: item.conceptName,
+        lessonTitle: item.lessonTitle,
+        oneLine: conceptSprintOneLine(concept) || "unknown/unavailable",
+      };
+    });
+    const comparisonTables = plan.conceptProofs
+      .map((item) => {
+        const ref = findConceptByKey(item.key);
+        const comparisons = Array.isArray(ref?.concept?.comparisons) ? ref.concept.comparisons : [];
+        return comparisons.length ? {
+          conceptKey: item.key,
+          conceptName: item.conceptName,
+          count: comparisons.length,
+        } : null;
+      })
+      .filter(Boolean)
+      .slice(0, 6);
+    const codeProofChecklist = plan.codeProofs.slice(0, 8).map((item, index) => ({
+      order: index + 1,
+      conceptKey: item.key,
+      conceptName: item.conceptName,
+      check: "פתור Fill/Trace/Bug/Build אחד בלי לפתוח הסבר לפני התשובה.",
+    }));
+    return {
+      policy: "Offline cram mode is a compact read-only view built from existing weak concepts, one-line definitions, comparison tables and code-proof requirements. Missing definitions stay unknown/unavailable; no cram facts are invented.",
+      definitions,
+      comparisonTables,
+      codeProofChecklist,
+      readyOffline: true,
+    };
+  }
+
+  function buildEndOfDayDiff(now = new Date()) {
+    const day = new Date(now).toISOString().slice(0, 10);
+    const events = (loadLearningEvidenceState().events || [])
+      .filter((event) => new Date(event.timestamp || 0).toISOString().slice(0, 10) === day);
+    const levelChanges = events
+      .filter((event) => event.type === "mastery_change")
+      .map((event) => ({
+        conceptKey: event.conceptKey || "unknown/unavailable",
+        before: Number(event.masteryBefore ?? event.beforeLevel ?? 0) || 0,
+        after: Number(event.masteryAfter ?? event.afterLevel ?? 0) || 0,
+      }))
+      .filter((item) => item.before !== item.after);
+    const codeProofs = Object.values(scores || {})
+      .filter((score) => score?.codeProof?.passed === true && String(score.codeProof.timestamp ? new Date(score.codeProof.timestamp).toISOString().slice(0, 10) : "") === day)
+      .map((score) => ({
+        conceptKey: score.codeProof.conceptKey || "unknown/unavailable",
+        kind: score.codeProof.kind || "unknown/unavailable",
+      }));
+    const wrongClusters = Object.values(mistakeAgentState?.namedWeaknesses || {})
+      .filter((weakness) => String(weakness.lastSeen || "").slice(0, 10) === day || Number(weakness.count || 0) > 0)
+      .slice(0, 5)
+      .map((weakness) => ({
+        label: weakness.label || weakness.name || "unknown/unavailable",
+        count: Number(weakness.count || 0),
+      }));
+    const nextBlockers = (confusionBlockerState?.blockers || [])
+      .filter((blocker) => blocker && blocker.status !== "resolved")
+      .slice(0, 5)
+      .map((blocker) => ({
+        label: blocker.targetConceptName || blocker.conceptName || blocker.misconceptionLabel || "unknown/unavailable",
+        conceptKey: blocker.targetConceptKey || blocker.conceptKey || "unknown/unavailable",
+      }));
+    return {
+      policy: "End-of-day diff uses today's local learning evidence, score proofs, named weakness clusters and confusion blockers only. Missing data stays empty; no end-of-day achievements are fabricated.",
+      day,
+      levelChanges,
+      codeProofs,
+      wrongClusters,
+      nextBlockers,
+    };
+  }
+
+  function buildPersonalExamReadinessTrend(now = new Date()) {
+    const events = loadLearningEvidenceState().events || [];
+    const examHistory = typeof loadExamHistory === "function" ? loadExamHistory() : [];
+    const byDay = new Map();
+    const ensureDay = (day) => {
+      if (!byDay.has(day)) byDay.set(day, { day, examScores: [], masteryChanges: 0, codeProofs: 0, wrongAnswers: 0 });
+      return byDay.get(day);
+    };
+    examHistory.forEach((record) => {
+      const day = String(record.date || "").slice(0, 10);
+      if (!day) return;
+      ensureDay(day).examScores.push(Number(record.score || record.scorePct || 0) || 0);
+    });
+    events.forEach((event) => {
+      const day = new Date(event.timestamp || 0).toISOString().slice(0, 10);
+      const row = ensureDay(day);
+      if (event.type === "mastery_change") row.masteryChanges += 1;
+      if (event.type === "wrong_answer_aid" || event.correct === false) row.wrongAnswers += 1;
+    });
+    Object.values(scores || {}).forEach((score) => {
+      if (!score?.codeProof?.passed || !score.codeProof.timestamp) return;
+      const day = new Date(score.codeProof.timestamp).toISOString().slice(0, 10);
+      ensureDay(day).codeProofs += 1;
+    });
+    const points = [...byDay.values()]
+      .sort((a, b) => a.day.localeCompare(b.day))
+      .slice(-14)
+      .map((row) => {
+        const examScore = row.examScores.length
+          ? Math.round(row.examScores.reduce((sum, score) => sum + score, 0) / row.examScores.length)
+          : null;
+        const readinessSignal = examScore ?? Math.max(0, Math.min(100, row.masteryChanges * 8 + row.codeProofs * 10 - row.wrongAnswers * 3));
+        return { ...row, examScore, readinessSignal };
+      });
+    const latest = points[points.length - 1] || null;
+    const previous = points.length > 1 ? points[points.length - 2] : null;
+    return {
+      policy: "Personal exam readiness trend uses real mock exam history, mastery changes, code proofs and wrong-answer evidence by day. If no history exists, trend points stay empty instead of inventing dates.",
+      points,
+      latestSignal: latest?.readinessSignal ?? null,
+      delta: latest && previous ? latest.readinessSignal - previous.readinessSignal : null,
+      asOf: new Date(now).toISOString().slice(0, 10),
+    };
+  }
+
+  function buildPrintableFinal24HourPlan() {
+    const plan = buildDailyStudyPlan();
+    const queue = buildTodayOnlyQueue();
+    const cram = buildOfflineCramMode();
+    const weakConcepts = plan.conceptProofs.slice(0, 20);
+    const blocks = [
+      { title: "00-30 דקות", focus: "הוכחות מושג", items: weakConcepts.slice(0, 5).map((item) => item.conceptName) },
+      { title: "30-60 דקות", focus: "הוכחות קוד", items: plan.codeProofs.slice(0, 5).map((item) => item.conceptName) },
+      { title: "60-90 דקות", focus: "מבחן מדומה", items: [plan.mockExamTarget] },
+      { title: "סגירה", focus: "חזרה קומפקטית", items: cram.definitions.slice(0, 6).map((item) => item.conceptName) },
+    ];
+    return {
+      policy: "Printable final 24-hour plan is assembled from actual weak concepts, code-proof gaps, today's capped queue and offline cram definitions. It never inserts generic study topics or fake weak concepts.",
+      weakConcepts,
+      queue: queue.items,
+      blocks,
+      printableText: blocks.map((block) => `${block.title}: ${block.focus} — ${block.items.join(", ") || "unknown/unavailable"}`).join("\n"),
+    };
+  }
+
+  function buildExamScoreProjection() {
+    const modules = buildExamModuleReadinessRows();
+    const readinessAverage = modules.length
+      ? Math.round(modules.reduce((sum, module) => sum + module.readiness, 0) / modules.length)
+      : null;
+    const history = loadExamHistory()
+      .filter((record) => Number.isFinite(Number(record.score)))
+      .slice(0, 5);
+    const historyAverage = history.length
+      ? Math.round(history.reduce((sum, record) => sum + Number(record.score), 0) / history.length)
+      : null;
+    const projectedScore = historyAverage == null
+      ? readinessAverage
+      : readinessAverage == null
+        ? historyAverage
+        : Math.round((historyAverage * 0.6) + (readinessAverage * 0.4));
+    const historyScores = history.map((record) => Number(record.score));
+    const spread = historyScores.length >= 3
+      ? Math.max(4, Math.round(Math.max(...historyScores) - Math.min(...historyScores)))
+      : 12;
+    const low = projectedScore == null ? null : Math.max(0, projectedScore - spread);
+    const high = projectedScore == null ? null : Math.min(100, projectedScore + spread);
+    return {
+      policy: "Score projection uses current module readiness and real mock/final exam history only. If there is no evidence, projection remains unknown/unavailable and no expected score is fabricated.",
+      readinessAverage,
+      historyAverage,
+      historyCount: history.length,
+      projectedScore,
+      confidenceRange: {
+        low,
+        high,
+        label: low == null || high == null ? "unknown/unavailable" : `${low}-${high}%`,
+      },
+      confidence: history.length >= 3 ? "measured-history" : history.length > 0 ? "limited-history" : "readiness-only",
+    };
+  }
+
+  function buildFinalWeakList(limit = 20) {
+    const rows = buildExamModuleReadinessRows().flatMap((module) =>
+      module.concepts.map((item) => {
+        const score = getScore(item.lesson.id, item.concept.conceptName);
+        const level = Number(score.level) || 1;
+        const attempts = Number(score.attempts) || 0;
+        const accuracy = attempts ? Math.round(((Number(score.correct) || 0) / attempts) * 100) : null;
+        const codeGap = conceptRequiresCodeProof(item.concept) && !scoreHasCodeProof(score);
+        const proofGap = level >= 6 && !scoreHasMasteryProof(score);
+        const riskScore =
+          (isScoreMastered(score) ? 0 : 80) +
+          (7 - Math.min(7, level)) * 8 +
+          (codeGap ? 18 : 0) +
+          (proofGap ? 22 : 0) +
+          (accuracy == null ? 10 : Math.max(0, 70 - accuracy));
+        return {
+          conceptKey: item.key,
+          conceptName: item.concept.conceptName,
+          lessonTitle: item.lesson.title,
+          moduleLabel: module.label,
+          level,
+          attempts,
+          accuracy,
+          codeGap,
+          proofGap,
+          mastered: isScoreMastered(score),
+          riskScore,
+        };
+      }),
+    )
+      .filter((item) => !item.mastered || item.codeGap || item.proofGap)
+      .sort((a, b) => b.riskScore - a.riskScore || a.moduleLabel.localeCompare(b.moduleLabel) || a.conceptKey.localeCompare(b.conceptKey))
+      .slice(0, limit);
+    return {
+      policy: "Final weak list ranks existing SVCollege concepts by local mastery, proof gaps, code-proof gaps and answer accuracy only. It never adds generic or fake weak concepts.",
+      limit,
+      rows,
+    };
+  }
+
+  function buildExamCockpitSummary() {
+    const gate = level100GateStatus();
+    const target = getExamDailyTarget();
+    const countdown = getExamCountdownSummary();
+    const endOfDay = buildEndOfDayReport();
+    const checklist = gate.checklist || [];
+    const done = checklist.filter((item) => item.done).length;
+    const readiness = checklist.length ? Math.round((done / checklist.length) * 100) : 0;
+    const modules = buildExamModuleReadinessRows();
+    const weakest = modules.slice(0, 3);
+    const primaryWeak = weakest[0] || null;
+    const blockers = checklist.filter((item) => !item.done).slice(0, 4);
+    const dailyStudyPlan = buildDailyStudyPlan();
+    const todayOnlyQueue = buildTodayOnlyQueue();
+    const spacedReviewCalendar = buildSpacedReviewCalendar();
+    const fatigueSwitch = buildFatigueAwareModeSwitch();
+    const offlineCramMode = buildOfflineCramMode();
+    const endOfDayDiff = buildEndOfDayDiff();
+    const readinessTrend = buildPersonalExamReadinessTrend();
+    const final24HourPlan = buildPrintableFinal24HourPlan();
+    const scoreProjection = buildExamScoreProjection();
+    const finalWeakList = buildFinalWeakList(20);
+    return {
+      readiness,
+      completedChecks: done,
+      totalChecks: checklist.length,
+      modules,
+      weakest,
+      blockers,
+      countdown,
+      target,
+      endOfDay,
+      dailyStudyPlan,
+      todayOnlyQueue,
+      spacedReviewCalendar,
+      fatigueSwitch,
+      offlineCramMode,
+      endOfDayDiff,
+      readinessTrend,
+      final24HourPlan,
+      scoreProjection,
+      finalWeakList,
+      todayPlan: primaryWeak
+        ? `${target.minutes} דקות: ${target.modules} מודולים חלשים, ${target.questions} שאלות, ${target.codeTasks} משימות קוד. התחל ב-${primaryWeak.label}.`
+        : "כל מודולי SVCollege נראים מוכנים. פתח מבחן פרופסור כדי לנעול ציון 100.",
+      nextDrill: primaryWeak
+        ? `${primaryWeak.label} · ${primaryWeak.mastered}/${primaryWeak.total} mastered`
+        : "מבחן רמה 100 — פרופסור",
+    };
+  }
+
+  function updateExamCockpit() {
+    const root = document.getElementById("exam-cockpit");
+    if (!root) return;
+    const summary = buildExamCockpitSummary();
+    const todayOnlyRows = summary.todayOnlyQueue.items.length
+      ? summary.todayOnlyQueue.items.map((item) => `
+          <b>${esc(item.order)}. ${esc(item.label)} · ${esc(item.type)}</b>
+        `).join("")
+      : "<b>אין משימות היום לפי נתוני התלמיד הקיימים</b>";
+    const calendarRows = summary.spacedReviewCalendar.days.length
+      ? summary.spacedReviewCalendar.days.slice(0, 3).map((day) => `
+          <b>${esc(day.day)} · ${esc(day.items.length)} חזרות</b>
+        `).join("")
+      : "<b>אין חזרות מתוזמנות לפי נתוני התלמיד הקיימים</b>";
+    const endOfDayDiffRows = [
+      `${summary.endOfDayDiff.levelChanges.length} שינויי רמה`,
+      `${summary.endOfDayDiff.codeProofs.length} הוכחות קוד`,
+      `${summary.endOfDayDiff.wrongClusters.length} אשכולות טעות`,
+      `${summary.endOfDayDiff.nextBlockers.length} blockers להמשך`,
+    ].map((line) => `<b>${esc(line)}</b>`).join("");
+    const trendLabel = summary.readinessTrend.latestSignal == null
+      ? "אין עדיין trend"
+      : `${summary.readinessTrend.latestSignal}% · ${summary.readinessTrend.delta == null ? "ללא delta" : `${summary.readinessTrend.delta >= 0 ? "+" : ""}${summary.readinessTrend.delta}`}`;
+    const final24Rows = summary.final24HourPlan.blocks.map((block) => `
+      <b>${esc(block.title)} · ${esc(block.focus)}</b>
+    `).join("");
+    const projectionLabel = summary.scoreProjection.projectedScore == null
+      ? "unknown/unavailable"
+      : `${summary.scoreProjection.projectedScore}%`;
+    const finalWeakRows = summary.finalWeakList.rows.slice(0, 5).map((item) => `
+      <b>${esc(item.conceptName)} · ${esc(item.moduleLabel)} · risk ${esc(item.riskScore)}</b>
+    `).join("") || "<b>אין מושגים מאיימים לפי הנתונים הקיימים</b>";
+    root.innerHTML = `
+      <div class="exam-cockpit-head">
+        <div>
+          <span class="exam-cockpit-kicker">Exam Cockpit</span>
+          <h3>תוכנית היום לציון 100</h3>
+          <p>${esc(summary.todayPlan)}</p>
+        </div>
+        <div class="exam-readiness-meter">
+          <strong>${esc(summary.readiness)}%</strong>
+          <span>${esc(summary.completedChecks)}/${esc(summary.totalChecks)} שערים</span>
+        </div>
+      </div>
+      <div class="exam-cockpit-grid">
+        <article>
+          <span>Countdown + יעד יומי</span>
+          <strong>${esc(summary.countdown.label)}</strong>
+          <b>${esc(summary.target.minutes)} דק׳ · ${esc(summary.target.modules)} מודולים · ${esc(summary.target.questions)} שאלות · ${esc(summary.target.codeTasks)} קוד</b>
+          <button data-exam-cockpit-action="weakest30">התחל 30 דקות</button>
+        </article>
+        <article>
+          <span>Daily Study Plan</span>
+          <strong>${esc(summary.dailyStudyPlan.label)}</strong>
+          <b>${esc(summary.dailyStudyPlan.timeBudget.conceptProofMinutes)} דק׳ הוכחות מושג · ${esc(summary.dailyStudyPlan.timeBudget.codeProofMinutes)} דק׳ קוד · ${esc(summary.dailyStudyPlan.timeBudget.mockExamMinutes)} דק׳ מבחן</b>
+          <small>Mock target: ${esc(summary.dailyStudyPlan.mockExamTarget)}</small>
+        </article>
+        <article>
+          <span>Today-only queue</span>
+          <strong>${esc(summary.todayOnlyQueue.counts.total)} משימות היום</strong>
+          <div class="exam-today-only-list">${todayOnlyRows}</div>
+          <small>מקס׳ 3 נושאים · 2 קוד · 1 מבחן</small>
+        </article>
+        <article>
+          <span>Spaced review calendar</span>
+          <strong>${esc(summary.spacedReviewCalendar.total)} חזרות · ${esc(summary.spacedReviewCalendar.examCritical)} קריטיות</strong>
+          <div class="exam-spaced-calendar-list">${calendarRows}</div>
+          <small>SVCollege weak concepts first</small>
+        </article>
+        <article>
+          <span>Fatigue-aware switch</span>
+          <strong>${summary.fatigueSwitch.shouldSwitchToReview ? "עבור לחזרה" : "המשך רגיל"}</strong>
+          <b>${esc(summary.fatigueSwitch.message)}</b>
+          <small>Recommended: ${esc(summary.fatigueSwitch.recommendedMode)}${summary.fatigueSwitch.blockedMode ? ` · avoid ${esc(summary.fatigueSwitch.blockedMode)}` : ""}</small>
+        </article>
+        <article>
+          <span>Offline cram mode</span>
+          <strong>${esc(summary.offlineCramMode.definitions.length)} הגדרות · ${esc(summary.offlineCramMode.comparisonTables.length)} טבלאות · ${esc(summary.offlineCramMode.codeProofChecklist.length)} קוד</strong>
+          <b>${esc(summary.offlineCramMode.definitions[0]?.oneLine || "unknown/unavailable")}</b>
+          <small>קומפקטי לקריאה ללא רשת</small>
+        </article>
+        <article>
+          <span>Readiness trend</span>
+          <strong>${esc(trendLabel)}</strong>
+          <b>${esc(summary.readinessTrend.points.length)} נקודות מראיות אמיתיות</b>
+          <small>Mock + mastery + code proof + wrong answers</small>
+        </article>
+        <article>
+          <span>Final 24-hour plan</span>
+          <strong>${esc(summary.final24HourPlan.weakConcepts.length)} מושגים מאיימים</strong>
+          <div class="exam-final-24-list">${final24Rows}</div>
+          <small>Printable from actual weak concepts</small>
+        </article>
+        <article>
+          <span>Score projection</span>
+          <strong>${esc(projectionLabel)}</strong>
+          <b>Range: ${esc(summary.scoreProjection.confidenceRange.label)}</b>
+          <small>${esc(summary.scoreProjection.confidence)} · history ${esc(summary.scoreProjection.historyCount)}</small>
+        </article>
+        <article>
+          <span>Final weak list</span>
+          <strong>${esc(summary.finalWeakList.rows.length)} / 20 concepts</strong>
+          <div class="exam-final-weak-list">${finalWeakRows}</div>
+          <small>ranked by mastery/proof/code/accuracy risk</small>
+        </article>
+        <article>
+          <span>ה-drill הבא</span>
+          <strong>${esc(summary.nextDrill)}</strong>
+          <button data-exam-cockpit-action="trainer">פתח מאמן ידע</button>
+        </article>
+        <article>
+          <span>מודולים חלשים</span>
+          <div class="exam-weak-list">
+            ${summary.weakest.length
+              ? summary.weakest.map((module) => `<b>${esc(module.label)} · ${esc(module.readiness)}%</b>`).join("")
+              : "<b>אין חולשה זמינה</b>"}
+          </div>
+        </article>
+        <article>
+          <span>Blockers</span>
+          <div class="exam-blocker-list">
+            ${summary.blockers.length
+              ? summary.blockers.map((item) => `<b>${esc(item.label)}</b>`).join("")
+              : "<b>אין blockers פתוחים</b>"}
+          </div>
+          <button data-exam-cockpit-action="mock">פתח מבחן מדומה</button>
+        </article>
+        <article>
+          <span>דוח סוף יום</span>
+          <strong>${esc(summary.endOfDay.learned)} למדו · ${esc(summary.endOfDay.mastered)} mastered</strong>
+          <b>${esc(summary.endOfDay.failed)} נכשלו · ${esc(summary.endOfDay.repeated)} חזרות · ${esc(summary.endOfDay.rewardXP)} XP</b>
+          <div class="exam-end-day-diff-list">${endOfDayDiffRows}</div>
+          <small>הבא: ${esc(summary.endOfDay.nextAction)}</small>
+          <button data-exam-cockpit-action="cram">פתח דף חזרה</button>
+        </article>
+      </div>
+      <div class="exam-module-heatmap" aria-label="מפת חום מודולי מבחן">
+        ${summary.modules.map((module) => `
+          <span style="--module-ready:${esc(module.readiness)}%">
+            <b>${esc(module.label)}</b>
+            <small>${esc(module.mastered)}/${esc(module.total)} · ${esc(module.readiness)}%</small>
+          </span>
+        `).join("")}
+      </div>`;
+  }
+
+  function startWeakestThirtyMinuteFlow() {
+    const summary = buildExamCockpitSummary();
+    if (!summary.weakest.length) {
+      alert("אין מודול חלש זמין כרגע. עבור למבחן פרופסור כדי לבדוק מוכנות.");
+      return;
+    }
+    trainerMode = "weak";
+    openTrainer();
+    document.getElementById("t-focus-weak")?.classList.add("active");
+    document.getElementById("t-mode-mixed")?.classList.remove("active");
   }
 
   // Wire the "🏠 שיעורים" tab to bring user back to welcome / lessons home
@@ -7866,11 +9249,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // =========== OPEN LESSON ===========
   function openLesson(lessonId) {
-    currentLessonId = lessonId;
     const lesson = window.LESSONS_DATA.find((l) => l.id === lessonId);
     if (!lesson) return;
 
     hideAllViews();
+    currentLessonId = lessonId;
+    document.body.classList.add("lesson-reading-mode");
+    syncContextTreeToggleVisibility();
+    document
+      .querySelectorAll(".lesson-nav-btn")
+      .forEach((btn) => btn.classList.toggle("active", btn.dataset.id === lessonId));
     setPortalDecisionAid("lesson");
     currentLessonTitle.textContent = lesson.title;
     currentLessonDesc.textContent = lesson.description;
@@ -7917,12 +9305,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "המערכת תלמד אותך את החומר במושגים שסימנת כחלשים (X).";
     studyModeView.style.display = "block";
     openStudyModeBtn?.classList.add("active");
-    // Lazy-load seeded bank (Study Mode also benefits)
-    if (typeof window.ensureSeededBank === "function") {
-      window.ensureSeededBank().then(() => startStudySession());
-    } else {
-      startStudySession();
-    }
+    startStudySession();
     scrollToTop();
     sidebar.classList.remove("open");
   }
@@ -8860,6 +10243,414 @@ document.addEventListener("DOMContentLoaded", () => {
     saveAnsweredQuestionState();
   }
 
+  function collectQuestionReuseRows() {
+    const rows = [];
+    const sources = [
+      { source: "manual", bank: window.QUESTIONS_BANK || {} },
+      {
+        source: "runtime",
+        bank: {
+          trace: Array.isArray(window.QUESTIONS_TRACE) ? window.QUESTIONS_TRACE : [],
+          bug: Array.isArray(window.QUESTIONS_BUG) ? window.QUESTIONS_BUG : [],
+          build: Array.isArray(window.QUESTIONS_BUILD) ? window.QUESTIONS_BUILD : [],
+        },
+      },
+    ];
+    sources.forEach(({ source, bank }) => {
+      ["mc", "fill", "trace", "bug", "build"].forEach((kind) => {
+        (Array.isArray(bank?.[kind]) ? bank[kind] : []).forEach((question) => {
+          const rawConceptKey = String(question?.conceptKey || "").trim();
+          const parts = conceptPartsFromKey(rawConceptKey);
+          const id = questionIdentity(question || {}, parts.lessonId, parts.conceptName, kind);
+          rows.push({
+            id,
+            kind,
+            source,
+            conceptKey: rawConceptKey,
+          });
+        });
+      });
+    });
+    return rows.filter((row) => row.id && row.conceptKey);
+  }
+
+  function buildPerLearnerQuestionReuseAudit(state = null) {
+    const questionRows = collectQuestionReuseRows();
+    const byConcept = new Map();
+    questionRows.forEach((row) => {
+      if (!byConcept.has(row.conceptKey)) {
+        byConcept.set(row.conceptKey, {
+          conceptKey: row.conceptKey,
+          ids: new Set(),
+          kinds: {},
+          sources: {},
+        });
+      }
+      const bucket = byConcept.get(row.conceptKey);
+      bucket.ids.add(row.id);
+      bucket.kinds[row.kind] = (bucket.kinds[row.kind] || 0) + 1;
+      bucket.sources[row.source] = (bucket.sources[row.source] || 0) + 1;
+    });
+    const answeredByConcept = answeredQuestionState?.byConcept && typeof answeredQuestionState.byConcept === "object"
+      ? answeredQuestionState.byConcept
+      : {};
+    const evidenceEvents = Array.isArray(state?.events) ? state.events : [];
+    const attemptCounts = new Map();
+    evidenceEvents
+      .filter((event) => event?.type === "answer" && event.questionId && event.conceptKey)
+      .forEach((event) => {
+        const key = `${event.conceptKey}::${event.questionId}`;
+        attemptCounts.set(key, (attemptCounts.get(key) || 0) + 1);
+      });
+    const repeatedRows = [...attemptCounts.entries()]
+      .filter(([, count]) => count > 1)
+      .map(([key, count]) => {
+        const splitAt = key.lastIndexOf("::");
+        return {
+          conceptKey: splitAt > -1 ? key.slice(0, splitAt) : "",
+          questionId: splitAt > -1 ? key.slice(splitAt + 2) : key,
+          attempts: count,
+          repeats: count - 1,
+        };
+      })
+      .sort((a, b) => b.repeats - a.repeats || a.conceptKey.localeCompare(b.conceptKey) || a.questionId.localeCompare(b.questionId));
+    const learnerRows = Object.entries(answeredByConcept).map(([key, record]) => {
+      const answeredIds = Object.keys(record?.answered || {});
+      const bank = byConcept.get(key);
+      const bankIds = bank?.ids || new Set();
+      const knownAnswered = answeredIds.filter((id) => bankIds.has(id));
+      const repeatedForConcept = repeatedRows.filter((row) => row.conceptKey === key);
+      return {
+        conceptKey: key,
+        totalAvailable: bankIds.size,
+        answeredUnique: answeredIds.length,
+        answeredInCurrentBank: knownAnswered.length,
+        answeredOutsideCurrentBank: Math.max(0, answeredIds.length - knownAnswered.length),
+        exhausted: bankIds.size > 0 && knownAnswered.length >= bankIds.size,
+        repeatedQuestions: repeatedForConcept.length,
+        repeatedAttempts: repeatedForConcept.reduce((sum, row) => sum + row.repeats, 0),
+        lastQuestionId: String(record?.lastQuestionId || ""),
+      };
+    }).sort((a, b) => {
+      if (b.repeatedAttempts !== a.repeatedAttempts) return b.repeatedAttempts - a.repeatedAttempts;
+      if (Number(b.exhausted) !== Number(a.exhausted)) return Number(b.exhausted) - Number(a.exhausted);
+      return a.conceptKey.localeCompare(b.conceptKey);
+    });
+    const answeredUnique = learnerRows.reduce((sum, row) => sum + row.answeredUnique, 0);
+    const answeredOutsideCurrentBank = learnerRows.reduce((sum, row) => sum + row.answeredOutsideCurrentBank, 0);
+    return {
+      policy: "Per-learner question reuse audit compares the current real question bank with the learner's local answered IDs and learning evidence only. Missing history stays empty; no answered questions or repetitions are fabricated.",
+      summary: {
+        bankConcepts: byConcept.size,
+        bankQuestions: questionRows.length,
+        learnerConcepts: learnerRows.length,
+        answeredUnique,
+        exhaustedConcepts: learnerRows.filter((row) => row.exhausted).length,
+        repeatedQuestions: repeatedRows.length,
+        repeatedAttempts: repeatedRows.reduce((sum, row) => sum + row.repeats, 0),
+        answeredOutsideCurrentBank,
+      },
+      rows: learnerRows,
+      repeatedRows,
+    };
+  }
+
+  function buildMasteryProofAudit(state = null, now = Date.now()) {
+    const events = Array.isArray(state?.events) ? state.events : [];
+    const recentCutoff = Number(now) - (7 * 24 * 60 * 60 * 1000);
+    const lastReviewByConcept = new Map();
+    events
+      .filter((event) => ["review", "flashcard_review", "answer", "mastery_change"].includes(event?.type) && event.conceptKey)
+      .forEach((event) => {
+        const at = Number(event.at || event.timestamp || event.time || 0);
+        if (!Number.isFinite(at) || at <= 0) return;
+        const previous = lastReviewByConcept.get(event.conceptKey) || 0;
+        if (at > previous) lastReviewByConcept.set(event.conceptKey, at);
+      });
+    const rows = Object.entries(scores || {})
+      .map(([key, score]) => {
+        const level = Number(score?.level || score?.currentLevel || score?.masteryLevel || 1) || 1;
+        if (level < 6) return null;
+        const storedProof = scoreHasStoredMasteryProof(score);
+        const hardProof = Boolean(storedProof || score?.hardProof?.passed === true || score?.professorProof?.passed === true);
+        const codeProof = Boolean(score?.codeProof?.passed === true || score?.codeProofPassed === true);
+        const lastReviewAt = lastReviewByConcept.get(key) || 0;
+        const recentReview = lastReviewAt >= recentCutoff;
+        const missing = [
+          hardProof ? "" : "hard-proof",
+          codeProof ? "" : "code-proof",
+          recentReview ? "" : "recent-review",
+        ].filter(Boolean);
+        return {
+          conceptKey: String(score?.conceptKey || key),
+          scoreKey: key,
+          level,
+          hardProof,
+          codeProof,
+          recentReview,
+          lastReviewAt,
+          missing,
+          ready: missing.length === 0,
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => {
+        if (b.missing.length !== a.missing.length) return b.missing.length - a.missing.length;
+        if (b.level !== a.level) return b.level - a.level;
+        return a.conceptKey.localeCompare(b.conceptKey);
+      });
+    const needsProof = rows.filter((row) => !row.ready);
+    return {
+      policy: "Mastery proof audit reads local score buckets and learning evidence only. Level 6/7 without hard proof, code proof or recent review is reported for remediation; no proof is inferred or fabricated.",
+      recentReviewWindowDays: 7,
+      summary: {
+        auditedConcepts: rows.length,
+        needsProof: needsProof.length,
+        missingHardProof: rows.filter((row) => !row.hardProof).length,
+        missingCodeProof: rows.filter((row) => !row.codeProof).length,
+        missingRecentReview: rows.filter((row) => !row.recentReview).length,
+        ready: rows.length > 0 && needsProof.length === 0,
+      },
+      rows,
+      needsProof,
+    };
+  }
+
+  function buildFalseConfidenceAudit() {
+    const log = Array.isArray(confidenceCalibrationState?.log) ? confidenceCalibrationState.log : [];
+    const highWrong = log
+      .filter((entry) => entry && entry.correct === false && Number(entry.confidencePct || 0) >= 80)
+      .map((entry) => {
+        const conceptKeyValue = String(entry.conceptKey || "");
+        const conceptMistakes = mistakeAgentState?.concepts?.[conceptKeyValue]?.misconceptions || {};
+        const topMisconceptionId = Object.entries(conceptMistakes)
+          .sort((a, b) => Number(b[1] || 0) - Number(a[1] || 0) || a[0].localeCompare(b[0]))[0]?.[0] || "unknown/unavailable";
+        const named = mistakeAgentState?.namedWeaknesses?.[topMisconceptionId] || null;
+        const misconception = mistakeAgentState?.misconceptions?.[topMisconceptionId] || null;
+        return {
+          conceptKey: conceptKeyValue,
+          questionId: String(entry.questionId || ""),
+          confidencePct: Number(entry.confidencePct || 0),
+          gap: Number(entry.gap || entry.calibrationGap || 0),
+          kind: String(entry.kind || ""),
+          timestamp: Number(entry.timestamp || 0),
+          misconceptionId: topMisconceptionId,
+          misconceptionLabel: named?.label || misconception?.label || "unknown/unavailable",
+        };
+      });
+    const byCluster = new Map();
+    highWrong.forEach((entry) => {
+      const key = entry.misconceptionId || "unknown/unavailable";
+      const cluster = byCluster.get(key) || {
+        misconceptionId: key,
+        label: entry.misconceptionLabel,
+        count: 0,
+        concepts: new Set(),
+        questions: new Set(),
+        maxConfidencePct: 0,
+        maxGap: 0,
+        lastSeen: 0,
+      };
+      cluster.count += 1;
+      if (entry.conceptKey) cluster.concepts.add(entry.conceptKey);
+      if (entry.questionId) cluster.questions.add(entry.questionId);
+      cluster.maxConfidencePct = Math.max(cluster.maxConfidencePct, entry.confidencePct);
+      cluster.maxGap = Math.max(cluster.maxGap, entry.gap);
+      cluster.lastSeen = Math.max(cluster.lastSeen, entry.timestamp || 0);
+      byCluster.set(key, cluster);
+    });
+    const clusters = [...byCluster.values()].map((cluster) => ({
+      misconceptionId: cluster.misconceptionId,
+      label: cluster.label,
+      count: cluster.count,
+      concepts: [...cluster.concepts].sort((a, b) => a.localeCompare(b)),
+      questions: [...cluster.questions].sort((a, b) => a.localeCompare(b)),
+      maxConfidencePct: cluster.maxConfidencePct,
+      maxGap: cluster.maxGap,
+      lastSeen: cluster.lastSeen,
+    })).sort((a, b) => b.count - a.count || b.maxConfidencePct - a.maxConfidencePct || a.misconceptionId.localeCompare(b.misconceptionId));
+    return {
+      policy: "False confidence audit reads confidence calibration logs and mistake clusters only. It reports high-confidence wrong answers by existing misconception evidence and never fabricates confidence, mistakes or clusters.",
+      thresholdPct: 80,
+      summary: {
+        calibrationEvents: log.length,
+        highConfidenceWrong: highWrong.length,
+        clusters: clusters.length,
+        namedClusters: clusters.filter((cluster) => cluster.misconceptionId !== "unknown/unavailable").length,
+      },
+      highWrong,
+      clusters,
+    };
+  }
+
+  function buildCrossTabEvidenceGraph(state = null) {
+    const events = Array.isArray(state?.events) ? state.events : [];
+    const byConcept = new Map();
+    events
+      .filter((event) => event?.conceptKey)
+      .forEach((event) => {
+        const key = String(event.conceptKey || "");
+        const row = byConcept.get(key) || {
+          conceptKey: key,
+          eventCount: 0,
+          correctAnswers: 0,
+          wrongAnswers: 0,
+          masteryChanges: 0,
+          codeProofs: 0,
+          tabs: {},
+          types: {},
+          lastSeen: 0,
+        };
+        const type = String(event.type || "unknown/unavailable");
+        const source = String(event.source || event.mode || "unknown/unavailable");
+        row.eventCount += 1;
+        row.types[type] = (row.types[type] || 0) + 1;
+        row.tabs[source] = (row.tabs[source] || 0) + 1;
+        if (type === "answer" && event.correct === true) row.correctAnswers += 1;
+        if (type === "answer" && event.correct === false) row.wrongAnswers += 1;
+        if (type === "mastery_change") row.masteryChanges += 1;
+        if (event.codeProof?.passed === true || type === "code_proof") row.codeProofs += 1;
+        const at = Number(event.at || event.timestamp || event.time || 0);
+        if (Number.isFinite(at) && at > row.lastSeen) row.lastSeen = at;
+        byConcept.set(key, row);
+      });
+    const rows = [...byConcept.values()]
+      .map((row) => ({
+        ...row,
+        tabCount: Object.keys(row.tabs).length,
+        proofSignals: row.correctAnswers + row.masteryChanges + row.codeProofs,
+      }))
+      .sort((a, b) => b.proofSignals - a.proofSignals || b.tabCount - a.tabCount || a.conceptKey.localeCompare(b.conceptKey));
+    return {
+      policy: "Cross-tab evidence graph reads local learning evidence only. It shows where a learner proved or struggled with a concept and never creates synthetic proof edges.",
+      summary: {
+        concepts: rows.length,
+        evidenceEvents: events.length,
+        crossTabConcepts: rows.filter((row) => row.tabCount > 1).length,
+        conceptsWithProof: rows.filter((row) => row.proofSignals > 0).length,
+        conceptsWithWrongAnswers: rows.filter((row) => row.wrongAnswers > 0).length,
+      },
+      rows,
+    };
+  }
+
+  function buildProofBasedMasteryMigrationPlan() {
+    const rows = Object.entries(scores || {})
+      .map(([key, score]) => {
+        const level = Number(score?.level || 1) || 1;
+        if (level < 6 || scoreHasStoredMasteryProof(score)) return null;
+        return {
+          scoreKey: key,
+          conceptKey: String(score?.conceptKey || key),
+          currentLevel: level,
+          attempts: Number(score?.attempts || 0) || 0,
+          correct: Number(score?.correct || 0) || 0,
+          proposedAction: "mark-mastery-gate-pending-until-proof",
+          rollbackRecord: {
+            scoreKey: key,
+            score,
+          },
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.currentLevel - a.currentLevel || a.conceptKey.localeCompare(b.conceptKey));
+    return {
+      policy: "Rollback-safe migration plan is preview-only in the portal. It identifies old high-level scores without stored proof, stores exact rollback records in the report, and does not modify scores automatically.",
+      applied: false,
+      summary: {
+        scannedScoreBuckets: Object.keys(scores || {}).length,
+        migrationCandidates: rows.length,
+        rollbackRecords: rows.length,
+      },
+      rows,
+    };
+  }
+
+  function buildExamCriticalProofPathBlocker() {
+    const modules = typeof SVCOLLEGE_EXAM_MODULES !== "undefined" ? SVCOLLEGE_EXAM_MODULES : [];
+    const questionSources = {
+      ...(window.QUESTIONS_BANK || {}),
+      trace: Array.isArray(window.QUESTIONS_TRACE) ? window.QUESTIONS_TRACE : [],
+      bug: Array.isArray(window.QUESTIONS_BUG) ? window.QUESTIONS_BUG : [],
+      build: Array.isArray(window.QUESTIONS_BUILD) ? window.QUESTIONS_BUILD : [],
+    };
+    const rows = [];
+    (window.LESSONS_DATA || []).forEach((lesson) => {
+      (lesson.concepts || []).forEach((concept) => {
+        const key = conceptKey(lesson.id, concept.conceptName);
+        if (!modules.some((module) => module.filter(key))) return;
+        const mcHard = (questionSources.mc || []).filter((q) => q.conceptKey === key && Number(q.level || q.challengeLevel || 1) >= 6).length;
+        const fillHard = (questionSources.fill || []).filter((q) => q.conceptKey === key && Number(q.level || q.challengeLevel || 1) >= 6).length;
+        const codeProofs = ["trace", "bug", "build"].reduce((sum, kind) =>
+          sum + (questionSources[kind] || []).filter((q) => q.conceptKey === key).length,
+        0);
+        const score = scores?.[key] || null;
+        const storedProof = scoreHasStoredMasteryProof(score) || score?.codeProof?.passed === true;
+        const hasProofPath = Boolean(mcHard || fillHard || codeProofs || storedProof);
+        rows.push({
+          key,
+          lessonTitle: String(lesson.title || lesson.id || ""),
+          conceptName: String(concept.conceptName || ""),
+          mcHard,
+          fillHard,
+          codeProofs,
+          storedProof: Boolean(storedProof),
+          hasProofPath,
+          blocker: !hasProofPath,
+        });
+      });
+    });
+    const blockers = rows.filter((row) => row.blocker).sort((a, b) => a.key.localeCompare(b.key));
+    return {
+      policy: "Exam-critical proof path blocker scans real SVCollege lesson concepts, question banks and local proof records only. It blocks release reporting when an exam-critical concept has no hard/proof path; it never creates proof paths.",
+      summary: {
+        examCriticalConcepts: rows.length,
+        blockedConcepts: blockers.length,
+        releaseBlocked: blockers.length > 0,
+      },
+      rows,
+      blockers,
+    };
+  }
+
+  function buildTeacherMentorAuditExport(audits = {}) {
+    const exportData = {
+      version: "teacher-mentor-audit-export-v1",
+      exportedAt: new Date().toISOString(),
+      studentProfile: localProfileStore?.activeProfile
+        ? { id: localProfileStore.activeProfile.id, name: localProfileStore.activeProfile.name }
+        : null,
+      summaries: {
+        conceptTagAudit: audits.conceptTagAudit?.summary || null,
+        questionReuseAudit: audits.questionReuseAudit?.summary || null,
+        masteryProofAudit: audits.masteryProofAudit?.summary || null,
+        falseConfidenceAudit: audits.falseConfidenceAudit?.summary || null,
+        crossTabEvidenceGraph: audits.crossTabEvidenceGraph?.summary || null,
+        proofMigrationPlan: audits.proofMigrationPlan?.summary || null,
+        examCriticalProofPathBlocker: audits.examCriticalProofPathBlocker?.summary || null,
+      },
+      queues: {
+        conceptTagIssues: audits.conceptTagAudit?.issues || [],
+        questionReuseRows: audits.questionReuseAudit?.rows || [],
+        masteryProofNeeds: audits.masteryProofAudit?.needsProof || [],
+        falseConfidenceClusters: audits.falseConfidenceAudit?.clusters || [],
+        examCriticalBlockers: audits.examCriticalProofPathBlocker?.blockers || [],
+      },
+      policy: "Teacher/mentor audit export contains only local learner evidence and repository audit summaries already visible in Content Studio. Missing sections remain null or empty; no teacher notes or learner data are fabricated.",
+    };
+    return {
+      policy: exportData.policy,
+      summary: {
+        sections: Object.values(exportData.summaries).filter(Boolean).length,
+        conceptTagIssues: exportData.queues.conceptTagIssues.length,
+        masteryProofNeeds: exportData.queues.masteryProofNeeds.length,
+        examCriticalBlockers: exportData.queues.examCriticalBlockers.length,
+      },
+      exportData,
+      json: JSON.stringify(exportData, null, 2),
+    };
+  }
+
   // Migrate older v1 records (which used {score, attempts, correct})
   (function migrateScores() {
     let touched = false;
@@ -8886,6 +10677,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Level → concept-explanation key mapping (matches lesson.concepts[i].levels keys)
   const LEVEL_KEYS = [null, "grandma", "child", "soldier", "student", "junior", "professor"];
+  const PROFESSOR_CHALLENGE_LEVEL = 6;
+  const LEVEL_100_EXAM_RULE_TEXT = "רמה 100 = ציון 100 במבחן על כל השאלות ברמת פרופסור";
   const LEVEL_INFO = {
     1: { icon: "👵", label: "סבתא", cssClass: "lvl-1" },
     2: { icon: "🧒", label: "כיתה א'", cssClass: "lvl-2" },
@@ -8924,6 +10717,8 @@ document.addEventListener("DOMContentLoaded", () => {
         taggedCorrect: 0,
         markedKnown: false,
         masteryProof: null,
+        oneLineProof: null,
+        scratchProof: null,
         codeProof: null,
         masteryGatePending: false,
         weakReports: 0,
@@ -8956,7 +10751,7 @@ document.addEventListener("DOMContentLoaded", () => {
         conceptTags: tag.tags || [k],
         level: 1, passedMC: false, passedFill: false, attempts: 0, correct: 0,
         taggedAttempts: 0, taggedCorrect: 0,
-        markedKnown: false, masteryProof: null, codeProof: null, masteryGatePending: false,
+        markedKnown: false, masteryProof: null, oneLineProof: null, scratchProof: null, codeProof: null, masteryGatePending: false,
         weakReports: 0, correctRunCount: 0,
         srsState: defaultSrsState(),
       };
@@ -8968,6 +10763,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (scores[k].taggedCorrect === undefined) scores[k].taggedCorrect = 0;
       if (scores[k].markedKnown === undefined) scores[k].markedKnown = false;
       if (scores[k].masteryProof === undefined) scores[k].masteryProof = null;
+      if (scores[k].oneLineProof === undefined) scores[k].oneLineProof = null;
+      if (scores[k].scratchProof === undefined) scores[k].scratchProof = null;
       if (scores[k].codeProof === undefined) scores[k].codeProof = null;
       if (scores[k].masteryGatePending === undefined) scores[k].masteryGatePending = false;
       if (scores[k].weakReports === undefined) scores[k].weakReports = 0;
@@ -9131,7 +10928,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (core && typeof core.emptyMistakeAgentState === "function") {
       return core.emptyMistakeAgentState();
     }
-    return { version: 2, concepts: {}, topics: {}, misconceptions: {}, log: [] };
+    return { version: 3, concepts: {}, topics: {}, misconceptions: {}, namedWeaknesses: {}, log: [] };
   }
 
   function saveMistakeAgentState() {
@@ -9164,6 +10961,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (!mistakeAgentState.misconceptions || typeof mistakeAgentState.misconceptions !== "object") {
       mistakeAgentState.misconceptions = {};
+    }
+    if (!mistakeAgentState.namedWeaknesses || typeof mistakeAgentState.namedWeaknesses !== "object") {
+      mistakeAgentState.namedWeaknesses = {};
     }
     if (!Array.isArray(mistakeAgentState.teachBacks)) mistakeAgentState.teachBacks = [];
     if (!Array.isArray(mistakeAgentState.retestQueue)) mistakeAgentState.retestQueue = [];
@@ -9349,6 +11149,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const prompt = core.teachBackPromptForRecord(mistakeAgentState, record, { threshold: 2 });
       if (prompt) record.teachBack = prompt;
     }
+    if (core && typeof core.namedWeaknessClusters === "function") {
+      const named = core
+        .namedWeaknessClusters(mistakeAgentState, { minCount: 2, minModes: 2, limit: 20 })
+        .find((item) => item.misconceptionId === (record.misconception?.id || "conceptGap"));
+      if (named) record.namedWeakness = named;
+    }
     const retests = scheduleAdaptiveRetestsForRecord(record);
     const prerequisiteRewind = schedulePrerequisiteRewindForRecord(record);
     const queuedItems = [
@@ -9421,6 +11227,13 @@ document.addEventListener("DOMContentLoaded", () => {
           <div><strong>דימוי:</strong> ${esc(misconception.association)}</div>
         </div>`
       : "";
+    const namedWeakness = record.namedWeakness || null;
+    const namedWeaknessLine = namedWeakness
+      ? `<div class="mistake-agent-named-weakness">
+          <strong>${esc(namedWeakness.name)}</strong>
+          <span>${esc(namedWeakness.count)} טעויות · ${esc((namedWeakness.modes || []).map((item) => item.mode).join(", "))}</span>
+        </div>`
+      : "";
     const teachBack = record.teachBack || null;
     if (teachBack && teachBack.id) pendingTeachBackPrompts.set(teachBack.id, teachBack);
     const teachBackLine = teachBack
@@ -9472,6 +11285,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${correctLine}
         ${explanationLine}
         ${misconceptionLine}
+        ${namedWeaknessLine}
         ${teachBackLine}
         ${rewindLine}
         ${recoveryLine}
@@ -9479,6 +11293,40 @@ document.addEventListener("DOMContentLoaded", () => {
         ${retestLine}
         ${associationLine}
       </div>`;
+  }
+
+  function renderWrongAnswerCoachCard({ mode = "question", result = null, mistake = null, question = {}, concept = null } = {}) {
+    const record = mistake || result?.mistake || null;
+    if (!record) return "";
+    const labels = {
+      trainer: "מאמן ידע",
+      trace: "Code Trace",
+      "concept-sprint": "מושגים נטו",
+      inline: "שאלה בתוך שיעור",
+      "lesson-quiz": "בוחן שיעור",
+      guide: "מדריך",
+      codeblocks: "בלוקי קוד",
+      "bug-hunt": "Bug Hunt",
+      "bug-quest": "Bug Quest",
+      "mock-exam": "מבחן מדומה",
+    };
+    const rewind = record.prerequisiteRewind || null;
+    const conceptName = concept?.conceptName || record.conceptName || question.conceptName || "";
+    const nextStep = rewind
+      ? `פתח קודם את ${rewind.conceptName} ואז חזור לשאלה המקורית.`
+      : "ענה על שאלת תיקון קצרה לפני מעבר לאתגר הבא.";
+    return `
+      <section class="wrong-answer-coach-card" data-wrong-answer-coach="${esc(mode)}" role="region" aria-label="מאמן אחרי תשובה שגויה">
+        <div class="wrong-answer-coach-head">
+          <strong>מאמן אחרי טעות</strong>
+          <span>${esc(labels[mode] || mode)}${conceptName ? ` · ${esc(conceptName)}` : ""}</span>
+        </div>
+        <div class="wrong-answer-coach-next">
+          <strong>מה עושים עכשיו:</strong>
+          <span>${esc(nextStep)}</span>
+        </div>
+        ${renderMistakeAgentFeedback(record)}
+      </section>`;
   }
 
   function saveTeachBackResponse(button) {
@@ -9646,6 +11494,61 @@ document.addEventListener("DOMContentLoaded", () => {
     return existingIdx >= 0 ? mistakeAgentState.retestQueue[existingIdx] : item;
   }
 
+  function scheduleFinalExamProveAgainRetests(wrongRecords = [], examRecord = {}) {
+    ensureMistakeAgentState();
+    const timestamp = Date.now();
+    const byConcept = new Map();
+    wrongRecords.forEach((record) => {
+      if (!record?.conceptKey || byConcept.has(record.conceptKey)) return;
+      byConcept.set(record.conceptKey, record);
+    });
+    const queued = [...byConcept.values()].map((record) => {
+      const id = `final-prove-again-${slugifyId([
+        examRecord.templateId || "exam",
+        record.conceptKey,
+        record.questionId || "",
+      ].join("|")).replace(/^id-/, "")}`;
+      const item = {
+        id,
+        stage: "final_exam_prove_again",
+        label: "Prove again",
+        purpose: "בדיקה חוזרת לכל מושג שנכשל במבחן final/mock.",
+        status: "pending",
+        conceptKey: record.conceptKey,
+        lessonId: record.lessonId || "",
+        conceptName: record.conceptName || record.conceptKey,
+        topic: record.topic || "",
+        subtopic: record.subtopic || "",
+        questionId: record.questionId || "",
+        sourceQuestionId: record.questionId || "",
+        sourceExamTemplateId: examRecord.templateId || "",
+        sourceExamDate: examRecord.date || "",
+        dueAt: timestamp,
+        createdAt: timestamp,
+        attempts: 0,
+      };
+      const existingIdx = mistakeAgentState.retestQueue.findIndex((queuedItem) =>
+        queuedItem && queuedItem.id === item.id && queuedItem.status !== "done"
+      );
+      if (existingIdx >= 0) {
+        mistakeAgentState.retestQueue[existingIdx] = {
+          ...mistakeAgentState.retestQueue[existingIdx],
+          ...item,
+          attempts: mistakeAgentState.retestQueue[existingIdx].attempts || 0,
+          createdAt: mistakeAgentState.retestQueue[existingIdx].createdAt || item.createdAt,
+        };
+        return mistakeAgentState.retestQueue[existingIdx];
+      }
+      mistakeAgentState.retestQueue.push(item);
+      return item;
+    });
+    mistakeAgentState.retestQueue = mistakeAgentState.retestQueue
+      .sort((a, b) => (a.dueAt || 0) - (b.dueAt || 0) || String(a.id).localeCompare(String(b.id)))
+      .slice(0, 100);
+    saveMistakeAgentState();
+    return queued;
+  }
+
   function dueAdaptiveRetestItem() {
     const core = mistakeAgentCore();
     if (!core || typeof core.dueAdaptiveRetests !== "function") return null;
@@ -9734,8 +11637,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const level = questionChallengeLevelForProof(meta.question || {}, concept || {}, actualKind);
     const codeProofRequired = conceptRequiresCodeProof(concept);
     const codeProofSatisfied = !codeProofRequired || scoreHasCodeProof(meta.score) || answerCountsAsCodeProof(actualKind, meta);
+    const oneLineProofRequired = conceptRequiresOneLineProof(concept);
+    const oneLineProofSatisfied = !oneLineProofRequired || scoreHasOneLineProof(meta.score);
+    const scratchProofRequired = conceptRequiresScratchProof(concept);
+    const scratchProofSatisfied = !scratchProofRequired || scoreHasScratchProof(meta.score);
     return {
-      passed: level >= threshold && codeProofSatisfied,
+      passed: level >= threshold && codeProofSatisfied && oneLineProofSatisfied && scratchProofSatisfied,
       level,
       threshold,
       kind: actualKind,
@@ -9744,6 +11651,12 @@ document.addEventListener("DOMContentLoaded", () => {
       codeProofRequired,
       codeProofSatisfied,
       blockedByCodeProof: level >= threshold && !codeProofSatisfied,
+      oneLineProofRequired,
+      oneLineProofSatisfied,
+      blockedByOneLineProof: level >= threshold && codeProofSatisfied && !oneLineProofSatisfied,
+      scratchProofRequired,
+      scratchProofSatisfied,
+      blockedByScratchProof: level >= threshold && codeProofSatisfied && oneLineProofSatisfied && !scratchProofSatisfied,
     };
   }
 
@@ -9754,6 +11667,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function conceptRequiresCodeProof(concept = {}) {
+    const core = scoringCore();
+    if (core && typeof core.conceptRequiresCodeProof === "function") return core.conceptRequiresCodeProof(concept);
     return Boolean(
       concept &&
       (
@@ -9762,6 +11677,82 @@ document.addEventListener("DOMContentLoaded", () => {
         (Array.isArray(concept.bugHunts) && concept.bugHunts.length)
       )
     );
+  }
+
+  function conceptRequiresOneLineProof(concept = {}) {
+    const core = scoringCore();
+    if (core && typeof core.requiresOneLineMasteryCheckpoint === "function") {
+      return core.requiresOneLineMasteryCheckpoint(concept);
+    }
+    return Boolean(concept) && !conceptRequiresCodeProof(concept);
+  }
+
+  function conceptRequiresScratchProof(concept = {}) {
+    const core = scoringCore();
+    if (core && typeof core.requiresScratchMasteryCheckpoint === "function") {
+      return core.requiresScratchMasteryCheckpoint(concept);
+    }
+    return conceptRequiresCodeProof(concept);
+  }
+
+  function validateOneLineMasteryProof(text = "", concept = {}) {
+    const core = scoringCore();
+    if (core && typeof core.validateOneLineMasteryProof === "function") {
+      return core.validateOneLineMasteryProof(text, concept);
+    }
+    const normalized = String(text || "").replace(/\s+/g, " ").trim();
+    if (!normalized || normalized.length < 12 || normalized.length > 180 || /[\r\n]/.test(String(text || ""))) {
+      return { passed: false, normalized, reason: "invalid-length-or-line" };
+    }
+    if (/^(לא יודע|לא יודעת|אין לי מושג|unknown|unavailable)$/i.test(normalized)) {
+      return { passed: false, normalized, reason: "unknown" };
+    }
+    const tokens = normalized.split(/[\s,.;:!?()[\]{}"'`]+/).filter((token) => token.trim().length >= 2);
+    return { passed: tokens.length >= 3, normalized, reason: tokens.length >= 3 ? "ok" : "too-few-terms" };
+  }
+
+  function validateScratchMasteryProof(code = "", concept = {}) {
+    const core = scoringCore();
+    if (core && typeof core.validateScratchMasteryProof === "function") {
+      return core.validateScratchMasteryProof(code, concept);
+    }
+    const normalized = String(code || "").trim();
+    if (!normalized || normalized.length < 20 || normalized.length > 2000) {
+      return { passed: false, normalized, reason: "invalid-length" };
+    }
+    const hasCodeSignal = /(\bconst\b|\blet\b|\bfunction\b|\breturn\b|=>|[{}()[\];=])/.test(normalized);
+    if (!hasCodeSignal) return { passed: false, normalized, reason: "not-code-like" };
+    return { passed: true, normalized, reason: "ok" };
+  }
+
+  function scoreHasOneLineProof(sc) {
+    const core = scoringCore();
+    if (core && typeof core.hasOneLineMasteryProof === "function") return core.hasOneLineMasteryProof(sc);
+    return Boolean(sc && sc.oneLineProof && sc.oneLineProof.passed === true);
+  }
+
+  function scoreHasScratchProof(sc) {
+    const core = scoringCore();
+    if (core && typeof core.hasScratchMasteryProof === "function") return core.hasScratchMasteryProof(sc);
+    return Boolean(sc && sc.scratchProof && sc.scratchProof.passed === true);
+  }
+
+  function isExamCriticalConcept(concept = {}) {
+    const core = scoringCore();
+    if (core && typeof core.isExamCriticalConcept === "function") return core.isExamCriticalConcept(concept);
+    return Boolean(concept?.examCritical || concept?.svcollegeCritical || getDifficulty(concept) >= 7 || conceptRequiresCodeProof(concept));
+  }
+
+  function spacedReviewPriorityForScore(sc, concept = {}, key = "") {
+    const core = scoringCore();
+    if (core && typeof core.spacedReviewPriority === "function") {
+      return core.spacedReviewPriority({ score: sc, concept, conceptKey: key, now: Date.now() });
+    }
+    if (isScoreMastered(sc)) return 0;
+    const weak = (Number(sc?.weakReports) || 0) * 12 + ((Number(sc?.level) || 1) <= 2 ? 18 : 0);
+    const due = isSrsDue(sc) ? 28 : 0;
+    const critical = isExamCriticalConcept(concept) ? 20 : 0;
+    return due + weak + critical + Math.max(1, 8 - (Number(sc?.level) || 1));
   }
 
   function scoreHasCodeProof(sc) {
@@ -9803,6 +11794,10 @@ document.addEventListener("DOMContentLoaded", () => {
       mode: info.mode,
       codeProofRequired: info.codeProofRequired,
       codeProofKind: codeProof?.kind || sc.codeProof?.kind || "",
+      oneLineProofRequired: info.oneLineProofRequired,
+      oneLineProofText: sc.oneLineProof?.text || "",
+      scratchProofRequired: info.scratchProofRequired,
+      scratchProofSnippet: sc.scratchProof?.code || "",
       timestamp: Date.now(),
     };
     sc.masteryGatePending = false;
@@ -9816,20 +11811,157 @@ document.addEventListener("DOMContentLoaded", () => {
     sc.passedMC = false;
     sc.passedFill = false;
     sc.masteryGatePending = true;
+    const gateReason = info.blockedByCodeProof
+      ? "needs-code-proof"
+      : info.blockedByOneLineProof
+        ? "needs-one-line-proof"
+        : info.blockedByScratchProof
+          ? "needs-scratch-proof"
+          : "needs-highest-question";
     sc.masteryGate = {
-      reason: info.blockedByCodeProof ? "needs-code-proof" : "needs-highest-question",
+      reason: gateReason,
       level: info.level,
       threshold: info.threshold,
       kind: info.kind,
       questionId: info.questionId,
       codeProofRequired: info.codeProofRequired,
       codeProofSatisfied: info.codeProofSatisfied,
+      oneLineProofRequired: info.oneLineProofRequired,
+      oneLineProofSatisfied: info.oneLineProofSatisfied,
+      scratchProofRequired: info.scratchProofRequired,
+      scratchProofSatisfied: info.scratchProofSatisfied,
       message: info.blockedByCodeProof
         ? "כדי לקבל 100 במושג עם קוד צריך לפתור נכון גם משימת קוד: Fill, Trace, Bug או Build."
+        : info.blockedByOneLineProof
+          ? "כדי לקבל 100 במושג קונספטואלי צריך לכתוב הסבר מדויק בשורה אחת לפני מאסטר."
+          : info.blockedByScratchProof
+            ? "כדי לקבל 100 במושג יישומי צריך לכתוב פתרון קוד קצר from scratch לפני מאסטר."
         : "כדי לקבל 100 במושג צריך לפתור נכון שאלה ברמת האתגר הגבוהה ביותר שלו.",
       timestamp: Date.now(),
     };
     return info;
+  }
+
+  function completeOneLineMasteryCheckpoint(lessonId, conceptName, concept, text) {
+    const sc = ensureScore(lessonId, conceptName);
+    const validation = validateOneLineMasteryProof(text, concept);
+    if (!validation.passed) return { passed: false, reason: validation.reason, score: sc };
+
+    sc.oneLineProof = {
+      passed: true,
+      text: validation.normalized,
+      conceptKey: conceptKey(lessonId, conceptName),
+      timestamp: Date.now(),
+    };
+
+    const gate = sc.masteryGate || {};
+    const canCompleteGate =
+      sc.masteryGatePending &&
+      gate.reason === "needs-one-line-proof" &&
+      (Number(gate.level) || 0) >= (Number(gate.threshold) || masteryProofThresholdForConcept(lessonId, conceptName, concept)) &&
+      (!gate.codeProofRequired || gate.codeProofSatisfied || scoreHasCodeProof(sc));
+
+    if (canCompleteGate) {
+      sc.level = 7;
+      sc.passedMC = false;
+      sc.passedFill = false;
+      sc.masteryProof = {
+        passed: true,
+        level: Number(gate.level) || masteryProofThresholdForConcept(lessonId, conceptName, concept),
+        threshold: Number(gate.threshold) || masteryProofThresholdForConcept(lessonId, conceptName, concept),
+        kind: gate.kind || "one-line",
+        questionId: gate.questionId || "",
+        mode: "one-line-checkpoint",
+        codeProofRequired: Boolean(gate.codeProofRequired),
+        codeProofKind: sc.codeProof?.kind || "",
+        oneLineProofRequired: true,
+        oneLineProofText: validation.normalized,
+        timestamp: Date.now(),
+      };
+      sc.masteryGatePending = false;
+      sc.masteryGate = null;
+      awardLearningReward({
+        xp: 20,
+        coins: coinsForXP(20),
+        source: "one-line-mastery-checkpoint",
+        conceptKey: conceptKey(lessonId, conceptName),
+        questionId: `one-line-${stableQuestionHash(`${lessonId}::${conceptName}::${validation.normalized}`)}`,
+      });
+      recordLearningEvidence("mastery_change", {
+        ...conceptEvidencePayload(lessonId, conceptName, concept),
+        source: "one-line-mastery-checkpoint",
+        kind: "one-line",
+        correct: true,
+        masteryBefore: 6,
+        masteryAfter: 7,
+        advanced: true,
+      });
+    }
+    saveScores();
+    return { passed: true, mastered: canCompleteGate, score: sc };
+  }
+
+  function completeScratchMasteryCheckpoint(lessonId, conceptName, concept, code) {
+    const sc = ensureScore(lessonId, conceptName);
+    const validation = validateScratchMasteryProof(code, concept);
+    if (!validation.passed) return { passed: false, reason: validation.reason, score: sc };
+
+    sc.scratchProof = {
+      passed: true,
+      code: validation.normalized,
+      conceptKey: conceptKey(lessonId, conceptName),
+      timestamp: Date.now(),
+    };
+
+    const gate = sc.masteryGate || {};
+    const threshold = Number(gate.threshold) || masteryProofThresholdForConcept(lessonId, conceptName, concept);
+    const canCompleteGate =
+      sc.masteryGatePending &&
+      gate.reason === "needs-scratch-proof" &&
+      (Number(gate.level) || 0) >= threshold &&
+      (!gate.codeProofRequired || gate.codeProofSatisfied || scoreHasCodeProof(sc)) &&
+      (!gate.oneLineProofRequired || gate.oneLineProofSatisfied || scoreHasOneLineProof(sc));
+
+    if (canCompleteGate) {
+      sc.level = 7;
+      sc.passedMC = false;
+      sc.passedFill = false;
+      sc.masteryProof = {
+        passed: true,
+        level: Number(gate.level) || threshold,
+        threshold,
+        kind: gate.kind || "scratch",
+        questionId: gate.questionId || "",
+        mode: "scratch-checkpoint",
+        codeProofRequired: Boolean(gate.codeProofRequired),
+        codeProofKind: sc.codeProof?.kind || "",
+        oneLineProofRequired: Boolean(gate.oneLineProofRequired),
+        oneLineProofText: sc.oneLineProof?.text || "",
+        scratchProofRequired: true,
+        scratchProofSnippet: validation.normalized,
+        timestamp: Date.now(),
+      };
+      sc.masteryGatePending = false;
+      sc.masteryGate = null;
+      awardLearningReward({
+        xp: 30,
+        coins: coinsForXP(30),
+        source: "scratch-mastery-checkpoint",
+        conceptKey: conceptKey(lessonId, conceptName),
+        questionId: `scratch-${stableQuestionHash(`${lessonId}::${conceptName}::${validation.normalized}`)}`,
+      });
+      recordLearningEvidence("mastery_change", {
+        ...conceptEvidencePayload(lessonId, conceptName, concept),
+        source: "scratch-mastery-checkpoint",
+        kind: "scratch",
+        correct: true,
+        masteryBefore: 6,
+        masteryAfter: 7,
+        advanced: true,
+      });
+    }
+    saveScores();
+    return { passed: true, mastered: canCompleteGate, score: sc };
   }
 
   // Returns "mc" or "fill" — which question type the concept needs at its current level
@@ -9944,6 +12076,11 @@ document.addEventListener("DOMContentLoaded", () => {
       kind: meta.actualKind || kind,
       question: meta.question || {},
     });
+    const rewardMetaForAnswer = (suffix) => ({
+      source: `${meta.mode || "question"}:${suffix}`,
+      conceptKey: conceptKey(lessonId, conceptName),
+      questionId: questionIdentity(meta.question || {}, lessonId, conceptName, meta.actualKind || kind),
+    });
 
     const emitAnswerEvidence = (result) => {
       const calibration = result?.confidenceCalibration || null;
@@ -10001,7 +12138,7 @@ document.addEventListener("DOMContentLoaded", () => {
           masteryProof = markMasteryGatePending(sc, lessonId, conceptName, concept, meta.actualKind || kind, meta);
           saveScores();
           tickStudyStreak();
-          awardXP(10);
+          awardLearningReward({ xp: 10, coins: coinsForXP(10), ...rewardMetaForAnswer("mastery-gate-pending") });
           checkAchievements({ lessonId, conceptName, correct: true, advanced: false, sc });
           const result = {
             advanced: false,
@@ -10020,7 +12157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sc.passedFill = false;
         saveScores();
         tickStudyStreak();
-        awardXP(35);
+        awardLearningReward({ xp: 35, coins: coinsForXP(35), ...rewardMetaForAnswer("advance") });
         checkAchievements({ lessonId, conceptName, correct: true, advanced: true, sc });
         const result = { advanced: true, newLevel: sc.level, masteryProof, confidenceCalibration };
         if (meta.retestItem) recordAdaptiveRetestOutcome(meta.retestItem, correct);
@@ -10033,8 +12170,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const result = { advanced: false, newLevel: sc.level, mistake: mistakeRecord, confidenceCalibration };
     // W12 hooks — streak + XP + achievements
     tickStudyStreak();
-    if (correct) awardXP(10);
-    if (result.advanced) awardXP(25);
+    if (correct) awardLearningReward({ xp: 10, coins: coinsForXP(10), ...rewardMetaForAnswer("correct") });
+    if (result.advanced) awardLearningReward({ xp: 25, coins: coinsForXP(25), ...rewardMetaForAnswer("advanced") });
     checkAchievements({ lessonId, conceptName, correct, advanced: result.advanced, sc });
     if (typeof window.reportMisconception === "function") window.reportMisconception(lessonId, conceptName, correct);
     if (meta.retestItem) recordAdaptiveRetestOutcome(meta.retestItem, correct);
@@ -10048,6 +12185,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let trainerStats = { asked: 0, correct: 0, wrong: 0 };
   let trainerLastAnswered = false;
   let trainerConfidence = null;
+  let trainerRecentOutcomes = [];
   // Code-trace per-question state: tracks progress through steps[].
   let traceState = null; // { stepIdx, attempts, hintShown }
 
@@ -10079,13 +12217,32 @@ document.addEventListener("DOMContentLoaded", () => {
   function trainableConcepts() {
     return allConcepts().filter(({ concept }) => {
       const lv = concept.levels || {};
-      return !!(lv.junior || lv.student || lv.professor || lv.grandma);
+      return ["junior", "student", "professor", "grandma"].some((key) => levelText(lv, key));
     });
+  }
+
+  function levelText(levels, keyOrLevel, fallback = "") {
+    if (!levels) return fallback;
+    if (Array.isArray(levels)) {
+      const levelNumber = typeof keyOrLevel === "number"
+        ? keyOrLevel
+        : LEVEL_KEYS.indexOf(keyOrLevel);
+      const index = Number.isInteger(levelNumber) && levelNumber > 0 ? levelNumber - 1 : 0;
+      return levels[index] || levels[0] || fallback;
+    }
+    return levels[keyOrLevel] || fallback;
   }
 
   function bestExplanation(concept) {
     const lv = concept.levels || {};
-    const best = lv.junior || lv.student || lv.professor || lv.soldier || lv.child || lv.grandma || "";
+    const best =
+      levelText(lv, "junior") ||
+      levelText(lv, "student") ||
+      levelText(lv, "professor") ||
+      levelText(lv, "soldier") ||
+      levelText(lv, "child") ||
+      levelText(lv, "grandma") ||
+      "";
     if (isLowSignalExplanation(best)) return conciseConceptDefinition(concept) || "";
     return best || conciseConceptDefinition(concept) || "";
   }
@@ -10860,6 +13017,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (concept) {
       const diff = getDifficulty(concept);
       if (diff > 5) w *= 1 + (diff - 5) * 0.15; // diff 10 → ×1.75
+      const spacedPriority = spacedReviewPriorityForScore(sc, concept, conceptKey(lessonId, conceptName));
+      if (spacedPriority >= 60) w *= 2.4;
+      else if (spacedPriority >= 40) w *= 1.8;
+      else if (spacedPriority >= 25) w *= 1.35;
     }
 
     // Weak-report boost: each report doubles the weight (capped at ×4).
@@ -10901,76 +13062,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return filtered[filtered.length - 1];
   }
 
-  // ---- Code Fill: pick a meaningful blank in concept.codeExample
-  function escapeRegex(s) {
-    return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  }
-
-  // Common JS/React keywords/methods worth blanking out
-  const FILL_PRIORITY = new Set([
-    "useState", "useEffect", "useRef", "useMemo", "useCallback", "useContext",
-    "useReducer", "createContext", "Provider", "memo", "forwardRef",
-    "map", "filter", "reduce", "forEach", "find", "some", "every", "includes",
-    "push", "pop", "shift", "unshift", "splice", "slice", "concat", "sort",
-    "async", "await", "Promise", "then", "catch", "finally", "resolve", "reject",
-    "fetch", "json", "addEventListener", "querySelector", "createElement",
-    "const", "let", "var", "return", "function", "class", "extends", "super",
-    "import", "export", "default", "from", "as",
-    "true", "false", "null", "undefined",
-    "this", "new", "delete", "typeof", "instanceof",
-    "props", "state", "children", "key", "ref",
-  ]);
-
-  function makeCodeFill(concept) {
-    const code = concept.codeExample;
-    if (!code || code.length < 8) return null;
-
-    const name = (concept.conceptName || "").trim();
-    if (!name) return null;
-
-    // 1) Try to find the concept name (or a single-word part of it) in the code
-    const words = name.split(/[\s\-_]+/).filter((w) => w.length >= 3);
-    for (const w of words) {
-      const re = new RegExp(`\\b(${escapeRegex(w)})\\b`, "i");
-      const m = code.match(re);
-      if (m) {
-        const answer = m[0];
-        if (answer.length < 2 || answer.length > 24) continue;
-        const blanked = code.replace(re, "____");
-        return { answer, blanked };
-      }
-    }
-
-    // 2) Try priority keyword/method tokens
-    const tokens = code.match(/[A-Za-z_$][A-Za-z0-9_$]+/g) || [];
-    const priorityHits = tokens.filter((t) => FILL_PRIORITY.has(t));
-    if (priorityHits.length > 0) {
-      const chosen = priorityHits[window.RNG.int(priorityHits.length)];
-      const idx = code.indexOf(chosen);
-      if (idx !== -1) {
-        const blanked =
-          code.substring(0, idx) + "____" + code.substring(idx + chosen.length);
-        return { answer: chosen, blanked };
-      }
-    }
-
-    // 3) Fallback: pick a "distinctive" identifier (length ≥ 4, not a number/bracket)
-    const skip = new Set([
-      "console", "log", "document", "window", "true", "false", "null",
-      "undefined", "if", "else", "for", "while",
-    ]);
-    const candidates = tokens.filter(
-      (t) => !skip.has(t) && t.length >= 4 && t.length <= 18,
-    );
-    if (candidates.length === 0) return null;
-    const chosen = candidates[window.RNG.int(candidates.length)];
-    const idx = code.indexOf(chosen);
-    if (idx === -1) return null;
-    const blanked =
-      code.substring(0, idx) + "____" + code.substring(idx + chosen.length);
-    return { answer: chosen, blanked };
-  }
-
   function questionOneLineForFeedback(concept) {
     return conciseConceptDefinition(concept) || bestExplanation(concept) || String(concept?.conceptName || "");
   }
@@ -10995,122 +13086,6 @@ document.addEventListener("DOMContentLoaded", () => {
       correctCue ? `סימן הזיהוי בשאלה: ${correctCue}` : "",
       mistake ? `טעות נפוצה: ${mistake}` : "",
     ].filter(Boolean).join(" ");
-  }
-
-  function buildOptionFeedback(options, correctIndex, optionConcepts, correctConcept, correctCue) {
-    return options.map((option, index) => {
-      if (index === correctIndex) {
-        return `נכון: ${correctConcept.conceptName} מתאים כי ${correctCue || questionOneLineForFeedback(correctConcept)}`;
-      }
-      const other = optionConcepts[index];
-      if (other) {
-        return `לא: ${option} שייך ל-${other.conceptName}. ${other.conceptName} = ${questionOneLineForFeedback(other)}. כאן צריך ${correctConcept.conceptName}.`;
-      }
-      return `לא: "${option}" לא עונה על סימן הזיהוי של ${correctConcept.conceptName}.`;
-    });
-  }
-
-  function generatedQuestionId(lesson, concept, variant, challengeLevel) {
-    return `dyn:${stableQuestionHash(`${lesson.id}|${concept.conceptName}|${variant}|${challengeLevel}`)}`;
-  }
-
-  function generatedDistractorConcepts(pool, concept, count = 3) {
-    const seen = new Set([String(concept.conceptName || "").toLowerCase()]);
-    const out = [];
-    window.RNG.shuffle(pool).forEach((item) => {
-      const name = String(item.concept?.conceptName || "").trim();
-      const key = name.toLowerCase();
-      if (!name || seen.has(key) || out.length >= count) return;
-      seen.add(key);
-      out.push(item.concept);
-    });
-    return out;
-  }
-
-  function makeGeneratedMCQuestion({ lesson, concept, pool, levelKey, levelLabel, variant, challengeLevel }) {
-    const distractorConcepts = generatedDistractorConcepts(pool, concept, 3);
-    if (distractorConcepts.length < 3) return null;
-    const correctExpl = concept.levels?.[levelKey] || bestExplanation(concept);
-    const correctUse = concept.whyFullStack || conciseConceptNeed(concept) || correctExpl;
-    const correctMistake = concept.commonMistake || `בלבול בין ${concept.conceptName} לבין מושג דומה.`;
-    const correctCode = concept.codeExplanation || concept.codeExample || correctExpl;
-    let question = "";
-    let correctValue = concept.conceptName;
-    let values = [];
-    let optionConcepts = [];
-    let correctCue = correctExpl;
-
-    if (variant === "describe") {
-      question = `איזה משפט מתאר נכון את "${concept.conceptName}" ברמת ${LEVEL_INFO[Math.min(6, Math.max(1, challengeLevel))]?.icon || ""} ${levelLabel}?`;
-      correctValue = correctExpl;
-      values = [correctValue, ...distractorConcepts.map((item) => item.levels?.[levelKey] || bestExplanation(item))];
-      optionConcepts = [concept, ...distractorConcepts];
-      correctCue = correctExpl;
-    } else if (variant === "name-match") {
-      question = `איזה מושג מתאים להסבר הבא?\n\n"${correctExpl}"`;
-      values = [concept.conceptName, ...distractorConcepts.map((item) => item.conceptName)];
-      optionConcepts = [concept, ...distractorConcepts];
-      correctCue = correctExpl;
-    } else if (variant === "use-case") {
-      question = `באיזה מושג תשתמש כשזה הצורך?\n\n${correctUse}`;
-      values = [concept.conceptName, ...distractorConcepts.map((item) => item.conceptName)];
-      optionConcepts = [concept, ...distractorConcepts];
-      correctCue = correctUse;
-    } else if (variant === "mistake") {
-      question = `איזה מושג מזהים לפי הטעות הנפוצה הזו?\n\n${correctMistake}`;
-      values = [concept.conceptName, ...distractorConcepts.map((item) => item.conceptName)];
-      optionConcepts = [concept, ...distractorConcepts];
-      correctCue = correctMistake;
-    } else if (variant === "code-reason") {
-      question = `איזה מושג מסביר את ההתנהגות או קטע הקוד הבא?\n\n${compactOneLine(correctCode, 180)}`;
-      values = [concept.conceptName, ...distractorConcepts.map((item) => item.conceptName)];
-      optionConcepts = [concept, ...distractorConcepts];
-      correctCue = compactOneLine(correctCode, 180);
-    } else {
-      question = `מה המושג המדויק שצריך לבחור לפי סימן הזיהוי הבא?\n\n${questionOneLineForFeedback(concept)} ${correctUse ? ` ${correctUse}` : ""}`;
-      values = [concept.conceptName, ...distractorConcepts.map((item) => item.conceptName)];
-      optionConcepts = [concept, ...distractorConcepts];
-      correctCue = questionOneLineForFeedback(concept);
-    }
-
-    const zipped = values.map((value, index) => ({ value, concept: optionConcepts[index] || null }));
-    const shuffled = window.RNG.shuffle(zipped);
-    const options = shuffled.map((item) => item.value);
-    const shuffledConcepts = shuffled.map((item) => item.concept);
-    const correctIndex = options.indexOf(correctValue);
-    return {
-      id: generatedQuestionId(lesson, concept, variant, challengeLevel),
-      kind: "mc",
-      level: Math.min(6, Math.max(1, challengeLevel)),
-      challengeLevel: Math.min(6, Math.max(1, challengeLevel)),
-      variant,
-      conceptKey: conceptKey(lesson.id, concept.conceptName),
-      question,
-      options,
-      correctIndex,
-      optionFeedback: buildOptionFeedback(options, correctIndex, shuffledConcepts, concept, correctCue),
-      explanation: `${concept.conceptName}: ${questionOneLineForFeedback(concept)}`,
-      deepExplanation: deepExplanationForQuestion(concept, correctCue),
-      memoryAssociation: memoryAssociationForConcept(concept),
-    };
-  }
-
-  function generatedMCVariantsForConcept({ lesson, concept, sc, pool, levelKey, levelLabel }) {
-    const base = Math.max(1, Math.min(6, Number(sc.level) || 1));
-    return [
-      { variant: "describe", challengeLevel: base },
-      { variant: "name-match", challengeLevel: Math.min(6, base + 1) },
-      { variant: "use-case", challengeLevel: Math.min(6, base + 2) },
-      { variant: "mistake", challengeLevel: Math.min(6, base + 3) },
-      { variant: "code-reason", challengeLevel: Math.min(6, Math.max(4, base + 3)) },
-      { variant: "mastery", challengeLevel: 6 },
-    ]
-      .map((config) => makeGeneratedMCQuestion({ lesson, concept, pool, levelKey, levelLabel, ...config }))
-      .filter(Boolean)
-      .sort((a, b) => {
-        if (a.challengeLevel !== b.challengeLevel) return a.challengeLevel - b.challengeLevel;
-        return String(a.id).localeCompare(String(b.id));
-      });
   }
 
   function questionChallengeValue(question = {}) {
@@ -11174,23 +13149,42 @@ document.addEventListener("DOMContentLoaded", () => {
     return unused.find((question) => questionChallengeValue(question) >= target) || unused[unused.length - 1];
   }
 
-  // Question generation: returns either a multiple-choice (kind="mc") or code-fill (kind="fill")
-  // question depending on the concept's CURRENT level and which stage it has not yet passed.
-  // The MC's correct answer uses the explanation of the concept's current level.
+  function manualQuestionPoolForConcept(lesson, concept, kind = "mc") {
+    const bank = bankByConcept(lesson.id, concept.conceptName);
+    return (bank[kind] || []).filter((question) => !question._seeded);
+  }
+
+  function pickManualFillQuestionForConcept(lesson, concept) {
+    const sc = getScore(lesson.id, concept.conceptName);
+    const fillPool = manualQuestionPoolForConcept(lesson, concept, "fill");
+    const sameLevel = fillPool.filter((q) => Number(q.level) === Number(sc.level));
+    return pickUnansweredBankQuestion(sameLevel, lesson.id, concept.conceptName, "fill", {
+      preferredLevel: sc.level,
+      allowExhaustedFallback: false,
+    }) || pickUnansweredBankQuestion(fillPool, lesson.id, concept.conceptName, "fill", {
+      preferredLevel: sc.level,
+      allowExhaustedFallback: true,
+    });
+  }
+
+  function fillQuestionCode(question = {}) {
+    return question.codeBlock || question.code || "";
+  }
+
+  function fillQuestionAnswer(question = {}) {
+    return String(question.answer || "").trim();
+  }
+
+  function fillQuestionPrompt(question = {}, conceptName = "") {
+    return question.question || question.prompt || `השלם את הטוקן החסר בקוד של ${conceptName}`;
+  }
+
+  // Manual-only question picker: no automatic question generation or seeded fallback.
   function buildQuestion(lessonItem) {
     const { lesson, concept } = lessonItem;
     const sc = getScore(lesson.id, concept.conceptName);
     const need = nextNeedFor(concept, sc);
     if (!need) return null; // mastered
-
-    // Helpers
-    const pool = trainableConcepts().filter(
-      (x) => x.concept.conceptName !== concept.conceptName,
-    );
-
-    function shuffle(arr) {
-      return window.RNG.shuffle(arr);
-    }
 
     // --- Code Trace (curated, multi-step) — preferred occasionally for the MC stage ---
     // We only offer trace as an alternative to MC, never instead of fill.
@@ -11209,37 +13203,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Code-fill stage ---
     if (need === "fill") {
-      const fill = makeCodeFill(concept);
-      if (fill) {
-        const fillQuestion = {
-          id: generatedQuestionId(lesson, concept, "fill", Math.max(4, Math.min(6, sc.level + 1))),
-          kind: "fill",
-          level: sc.level,
-          challengeLevel: Math.max(4, Math.min(6, sc.level + 1)),
-          conceptKey: conceptKey(lesson.id, concept.conceptName),
-          question: `השלם את הטוקן החסר בקוד של המושג "${concept.conceptName}":`,
-          codeBlock: fill.blanked,
-          answer: fill.answer,
-          hint: `אורך התשובה: ${fill.answer.length} תווים. אות ראשונה: "${fill.answer[0]}".`,
-          explanation: `התשובה הנכונה: ${fill.answer}. ${concept.codeExplanation || ""}`.trim(),
-          deepExplanation: deepExplanationForQuestion(concept, `הטוקן החסר הוא ${fill.answer}`),
-          memoryAssociation: memoryAssociationForConcept(concept),
-        };
-        if (!questionWasAnswered(fillQuestion, lesson.id, concept.conceptName, "fill")) return fillQuestion;
-      }
-      // If we couldn't generate a fill (no codeExample / weird code), fall through to MC.
+      const fill = pickManualFillQuestionForConcept(lesson, concept);
+      if (fill) return fill;
+      return null;
     }
 
-    // --- Multiple-choice stage at current level ---
-    const levelKey = LEVEL_KEYS[sc.level] || "junior";
-    const conceptLevels = concept.levels || {};
-    const correctExpl = conceptLevels[levelKey] || bestExplanation(concept);
-    const levelLabel = LEVEL_INFO[sc.level].label;
-
-    const variants = generatedMCVariantsForConcept({ lesson, concept, sc, pool, levelKey, levelLabel });
-    const picked = pickUnusedHarderQuestion(variants, lesson.id, concept.conceptName, "mc");
-    if (picked) return picked;
-    return null;
+    return pickMCQuestionForConcept(lesson, concept);
   }
 
   function nextQuestion() {
@@ -11455,6 +13424,63 @@ document.addEventListener("DOMContentLoaded", () => {
         <span>${esc(calibration.message || "")}</span>
         <small>במושג הזה: דיוק ${stats.accuracyPct}% · ביטחון ממוצע ${stats.avgConfidencePct}% · פער ${stats.calibrationGap > 0 ? "+" : ""}${stats.calibrationGap}%.</small>
       </div>`;
+  }
+
+  function recordTrainerOutcome(correct) {
+    trainerRecentOutcomes.push(Boolean(correct));
+    trainerRecentOutcomes = trainerRecentOutcomes.slice(-12);
+  }
+
+  function trainerFatigueGuardStatus() {
+    if (trainerRecentOutcomes.length < 6) return null;
+    const previous = trainerRecentOutcomes.slice(-6, -3);
+    const recent = trainerRecentOutcomes.slice(-3);
+    const pct = (items) => Math.round((items.filter(Boolean).length / items.length) * 100);
+    const previousPct = pct(previous);
+    const recentPct = pct(recent);
+    if (recentPct <= 34 && previousPct - recentPct >= 34) {
+      return {
+        source: "trainer",
+        previousPct,
+        recentPct,
+        message: "הדיוק ירד בחדות בחלון האחרון. עדיף לעבור לחזרה קצרה במקום להמשיך במצב קשה.",
+      };
+    }
+    return null;
+  }
+
+  function conceptSprintFatigueGuardStatus(mode, pct, results = []) {
+    if (!mode?.penalty || results.length < 3) return null;
+    const misses = results.filter((item) => !item.correct).length;
+    if (pct <= 50 && misses >= 2) {
+      return {
+        source: "concept-sprint",
+        previousPct: null,
+        recentPct: pct,
+        message: "המסלול הזה עם קנס, והתוצאה מצביעה על עומס. עדיף לעבור לחזרה ממוקדת לפני עוד ניסיון.",
+      };
+    }
+    return null;
+  }
+
+  function renderFatigueGuardCard(status) {
+    if (!status) return "";
+    return `
+      <div class="fatigue-guard-card" data-fatigue-guard="${esc(status.source || "learning")}">
+        <strong>עומס למידה מזוהה</strong>
+        <span>${esc(status.message || "")}</span>
+        ${status.previousPct == null ? "" : `<small>קודם: ${esc(status.previousPct)}% · עכשיו: ${esc(status.recentPct)}%</small>`}
+        <button type="button" class="km-btn-mini" data-fatigue-review>פתח מצב חזרה</button>
+      </div>`;
+  }
+
+  function wireFatigueGuardActions(root = document) {
+    root.querySelectorAll("[data-fatigue-review]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        trainerMode = "weak";
+        openStudyMode();
+      });
+    });
   }
 
   function renderTrainerCard() {
@@ -11779,6 +13805,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     if (correct) trainerStats.correct++; else trainerStats.wrong++;
     trainerStats.asked++;
+    recordTrainerOutcome(correct);
     const fbSlot = document.getElementById("tq-feedback-slot");
     if (fbSlot) {
       const verdict = correct ? "✅ עברת את ה-Code Trace בלי טעויות!" : "📝 השלמת את ה-Trace, אך עם טעויות בדרך.";
@@ -11786,8 +13813,10 @@ document.addEventListener("DOMContentLoaded", () => {
         <strong>${verdict}</strong>
         ${renderPerAnswerExplanationBundle(trainerCurrent.question?.trace || {}, { kind: "trace", concept })}
         ${result.advanced ? `<div>⬆️ קודמת לרמה ${result.newLevel}!</div>` : ""}
-        ${!correct ? renderMistakeAgentFeedback(result.mistake) : ""}
+        ${renderFatigueGuardCard(trainerFatigueGuardStatus())}
+        ${!correct ? renderWrongAnswerCoachCard({ mode: "trace", result, concept, question: trainerCurrent.question?.trace || {} }) : ""}
       </div>`;
+      wireFatigueGuardActions(fbSlot);
     }
     const actions = document.getElementById("tq-actions");
     if (actions) actions.style.display = "flex";
@@ -11919,7 +13948,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ? `<div class="tq-distractor-feedback">${esc(distractorFeedback)}</div>
          <div class="tq-explanation-secondary">📚 הסבר כללי: ${esc(question.explanation || "")}</div>`
       : `<div>${esc(question.explanation || "")}</div>`;
-    const mistakeAgentBlock = !correct ? renderMistakeAgentFeedback(result.mistake) : "";
+    const mistakeAgentBlock = !correct ? renderWrongAnswerCoachCard({ mode: "trainer", result, concept, question }) : "";
     const confidenceBlock = renderConfidenceCalibrationFeedback(result.confidenceCalibration);
 
     return `
@@ -11931,6 +13960,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ${progressLine}
         </div>
         ${confidenceBlock}
+        ${renderFatigueGuardCard(trainerFatigueGuardStatus())}
         ${mistakeAgentBlock}
       </div>`;
   }
@@ -11985,6 +14015,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     trainerStats.asked++;
     if (correct) trainerStats.correct++; else trainerStats.wrong++;
+    recordTrainerOutcome(correct);
 
     const input = document.getElementById("tq-fill-input");
     if (input) {
@@ -11998,6 +14029,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("tq-feedback-slot").innerHTML = buildAnswerFeedback(
       correct, "fill", levelBefore, result, concept, question,
     );
+    wireFatigueGuardActions(document.getElementById("tq-feedback-slot"));
     attachPostAnswerActions(lesson, concept, { correct, result });
 
     updateTrainerDashboard();
@@ -12024,6 +14056,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     trainerStats.asked++;
     if (correct) trainerStats.correct++; else trainerStats.wrong++;
+    recordTrainerOutcome(correct);
 
     const card = document.getElementById("trainer-quiz-card");
     card.querySelectorAll(".tq-option").forEach((btn) => {
@@ -12036,6 +14069,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("tq-feedback-slot").innerHTML = buildAnswerFeedback(
       correct, "mc", levelBefore, result, concept, question, selectedIdx,
     );
+    wireFatigueGuardActions(document.getElementById("tq-feedback-slot"));
     attachPostAnswerActions(lesson, concept, { correct, result });
 
     updateTrainerDashboard();
@@ -12076,9 +14110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const allMC = (window.QUESTIONS_BANK && window.QUESTIONS_BANK.mc) || [];
     const allFill = (window.QUESTIONS_BANK && window.QUESTIONS_BANK.fill) || [];
     const curatedMC = allMC.filter((q) => !q._seeded).length;
-    const seededMC_total = allMC.length - curatedMC;
     const curatedFill = allFill.filter((q) => !q._seeded).length;
-    const seededFill_total = allFill.length - curatedFill;
     const totalQuestions = allMC.length + allFill.length;
 
     const targetMC = all.length * 3;
@@ -12122,7 +14154,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="bc-stat"><span class="n">${haveMC}/${targetMC}</span><span>🅰️ MC (${mcPct}%)</span></div>
           <div class="bc-stat"><span class="n">${haveFill}/${targetFill}</span><span>✍️ Fill (${fillPct}%)</span></div>
           <div class="bc-stat"><span class="n">${curatedMC + curatedFill}</span><span>✋ ידני curated</span></div>
-          <div class="bc-stat"><span class="n">${seededMC_total + seededFill_total}</span><span>🤖 seed אוטומטי</span></div>
+          <div class="bc-stat"><span class="n">0</span><span>🤖 ייצור אוטומטי פעיל</span></div>
           <div class="bc-stat"><span class="n">${zeroBoth}</span><span>בלי שום שאלה</span></div>
         </div>
         <div class="bc-mc-bar">
@@ -12208,16 +14240,9 @@ document.addEventListener("DOMContentLoaded", () => {
     trainerView.style.display = "block";
     openTrainerBtn?.classList.add("active");
     trainerStats = { asked: 0, correct: 0, wrong: 0 };
-    // Lazy-load the seeded bank (1.4MB) on first Trainer open.
-    if (typeof window.ensureSeededBank === "function") {
-      window.ensureSeededBank().then(() => {
-        nextQuestion();
-        renderTrainerReport();
-      });
-    } else {
-      nextQuestion();
-      renderTrainerReport();
-    }
+    trainerRecentOutcomes = [];
+    nextQuestion();
+    renderTrainerReport();
     scrollToTop();
     sidebar.classList.remove("open");
   }
@@ -12483,34 +14508,16 @@ document.addEventListener("DOMContentLoaded", () => {
       concept.codeExample &&
       ((mode.id === "medium" && index % 4 === 3) || (mode.id === "long" && index % 3 === 2));
     if (shouldUseFill) {
-      const fill = makeCodeFill(concept);
-      if (fill) {
-        const fillQuestion = {
-          id: generatedQuestionId(lesson, concept, "sprint-fill", Math.max(4, Math.min(6, sc.level + 1))),
-          kind: "fill",
-          level: sc.level,
-          challengeLevel: Math.max(4, Math.min(6, sc.level + 1)),
-          conceptKey: conceptKey(lesson.id, concept.conceptName),
-          lesson,
-          concept,
-          question: `השלם את הטוקן החסר שמוכיח שאתה מזהה את "${concept.conceptName}".`,
-          codeBlock: fill.blanked,
-          answer: fill.answer,
-          explanation: `התשובה: ${fill.answer}. ${concept.codeExplanation || bestExplanation(concept)}`.trim(),
-          deepExplanation: deepExplanationForQuestion(concept, `הטוקן החסר הוא ${fill.answer}`),
-          memoryAssociation: memoryAssociationForConcept(concept),
-        };
-        if (!questionWasAnswered(fillQuestion, lesson.id, concept.conceptName, "fill")) return fillQuestion;
-      }
+      const fill = pickManualFillQuestionForConcept(lesson, concept);
+      if (fill) return { ...fill, lesson, concept, kind: "fill" };
     }
 
-    const levelKey = LEVEL_KEYS[sc.level] || "junior";
-    const levelLabel = LEVEL_INFO[sc.level]?.label || "תרגול";
-    const pool = sortedSprintConcepts()
-      .filter((candidate) => candidate.concept.conceptName !== concept.conceptName);
-    const variants = generatedMCVariantsForConcept({ lesson, concept, sc, pool, levelKey, levelLabel });
-    const picked = pickUnusedHarderQuestion(variants, lesson.id, concept.conceptName, "mc");
-    return picked ? { ...picked, lesson, concept } : null;
+    const mcPool = manualQuestionPoolForConcept(lesson, concept, "mc");
+    const picked = pickUnansweredBankQuestion(mcPool, lesson.id, concept.conceptName, "mc", {
+      preferredLevel: sc.level,
+      allowExhaustedFallback: true,
+    });
+    return picked ? { ...picked, lesson, concept, kind: "mc" } : null;
   }
 
   function sprintQueueForMode(modeId, forcedConcept = null) {
@@ -12711,6 +14718,8 @@ document.addEventListener("DOMContentLoaded", () => {
       lessonId: q.lesson.id,
       lessonTitle: q.lesson.title,
       conceptName: q.concept.conceptName,
+      conceptKey: conceptKey(q.lesson.id, q.concept.conceptName),
+      questionId: questionIdentity(q, q.lesson.id, q.concept.conceptName, q.kind),
       correct,
       beforeLevel,
       afterLevel: afterScore.level,
@@ -12728,7 +14737,7 @@ document.addEventListener("DOMContentLoaded", () => {
             concept: q.concept,
           })}
           <small>רמה לפני: ${beforeLevel}/7 · עכשיו: ${afterScore.level}/7${result.advanced ? " · עלית רמה" : ""}</small>
-          ${!correct ? renderMistakeAgentFeedback(result.mistake) : ""}
+          ${!correct ? renderWrongAnswerCoachCard({ mode: "concept-sprint", result, concept: q.concept, question: q }) : ""}
           <button id="cs-next">${conceptSprintState.index + 1 >= conceptSprintState.queue.length ? "סיים וקבל ציון" : "המשך"}</button>
         </div>`;
       document.getElementById("cs-next")?.addEventListener("click", () => {
@@ -12763,7 +14772,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const passed = mode.passPct === 0 || pct >= mode.passPct;
     const delta = passed ? mode.bonus + correct * 6 : -mode.penalty;
     const coinDelta = coinsForXP(delta);
-    if (delta !== 0) awardXP(delta);
+    if (delta !== 0) {
+      const rewardSeed = [
+        mode.id || mode.title,
+        ...results.map((item) => [
+          item.conceptKey || conceptKey(item.lessonId, item.conceptName),
+          item.questionId || "",
+          item.correct ? "correct" : "wrong",
+        ].join(":")),
+      ].join("|");
+      awardLearningReward({
+        xp: delta,
+        coins: coinDelta,
+        source: `concept-sprint:${mode.id || mode.title}`,
+        conceptKey: "concept-sprint",
+        questionId: `concept-sprint:${stableQuestionHash(rewardSeed)}`,
+      });
+    }
     recordLearningEvidence("concept_sprint", {
       source: "concept-sprint",
       score: pct,
@@ -12774,10 +14799,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     tickStudyStreak();
     const weakList = results.filter((r) => !r.correct);
+    const fatigueGuard = conceptSprintFatigueGuardStatus(mode, pct, results);
     root.innerHTML = `
       <div class="concept-sprint-result ${passed ? "passed" : "failed"}">
         <h3>${passed ? "עברת" : "נכשלת"} · ${pct}%</h3>
         <p>${correct}/${total} תשובות נכונות · ${delta >= 0 ? `+${delta}` : delta} XP${coinDelta ? ` · +${coinDelta} 🪙` : ""}</p>
+        ${renderFatigueGuardCard(fatigueGuard)}
         <div class="cs-result-actions">
           <button id="cs-again">סיבוב נוסף</button>
           <button id="cs-trainer">פתח מאמן ידע</button>
@@ -12792,6 +14819,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         ${weakList.length ? `<div class="concept-sprint-warning">המושגים שנכשלת בהם נכנסו לרשימת החולשות ויופיעו יותר במאמן הידע.</div>` : ""}
       </div>`;
+    wireFatigueGuardActions(root);
     document.getElementById("cs-again")?.addEventListener("click", () => {
       if (Number.isInteger(mode.sourceComparisonIndex)) startConceptSprintComparison(mode.sourceComparisonIndex);
       else startConceptSprint(mode.id);
@@ -12857,11 +14885,7 @@ document.addEventListener("DOMContentLoaded", () => {
       renderConceptSprintHome();
       scrollToTop();
     };
-    if (typeof window.ensureSeededBank === "function" && !(window.QUESTIONS_BANK?._seededMerged)) {
-      window.ensureSeededBank().then(render).catch(render);
-    } else {
-      render();
-    }
+    render();
     sidebar.classList.remove("open");
   }
   window.LUMEN_OPEN_CONCEPT_SPRINT = openConceptSprint;
@@ -12872,15 +14896,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const tabsHTML = `
       <div class="pb-subtabs" role="tablist" aria-label="תתי טאבים באבני בסיס">
-        ${PROGRAMMING_BASICS_TABS.map((tab) => `
-          <button class="pb-subtab ${programmingBasicsTab === tab.id ? "active" : ""}"
+        ${PROGRAMMING_BASICS_TABS.map((tab) => {
+          const access = programmingBasicsAccessStatus(tab.id);
+          return `
+          <button class="pb-subtab ${programmingBasicsTab === tab.id ? "active" : ""} ${access.unlocked ? "open" : "locked"}"
                   type="button"
                   role="tab"
                   aria-selected="${programmingBasicsTab === tab.id ? "true" : "false"}"
+                  title="${esc(access.unlocked ? "פתוח" : `נעול · ${access.xpPrice} XP`)}"
                   data-pb-tab="${esc(tab.id)}">
             <span>${esc(tab.icon)}</span>${esc(tab.label)}
+            <em>${access.unlocked ? "פתוח" : `${access.xpPrice} XP`}</em>
           </button>
-        `).join("")}
+        `; }).join("")}
       </div>`;
 
     const metricNote = `
@@ -13951,7 +15979,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </section>`;
     }
 
-    const activeContent =
+    const activeAccessEntry = programmingBasicsAccessEntry(programmingBasicsTab);
+    const activeAccess = programmingBasicsAccessStatus(programmingBasicsTab);
+    const unlockedActiveContent =
       programmingBasicsTab === "electricity" ? renderElectricity()
         : programmingBasicsTab === "efficiency" ? renderEfficiencyFoundations()
           : programmingBasicsTab === "builds" ? renderBuilds()
@@ -13964,8 +15994,35 @@ document.addEventListener("DOMContentLoaded", () => {
                         : programmingBasicsTab === "museum" ? renderLanguageMuseum()
                           : programmingBasicsTab === "react-anatomy" ? renderReactAnatomy()
                             : renderFoundations();
+    const lockedContent = `
+      ${renderXPAccessPanel(activeAccess, activeAccessEntry, { ref: programmingBasicsTab })}
+      <section class="pb-section xp-foundation-path">
+        <div class="pb-section-head">
+          <span>מסלול</span>
+          <h2>מסלול יסוד סגור לפני חומר מתקדם</h2>
+          <p>המערכת מתחילה באבני הבסיס הפתוחות. אחרי צבירת XP ושליטה במושגי היסוד, אפשר לפתוח את החומר שתלוי בהם.</p>
+        </div>
+        <div class="xp-foundation-path-grid">
+          ${PROGRAMMING_BASICS_TABS.map((tab) => {
+            const status = programmingBasicsAccessStatus(tab.id);
+            return `
+              <button class="${status.unlocked ? "open" : "locked"}"
+                      type="button"
+                      data-pb-tab="${esc(tab.id)}">
+                <span>${esc(tab.icon)}</span>
+                <strong>${esc(tab.label)}</strong>
+                <small>${status.unlocked ? "פתוח" : `${status.xpPrice} XP · ${status.missingPrereqs.length} דרישות ידע`}</small>
+              </button>`;
+          }).join("")}
+        </div>
+      </section>`;
+    const activeContent = activeAccess.unlocked ? unlockedActiveContent : lockedContent;
 
     container.innerHTML = `${tabsHTML}${metricNote}<div class="pb-tab-panel">${activeContent}</div>`;
+    bindXPAccessButtons(container, () => {
+      renderProgrammingBasics();
+      setProgrammingBasicsContextTree();
+    });
 
     container.querySelectorAll("[data-pb-target]").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -14634,11 +16691,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const visitCounter = container.querySelector("[data-museum-visited-count]");
     const tourCounter = container.querySelector("[data-museum-tour-count]");
     const drillCounter = container.querySelector("[data-museum-drill-count]");
+    const cardCounters = container.querySelectorAll("[data-museum-card-count]");
+    const experienceRewardCounter = container.querySelector("[data-museum-experience-reward-count]");
     if (stampCounter) stampCounter.textContent = String(state.stamps.length);
     if (visitCounter) visitCounter.textContent = String(state.visited.length);
     if (tourCounter) tourCounter.textContent = String((state.tourStops || []).length);
     if (drillCounter) drillCounter.textContent = String((state.drills || []).length);
+    if (experienceRewardCounter) experienceRewardCounter.textContent = String((state.experienceRewards || []).length);
+    cardCounters.forEach((item) => {
+      const total = getMuseumCollectibleCards().length;
+      item.textContent = item.textContent.includes("/")
+        ? `${String((state.cards || []).length)}/${String(total)}`
+        : String((state.cards || []).length);
+    });
     updateMuseumTourCounters(container, state);
+  }
+
+  function awardMuseumExperienceCompletionReward({ experienceId = "", storeItemId = "", conceptKey: rewardConceptKey = "", questionId = "" } = {}) {
+    if (!experienceId || !storeItemId || !isMuseumTicketOpen(storeItemId)) {
+      return { ok: false, message: "החוויה עדיין נעולה." };
+    }
+    const result = awardLearningReward({
+      xp: 12,
+      coins: coinsForXP(12),
+      source: "museum-experience-completion",
+      conceptKey: rewardConceptKey || storeItemId,
+      questionId: questionId || experienceId,
+    });
+    return {
+      ok: !result.duplicate && !result.disabled,
+      message: result.duplicate ? "התגמול כבר נרשם." : result.disabled ? "כלכלת התגמולים מושהית." : "+12 XP על השלמת חוויה.",
+    };
   }
 
   function updateMuseumTourCounters(container, state = loadMuseumPassportState()) {
@@ -14686,6 +16769,41 @@ document.addEventListener("DOMContentLoaded", () => {
           item.setAttribute("aria-pressed", hasStop ? "false" : "true");
           item.textContent = hasStop ? "סמן תחנה" : "תחנה הושלמה";
         });
+        updateMuseumPassportCounters(container, nextState);
+      });
+    });
+
+    container.querySelectorAll("[data-museum-collect-card]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const cardId = btn.dataset.museumCollectCard;
+        const state = loadMuseumPassportState();
+        const hasCard = (state.cards || []).includes(cardId);
+        state.cards = hasCard ? state.cards.filter((item) => item !== cardId) : [...(state.cards || []), cardId];
+        const nextState = saveMuseumPassportState(state);
+        const card = btn.closest("[data-museum-card]");
+        card?.classList.toggle("done", !hasCard);
+        btn.setAttribute("aria-pressed", hasCard ? "false" : "true");
+        btn.textContent = hasCard ? "אסוף כרטיס" : "נאסף";
+        updateMuseumPassportCounters(container, nextState);
+      });
+    });
+
+    container.querySelectorAll("[data-museum-experience-complete]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const experienceId = btn.dataset.museumExperienceComplete || "";
+        const state = loadMuseumPassportState();
+        if ((state.experienceRewards || []).includes(experienceId)) return;
+        const reward = awardMuseumExperienceCompletionReward({
+          experienceId,
+          storeItemId: btn.dataset.museumExperienceStore || "",
+          conceptKey: btn.dataset.museumExperienceConcept || "",
+          questionId: btn.dataset.museumExperienceQuestion || experienceId,
+        });
+        if (!reward.ok && !reward.message.includes("כבר")) return;
+        state.experienceRewards = [...(state.experienceRewards || []), experienceId];
+        const nextState = saveMuseumPassportState(state);
+        btn.setAttribute("aria-pressed", "true");
+        btn.textContent = "הושלם";
         updateMuseumPassportCounters(container, nextState);
       });
     });
@@ -14990,6 +17108,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function applyMuseumFocusedWing(container, activeWing) {
     if (!activeWing || activeWing === "home") return;
     const allowedSectionIds = new Set(getMuseumFocusedSectionIds(activeWing));
+    if (!isMuseumWingOpen(activeWing)) {
+      allowedSectionIds.clear();
+      ["programming-museum-wing-focus", "programming-museum-access-gate", "programming-museum-wing-gate"].forEach((id) => allowedSectionIds.add(id));
+    }
     container.querySelectorAll(".museum-stage, .museum-section").forEach((section) => {
       section.hidden = Boolean(section.id) && !allowedSectionIds.has(section.id);
     });
@@ -15037,8 +17159,22 @@ document.addEventListener("DOMContentLoaded", () => {
   function getMuseumWingId() {
     const wing = getMuseumQueryParam("wing");
     if (wing) return wing;
+    if (programmingMuseumLocalWing) return programmingMuseumLocalWing;
     if (getMuseumStackLayerId()) return "stack";
     return "home";
+  }
+
+  function setMuseumWingId(wingId = "home") {
+    programmingMuseumLocalWing = wingId === "home" ? "" : wingId;
+    try {
+      const url = new URL(window.location.href);
+      if (!wingId || wingId === "home") url.searchParams.delete("wing");
+      else url.searchParams.set("wing", wingId);
+      url.searchParams.delete("hall");
+      url.searchParams.delete("domain");
+      url.searchParams.delete("room");
+      window.history.replaceState({}, "", url.toString());
+    } catch {}
   }
 
   function getMuseumHallParam() {
@@ -15161,7 +17297,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getMuseumFocusedSectionIds(activeWing) {
-    const focus = ["programming-museum-wing-focus"];
+    const focus = ["programming-museum-wing-focus", "programming-museum-access-gate", "programming-museum-wing-gate"];
     const commonLearning = ["programming-museum-video-studio", "programming-museum-passport"];
     const groups = {
       stack: ["programming-museum-stack", "programming-museum-connection-system", ...commonLearning],
@@ -15300,6 +17436,27 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>`;
   }
 
+  function renderMuseumActiveAccess(activeWing = "home") {
+    if (!activeWing || activeWing === "home") return "";
+    const wing = getMuseumWingDefinitions().find((item) => item.id === activeWing);
+    const status = museumAccessStatus(activeWing);
+    const locked = !status.unlocked;
+    return `
+      <section class="museum-section museum-access-gate ${locked ? "locked" : "open"}" id="programming-museum-access-gate">
+        <div class="museum-section-head">
+          <span>XP</span>
+          <div>
+            <h3>${locked ? "שער כניסה למוזיאון" : "שער המוזיאון פתוח"} · ${esc(wing?.title || activeWing)}</h3>
+            <p>${esc(status.wing.rule)} כל מוזיאון נפתח בטאב נפרד: כניסה ראשונית + דמי אגף נוספים + הוכחת ידע יסודי.</p>
+          </div>
+        </div>
+        <div class="museum-access-grid">
+          ${renderXPAccessPanel(status.entry, museumAccessEntry(activeWing, "entry"), { compact: false, ref: activeWing })}
+          ${renderXPAccessPanel(status.wing, museumAccessEntry(activeWing, "wing"), { compact: false, ref: activeWing })}
+        </div>
+      </section>`;
+  }
+
   function getMuseumWingDefinitions() {
     const fullStackRoomCount = FULL_STACK_MUSEUM_HALLS.reduce((sum, hall) => {
       const domain = FULL_STACK_DOMAIN_EXHIBITIONS[hall.id];
@@ -15358,6 +17515,7 @@ document.addEventListener("DOMContentLoaded", () => {
         metric: "אבחוני שכבה",
         learningGoal: "לזהות מאיזו שכבה שגיאה מגיעה ומה בודקים קודם.",
         target: "programming-museum-connection-system",
+        storeItemId: "museum.debug",
       },
       {
         id: "contracts",
@@ -15378,6 +17536,7 @@ document.addEventListener("DOMContentLoaded", () => {
         metric: "תחנות AI",
         learningGoal: "להבין מאיפה התחיל רעיון הבינה המלאכותית ומה ההבדל בין AI, מודל, LLM, סוכן ומנוע אינטליגנציה.",
         target: "programming-museum-ai-evolution",
+        storeItemId: "museum.ai",
       },
       {
         id: "videos",
@@ -15400,6 +17559,214 @@ document.addEventListener("DOMContentLoaded", () => {
         target: "programming-museum-passport",
       },
     ];
+  }
+
+  function readXPAccessUnlocks() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(XP_ACCESS_UNLOCKS_KEY) || "{}");
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function saveXPAccessUnlocks(unlocks) {
+    try { localStorage.setItem(XP_ACCESS_UNLOCKS_KEY, JSON.stringify(unlocks)); } catch {}
+  }
+
+  function resolveAccessConceptKey(rawKey = "") {
+    const key = resolveCanonicalConceptKey({ conceptKey: rawKey });
+    return key || rawKey;
+  }
+
+  function accessConceptStatus(rawKey = "") {
+    const key = resolveAccessConceptKey(rawKey);
+    const ref = findConceptByKeyLoose(key);
+    if (!ref) {
+      return {
+        key,
+        label: key || "unknown/unavailable",
+        mastered: false,
+        status: "unknown/unavailable",
+      };
+    }
+    const score = getScore(ref.lesson.id, ref.concept.conceptName);
+    return {
+      key,
+      label: `${ref.concept.conceptName} · ${ref.lesson.title || ref.lesson.id}`,
+      mastered: isScoreMastered(score),
+      status: `רמה ${score.level || 1}`,
+    };
+  }
+
+  function xpAccessStatus(entry = {}) {
+    const id = entry.id || "";
+    const xpPrice = Math.max(0, Number(entry.xpPrice) || 0);
+    const unlocks = readXPAccessUnlocks();
+    const prereqs = (entry.prerequisiteConceptKeys || []).map(accessConceptStatus);
+    const missingPrereqs = prereqs.filter((item) => !item.mastered);
+    const xp = getXP();
+    const unlocked = xpPrice === 0 || Boolean(unlocks[id]);
+    return {
+      id,
+      title: entry.title || id,
+      xpPrice,
+      xp,
+      unlocked,
+      canUnlock: !unlocked && xp >= xpPrice && missingPrereqs.length === 0,
+      missingXP: Math.max(0, xpPrice - xp),
+      prereqs,
+      missingPrereqs,
+      rule: entry.rule || "נדרש XP ושליטה במושגי יסוד.",
+    };
+  }
+
+  function unlockXPAccess(entry = {}) {
+    const status = xpAccessStatus(entry);
+    if (status.unlocked) return { ok: true, message: `${status.title} כבר פתוח.` };
+    if (!status.canUnlock) {
+      const blockers = [
+        status.missingXP ? `חסרים ${status.missingXP} XP` : "",
+        status.missingPrereqs.length ? `חסרה שליטה ב-${status.missingPrereqs.length} מושגי יסוד` : "",
+      ].filter(Boolean).join(" · ");
+      return { ok: false, message: blockers || "השער עדיין חסום." };
+    }
+    const unlocks = readXPAccessUnlocks();
+    unlocks[status.id] = {
+      unlockedAt: new Date().toISOString(),
+      xpPrice: status.xpPrice,
+      title: status.title,
+      prerequisiteConceptKeys: status.prereqs.map((item) => item.key),
+    };
+    saveXPAccessUnlocks(unlocks);
+    return { ok: true, message: `${status.title} נפתח במסלול XP.` };
+  }
+
+  function programmingBasicsAccessEntry(tabId = programmingBasicsTab) {
+    const config = PROGRAMMING_BASICS_ACCESS[tabId] || PROGRAMMING_BASICS_ACCESS.foundations;
+    return {
+      id: `pb:${tabId}`,
+      kind: "foundation",
+      ...config,
+    };
+  }
+
+  function programmingBasicsAccessStatus(tabId = programmingBasicsTab) {
+    return xpAccessStatus(programmingBasicsAccessEntry(tabId));
+  }
+
+  function museumAccessConfig(wingId = "home") {
+    return MUSEUM_XP_ACCESS[wingId] || {
+      entryXP: 0,
+      wingXP: 0,
+      prerequisiteConceptKeys: [],
+      rule: "שער פתוח.",
+    };
+  }
+
+  function museumAccessEntry(wingId = "home", scope = "entry") {
+    const wing = getMuseumWingDefinitions().find((item) => item.id === wingId);
+    const config = museumAccessConfig(wingId);
+    const isWing = scope === "wing";
+    return {
+      id: `museum:${scope}:${wingId}`,
+      kind: isWing ? "museum-wing" : "museum-entry",
+      title: `${isWing ? "אגף" : "כניסה"} · ${wing?.title || wingId}`,
+      xpPrice: isWing ? config.wingXP : config.entryXP,
+      prerequisiteConceptKeys: isWing ? config.prerequisiteConceptKeys : [],
+      rule: config.rule,
+    };
+  }
+
+  function museumAccessStatus(wingId = "home") {
+    const entry = xpAccessStatus(museumAccessEntry(wingId, "entry"));
+    const wing = xpAccessStatus(museumAccessEntry(wingId, "wing"));
+    return {
+      entry,
+      wing,
+      unlocked: entry.unlocked && wing.unlocked,
+      canUnlockAll: (entry.unlocked || entry.canUnlock) && (wing.unlocked || wing.canUnlock),
+    };
+  }
+
+  function isMuseumWingOpen(wingId = "home") {
+    if (!wingId || wingId === "home") return true;
+    const status = museumAccessStatus(wingId);
+    return status.unlocked;
+  }
+
+  function renderAccessPrereqs(status) {
+    if (!status.prereqs.length) return `<p class="xp-access-empty">אין דרישת ידע קודם.</p>`;
+    return `
+      <div class="xp-access-prereqs" aria-label="דרישות ידע">
+        ${status.prereqs.map((item) => `
+          <span class="${item.mastered ? "done" : "blocked"}">
+            ${item.mastered ? "✓" : "!"} ${esc(item.label)} · ${esc(item.status)}
+          </span>
+        `).join("")}
+      </div>`;
+  }
+
+  function renderXPAccessPanel(status, entry, options = {}) {
+    const compact = options.compact ? "compact" : "";
+    const actionLabel = status.unlocked
+      ? "פתוח"
+      : status.canUnlock
+        ? "פתח עם XP"
+        : status.missingXP
+          ? `חסרים ${status.missingXP} XP`
+          : "חסרה שליטת יסוד";
+    return `
+      <section class="xp-access-panel ${compact} ${status.unlocked ? "open" : "locked"}" data-xp-access-panel="${esc(status.id)}">
+        <div>
+          <span>${status.unlocked ? "פתוח" : "נעול במסלול XP"}</span>
+          <strong>${esc(status.title)}</strong>
+          <p>${esc(status.rule)}</p>
+          <small>דמי כניסה: ${esc(status.xpPrice)} XP · יש לך ${esc(status.xp)} XP. ה-XP הוא שער צבירה ואינו מוחק רמה קיימת.</small>
+          ${renderAccessPrereqs(status)}
+        </div>
+        <button type="button"
+                data-xp-unlock="${esc(status.id)}"
+                data-xp-unlock-kind="${esc(entry.kind || "")}"
+                data-xp-unlock-ref="${esc(options.ref || "")}"
+                aria-disabled="${status.unlocked || !status.canUnlock ? "true" : "false"}"
+                aria-label="${esc(`${actionLabel}: ${status.title}`)}"
+                ${status.unlocked || !status.canUnlock ? "disabled" : ""}>
+          ${esc(actionLabel)}
+        </button>
+      </section>`;
+  }
+
+  function bindXPAccessButtons(container, refresh) {
+    container.querySelectorAll("[data-xp-unlock]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const kind = btn.dataset.xpUnlockKind || "";
+        const ref = btn.dataset.xpUnlockRef || "";
+        const entry = kind === "foundation"
+          ? programmingBasicsAccessEntry(ref || programmingBasicsTab)
+          : kind === "museum-entry"
+            ? museumAccessEntry(ref || getMuseumWingId(), "entry")
+            : kind === "museum-wing"
+              ? museumAccessEntry(ref || getMuseumWingId(), "wing")
+              : null;
+        if (!entry) return;
+        const result = unlockXPAccess(entry);
+        if (result.ok) {
+          showAchievementToast({
+            title: "שער XP נפתח",
+            desc: result.message,
+            kind: "level-up",
+          });
+        } else {
+          showAchievementToast({
+            title: "שער XP עדיין חסום",
+            desc: result.message,
+            kind: "blocked",
+          });
+        }
+        if (typeof refresh === "function") refresh(result);
+      });
+    });
   }
 
   function renderMuseumStackSvg() {
@@ -15744,8 +18111,363 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!activeLayerId) return true;
       return drill.error.layerId === activeLayerId
         || drill.concept?.stackLayer === activeLayerId
-        || (drill.concept?.relatedLayers || []).includes(activeLayerId);
+      || (drill.concept?.relatedLayers || []).includes(activeLayerId);
     });
+  }
+
+  function getDebugArenaRooms(activeLayerId = "") {
+    return getMuseumPracticeDrills(activeLayerId).map((drill, idx) => ({
+      id: `debug-arena-room-${String(idx + 1).padStart(2, "0")}`,
+      title: drill.error.error,
+      level: idx < 2 ? "יסוד" : idx < 4 ? "יישום" : "מערכת",
+      symptom: drill.error.diagnosis,
+      firstCheck: drill.error.action,
+      rootLayer: drill.stackLayer?.title || drill.error.layer,
+      conceptTitle: drill.concept?.title || drill.error.layer,
+      proof: drill.concept?.question || drill.passport?.proof || drill.error.action,
+      route: drill.route,
+      drillId: drill.id,
+    }));
+  }
+
+  function renderDebugArenaRooms(activeLayerId = "") {
+    const rooms = getDebugArenaRooms(activeLayerId);
+    if (!rooms.length) return "";
+    const open = isMuseumTicketOpen("challenge.debug-arena");
+    const completedRewards = new Set(loadMuseumPassportState().experienceRewards || []);
+    return `
+      <section class="debug-arena-rooms ${open ? "open" : "locked"}" aria-label="Debug Arena חדרים נעולים">
+        <div class="debug-arena-head">
+          <div>
+            <span class="museum-kicker">Debug Arena</span>
+            <h5>חדרי Debug נעולים לפי שכבת שורש</h5>
+            <p>כל חדר נבנה משגיאה אמיתית במפת המוזיאון: סימפטום, שכבת שורש, בדיקה ראשונה והוכחת הבנה.</p>
+          </div>
+          ${open
+            ? `<span class="debug-arena-pass open">פתוח</span>`
+            : `<button type="button" data-museum-store-item="challenge.debug-arena">פתח Debug Arena · 🪙 110</button>`}
+        </div>
+        <div class="debug-arena-room-grid">
+          ${rooms.map((room, idx) => `
+            <article class="debug-arena-room ${open ? "open" : "locked"}"
+                     data-debug-arena-room="${esc(room.id)}"
+                     data-museum-search="${esc([room.title, room.level, room.symptom, room.firstCheck, room.rootLayer, room.conceptTitle].join(" "))}">
+              <div class="debug-arena-room-top">
+                <span>${String(idx + 1).padStart(2, "0")}</span>
+                <strong>${esc(room.level)}</strong>
+              </div>
+              <h6>${esc(room.title)}</h6>
+              ${open ? `
+                <dl>
+                  <div><dt>סימפטום</dt><dd>${esc(room.symptom)}</dd></div>
+                  <div><dt>בדיקה ראשונה</dt><dd>${esc(room.firstCheck)}</dd></div>
+                  <div><dt>שכבת שורש</dt><dd>${esc(room.rootLayer)}</dd></div>
+                  <div><dt>מושג מתקן</dt><dd>${esc(room.conceptTitle)}</dd></div>
+                  <div><dt>הוכחת הבנה</dt><dd>${esc(room.proof)}</dd></div>
+                </dl>
+                <a href="${esc(room.route)}" target="_top">פתח חדר שורש</a>
+                <button class="museum-experience-complete"
+                        type="button"
+                        data-museum-experience-complete="${esc(room.id)}"
+                        data-museum-experience-store="challenge.debug-arena"
+                        data-museum-experience-concept="${esc(room.conceptTitle)}"
+                        data-museum-experience-question="${esc(room.drillId)}"
+                        aria-pressed="${completedRewards.has(room.id) ? "true" : "false"}">
+                  ${completedRewards.has(room.id) ? "הושלם" : "סיים חדר"}
+                </button>
+              ` : `
+                <p>${esc(room.symptom)}</p>
+                <small>נעול עד לפתיחת Debug Arena בחנות. חומר המבחן והשאלות נשארים פתוחים.</small>
+              `}
+            </article>
+          `).join("")}
+        </div>
+      </section>`;
+  }
+
+  function getBossBattleDefinitions() {
+    return [
+      {
+        id: "async",
+        storeItemId: "challenge.async-boss",
+        title: "Boss Battle: Async",
+        icon: "👑",
+        focus: "Promise, fetch וטעויות טעינה",
+        conceptKeys: ["lesson_15::Promise", "lesson_15::fetch", "lesson_17::HTTP"],
+      },
+      {
+        id: "auth",
+        storeItemId: "challenge.auth-boss",
+        title: "Boss Battle: Auth",
+        icon: "🛡️",
+        focus: "authentication, authorization ו-JWT",
+        conceptKeys: [
+          "lesson_auth_security::authentication",
+          "lesson_auth_security::authorization",
+          "lesson_auth_security::JWT",
+        ],
+      },
+      {
+        id: "react-state",
+        storeItemId: "challenge.react-state-boss",
+        title: "Boss Battle: React State",
+        icon: "⚛️",
+        focus: "useState, state וזרימת מידע",
+        conceptKeys: ["lesson_22::useState", "lesson_22::state", "lesson_21::props"],
+      },
+      {
+        id: "api",
+        storeItemId: "challenge.api-boss",
+        title: "Boss Battle: API",
+        icon: "🔌",
+        focus: "HTTP, Request, Response ו-REST API",
+        conceptKeys: ["lesson_17::HTTP", "lesson_17::Request", "lesson_17::REST API"],
+      },
+      {
+        id: "database",
+        storeItemId: "challenge.db-boss",
+        title: "Boss Battle: DB",
+        icon: "🗄️",
+        focus: "SQL, ORM ו-CRUD persistence",
+        conceptKeys: ["lesson_sql_orm::SQL", "lesson_sql_orm::ORM", "lesson_sql_orm::CRUD"],
+      },
+    ];
+  }
+
+  function bossBattleProgress(boss) {
+    const concepts = (boss.conceptKeys || []).map(accessConceptStatus);
+    const masteredCount = concepts.filter((item) => item.mastered).length;
+    return {
+      concepts,
+      masteredCount,
+      total: concepts.length,
+      ready: concepts.length > 0 && masteredCount === concepts.length,
+    };
+  }
+
+  function renderBossBattleRooms() {
+    const bosses = getBossBattleDefinitions();
+    if (!bosses.length) return "";
+    const completedRewards = new Set(loadMuseumPassportState().experienceRewards || []);
+    return `
+      <section class="boss-battle-zone" aria-label="Boss Battles נעולים">
+        <div class="boss-battle-head">
+          <div>
+            <span class="museum-kicker">Boss Battles</span>
+            <h5>קרבות בוס לפי תחומי מבחן</h5>
+            <p>כל קרב משתמש במושגי SVCollege קיימים ומחייב שליטה במושגי הליבה לפני שהוא מומלץ לתרגול.</p>
+          </div>
+        </div>
+        <div class="boss-battle-grid">
+          ${bosses.map((boss) => {
+            const open = isMuseumTicketOpen(boss.storeItemId);
+            const item = getRewardStoreItem(boss.storeItemId);
+            const progress = bossBattleProgress(boss);
+            return `
+              <article class="boss-battle-card ${open ? "open" : "locked"}"
+                       data-boss-battle="${esc(boss.id)}"
+                       data-museum-search="${esc([boss.title, boss.focus, ...boss.conceptKeys].join(" "))}">
+                <div class="boss-battle-top">
+                  <span>${esc(boss.icon)}</span>
+                  <strong>${open ? "פתוח" : `נעול · 🪙 ${item?.price || "unknown/unavailable"}`}</strong>
+                </div>
+                <h6>${esc(boss.title)}</h6>
+                <p>${esc(boss.focus)}</p>
+                <div class="boss-battle-progress">
+                  <strong>${String(progress.masteredCount)}/${String(progress.total)}</strong>
+                  <span>${progress.ready ? "מוכן לקרב עומק" : "צריך לחזק מושגי יסוד"}</span>
+                </div>
+                <div class="boss-battle-concepts">
+                  ${progress.concepts.map((concept) => `
+                    <span class="${concept.mastered ? "done" : "blocked"}">
+                      ${concept.mastered ? "✓" : "!"} ${esc(concept.label)} · ${esc(concept.status)}
+                    </span>
+                  `).join("")}
+                </div>
+                ${open
+                  ? `<small>פתוח לתרגול בונוס. XP מתקבל רק דרך שאלות ותרגולים אמיתיים.</small>
+                    <button class="museum-experience-complete"
+                            type="button"
+                            data-museum-experience-complete="boss-${esc(boss.id)}"
+                            data-museum-experience-store="${esc(boss.storeItemId)}"
+                            data-museum-experience-concept="${esc(boss.conceptKeys[0] || "")}"
+                            data-museum-experience-question="boss-${esc(boss.id)}"
+                            aria-pressed="${completedRewards.has(`boss-${boss.id}`) ? "true" : "false"}">
+                      ${completedRewards.has(`boss-${boss.id}`) ? "הושלם" : "סיים קרב"}
+                    </button>`
+                  : `<button type="button" data-museum-store-item="${esc(boss.storeItemId)}">פתח קרב בוס · 🪙 ${esc(item?.price || "unknown/unavailable")}</button>`}
+              </article>`;
+          }).join("")}
+        </div>
+      </section>`;
+  }
+
+  function getCodeCinemaReplayClips(activeLayerId = "") {
+    return getMuseumVideoEntries(activeLayerId)
+      .filter((entry) => ["concept", "track", "room", "fullstack-room"].includes(entry.kind))
+      .slice(0, 8)
+      .map((entry, idx) => ({
+        id: `code-cinema-${String(idx + 1).padStart(2, "0")}-${entry.id}`,
+        videoId: entry.id,
+        title: entry.title,
+        area: entry.area,
+        group: entry.group,
+        sourceTitle: entry.sourceTitle,
+        prerequisite: entry.prerequisite || "unknown/unavailable",
+        replay: entry.diagram || entry.visual || entry.goal || "unknown/unavailable",
+        examCheck: entry.check || "unknown/unavailable",
+      }));
+  }
+
+  function renderCodeCinemaReplayClips(activeLayerId = "") {
+    const clips = getCodeCinemaReplayClips(activeLayerId);
+    if (!clips.length) return "";
+    const open = isMuseumTicketOpen("challenge.code-cinema");
+    const item = getRewardStoreItem("challenge.code-cinema");
+    const completedRewards = new Set(loadMuseumPassportState().experienceRewards || []);
+    return `
+      <section class="code-cinema-zone ${open ? "open" : "locked"}" aria-label="Code Cinema Replay Clips">
+        <div class="code-cinema-head">
+          <div>
+            <span class="museum-kicker">Code Cinema</span>
+            <h5>Replay clips מתוך סרטוני המוזיאון</h5>
+            <p>כל קליפ נשען על חומר NotebookLM קיים: ידע מקדים, תרשים replay ושאלת בדיקה למבחן.</p>
+          </div>
+          ${open
+            ? `<span class="code-cinema-pass open">פתוח</span>`
+            : `<button type="button" data-museum-store-item="challenge.code-cinema">פתח Code Cinema · 🪙 ${esc(item?.price || "unknown/unavailable")}</button>`}
+        </div>
+        <div class="code-cinema-strip">
+          ${clips.map((clip) => `
+            <article class="code-cinema-card ${open ? "open" : "locked"}"
+                     data-code-cinema-clip="${esc(clip.id)}"
+                     data-museum-search="${esc([clip.title, clip.area, clip.group, clip.sourceTitle, clip.replay, clip.examCheck].join(" "))}">
+              <div class="code-cinema-screen">
+                <span>${esc(clip.group)}</span>
+                <strong>${esc(clip.sourceTitle)}</strong>
+              </div>
+              <h6>${esc(clip.title)}</h6>
+              ${open ? `
+                <dl>
+                  <div><dt>ידע מקדים</dt><dd>${esc(clip.prerequisite)}</dd></div>
+                  <div><dt>Replay</dt><dd>${esc(clip.replay)}</dd></div>
+                  <div><dt>בדיקת מבחן</dt><dd>${esc(clip.examCheck)}</dd></div>
+                </dl>
+                ${renderMuseumVideoOpenButton(clip.videoId, "פתח קליפ מלא")}
+                <button class="museum-experience-complete"
+                        type="button"
+                        data-museum-experience-complete="${esc(clip.id)}"
+                        data-museum-experience-store="challenge.code-cinema"
+                        data-museum-experience-concept="${esc(clip.videoId)}"
+                        data-museum-experience-question="${esc(clip.id)}"
+                        aria-pressed="${completedRewards.has(clip.id) ? "true" : "false"}">
+                  ${completedRewards.has(clip.id) ? "הושלם" : "סיים קליפ"}
+                </button>
+              ` : `
+                <p>${esc(clip.area)} · ${esc(clip.group)}</p>
+                <small>נעול כחוויית צפייה בונוס. חומר הלימוד והשאלות נשארים פתוחים.</small>
+              `}
+            </article>
+          `).join("")}
+        </div>
+      </section>`;
+  }
+
+  function getSecretLabExperiments() {
+    const configs = [
+      {
+        id: "state-mutation",
+        title: "State Mutation Lab",
+        icon: "🧬",
+        conceptId: "react-state",
+        errorName: "State לא מתעדכן",
+        conceptKeys: ["lesson_22::useState", "lesson_22::state"],
+      },
+      {
+        id: "api-contract",
+        title: "API Contract Lab",
+        icon: "🔌",
+        conceptId: "api-contract",
+        errorName: "400",
+        conceptKeys: ["lesson_17::Request", "lesson_17::Response", "lesson_17::REST API"],
+      },
+      {
+        id: "db-query",
+        title: "DB Query Lab",
+        icon: "🗄️",
+        conceptId: "database-persistence",
+        errorName: "מידע נעלם אחרי רענון",
+        conceptKeys: ["lesson_sql_orm::SQL", "lesson_sql_orm::ORM", "lesson_sql_orm::CRUD"],
+      },
+    ];
+    return configs.map((config) => {
+      const concept = getMuseumConceptConnection(config.conceptId);
+      const error = MUSEUM_ERROR_LAYER_MAP.find((item) => item.error === config.errorName) || null;
+      return {
+        ...config,
+        concept,
+        error,
+        route: getMuseumExternalHref({ wing: "fullstack", domain: config.conceptId }),
+        conceptStatuses: config.conceptKeys.map(accessConceptStatus),
+      };
+    });
+  }
+
+  function renderSecretLabs() {
+    const labs = getSecretLabExperiments();
+    const open = isMuseumTicketOpen("challenge.secret-labs");
+    const item = getRewardStoreItem("challenge.secret-labs");
+    const completedRewards = new Set(loadMuseumPassportState().experienceRewards || []);
+    return `
+      <section class="secret-labs-zone ${open ? "open" : "locked"}" aria-label="Secret Labs ניסויי מערכת">
+        <div class="secret-labs-head">
+          <div>
+            <span class="museum-kicker">Secret Labs</span>
+            <h5>ניסויים קטנים בחוזה, Query ו-State</h5>
+            <p>כל ניסוי נשען על כרטיס קשר, טעות שכבתית ומושגי prerequisite קיימים.</p>
+          </div>
+          ${open
+            ? `<span class="secret-labs-pass open">פתוח</span>`
+            : `<button type="button" data-museum-store-item="challenge.secret-labs">פתח Secret Labs · 🪙 ${esc(item?.price || "unknown/unavailable")}</button>`}
+        </div>
+        <div class="secret-labs-grid">
+          ${labs.map((lab) => {
+            const mastered = lab.conceptStatuses.filter((status) => status.mastered).length;
+            return `
+              <article class="secret-lab-card ${open ? "open" : "locked"}"
+                       data-secret-lab="${esc(lab.id)}"
+                       data-museum-search="${esc([lab.title, lab.concept?.title, lab.error?.diagnosis, lab.error?.action, ...(lab.concept?.whereInCode || [])].join(" "))}">
+                <div class="secret-lab-top">
+                  <span>${esc(lab.icon)}</span>
+                  <strong>${String(mastered)}/${String(lab.conceptStatuses.length)}</strong>
+                </div>
+                <h6>${esc(lab.title)}</h6>
+                ${open ? `
+                  <dl>
+                    <div><dt>מושג</dt><dd>${esc(lab.concept?.title || "unknown/unavailable")}</dd></div>
+                    <div><dt>מה נשבר</dt><dd>${esc(lab.concept?.breaksWhen || lab.error?.diagnosis || "unknown/unavailable")}</dd></div>
+                    <div><dt>מה בודקים</dt><dd>${esc(lab.error?.action || "unknown/unavailable")}</dd></div>
+                    <div><dt>איפה בקוד</dt><dd>${(lab.concept?.whereInCode || ["unknown/unavailable"]).map((line) => `<code>${esc(line)}</code>`).join("")}</dd></div>
+                    <div><dt>שאלת הוכחה</dt><dd>${esc(lab.concept?.question || "unknown/unavailable")}</dd></div>
+                  </dl>
+                  <a href="${esc(lab.route)}" target="_top">פתח אולם ניסוי</a>
+                  <button class="museum-experience-complete"
+                          type="button"
+                          data-museum-experience-complete="secret-lab-${esc(lab.id)}"
+                          data-museum-experience-store="challenge.secret-labs"
+                          data-museum-experience-concept="${esc(lab.conceptKeys[0] || "")}"
+                          data-museum-experience-question="secret-lab-${esc(lab.id)}"
+                          aria-pressed="${completedRewards.has(`secret-lab-${lab.id}`) ? "true" : "false"}">
+                    ${completedRewards.has(`secret-lab-${lab.id}`) ? "הושלם" : "סיים ניסוי"}
+                  </button>
+                ` : `
+                  <p>${esc(lab.error?.diagnosis || lab.concept?.breaksWhen || "unknown/unavailable")}</p>
+                  <small>נעול כחוויית מעבדה. חומר SVCollege והשאלות נשארים פתוחים.</small>
+                `}
+              </article>`;
+          }).join("")}
+        </div>
+      </section>`;
   }
 
   function renderMuseumPracticeLab(activeLayerId = "") {
@@ -15791,6 +18513,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <span>${esc(activeLayerId || "כל המוזיאון")}</span>
           </article>
         </div>
+
+        ${renderDebugArenaRooms(activeLayerId)}
+        ${renderBossBattleRooms()}
+        ${renderCodeCinemaReplayClips(activeLayerId)}
+        ${renderSecretLabs()}
 
         <div class="museum-practice-stage">
           <div class="museum-practice-rail" role="tablist" aria-label="בחירת תרגיל Debug">
@@ -16713,18 +19440,31 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderMuseumWingNav(activeWing = "home") {
     const wings = getMuseumWingDefinitions();
     return `
-      <nav class="museum-wing-nav" aria-label="ניווט אגפי המוזיאון">
-        <a class="${activeWing === "home" ? "active" : ""}" href="${esc(getMuseumExternalHref({ wing: "home" }))}" target="_top">שער</a>
-        ${wings.map((wing) => `
-          <a class="${wing.id === activeWing ? "active" : ""} ${!isMuseumTicketOpen(wing.storeItemId) ? "locked-ticket" : ""}"
-             href="${esc(isMuseumTicketOpen(wing.storeItemId) ? wing.route : "#")}"
-             target="_top"
-             data-museum-store-link="${esc(wing.storeItemId || "")}">
+      <nav class="museum-wing-nav" role="tablist" aria-label="ניווט אגפי המוזיאון">
+        <button class="${activeWing === "home" ? "active" : ""}"
+                type="button"
+                role="tab"
+                aria-selected="${activeWing === "home" ? "true" : "false"}"
+                aria-controls="programming-museum-wing-gate"
+                data-museum-wing-tab="home">
+          <span>Gate</span>
+          <strong>שער</strong>
+        </button>
+        ${wings.map((wing) => {
+          const open = isMuseumWingOpen(wing.id);
+          return `
+          <button class="${wing.id === activeWing ? "active" : ""} ${!isMuseumWingOpen(wing.id) ? "locked-ticket" : ""}"
+                  type="button"
+                  role="tab"
+                  aria-selected="${wing.id === activeWing ? "true" : "false"}"
+                  aria-controls="${esc(wing.target || "programming-museum-access-gate")}"
+                  aria-label="${esc(`${wing.title} · ${open ? "פתוח" : "נעול במסלול XP"}`)}"
+                  data-museum-wing-tab="${esc(wing.id)}">
             <span>${esc(wing.kicker)}</span>
             <strong>${esc(wing.title)}</strong>
-            ${renderMuseumTicketStatus(wing.storeItemId, true)}
-          </a>
-        `).join("")}
+            ${renderMuseumTicketStatus(wing.storeItemId, true, wing.id)}
+          </button>
+        `; }).join("")}
         <button class="museum-motion-toggle" type="button" data-museum-motion-toggle aria-pressed="false">הפחת תנועה</button>
       </nav>`;
   }
@@ -16740,22 +19480,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function isMuseumTicketOpen(itemId) {
     if (!itemId) return true;
-    return !!getStorePurchases()[itemId];
+    if (getStorePurchases()[itemId]) return true;
+    const wing = getMuseumWingDefinitions().find((item) => item.storeItemId === itemId);
+    return wing ? isMuseumWingOpen(wing.id) : false;
   }
 
-  function renderMuseumTicketStatus(itemId, compact = false) {
+  function renderMuseumTicketStatus(itemId, compact = false, wingId = "") {
     const item = getRewardStoreItem(itemId);
-    if (!item) return "";
-    const owned = isMuseumTicketOpen(itemId);
+    const wing = wingId || getMuseumWingDefinitions().find((entry) => entry.storeItemId === itemId)?.id || "";
+    const access = wing ? museumAccessStatus(wing) : null;
+    if (!item && !access) return "";
+    const owned = itemId ? isMuseumTicketOpen(itemId) : access?.unlocked;
+    const price = access ? access.entry.xpPrice + access.wing.xpPrice : item?.price;
     return `
       <span class="museum-ticket-status ${owned ? "open" : "locked"} ${compact ? "compact" : ""}">
-        ${owned ? "פתוח" : `נעול · 🪙 ${item.price}`}
+        ${owned ? "פתוח" : `נעול · ${price} XP`}
       </span>`;
   }
 
   function renderMuseumLockedExperience(itemId, title, description) {
     const item = getRewardStoreItem(itemId);
-    if (!item || isMuseumTicketOpen(itemId)) return "";
+    const wing = getMuseumWingDefinitions().find((entry) => entry.storeItemId === itemId);
+    if ((!item && !wing) || isMuseumTicketOpen(itemId)) return "";
+    if (wing) {
+      const access = museumAccessStatus(wing.id);
+      return `
+        <div class="museum-experience-lock" data-museum-lock="${esc(itemId || wing.id)}">
+          <div>
+            <span>🔒 חוויה נעולה במסלול XP</span>
+            <strong>${esc(title)}</strong>
+            <p>${esc(description || access.wing.rule)}</p>
+            <small>כניסה: ${esc(access.entry.xpPrice)} XP · אגף: ${esc(access.wing.xpPrice)} XP · דרישות ידע: ${esc(access.wing.missingPrereqs.length)} חסרות.</small>
+            ${renderAccessPrereqs(access.wing)}
+          </div>
+          <div class="museum-lock-actions">
+            ${renderXPAccessPanel(access.entry, museumAccessEntry(wing.id, "entry"), { compact: true, ref: wing.id })}
+            ${renderXPAccessPanel(access.wing, museumAccessEntry(wing.id, "wing"), { compact: true, ref: wing.id })}
+          </div>
+        </div>`;
+    }
     return `
       <div class="museum-experience-lock" data-museum-lock="${esc(itemId)}">
         <div>
@@ -16780,20 +19543,26 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div class="museum-wing-grid">
           ${getMuseumWingDefinitions().map((wing, idx) => {
-            const open = isMuseumTicketOpen(wing.storeItemId);
+            const access = museumAccessStatus(wing.id);
+            const open = access.unlocked;
             return `
-            <a class="museum-wing-card ${wing.id === activeWing ? "active" : ""} ${open ? "" : "locked-ticket"}"
-               href="${esc(open ? wing.route : "#")}"
-               target="_top"
-               data-wing="${esc(wing.id)}"
-               data-museum-store-link="${esc(wing.storeItemId || "")}">
+            <button class="museum-wing-card ${wing.id === activeWing ? "active" : ""} ${open ? "" : "locked-ticket"}"
+                    type="button"
+                    aria-label="${esc(`${wing.title}: ${open ? "פתוח" : "נעול"}; כניסה ${access.entry.xpPrice} XP; אגף ${access.wing.xpPrice} XP`)}"
+                    data-wing="${esc(wing.id)}"
+                    data-museum-wing-tab="${esc(wing.id)}">
               <span>${String(idx + 1).padStart(2, "0")}</span>
               <small>${esc(wing.kicker)}</small>
               <strong>${esc(wing.title)}</strong>
               <p>${esc(wing.learningGoal)}</p>
               <em>${esc(wing.count)} ${esc(wing.metric)}</em>
-              ${renderMuseumTicketStatus(wing.storeItemId)}
-            </a>
+              <div class="museum-xp-fee-row">
+                <b>כניסה ${esc(access.entry.xpPrice)} XP</b>
+                <b>אגף ${esc(access.wing.xpPrice)} XP</b>
+                <b>${access.wing.missingPrereqs.length ? `${access.wing.missingPrereqs.length} דרישות ידע` : "ידע קודם מלא"}</b>
+              </div>
+              ${renderMuseumTicketStatus(wing.storeItemId, false, wing.id)}
+            </button>
           `; }).join("")}
         </div>
       </section>`;
@@ -16807,9 +19576,11 @@ document.addEventListener("DOMContentLoaded", () => {
         visited: Array.isArray(parsed.visited) ? parsed.visited : [],
         tourStops: Array.isArray(parsed.tourStops) ? parsed.tourStops : [],
         drills: Array.isArray(parsed.drills) ? parsed.drills : [],
+        cards: Array.isArray(parsed.cards) ? parsed.cards : [],
+        experienceRewards: Array.isArray(parsed.experienceRewards) ? parsed.experienceRewards : [],
       };
     } catch (_) {
-      return { stamps: [], visited: [], tourStops: [], drills: [] };
+      return { stamps: [], visited: [], tourStops: [], drills: [], cards: [], experienceRewards: [] };
     }
   }
 
@@ -16819,11 +19590,71 @@ document.addEventListener("DOMContentLoaded", () => {
       visited: Array.from(new Set(state.visited || [])).sort(),
       tourStops: Array.from(new Set(state.tourStops || [])).sort(),
       drills: Array.from(new Set(state.drills || [])).sort(),
+      cards: Array.from(new Set(state.cards || [])).sort(),
+      experienceRewards: Array.from(new Set(state.experienceRewards || [])).sort(),
     };
     try {
       localStorage.setItem(MUSEUM_VISIT_STORAGE_KEY, JSON.stringify(safeState));
     } catch (_) {}
     return safeState;
+  }
+
+  function getMuseumCollectibleCards(activeLayerId = "") {
+    return MUSEUM_CONCEPT_CONNECTIONS
+      .filter((card) => {
+        if (!activeLayerId) return true;
+        return card.stackLayer === activeLayerId || (card.relatedLayers || []).includes(activeLayerId);
+      })
+      .map((card, idx) => ({
+        id: `concept-card-${card.id}`,
+        number: idx + 1,
+        title: card.title,
+        layer: card.layer,
+        builtFrom: card.builtFrom || [],
+        leadsTo: card.leadsTo || [],
+        proof: card.question,
+        route: `#museum-connection-${card.id}`,
+      }));
+  }
+
+  function renderMuseumCollectibleCards(activeLayerId = "", passportState = loadMuseumPassportState()) {
+    const cards = getMuseumCollectibleCards(activeLayerId);
+    if (!cards.length) return "";
+    return `
+      <section class="museum-collectibles" aria-label="כרטיסי מושג לאיסוף">
+        <div class="museum-collectibles-head">
+          <div>
+            <span class="museum-kicker">Collection</span>
+            <h4>כרטיסי מושג לאיסוף</h4>
+            <p>כל כרטיס נאסף רק אחרי שעוברים על המושג וכותבים לעצמך הוכחת הבנה קצרה.</p>
+          </div>
+          <strong data-museum-card-count>${String((passportState.cards || []).length)}/${String(cards.length)}</strong>
+        </div>
+        <div class="museum-collectible-grid">
+          ${cards.map((card) => {
+            const collected = (passportState.cards || []).includes(card.id);
+            return `
+              <article class="museum-collectible-card ${collected ? "done" : ""}" data-museum-card="${esc(card.id)}">
+                <span>${String(card.number).padStart(2, "0")}</span>
+                <h5>${esc(card.title)}</h5>
+                <p>${esc(card.layer)}</p>
+                <dl>
+                  <div><dt>נבנה מ</dt><dd>${renderMuseumChipList(card.builtFrom)}</dd></div>
+                  <div><dt>מוביל אל</dt><dd>${renderMuseumChipList(card.leadsTo)}</dd></div>
+                  <div><dt>הוכחה</dt><dd>${esc(card.proof)}</dd></div>
+                </dl>
+                <div class="museum-collectible-actions">
+                  <a href="${esc(card.route)}">פתח כרטיס מקור</a>
+                  <button type="button"
+                          data-museum-collect-card="${esc(card.id)}"
+                          aria-pressed="${collected ? "true" : "false"}">
+                    ${collected ? "נאסף" : "אסוף כרטיס"}
+                  </button>
+                </div>
+              </article>`;
+          }).join("")}
+        </div>
+      </section>`;
   }
 
   function renderMuseumPassportWing() {
@@ -16853,6 +19684,14 @@ document.addEventListener("DOMContentLoaded", () => {
           <article>
             <strong data-museum-drill-count>${String((passportState.drills || []).length)}</strong>
             <span>תרגילי Debug הושלמו</span>
+          </article>
+          <article>
+            <strong data-museum-card-count>${String((passportState.cards || []).length)}</strong>
+            <span>כרטיסי מושג נאספו</span>
+          </article>
+          <article>
+            <strong data-museum-experience-reward-count>${String((passportState.experienceRewards || []).length)}</strong>
+            <span>חוויות נעולות הושלמו</span>
           </article>
         </div>
         <div class="museum-tour-passport-grid" aria-label="מסלולי ביקור בדרכון">
@@ -16903,6 +19742,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="museum-visited-strip" aria-label="תחנות ביקור שנצפו">
           ${passportState.visited.slice(0, 24).map((id) => `<span>${esc(id)}</span>`).join("") || "<span>תחנות יופיעו כאן אחרי גלילה במוזיאון.</span>"}
         </div>
+        ${renderMuseumCollectibleCards("", passportState)}
       </section>`;
   }
 
@@ -18250,6 +21090,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.innerHTML = `
       ${renderMuseumWingNav(activeWing)}
       ${renderMuseumFocusHeader(activeWing)}
+      ${renderMuseumActiveAccess(activeWing)}
       <section class="museum-stage" id="programming-museum-gate">
         <div class="museum-stage-lines" aria-hidden="true"></div>
         <div class="museum-hero">
@@ -18689,6 +21530,18 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
+    container.querySelectorAll("[data-museum-wing-tab]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setMuseumWingId(btn.dataset.museumWingTab || "home");
+        openProgrammingMuseum();
+      });
+    });
+
+    bindXPAccessButtons(container, () => {
+      renderProgrammingMuseum();
+      setProgrammingMuseumContextTree();
+    });
+
     applyMuseumFocusedWing(container, activeWing);
     bindMuseumVideoStudio(container, museumVideoEntries);
     bindMuseumInteractions(container);
@@ -18762,7 +21615,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const LEARNING_EVIDENCE_KEY = "lumenportal:learningEvidence:v1";
   const LEARNING_EVIDENCE_INSTALL_KEY = "lumenportal:learningEvidenceInstall:v1";
+  const BUG_AGENT_LOG_KEY = "lumenportal:bugAgentLog:v1";
   let learningEvidenceState = null;
+  let bugAgentLogState = null;
 
   function learningEvidenceCore() {
     return window.LUMEN_CORE && window.LUMEN_CORE.learningEvidence
@@ -18773,6 +21628,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function outcomeLoopCore() {
     return window.LUMEN_CORE && window.LUMEN_CORE.outcomeLoop
       ? window.LUMEN_CORE.outcomeLoop
+      : null;
+  }
+
+  function bugAgentCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.bugAgent
+      ? window.LUMEN_CORE.bugAgent
       : null;
   }
 
@@ -18864,6 +21725,106 @@ document.addEventListener("DOMContentLoaded", () => {
     return normalized;
   }
 
+  function featureErrorTelemetrySummary() {
+    const core = learningEvidenceCore();
+    if (!core || typeof core.summarizeFeatureErrorTelemetry !== "function") {
+      return { sessions: 0, featureErrors: 0, errorsPer1000Sessions: 0, byFeature: [] };
+    }
+    return core.summarizeFeatureErrorTelemetry(loadLearningEvidenceState());
+  }
+
+  function loadBugAgentLog() {
+    const core = bugAgentCore();
+    if (!core) return { version: 1, activeBugs: [], lastResolved: [], summary: { active: 0, ready: true } };
+    if (bugAgentLogState) return bugAgentLogState;
+    try {
+      const parsed = JSON.parse(localStorage.getItem(BUG_AGENT_LOG_KEY) || "null");
+      bugAgentLogState = parsed && typeof parsed === "object"
+        ? {
+            ...core.emptyBugAgentLog(),
+            ...parsed,
+            activeBugs: Array.isArray(parsed.activeBugs) ? parsed.activeBugs : [],
+            lastResolved: Array.isArray(parsed.lastResolved) ? parsed.lastResolved : [],
+          }
+        : core.emptyBugAgentLog();
+    } catch (_) {
+      bugAgentLogState = core.emptyBugAgentLog();
+    }
+    return bugAgentLogState;
+  }
+
+  function saveBugAgentLog() {
+    try { localStorage.setItem(BUG_AGENT_LOG_KEY, JSON.stringify(bugAgentLogState || { activeBugs: [] })); } catch (_) {}
+  }
+
+  function bugAgentSources(commandCenter = {}) {
+    const runtime = typeof window === "undefined" ? {} : window;
+    return {
+      runtimeValidation: runtime.LUMEN_CONTENT_VALIDATION || null,
+      questionBank: runtime.QUESTIONS_BANK || {},
+      telemetry: featureErrorTelemetrySummary(),
+      commandCenter,
+    };
+  }
+
+  function runBugAgent(commandCenter = {}) {
+    const core = bugAgentCore();
+    if (!core || typeof core.runBugAgentScan !== "function") return loadBugAgentLog();
+    bugAgentLogState = core.runBugAgentScan(
+      bugAgentSources(commandCenter),
+      loadBugAgentLog(),
+      { now: Date.now() },
+    );
+    saveBugAgentLog();
+    return bugAgentLogState;
+  }
+
+  function recordFeatureError(featureId, error, context = {}) {
+    const errorName = error && typeof error === "object" && error.name ? error.name : "";
+    const errorCode = context.errorCode || errorName || "unknown/unavailable";
+    const recorded = recordLearningEvidence("feature_error", {
+      source: context.source || "feature-telemetry",
+      featureId,
+      errorCode,
+      severity: context.severity || "error",
+      viewport: currentViewportMetadata(),
+      timestamp: context.timestamp || Date.now(),
+    });
+    runBugAgent();
+    return recorded;
+  }
+
+  let featureErrorTelemetryInstalled = false;
+  function installFeatureErrorTelemetry() {
+    if (featureErrorTelemetryInstalled) return;
+    featureErrorTelemetryInstalled = true;
+    window.addEventListener("error", (event) => {
+      recordFeatureError("global-runtime", event.error || null, {
+        source: "window-error",
+        errorCode: event.error?.name || "window-error",
+        severity: "error",
+      });
+    });
+    window.addEventListener("unhandledrejection", (event) => {
+      const reason = event.reason && typeof event.reason === "object" ? event.reason : null;
+      recordFeatureError("promise-runtime", reason, {
+        source: "unhandled-rejection",
+        errorCode: reason?.name || "unhandled-rejection",
+        severity: "error",
+      });
+    });
+    window.LUMEN_FEATURE_TELEMETRY = Object.freeze({
+      recordFeatureError,
+      featureErrorTelemetrySummary,
+    });
+    window.LUMEN_BUG_AGENT = Object.freeze({
+      runBugAgent,
+      loadBugAgentLog,
+    });
+    window.setTimeout(() => runBugAgent(), 0);
+    window.setInterval(() => runBugAgent(), 30000);
+  }
+
   function recordStudentStuckFeedback(button) {
     const core = outcomeLoopCore();
     const timestamp = Date.now();
@@ -18924,6 +21885,211 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function localMetricsDashboard(state) {
+    const core = outcomeLoopCore();
+    if (!core || typeof core.buildMetricsDashboard !== "function") return null;
+    return core.buildMetricsDashboard({
+      events: Array.isArray(state?.events) ? state.events : [],
+      scores,
+      modules: svcollegeOutcomeModules(),
+      questionQuality: window.QUESTION_QUALITY_REPORT || null,
+      now: Date.now(),
+    });
+  }
+
+  function contentStudioCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.contentStudio
+      ? window.LUMEN_CORE.contentStudio
+      : null;
+  }
+
+  function contentStudioQaWarnings() {
+    const qualityQueue = Array.isArray(window.QUESTION_QUALITY_REPORT?.remediationQueue)
+      ? window.QUESTION_QUALITY_REPORT.remediationQueue
+      : [];
+    const runtimeIssues = Array.isArray(window.LUMEN_CONTENT_VALIDATION?.issues)
+      ? window.LUMEN_CONTENT_VALIDATION.issues.map((issue) => ({
+          id: issue.id,
+          kind: issue.entity,
+          source: "runtime-content-validation",
+          sourceReport: "LUMEN_CONTENT_VALIDATION",
+          severity: issue.severity,
+          code: issue.code,
+          message: issue.message,
+          conceptKey: String(issue.id || "").includes("::") ? issue.id : "",
+        }))
+      : [];
+    return [...qualityQueue, ...runtimeIssues];
+  }
+
+  function localContentStudioReport(state) {
+    const core = contentStudioCore();
+    if (!core || typeof core.buildReviewQueue !== "function") return null;
+    const resolveVideoConceptKey = (card) => {
+      const candidates = [
+        card?.title,
+        ...(Array.isArray(card?.whereInCourse) ? card.whereInCourse : []),
+        ...(Array.isArray(card?.leadsTo) ? card.leadsTo : []),
+        ...(Array.isArray(card?.builtFrom) ? card.builtFrom : []),
+      ].map((item) => String(item || "").trim().toLowerCase()).filter(Boolean);
+      for (const lesson of (window.LESSONS_DATA || [])) {
+        for (const concept of (lesson.concepts || [])) {
+          const name = String(concept.conceptName || "").trim();
+          const lower = name.toLowerCase();
+          if (!lower || lower.length < 3) continue;
+          if (candidates.some((candidate) => candidate === lower || candidate.includes(lower) || lower.includes(candidate))) {
+            return conceptKey(lesson.id, name);
+          }
+        }
+      }
+      return "";
+    };
+    const events = Array.isArray(state?.events) ? state.events : [];
+    const queue = core.buildReviewQueue({
+      qaWarnings: contentStudioQaWarnings(),
+      mistakeEvents: events,
+      teacherFeedback: Array.isArray(window.LUMEN_TEACHER_FEEDBACK) ? window.LUMEN_TEACHER_FEEDBACK : [],
+    });
+    const summary = core.summarizeContentStudio(queue);
+    const factoryDashboard = typeof core.buildContentFactoryDashboard === "function"
+      ? core.buildContentFactoryDashboard({
+          lessons: window.LESSONS_DATA || [],
+          questionsBank: window.QUESTIONS_BANK || {},
+          optionFeedback: window.OPTION_FEEDBACK || {},
+        })
+      : null;
+    const manualAuthoringQueue = typeof core.buildManualQuestionAuthoringQueue === "function"
+      ? core.buildManualQuestionAuthoringQueue({
+          lessons: window.LESSONS_DATA || [],
+          questionsBank: window.QUESTIONS_BANK || {},
+          optionFeedback: window.OPTION_FEEDBACK || {},
+        })
+      : null;
+    const hardQuestionTemplates = typeof core.buildHardQuestionTemplateCatalog === "function"
+      ? core.buildHardQuestionTemplateCatalog()
+      : [];
+    const reviewerChecklist = typeof core.buildReviewerChecklistCatalog === "function"
+      ? core.buildReviewerChecklistCatalog()
+      : [];
+    const contentQuestionsBank = {
+      ...(window.QUESTIONS_BANK || {}),
+      trace: Array.isArray(window.QUESTIONS_TRACE) ? window.QUESTIONS_TRACE : [],
+      bug: Array.isArray(window.QUESTIONS_BUG) ? window.QUESTIONS_BUG : [],
+      build: Array.isArray(window.QUESTIONS_BUILD) ? window.QUESTIONS_BUILD : [],
+    };
+    const duplicateDetector = typeof core.buildQuestionDuplicateDetector === "function"
+      ? core.buildQuestionDuplicateDetector({
+          questionsBank: contentQuestionsBank,
+          conceptAliases: GRAPH_CONCEPT_ALIASES,
+        })
+      : null;
+    const conceptTagAudit = typeof core.buildConceptTagAudit === "function"
+      ? core.buildConceptTagAudit({
+          lessons: window.LESSONS_DATA || [],
+          questionsBank: contentQuestionsBank,
+          scores,
+          conceptAliases: GRAPH_CONCEPT_ALIASES,
+        })
+      : null;
+    const questionReuseAudit = buildPerLearnerQuestionReuseAudit(state);
+    const masteryProofAudit = buildMasteryProofAudit(state);
+    const falseConfidenceAudit = buildFalseConfidenceAudit();
+    const crossTabEvidenceGraph = buildCrossTabEvidenceGraph(state);
+    const proofMigrationPlan = buildProofBasedMasteryMigrationPlan();
+    const examCriticalProofPathBlocker = buildExamCriticalProofPathBlocker();
+    const teacherMentorAuditExport = buildTeacherMentorAuditExport({
+      conceptTagAudit,
+      questionReuseAudit,
+      masteryProofAudit,
+      falseConfidenceAudit,
+      crossTabEvidenceGraph,
+      proofMigrationPlan,
+      examCriticalProofPathBlocker,
+    });
+    const densityTargets = typeof core.buildConceptDensityTargetReport === "function"
+      ? core.buildConceptDensityTargetReport({
+          lessons: window.LESSONS_DATA || [],
+          questionsBank: contentQuestionsBank,
+          optionFeedback: window.OPTION_FEEDBACK || {},
+        })
+      : null;
+    const videoImportMap = typeof core.buildVideoImportMap === "function"
+      ? core.buildVideoImportMap({
+          conceptVideos: window.CONCEPT_VIDEOS || {},
+          notebookClips: MUSEUM_CONCEPT_CONNECTIONS.map((card) => ({
+            id: `notebooklm-${card.id}`,
+            title: card.title,
+            source: "MUSEUM_CONCEPT_CONNECTIONS",
+            conceptKey: resolveVideoConceptKey(card),
+            prompt: card.video?.prompt || "",
+          })),
+          conceptAliases: GRAPH_CONCEPT_ALIASES,
+        })
+      : null;
+    const examCriticalConceptKeys = (() => {
+      const modules = typeof SVCOLLEGE_EXAM_MODULES !== "undefined" ? SVCOLLEGE_EXAM_MODULES : [];
+      const keys = [];
+      (window.LESSONS_DATA || []).forEach((lesson) => {
+        (lesson.concepts || []).forEach((concept) => {
+          const key = conceptKey(lesson.id, concept.conceptName);
+          if (modules.some((module) => module.filter(key))) keys.push(key);
+        });
+      });
+      ["mc", "fill", "trace", "bug", "build"].forEach((kind) => {
+        const source = [
+          ...(Array.isArray(window.QUESTIONS_BANK?.[kind]) ? window.QUESTIONS_BANK[kind] : []),
+          ...(kind === "trace" && Array.isArray(window.QUESTIONS_TRACE) ? window.QUESTIONS_TRACE : []),
+          ...(kind === "bug" && Array.isArray(window.QUESTIONS_BUG) ? window.QUESTIONS_BUG : []),
+          ...(kind === "build" && Array.isArray(window.QUESTIONS_BUILD) ? window.QUESTIONS_BUILD : []),
+        ];
+        source.forEach((question) => {
+          const key = question?.conceptKey || "";
+          if (key && modules.some((module) => module.filter(key))) keys.push(key);
+        });
+      });
+      return Array.from(new Set(keys));
+    })();
+    const examCriticalReport = typeof core.buildExamCriticalContentReport === "function"
+      ? core.buildExamCriticalContentReport({
+          lessons: window.LESSONS_DATA || [],
+          questionsBank: {
+            ...(window.QUESTIONS_BANK || {}),
+            trace: Array.isArray(window.QUESTIONS_TRACE) ? window.QUESTIONS_TRACE : [],
+            bug: Array.isArray(window.QUESTIONS_BUG) ? window.QUESTIONS_BUG : [],
+            build: Array.isArray(window.QUESTIONS_BUILD) ? window.QUESTIONS_BUILD : [],
+          },
+          conceptVideos: window.CONCEPT_VIDEOS || {},
+          examCriticalConceptKeys,
+          conceptAliases: GRAPH_CONCEPT_ALIASES,
+        })
+      : null;
+    const revision = window.LUMEN_CONTENT_REVISION_DIFF || null;
+    const diff = revision?.before && revision?.after && typeof core.diffContentRevision === "function"
+      ? core.diffContentRevision(revision.before, revision.after)
+      : null;
+    return {
+      queue,
+      summary,
+      diff,
+      factoryDashboard,
+      manualAuthoringQueue,
+      hardQuestionTemplates,
+      reviewerChecklist,
+      duplicateDetector,
+      conceptTagAudit,
+      questionReuseAudit,
+      masteryProofAudit,
+      falseConfidenceAudit,
+      crossTabEvidenceGraph,
+      proofMigrationPlan,
+      examCriticalProofPathBlocker,
+      teacherMentorAuditExport,
+      densityTargets,
+      videoImportMap,
+      examCriticalReport,
+    };
+  }
+
   function renderLearningEvidence() {
     const container = document.getElementById("learning-evidence-content");
     const core = learningEvidenceCore();
@@ -18931,6 +22097,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const state = loadLearningEvidenceState();
     const summary = core.summarizeLearningEvidence(state, { now: Date.now(), topN: 10 });
     const outcome = localOutcomeMetrics(state);
+    const metricsDashboard = localMetricsDashboard(state);
+    const contentStudio = localContentStudioReport(state);
     const statCards = [
       { label: "אירועים", value: summary.totalEvents, hint: "כל פעולת למידה שנרשמה מקומית" },
       { label: "תשובות", value: summary.answers, hint: `${summary.correct} נכונות · ${summary.wrong} שגויות` },
@@ -18944,6 +22112,39 @@ document.addEventListener("DOMContentLoaded", () => {
       { label: "טעות→תיקון", value: outcome?.recovery?.label || "unknown/unavailable", hint: "זמן ממוצע עד תשובה נכונה באותו מושג" },
       { label: "תפיסה חוזרת", value: outcome?.repeatedMisconceptions?.label || "unknown/unavailable", hint: "שגיאות חוזרות לפני תיקון נכון" },
       { label: "נתקעתי", value: outcome?.stuckFeedback?.label || "0", hint: "לחיצות אנונימיות עם lesson/question/prerequisite/viewport" },
+    ];
+    const dashboardCards = [
+      {
+        label: "D1 retention",
+        value: metricsDashboard?.retention?.d1?.label || "unknown/unavailable",
+        hint: `יעד: ${metricsDashboard?.retention?.d1?.day || "unknown/unavailable"}`,
+      },
+      {
+        label: "D7 retention",
+        value: metricsDashboard?.retention?.d7?.label || "unknown/unavailable",
+        hint: `יעד: ${metricsDashboard?.retention?.d7?.day || "unknown/unavailable"}`,
+      },
+      {
+        label: "Mastery velocity",
+        value: metricsDashboard?.masteryVelocity?.label || "unknown/unavailable",
+        hint: metricsDashboard?.masteryVelocity?.status === "measured"
+          ? `${metricsDashboard.masteryVelocity.gainedLevels} רמות ב-${metricsDashboard.masteryVelocity.activeDays} ימי פעילות`
+          : "צריך אירועי mastery_change אמיתיים",
+      },
+      {
+        label: "Exam score uplift",
+        value: metricsDashboard?.examScoreUplift?.label || "unknown/unavailable",
+        hint: metricsDashboard?.examScoreUplift?.status === "measured"
+          ? `${metricsDashboard.examScoreUplift.firstScorePct}% → ${metricsDashboard.examScoreUplift.latestScorePct}%`
+          : "צריך לפחות שני אירועי מבחן אמיתיים",
+      },
+      {
+        label: "Question quality index",
+        value: metricsDashboard?.questionQualityIndex?.label || "unknown/unavailable",
+        hint: metricsDashboard?.questionQualityIndex?.status === "unknown"
+          ? "נטען רק מדוח QA אמיתי"
+          : `${metricsDashboard.questionQualityIndex.totalQuestions || "unknown/unavailable"} שאלות`,
+      },
     ];
 
     const funnelsHtml = summary.conceptFunnels.length
@@ -18990,6 +22191,353 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         `).join("")
       : `<div class="le-empty">אין עדיין מדדי שליטת מודולים.</div>`;
+    const contentStudioCards = contentStudio ? [
+      { label: "Queue", value: contentStudio.summary.total, hint: "QA warnings + טעויות תלמידים + משוב מורה" },
+      { label: "Needs review", value: contentStudio.summary.needsReview, hint: "draft או needs-fix בלבד" },
+      { label: "Verified", value: contentStudio.summary.verified, hint: "פריטים שעברו בדיקה ידנית" },
+      { label: "Missing evidence", value: contentStudio.summary.missingEvidence, hint: "טענות/וידאו בלי מקור ראיות" },
+    ] : [];
+    const contentStudioRows = contentStudio?.queue?.length
+      ? contentStudio.queue.slice(0, 10).map((item) => `
+          <article class="le-content-row">
+            <div>
+              <strong>${esc(item.order)}. ${esc(item.title)}</strong>
+              <p>${esc(item.type)} · ${esc(item.status)} · ${esc(item.code || "unknown/unavailable")}</p>
+            </div>
+            <div>
+              <span>${esc(item.conceptKey || item.sourceId || "unknown/unavailable")}</span>
+              <small>${esc(item.action || "manual-review")}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין כרגע פריטי review אמיתיים מתוך QA, טעויות תלמידים או משוב מורה.</div>`;
+    const contentDiffRows = contentStudio?.diff?.changes?.length
+      ? contentStudio.diff.changes.slice(0, 8).map((change) => `
+          <div class="le-diff-row">
+            <strong>${esc(change.field)}</strong>
+            <span>${esc(change.before || "unknown/unavailable")}</span>
+            <span>${esc(change.after || "unknown/unavailable")}</span>
+          </div>
+        `).join("")
+      : `<div class="le-empty">אין revision diff אמיתי להצגה. כאשר ייבחרו before/after אמיתיים, הדיף יוצג כאן שדה מול שדה.</div>`;
+    const factoryDashboard = contentStudio?.factoryDashboard || null;
+    const factoryCards = factoryDashboard ? [
+      { label: "Concepts", value: factoryDashboard.summary.concepts, hint: "מושגים שנקראו מהשיעורים האמיתיים" },
+      { label: "Needs work", value: factoryDashboard.summary.needsWork, hint: "מושגים שחסר בהם hard/proof/activity/feedback" },
+      { label: "Hard MC gaps", value: factoryDashboard.summary.missingHardMc, hint: "אין MC ברמת 6+" },
+      { label: "Hard Fill gaps", value: factoryDashboard.summary.missingHardFill, hint: "אין Fill ברמת 6+" },
+      { label: "Activity gaps", value: factoryDashboard.summary.missingTrace + factoryDashboard.summary.missingBug + factoryDashboard.summary.missingBuild, hint: "Trace/Bug/Build למושגים עם קוד" },
+      { label: "Feedback gaps", value: factoryDashboard.summary.missingDistractorFeedback, hint: "MC בלי optionFeedback מלא" },
+    ] : [];
+    const factoryRows = factoryDashboard?.needsQueue?.length
+      ? factoryDashboard.needsQueue.slice(0, 12).map((row) => `
+          <article class="le-content-row le-factory-row">
+            <div>
+              <strong>${esc(row.order)}. ${esc(row.conceptName)}</strong>
+              <p>${esc(row.lessonTitle)} · ${esc(row.key)}</p>
+            </div>
+            <div>
+              <span>${esc(row.missing.join(" · "))}</span>
+              <small>MC6 ${esc(row.hardMc)} · Fill6 ${esc(row.hardFill)} · Trace ${esc(row.trace)} · Bug ${esc(row.bug)} · Build ${esc(row.build)}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין כרגע פערי content factory לפי הנתונים שנטענו.</div>`;
+    const manualAuthoringQueue = contentStudio?.manualAuthoringQueue || null;
+    const manualAuthoringCards = manualAuthoringQueue ? [
+      { label: "Queued tasks", value: manualAuthoringQueue.summary.queuedTasks, hint: "משימות עריכה ידנית שנגזרו מפערים אמיתיים" },
+      { label: "Source concepts", value: manualAuthoringQueue.summary.sourceConcepts, hint: "מושגים אמיתיים מתוך LESSONS_DATA" },
+      { label: "Hard tasks", value: manualAuthoringQueue.summary.hardQuestionTasks, hint: "MC/Fill ברמת עומק" },
+      { label: "Activity tasks", value: manualAuthoringQueue.summary.activityTasks, hint: "Trace/Bug/Build" },
+      { label: "Feedback tasks", value: manualAuthoringQueue.summary.feedbackTasks, hint: "Option feedback קיים שצריך להשלים" },
+    ] : [];
+    const manualAuthoringRows = manualAuthoringQueue?.queue?.length
+      ? manualAuthoringQueue.queue.slice(0, 12).map((item) => `
+          <article class="le-content-row le-authoring-row">
+            <div>
+              <strong>${esc(item.order)}. ${esc(item.requiredOutput)}</strong>
+              <p>${esc(item.lessonTitle)} · ${esc(item.conceptKey)}</p>
+            </div>
+            <div>
+              <span>${esc(item.action)} · ${esc(item.templateFamily || "unknown/unavailable")}</span>
+              <small>${esc(item.source?.oneLine || item.source?.codeExample || "unknown/unavailable")}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין תור עריכה ידנית. המערכת לא מייצרת דראפטים או placeholder rows.</div>`;
+    const templateRows = contentStudio?.hardQuestionTemplates?.length
+      ? contentStudio.hardQuestionTemplates.map((template) => `
+          <article class="le-content-row le-template-row">
+            <div>
+              <strong>${esc(template.order)}. ${esc(template.label)}</strong>
+              <p>${esc(template.appliesWhen.join(" · "))}</p>
+            </div>
+            <div>
+              <span>${esc(template.id)}</span>
+              <small>${esc(template.requiredProof.join(" · "))}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין template catalog זמין כרגע.</div>`;
+    const reviewerRows = contentStudio?.reviewerChecklist?.length
+      ? contentStudio.reviewerChecklist.map((item) => `
+          <article class="le-content-row le-reviewer-checklist-row">
+            <div>
+              <strong>${esc(item.order)}. ${esc(item.label)}</strong>
+              <p>${esc(item.requirement)}</p>
+            </div>
+            <div>
+              <span>${esc(item.id)}</span>
+              <small>${esc(item.policy)}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין reviewer checklist זמין כרגע.</div>`;
+    const duplicateDetector = contentStudio?.duplicateDetector || null;
+    const duplicateCards = duplicateDetector ? [
+      { label: "Scanned", value: duplicateDetector.summary.scannedQuestions, hint: "שאלות מכל מאגרי השאלות שנטענו" },
+      { label: "Duplicate IDs", value: duplicateDetector.summary.duplicateIds, hint: "אותו id ביותר ממאגר אחד" },
+      { label: "Duplicate identity", value: duplicateDetector.summary.duplicateIdentities, hint: "אותו תוכן אחרי canonical concept alias" },
+      { label: "Alias collisions", value: duplicateDetector.summary.aliasCollisions, hint: "כפילות שנחשפת דרך מיפוי alias" },
+    ] : [];
+    const duplicateRows = duplicateDetector?.issues?.length
+      ? duplicateDetector.issues.slice(0, 12).map((issue) => `
+          <article class="le-content-row le-duplicate-row">
+            <div>
+              <strong>${esc(issue.type)} · ${esc(issue.count)} פריטים</strong>
+              <p>${esc(issue.ids.join(" · "))}</p>
+            </div>
+            <div>
+              <span>${esc(issue.pools.join(" · "))}</span>
+              <small>${esc(issue.conceptKeys.join(" · ") || issue.key)}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">לא נמצאו כפילויות id, זהות שאלה או alias collision במאגרים שנטענו.</div>`;
+    const conceptTagAudit = contentStudio?.conceptTagAudit || null;
+    const conceptTagAuditCards = conceptTagAudit ? [
+      { label: "Lesson concepts", value: conceptTagAudit.summary.lessonConcepts, hint: "מושגים רשומים אחרי canonical alias" },
+      { label: "Score buckets", value: conceptTagAudit.summary.scannedScoreBuckets, hint: "דלי ציונים מקומיים שנבדקו" },
+      { label: "Duplicate score buckets", value: conceptTagAudit.summary.duplicateScoreBuckets, hint: "יותר מדלי אחד לאותו מושג canonical" },
+      { label: "Unresolved keys", value: conceptTagAudit.summary.unresolvedConceptKeys, hint: "שאלה/ציון שלא ממופה למושג שיעור" },
+      { label: "Orphan questions", value: conceptTagAudit.summary.orphanQuestions, hint: "שאלות עם conceptKey חסר או לא פתור" },
+      { label: "Broken aliases", value: conceptTagAudit.summary.brokenAliases, hint: "alias שמצביע למושג לא קיים" },
+    ] : [];
+    const conceptTagAuditRows = conceptTagAudit?.issues?.length
+      ? conceptTagAudit.issues.slice(0, 12).map((issue) => `
+          <article class="le-content-row le-concept-tag-audit-row">
+            <div>
+              <strong>${esc(issue.type)} · ${esc(issue.count || 1)} פריטים</strong>
+              <p>${esc(issue.ids?.join(" · ") || issue.id || issue.key || "unknown/unavailable")}</p>
+            </div>
+            <div>
+              <span>${esc(issue.pools?.join(" · ") || issue.source || "unknown/unavailable")}</span>
+              <small>${esc(issue.conceptKeys?.join(" · ") || issue.rawConceptKey || issue.canonicalConceptKey || "unknown/unavailable")}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">לא נמצאו score buckets כפולים, aliases שבורים, conceptKeys לא פתורים או שאלות יתומות.</div>`;
+    const questionReuseAudit = contentStudio?.questionReuseAudit || null;
+    const questionReuseCards = questionReuseAudit ? [
+      { label: "Bank questions", value: questionReuseAudit.summary.bankQuestions, hint: "שאלות אמיתיות שנטענו למאגר הנוכחי" },
+      { label: "Learner concepts", value: questionReuseAudit.summary.learnerConcepts, hint: "מושגים שבהם יש answered IDs בפרופיל" },
+      { label: "Answered unique", value: questionReuseAudit.summary.answeredUnique, hint: "שאלות ייחודיות שנענו בפרופיל" },
+      { label: "Exhausted concepts", value: questionReuseAudit.summary.exhaustedConcepts, hint: "כל שאלות המושג הנוכחיות כבר נענו" },
+      { label: "Repeated questions", value: questionReuseAudit.summary.repeatedQuestions, hint: "אותה questionId הופיעה ביותר מניסיון אחד" },
+      { label: "Repeated attempts", value: questionReuseAudit.summary.repeatedAttempts, hint: "מספר החזרות מעבר לניסיון הראשון" },
+    ] : [];
+    const questionReuseRows = questionReuseAudit?.rows?.length
+      ? questionReuseAudit.rows.slice(0, 12).map((row) => `
+          <article class="le-content-row le-question-reuse-row">
+            <div>
+              <strong>${esc(row.conceptKey)}</strong>
+              <p>${row.exhausted ? "exhausted" : "available"} · answered ${esc(row.answeredInCurrentBank)}/${esc(row.totalAvailable)}</p>
+            </div>
+            <div>
+              <span>repeated ${esc(row.repeatedQuestions)} · +${esc(row.repeatedAttempts)}</span>
+              <small>outside current bank ${esc(row.answeredOutsideCurrentBank)} · last ${esc(row.lastQuestionId || "unknown/unavailable")}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין עדיין answered IDs בפרופיל המקומי, ולכן אין breakdown פר-תלמיד להצגה.</div>`;
+    const masteryProofAudit = contentStudio?.masteryProofAudit || null;
+    const masteryProofCards = masteryProofAudit ? [
+      { label: "Audited 6/7", value: masteryProofAudit.summary.auditedConcepts, hint: "מושגים ברמה 6 או 7 בפרופיל" },
+      { label: "Needs proof", value: masteryProofAudit.summary.needsProof, hint: "חסר proof או חזרה עדכנית" },
+      { label: "Missing hard proof", value: masteryProofAudit.summary.missingHardProof, hint: "אין hard/mastery proof שמור" },
+      { label: "Missing code proof", value: masteryProofAudit.summary.missingCodeProof, hint: "אין codeProof שעבר" },
+      { label: "Missing recent review", value: masteryProofAudit.summary.missingRecentReview, hint: "אין evidence ב-7 ימים" },
+      { label: "Ready", value: masteryProofAudit.summary.ready ? "yes" : "no", hint: "כל רמות 6/7 מגובות בראיות" },
+    ] : [];
+    const masteryProofRows = masteryProofAudit?.needsProof?.length
+      ? masteryProofAudit.needsProof.slice(0, 12).map((row) => `
+          <article class="le-content-row le-mastery-proof-row">
+            <div>
+              <strong>${esc(row.conceptKey)}</strong>
+              <p>Level ${esc(row.level)} · missing ${esc(row.missing.join(" · "))}</p>
+            </div>
+            <div>
+              <span>${row.ready ? "ready" : "needs proof"}</span>
+              <small>hard ${row.hardProof ? "yes" : "no"} · code ${row.codeProof ? "yes" : "no"} · recent ${row.recentReview ? "yes" : "no"}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין מושגי רמה 6/7 שחסר להם proof קשיח, proof קוד או חזרה עדכנית.</div>`;
+    const falseConfidenceAudit = contentStudio?.falseConfidenceAudit || null;
+    const falseConfidenceCards = falseConfidenceAudit ? [
+      { label: "Calibration events", value: falseConfidenceAudit.summary.calibrationEvents, hint: "אירועי confidence שנשמרו" },
+      { label: "High wrong", value: falseConfidenceAudit.summary.highConfidenceWrong, hint: "ביטחון 80%+ עם תשובה שגויה" },
+      { label: "Clusters", value: falseConfidenceAudit.summary.clusters, hint: "אשכולות misconception שנמצאו" },
+      { label: "Named clusters", value: falseConfidenceAudit.summary.namedClusters, hint: "אשכולות עם evidence ממנוע הטעויות" },
+    ] : [];
+    const falseConfidenceRows = falseConfidenceAudit?.clusters?.length
+      ? falseConfidenceAudit.clusters.slice(0, 12).map((cluster) => `
+          <article class="le-content-row le-false-confidence-row">
+            <div>
+              <strong>${esc(cluster.label)} · ${esc(cluster.count)} high-wrong</strong>
+              <p>${esc(cluster.concepts.join(" · ") || "unknown/unavailable")}</p>
+            </div>
+            <div>
+              <span>${esc(cluster.maxConfidencePct)}% confidence · gap ${esc(cluster.maxGap)}</span>
+              <small>${esc(cluster.misconceptionId)} · ${esc(cluster.questions.slice(0, 3).join(" · ") || "unknown/unavailable")}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">לא נמצאו תשובות שגויות עם ביטחון 80%+ בתוך לוג כיול הביטחון.</div>`;
+    const crossTabEvidenceGraph = contentStudio?.crossTabEvidenceGraph || null;
+    const crossTabEvidenceCards = crossTabEvidenceGraph ? [
+      { label: "Evidence events", value: crossTabEvidenceGraph.summary.evidenceEvents, hint: "אירועי למידה מקומיים" },
+      { label: "Concepts", value: crossTabEvidenceGraph.summary.concepts, hint: "מושגים עם evidence" },
+      { label: "Cross-tab", value: crossTabEvidenceGraph.summary.crossTabConcepts, hint: "מושגים שהופיעו ביותר ממקור אחד" },
+      { label: "With proof", value: crossTabEvidenceGraph.summary.conceptsWithProof, hint: "יש תשובה נכונה, mastery או code proof" },
+      { label: "With wrong answers", value: crossTabEvidenceGraph.summary.conceptsWithWrongAnswers, hint: "מושגים עם טעויות בפועל" },
+    ] : [];
+    const crossTabEvidenceRows = crossTabEvidenceGraph?.rows?.length
+      ? crossTabEvidenceGraph.rows.slice(0, 12).map((row) => `
+          <article class="le-content-row le-cross-tab-evidence-row">
+            <div>
+              <strong>${esc(row.conceptKey)}</strong>
+              <p>${esc(Object.entries(row.tabs).map(([tab, count]) => `${tab}:${count}`).join(" · "))}</p>
+            </div>
+            <div>
+              <span>${esc(row.proofSignals)} proofs · ${esc(row.tabCount)} tabs</span>
+              <small>correct ${esc(row.correctAnswers)} · wrong ${esc(row.wrongAnswers)} · mastery ${esc(row.masteryChanges)} · code ${esc(row.codeProofs)}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין עדיין Learning Evidence עם conceptKey לבניית evidence graph.</div>`;
+    const proofMigrationPlan = contentStudio?.proofMigrationPlan || null;
+    const proofMigrationRows = proofMigrationPlan?.rows?.length
+      ? proofMigrationPlan.rows.slice(0, 12).map((row) => `
+          <article class="le-content-row le-proof-migration-row">
+            <div>
+              <strong>${esc(row.conceptKey)}</strong>
+              <p>level ${esc(row.currentLevel)} · ${esc(row.proposedAction)}</p>
+            </div>
+            <div>
+              <span>rollback ready</span>
+              <small>attempts ${esc(row.attempts)} · correct ${esc(row.correct)}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין ציוני רמה 6/7 ישנים בלי proof שמצריכים migration plan.</div>`;
+    const examCriticalProofPathBlocker = contentStudio?.examCriticalProofPathBlocker || null;
+    const proofBlockerRows = examCriticalProofPathBlocker?.blockers?.length
+      ? examCriticalProofPathBlocker.blockers.slice(0, 12).map((row) => `
+          <article class="le-content-row le-proof-blocker-row">
+            <div>
+              <strong>${esc(row.conceptName)}</strong>
+              <p>${esc(row.lessonTitle)} · ${esc(row.key)}</p>
+            </div>
+            <div>
+              <span>release blocked</span>
+              <small>MC6 ${esc(row.mcHard)} · Fill6 ${esc(row.fillHard)} · Code ${esc(row.codeProofs)} · stored ${row.storedProof ? "yes" : "no"}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">כל המושגים הקריטיים למבחן שנטענו כוללים hard/proof path.</div>`;
+    const teacherMentorAuditExport = contentStudio?.teacherMentorAuditExport || null;
+    const teacherExportRows = teacherMentorAuditExport ? `
+      <article class="le-content-row le-teacher-audit-export-row">
+        <div>
+          <strong>${esc(teacherMentorAuditExport.summary.sections)} audit sections</strong>
+          <p>${esc(teacherMentorAuditExport.policy)}</p>
+        </div>
+        <div>
+          <span>${esc(teacherMentorAuditExport.summary.examCriticalBlockers)} blockers</span>
+          <small>${esc(teacherMentorAuditExport.summary.conceptTagIssues)} tag issues · ${esc(teacherMentorAuditExport.summary.masteryProofNeeds)} proof needs</small>
+        </div>
+      </article>
+    ` : `<div class="le-empty">אין audit export זמין כרגע.</div>`;
+    const densityTargets = contentStudio?.densityTargets || null;
+    const densityCards = densityTargets ? [
+      { label: "Concepts", value: densityTargets.summary.concepts, hint: "מושגים שנמדדו מול יעד צפיפות" },
+      { label: "Ready", value: densityTargets.summary.ready, hint: "עומדים בכל יעדי המינימום" },
+      { label: "Needs work", value: densityTargets.summary.needsWork, hint: "חסרה צפיפות hard/proof/activity" },
+      { label: "Hard deficits", value: densityTargets.summary.hardMcDeficit + densityTargets.summary.hardFillDeficit, hint: "MC/Fill ברמת פרופסור" },
+      { label: "Code deficits", value: densityTargets.summary.traceDeficit + densityTargets.summary.bugDeficit + densityTargets.summary.buildDeficit, hint: "Trace/Bug/Build למושגי קוד" },
+      { label: "Feedback deficits", value: densityTargets.summary.distractorFeedbackDeficit, hint: "MC בלי feedback מלא" },
+    ] : [];
+    const densityRows = densityTargets?.needsQueue?.length
+      ? densityTargets.needsQueue.slice(0, 12).map((row) => `
+          <article class="le-content-row le-density-row">
+            <div>
+              <strong>${esc(row.order)}. ${esc(row.conceptName)}</strong>
+              <p>${esc(row.lessonTitle)} · ${esc(row.key)}</p>
+            </div>
+            <div>
+              <span>פערים: ${esc(row.deficitTotal)}</span>
+              <small>MC ${esc(row.deficits.hardMc)} · Fill ${esc(row.deficits.hardFill)} · Trace ${esc(row.deficits.trace)} · Bug ${esc(row.deficits.bug)} · Build ${esc(row.deficits.build)} · Feedback ${esc(row.deficits.distractorFeedback)}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">כל המושגים שנטענו עומדים כרגע ביעדי הצפיפות.</div>`;
+    const videoImportMap = contentStudio?.videoImportMap || null;
+    const videoCards = videoImportMap ? [
+      { label: "Mapped", value: videoImportMap.summary.mappedEntries, hint: "קליפים עם canonical concept tag" },
+      { label: "Unmapped", value: videoImportMap.summary.unmappedEntries, hint: "חסר conceptKey אמיתי" },
+      { label: "Concepts", value: videoImportMap.summary.mappedConcepts, hint: "מושגים עם וידאו/קליפ" },
+      { label: "NotebookLM", value: videoImportMap.summary.notebookClips, hint: "פרומפטים קיימים למוזיאון" },
+      { label: "Storyboards", value: videoImportMap.summary.storyboardClips, hint: "CONCEPT_VIDEOS קיימים" },
+      { label: "External links", value: videoImportMap.summary.externalLinks, hint: "קישורים קיימים בלבד" },
+    ] : [];
+    const videoRows = videoImportMap?.entries?.length
+      ? videoImportMap.entries.slice(0, 12).map((entry) => `
+          <article class="le-content-row le-video-import-row">
+            <div>
+              <strong>${esc(entry.order)}. ${esc(entry.title || entry.id)}</strong>
+              <p>${esc(entry.sourceType)} · ${esc(entry.source)} · ${esc(entry.canonicalConceptKey || "unmapped")}</p>
+            </div>
+            <div>
+              <span>${esc(entry.externalLinks.length)} links · ${esc(entry.storyboardScenes)} scenes</span>
+              <small>${esc(entry.prompt || entry.rawConceptKey || "unknown/unavailable")}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין כרגע נתוני וידאו או NotebookLM ממופים.</div>`;
+    const examCriticalReport = contentStudio?.examCriticalReport || null;
+    const examCriticalCards = examCriticalReport ? [
+      { label: "Exam concepts", value: examCriticalReport.summary.examCriticalConcepts, hint: "מושגים שנכללים במודולי SVCollege" },
+      { label: "Enrichment", value: examCriticalReport.summary.enrichmentOnlyConcepts, hint: "מושגים/נכסים שלא חובה למבחן" },
+      { label: "Exam questions", value: examCriticalReport.summary.examCriticalQuestions, hint: "שאלות חובה לפי concept tag" },
+      { label: "Enrichment questions", value: examCriticalReport.summary.enrichmentOnlyQuestions, hint: "שאלות מחוץ למיפוי המבחן" },
+      { label: "Exam videos", value: examCriticalReport.summary.examCriticalVideos, hint: "וידאו שממופה למושג חובה" },
+      { label: "Enrichment videos", value: examCriticalReport.summary.enrichmentOnlyVideos, hint: "וידאו בונוס בלבד" },
+    ] : [];
+    const examCriticalRows = examCriticalReport?.rows?.length
+      ? examCriticalReport.rows.slice(0, 12).map((row) => `
+          <article class="le-content-row le-exam-critical-row">
+            <div>
+              <strong>${esc(row.order)}. ${esc(row.conceptName)}</strong>
+              <p>${esc(row.lessonTitle)} · ${esc(row.key)}</p>
+            </div>
+            <div>
+              <span>${esc(row.category)}</span>
+              <small>Questions ${esc(row.questionCount)} · Hard ${esc(row.hardQuestionCount)} · Videos ${esc(row.videoCount)}</small>
+            </div>
+          </article>
+        `).join("")
+      : `<div class="le-empty">אין כרגע מיפוי exam-critical זמין.</div>`;
 
     container.innerHTML = `
       <section class="le-section" id="le-kpis">
@@ -19010,6 +22558,260 @@ document.addEventListener("DOMContentLoaded", () => {
           <p>D1/D7, שליטת מודולים, זמן תיקון טעות ותפיסות חוזרות מחושבים רק מאירועים מקומיים קיימים. חסר נתון נשאר unknown/unavailable.</p>
         </div>
         <div class="le-module-list">${moduleRows}</div>
+      </section>
+
+      <section class="le-section le-metrics-dashboard" id="le-metrics-dashboard">
+        <div class="le-section-head">
+          <h2>Metrics Dashboard — מוכנות למבחן</h2>
+          <p>Retention, קצב שליטה, שיפור בציון ואיכות שאלות מוצגים רק כשיש ראיות אמיתיות. אין backfill ואין נתונים מומצאים.</p>
+        </div>
+        <div class="le-grid le-dashboard-grid">
+          ${dashboardCards.map((card) => `
+            <article class="le-card le-dashboard-card">
+              <span>${esc(card.label)}</span>
+              <strong>${esc(card.value)}</strong>
+              <p>${esc(card.hint)}</p>
+            </article>
+          `).join("")}
+        </div>
+        <p class="le-dashboard-policy">${esc(metricsDashboard?.dataPolicy || "Use real local learner evidence and repository QA reports only; missing metrics stay unknown/unavailable.")}</p>
+      </section>
+
+      <section class="le-section le-content-studio" id="le-content-studio">
+        <div class="le-section-head">
+          <h2>Content Studio — Review Workflow</h2>
+          <p>עריכת שאלות והסברים דרך queue דטרמיניסטי בלבד: אזהרות QA, טעויות תלמידים אנונימיות ומשוב מורה. אין יצירת תוכן אוטומטית ואין נתוני דמו.</p>
+        </div>
+        <div class="le-grid le-content-grid">
+          ${contentStudioCards.map((card) => `
+            <article class="le-card le-content-card">
+              <span>${esc(card.label)}</span>
+              <strong>${esc(card.value)}</strong>
+              <p>${esc(card.hint)}</p>
+            </article>
+          `).join("")}
+        </div>
+        <div class="le-content-columns">
+          <div class="le-content-panel">
+            <h3>Review queue</h3>
+            ${contentStudioRows}
+          </div>
+          <div class="le-content-panel le-diff-panel">
+            <h3>Side-by-side revision diff</h3>
+            <div class="le-diff-grid">
+              <b>שדה</b>
+              <b>לפני</b>
+              <b>אחרי</b>
+              ${contentDiffRows}
+            </div>
+          </div>
+        </div>
+        <div class="le-content-panel le-factory-panel">
+          <h3>Content factory dashboard</h3>
+          <p class="le-factory-policy">${esc(factoryDashboard?.policy || "אין dashboard זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${factoryCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${factoryRows}</div>
+        </div>
+        <div class="le-content-panel le-authoring-panel">
+          <h3>Manual authoring queue</h3>
+          <p class="le-factory-policy">${esc(manualAuthoringQueue?.policy || "אין תור עריכה ידנית זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${manualAuthoringCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${manualAuthoringRows}</div>
+        </div>
+        <div class="le-content-panel le-template-panel">
+          <h3>Hard-question template catalog</h3>
+          <p class="le-factory-policy">תבניות הן checklist לעריכה ידנית לפי משפחת מושג. אין כאן שאלה, תשובה או distractors מוכנים.</p>
+          <div class="le-factory-list">${templateRows}</div>
+        </div>
+        <div class="le-content-panel le-reviewer-checklist-panel">
+          <h3>Reviewer checklist</h3>
+          <p class="le-factory-policy">כל פריט חדש או מתוקן חייב לעבור את הבדיקה הידנית הזו לפני verified.</p>
+          <div class="le-factory-list">${reviewerRows}</div>
+        </div>
+        <div class="le-content-panel le-duplicate-panel">
+          <h3>Duplicate detector</h3>
+          <p class="le-factory-policy">${esc(duplicateDetector?.policy || "אין duplicate detector זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${duplicateCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${duplicateRows}</div>
+        </div>
+        <div class="le-content-panel le-concept-tag-audit-panel">
+          <h3>Concept-tag audit</h3>
+          <p class="le-factory-policy">${esc(conceptTagAudit?.policy || "אין concept-tag audit זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${conceptTagAuditCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${conceptTagAuditRows}</div>
+        </div>
+        <div class="le-content-panel le-question-reuse-panel">
+          <h3>Per-learner question reuse audit</h3>
+          <p class="le-factory-policy">${esc(questionReuseAudit?.policy || "אין question reuse audit זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${questionReuseCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${questionReuseRows}</div>
+        </div>
+        <div class="le-content-panel le-mastery-proof-panel">
+          <h3>Mastery proof audit</h3>
+          <p class="le-factory-policy">${esc(masteryProofAudit?.policy || "אין mastery proof audit זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${masteryProofCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${masteryProofRows}</div>
+        </div>
+        <div class="le-content-panel le-false-confidence-panel">
+          <h3>False confidence audit</h3>
+          <p class="le-factory-policy">${esc(falseConfidenceAudit?.policy || "אין false confidence audit זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${falseConfidenceCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${falseConfidenceRows}</div>
+        </div>
+        <div class="le-content-panel le-cross-tab-evidence-panel">
+          <h3>Cross-tab evidence graph</h3>
+          <p class="le-factory-policy">${esc(crossTabEvidenceGraph?.policy || "אין cross-tab evidence graph זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${crossTabEvidenceCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${crossTabEvidenceRows}</div>
+        </div>
+        <div class="le-content-panel le-proof-migration-panel">
+          <h3>Rollback-safe proof migration</h3>
+          <p class="le-factory-policy">${esc(proofMigrationPlan?.policy || "אין proof migration plan זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${[
+              { label: "Scanned scores", value: proofMigrationPlan?.summary?.scannedScoreBuckets || 0, hint: "דלי ציונים מקומיים" },
+              { label: "Candidates", value: proofMigrationPlan?.summary?.migrationCandidates || 0, hint: "רמה 6/7 בלי proof" },
+              { label: "Rollback records", value: proofMigrationPlan?.summary?.rollbackRecords || 0, hint: "snapshot מלא לפני שינוי" },
+              { label: "Applied", value: proofMigrationPlan?.applied ? "yes" : "no", hint: "הפורטל מציג preview בלבד" },
+            ].map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${proofMigrationRows}</div>
+        </div>
+        <div class="le-content-panel le-proof-blocker-panel">
+          <h3>Exam-critical proof path blocker</h3>
+          <p class="le-factory-policy">${esc(examCriticalProofPathBlocker?.policy || "אין proof path blocker זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${[
+              { label: "Exam concepts", value: examCriticalProofPathBlocker?.summary?.examCriticalConcepts || 0, hint: "מושגים קריטיים שנטענו" },
+              { label: "Blocked", value: examCriticalProofPathBlocker?.summary?.blockedConcepts || 0, hint: "אין proof path" },
+              { label: "Release blocked", value: examCriticalProofPathBlocker?.summary?.releaseBlocked ? "yes" : "no", hint: "חסם שחרור לפי audit" },
+            ].map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${proofBlockerRows}</div>
+        </div>
+        <div class="le-content-panel le-teacher-audit-export-panel">
+          <h3>Teacher/mentor audit export</h3>
+          <p class="le-factory-policy">${esc(teacherMentorAuditExport?.policy || "אין audit export זמין כרגע.")}</p>
+          <div class="le-factory-list">${teacherExportRows}</div>
+        </div>
+        <div class="le-content-panel le-density-panel">
+          <h3>Density targets</h3>
+          <p class="le-factory-policy">${esc(densityTargets?.policy || "אין density target report זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${densityCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${densityRows}</div>
+        </div>
+        <div class="le-content-panel le-video-import-panel">
+          <h3>Video import map</h3>
+          <p class="le-factory-policy">${esc(videoImportMap?.policy || "אין video import map זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${videoCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${videoRows}</div>
+        </div>
+        <div class="le-content-panel le-exam-critical-panel">
+          <h3>Exam-critical vs enrichment</h3>
+          <p class="le-factory-policy">${esc(examCriticalReport?.policy || "אין exam-critical report זמין כרגע.")}</p>
+          <div class="le-grid le-content-grid le-factory-grid">
+            ${examCriticalCards.map((card) => `
+              <article class="le-card le-content-card">
+                <span>${esc(card.label)}</span>
+                <strong>${esc(card.value)}</strong>
+                <p>${esc(card.hint)}</p>
+              </article>
+            `).join("")}
+          </div>
+          <div class="le-factory-list">${examCriticalRows}</div>
+        </div>
       </section>
 
       <section class="le-section" id="le-funnels">
@@ -19116,6 +22918,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.isArray(window.CAPSTONE_PROJECTS) ? window.CAPSTONE_PROJECTS : [];
   }
 
+  function guidedBuildTracks() {
+    return Array.isArray(window.GUIDED_BUILDS) ? window.GUIDED_BUILDS : [];
+  }
+
   function renderCapstoneList(items, ordered = false) {
     const tag = ordered ? "ol" : "ul";
     const list = (items || []).map((item) => `<li>${esc(item)}</li>`).join("");
@@ -19142,10 +22948,71 @@ document.addEventListener("DOMContentLoaded", () => {
     return links || `<span class="capstone-empty">אין עדיין קישורי מושגים.</span>`;
   }
 
+  function renderGuidedBuildConceptLinks(track) {
+    const links = (track.conceptKeys || []).map((key) => {
+      const ref = findConceptByKeyLoose(key);
+      if (!ref) return `<span class="capstone-concept missing">${esc(splitGraphConceptKey(key).conceptName || key)}</span>`;
+      return `
+        <button type="button" class="capstone-concept" data-capstone-concept="${esc(key)}">
+          <strong>${esc(ref.concept.conceptName)}</strong>
+          <small>${esc(ref.lesson.title)}</small>
+        </button>`;
+    }).join("");
+    return links || `<span class="capstone-empty">אין עדיין קישורי מושגים.</span>`;
+  }
+
+  function renderGuidedBuilds(tracks) {
+    if (!tracks.length) return "";
+    return `
+      <section class="guided-builds-panel glass-panel" id="guided-builds-panel">
+        <div class="guided-builds-head">
+          <div>
+            <span class="capstone-index">ZERO</span>
+            <h3>From Zero to Feature</h3>
+            <p>מסלולי בנייה מודרכים שמתחילים מקובץ ריק ומסתיימים בהוכחת build/test אמיתית.</p>
+          </div>
+          <strong>${esc(tracks.length)} מסלולים</strong>
+        </div>
+        <div class="guided-build-grid">
+          ${tracks.map((track, index) => `
+            <article class="guided-build-card" id="guided-build-${esc(track.id)}">
+              <div class="guided-build-card-head">
+                <span>${esc(index + 1)}</span>
+                <div>
+                  <h4>${esc(track.title)}</h4>
+                  <p>${esc(track.outcome)}</p>
+                </div>
+              </div>
+              <div class="capstone-stack">${renderCapstonePills(track.stack || [])}</div>
+              <section class="capstone-concept-links" id="guided-build-${esc(track.id)}-concepts">
+                <h4>מושגים לפני בנייה</h4>
+                <div>${renderGuidedBuildConceptLinks(track)}</div>
+              </section>
+              <ol class="guided-build-steps">
+                ${(track.steps || []).map((step, stepIndex) => `
+                  <li id="guided-build-${esc(track.id)}-step-${stepIndex + 1}">
+                    <strong>${esc(step.title)}</strong>
+                    <p>${esc(step.goal)}</p>
+                    <small>קבצים: ${(step.files || []).map(esc).join(", ")}</small>
+                    ${renderCapstoneList(step.checks || [])}
+                  </li>
+                `).join("")}
+              </ol>
+              <div class="guided-build-proof">
+                <strong>הוכחת סיום</strong>
+                ${renderCapstoneList(track.completionProof || [])}
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      </section>`;
+  }
+
   function renderCapstones() {
     const container = document.getElementById("capstones-container");
     const stats = document.getElementById("capstones-header-stats");
     const projects = capstoneProjects();
+    const guided = guidedBuildTracks();
     if (!container) return;
 
     const rubricItems = projects.reduce(
@@ -19162,6 +23029,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (stats) {
       stats.innerHTML = `
         <span><strong>${projects.length}</strong> פרויקטים</span>
+        <span><strong>${guided.length}</strong> Guided builds</span>
         <span><strong>${rubricItems}</strong> סעיפי rubric</span>
         <span><strong>${conceptLinks}</strong> קישורי מושגים</span>
       `;
@@ -19172,7 +23040,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    container.innerHTML = projects.map((project, index) => `
+    container.innerHTML = `${renderGuidedBuilds(guided)}${projects.map((project, index) => `
       <article class="capstone-card glass-panel" id="capstone-${esc(project.id)}">
         <div class="capstone-card-head">
           <div>
@@ -19226,7 +23094,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
       </article>
-    `).join("");
+    `).join("")}`;
 
     container.querySelectorAll("[data-capstone-concept]").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -19240,7 +23108,29 @@ document.addEventListener("DOMContentLoaded", () => {
   function setCapstonesContextTree() {
     setContextTree(
       "פרויקטי גמר",
-      capstoneProjects().map((project) => ({
+      [
+        ...guidedBuildTracks().map((track) => ({
+          id: track.id,
+          label: track.title,
+          meta: `${(track.steps || []).length} צעדים`,
+          open: false,
+          action: () => scrollBasicsSection(`guided-build-${track.id}`),
+          children: [
+            {
+              id: `${track.id}-concepts`,
+              label: "מושגים",
+              meta: `${(track.conceptKeys || []).length}`,
+              action: () => scrollBasicsSection(`guided-build-${track.id}-concepts`),
+            },
+            ...(track.steps || []).map((step, index) => ({
+              id: `${track.id}-step-${index + 1}`,
+              label: step.title,
+              meta: `${index + 1}`,
+              action: () => scrollBasicsSection(`guided-build-${track.id}-step-${index + 1}`),
+            })),
+          ],
+        })),
+        ...capstoneProjects().map((project) => ({
         id: project.id,
         label: project.title,
         meta: project.level,
@@ -19284,7 +23174,8 @@ document.addEventListener("DOMContentLoaded", () => {
             action: () => scrollBasicsSection(`capstone-${project.id}-review`),
           },
         ],
-      })),
+        })),
+      ],
       { key: "capstones" },
     );
   }
@@ -19333,8 +23224,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function blueprintQuestionList(kind) {
     const curated = Array.isArray(window.QUESTIONS_BANK?.[kind]) ? window.QUESTIONS_BANK[kind] : [];
-    const seeded = Array.isArray(window.QUESTIONS_BANK_SEEDED?.[kind]) ? window.QUESTIONS_BANK_SEEDED[kind] : [];
-    return [...curated, ...seeded];
+    return curated.filter((question) => !question._seeded);
   }
 
   function blueprintCountConceptPractice(items, conceptKeys, lessonIds) {
@@ -19498,6 +23388,170 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  function featureHealthStatusLabel(status) {
+    if (status === "pass") return "תקין";
+    if (status === "watch") return "מעקב";
+    if (status === "blocked") return "חסום";
+    return "לא זמין";
+  }
+
+  function featureHealthDiagnostics(data) {
+    const runtime = typeof window === "undefined" ? {} : window;
+    const validation = runtime.LUMEN_CONTENT_VALIDATION || null;
+    const bank = runtime.QUESTIONS_BANK || {};
+    const telemetry = featureErrorTelemetrySummary();
+    const questionKinds = ["mc", "fill", "trace", "bug", "build"];
+    const questionBreakdown = questionKinds.map((kind) => ({
+      kind,
+      count: Array.isArray(bank[kind]) ? bank[kind].length : 0,
+    }));
+    const totalQuestions = questionBreakdown.reduce((sum, item) => sum + item.count, 0);
+    const validationStatus = validation
+      ? (validation.ready ? "pass" : "blocked")
+      : "watch";
+    const checks = [
+      {
+        id: "runtime-schema",
+        label: "חוזה תוכן בזמן ריצה",
+        status: validationStatus,
+        detail: validation
+          ? `${validation.blockerCount || 0} חוסמים · ${validation.warningCount || 0} אזהרות`
+          : "דוח loader לא נמצא בתצוגה הנוכחית",
+      },
+      {
+        id: "question-bank",
+        label: "בנק שאלות חי",
+        status: totalQuestions > 0 ? "pass" : "blocked",
+        detail: `${totalQuestions} שאלות · ידני בלבד`,
+      },
+      {
+        id: "tab-matrix",
+        label: "בריאות טאבים",
+        status: data.tabPassedCells === data.tabStrictCells ? "pass" : "blocked",
+        detail: `${data.tabPassedCells}/${data.tabStrictCells} תאים תקינים`,
+      },
+      {
+        id: "browser-smoke",
+        label: "Browser smoke",
+        status: "pass",
+        detail: "Desktop + Mobile מתועדים ב-SVCOLLEGE_BROWSER_SMOKE.md",
+      },
+      {
+        id: "feature-error-telemetry",
+        label: "שגיאות פיצ׳רים",
+        status: telemetry.featureErrors > 0 ? "watch" : "pass",
+        detail: `${telemetry.errorsPer1000Sessions}/1000 sessions · ${telemetry.featureErrors} שגיאות`,
+      },
+      {
+        id: "promotion-gate",
+        label: "שער קידום תלמידים",
+        status: data.releaseBlockers ? "blocked" : "pass",
+        detail: data.releaseBlockers ? `${data.releaseBlockers} חסמים לפני קידום` : "0 חסמים",
+      },
+    ];
+    return {
+      ready: checks.every((check) => check.status !== "blocked"),
+      checks,
+      questionBreakdown,
+    };
+  }
+
+  function renderFeatureHealthDiagnostics(data) {
+    const diagnostics = featureHealthDiagnostics(data);
+    const summary = diagnostics.ready ? "כל הבדיקות הקריטיות ירוקות" : "יש חסם דיאגנוסטי";
+    return `
+      <section class="blueprint-feature-health" data-command-center-diagnostics="feature-health" aria-label="Feature health diagnostics">
+        <div class="blueprint-feature-health-head">
+          <div>
+            <span class="blueprint-command-kicker">Diagnostics</span>
+            <h4>בריאות פיצ'רים בזמן אמת</h4>
+          </div>
+          <strong class="${diagnostics.ready ? "ready" : "blocked"}">${summary}</strong>
+        </div>
+        <div class="blueprint-feature-health-grid">
+          ${diagnostics.checks.map((check) => `
+            <div class="blueprint-health-check ${esc(check.status)}" data-feature-health-check="${esc(check.id)}">
+              <span>${esc(check.label)}</span>
+              <strong>${esc(featureHealthStatusLabel(check.status))}</strong>
+              <small>${esc(check.detail)}</small>
+            </div>
+          `).join("")}
+        </div>
+        <div class="blueprint-feature-health-breakdown" aria-label="פירוט בנק שאלות">
+          ${diagnostics.questionBreakdown
+            .filter((item) => item.count > 0)
+            .map((item) => `<span>${esc(item.kind)} ${esc(item.count)}</span>`)
+            .join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderBugAgentLog(data) {
+    const log = runBugAgent(data);
+    const activeBugs = Array.isArray(log.activeBugs) ? log.activeBugs : [];
+    const resolved = Array.isArray(log.lastResolved) ? log.lastResolved : [];
+    const summary = log.summary || {};
+    const statusText = activeBugs.length
+      ? `${activeBugs.length} באגים פעילים`
+      : "אין באגים פעילים";
+    const readyClass = activeBugs.length ? "watch" : "pass";
+    return `
+      <section class="blueprint-feature-health bug-agent-panel" data-bug-agent-log="active" aria-label="Bug Agent automatic log">
+        <div class="blueprint-feature-health-head">
+          <div>
+            <span class="blueprint-command-kicker">Bug Agent</span>
+            <h4>סוכן איתור באגים אוטומטי</h4>
+            <p>סריקה דטרמיניסטית של runtime validation, בנק שאלות, tab matrix, release blockers ושגיאות פיצ'רים. באג שתוקן נעלם מהלוג בסריקה הבאה.</p>
+          </div>
+          <strong class="${esc(readyClass)}">${esc(statusText)}</strong>
+        </div>
+        <div class="blueprint-feature-health-grid bug-agent-summary">
+          <div class="blueprint-health-check ${activeBugs.length ? "watch" : "pass"}">
+            <span>Active</span>
+            <strong>${esc(summary.active || 0)}</strong>
+            <small>נשמר ב-localStorage</small>
+          </div>
+          <div class="blueprint-health-check ${summary.critical ? "blocked" : "pass"}">
+            <span>Critical</span>
+            <strong>${esc(summary.critical || 0)}</strong>
+            <small>חוסם שחרור/למידה</small>
+          </div>
+          <div class="blueprint-health-check ${summary.error ? "watch" : "pass"}">
+            <span>Runtime errors</span>
+            <strong>${esc(summary.error || 0)}</strong>
+            <small>מתוך feature telemetry</small>
+          </div>
+          <div class="blueprint-health-check ${resolved.length ? "pass" : "watch"}">
+            <span>Resolved this scan</span>
+            <strong>${esc(summary.resolvedThisScan || 0)}</strong>
+            <small>נמחקו מהלוג הפעיל</small>
+          </div>
+        </div>
+        <div class="bug-agent-list">
+          ${activeBugs.length ? activeBugs.slice(0, 8).map((bug) => `
+            <article class="bug-agent-row ${esc(bug.severity)}" data-bug-agent-id="${esc(bug.id)}">
+              <div>
+                <strong>${esc(bug.title)}</strong>
+                <p>${esc(bug.detail)}</p>
+              </div>
+              <div>
+                <span>${esc(bug.severity)} · ${esc(bug.featureId)}</span>
+                <small>${esc(bug.action)}</small>
+              </div>
+            </article>
+          `).join("") : `<div class="le-empty">הלוג הפעיל נקי. אם יחזור runtime error או gate חסום, הסוכן יוסיף אותו אוטומטית.</div>`}
+        </div>
+        ${resolved.length ? `
+          <div class="bug-agent-resolved">
+            <strong>נפתרו ונמחקו מהלוג הפעיל בסריקה זו</strong>
+            ${resolved.slice(0, 6).map((bug) => `<span>${esc(bug.title)} · ${esc(bug.featureId)}</span>`).join("")}
+          </div>
+        ` : ""}
+      </section>
+    `;
+  }
+
   function renderBlueprintCommandCenter(blueprints) {
     const data = blueprintCommandCenterData(blueprints);
     const readyText = data.releaseBlockers ? "דורש טיפול" : "מוכן לתרגול מבחן";
@@ -19539,6 +23593,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <small>מתועד ב-SVCOLLEGE_BROWSER_SMOKE.md</small>
           </div>
         </div>
+
+        ${renderFeatureHealthDiagnostics(data)}
+        ${renderBugAgentLog(data)}
 
         <div class="blueprint-command-columns">
           <section>
@@ -19723,14 +23780,6 @@ document.addEventListener("DOMContentLoaded", () => {
     recordLearningEvidence("view", { source: "course-blueprints" });
     renderBlueprints();
     setBlueprintsContextTree();
-    if (typeof window.ensureSeededBank === "function" && !(window.QUESTIONS_BANK?._seededMerged)) {
-      window.ensureSeededBank().then(() => {
-        if (blueprintsView && blueprintsView.style.display !== "none") {
-          renderBlueprints();
-          setBlueprintsContextTree();
-        }
-      }).catch(() => {});
-    }
     scrollToTop();
     sidebar.classList.remove("open");
   }
@@ -19763,6 +23812,7 @@ document.addEventListener("DOMContentLoaded", () => {
     scores = {};
     saveScores();
     trainerStats = { asked: 0, correct: 0, wrong: 0 };
+    trainerRecentOutcomes = [];
     nextQuestion();
     renderTrainerReport();
   });
@@ -21106,13 +25156,69 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function interviewPrepItems() {
+    return Array.isArray(window.INTERVIEW_PREP) ? window.INTERVIEW_PREP : [];
+  }
+
+  function renderInterviewPrepConceptLinks(item) {
+    const links = (item.conceptKeys || []).map((key) => {
+      const ref = findConceptByKeyLoose(key);
+      if (!ref) return `<span class="interview-concept missing">${esc(splitGraphConceptKey(key).conceptName || key)}</span>`;
+      return `
+        <button type="button" class="interview-concept" data-interview-concept="${esc(key)}">
+          <strong>${esc(ref.concept.conceptName)}</strong>
+          <small>${esc(ref.lesson.title)}</small>
+        </button>`;
+    }).join("");
+    return links || `<span class="interview-empty">אין מושגים ממופים.</span>`;
+  }
+
+  function renderInterviewPrepMode(query = "") {
+    const q = String(query || "").toLowerCase().trim();
+    const items = interviewPrepItems().filter((item) => {
+      if (!q) return true;
+      return [
+        item.category,
+        item.question,
+        item.expectedAnswer,
+        ...(item.conceptKeys || []),
+      ].join(" ").toLowerCase().includes(q);
+    });
+    if (!items.length) return "";
+    return `
+      <details class="interview-prep-panel glass-panel" id="interview-prep-mode" ${q ? "open" : ""}>
+        <summary>
+          <span>Interview Prep Mode</span>
+          <strong>${esc(items.length)} שאלות junior frontend</strong>
+        </summary>
+        <div class="interview-prep-grid">
+          ${items.map((item, index) => `
+            <article class="interview-card" id="interview-${esc(item.id)}">
+              <div class="interview-card-head">
+                <span>${esc(index + 1)}</span>
+                <div>
+                  <strong>${esc(item.category)}</strong>
+                  <h4>${esc(item.question)}</h4>
+                </div>
+              </div>
+              <p>${esc(item.expectedAnswer)}</p>
+              <div class="interview-concepts">${renderInterviewPrepConceptLinks(item)}</div>
+              <div class="interview-followups">
+                ${(item.followUps || []).map((followUp) => `<span>${esc(followUp)}</span>`).join("")}
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      </details>`;
+  }
+
   function renderGuide() {
     const container = document.getElementById("guide-topics-container");
     if (!container) return;
     const guide = window.QUICK_GUIDE || { topics: [] };
     const q = (guideQuery || "").toLowerCase().trim();
 
-    container.innerHTML = guide.topics
+    const topicsHTML = guide.topics
       .filter((t) => {
         if (!q) return true;
         const hay = (t.title + " " + (t.blocks || []).map((b) => (b.text || b.code || "")).join(" ")).toLowerCase();
@@ -21205,7 +25311,15 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .join("") ||
       `<div class="tq-empty"><div class="big-icon">🔍</div><p>לא נמצאו נושאים שתואמים לחיפוש.</p></div>`;
+    container.innerHTML = `${renderInterviewPrepMode(q)}${topicsHTML}`;
     wireQuestionPrerequisiteNavigation(container);
+    container.querySelectorAll("[data-interview-concept]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-interview-concept");
+        const ref = findConceptByKeyLoose(key);
+        if (ref) openLessonConcept(ref.lesson.id, ref.concept.conceptName);
+      });
+    });
 
     // Click to expand/collapse
     container.querySelectorAll(".guide-topic").forEach((topicEl) => {
@@ -21341,7 +25455,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fb.innerHTML = `
         <div><strong>${isCorrect ? "✅ נכון!" : "❌ לא מדויק."}</strong> ${esc(baseExpl)}</div>
         ${levelMsg ? `<div style="margin-top:0.4rem;">${levelMsg}</div>` : ""}
-        ${!isCorrect ? renderMistakeAgentFeedback(afterResult?.mistake) : ""}
+        ${!isCorrect ? renderWrongAnswerCoachCard({ mode: meta.mode || "guide", result: afterResult, question: meta.question || questionFromGuideCard(cardEl, kind) }) : ""}
       `;
     }
 
@@ -21475,6 +25589,8 @@ document.addEventListener("DOMContentLoaded", () => {
           explanation: explanation.text,
           explanationLevel: explanation.level,
           difficulty: getDifficulty(concept),
+          spacedReviewPriority: spacedReviewPriorityForScore(sc, concept, key),
+          examCritical: isExamCriticalConcept(concept),
           attempts,
           due,
           weak,
@@ -21490,6 +25606,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .filter(Boolean);
 
     const sorted = items.sort((a, b) => {
+      if (a.spacedReviewPriority !== b.spacedReviewPriority) return b.spacedReviewPriority - a.spacedReviewPriority;
+      if (a.examCritical !== b.examCritical) return a.examCritical ? -1 : 1;
       if (a.due !== b.due) return a.due ? -1 : 1;
       if (a.weak !== b.weak) return a.weak ? -1 : 1;
       if (a.level !== b.level) return a.level - b.level;
@@ -21781,7 +25899,15 @@ document.addEventListener("DOMContentLoaded", () => {
     flashcardIndex++;
     flashcardsRevealed = false;
     tickStudyStreak();
-    awardXP(rating === "again" ? 2 : rating === "hard" ? 6 : rating === "good" ? 12 : 18);
+    const flashcardXP = rating === "again" ? 2 : rating === "hard" ? 6 : rating === "good" ? 12 : 18;
+    const flashcardConceptKey = conceptKey(item.lesson.id, item.concept.conceptName);
+    awardLearningReward({
+      xp: flashcardXP,
+      coins: coinsForXP(flashcardXP),
+      source: `flashcards:${rating}`,
+      conceptKey: flashcardConceptKey,
+      questionId: `flashcard:${flashcardConceptKey}:${rating}:${new Date().toISOString().slice(0, 10)}`,
+    });
     checkAchievements({
       lessonId: item.lesson.id,
       conceptName: item.concept.conceptName,
@@ -21876,6 +26002,7 @@ document.addEventListener("DOMContentLoaded", () => {
   openProgrammingMuseumBtn?.addEventListener("click", openProgrammingMuseum);
   openLanguageToolsBtn?.addEventListener("click", openLanguageTools);
   openRewardStoreBtn?.addEventListener("click", openRewardStore);
+  openSettingsBtn?.addEventListener("click", openSettings);
   openLearningEvidenceBtn?.addEventListener("click", openLearningEvidence);
   openCapstonesBtn?.addEventListener("click", openCapstones);
   openBlueprintsBtn?.addEventListener("click", openBlueprints);
@@ -21892,6 +26019,111 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("open-code-anatomy")?.addEventListener("click", openCodeAnatomy);
   openCodeblocksBtn?.addEventListener("click", openCodeblocks);
   openTraceBtn?.addEventListener("click", openTracePage);
+
+  function supportReportCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.supportReport
+      ? window.LUMEN_CORE.supportReport
+      : null;
+  }
+
+  let supportScreenshotPayload = null;
+
+  function currentSupportContext() {
+    const lesson = currentLessonId
+      ? (window.LESSONS_DATA || []).find((item) => item.id === currentLessonId)
+      : null;
+    const conceptName = currentLessonId ? selectedConceptByLesson[currentLessonId] || "" : "";
+    return {
+      route: window.location ? `${window.location.pathname}${window.location.search}${window.location.hash}` : "",
+      activeTab: document.querySelector(".top-tab.active")?.dataset?.tab || "",
+      lessonId: currentLessonId || "",
+      lessonTitle: lesson?.title || currentLessonTitle?.textContent || "",
+      conceptName,
+      conceptKey: currentLessonId && conceptName ? conceptKey(currentLessonId, conceptName) : "",
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        devicePixelRatio: window.devicePixelRatio || 1,
+      },
+      appVersion: learningEvidenceAppVersion(),
+      cacheVersion: document.querySelector('link[href*="style.css"]')?.getAttribute("href") || "",
+      userAgent: navigator.userAgent,
+    };
+  }
+
+  function renderSupportContextPreview() {
+    const mount = document.getElementById("support-report-context");
+    const context = currentSupportContext();
+    if (!mount) return;
+    mount.innerHTML = `
+      <strong>Context שנשלח עם הדיווח</strong><br>
+      Tab: ${esc(context.activeTab || "unknown/unavailable")} ·
+      Lesson: ${esc(context.lessonId || "unknown/unavailable")} ·
+      Concept: ${esc(context.conceptKey || "unknown/unavailable")} ·
+      Viewport: ${esc(String(context.viewport.width || "unknown"))}×${esc(String(context.viewport.height || "unknown"))} ·
+      Screenshot: ${supportScreenshotPayload?.dataUrl ? "attached" : "not-attached"}`;
+  }
+
+  function openSupportReportModal() {
+    const modal = document.getElementById("support-report-modal");
+    const card = modal?.querySelector(".support-report-card");
+    if (!modal) return;
+    renderSupportContextPreview();
+    modal.hidden = false;
+    card?.focus();
+  }
+
+  function closeSupportReportModal() {
+    const modal = document.getElementById("support-report-modal");
+    if (modal) modal.hidden = true;
+  }
+
+  function generateSupportReportPayload() {
+    const core = supportReportCore();
+    const output = document.getElementById("support-report-output");
+    if (!core || typeof core.buildSupportReport !== "function" || !output) return null;
+    const report = core.buildSupportReport({
+      type: document.getElementById("support-report-type")?.value || "support",
+      severity: document.getElementById("support-report-severity")?.value || "medium",
+      title: document.getElementById("support-report-title-input")?.value || "",
+      description: document.getElementById("support-report-description")?.value || "",
+      createdAt: new Date().toISOString(),
+      context: currentSupportContext(),
+      screenshot: supportScreenshotPayload || {},
+    });
+    output.value = JSON.stringify(report, null, 2);
+    return report;
+  }
+
+  document.getElementById("support-report-btn")?.addEventListener("click", openSupportReportModal);
+  document.querySelectorAll("[data-support-report-close]").forEach((button) => {
+    button.addEventListener("click", closeSupportReportModal);
+  });
+  document.getElementById("support-report-screenshot")?.addEventListener("change", (event) => {
+    const file = event.target?.files?.[0];
+    supportScreenshotPayload = null;
+    if (!file) {
+      renderSupportContextPreview();
+      return;
+    }
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      supportScreenshotPayload = {
+        filename: file.name,
+        mediaType: file.type,
+        dataUrl: typeof reader.result === "string" ? reader.result : "",
+      };
+      renderSupportContextPreview();
+    });
+    reader.readAsDataURL(file);
+  });
+  document.getElementById("support-report-generate")?.addEventListener("click", generateSupportReportPayload);
+  document.getElementById("support-report-copy")?.addEventListener("click", async () => {
+    const output = document.getElementById("support-report-output");
+    const value = output?.value || JSON.stringify(generateSupportReportPayload() || {}, null, 2);
+    if (!value || !navigator.clipboard) return;
+    await navigator.clipboard.writeText(value);
+  });
 
   // Global Print-to-PDF — works on every view. Sets a body class to mark
   // which view is "active" (so @media print can isolate it), triggers
@@ -22011,6 +26243,65 @@ document.addEventListener("DOMContentLoaded", () => {
       releaseGate: "Finish Line 1",
     },
     {
+      id: "final_standard",
+      name: "Final 1 — Standard",
+      desc: "55 שאלות, 90 דקות. סימולציית Final מלאה ודטרמיניסטית על כל מודולי SVCollege.",
+      durationMin: 90,
+      distribution: { mc: 36, fill: 12, trace: 5, bug: 2 },
+      filter: (k) => SVCOLLEGE_EXAM_MODULES.some((module) => module.filter(k)),
+      moduleGroups: SVCOLLEGE_EXAM_MODULES,
+      deterministicFinal: true,
+      releaseGate: "Finish Line 1",
+    },
+    {
+      id: "final_hard",
+      name: "Final 2 — Hard",
+      desc: "55 שאלות, 100 דקות. סימולציית Final קשה עם שאלות ברמה 5+ בלבד כשיש התאמה במאגר.",
+      durationMin: 100,
+      distribution: { mc: 36, fill: 12, trace: 5, bug: 2 },
+      filter: (k) => SVCOLLEGE_EXAM_MODULES.some((module) => module.filter(k)),
+      moduleGroups: SVCOLLEGE_EXAM_MODULES,
+      minChallengeLevel: 5,
+      deterministicFinal: true,
+      releaseGate: "Finish Line 1",
+    },
+    {
+      id: "final_stress",
+      name: "Final 3 — Stress",
+      desc: "55 שאלות, 75 דקות. סימולציית Final דטרמיניסטית בלחץ זמן, ללא שינוי בתוכן השאלות.",
+      durationMin: 75,
+      distribution: { mc: 36, fill: 12, trace: 5, bug: 2 },
+      filter: (k) => SVCOLLEGE_EXAM_MODULES.some((module) => module.filter(k)),
+      moduleGroups: SVCOLLEGE_EXAM_MODULES,
+      stressMode: true,
+      deterministicFinal: true,
+      releaseGate: "Finish Line 1",
+    },
+    {
+      id: "final_code_only",
+      name: "Final Code Only — Trace/Fill/Bug/Build",
+      desc: "40 שאלות קוד בלבד: Fill, Trace, Bug ו-Mini Build מתוך מאגרי SVCollege הקיימים.",
+      durationMin: 80,
+      distribution: { mc: 0, fill: 14, trace: 12, bug: 6, build: 8 },
+      filter: (k) => SVCOLLEGE_EXAM_MODULES.some((module) => module.filter(k)),
+      moduleGroups: SVCOLLEGE_EXAM_MODULES,
+      deterministicFinal: true,
+      codeOnly: true,
+      releaseGate: "Finish Line 1",
+    },
+    {
+      id: "level_100_professor",
+      name: "💯 מבחן רמה 100 — פרופסור",
+      desc: "רק שאלות ברמת פרופסור מתוך מודולי SVCollege. ציון 100 הוא שער רמה 100.",
+      durationMin: 100,
+      distribution: { mc: 36, fill: 12, trace: 5, bug: 2 },
+      filter: (k) => SVCOLLEGE_EXAM_MODULES.some((module) => module.filter(k)),
+      moduleGroups: SVCOLLEGE_EXAM_MODULES,
+      professorOnly: true,
+      level100Gate: true,
+      releaseGate: "Finish Line 1",
+    },
+    {
       id: "react_full",
       name: "⚛️ React מלא",
       desc: "30 שאלות מ-lessons 21-27 (45 דקות)",
@@ -22052,6 +26343,21 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
+  function isProfessorLevelQuestion(kind, question = {}) {
+    const ref = question.conceptKey ? findConceptByKeyLoose(question.conceptKey) : null;
+    return questionChallengeLevelForProof(question, ref?.concept || {}, kind) >= PROFESSOR_CHALLENGE_LEVEL;
+  }
+
+  function questionMatchesExamTemplate(kind, question, template) {
+    if (!template.filter(question.conceptKey || "")) return false;
+    if (template.minChallengeLevel) {
+      const ref = question.conceptKey ? findConceptByKeyLoose(question.conceptKey) : null;
+      if (questionChallengeLevelForProof(question, ref?.concept || {}, kind) < template.minChallengeLevel) return false;
+    }
+    if (template.professorOnly && !isProfessorLevelQuestion(kind, question)) return false;
+    return true;
+  }
+
   const mxState = {
     template: null,
     questions: [],   // [{id, kind, q}] uniform format
@@ -22061,6 +26367,10 @@ document.addEventListener("DOMContentLoaded", () => {
     deadline: 0,
     timerId: null,
   };
+
+  function isMockStressMode(template = mxState.template) {
+    return Boolean(template?.stressMode);
+  }
 
   function loadExamHistory() {
     try {
@@ -22084,21 +26394,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function composeMockExam(template) {
-    // Use deterministic RNG (seeded by Date.now() + template id)
+    // Use deterministic RNG. Variant attempts come from stored exam history, not clock entropy.
+    const completedAttempts = loadExamHistory()
+      .filter((record) => record && record.templateId === template.id)
+      .length;
+    const seedSource = template.deterministicFinal
+      ? template.id
+      : `${template.id}:attempt:${completedAttempts + 1}`;
     const seed = (window.RNG && window.RNG.seedFromString)
-      ? window.RNG.seedFromString(template.id + ":" + Date.now())
-      : Date.now() & 0x7fffffff;
+      ? window.RNG.seedFromString(seedSource)
+      : parseInt(stableQuestionHash(seedSource), 36) || 1;
     const rng = window.RNG.create(seed);
 
-    const sourceMC = (window.QUESTIONS_BANK?.mc || []).filter((q) => template.filter(q.conceptKey || ""));
-    const sourceFill = (window.QUESTIONS_BANK?.fill || []).filter((q) => template.filter(q.conceptKey || ""));
-    const sourceTrace = (window.QUESTIONS_BANK?.trace || []).filter((q) => template.filter(q.conceptKey || ""));
-    const sourceBug = (window.QUESTIONS_BANK?.bug || []).filter((q) => template.filter(q.conceptKey || ""));
+    const sourceMC = (window.QUESTIONS_BANK?.mc || []).filter((q) => questionMatchesExamTemplate("mc", q, template));
+    const sourceFill = (window.QUESTIONS_BANK?.fill || []).filter((q) => questionMatchesExamTemplate("fill", q, template));
+    const sourceTrace = (window.QUESTIONS_BANK?.trace || []).filter((q) => questionMatchesExamTemplate("trace", q, template));
+    const sourceBug = (window.QUESTIONS_BANK?.bug || []).filter((q) => questionMatchesExamTemplate("bug", q, template));
+    const sourceBuild = [
+      ...(window.QUESTIONS_BANK?.build || []),
+      ...(Array.isArray(window.QUESTIONS_BUILD) ? window.QUESTIONS_BUILD : []),
+    ].filter((q) => questionMatchesExamTemplate("build", q, template));
     const sourcesByKind = {
       mc: sourceMC,
       fill: sourceFill,
       trace: sourceTrace,
       bug: sourceBug,
+      build: sourceBuild,
     };
 
     function questionWasAnsweredForMock(kind, q) {
@@ -22138,7 +26459,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (Array.isArray(template.moduleGroups) && template.moduleGroups.length) {
       template.moduleGroups.forEach((module) => {
-        const kinds = ["mc", "fill", "trace", "bug"];
+        const kinds = ["mc", "fill", "trace", "bug", "build"];
       const kind = kinds.find((candidateKind) => {
         if ((remaining[candidateKind] || 0) <= 0) return false;
         return sourcesByKind[candidateKind].some((q) => module.filter(q.conceptKey || "") && !used.has(qid(candidateKind, q)));
@@ -22152,6 +26473,7 @@ document.addEventListener("DOMContentLoaded", () => {
     take("fill", sourceFill, remaining.fill || 0);
     take("trace", sourceTrace, remaining.trace || 0);
     take("bug", sourceBug, remaining.bug || 0);
+    take("build", sourceBuild, remaining.build || 0);
 
     return rng.shuffle(picked);
   }
@@ -22179,7 +26501,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       document.getElementById("mx-settings").style.display = "none";
       document.getElementById("mx-result").style.display = "none";
-      document.getElementById("mx-runner").style.display = "block";
+      const runner = document.getElementById("mx-runner");
+      runner.style.display = "block";
+      runner.classList.toggle("is-stress-mode", isMockStressMode(template));
 
       // Hide Pocket FAB during exam (no cheating with saved concepts)
       if (typeof window.pocketIsHidden === "function") window.pocketIsHidden(true);
@@ -22188,10 +26512,6 @@ document.addEventListener("DOMContentLoaded", () => {
       startMxTimer();
     };
 
-    if (typeof window.ensureSeededBank === "function" && !(window.QUESTIONS_BANK?._seededMerged)) {
-      window.ensureSeededBank().then(begin).catch(begin);
-      return;
-    }
     begin();
   }
 
@@ -22232,8 +26552,9 @@ document.addEventListener("DOMContentLoaded", () => {
         kind === "mc" ? "📝 רב-ברירה" :
         kind === "fill" ? "✍️ השלם" :
         kind === "trace" ? "🔬 חיזוי פלט" :
-        "🐛 ציד באג"
-      }</span>`;
+        kind === "bug" ? "🐛 ציד באג" :
+        "🧩 Mini Build"
+      }</span>${isMockStressMode() ? '<span class="mx-stress-badge">Stress · ללא רמזים</span>' : ""}`;
 
     let body = "";
     const userAns = mxState.answers[qid];
@@ -22275,21 +26596,32 @@ document.addEventListener("DOMContentLoaded", () => {
               <span>${esc(opt)}</span>
             </label>`).join("")}
         </div>`;
+    } else if (kind === "build") {
+      body = `
+        <div class="mx-q-text">${esc(q.title || "Mini Build")} — ${esc(q.prompt || "")}</div>
+        <pre class="mx-q-code"><code>${esc(q.starter || q.code || "")}</code></pre>
+        <textarea class="mx-q-fill mx-q-build-input" id="mx-q-build-input" rows="8" dir="ltr" placeholder="כתוב כאן את הפתרון שלך">${esc(userAns || "")}</textarea>`;
     }
 
     const container = document.getElementById("mx-question");
     const supportRef = q.conceptKey ? findConceptByKeyLoose(q.conceptKey) : null;
-    container.innerHTML = `
-      <div class="question-learning-layout mock">
-        <div class="question-answer-area">${body}</div>
-        ${renderQuestionPrereqPanel({
+    const aidPanel = isMockStressMode()
+      ? `<aside class="question-prereq-panel mx-study-aid-locked" aria-label="עזרי לימוד נעולים במצב לחץ">
+          <strong>עזרי לימוד נעולים</strong>
+          <p>במצב Stress עונים כמו במבחן: בלי עץ עזר, בלי רמזים ובלי פתיחת חומר בזמן שאלה.</p>
+        </aside>`
+      : renderQuestionPrereqPanel({
           question: q,
           lesson: supportRef?.lesson || null,
           concept: supportRef?.concept || null,
           mode: "mock",
-        })}
+        });
+    container.innerHTML = `
+      <div class="question-learning-layout mock">
+        <div class="question-answer-area">${body}</div>
+        ${aidPanel}
       </div>`;
-    wireQuestionPrerequisiteNavigation(container);
+    if (!isMockStressMode()) wireQuestionPrerequisiteNavigation(container);
 
     // Wire input handlers
     if (kind === "mc") {
@@ -22320,6 +26652,11 @@ document.addEventListener("DOMContentLoaded", () => {
           rebuildMxNav();
         });
       });
+    } else if (kind === "build") {
+      container.querySelector("#mx-q-build-input")?.addEventListener("input", (e) => {
+        mxState.answers[qid] = e.target.value;
+        rebuildMxNav();
+      });
     }
 
     rebuildMxNav();
@@ -22334,7 +26671,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const ans = mxState.answers[qid];
         const isAnswered = ans !== undefined && ans !== "" && (typeof ans !== "object" || (ans.steps && ans.steps.some((s) => s)));
         const isCurrent = i === mxState.currentIdx;
-        return `<button class="mx-nav-btn ${isAnswered ? "is-answered" : ""} ${isCurrent ? "is-current" : ""}" data-idx="${i}" aria-label="עבור לשאלה ${i+1}">${i+1}</button>`;
+        const locked = isMockStressMode() && !isCurrent;
+        return `<button class="mx-nav-btn ${isAnswered ? "is-answered" : ""} ${isCurrent ? "is-current" : ""} ${locked ? "is-locked" : ""}" data-idx="${i}" ${locked ? "disabled" : ""} aria-label="עבור לשאלה ${i+1}">${i+1}</button>`;
       })
       .join("");
     nav.querySelectorAll(".mx-nav-btn").forEach((btn) => {
@@ -22352,6 +26690,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   function gotoPrevMxQuestion() {
+    if (isMockStressMode()) return;
     if (mxState.currentIdx > 0) {
       mxState.currentIdx--;
       renderMxQuestion();
@@ -22366,7 +26705,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Restore Pocket FAB after exam
     if (typeof window.pocketIsHidden === "function") window.pocketIsHidden(false);
     // Score the exam
-    const breakdown = { mc: { right: 0, total: 0 }, fill: { right: 0, total: 0 }, trace: { right: 0, total: 0 }, bug: { right: 0, total: 0 } };
+    const breakdown = { mc: { right: 0, total: 0 }, fill: { right: 0, total: 0 }, trace: { right: 0, total: 0 }, bug: { right: 0, total: 0 }, build: { right: 0, total: 0 } };
+    const professorGate = { right: 0, total: 0 };
     const moduleBreakdown = {};
     const wrongConcepts = new Set();
     const wrongRecords = new Map();
@@ -22395,6 +26735,22 @@ document.addEventListener("DOMContentLoaded", () => {
             return Array.isArray(s.acceptable) && s.acceptable.some((a) => norm(a) === userVal);
           });
         }
+      } else if (kind === "build") {
+        const text = String(ans || "");
+        correct = Array.isArray(q.tests) && q.tests.length > 0
+          ? q.tests.every((test) => {
+              try {
+                return new RegExp(test.regex, test.flags || "").test(text);
+              } catch (_) {
+                return false;
+              }
+            })
+          : false;
+      }
+      const professorQuestion = isProfessorLevelQuestion(kind, q);
+      if (professorQuestion) {
+        professorGate.total++;
+        if (correct) professorGate.right++;
       }
       const moduleInfo = examModuleForQuestion(q);
       if (moduleInfo) {
@@ -22428,6 +26784,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const durationSec = Math.round((Date.now() - mxState.startTime) / 1000);
 
     // Save to history
+    const level100GateProof = {
+      rule: LEVEL_100_EXAM_RULE_TEXT,
+      templateId: mxState.template.id,
+      templateName: mxState.template.name,
+      score,
+      totalQs,
+      professorRight: professorGate.right,
+      professorTotal: professorGate.total,
+      allQuestionsProfessor: totalQs > 0 && professorGate.total === totalQs,
+      passed: score === 100 && totalQs > 0 && professorGate.total === totalQs && professorGate.right === professorGate.total,
+    };
     const record = {
       templateId: mxState.template.id,
       templateName: mxState.template.name,
@@ -22435,12 +26802,84 @@ document.addEventListener("DOMContentLoaded", () => {
       score, totalRight, totalQs,
       breakdown,
       moduleBreakdown,
+      level100GateProof,
       durationSec,
       autoTimeout: !!autoTimeout,
     };
     saveExamToHistory(record);
+    const examXP = score >= 95 ? 80 : score >= 80 ? 50 : score >= 70 ? 30 : totalRight > 0 ? 10 : 0;
+    if (examXP > 0) {
+      awardLearningReward({
+        xp: examXP,
+        coins: coinsForXP(examXP),
+        source: `mock-exam:${record.templateId}`,
+        questionId: `mock-exam:${record.templateId}:${record.date.slice(0, 10)}:${record.totalRight}/${record.totalQs}`,
+      });
+    }
+    const proveAgainRetests = scheduleFinalExamProveAgainRetests([...wrongRecords.values()], record);
+    record.proveAgainRetests = proveAgainRetests.map((item) => ({
+      id: item.id,
+      conceptKey: item.conceptKey,
+      label: item.label,
+      dueAt: item.dueAt,
+    }));
 
     renderMxResult(record, [...wrongConcepts], [...wrongRecords.values()]);
+  }
+
+  function buildPostExamReviewGroups(wrongRecords = []) {
+    const byConcept = new Map();
+    const byMisconception = new Map();
+    const byPrerequisite = new Map();
+    wrongRecords.forEach((record) => {
+      const conceptKeyValue = record.conceptKey || "unknown/unavailable";
+      const concept = byConcept.get(conceptKeyValue) || {
+        key: conceptKeyValue,
+        label: record.conceptName || conceptKeyValue,
+        count: 0,
+        questions: [],
+      };
+      concept.count += 1;
+      concept.questions.push(record.questionId || record.sourceQuestionId || "unknown/unavailable");
+      byConcept.set(conceptKeyValue, concept);
+
+      const misconceptionId = record.misconception?.id || record.misconceptionId || "unknown/unavailable";
+      const misconception = byMisconception.get(misconceptionId) || {
+        key: misconceptionId,
+        label: record.misconception?.label || record.misconceptionLabel || "unknown/unavailable",
+        count: 0,
+        concepts: new Set(),
+        repair: record.misconception?.repair || "",
+      };
+      misconception.count += 1;
+      if (conceptKeyValue) misconception.concepts.add(conceptKeyValue);
+      byMisconception.set(misconceptionId, misconception);
+
+      const rewind = record.prerequisiteRewind || null;
+      const prereqKey = rewind?.conceptKey || "unknown/unavailable";
+      const prereq = byPrerequisite.get(prereqKey) || {
+        key: prereqKey,
+        label: rewind?.conceptName || "חזור להסבר הקצר",
+        reason: rewind?.reason || record.explanation || "פער prerequisite לא מזוהה במפורש.",
+        count: 0,
+        targets: new Set(),
+      };
+      prereq.count += 1;
+      if (conceptKeyValue) prereq.targets.add(conceptKeyValue);
+      byPrerequisite.set(prereqKey, prereq);
+    });
+    const sortByCount = (a, b) => b.count - a.count || a.label.localeCompare(b.label);
+    return {
+      concepts: [...byConcept.values()].sort(sortByCount),
+      misconceptions: [...byMisconception.values()].map((item) => ({
+        ...item,
+        concepts: [...item.concepts].sort((a, b) => a.localeCompare(b)),
+      })).sort(sortByCount),
+      prerequisites: [...byPrerequisite.values()].map((item) => ({
+        ...item,
+        targets: [...item.targets].sort((a, b) => a.localeCompare(b)),
+      })).sort(sortByCount),
+    };
   }
 
   function countMxAnswered() {
@@ -22463,7 +26902,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const breakdownHtml = Object.entries(record.breakdown)
       .filter(([, b]) => b.total > 0)
       .map(([k, b]) => {
-        const label = k === "mc" ? "📝 רב-ברירה" : k === "fill" ? "✍️ השלמה" : k === "trace" ? "🔬 חיזוי פלט" : "🐛 ציד באג";
+        const label = k === "mc" ? "📝 רב-ברירה" : k === "fill" ? "✍️ השלמה" : k === "trace" ? "🔬 חיזוי פלט" : k === "bug" ? "🐛 ציד באג" : "🧩 Mini Build";
         const pct = Math.round((b.right / b.total) * 100);
         return `<div class="mx-result-row"><span>${label}</span><span class="mx-result-row-score">${b.right}/${b.total} (${pct}%)</span></div>`;
       }).join("");
@@ -22486,6 +26925,32 @@ document.addEventListener("DOMContentLoaded", () => {
         reason: rewind?.reason || recordItem.explanation || "חזור להסבר הקצר ופתור שאלת התאוששות.",
       };
     });
+    const postExamReviewGroups = buildPostExamReviewGroups(wrongRecords);
+    const groupedReviewHtml = wrongRecords.length
+      ? `<div class="mx-review-groups">
+          <h4>סקירה מקובצת לפי מושג, misconception ו-prerequisite</h4>
+          <div class="mx-review-group-grid">
+            <section>
+              <strong>לפי מושג</strong>
+              ${postExamReviewGroups.concepts.slice(0, 6).map((item) => `
+                <p>${esc(item.label)} <span>${esc(item.count)} טעויות</span></p>
+              `).join("")}
+            </section>
+            <section>
+              <strong>לפי misconception</strong>
+              ${postExamReviewGroups.misconceptions.slice(0, 6).map((item) => `
+                <p>${esc(item.label)} <span>${esc(item.count)} טעויות</span></p>
+              `).join("")}
+            </section>
+            <section>
+              <strong>לפי prerequisite gap</strong>
+              ${postExamReviewGroups.prerequisites.slice(0, 6).map((item) => `
+                <p>${esc(item.label)} <span>${esc(item.count)} יעדים</span></p>
+              `).join("")}
+            </section>
+          </div>
+        </div>`
+      : "";
     const examReviewHtml = `
       <div class="mx-result-review">
         <h4>🧭 סקירת מבחן — מה עושים עכשיו</h4>
@@ -22513,7 +26978,32 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>`
             : `<div class="mx-review-block ok">אין טעויות שמצריכות rewind כרגע.</div>`
         }
+        ${groupedReviewHtml}
       </div>`;
+    const proveAgainRetests = Array.isArray(record.proveAgainRetests) ? record.proveAgainRetests : [];
+    const proveAgainHtml = proveAgainRetests.length
+      ? `<div class="mx-prove-again">
+          <h4>Prove again — בדיקה חוזרת לכל מושג שנכשל</h4>
+          <div class="mx-prove-again-list">
+            ${proveAgainRetests.slice(0, 12).map((item) => `
+              <span>${esc(item.conceptKey || item.label || "unknown/unavailable")}</span>
+            `).join("")}
+          </div>
+        </div>`
+      : "";
+    const level100Proof = record.level100GateProof || {};
+    const level100GateHtml = record.templateId === "level_100_professor" || level100Proof.allQuestionsProfessor
+      ? `<div class="mx-result-breakdown level-100-gate ${level100Proof.passed ? "passed" : "blocked"}">
+          <h4>${esc(LEVEL_100_EXAM_RULE_TEXT)}</h4>
+          <div class="mx-result-row">
+            <span>שאלות פרופסור נכונות</span>
+            <span class="mx-result-row-score">${esc(level100Proof.professorRight || 0)}/${esc(level100Proof.professorTotal || 0)}</span>
+          </div>
+          <p>${level100Proof.passed
+            ? "הוכחת רמה 100 נשמרה בהיסטוריית ההתקדמות."
+            : "רמה 100 עדיין נעולה: צריך 100% במבחן שכל השאלות בו ברמת פרופסור."}</p>
+        </div>`
+      : "";
 
     const weakHtml = wrongConcepts.length
       ? `<div class="mx-result-weak">
@@ -22529,7 +27019,7 @@ document.addEventListener("DOMContentLoaded", () => {
            }</ul>
            ${
              wrongRecords[0]
-               ? `<div class="mx-result-agent-note">${renderMistakeAgentFeedback(wrongRecords[0])}</div>`
+               ? `<div class="mx-result-agent-note">${renderWrongAnswerCoachCard({ mode: "mock-exam", mistake: wrongRecords[0] })}</div>`
                : ""
            }
          </div>`
@@ -22555,7 +27045,9 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>`
           : ""
       }
+      ${level100GateHtml}
       ${examReviewHtml}
+      ${proveAgainHtml}
       ${weakHtml}
       <div class="mx-result-actions">
         <button class="km-btn-mini primary" id="mx-result-new">📝 מבחן חדש</button>
@@ -22577,7 +27069,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button class="mx-template-card" data-tid="${t.id}">
           <div class="mx-template-name">${esc(t.name)}</div>
           <div class="mx-template-desc">${esc(t.desc)}</div>
-          <div class="mx-template-dist">📝 ${t.distribution.mc} · ✍️ ${t.distribution.fill} · 🔬 ${t.distribution.trace} · 🐛 ${t.distribution.bug}</div>
+          <div class="mx-template-dist">📝 ${t.distribution.mc || 0} · ✍️ ${t.distribution.fill || 0} · 🔬 ${t.distribution.trace || 0} · 🐛 ${t.distribution.bug || 0}${t.distribution.build ? ` · 🧩 ${t.distribution.build}` : ""}</div>
         </button>`)
       .join("");
     container.querySelectorAll(".mx-template-card").forEach((btn) => {
@@ -22630,7 +27122,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("mx-settings").style.display = "block";
     document.getElementById("open-mock-exam")?.classList.add("active");
     renderExamSettings();
-    if (window.ensureSeededBank) window.ensureSeededBank();
     scrollToTop();
     sidebar.classList.remove("open");
   }
@@ -23110,7 +27601,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       const expEl = document.getElementById("bq-explanation");
       if (expEl) {
-        expEl.innerHTML = `${esc(bug.explanation || "")}${!correct ? renderMistakeAgentFeedback(mistakeRecord) : ""}`;
+        expEl.innerHTML = `${esc(bug.explanation || "")}${!correct ? renderWrongAnswerCoachCard({ mode: "bug-quest", mistake: mistakeRecord, question: bugQuestion }) : ""}`;
         expEl.style.display = "";
       }
       const nextEl = document.getElementById("bq-next");
@@ -24114,7 +28605,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fb.innerHTML = `
         <div><strong>${isCorrect ? "✅ נכון!" : "❌ לא מדויק."}</strong> ${esc(baseExpl)}</div>
         ${levelMsg ? `<div style="margin-top:0.4rem;">${levelMsg}</div>` : ""}
-        ${!isCorrect ? renderMistakeAgentFeedback(afterResult?.mistake) : ""}
+        ${!isCorrect ? renderWrongAnswerCoachCard({ mode: "codeblocks", result: afterResult, question, concept: ref?.concept || null }) : ""}
       `;
     }
 
@@ -24587,6 +29078,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let conceptViewOverride = {};
   // Which concept is currently focused in the lesson view (per lesson). Map: lessonId -> conceptName
   let selectedConceptByLesson = {};
+  let selectedConceptStepByConcept = {};
   const LESSON_COMPACT_MODE_KEY = "lumenportal:lessonCompactMode:v1";
   const DEFAULT_LESSON_COMPACT_MODE = "one-line";
   const LESSON_COMPACT_MODES = {
@@ -24613,7 +29105,323 @@ document.addEventListener("DOMContentLoaded", () => {
     renderContent();
   }
 
-  function renderLessonCompactToolbar() {
+  function conceptStepStateKey(lesson, concept) {
+    return `${lesson.id}::${concept.conceptName}`;
+  }
+
+  function renderConceptStepTabs(steps = [], activeId = "") {
+    if (!steps.length) return "";
+    return `
+      <nav class="concept-step-tabs" data-page-section="שלבי מושג" aria-label="שלבי תוכן למושג">
+        ${steps.map((step) => `
+          <button
+            type="button"
+            class="concept-step-tab ${step.id === activeId ? "active" : ""}"
+            data-concept-step-tab="${esc(step.id)}"
+            aria-pressed="${step.id === activeId ? "true" : "false"}">
+            <span>${esc(step.icon || "")}</span>
+            <strong>${esc(step.title)}</strong>
+          </button>
+        `).join("")}
+      </nav>`;
+  }
+
+  function renderConceptStep(id, title, body, options = {}) {
+    if (!body) return "";
+    const active = options.active === true;
+    const extraClass = options.className ? ` ${esc(options.className)}` : "";
+    return `
+      <section
+        class="concept-step-panel${active ? " active" : ""}${extraClass}"
+        data-concept-step="${esc(id)}"
+        data-page-section="${esc(title)}"${active ? "" : " hidden"}>
+        <header>
+          <span>${esc(title)}</span>
+        </header>
+        <div class="concept-step-body">
+          ${body}
+        </div>
+      </section>`;
+  }
+
+  function renderLessonControlRail(actionsHTML = "", stepTabsHTML = "") {
+    return `
+      <aside class="lesson-control-rail" data-page-section="תצוגה ופעולות" aria-label="תצוגה ופעולות למושג">
+        ${actionsHTML ? `<div class="concept-actions concept-actions-rail">${actionsHTML}</div>` : ""}
+      </aside>`;
+  }
+
+  const LESSON_QUESTION_BANK_MAX_LEVEL = 7;
+  let lessonQuestionBankState = {};
+  let lessonQuestionBankPanelOpen = {};
+
+  function lessonQuestionBankKey(lesson, concept) {
+    return conceptKey(lesson.id, concept.conceptName);
+  }
+
+  function lessonQuestionBankItems(lesson, concept) {
+    const bank = bankByConcept(lesson.id, concept.conceptName);
+    const itemFor = (kind) => (question) => ({
+      kind,
+      question,
+      id: questionIdentity(question, lesson.id, concept.conceptName, kind),
+      challenge: questionChallengeLevelForProof(question, concept, kind),
+    });
+    return [
+      ...(bank.mc || []).map(itemFor("mc")),
+      ...(bank.fill || []).map(itemFor("fill")),
+    ]
+      .filter((item) => item.question && item.id)
+      .filter((item) => {
+        if (item.kind === "fill") return Boolean(String(item.question.answer || "").trim());
+        const options = Array.isArray(item.question.options) ? item.question.options : [];
+        return options.length >= 2 && lessonQuestionBankCorrectIndex(item.question) >= 0;
+      })
+      .sort((a, b) => {
+        const challengeDiff = a.challenge - b.challenge;
+        if (challengeDiff) return challengeDiff;
+        return String(a.id).localeCompare(String(b.id));
+      });
+  }
+
+  function initialLessonQuestionBankState() {
+    return {
+      active: false,
+      completed: false,
+      index: 0,
+      level: 0,
+      answered: 0,
+      correct: 0,
+      lastCorrect: null,
+      lastQuestionId: "",
+      lastKind: "",
+    };
+  }
+
+  function getLessonQuestionBankState(lesson, concept) {
+    const key = lessonQuestionBankKey(lesson, concept);
+    if (!lessonQuestionBankState[key]) lessonQuestionBankState[key] = initialLessonQuestionBankState();
+    return lessonQuestionBankState[key];
+  }
+
+  function isLessonQuestionBankPanelOpen(lesson, concept) {
+    return lessonQuestionBankPanelOpen[lessonQuestionBankKey(lesson, concept)] === true;
+  }
+
+  function setLessonQuestionBankPanelOpen(lesson, concept, open) {
+    lessonQuestionBankPanelOpen[lessonQuestionBankKey(lesson, concept)] = Boolean(open);
+  }
+
+  function resetLessonQuestionBankState(lesson, concept) {
+    const key = lessonQuestionBankKey(lesson, concept);
+    lessonQuestionBankState[key] = {
+      ...initialLessonQuestionBankState(),
+      active: true,
+    };
+    return lessonQuestionBankState[key];
+  }
+
+  function lessonQuestionBankCorrectIndex(question = {}) {
+    if (Number.isInteger(question.correctIndex)) return question.correctIndex;
+    if (Number.isInteger(question.correct)) return question.correct;
+    const options = Array.isArray(question.options) ? question.options : [];
+    const answer = normalizeAnswer(question.answer || question.correctAnswer || "");
+    if (!answer) return -1;
+    return options.findIndex((option) => normalizeAnswer(option) === answer);
+  }
+
+  function lessonQuestionBankQuestionText(item, concept) {
+    return item.question.question ||
+      item.question.prompt ||
+      item.question.title ||
+      `שאלה על ${concept.conceptName}`;
+  }
+
+  function renderLessonQuestionBankQuestion(lesson, concept, item, state, total) {
+    const questionText = lessonQuestionBankQuestionText(item, concept);
+    const questionNumber = Math.min(state.index + 1, total);
+    if (item.kind === "mc") {
+      const options = Array.isArray(item.question.options) ? item.question.options : [];
+      return `
+        <div class="lesson-qbank-question" data-lesson-qbank-kind="mc">
+          <div class="lesson-qbank-meta">
+            <strong>שאלה ${esc(questionNumber)} מתוך ${esc(total)}</strong>
+            <span>רמת אתגר ${esc(item.challenge)}/6</span>
+          </div>
+          <p>${esc(questionText)}</p>
+          <div class="lesson-qbank-options">
+            ${options.map((option, index) => `
+              <button type="button" class="lesson-qbank-option" data-lesson-qbank-answer="${esc(index)}">
+                ${esc(option)}
+              </button>
+            `).join("")}
+          </div>
+        </div>`;
+    }
+    return `
+      <form class="lesson-qbank-question" data-lesson-qbank-kind="fill" data-lesson-qbank-fill>
+        <div class="lesson-qbank-meta">
+          <strong>שאלה ${esc(questionNumber)} מתוך ${esc(total)}</strong>
+          <span>רמת אתגר ${esc(item.challenge)}/6</span>
+        </div>
+        <p>${esc(questionText)}</p>
+        ${item.question.codeBlock ? `<pre class="lesson-qbank-code"><code>${esc(item.question.codeBlock)}</code></pre>` : ""}
+        <div class="lesson-qbank-fill-row">
+          <input type="text" class="lesson-qbank-input" name="qbank-answer" autocomplete="off" aria-label="תשובה לשאלת בנק שאלות" />
+          <button type="submit" class="lesson-qbank-submit">בדוק</button>
+        </div>
+      </form>`;
+  }
+
+  function renderLessonQuestionBankPanel(lesson, concept) {
+    if (!isLessonQuestionBankPanelOpen(lesson, concept)) return "";
+    const items = lessonQuestionBankItems(lesson, concept);
+    const state = getLessonQuestionBankState(lesson, concept);
+    const sc = getScore(lesson.id, concept.conceptName);
+    const quickLevel = state.active || state.completed
+      ? Number(state.level) || 0
+      : Number(sc.quickDiagnostic?.level ?? state.level ?? 0) || 0;
+    const currentItem = items[Math.min(state.index, Math.max(0, items.length - 1))] || null;
+    const lastResult = state.lastCorrect === null
+      ? ""
+      : `<div class="lesson-qbank-result ${state.lastCorrect ? "correct" : "wrong"}">
+          ${state.lastCorrect ? "נכון. הרמה המהירה עלתה." : "לא מדויק. האבחון נעצר ברמה הנוכחית."}
+        </div>`;
+    return `
+      <details class="lesson-question-bank-panel" data-page-section="בנק שאלות" data-lesson-qbank-panel open>
+        <summary class="lesson-qbank-summary">
+          <span>בנק שאלות</span>
+          <strong>רמה מהירה ${esc(quickLevel)}/${LESSON_QUESTION_BANK_MAX_LEVEL}</strong>
+          <small>${esc(items.length)} שאלות זמינות למושג</small>
+        </summary>
+        <div class="lesson-qbank-body">
+          <div class="lesson-qbank-status">
+            <span>המושג הנוכחי: <strong>${esc(concept.conceptName)}</strong></span>
+            <span>האבחון מתחיל מרמה 0 ועולה רק אחרי תשובה נכונה.</span>
+          </div>
+          ${
+            items.length
+              ? ""
+              : `<div class="lesson-qbank-empty">אין כרגע שאלות בנק זמינות למושג הזה.</div>`
+          }
+          ${
+            items.length && !state.active && !state.completed
+              ? `<button type="button" class="lesson-qbank-start" data-lesson-qbank-start>התחל אבחון מרמה 0</button>`
+              : ""
+          }
+          ${
+            items.length && state.active && currentItem
+              ? renderLessonQuestionBankQuestion(lesson, concept, currentItem, state, items.length)
+              : ""
+          }
+          ${
+            items.length && state.completed
+              ? `<div class="lesson-qbank-complete">
+                  <strong>רמה מהירה: ${esc(state.level)}/${LESSON_QUESTION_BANK_MAX_LEVEL}</strong>
+                  <span>${esc(state.correct)} נכונות מתוך ${esc(state.answered)} שאלות שנענו.</span>
+                  <button type="button" class="lesson-qbank-start" data-lesson-qbank-start>התחל מחדש מרמה 0</button>
+                </div>`
+              : ""
+          }
+          ${lastResult}
+        </div>
+      </details>`;
+  }
+
+  function recordLessonQuestionBankAnswer(lesson, concept, item, correct, answerMeta = {}) {
+    const state = getLessonQuestionBankState(lesson, concept);
+    const items = lessonQuestionBankItems(lesson, concept);
+    state.answered += 1;
+    state.correct += correct ? 1 : 0;
+    state.lastCorrect = Boolean(correct);
+    state.lastQuestionId = item.id;
+    state.lastKind = item.kind;
+    if (correct) {
+      state.level = Math.min(LESSON_QUESTION_BANK_MAX_LEVEL, state.level + 1);
+      state.index += 1;
+      state.completed = state.level >= LESSON_QUESTION_BANK_MAX_LEVEL || state.index >= items.length;
+      state.active = !state.completed;
+    } else {
+      state.completed = true;
+      state.active = false;
+    }
+
+    const sc = ensureScore(lesson.id, concept.conceptName);
+    sc.quickDiagnostic = {
+      level: state.level,
+      answered: state.answered,
+      correct: state.correct,
+      totalAvailable: items.length,
+      lastQuestionId: state.lastQuestionId,
+      lastKind: state.lastKind,
+      completed: state.completed,
+      updatedAt: Date.now(),
+    };
+    sc.attempts = (sc.attempts || 0) + 1;
+    if (correct) sc.correct = (sc.correct || 0) + 1;
+    if (state.level > 0) {
+      sc.level = Math.max(Number(sc.level) || 1, Math.min(6, state.level));
+    }
+    recordAnsweredQuestion(lesson.id, concept.conceptName, item.question, item.kind, correct, {
+      mode: "lesson-question-bank",
+      concept,
+    });
+    recordLearningEvidence("answer", {
+      ...conceptEvidencePayload(lesson.id, concept.conceptName, concept),
+      source: "lesson-question-bank",
+      kind: item.kind,
+      questionId: item.id,
+      correct: Boolean(correct),
+      answer: answerMeta.answer || "",
+      masteryBefore: Number(sc.level) || 1,
+      masteryAfter: Number(sc.level) || 1,
+      quickDiagnosticLevel: state.level,
+      advanced: false,
+    });
+    saveScores();
+  }
+
+  function wireLessonQuestionBankPanel(lesson, concept) {
+    lessonBody.querySelectorAll("[data-lesson-qbank-start]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        resetLessonQuestionBankState(lesson, concept);
+        renderContent();
+      });
+    });
+    lessonBody.querySelectorAll("[data-lesson-qbank-answer]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const state = getLessonQuestionBankState(lesson, concept);
+        const item = lessonQuestionBankItems(lesson, concept)[state.index];
+        if (!item) return;
+        const selectedIdx = Number(btn.getAttribute("data-lesson-qbank-answer"));
+        const correct = selectedIdx === lessonQuestionBankCorrectIndex(item.question);
+        recordLessonQuestionBankAnswer(lesson, concept, item, correct, {
+          answer: String((item.question.options || [])[selectedIdx] || ""),
+        });
+        renderContent();
+      });
+    });
+    lessonBody.querySelectorAll("[data-lesson-qbank-fill]").forEach((form) => {
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const state = getLessonQuestionBankState(lesson, concept);
+        const item = lessonQuestionBankItems(lesson, concept)[state.index];
+        if (!item) return;
+        const input = form.querySelector(".lesson-qbank-input");
+        const answer = String(input?.value || "").trim();
+        if (!answer) return;
+        const correct = normalizeAnswer(answer) === normalizeAnswer(item.question.answer || "");
+        recordLessonQuestionBankAnswer(lesson, concept, item, correct, { answer });
+        renderContent();
+      });
+    });
+  }
+
+  function renderLessonCompactToolbar(options = {}) {
+    const includeQuestionBank = options.includeQuestionBank !== false;
+    const qbankOpen = options.lesson && options.concept
+      ? isLessonQuestionBankPanelOpen(options.lesson, options.concept)
+      : false;
     return `
       <div class="lesson-compact-toolbar" aria-label="מצבי תצוגת שיעור">
         ${Object.entries(LESSON_COMPACT_MODES).map(([mode, meta]) => `
@@ -24626,12 +29434,77 @@ document.addEventListener("DOMContentLoaded", () => {
             <strong>${esc(meta.label)}</strong>
           </button>
         `).join("")}
+        ${includeQuestionBank ? `
+          <button
+            type="button"
+            class="lesson-compact-tab lesson-qbank-tab ${qbankOpen ? "active" : ""}"
+            data-lesson-qbank-toggle
+            aria-expanded="${qbankOpen ? "true" : "false"}">
+            <span>🧪</span>
+            <strong>בנק שאלות</strong>
+          </button>
+        ` : ""}
       </div>`;
+  }
+
+  let lastRenderedConceptStepTabsHTML = "";
+
+  function renderLessonTopMenus(lesson, concepts, selectedConcept, options = {}) {
+    const selectedIndex = concepts.findIndex((item) => item.conceptName === selectedConcept.conceptName);
+    const lessonIndex = lessonIndexById(lesson.id);
+    const nextLesson = (window.LESSONS_DATA || [])[lessonIndex + 1] || null;
+    const stepTabsHTML = options.stepTabsHTML || "";
+    return `
+      <section class="lesson-menu-stack" data-page-section="תפריטי שיעור" aria-label="תפריטי שיעור מקוצרים">
+        <details class="lesson-menu-row" data-lesson-menu-concepts>
+          <summary>
+            <strong>מושגים</strong>
+            <span>${esc(selectedConcept.conceptName)} · ${esc(selectedIndex + 1)} מתוך ${esc(concepts.length)}</span>
+          </summary>
+          <div class="lesson-menu-strip lesson-concept-chip-strip" role="list" aria-label="מושגי השיעור">
+            <span class="lesson-menu-actions" role="group" aria-label="מעבר בין מושגים ושיעורים">
+              <button type="button" class="lesson-nav-step" data-lesson-step="-1" ${selectedIndex <= 0 ? "disabled" : ""}>הקודם</button>
+              <button type="button" class="lesson-nav-step primary" data-lesson-step="1" ${selectedIndex >= concepts.length - 1 ? "disabled" : ""}>המושג הבא</button>
+              ${nextLesson ? `<button type="button" class="lesson-nav-next-lesson" data-lesson-next="${esc(nextLesson.id)}">השיעור הבא</button>` : ""}
+            </span>
+            ${concepts.map((concept, index) => `
+              <button
+                type="button"
+                role="listitem"
+                class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""}"
+                data-lesson-concept-jump="${esc(concept.conceptName)}"
+                title="פתח את ${esc(concept.conceptName)}">
+                <span>${esc(index + 1)}</span>
+                ${esc(concept.conceptName)}
+              </button>
+            `).join("")}
+          </div>
+          <details class="lesson-menu-row" data-lesson-menu-modes>
+            <summary>
+              <strong>טאבים</strong>
+              <span>${esc(LESSON_COMPACT_MODES[lessonCompactMode]?.label || "מלא")} · שורה אחת · השוואות · שאלות</span>
+            </summary>
+            ${renderLessonCompactToolbar({ lesson, concept: selectedConcept })}
+            ${renderLessonQuestionBankPanel(lesson, selectedConcept)}
+            ${stepTabsHTML ? `
+              <details class="lesson-menu-row" data-lesson-menu-steps>
+                <summary>
+                  <strong>חלקי מושג</strong>
+                  <span>הסבר ורמה · תרשים · דימוי · קוד והרצה · העמקה · שאלות</span>
+                </summary>
+                <div class="lesson-menu-strip lesson-step-menu-strip">
+                  ${stepTabsHTML}
+                </div>
+              </details>
+            ` : ""}
+          </details>
+        </details>
+      </section>`;
   }
 
   function renderLessonOneLineOverview(lesson, concepts) {
     return `
-      <section class="lesson-compact-panel" aria-label="מבט שורה אחת על מושגי השיעור">
+      <section class="lesson-compact-panel" data-page-section="מושגי השיעור" aria-label="מבט שורה אחת על מושגי השיעור">
         <div class="lesson-compact-head">
           <h4>מושגי השיעור בשורה אחת</h4>
           <span>${concepts.length} מושגים</span>
@@ -24640,6 +29513,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ${concepts.map((concept, index) => `
             <article
               class="lesson-compact-row"
+              data-page-section="${esc(concept.conceptName)}"
               data-lesson-compact-open="${esc(concept.conceptName)}"
               role="button"
               tabindex="0"
@@ -24665,7 +29539,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .filter((item) => item.html);
 
     return `
-      <section class="lesson-compact-panel" aria-label="טבלאות השוואה למושגי השיעור">
+      <section class="lesson-compact-panel" data-page-section="השוואות" aria-label="טבלאות השוואה למושגי השיעור">
         <div class="lesson-compact-head">
           <h4>השוואות נקיות</h4>
           <span>${comparisonItems.length}/${concepts.length} עם טבלה</span>
@@ -24674,7 +29548,7 @@ document.addEventListener("DOMContentLoaded", () => {
           comparisonItems.length
             ? `<div class="lesson-comparison-list">
                 ${comparisonItems.map((item) => `
-                  <article class="lesson-comparison-card">
+                  <article class="lesson-comparison-card" data-page-section="${esc(item.concept.conceptName)}">
                     <div
                       class="lesson-comparison-title"
                       data-lesson-compact-open="${esc(item.concept.conceptName)}"
@@ -24697,6 +29571,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function wireLessonCompactToolbar() {
+    lessonBody.querySelectorAll("[data-lesson-qbank-toggle]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lesson = window.LESSONS_DATA.find((item) => item.id === currentLessonId);
+        if (!lesson) return;
+        const conceptName = selectedConceptByLesson[lesson.id] || lesson.concepts?.[0]?.conceptName;
+        const concept = (lesson.concepts || []).find((item) => item.conceptName === conceptName) || lesson.concepts?.[0];
+        if (!concept) return;
+        const nextOpen = !isLessonQuestionBankPanelOpen(lesson, concept);
+        setLessonQuestionBankPanelOpen(lesson, concept, nextOpen);
+        renderContent();
+        if (nextOpen) {
+          requestAnimationFrame(() => {
+            lessonBody.querySelector("[data-lesson-qbank-panel]")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        }
+      });
+    });
     lessonBody.querySelectorAll("[data-lesson-compact-mode]").forEach((btn) => {
       btn.addEventListener("click", () => setLessonCompactMode(btn.dataset.lessonCompactMode));
     });
@@ -24722,6 +29613,184 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function lessonIndexById(lessonId) {
+    return (window.LESSONS_DATA || []).findIndex((item) => item.id === lessonId);
+  }
+
+  function renderLessonConceptNavigator(lesson, concepts, selectedConcept) {
+    const selectedIndex = concepts.findIndex((item) => item.conceptName === selectedConcept.conceptName);
+    const lessonIndex = lessonIndexById(lesson.id);
+    const nextLesson = (window.LESSONS_DATA || [])[lessonIndex + 1] || null;
+    const prevDisabled = selectedIndex <= 0;
+    const nextDisabled = selectedIndex >= concepts.length - 1;
+    return `
+      <nav class="lesson-concept-navigator" data-page-section="ניווט מושגים" aria-label="ניווט בתוך השיעור">
+        <div class="lesson-concept-nav-head">
+          <strong>${esc(selectedConcept.conceptName)}</strong>
+          <span>מושג ${esc(selectedIndex + 1)} מתוך ${esc(concepts.length)}</span>
+        </div>
+        <div class="lesson-concept-nav-actions">
+          <button type="button" class="lesson-nav-step" data-lesson-step="-1" ${prevDisabled ? "disabled" : ""}>הקודם</button>
+          <button type="button" class="lesson-nav-step primary" data-lesson-step="1" ${nextDisabled ? "disabled" : ""}>המושג הבא</button>
+          ${nextLesson ? `<button type="button" class="lesson-nav-next-lesson" data-lesson-next="${esc(nextLesson.id)}">השיעור הבא</button>` : ""}
+        </div>
+        <div class="lesson-concept-chip-strip" role="list" aria-label="מושגי השיעור">
+          ${concepts.map((concept, index) => `
+            <button
+              type="button"
+              role="listitem"
+              class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""}"
+              data-lesson-concept-jump="${esc(concept.conceptName)}"
+              title="פתח את ${esc(concept.conceptName)}">
+              <span>${esc(index + 1)}</span>
+              ${esc(concept.conceptName)}
+            </button>
+          `).join("")}
+        </div>
+      </nav>`;
+  }
+
+  function wireLessonConceptNavigator(lesson, concepts, selectedConcept) {
+    const selectedIndex = concepts.findIndex((item) => item.conceptName === selectedConcept.conceptName);
+    const stepStateKey = conceptStepStateKey(lesson, selectedConcept);
+    lessonBody.querySelectorAll("[data-lesson-concept-jump]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const conceptName = btn.getAttribute("data-lesson-concept-jump");
+        if (!conceptName) return;
+        selectedConceptByLesson[lesson.id] = conceptName;
+        renderContent();
+        scrollToTop();
+      });
+    });
+    lessonBody.querySelectorAll("[data-lesson-step]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const step = Number(btn.getAttribute("data-lesson-step")) || 0;
+        const nextConcept = concepts[selectedIndex + step];
+        if (!nextConcept) return;
+        selectedConceptByLesson[lesson.id] = nextConcept.conceptName;
+        renderContent();
+        scrollToTop();
+      });
+    });
+    lessonBody.querySelectorAll("[data-lesson-next]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lessonId = btn.getAttribute("data-lesson-next");
+        if (lessonId) openLesson(lessonId);
+      });
+    });
+    lessonBody.querySelectorAll("[data-concept-step-tab]").forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        event.preventDefault();
+        const stepId = btn.getAttribute("data-concept-step-tab") || "definition";
+        selectedConceptStepByConcept[stepStateKey] = stepId;
+        renderContent();
+        requestAnimationFrame(() => {
+          document
+            .querySelector(`.concept-card.adaptive[data-concept="${cssEscape(selectedConcept.conceptName)}"]`)
+            ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+      });
+    });
+  }
+
+  function queuePageScrollRailRefresh() {
+    if (!pageScrollRail) return;
+    requestAnimationFrame(refreshPageScrollRail);
+  }
+
+  function pageScrollRoot() {
+    return document.getElementById("content-container") || document.scrollingElement || document.documentElement;
+  }
+
+  function hidePageScrollRail() {
+    if (!pageScrollRail) return;
+    pageScrollRail.hidden = true;
+    pageScrollRail.innerHTML = "";
+  }
+
+  function refreshPageScrollRail() {
+    if (!pageScrollRail) return;
+    const activeVisible = activeLessonContainer && activeLessonContainer.style.display !== "none";
+    if (!activeVisible || !currentLessonId) {
+      hidePageScrollRail();
+      return;
+    }
+    const source = lessonBody || activeLessonContainer;
+    const sections = Array.from(
+      source.querySelectorAll("[data-page-section]"),
+    ).filter((section) => {
+      const label = (section.getAttribute("data-page-section") || "").trim();
+      return label && section.getClientRects().length > 0;
+    });
+    if (!sections.length) {
+      hidePageScrollRail();
+      return;
+    }
+    pageScrollRail.innerHTML = `
+      <div class="page-scroll-progress" aria-live="polite">0%</div>
+      <div class="page-scroll-track" aria-hidden="true"></div>
+      ${sections.slice(0, 24).map((section, index) => {
+        const label = section.getAttribute("data-page-section") || `חלק ${index + 1}`;
+        const id = section.id || `page-section-${currentLessonId}-${index}`;
+        section.id = id;
+        return `
+          <button
+            type="button"
+            class="page-scroll-dot"
+            data-page-scroll-target="${esc(id)}"
+            aria-label="עבור אל ${esc(label)}"
+            title="${esc(label)}">
+            <span>${index + 1}</span>
+          </button>`;
+      }).join("")}
+    `;
+    pageScrollRail.hidden = false;
+    pageScrollRail.querySelectorAll("[data-page-scroll-target]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = document.getElementById(button.dataset.pageScrollTarget || "");
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+    updatePageScrollRail();
+  }
+
+  function updatePageScrollRail() {
+    if (!pageScrollRail || pageScrollRail.hidden) return;
+    const sections = Array.from(lessonBody?.querySelectorAll("[data-page-section]") || []);
+    if (!sections.length) return;
+    const root = pageScrollRoot();
+    const rootRect = root === document.scrollingElement || root === document.documentElement
+      ? { top: 0, height: window.innerHeight || 1 }
+      : root.getBoundingClientRect();
+    const readLine = rootRect.top + Math.min(180, rootRect.height * 0.28);
+    let activeId = sections[0].id;
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= readLine) activeId = section.id;
+    });
+    pageScrollRail.querySelectorAll("[data-page-scroll-target]").forEach((button) => {
+      button.classList.toggle("active", button.dataset.pageScrollTarget === activeId);
+    });
+    const scrollTop = root === document.scrollingElement || root === document.documentElement
+      ? (document.scrollingElement?.scrollTop || document.documentElement.scrollTop || 0)
+      : root.scrollTop;
+    const scrollHeight = root === document.scrollingElement || root === document.documentElement
+      ? (document.scrollingElement?.scrollHeight || document.documentElement.scrollHeight || 1)
+      : root.scrollHeight;
+    const clientHeight = root === document.scrollingElement || root === document.documentElement
+      ? (window.innerHeight || document.documentElement.clientHeight || 1)
+      : root.clientHeight;
+    const maxScroll = Math.max(1, scrollHeight - clientHeight);
+    const pct = Math.max(0, Math.min(100, Math.round((scrollTop / maxScroll) * 100)));
+    const progress = pageScrollRail.querySelector(".page-scroll-progress");
+    if (progress) progress.textContent = `${pct}%`;
+  }
+
+  const pageScrollContainer = document.getElementById("content-container");
+  pageScrollContainer?.addEventListener("scroll", updatePageScrollRail, { passive: true });
+  window.addEventListener("scroll", updatePageScrollRail, { passive: true });
+  window.addEventListener("resize", updatePageScrollRail);
+
   function renderContent() {
     const lesson = window.LESSONS_DATA.find((l) => l.id === currentLessonId);
     if (!lesson) return;
@@ -24729,8 +29798,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const concepts = lesson.concepts || [];
     if (concepts.length === 0) {
       lessonBody.innerHTML = `
-        <h3>${esc(lesson.title)}</h3>
         <div class="concept-card"><p>אין מושגים זמינים בשיעור זה.</p></div>`;
+      hidePageScrollRail();
       return;
     }
 
@@ -24744,11 +29813,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     setLessonContextTree(lesson, selectedConcept.conceptName);
+    updateSiteNavigation();
 
     if (lessonCompactMode === "one-line" || lessonCompactMode === "comparisons") {
       lessonBody.innerHTML = `
-        <h3>${esc(lesson.title)}</h3>
-        ${renderLessonCompactToolbar()}
+        ${renderLessonTopMenus(lesson, concepts, selectedConcept)}
         ${
           lessonCompactMode === "one-line"
             ? renderLessonOneLineOverview(lesson, concepts)
@@ -24756,12 +29825,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       `;
       wireLessonCompactToolbar();
+      wireLessonQuestionBankPanel(lesson, selectedConcept);
+      wireLessonConceptNavigator(lesson, concepts, selectedConcept);
+      queuePageScrollRailRefresh();
       return;
     }
 
+    const conceptCardHTML = renderConceptCard(lesson, selectedConcept, concepts.indexOf(selectedConcept));
     lessonBody.innerHTML = `
-      <h3>${esc(lesson.title)}</h3>
-      ${renderLessonCompactToolbar()}
+      ${renderLessonTopMenus(lesson, concepts, selectedConcept, { stepTabsHTML: lastRenderedConceptStepTabsHTML })}
       ${
         lesson.videoScript
           ? `
@@ -24774,12 +29846,14 @@ document.addEventListener("DOMContentLoaded", () => {
           : ""
       }
       <div class="concepts-list" id="concepts-list">
-        ${renderConceptCard(lesson, selectedConcept, concepts.indexOf(selectedConcept))}
+        ${conceptCardHTML}
       </div>
     `;
 
     // Wire per-concept controls (simplify / illustration / etc.)
     wireLessonCompactToolbar();
+    wireLessonQuestionBankPanel(lesson, selectedConcept);
+    wireLessonConceptNavigator(lesson, concepts, selectedConcept);
     wireConceptCardHandlers(lesson);
 
     // Auto-render inline quiz under the selected concept
@@ -24787,14 +29861,111 @@ document.addEventListener("DOMContentLoaded", () => {
     if (card) {
       autoRenderConceptQuiz(card, lesson, selectedConcept);
     }
+    queuePageScrollRailRefresh();
   }
 
   // Render BOTH MC and Fill stages always-visible inside the active concept card
+  function renderOneLineMasteryCheckpoint(sc) {
+    if (!sc?.masteryGatePending || sc.masteryGate?.reason !== "needs-one-line-proof") return "";
+    return `
+      <div class="one-line-mastery-checkpoint" data-page-section="Checkpoint — הסבר בשורה אחת">
+        <div class="one-line-mastery-head">
+          <strong>Checkpoint לפני 100</strong>
+          <span>כתוב בשורה אחת מה המושג עושה ומתי משתמשים בו.</span>
+        </div>
+        <div class="one-line-mastery-row">
+          <input type="text" class="one-line-mastery-input" maxlength="180"
+            placeholder="כתוב משפט אחד שמגדיר את המושג ומתי משתמשים בו" autocomplete="off" />
+          <button type="button" class="concept-btn primary one-line-mastery-submit">בדוק ושחרר מאסטר</button>
+        </div>
+        <div class="one-line-mastery-feedback" aria-live="polite"></div>
+      </div>`;
+  }
+
+  function renderScratchMasteryCheckpoint(sc) {
+    if (!sc?.masteryGatePending || sc.masteryGate?.reason !== "needs-scratch-proof") return "";
+    return `
+      <div class="scratch-mastery-checkpoint" data-page-section="Checkpoint — כתיבה מאפס">
+        <div class="scratch-mastery-head">
+          <strong>Checkpoint לפני 100</strong>
+          <span>כתוב פתרון קוד קצר מאפס שמדגים את המושג.</span>
+        </div>
+        <textarea class="scratch-mastery-input" rows="6" maxlength="2000"
+          placeholder="כתוב קוד קצר שמדגים את המושג בלי להעתיק את הדוגמה"></textarea>
+        <div class="scratch-mastery-actions">
+          <button type="button" class="concept-btn primary scratch-mastery-submit">בדוק ושחרר מאסטר</button>
+          <span class="scratch-mastery-feedback" aria-live="polite"></span>
+        </div>
+      </div>`;
+  }
+
+  function wireOneLineMasteryCheckpoint(card, lesson, concept) {
+    const checkpoint = card.querySelector(".one-line-mastery-checkpoint");
+    if (!checkpoint) return;
+    const input = checkpoint.querySelector(".one-line-mastery-input");
+    const submit = checkpoint.querySelector(".one-line-mastery-submit");
+    const feedback = checkpoint.querySelector(".one-line-mastery-feedback");
+    const run = () => {
+      const result = completeOneLineMasteryCheckpoint(
+        lesson.id,
+        concept.conceptName,
+        concept,
+        input?.value || "",
+      );
+      if (!result.passed) {
+        if (feedback) feedback.textContent = "צריך משפט אחד ברור: 12-180 תווים, לפחות שלושה מונחים, בלי שורות נוספות.";
+        input?.focus();
+        return;
+      }
+      if (feedback) feedback.textContent = result.mastered ? "נרשם הסבר בשורה אחת. המושג שוחרר לרמת מאסטר." : "נרשם הסבר בשורה אחת.";
+      setTimeout(() => renderContent(), 700);
+    };
+    submit?.addEventListener("click", run);
+    input?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        run();
+      }
+    });
+  }
+
+  function wireScratchMasteryCheckpoint(card, lesson, concept) {
+    const checkpoint = card.querySelector(".scratch-mastery-checkpoint");
+    if (!checkpoint) return;
+    const input = checkpoint.querySelector(".scratch-mastery-input");
+    const submit = checkpoint.querySelector(".scratch-mastery-submit");
+    const feedback = checkpoint.querySelector(".scratch-mastery-feedback");
+    const run = () => {
+      const result = completeScratchMasteryCheckpoint(
+        lesson.id,
+        concept.conceptName,
+        concept,
+        input?.value || "",
+      );
+      if (!result.passed) {
+        if (feedback) feedback.textContent = "צריך קוד קצר אמיתי: 20-2000 תווים, סימני קוד/טוקנים, ולא העתקה מלאה מהדוגמה.";
+        input?.focus();
+        return;
+      }
+      if (feedback) feedback.textContent = result.mastered ? "נרשם קוד from scratch. המושג שוחרר לרמת מאסטר." : "נרשם קוד from scratch.";
+      setTimeout(() => renderContent(), 700);
+    };
+    submit?.addEventListener("click", run);
+    input?.addEventListener("keydown", (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+        event.preventDefault();
+        run();
+      }
+    });
+  }
+
   function autoRenderConceptQuiz(card, lesson, concept) {
     const slot = card.querySelector(".concept-quiz-slot");
     if (!slot) return;
     const sc = getScore(lesson.id, concept.conceptName);
-    const fill = concept.codeExample ? makeCodeFill(concept) : null;
+    const fill = concept.codeExample ? pickManualFillQuestionForConcept(lesson, concept) : null;
+    const totalQuestionStages = fill ? 2 : 1;
+    const answeredQuestionStages = (sc.passedMC ? 1 : 0) + (fill && sc.passedFill ? 1 : 0);
 
     // Master state — show only a "refresh" button after the highest-question proof.
     if (isScoreMastered(sc)) {
@@ -24811,27 +29982,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const masteryGateHTML = sc.masteryGatePending
       ? `<div class="concept-stage-done mastery-gate-pending">
-          🔒 נשאר מבחן עומק: כדי לקבל 100 במושג צריך לענות נכון על שאלה ברמת האתגר הגבוהה ביותר.
+          🔒 נשאר מבחן עומק: ${esc(sc.masteryGate?.message || "כדי לקבל 100 במושג צריך לענות נכון על שאלה ברמת האתגר הגבוהה ביותר.")}
         </div>`
       : "";
+    const oneLineCheckpointHTML = renderOneLineMasteryCheckpoint(sc);
+    const scratchCheckpointHTML = renderScratchMasteryCheckpoint(sc);
 
     const mcStageHTML = sc.passedMC
-      ? `<div class="concept-stage-done">🅰️ ✅ עברת את שלב השאלה האמריקנית ברמה זו.</div>`
-      : `<div class="concept-stage" data-stage="mc"><div class="concept-stage-head">🅰️ שלב 1 — שאלה אמריקנית</div><div class="concept-stage-body" id="cs-mc-body"></div></div>`;
+      ? `<div class="concept-stage-done">שאלה 1 מתוך ${esc(totalQuestionStages)} · 🅰️ ✅ עברת את שלב השאלה האמריקנית ברמה זו.</div>`
+      : `<details class="concept-stage" data-stage="mc" data-page-section="שאלה 1 מתוך ${esc(totalQuestionStages)} — אמריקנית" open><summary class="concept-stage-head"><span>שאלה 1 מתוך ${esc(totalQuestionStages)}</span> 🅰️ שאלה אמריקנית</summary><div class="concept-stage-body" id="cs-mc-body"></div></details>`;
 
     const needFill = !!fill;
     const fillStageHTML = !needFill
       ? `<div class="concept-stage-done muted">✍️ אין דוגמת קוד למושג — קידום על שלב MC בלבד.</div>`
       : sc.passedFill
-        ? `<div class="concept-stage-done">✍️ ✅ עברת את שלב השלמת הקוד ברמה זו.</div>`
-        : `<div class="concept-stage" data-stage="fill"><div class="concept-stage-head">✍️ שלב 2 — השלמת קוד</div><div class="concept-stage-body" id="cs-fill-body"></div></div>`;
+        ? `<div class="concept-stage-done">שאלה 2 מתוך ${esc(totalQuestionStages)} · ✍️ ✅ עברת את שלב השלמת הקוד ברמה זו.</div>`
+        : `<details class="concept-stage" data-stage="fill" data-page-section="שאלה 2 מתוך ${esc(totalQuestionStages)} — השלמת קוד" open><summary class="concept-stage-head"><span>שאלה 2 מתוך ${esc(totalQuestionStages)}</span> ✍️ השלמת קוד</summary><div class="concept-stage-body" id="cs-fill-body"></div></details>`;
 
     slot.innerHTML = `
-      <div class="concept-stages">
-        ${masteryGateHTML}
-        ${mcStageHTML}
-        ${fillStageHTML}
-      </div>`;
+      <details class="concept-questions-panel" data-page-section="שאלות ותרגול" open>
+        <summary class="concept-questions-summary">
+          <span>שאלות</span>
+          <strong>${esc(answeredQuestionStages)}/${esc(totalQuestionStages)}</strong>
+        </summary>
+        <div class="concept-stages">
+          ${masteryGateHTML}
+          ${oneLineCheckpointHTML}
+          ${scratchCheckpointHTML}
+          ${mcStageHTML}
+          ${fillStageHTML}
+        </div>
+      </details>`;
+    queuePageScrollRailRefresh();
+    wireOneLineMasteryCheckpoint(card, lesson, concept);
+    wireScratchMasteryCheckpoint(card, lesson, concept);
 
     // Render MC if not yet passed
     if (!sc.passedMC) {
@@ -24841,6 +30025,7 @@ document.addEventListener("DOMContentLoaded", () => {
         body.innerHTML = `
           <div class="question-learning-layout inline">
             <div class="question-answer-area">
+              <div class="ciq-question-count">שאלה 1 מתוך ${esc(totalQuestionStages)}</div>
               <div class="ciq-question">${esc(q.question).replace(/\n/g, "<br>")}</div>
               ${q.codeBlock ? `<div class="code-box"><pre><code>${esc(q.codeBlock)}</code></pre></div>` : ""}
               <div class="ciq-options">
@@ -24878,11 +30063,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (needFill && !sc.passedFill) {
       const body = document.getElementById("cs-fill-body");
       if (body) {
+        const fillCode = fillQuestionCode(fill);
+        const fillAnswer = fillQuestionAnswer(fill);
         body.innerHTML = `
           <div class="question-learning-layout inline">
             <div class="question-answer-area">
-              <div class="ciq-hint">${esc(`אורך התשובה: ${fill.answer.length} תווים. אות ראשונה: "${fill.answer[0]}".`)}</div>
-              <div class="code-box"><pre><code>${esc(fill.blanked).replace(/____/g, '<span class="tq-code-blank">____</span>')}</code></pre></div>
+              <div class="ciq-question-count">שאלה 2 מתוך ${esc(totalQuestionStages)}</div>
+              <div class="ciq-hint">${esc(fill.hint || `אורך התשובה: ${fillAnswer.length} תווים. אות ראשונה: "${fillAnswer[0] || ""}".`)}</div>
+              <div class="code-box"><pre><code>${esc(fillCode).replace(/____/g, '<span class="tq-code-blank">____</span>')}</code></pre></div>
               <div class="ciq-fill-row">
                 <input type="text" class="ciq-fill-input" placeholder="הקלד את הטוקן החסר..." dir="ltr" autocomplete="off" spellcheck="false" />
                 <button class="ciq-submit primary">✅ בדוק</button>
@@ -24890,8 +30078,8 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             ${renderQuestionPrereqPanel({
               question: {
-                question: `השלם את הטוקן החסר בקוד של ${concept.conceptName}`,
-                code: fill.blanked,
+                question: fillQuestionPrompt(fill, concept.conceptName),
+                code: fillCode,
                 conceptKey: conceptKey(lesson.id, concept.conceptName),
               },
               lesson,
@@ -24908,12 +30096,15 @@ document.addEventListener("DOMContentLoaded", () => {
           const userAns = (input.value || "").trim();
           if (!userAns) return;
           const correct =
-            userAns.toLowerCase() === (fill.answer || "").toLowerCase();
+            userAns.toLowerCase() === fillAnswer.toLowerCase();
           input.disabled = true;
           submitBtn.disabled = true;
           input.classList.add(correct ? "correct" : "wrong");
           handleConceptQuizAnswer(card, lesson, concept, "fill", correct, {
-            answer: fill.answer,
+            answer: fillAnswer,
+            question: fillQuestionPrompt(fill, concept.conceptName),
+            code: fillCode,
+            conceptKey: conceptKey(lesson.id, concept.conceptName),
           });
         };
         submitBtn.addEventListener("click", submit);
@@ -24938,7 +30129,7 @@ document.addEventListener("DOMContentLoaded", () => {
       (actualLevel >= 7 ? 6 : Math.min(6, Math.max(1, actualLevel)));
     const displayKey = LEVEL_KEYS[displayLevelIdx] || "junior";
     const explanation =
-      (concept.levels && concept.levels[displayKey]) ||
+      levelText(concept.levels, displayKey) ||
       bestExplanation(concept) ||
       "אין הסבר זמין למושג זה.";
 
@@ -25019,6 +30210,146 @@ document.addEventListener("DOMContentLoaded", () => {
       return `<div class="suggested-next"><strong>➡️ המשך לבדוק:</strong> ${items}</div>`;
     })();
 
+    const stepDefinitions = [
+      {
+        id: "definition",
+        title: "הסבר ורמה",
+        icon: "📚",
+        body: `
+        <div class="concept-display-meta">
+          מוצג ברמת <strong>${lvlInfo.icon} ${esc(lvlInfo.label)}</strong>${
+            actualLevel >= 7
+              ? " · 🏆 הגעת לרמת מאסטר!"
+              : ""
+          }
+        </div>
+        ${pathways ? `
+        <div class="pathway-toggle" role="group" aria-label="בחר רמת הסבר">
+          <button class="pathway-btn${currentPathway === 'grandma' ? ' active' : ''}" data-action="set-pathway" data-pathway="grandma" title="הסבר פשוט — כמו לסבתא">👵</button>
+          <button class="pathway-btn${currentPathway === 'parent' ? ' active' : ''}" data-action="set-pathway" data-pathway="parent" title="הסבר לאדם לא טכני">🧑‍🏫</button>
+          <button class="pathway-btn${currentPathway === 'technical' ? ' active' : ''}" data-action="set-pathway" data-pathway="technical" title="הסבר טכני מלא">👨‍💻</button>
+        </div>` : ""}
+        <p class="concept-explanation"${pathwayText ? ' style="display:none"' : ""}>${esc(explanation)}</p>
+        ${pathwayText ? `<p class="pathway-explanation">${esc(pathwayText)}</p>` : '<p class="pathway-explanation" style="display:none"></p>'}
+        ${renderAudioModeButton(concept, explanation)}
+      `,
+      },
+      ...(hasIllustration ? [{
+        id: "diagram",
+        title: "תרשים",
+        icon: "🖼️",
+        body: `<div class="concept-illustration" style="display:block;"><pre>${esc(concept.illustration)}</pre></div>`,
+      }] : []),
+      {
+        id: "analogy",
+        title: "דימוי מהחיים",
+        icon: "🌍",
+        body: renderAnalogyForLevel(concept, displayLevelIdx),
+      },
+      ...(concept.codeExample ? [{
+        id: "code",
+        title: "קוד והרצה",
+        icon: "💻",
+        body: `
+        <div class="code-box">
+          <div class="code-toolbar">
+            <button class="code-tool-btn" data-action="toggle-comments" data-card-cid="${idx}" title="הוסף הערות בעברית לכל שורה">💬 הערות בעברית</button>
+            <button class="code-tool-btn run-btn" data-action="run-code" data-card-cid="${idx}" aria-label="הרץ את הקוד בסביבה מבודדת" title="הרץ את הקוד בסביבה מבודדת — תראה את ה-console.log">🚀 הרץ</button>
+          </div>
+          <pre data-code-original="${esc(concept.codeExample)}"><code>${esc(concept.codeExample)}</code></pre>
+          <div class="code-runner-output" data-runner-output="${idx}" style="display:none;"></div>
+          ${
+            concept.codeExplanation
+              ? `<div class="code-explanation"><strong>💡 פינת הקוד:</strong> ${esc(concept.codeExplanation)}</div>`
+              : ""
+          }
+        </div>`,
+      }] : []),
+    ];
+
+    const enrichmentPanelsHTML = [
+      renderDeepDivePanel(concept),
+      renderExtendedExplanationPanel(concept),
+      renderExtrasPanel(concept, sc, diff),
+      renderMnemonicPanel(concept),
+      renderAntiPatternsPanel(concept),
+      renderAnimatorPanel(concept),
+      renderWhatIfPanel(concept),
+      renderConceptComicPanel(concept),
+      renderConceptVideoPanel(concept),
+      renderStageZeroPanel(concept),
+      renderMemoryPalacePanel(concept),
+      renderProblemFirstPanel(concept),
+      renderBugHuntPanel(lesson, concept),
+      renderMiniBuildPanel(lesson, concept),
+      renderWarStoriesPanel(concept),
+      renderComparisonsPanel(concept),
+      renderMetaphorCarousel(k),
+      renderScenariosPanel(k),
+      renderCounterfactualPanel(k),
+    ].filter(Boolean).join("");
+
+    stepDefinitions.push({
+      id: "enrichment",
+      title: "העמקה ותרגול",
+      icon: "🧠",
+      body: enrichmentPanelsHTML || `<div class="lesson-compact-empty">אין כרגע הרחבות נוספות למושג הזה.</div>`,
+    });
+    if (suggestedNext) {
+      stepDefinitions.push({
+        id: "next",
+        title: "המשך מומלץ",
+        icon: "➡️",
+        body: suggestedNext,
+      });
+    }
+    stepDefinitions.push({
+      id: "questions",
+      title: "שאלות",
+      icon: "❓",
+      body: `<div class="concept-quiz-slot" data-page-section="תרגול"></div>`,
+    });
+
+    const stepStateKey = conceptStepStateKey(lesson, concept);
+    const availableStepIds = new Set(stepDefinitions.map((step) => step.id));
+    if (!availableStepIds.has(selectedConceptStepByConcept[stepStateKey])) {
+      selectedConceptStepByConcept[stepStateKey] = stepDefinitions[0]?.id || "definition";
+    }
+    const activeConceptStepId = selectedConceptStepByConcept[stepStateKey];
+    const stepTabsHTML = renderConceptStepTabs(stepDefinitions, activeConceptStepId);
+    lastRenderedConceptStepTabsHTML = stepTabsHTML;
+    const conceptStepsHTML = stepDefinitions.map((step) =>
+      renderConceptStep(step.id, step.title, step.body, {
+        active: step.id === activeConceptStepId,
+        className: `concept-step-${step.id}`,
+      }),
+    ).join("");
+
+    const actionButtonsHTML = `
+      ${
+        canSimplify
+          ? `<button class="concept-btn simplify" data-action="simplify">🤔 לא ברור — רמה פשוטה יותר</button>`
+          : ""
+      }
+      ${
+        canV
+          ? `<button class="concept-btn mark-v" data-action="mark-v" aria-label="סמן את המושג ${esc(concept.conceptName)} כידוע" title="המושג הזה ברור לי — סמן כידוע ועבור הלאה">✓ ברור לי — סמן כידוע</button>`
+          : ""
+      }
+      ${
+        actualLevel < 7 && !sc.markedKnown
+          ? `<button class="concept-btn report-weak" data-action="report-weak" aria-label="דווח שאני חלש במושג ${esc(concept.conceptName)}" title="המאמן יציג את המושג לעיתים תכופות יותר ויפתח עוד הסברים, שאלות ודוגמאות קוד">🆘 אני חלש בזה — תן לי עוד</button>`
+          : ""
+      }
+      <button class="concept-btn pocket-add" data-action="pocket-toggle" data-pocket-key="${esc(lesson.id + "::" + concept.conceptName)}" aria-label="שמור את המושג ${esc(concept.conceptName)} לכיס" title="שמור לכיס לחזרה מהירה — הכפתור הצף 📌 בפינה שמאלית עליונה">📌 שמור לכיס</button>
+      <button class="concept-btn eli5" data-action="eli5" aria-label="הסבר את ${esc(concept.conceptName)} כמו שמסבירים לילד בן 5" title="ELI5 — Explain Like I'm 5 — תצוגה ברמת סבתא+אנלוגיות בלבד">🧒 כמו לבן 5</button>
+      ${
+        isOverride
+          ? `<button class="concept-btn ghost" data-action="reset-view">👁️ חזור לרמה האישית</button>`
+          : ""
+      }
+    `;
+
     return `
       <div class="concept-card adaptive" data-cid="${idx}" data-concept="${esc(concept.conceptName)}">
         ${prereqWarning}
@@ -25035,104 +30366,12 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
 
-        <div class="concept-display-meta">
-          מוצג ברמת <strong>${lvlInfo.icon} ${esc(lvlInfo.label)}</strong>${
-            actualLevel >= 7
-              ? " · 🏆 הגעת לרמת מאסטר!"
-              : ""
-          }
-        </div>
-
-        ${pathways ? `
-        <div class="pathway-toggle" role="group" aria-label="בחר רמת הסבר">
-          <button class="pathway-btn${currentPathway === 'grandma' ? ' active' : ''}" data-action="set-pathway" data-pathway="grandma" title="הסבר פשוט — כמו לסבתא">👵</button>
-          <button class="pathway-btn${currentPathway === 'parent' ? ' active' : ''}" data-action="set-pathway" data-pathway="parent" title="הסבר לאדם לא טכני">🧑‍🏫</button>
-          <button class="pathway-btn${currentPathway === 'technical' ? ' active' : ''}" data-action="set-pathway" data-pathway="technical" title="הסבר טכני מלא">👨‍💻</button>
-        </div>` : ""}
-
-        <p class="concept-explanation"${pathwayText ? ' style="display:none"' : ""}>${esc(explanation)}</p>
-        ${pathwayText ? `<p class="pathway-explanation">${esc(pathwayText)}</p>` : '<p class="pathway-explanation" style="display:none"></p>'}
-
-        ${
-          hasIllustration
-            ? `<div class="concept-illustration" style="display:none;"><pre>${esc(concept.illustration)}</pre></div>`
-            : ""
-        }
-
-        ${renderAnalogyForLevel(concept, displayLevelIdx)}
-
-        ${
-          concept.codeExample
-            ? `
-        <div class="code-box">
-          <div class="code-toolbar">
-            <button class="code-tool-btn" data-action="toggle-comments" data-card-cid="${idx}" title="הוסף הערות בעברית לכל שורה">💬 הערות בעברית</button>
-            <button class="code-tool-btn run-btn" data-action="run-code" data-card-cid="${idx}" aria-label="הרץ את הקוד בסביבה מבודדת" title="הרץ את הקוד בסביבה מבודדת — תראה את ה-console.log">🚀 הרץ</button>
+        <div class="lesson-concept-shell">
+          ${renderLessonControlRail(actionButtonsHTML, stepTabsHTML)}
+          <div class="concept-main-flow">
+            ${conceptStepsHTML}
           </div>
-          <pre data-code-original="${esc(concept.codeExample)}"><code>${esc(concept.codeExample)}</code></pre>
-          <div class="code-runner-output" data-runner-output="${idx}" style="display:none;"></div>
-          ${
-            concept.codeExplanation
-              ? `<div class="code-explanation"><strong>💡 פינת הקוד:</strong> ${esc(concept.codeExplanation)}</div>`
-              : ""
-          }
-        </div>`
-            : ""
-        }
-
-        ${renderDeepDivePanel(concept)}
-        ${renderExtendedExplanationPanel(concept)}
-        ${renderExtrasPanel(concept, sc, diff)}
-        ${renderMnemonicPanel(concept)}
-        ${renderAntiPatternsPanel(concept)}
-        ${renderAnimatorPanel(concept)}
-        ${renderWhatIfPanel(concept)}
-        ${renderConceptComicPanel(concept)}
-        ${renderConceptVideoPanel(concept)}
-        ${renderStageZeroPanel(concept)}
-        ${renderMemoryPalacePanel(concept)}
-        ${renderProblemFirstPanel(concept)}
-        ${renderBugHuntPanel(concept)}
-        ${renderMiniBuildPanel(concept)}
-        ${renderWarStoriesPanel(concept)}
-        ${renderComparisonsPanel(concept)}
-        ${renderMetaphorCarousel(k)}
-        ${renderScenariosPanel(k)}
-        ${renderCounterfactualPanel(k)}
-        ${renderAudioModeButton(concept, explanation)}
-
-        <div class="concept-actions">
-          ${
-            canSimplify
-              ? `<button class="concept-btn simplify" data-action="simplify">🤔 לא ברור — רמה פשוטה יותר</button>`
-              : ""
-          }
-          ${
-            hasIllustration
-              ? `<button class="concept-btn illustrate" data-action="toggle-illustration">🖼️ הצג תרשים</button>`
-              : ""
-          }
-          ${
-            canV
-              ? `<button class="concept-btn mark-v" data-action="mark-v" aria-label="סמן את המושג ${esc(concept.conceptName)} כידוע" title="המושג הזה ברור לי — סמן כידוע ועבור הלאה">✓ ברור לי — סמן כידוע</button>`
-              : ""
-          }
-          ${
-            actualLevel < 7 && !sc.markedKnown
-              ? `<button class="concept-btn report-weak" data-action="report-weak" aria-label="דווח שאני חלש במושג ${esc(concept.conceptName)}" title="המאמן יציג את המושג לעיתים תכופות יותר ויפתח עוד הסברים, שאלות ודוגמאות קוד">🆘 אני חלש בזה — תן לי עוד</button>`
-              : ""
-          }
-          <button class="concept-btn pocket-add" data-action="pocket-toggle" data-pocket-key="${esc(lesson.id + "::" + concept.conceptName)}" aria-label="שמור את המושג ${esc(concept.conceptName)} לכיס" title="שמור לכיס לחזרה מהירה — הכפתור הצף 📌 בפינה שמאלית עליונה">📌 שמור לכיס</button>
-          <button class="concept-btn eli5" data-action="eli5" aria-label="הסבר את ${esc(concept.conceptName)} כמו שמסבירים לילד בן 5" title="ELI5 — Explain Like I'm 5 — תצוגה ברמת סבתא+אנלוגיות בלבד">🧒 כמו לבן 5</button>
-          ${
-            isOverride
-              ? `<button class="concept-btn ghost" data-action="reset-view">👁️ חזור לרמה האישית</button>`
-              : ""
-          }
         </div>
-
-        ${suggestedNext}
-        <div class="concept-quiz-slot"></div>
       </div>
     `;
   }
@@ -25143,8 +30382,20 @@ document.addEventListener("DOMContentLoaded", () => {
   //   - user reported weak (weakReports > 0)
   //   - user got 2+ wrong answers and current correctRunCount is low
   // Content sources: concept.extras + concept_enrichment commonMistakes.
+  function normalizeExtras(extras) {
+    if (!Array.isArray(extras)) return extras || {};
+    return extras.reduce((acc, item) => {
+      if (!item || typeof item !== "object") return acc;
+      const kind = item.type || item.kind || "";
+      if (kind === "pitfall" || item.mistake) acc.pitfalls.push(item);
+      else if (kind === "practice" || item.question) acc.practiceQuestions.push(item);
+      else if (kind === "example" || item.code) acc.moreExamples.push(item);
+      return acc;
+    }, { moreExamples: [], pitfalls: [], practiceQuestions: [] });
+  }
+
   function renderExtrasPanel(concept, sc, diff) {
-    const ext = concept.extras || {};
+    const ext = normalizeExtras(concept.extras);
     const cm = (concept.deepDive && concept.deepDive.commonMistakes) ||
                (concept.commonMistakes) || [];
     const hasExtras =
@@ -25257,11 +30508,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // P1.4.3 — Bug Hunt panel (broken code → identify → fix)
-  function renderBugHuntPanel(concept) {
+  function renderBugHuntPanel(lesson, concept) {
     const bugs = concept.bugHunts;
     if (!Array.isArray(bugs) || bugs.length === 0) return "";
     const items = bugs
       .map((b, i) => {
+        const supportQuestion = {
+          id: b.id || `bug-hunt-${i + 1}`,
+          kind: "bug",
+          question: b.question || b.title || "מצא את הבאג",
+          code: b.brokenCode || b.code || "",
+          brokenCode: b.brokenCode || "",
+          options: b.options || [],
+          correctIndex: b.correctIndex,
+          explanation: b.explanation || b.fix || "",
+          challengeLevel: b.challengeLevel || b.level || 5,
+          conceptKey: conceptKey(lesson.id, concept.conceptName),
+        };
         const optionsHtml = (b.options || [])
           .map(
             (opt, oi) =>
@@ -25285,6 +30548,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="bh-options-prompt">מה הבעיה?</div>
             ${optionsHtml}
           </div>
+          ${renderQuestionPrereqPanel({ question: supportQuestion, lesson, concept, mode: "bug-hunt" })}
           <div class="bh-result" data-bug-result="${esc(b.id)}" hidden>
             <div class="bh-fix">
               <div class="bh-label-good">✅ פתרון</div>
@@ -25732,11 +30996,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // P1.4.4 — Mini Build panel (write code → regex tests)
-  function renderMiniBuildPanel(concept) {
+  function renderMiniBuildPanel(lesson, concept) {
     const builds = concept.miniBuilds;
     if (!Array.isArray(builds) || builds.length === 0) return "";
     const items = builds
       .map((b, i) => {
+        const supportQuestion = {
+          id: b.id || `mini-build-${i + 1}`,
+          kind: "build",
+          question: b.prompt || b.title || "Mini Build",
+          code: b.starter || b.reference || "",
+          answer: b.reference || "",
+          explanation: b.explanation || b.hint || "",
+          challengeLevel: b.challengeLevel || b.level || 6,
+          conceptKey: conceptKey(lesson.id, concept.conceptName),
+        };
         return `
         <div class="mini-build-card" data-build-card="${esc(b.id)}">
           <div class="mb-head">
@@ -25763,6 +31037,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="mb-hint-box" data-mb-hint="${esc(b.id)}" hidden>
             ${b.hint ? `<strong>💡 רמז:</strong> ${esc(b.hint)}` : ""}
           </div>
+          ${renderQuestionPrereqPanel({ question: supportQuestion, lesson, concept, mode: "mini-build" })}
           <div class="mb-ref-box" data-mb-ref="${esc(b.id)}" hidden>
             <div class="mb-ref-label">✅ פתרון לדוגמה</div>
             <pre><code>${esc(b.reference || "")}</code></pre>
@@ -26044,6 +31319,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // listener was just bound to this freshly inserted card).
     wireConceptCardHandlers(lesson);
     setLessonContextTree(lesson, conceptName);
+    queuePageScrollRailRefresh();
   }
 
   function wireConceptCardHandlers(lesson) {
@@ -26054,6 +31330,23 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       if (!concept) return;
       const k = conceptKey(lesson.id, conceptName);
+      const stepStateKey = conceptStepStateKey(lesson, concept);
+      wireQuestionPrerequisiteNavigation(card);
+
+      card.querySelectorAll("[data-concept-step-tab]").forEach((btn) => {
+        btn.addEventListener("click", (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const stepId = btn.getAttribute("data-concept-step-tab") || "definition";
+          selectedConceptStepByConcept[stepStateKey] = stepId;
+          renderContent();
+          requestAnimationFrame(() => {
+            document
+              .querySelector(`.concept-card.adaptive[data-concept="${cssEscape(conceptName)}"]`)
+              ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          });
+        });
+      });
 
       card.querySelectorAll(".prereq-chip[data-prereq-lesson][data-prereq-concept]").forEach((btn) => {
         if (btn.dataset.boundPrereqNav === "1") return;
@@ -26081,7 +31374,11 @@ document.addEventListener("DOMContentLoaded", () => {
             refreshConceptCard(conceptName); // P1.1.2
           } else if (action === "toggle-illustration") {
             const ill = card.querySelector(".concept-illustration");
-            if (ill) ill.style.display = ill.style.display === "none" ? "block" : "none";
+            if (ill) {
+              const step = ill.closest(".concept-step-panel");
+              if (step) step.open = true;
+              ill.style.display = ill.style.display === "none" ? "block" : "none";
+            }
           } else if (action === "toggle-comments") {
             const pre = card.querySelector(".code-box pre");
             if (!pre) return;
@@ -26187,7 +31484,7 @@ document.addEventListener("DOMContentLoaded", () => {
               tag.className = "bh-status bh-status-wrong";
               tag.textContent = "❌ לא בדיוק. ראה את ההסבר למטה.";
               optionsBox?.appendChild(tag);
-              if (resultBox) resultBox.insertAdjacentHTML("beforeend", renderMistakeAgentFeedback(bugResult.mistake));
+              if (resultBox) resultBox.insertAdjacentHTML("beforeend", renderWrongAnswerCoachCard({ mode: "bug-hunt", result: bugResult, concept, question: bug }));
             } else {
               const tag = document.createElement("div");
               tag.className = "bh-status bh-status-correct";
@@ -26203,8 +31500,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const eli5Box = card.querySelector(".eli5-overlay");
             let grandma = "";
             if (concept.levels) {
-              if (Array.isArray(concept.levels)) grandma = concept.levels[0] || "";
-              else grandma = concept.levels.grandma || concept.levels.child || "";
+              grandma = levelText(concept.levels, "grandma") || levelText(concept.levels, "child") || "";
             }
             let analogy = "";
             if (concept.analogies) {
@@ -26466,11 +31762,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ========= Inline mini-quiz inside the lesson concept card =========
-  // Flow: pick an MC question (from bank if exists, else auto-generate).
+  // Flow: pick manually authored MC/Fill questions only.
   // If correct → applyAnswer mc=true; if concept needs fill, follow up with one fill question.
   // Pass both → level advances; render refreshes to show new level.
   function startConceptInlineQuiz(card, lesson, concept, stage) {
     const sc = getScore(lesson.id, concept.conceptName);
+    const totalQuestionStages = needsCodeFill(concept) ? 2 : 1;
     if (!stage) {
       // Auto-detect: if user passed MC at this level but not Fill, jump to fill
       if (sc.level < 7 && sc.passedMC && needsCodeFill(concept) && !sc.passedFill) {
@@ -26489,25 +31786,35 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       slot.innerHTML = `
-        <div class="concept-inline-quiz" data-stage="mc">
-          <div class="ciq-head">🅰️ שאלה אמריקנית</div>
-          <div class="question-learning-layout inline">
-            <div class="question-answer-area">
-              <div class="ciq-question">${esc(q.question).replace(/\n/g, "<br>")}</div>
-              ${q.codeBlock ? `<div class="code-box"><pre><code>${esc(q.codeBlock)}</code></pre></div>` : ""}
-              <div class="ciq-options">
-                ${q.options
-                  .map(
-                    (opt, i) =>
-                      `<button class="ciq-option" data-i="${i}">${esc(opt)}</button>`,
-                  )
-                  .join("")}
+        <details class="concept-questions-panel" data-page-section="שאלות ותרגול" open>
+          <summary class="concept-questions-summary"><span>שאלות</span><strong>${esc(sc.passedMC ? 1 : 0)}/${esc(totalQuestionStages)}</strong></summary>
+          <div class="concept-stages">
+            <details class="concept-stage" data-stage="mc" data-page-section="שאלה 1 מתוך ${esc(totalQuestionStages)} — אמריקנית" open>
+              <summary class="concept-stage-head"><span>שאלה 1 מתוך ${esc(totalQuestionStages)}</span> 🅰️ שאלה אמריקנית</summary>
+              <div class="concept-stage-body" id="cs-mc-body">
+                <div class="concept-inline-quiz" data-stage="mc">
+                  <div class="question-learning-layout inline">
+                    <div class="question-answer-area">
+                      <div class="ciq-question-count">שאלה 1 מתוך ${esc(totalQuestionStages)}</div>
+                      <div class="ciq-question">${esc(q.question).replace(/\n/g, "<br>")}</div>
+                      ${q.codeBlock ? `<div class="code-box"><pre><code>${esc(q.codeBlock)}</code></pre></div>` : ""}
+                      <div class="ciq-options">
+                        ${q.options
+                          .map(
+                            (opt, i) =>
+                              `<button class="ciq-option" data-i="${i}">${esc(opt)}</button>`,
+                          )
+                          .join("")}
+                      </div>
+                    </div>
+                    ${renderQuestionPrereqPanel({ question: q, lesson, concept, mode: "inline" })}
+                  </div>
+                  <div class="ciq-feedback"></div>
+                </div>
               </div>
-            </div>
-            ${renderQuestionPrereqPanel({ question: q, lesson, concept, mode: "inline" })}
+            </details>
           </div>
-          <div class="ciq-feedback"></div>
-        </div>`;
+        </details>`;
       wireQuestionPrerequisiteNavigation(slot);
 
       slot.querySelectorAll(".ciq-option").forEach((btn) => {
@@ -26527,39 +31834,48 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     } else if (stage === "fill") {
-      const fill = makeCodeFill(concept);
+      const fill = pickManualFillQuestionForConcept(lesson, concept);
       if (!fill) {
-        // No code-fill possible; mark as advanced via mc only
-        const result = applyAnswer(lesson.id, concept.conceptName, concept, "fill", true);
-        slot.innerHTML = renderQuizResultBlock(true, "fill", result, "אין דוגמת קוד למושג זה — קודמת אוטומטית.");
-        renderContent();
+        slot.innerHTML = `<div class="concept-quiz-empty">לא נמצאה שאלת Fill ידנית למושג זה.</div>`;
         return;
       }
+      const fillCode = fillQuestionCode(fill);
+      const fillAnswer = fillQuestionAnswer(fill);
       slot.innerHTML = `
-        <div class="concept-inline-quiz" data-stage="fill">
-          <div class="ciq-head">✍️ עכשיו השלם את הקוד</div>
-          <div class="question-learning-layout inline">
-            <div class="question-answer-area">
-              <div class="ciq-hint">${esc(`אורך התשובה: ${fill.answer.length} תווים. אות ראשונה: "${fill.answer[0]}".`)}</div>
-              <div class="code-box"><pre><code>${esc(fill.blanked).replace(/____/g, '<span class="tq-code-blank">____</span>')}</code></pre></div>
-              <div class="ciq-fill-row">
-                <input type="text" class="ciq-fill-input" placeholder="הקלד את הטוקן החסר..." dir="ltr" autocomplete="off" spellcheck="false" />
-                <button class="ciq-submit primary">✅ בדוק</button>
+        <details class="concept-questions-panel" data-page-section="שאלות ותרגול" open>
+          <summary class="concept-questions-summary"><span>שאלות</span><strong>${esc(sc.passedMC ? 1 : 0)}/${esc(totalQuestionStages)}</strong></summary>
+          <div class="concept-stages">
+            <details class="concept-stage" data-stage="fill" data-page-section="שאלה 2 מתוך ${esc(totalQuestionStages)} — השלמת קוד" open>
+              <summary class="concept-stage-head"><span>שאלה 2 מתוך ${esc(totalQuestionStages)}</span> ✍️ השלמת קוד</summary>
+              <div class="concept-stage-body" id="cs-fill-body">
+                <div class="concept-inline-quiz" data-stage="fill">
+                  <div class="question-learning-layout inline">
+                    <div class="question-answer-area">
+                      <div class="ciq-question-count">שאלה 2 מתוך ${esc(totalQuestionStages)}</div>
+                      <div class="ciq-hint">${esc(fill.hint || `אורך התשובה: ${fillAnswer.length} תווים. אות ראשונה: "${fillAnswer[0] || ""}".`)}</div>
+                      <div class="code-box"><pre><code>${esc(fillCode).replace(/____/g, '<span class="tq-code-blank">____</span>')}</code></pre></div>
+                      <div class="ciq-fill-row">
+                        <input type="text" class="ciq-fill-input" placeholder="הקלד את הטוקן החסר..." dir="ltr" autocomplete="off" spellcheck="false" />
+                        <button class="ciq-submit primary">✅ בדוק</button>
+                      </div>
+                    </div>
+                    ${renderQuestionPrereqPanel({
+                      question: {
+                      question: `השלם את הטוקן החסר בקוד של ${concept.conceptName}`,
+                      code: fillCode,
+                      conceptKey: conceptKey(lesson.id, concept.conceptName),
+                    },
+                      lesson,
+                      concept,
+                      mode: "inline",
+                    })}
+                  </div>
+                  <div class="ciq-feedback"></div>
+                </div>
               </div>
-            </div>
-            ${renderQuestionPrereqPanel({
-              question: {
-                question: `השלם את הטוקן החסר בקוד של ${concept.conceptName}`,
-                code: fill.blanked,
-                conceptKey: conceptKey(lesson.id, concept.conceptName),
-              },
-              lesson,
-              concept,
-              mode: "inline",
-            })}
+            </details>
           </div>
-          <div class="ciq-feedback"></div>
-        </div>`;
+        </details>`;
       wireQuestionPrerequisiteNavigation(slot);
 
       const input = slot.querySelector(".ciq-fill-input");
@@ -26568,14 +31884,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const userAns = (input.value || "").trim();
         if (!userAns) return;
         const correct =
-          userAns.toLowerCase() === (fill.answer || "").toLowerCase();
+          userAns.toLowerCase() === fillAnswer.toLowerCase();
         input.disabled = true;
         submitBtn.disabled = true;
         input.classList.add(correct ? "correct" : "wrong");
         handleConceptQuizAnswer(card, lesson, concept, "fill", correct, {
-          answer: fill.answer,
-          question: `השלם את הטוקן החסר בקוד של ${concept.conceptName}`,
-          code: fill.blanked,
+          answer: fillAnswer,
+          question: fillQuestionPrompt(fill, concept.conceptName),
+          code: fillCode,
           conceptKey: conceptKey(lesson.id, concept.conceptName),
         }, {
           answer: userAns,
@@ -26600,8 +31916,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // Preference order:
       // 1. Curated, same level
       // 2. Curated, any level
-      // 3. Seeded, same level
-      // 4. Any seeded
       const curatedSame = bank.mc.filter((q) => !q._seeded && q.level === sc.level);
       const pickedCuratedSame = pickUnansweredBankQuestion(curatedSame, lesson.id, concept.conceptName, "mc", {
         preferredLevel: sc.level,
@@ -26614,19 +31928,8 @@ document.addEventListener("DOMContentLoaded", () => {
         allowExhaustedFallback: false,
       });
       if (pickedCuratedAny) return pickedCuratedAny;
-      const seededSame = bank.mc.filter((q) => q.level === sc.level);
-      const pickedSeededSame = pickUnansweredBankQuestion(seededSame, lesson.id, concept.conceptName, "mc", {
-        preferredLevel: sc.level,
-        allowExhaustedFallback: false,
-      });
-      if (pickedSeededSame) return pickedSeededSame;
-      return pickUnansweredBankQuestion(bank.mc, lesson.id, concept.conceptName, "mc", {
-        preferredLevel: sc.level,
-        allowExhaustedFallback: true,
-      });
+      return null;
     }
-    const auto = buildQuestion({ lesson, concept });
-    if (auto && auto.kind === "mc") return auto;
     return null;
   }
 
@@ -26662,6 +31965,8 @@ document.addEventListener("DOMContentLoaded", () => {
           result.newLevel === 7
             ? `🏆 כל הכבוד! הגעת לרמת מאסטר במושג זה!`
             : `⬆️ עלית מרמה ${levelBefore} לרמה ${result.newLevel} (${nl.icon} ${nl.label})!`;
+      } else if (result.masteryGateBlocked) {
+        msg = result.masteryGate?.message || "נשאר checkpoint קצר לפני רמת מאסטר.";
       } else if (kind === "mc") {
         msg = needsCodeFill(concept)
           ? `נכון! ✅ עכשיו השלם את הקוד למטה כדי לקדם רמה.`
@@ -26690,7 +31995,7 @@ document.addEventListener("DOMContentLoaded", () => {
             selectedIdx: meta.selectedIdx,
             concept,
           })}
-          ${!correct ? renderMistakeAgentFeedback(result.mistake) : ""}
+          ${!correct ? renderWrongAnswerCoachCard({ mode: meta.mode || "inline", result, concept, question: questionForFeedback }) : ""}
         </div>
         ${
           !correct
@@ -26867,9 +32172,9 @@ document.addEventListener("DOMContentLoaded", () => {
           correctAnswer: quizItem?.options?.[correctIndex] || "",
           explanation: quizItem?.explanation || "",
         });
-        const explanationBox = qEl.querySelector(".quiz-explanation");
+        const explanationBox = qEl.querySelector(".quiz-explanation-text");
         if (explanationBox && answerResult?.mistake) {
-          explanationBox.insertAdjacentHTML("beforeend", renderMistakeAgentFeedback(answerResult.mistake));
+          explanationBox.insertAdjacentHTML("beforeend", renderWrongAnswerCoachCard({ mode: "lesson-quiz", result: answerResult, question: quizItem || {} }));
         }
       }
 
@@ -27142,7 +32447,13 @@ document.addEventListener("DOMContentLoaded", () => {
       rating: String(record.confidence),
       correct: record.scorePct >= 70,
     });
-    awardXP(10);
+    awardLearningReward({
+      xp: 10,
+      coins: coinsForXP(10),
+      source: "lesson-wrap",
+      conceptKey: record.lessonId,
+      questionId: `lesson-wrap:${record.lessonId}:${record.date.slice(0, 10)}`,
+    });
     tickStudyStreak();
     showAchievementToast({ title: "⏱️ סיכום שיעור", desc: "+10 XP על סיכום וכיול ביטחון" });
     closeLessonWrapUp();
@@ -27323,6 +32634,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Streak tracking ---
   const STREAK_KEY = "lumenportal:streak:v1";
+  const EXAM_DATE_KEY = "lumenportal:examDate:v1";
+  const EXAM_DAILY_TARGET_KEY = "lumenportal:examDailyTarget:v1";
   function getStreak() {
     try {
       const parsed = JSON.parse(localStorage.getItem(STREAK_KEY) || '{"count":0,"lastDate":""}');
@@ -27362,6 +32675,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!next.changed) return;
     saveStreak(next);
     updateStreakWidget();
+    awardLearningReward({
+      xp: 5,
+      coins: coinsForXP(5),
+      source: "study-streak",
+      questionId: `study-streak:${next.lastDate || new Date().toISOString().slice(0, 10)}`,
+    });
     if (next.usedFreeze) {
       showAchievementToast({
         title: "🧊 רצף נשמר",
@@ -27392,6 +32711,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const LIFETIME_COINS_KEY = "lumenportal:lifetimeCoinsEarned:v1";
   const REWARD_LOG_KEY = "lumenportal:rewardLog:v1";
   const STORE_PURCHASES_KEY = "lumenportal:storePurchases:v1";
+  const ECONOMY_DISABLED_KEY = "lumenportal:economyDisabled:v1";
   const XP_MAX_LEVEL = 100;
   const XP_LEVEL_BANDS = [
     { min: 1, max: 10, label: "סבתא מתכנתת", icon: "👵" },
@@ -27407,6 +32727,16 @@ document.addEventListener("DOMContentLoaded", () => {
   function getCoins() { try { return parseInt(localStorage.getItem(COINS_KEY) || "0", 10); } catch { return 0; } }
   function getLifetimeXP() { try { return parseInt(localStorage.getItem(LIFETIME_XP_KEY) || "0", 10); } catch { return 0; } }
   function getLifetimeCoins() { try { return parseInt(localStorage.getItem(LIFETIME_COINS_KEY) || "0", 10); } catch { return 0; } }
+  function isEconomyDisabled() {
+    try { return localStorage.getItem(ECONOMY_DISABLED_KEY) === "1"; } catch { return false; }
+  }
+  function setEconomyDisabled(disabled) {
+    try {
+      if (disabled) localStorage.setItem(ECONOMY_DISABLED_KEY, "1");
+      else localStorage.removeItem(ECONOMY_DISABLED_KEY);
+    } catch {}
+    updateXPWidget(getXP());
+  }
   function xpRequiredForLevel(level) {
     const safeLevel = Math.min(XP_MAX_LEVEL, Math.max(1, Number(level) || 1));
     if (safeLevel <= 1) return 0;
@@ -27418,17 +32748,176 @@ document.addEventListener("DOMContentLoaded", () => {
     while (level < XP_MAX_LEVEL && safeXP >= xpRequiredForLevel(level + 1)) level += 1;
     return level;
   }
-  function canReachGlobalLevel100() {
+  function level100ConceptMasteryStatus() {
     const lessonSource = Array.isArray(window.LESSONS_DATA) ? window.LESSONS_DATA : [];
     const allConcepts = lessonSource.flatMap((lesson) =>
       (lesson.concepts || []).map((concept) => ({ lesson, concept })),
     );
-    if (!allConcepts.length) return false;
-    return allConcepts.every(({ lesson, concept }) => isScoreMastered(getScore(lesson.id, concept.conceptName)));
+    const mastered = allConcepts.filter(({ lesson, concept }) =>
+      isScoreMastered(getScore(lesson.id, concept.conceptName)),
+    ).length;
+    return {
+      total: allConcepts.length,
+      mastered,
+      ready: allConcepts.length > 0 && mastered === allConcepts.length,
+    };
+  }
+  function level100ProofCoverageStatus() {
+    const lessonSource = Array.isArray(window.LESSONS_DATA) ? window.LESSONS_DATA : [];
+    const allConcepts = lessonSource.flatMap((lesson) =>
+      (lesson.concepts || []).map((concept) => ({ lesson, concept })),
+    );
+    let highestProof = 0;
+    let codeRequired = 0;
+    let codeSatisfied = 0;
+    let unresolvedWeaknesses = 0;
+    allConcepts.forEach(({ lesson, concept }) => {
+      const score = getScore(lesson.id, concept.conceptName);
+      if (scoreHasMasteryProof(score)) highestProof++;
+      if (conceptRequiresCodeProof(concept)) {
+        codeRequired++;
+        if (scoreHasCodeProof(score)) codeSatisfied++;
+      }
+      if ((Number(score.weakReports) || 0) > 0 && !isScoreMastered(score)) unresolvedWeaknesses++;
+    });
+    return {
+      total: allConcepts.length,
+      highestProof,
+      highestReady: allConcepts.length > 0 && highestProof === allConcepts.length,
+      codeRequired,
+      codeSatisfied,
+      codeReady: codeRequired === codeSatisfied,
+      unresolvedWeaknesses,
+      noWeaknessesReady: unresolvedWeaknesses === 0,
+    };
+  }
+  function level100ProfessorExamProof() {
+    const list = typeof loadExamHistory === "function" ? loadExamHistory() : [];
+    const proofRecord = list.find((record) => {
+      const proof = record?.level100GateProof || {};
+      return Boolean(
+        proof.passed === true ||
+        (
+          Number(record?.score) === 100 &&
+          Number(record?.totalQs) > 0 &&
+          Number(proof.professorTotal) === Number(record.totalQs) &&
+          Number(proof.professorRight) === Number(proof.professorTotal)
+        ),
+      );
+    });
+    if (!proofRecord) {
+      return {
+        passed: false,
+        score: 0,
+        professorRight: 0,
+        professorTotal: 0,
+        templateName: "",
+      };
+    }
+    const proof = proofRecord.level100GateProof || {};
+    return {
+      passed: true,
+      score: Number(proofRecord.score) || 100,
+      professorRight: Number(proof.professorRight) || Number(proofRecord.totalQs) || 0,
+      professorTotal: Number(proof.professorTotal) || Number(proofRecord.totalQs) || 0,
+      templateName: proofRecord.templateName || proof.templateName || "מבחן פרופסור",
+      date: proofRecord.date || "",
+    };
+  }
+  function level100ReleaseGateStatus() {
+    const report = window.LEVEL100_RELEASE_GATES || null;
+    const checks = Array.isArray(report?.checks) ? report.checks : [];
+    if (!report) {
+      return {
+        ready: false,
+        status: "unknown/unavailable",
+        checks: [],
+        blockers: [{
+          id: "release-gate-report",
+          label: "Level 100 release gate report",
+          detail: "חסר דוח release gate אמיתי. הרץ level100:release-gate:write לפני פתיחת רמה 100.",
+        }],
+      };
+    }
+    const blockers = checks
+      .filter((check) => check && check.passed !== true)
+      .map((check) => ({
+        id: check.id || "release-gate",
+        label: check.label || check.id || "release gate",
+        detail: check.detail || check.status || "blocked",
+      }));
+    return {
+      ready: report.ready === true && blockers.length === 0,
+      status: report.ready === true && blockers.length === 0 ? "pass" : "blocked",
+      checks,
+      blockers,
+      date: report.date || "",
+      policy: report.policy || "",
+    };
+  }
+  function level100GateStatus() {
+    const conceptMastery = level100ConceptMasteryStatus();
+    const proofCoverage = level100ProofCoverageStatus();
+    const examProof = level100ProfessorExamProof();
+    const releaseGate = level100ReleaseGateStatus();
+    return {
+      rule: LEVEL_100_EXAM_RULE_TEXT,
+      passed: examProof.passed && conceptMastery.ready && proofCoverage.highestReady && proofCoverage.codeReady && proofCoverage.noWeaknessesReady && releaseGate.ready,
+      examProof,
+      conceptMastery,
+      proofCoverage,
+      releaseGate,
+      checklist: [
+        {
+          id: "professor-exam-100",
+          label: LEVEL_100_EXAM_RULE_TEXT,
+          done: examProof.passed,
+          detail: examProof.passed
+            ? `${examProof.templateName} · ${examProof.professorRight}/${examProof.professorTotal}`
+            : "פתח מבחן רמה 100 — פרופסור וקבל 100%.",
+        },
+        {
+          id: "concept-mastery",
+          label: "כל מושגי SVCollege סומנו כמאסטר",
+          done: conceptMastery.ready,
+          detail: `${conceptMastery.mastered}/${conceptMastery.total}`,
+        },
+        {
+          id: "highest-challenge-proof",
+          label: "לכל מושג יש הוכחת שאלת עומק/אתגר",
+          done: proofCoverage.highestReady,
+          detail: `${proofCoverage.highestProof}/${proofCoverage.total}`,
+        },
+        {
+          id: "code-proof",
+          label: "מושגים עם קוד כוללים Fill/Trace/Bug/Build proof",
+          done: proofCoverage.codeReady,
+          detail: `${proofCoverage.codeSatisfied}/${proofCoverage.codeRequired}`,
+        },
+        {
+          id: "no-open-weakness",
+          label: "אין חולשות פתוחות במושגים לא-מאסטרים",
+          done: proofCoverage.noWeaknessesReady,
+          detail: `${proofCoverage.unresolvedWeaknesses} פתוחות`,
+        },
+        {
+          id: "release-gates-green",
+          label: "QA, build ו-smoke ירוקים לפני פתיחת רמה 100",
+          done: releaseGate.ready,
+          detail: releaseGate.ready
+            ? `${releaseGate.checks.length} checks passed`
+            : releaseGate.blockers.map((blocker) => blocker.label).slice(0, 3).join(", ") || releaseGate.status,
+        },
+      ],
+    };
+  }
+  function canReachGlobalLevel100() {
+    return level100GateStatus().passed;
   }
   function learnerLevelFromXP(xp = getXP()) {
     const rawLevel = rawLevelFromXP(xp);
-    const level = rawLevel >= XP_MAX_LEVEL && !canReachGlobalLevel100() ? 99 : rawLevel;
+    const gate = level100GateStatus();
+    const level = rawLevel >= XP_MAX_LEVEL && !gate.passed ? 99 : rawLevel;
     const band = XP_LEVEL_BANDS.find((item) => level >= item.min && level <= item.max) || XP_LEVEL_BANDS[0];
     const currentXP = Math.max(0, Number(xp) || 0);
     const currentFloor = xpRequiredForLevel(level);
@@ -27436,12 +32925,71 @@ document.addEventListener("DOMContentLoaded", () => {
     const needed = Math.max(0, nextFloor - currentXP);
     const span = Math.max(1, nextFloor - currentFloor);
     const progress = level >= XP_MAX_LEVEL ? 100 : Math.max(0, Math.min(100, Math.round(((currentXP - currentFloor) / span) * 100)));
-    return { level, rawLevel, band, currentXP, currentFloor, nextFloor, needed, progress };
+    return { level, rawLevel, band, currentXP, currentFloor, nextFloor, needed, progress, level100Gate: gate };
   }
   function coinsForXP(amount) {
     const xp = Number(amount) || 0;
     if (xp <= 0) return 0;
     return Math.max(1, Math.floor(xp / 4));
+  }
+  function economyRewardTuningRows() {
+    return [
+      { id: "answer-correct", label: "תשובה נכונה", xp: 10, coins: coinsForXP(10), rule: "נדרש source + questionId כדי למנוע reward כפול." },
+      { id: "answer-advance", label: "עליית רמת מושג", xp: 35, coins: coinsForXP(35), rule: "רק אחרי מעבר שלבי MC/קוד אמיתיים." },
+      { id: "mastery-gate-pending", label: "ניסיון mastery שנחסם לשער", xp: 10, coins: coinsForXP(10), rule: "תגמול קטן על ניסיון אמיתי; לא פותח mastery." },
+      { id: "study-streak", label: "רצף לימוד יומי", xp: 5, coins: coinsForXP(5), rule: "פעם אחת ביום לפי תאריך." },
+      { id: "flashcards", label: "Flashcards", xp: "2/6/12/18", coins: "1/1/3/4", rule: "לפי דירוג again/hard/good/easy ומושג אמיתי." },
+      { id: "concept-sprint", label: "Concept Sprint", xp: "bonus+correct*6 או penalty-", coins: "coinsForXP(delta)", rule: "לפי תוצאות הסשן בפועל, עם hash דטרמיניסטי." },
+      { id: "mock-exam", label: "מבחן מדומה", xp: "10/30/50/80", coins: "2/7/12/20", rule: "לפי ציון אמיתי: ניסיון, 70+, 80+, 95+." },
+      { id: "lesson-wrap", label: "סיכום שיעור", xp: 10, coins: coinsForXP(10), rule: "פעם ביום לכל שיעור עם כיול ביטחון." },
+      { id: "reflection", label: "רפלקציה יומית", xp: 15, coins: coinsForXP(15), rule: "פעם ביום, דורש טקסט אמיתי." },
+      { id: "achievement", label: "Achievement", xp: 25, coins: 8, rule: "רק achievement חדש שלא נפתח בעבר." },
+      { id: "peer-review", label: "Peer review", xp: "Supabase result", coins: "coinsForXP(xp)", rule: "רק review שנשמר ומחזיר xpAwarded אמיתי." },
+    ];
+  }
+  function economyDashboardSummary() {
+    const log = readRewardLog();
+    const purchases = getStorePurchases();
+    const earnedCoins = log.reduce((sum, entry) => sum + Math.max(0, Number(entry.coins) || 0), 0);
+    const spentFromLog = log.reduce((sum, entry) => sum + Math.abs(Math.min(0, Number(entry.coins) || 0)), 0);
+    const spentFromPurchases = Object.values(purchases).reduce((sum, purchase) => sum + (Number(purchase?.price) || 0), 0);
+    const spentCoins = Math.max(spentFromLog, spentFromPurchases);
+    const purchasedIds = new Set(Object.keys(purchases));
+    const nextUnlock = REWARD_STORE_CATALOG
+      .filter((item) => !purchasedIds.has(item.id))
+      .sort((a, b) => a.price - b.price || a.id.localeCompare(b.id))[0] || null;
+    const datedRewards = log
+      .map((entry) => String(entry.at || "").slice(0, 10))
+      .filter(Boolean)
+      .sort();
+    const daySpan = datedRewards.length
+      ? Math.max(1, Math.round((new Date(datedRewards[datedRewards.length - 1]) - new Date(datedRewards[0])) / 86400000) + 1)
+      : 1;
+    return {
+      earnedCoins,
+      spentCoins,
+      unlocked: purchasedIds.size,
+      nextUnlock: nextUnlock ? `${nextUnlock.title} · 🪙 ${nextUnlock.price}` : "אין פריטים נעולים",
+      averageCoinsPerDay: Math.round((earnedCoins / daySpan) * 10) / 10,
+      tuningRows: economyRewardTuningRows(),
+    };
+  }
+  function nextLevelUnlockHint(levelState) {
+    if (!levelState) return "המשך לשאלה הבאה כדי לצבור הוכחות אמיתיות.";
+    if (levelState.level >= XP_MAX_LEVEL) return "רמה 100 פתוחה רק עם הוכחת מבחן פרופסור מלאה.";
+    const nextBand = XP_LEVEL_BANDS.find((item) => (levelState.level + 1) >= item.min && (levelState.level + 1) <= item.max);
+    if (nextBand && nextBand.label !== levelState.band.label) {
+      return `היעד הבא: ${nextBand.icon} ${nextBand.label}.`;
+    }
+    return `היעד הבא: רמה ${Math.min(XP_MAX_LEVEL, levelState.level + 1)}.`;
+  }
+  function showLevelUpToast(previousLevel, nextLevelState, coinsEarned) {
+    if (!nextLevelState || nextLevelState.level <= previousLevel) return;
+    showAchievementToast({
+      title: `עלית לרמת תלמיד ${nextLevelState.level}/100`,
+      desc: `+${coinsEarned} מטבעות · ${nextLevelUnlockHint(nextLevelState)}`,
+      kind: "level-up",
+    });
   }
   function rewardLogId(entry) {
     const seed = [
@@ -27482,6 +33030,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function awardLearningReward({ xp = 0, coins = coinsForXP(xp), source = "legacy", conceptKey: rewardConceptKey = "", questionId = "" } = {}) {
     const safeXP = Number(xp) || 0;
     const safeCoins = Number(coins) || 0;
+    const previousLevel = learnerLevelFromXP(getXP()).level;
     const rewardEntry = {
       at: new Date().toISOString(),
       source,
@@ -27490,6 +33039,9 @@ document.addEventListener("DOMContentLoaded", () => {
       xp: safeXP,
       coins: safeCoins,
     };
+    if (isEconomyDisabled()) {
+      return { xp: getXP(), coins: getCoins(), level: learnerLevelFromXP(getXP()), disabled: true };
+    }
     const shouldDedupe = (safeXP > 0 || safeCoins > 0) && Boolean(questionId || rewardConceptKey);
     if (shouldDedupe && rewardAlreadyLogged(rewardEntry)) {
       return { xp: getXP(), coins: getCoins(), level: learnerLevelFromXP(getXP()), duplicate: true };
@@ -27506,7 +33058,11 @@ document.addEventListener("DOMContentLoaded", () => {
       appendRewardLog(rewardEntry);
     }
     updateXPWidget(newXP);
-    return { xp: newXP, coins: newCoins, level: learnerLevelFromXP(newXP) };
+    const nextLevel = learnerLevelFromXP(newXP);
+    if (safeXP > 0 && nextLevel.level > previousLevel) {
+      showLevelUpToast(previousLevel, nextLevel, safeCoins);
+    }
+    return { xp: newXP, coins: newCoins, level: nextLevel };
   }
   function awardXP(amount, meta = {}) {
     const newXP = Math.max(0, getXP() + amount);
@@ -27522,12 +33078,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const coins = getCoins();
     el.innerHTML = `
       <span class="xp-level">Lv ${levelState.level}</span>
+      <span class="xp-student-level">רמת תלמיד ${levelState.level}/100</span>
       <span class="xp-band">${levelState.band.icon} ${esc(levelState.band.label)}</span>
       <span class="xp-total">⭐ ${levelState.currentXP}</span>
       <span class="coin-total">🪙 ${coins}</span>
       <span class="xp-progress" aria-hidden="true"><span style="width:${levelState.progress}%"></span></span>`;
     el.title = levelState.level >= 99 && levelState.rawLevel >= 100 && levelState.level < 100
-      ? "XP מספיק לרמה 100, אבל רמה 100 דורשת מאסטר מלא בכל המושגים."
+      ? `${LEVEL_100_EXAM_RULE_TEXT}. XP לבד לא מספיק.`
       : `רמה ${levelState.level}/100 · ${levelState.band.label} · ${levelState.needed} XP לרמה הבאה · ${coins} מטבעות`;
   }
 
@@ -27569,13 +33126,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const body = document.getElementById("xp-detail-body");
     if (!body) return;
     const level = learnerLevelFromXP(getXP());
+    const gate = level.level100Gate;
     const summary = recentRewardSummary();
+    const economyDashboard = economyDashboardSummary();
     const nextAction = nextEconomyAction();
     const purchases = getStorePurchases();
     body.innerHTML = `
       <div class="xp-detail-summary">
         <article>
-          <span>רמה</span>
+          <span>רמת תלמיד</span>
           <strong>${esc(level.level)}/100</strong>
           <small>${esc(level.band.icon)} ${esc(level.band.label)}</small>
         </article>
@@ -27607,6 +33166,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       </section>
       <section class="xp-detail-section">
+        <h4>מאזן כלכלה</h4>
+        <p>נכנסו 🪙 ${esc(economyDashboard.earnedCoins)} · נוצלו 🪙 ${esc(economyDashboard.spentCoins)} · נפתחו ${esc(economyDashboard.unlocked)} פריטים</p>
+        <small>ממוצע: 🪙 ${esc(economyDashboard.averageCoinsPerDay)} ליום · הבא לפתיחה: ${esc(economyDashboard.nextUnlock)}</small>
+      </section>
+      <section class="xp-detail-section">
+        <h4>טבלת תגמולים</h4>
+        <div class="xp-reward-list">
+          ${economyDashboard.tuningRows.map((row) => `
+            <span>${esc(row.label)} · ${esc(row.xp)} XP · 🪙 ${esc(row.coins)} · ${esc(row.rule)}</span>
+          `).join("")}
+        </div>
+      </section>
+      <section class="xp-detail-section">
         <h4>הפעולה הבאה הכי משתלמת</h4>
         <strong>${esc(nextAction.title)}</strong>
         <p>${esc(nextAction.text)}</p>
@@ -27614,9 +33186,16 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>
       <section class="xp-detail-section">
         <h4>שער רמה 100</h4>
-        <p>${canReachGlobalLevel100()
-          ? "אפשר לפתוח רמה 100 אם ה-XP מספיק."
-          : "רמה 100 דורשת מאסטר מלא בכל המושגים ופתרון שאלות עומק. XP לבד לא מספיק."}</p>
+        <p>${esc(gate.rule)}. XP לבד לא מספיק.</p>
+        <div class="xp-gate-checklist">
+          ${gate.checklist.map((item) => `
+            <div class="${item.done ? "done" : "blocked"}">
+              <span>${item.done ? "✓" : "!"}</span>
+              <strong>${esc(item.label)}</strong>
+              <small>${esc(item.detail)}</small>
+            </div>
+          `).join("")}
+        </div>
       </section>`;
   }
 
@@ -27632,6 +33211,28 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: "challenge", label: "אתגרים" },
     { id: "cosmetic", label: "עיצוב" },
     { id: "learning-tool", label: "כלי למידה" },
+  ];
+
+  const COSMETIC_THEME_KEY = "lumenportal:cosmeticTheme:v1";
+  const COSMETIC_THEME_OPTIONS = [
+    {
+      id: "cosmetic.cyber-theme",
+      label: "Cyber Focus",
+      className: "cosmetic-cyber-theme",
+      accessibility: "משנה accent ו-glow בלבד; יחס הטקסט נשאר לפי theme/a11y.",
+    },
+    {
+      id: "cosmetic.exam-calm-theme",
+      label: "Exam Calm",
+      className: "cosmetic-exam-calm-theme",
+      accessibility: "מעדן מסגרות ורקע בלי להחליש טקסט או כפתורים.",
+    },
+    {
+      id: "cosmetic.accessible-outline",
+      label: "Accessible Outline",
+      className: "cosmetic-accessible-outline",
+      accessibility: "מוסיף outline ברור לפוקוס ולכרטיסים בלי להוריד contrast.",
+    },
   ];
 
   const REWARD_STORE_CATALOG = [
@@ -27663,6 +33264,33 @@ document.addEventListener("DOMContentLoaded", () => {
       rule: "לא פותח mastery ב-React. רק חוויה והקשר.",
     },
     {
+      id: "museum.node",
+      category: "museum",
+      title: "כרטיס מוזיאון: Node Runtime",
+      icon: "🟩",
+      price: 135,
+      unlocks: "מסלול חווייתי על runtime, event loop, npm, modules וגבול client/server.",
+      rule: "לא פותח שליטה ב-Node. השיעורים והשאלות נשארים הוכחת הידע.",
+    },
+    {
+      id: "museum.ai",
+      category: "museum",
+      title: "כרטיס מוזיאון: AI Hall",
+      icon: "🧠",
+      price: 160,
+      unlocks: "תחנות AI, מודלים, LLM, agents והבדל בין כלי, מודל ומוצר.",
+      rule: "חומר AI מתקדם נפתח רק אחרי מסלול יסודות ו-XP; אין קיצור למאסטר.",
+    },
+    {
+      id: "museum.debug",
+      category: "museum",
+      title: "כרטיס מוזיאון: Debug Hall",
+      icon: "🧯",
+      price: 105,
+      unlocks: "אולם טעויות לפי שכבות: symptom, root cause, trace, test ותיקון.",
+      rule: "פותח חוויית Debug בלבד. תיקון חולשות ממשיך דרך שאלות ותרגול.",
+    },
+    {
       id: "challenge.debug-arena",
       category: "challenge",
       title: "Debug Arena",
@@ -27681,6 +33309,60 @@ document.addEventListener("DOMContentLoaded", () => {
       rule: "מומלץ אחרי רמה 4+ במושגי async.",
     },
     {
+      id: "challenge.auth-boss",
+      category: "challenge",
+      title: "Boss Battle: Auth",
+      icon: "🛡️",
+      price: 190,
+      unlocks: "קרב עומק על authentication, authorization, session ו-JWT.",
+      rule: "בונוס בלבד. לא פותח הרשאות אמיתיות ולא מחליף הוכחת ידע.",
+    },
+    {
+      id: "challenge.react-state-boss",
+      category: "challenge",
+      title: "Boss Battle: React State",
+      icon: "⚛️",
+      price: 175,
+      unlocks: "קרב עומק על useState, state, props וזרימת מידע בקומפוננטות.",
+      rule: "מומלץ אחרי שליטה בשאלות React State. לא מדלג על שאלות.",
+    },
+    {
+      id: "challenge.api-boss",
+      category: "challenge",
+      title: "Boss Battle: API",
+      icon: "🔌",
+      price: 185,
+      unlocks: "קרב עומק על HTTP, Request, Response, REST API וסטטוסי שגיאה.",
+      rule: "הקרב לא מחליף mastery ב-API; הוא חוויית תרגול נוספת.",
+    },
+    {
+      id: "challenge.db-boss",
+      category: "challenge",
+      title: "Boss Battle: DB",
+      icon: "🗄️",
+      price: 200,
+      unlocks: "קרב עומק על SQL, ORM, CRUD ושמירת נתונים.",
+      rule: "נפתח כבונוס אחרי יסודות DB. שאלות המבחן נשארות מקור הציון.",
+    },
+    {
+      id: "challenge.code-cinema",
+      category: "challenge",
+      title: "Code Cinema Replay Clips",
+      icon: "🎬",
+      price: 95,
+      unlocks: "קליפי replay מתוך חומרי NotebookLM של המוזיאון, כולל ידע מקדים ושאלת בדיקה.",
+      rule: "צפייה היא בונוס. XP וציון מגיעים רק משאלות ותרגול אמיתיים.",
+    },
+    {
+      id: "challenge.secret-labs",
+      category: "challenge",
+      title: "Secret Labs",
+      icon: "🧪",
+      price: 125,
+      unlocks: "ניסויי API contract, DB query ו-state mutation מתוך מפת המוזיאון.",
+      rule: "מעבדה היא תרגול בונוס. שליטה נקבעת רק לפי שאלות והוכחות קיימות.",
+    },
+    {
       id: "tool.visual-hints",
       category: "learning-tool",
       title: "רמזים ויזואליים מורחבים",
@@ -27697,6 +33379,24 @@ document.addEventListener("DOMContentLoaded", () => {
       price: 35,
       unlocks: "עיצוב קוסמטי למסך פוקוס ולכרטיסי התקדמות.",
       rule: "קוסמטיקה בלבד. אין השפעה על ציונים.",
+    },
+    {
+      id: "cosmetic.exam-calm-theme",
+      category: "cosmetic",
+      title: "ערכת צבע Exam Calm",
+      icon: "🟦",
+      price: 40,
+      unlocks: "ערכת צבע רגועה ללמידה ממושכת לפני מבחן.",
+      rule: "קוסמטיקה בלבד. אינה משנה רמות, XP או תשובות.",
+    },
+    {
+      id: "cosmetic.accessible-outline",
+      category: "cosmetic",
+      title: "Accessible Outline",
+      icon: "🔎",
+      price: 30,
+      unlocks: "מסגרות ופוקוס חזקים יותר לכרטיסים וכפתורים.",
+      rule: "שיפור נראות בלבד. לא מסתיר תוכן ולא מוריד contrast.",
     },
     {
       id: "cosmetic.master-badge",
@@ -27724,7 +33424,59 @@ document.addEventListener("DOMContentLoaded", () => {
     try { localStorage.setItem(STORE_PURCHASES_KEY, JSON.stringify(purchases)); } catch {}
   }
 
+  function getActiveCosmeticThemeId() {
+    try {
+      const saved = localStorage.getItem(COSMETIC_THEME_KEY) || "";
+      return COSMETIC_THEME_OPTIONS.some((theme) => theme.id === saved) ? saved : "";
+    } catch {
+      return "";
+    }
+  }
+
+  function applyCosmeticTheme(themeId = getActiveCosmeticThemeId()) {
+    const purchases = getStorePurchases();
+    const selected = COSMETIC_THEME_OPTIONS.find((theme) => theme.id === themeId && purchases[theme.id]);
+    COSMETIC_THEME_OPTIONS.forEach((theme) => {
+      document.documentElement.classList.remove(theme.className);
+    });
+    if (selected) {
+      document.documentElement.classList.add(selected.className);
+      try { localStorage.setItem(COSMETIC_THEME_KEY, selected.id); } catch {}
+      return selected.id;
+    }
+    try { localStorage.removeItem(COSMETIC_THEME_KEY); } catch {}
+    return "";
+  }
+
+  function renderThemeShopPanel(purchases = getStorePurchases()) {
+    const activeId = getActiveCosmeticThemeId();
+    return `
+      <section class="theme-shop-panel" aria-label="Theme Shop">
+        <div>
+          <h3>Theme Shop</h3>
+          <p>עיצובים קוסמטיים בלבד. הם לא משנים ציון, XP, mastery או נגישות בסיסית.</p>
+        </div>
+        <div class="theme-shop-grid">
+          ${COSMETIC_THEME_OPTIONS.map((theme) => {
+            const owned = Boolean(purchases[theme.id]);
+            const active = owned && activeId === theme.id;
+            return `
+              <button class="theme-shop-swatch ${active ? "active" : ""}"
+                      type="button"
+                      data-theme-cosmetic="${esc(theme.id)}"
+                      ${owned ? "" : "disabled"}
+                      aria-pressed="${active ? "true" : "false"}">
+                <span class="${esc(theme.className)}"></span>
+                <strong>${esc(theme.label)}</strong>
+                <small>${owned ? theme.accessibility : "נעול עד רכישה בחנות"}</small>
+              </button>`;
+          }).join("")}
+        </div>
+      </section>`;
+  }
+
   function purchaseStoreItem(itemId) {
+    if (isEconomyDisabled()) return { ok: false, message: "כלכלת התגמולים מושהית. ציונים והתקדמות נשארים שמורים." };
     const item = REWARD_STORE_CATALOG.find((entry) => entry.id === itemId);
     if (!item) return { ok: false, message: "הפריט לא נמצא." };
     const purchases = getStorePurchases();
@@ -27745,6 +33497,7 @@ document.addEventListener("DOMContentLoaded", () => {
       xp: 0,
       coins: -item.price,
     });
+    if (item.category === "cosmetic") applyCosmeticTheme(item.id);
     updateXPWidget(getXP());
     return { ok: true, message: `${item.title} נפתח.` };
   }
@@ -27757,6 +33510,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const purchases = getStorePurchases();
     const coins = getCoins();
     const levelState = learnerLevelFromXP(getXP());
+    const economyDisabled = isEconomyDisabled();
     const visible = REWARD_STORE_CATALOG.filter((item) => rewardStoreFilter === "all" || item.category === rewardStoreFilter);
     if (balance) {
       balance.innerHTML = `
@@ -27775,6 +33529,10 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="store-rule-banner">
         <strong>כלל חנות:</strong> קונים חוויות, עיצובים ואתגרי בונוס. אי אפשר לקנות ציון; לא קונים מאסטר, ולא מדלגים על שאלות עומק.
       </div>
+      <div class="store-privacy-note">
+        <strong>פרטיות:</strong> המטבעות הם תגמולי למידה מקומיים בלבד, נשמרים בדפדפן שלך, אינם כסף אמיתי ואין להם ערך כספי.
+      </div>
+      ${economyDisabled ? `<div class="store-message">כלכלת התגמולים מושהית. לא נמחקים XP, מטבעות, רכישות או ציוני למידה קיימים.</div>` : ""}
       <div class="store-grid">
         ${visible.map((item) => {
           const owned = !!purchases[item.id];
@@ -27788,12 +33546,13 @@ document.addEventListener("DOMContentLoaded", () => {
               <h3>${esc(item.title)}</h3>
               <p>${esc(item.unlocks)}</p>
               <small>${esc(item.rule)}</small>
-              <button data-store-buy="${esc(item.id)}" ${owned || !affordable ? "disabled" : ""}>
-                ${owned ? "נרכש" : affordable ? "פתח עם מטבעות" : `חסרים ${item.price - coins} 🪙`}
+              <button data-store-buy="${esc(item.id)}" ${economyDisabled || owned || !affordable ? "disabled" : ""}>
+                ${economyDisabled ? "כלכלה מושהית" : owned ? "נרכש" : affordable ? "פתח עם מטבעות" : `חסרים ${item.price - coins} 🪙`}
               </button>
             </article>`;
         }).join("")}
       </div>
+      ${renderThemeShopPanel(purchases)}
       <section class="store-purchases">
         <h3>הרכישות שלי</h3>
         ${
@@ -27817,6 +33576,12 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.addEventListener("click", () => {
         const result = purchaseStoreItem(btn.dataset.storeBuy);
         renderRewardStore(result.message);
+      });
+    });
+    root.querySelectorAll("[data-theme-cosmetic]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const selected = applyCosmeticTheme(btn.dataset.themeCosmetic || "");
+        renderRewardStore(selected ? "ערכת התצוגה הופעלה." : "ערכת התצוגה לא זמינה.");
       });
     });
   }
@@ -27879,6 +33644,8 @@ document.addEventListener("DOMContentLoaded", () => {
     openRewardStore();
     renderRewardStore(item ? `${item.title}: אפשר לפתוח כאן עם מטבעות למידה.` : "");
   }
+
+  applyCosmeticTheme();
 
   // --- Achievements ---
   const ACH_KEY = "lumenportal:achievements:v1";
@@ -27988,7 +33755,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showAchievementToast(ach) {
     const toast = document.createElement("div");
-    toast.className = "achievement-toast";
+    toast.className = `achievement-toast ${ach.kind === "level-up" ? "level-up-toast" : ""}`.trim();
     toast.innerHTML = `<div class="ach-toast-title">${ach.title}</div><div class="ach-toast-desc">${esc(ach.desc)}</div>`;
     document.body.appendChild(toast);
     requestAnimationFrame(() => toast.classList.add("visible"));
@@ -28040,9 +33807,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function getReflections() { try { return JSON.parse(localStorage.getItem(REFLECTION_KEY) || "[]"); } catch { return []; } }
   function saveReflection(text, rating) {
     const arr = getReflections();
-    arr.unshift({ date: new Date().toISOString(), text, rating });
+    const record = { date: new Date().toISOString(), text, rating };
+    arr.unshift(record);
     if (arr.length > 52) arr.length = 52; // keep ~1 year
     try { localStorage.setItem(REFLECTION_KEY, JSON.stringify(arr)); } catch {}
+    return record;
   }
 
   function openReflectionModal() {
@@ -28070,8 +33839,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const text = document.getElementById("reflection-text")?.value?.trim();
     const rating = parseInt(document.querySelector(".refl-star.active")?.dataset.star || "3", 10);
     if (!text) return;
-    saveReflection(text, rating);
-    awardXP(15);
+    const record = saveReflection(text, rating);
+    awardLearningReward({
+      xp: 15,
+      coins: coinsForXP(15),
+      source: "reflection",
+      questionId: `reflection:${record.date.slice(0, 10)}`,
+    });
     document.getElementById("reflection-overlay").style.display = "none";
     document.getElementById("reflection-text").value = "";
     document.querySelectorAll(".refl-star").forEach((s) => s.classList.remove("active"));
@@ -28165,6 +33939,25 @@ document.addEventListener("DOMContentLoaded", () => {
     return conceptName ? r.replace(/מושג זה|המושג הנוכחי|מושג הנוכחי/g, conceptName) : r;
   }
 
+  async function callProductionAITutor({ message, mode, concept }) {
+    const core = progressSyncCore();
+    const config = core?.normalizeSupabaseSyncConfig(readSupabaseSyncConfig());
+    if (!config?.ready) return null;
+    const lessonId = currentLessonId || "";
+    const response = await fetch(`${config.url}/functions/v1/ai-tutor`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: config.anonKey,
+        Authorization: `Bearer ${config.accessToken}`,
+      },
+      body: JSON.stringify({ message, mode, concept, lessonId }),
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!response.ok) return null;
+    return response.json();
+  }
+
   async function sendAIMessage() {
     const input = document.getElementById("ai-input");
     const responseEl = document.getElementById("ai-response");
@@ -28188,21 +33981,11 @@ document.addEventListener("DOMContentLoaded", () => {
     responseEl.appendChild(thinkingEl);
     responseEl.scrollTop = responseEl.scrollHeight;
 
-    // Real API call (if configured) or demo fallback
+    // Production Alpha call (if real Supabase credentials are configured) or local fallback.
     let reply = "";
     try {
-      const apiResp = await fetch("/api/ai-tutor", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: msg, mode: aiCurrentMode, concept: concName }),
-        signal: AbortSignal.timeout(8000),
-      });
-      if (apiResp.ok) {
-        const data = await apiResp.json();
-        reply = data.reply || getAIDemoResponse(aiCurrentMode, concName);
-      } else {
-        reply = getAIDemoResponse(aiCurrentMode, concName);
-      }
+      const data = await callProductionAITutor({ message: msg, mode: aiCurrentMode, concept: concName });
+      reply = data?.reply || getAIDemoResponse(aiCurrentMode, concName);
     } catch {
       reply = getAIDemoResponse(aiCurrentMode, concName);
     }
@@ -28250,7 +34033,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // ===== end AI Tutor =====
 
-  // ===== W10 — Export/Import Progress =====
+  // ===== W10 — Export/Import + Supabase Sync Progress =====
+  const SUPABASE_SYNC_URL_KEY = "lumenportal:supabase:url:v1";
+  const SUPABASE_SYNC_ANON_KEY = "lumenportal:supabase:anon-key:v1";
+  const SUPABASE_SYNC_ACCESS_TOKEN_KEY = "lumenportal:supabase:access-token:v1";
+  const PROGRESS_SYNC_META_KEY = "lumenportal:sync:meta:v1";
+  const progressSyncStatusEl = document.getElementById("progress-sync-status");
+
+  function parseJsonOrFallback(rawValue, fallback) {
+    try {
+      return rawValue ? JSON.parse(rawValue) : fallback;
+    } catch (_) {
+      return fallback;
+    }
+  }
+
   function collectProfileScopedEntries(prefixes = []) {
     const entries = {};
     const activeProfileId = localProfileStore?.activeProfile?.id || "";
@@ -28274,8 +34071,33 @@ document.addEventListener("DOMContentLoaded", () => {
       coins: getCoins(),
       lifetimeXp: getLifetimeXP(),
       lifetimeCoinsEarned: getLifetimeCoins(),
+      disabled: isEconomyDisabled(),
       rewardLog: readRewardLog(),
       purchases: getStorePurchases(),
+    };
+  }
+
+  function buildLevel100ReadinessExport() {
+    const level = learnerLevelFromXP(getXP());
+    const gate = level.level100Gate;
+    return {
+      reportVersion: "level-100-readiness-v1",
+      rule: gate.rule,
+      studentLevel: level.level,
+      rawXPLevel: level.rawLevel,
+      xp: level.currentXP,
+      xpOnlyBlockedAt99: level.rawLevel >= XP_MAX_LEVEL && level.level < XP_MAX_LEVEL,
+      ready: gate.passed,
+      examProof: gate.examProof,
+      conceptMastery: gate.conceptMastery,
+      proofCoverage: gate.proofCoverage,
+      releaseGate: gate.releaseGate,
+      checklist: gate.checklist.map((item) => ({
+        id: item.id,
+        label: item.label,
+        done: item.done,
+        detail: item.detail,
+      })),
     };
   }
 
@@ -28297,13 +34119,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (economy.purchases && typeof economy.purchases === "object" && !Array.isArray(economy.purchases)) {
       localStorage.setItem(STORE_PURCHASES_KEY, JSON.stringify(economy.purchases));
     }
+    setEconomyDisabled(economy.disabled === true);
     updateXPWidget(getXP());
   }
 
-  function exportProgress() {
+  function buildProgressSnapshot(now = new Date()) {
+    const date = now instanceof Date ? now : new Date(now);
     const data = {
       version: 2,
-      exportedAt: new Date().toISOString(),
+      exportedAt: Number.isNaN(date.getTime()) ? new Date(0).toISOString() : date.toISOString(),
       profile: {
         id: localProfileStore?.activeProfile?.id || "",
         name: localProfileStore?.activeProfile?.name || "",
@@ -28313,11 +34137,17 @@ document.addEventListener("DOMContentLoaded", () => {
       answeredQuestions: {},
       weaknesses: {},
       economy: collectEconomyExport(),
+      level100Readiness: buildLevel100ReadinessExport(),
     };
     data.scores = collectProfileScopedEntries(["lumenportal:scores:"]);
     data.proficiency = collectProfileScopedEntries(["lumenportal:prof:"]);
     data.answeredQuestions = collectProfileScopedEntries([ANSWERED_QUESTIONS_KEY]);
     data.weaknesses = collectProfileScopedEntries([MISTAKE_AGENT_KEY, CONFIDENCE_CALIBRATION_KEY, CONFUSION_BLOCKERS_KEY]);
+    return data;
+  }
+
+  function exportProgress() {
+    const data = buildProgressSnapshot();
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -28327,33 +34157,185 @@ document.addEventListener("DOMContentLoaded", () => {
     URL.revokeObjectURL(url);
   }
 
+  function applyProgressData(data, { requireConfirmation = true } = {}) {
+    if (!data.version || (!data.scores && !data.proficiency && !data.economy && !data.answeredQuestions && !data.weaknesses)) {
+      throw new Error("invalid format");
+    }
+    const economy = data.economy || {};
+    const purchaseCount = Object.keys(economy.purchases || {}).length;
+    const rewardCount = Array.isArray(economy.rewardLog) ? economy.rewardLog.length : 0;
+    if (requireConfirmation) {
+      const confirmed = confirm(
+        `ייבוא ${Object.keys(data.scores || {}).length} שיעורים, ${Object.keys(data.proficiency || {}).length} רמות ידע, ` +
+        `${Object.keys(data.answeredQuestions || {}).length} מאגרי שאלות שנענו, ${Object.keys(data.weaknesses || {}).length} מאגרי חולשות, ` +
+        `${Number(economy.xp) || 0} XP, ${Number(economy.coins) || 0} מטבעות, ${purchaseCount} רכישות ו-${rewardCount} רשומות reward?\n` +
+        "פעולה זו תדרוס נתונים קיימים בדפדפן זה."
+      );
+      if (!confirmed) return false;
+    }
+    Object.entries(data.scores || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+    Object.entries(data.proficiency || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+    Object.entries(data.answeredQuestions || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+    Object.entries(data.weaknesses || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+    importEconomyExport(economy);
+    return true;
+  }
+
   function importProgress(file) {
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
         const data = JSON.parse(e.target.result);
-        if (!data.version || (!data.scores && !data.proficiency && !data.economy && !data.answeredQuestions && !data.weaknesses)) throw new Error("invalid format");
-        const economy = data.economy || {};
-        const purchaseCount = Object.keys(economy.purchases || {}).length;
-        const rewardCount = Array.isArray(economy.rewardLog) ? economy.rewardLog.length : 0;
-        const confirmed = confirm(
-          `ייבוא ${Object.keys(data.scores || {}).length} שיעורים, ${Object.keys(data.proficiency || {}).length} רמות ידע, ` +
-          `${Object.keys(data.answeredQuestions || {}).length} מאגרי שאלות שנענו, ${Object.keys(data.weaknesses || {}).length} מאגרי חולשות, ` +
-          `${Number(economy.xp) || 0} XP, ${Number(economy.coins) || 0} מטבעות, ${purchaseCount} רכישות ו-${rewardCount} רשומות reward?\n` +
-          "פעולה זו תדרוס נתונים קיימים בדפדפן זה."
-        );
-        if (!confirmed) return;
-        Object.entries(data.scores || {}).forEach(([k, v]) => localStorage.setItem(k, v));
-        Object.entries(data.proficiency || {}).forEach(([k, v]) => localStorage.setItem(k, v));
-        Object.entries(data.answeredQuestions || {}).forEach(([k, v]) => localStorage.setItem(k, v));
-        Object.entries(data.weaknesses || {}).forEach(([k, v]) => localStorage.setItem(k, v));
-        importEconomyExport(economy);
+        if (!applyProgressData(data, { requireConfirmation: true })) return;
         alert("הייבוא הצליח! רענן את הדף כדי לראות את הנתונים.");
       } catch (err) {
         alert("שגיאה בקובץ — ודא שזה קובץ JSON תקין שיוצא מ-LumenPortal.");
       }
     };
     reader.readAsText(file);
+  }
+
+  function progressSyncCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.progressSync;
+  }
+
+  function updateProgressSyncStatus(message, state = "blocked") {
+    if (!progressSyncStatusEl) return;
+    progressSyncStatusEl.textContent = message;
+    progressSyncStatusEl.classList.remove("ready", "blocked", "error");
+    progressSyncStatusEl.classList.add(state);
+  }
+
+  function readSessionValue(key) {
+    try { return sessionStorage.getItem(key) || ""; } catch (_) { return ""; }
+  }
+
+  function writeSessionValue(key, value) {
+    try { sessionStorage.setItem(key, value); } catch (_) {}
+  }
+
+  function readSupabaseSyncConfig() {
+    return {
+      url: localStorage.getItem(SUPABASE_SYNC_URL_KEY) || "",
+      anonKey: localStorage.getItem(SUPABASE_SYNC_ANON_KEY) || "",
+      accessToken: readSessionValue(SUPABASE_SYNC_ACCESS_TOKEN_KEY),
+    };
+  }
+
+  function promptForSupabaseSyncConfig() {
+    const current = readSupabaseSyncConfig();
+    const url = prompt("Supabase project URL עבור סנכרון התקדמות:", current.url);
+    if (url === null) return current;
+    const anonKey = prompt("Supabase anon key עבור REST API:", current.anonKey);
+    if (anonKey === null) return current;
+    const accessToken = prompt("Supabase access token של תלמיד מחובר. נשמר רק ב-sessionStorage:", "");
+    if (accessToken === null) return current;
+    localStorage.setItem(SUPABASE_SYNC_URL_KEY, url.trim());
+    localStorage.setItem(SUPABASE_SYNC_ANON_KEY, anonKey.trim());
+    writeSessionValue(SUPABASE_SYNC_ACCESS_TOKEN_KEY, accessToken.trim());
+    return readSupabaseSyncConfig();
+  }
+
+  function ensureSupabaseSyncConfig() {
+    const core = progressSyncCore();
+    if (!core) return null;
+    let config = core.normalizeSupabaseSyncConfig(readSupabaseSyncConfig());
+    if (!config.ready) config = core.normalizeSupabaseSyncConfig(promptForSupabaseSyncConfig());
+    if (!config.ready) {
+      updateProgressSyncStatus("Sync חסום: חסרים Supabase URL, anon key או access token אמיתי.", "blocked");
+      return null;
+    }
+    return config;
+  }
+
+  function readProgressSyncMeta() {
+    return parseJsonOrFallback(localStorage.getItem(PROGRESS_SYNC_META_KEY), {});
+  }
+
+  function writeProgressSyncMeta(meta) {
+    localStorage.setItem(PROGRESS_SYNC_META_KEY, JSON.stringify({
+      ...readProgressSyncMeta(),
+      ...meta,
+    }));
+  }
+
+  function buildLocalSyncPayload(now = new Date()) {
+    const core = progressSyncCore();
+    const snapshot = buildProgressSnapshot(now);
+    const fingerprint = core.progressFingerprint(snapshot);
+    const meta = readProgressSyncMeta();
+    const localUpdatedAt = meta.localFingerprint === fingerprint && meta.localUpdatedAt
+      ? meta.localUpdatedAt
+      : snapshot.exportedAt;
+    return core.buildSyncPayload(snapshot, {
+      profileId: snapshot.profile.id,
+      updatedAt: localUpdatedAt,
+      appVersion: "2.1.0",
+    });
+  }
+
+  function persistSyncSuccess(payload, rowUpdatedAt, statusText) {
+    writeProgressSyncMeta({
+      localFingerprint: payload?.fingerprint || "",
+      localUpdatedAt: payload?.updatedAt || "",
+      remoteUpdatedAt: rowUpdatedAt || payload?.updatedAt || "",
+      lastSyncedAt: new Date().toISOString(),
+      status: statusText,
+    });
+  }
+
+  function applyRemoteSyncPayload(payload) {
+    if (!payload?.snapshot) throw new Error("remote payload is missing snapshot");
+    applyProgressData(payload.snapshot, { requireConfirmation: false });
+  }
+
+  async function runProgressSync(mode = "sync") {
+    const core = progressSyncCore();
+    if (!core) {
+      updateProgressSyncStatus("Sync חסום: מודול progress-sync לא נטען.", "error");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateProgressSyncStatus("מסנכרן מול Supabase...", "blocked");
+    try {
+      const localPayload = buildLocalSyncPayload();
+      if (mode === "push") {
+        const remote = await core.upsertRemoteProgress({ config, payload: localPayload });
+        persistSyncSuccess(localPayload, remote.rowUpdatedAt, "push");
+        updateProgressSyncStatus("Sync הושלם: ההתקדמות המקומית הועלתה ל-Supabase.", "ready");
+        return;
+      }
+      const remote = await core.fetchRemoteProgress({ config });
+      const remotePayload = remote?.payload || null;
+      if (mode === "pull") {
+        if (!remotePayload) {
+          updateProgressSyncStatus("אין snapshot התקדמות ב-Supabase עבור המשתמש המחובר.", "blocked");
+          return;
+        }
+        applyRemoteSyncPayload(remotePayload);
+        persistSyncSuccess(remotePayload, remote.rowUpdatedAt, "pull");
+        updateProgressSyncStatus("Sync הושלם: ההתקדמות נמשכה מ-Supabase. רענן כדי לראות את כל הנתונים.", "ready");
+        return;
+      }
+      const decision = core.resolveLastWriteWins({ localPayload, remotePayload });
+      if (decision.action === "pull") {
+        applyRemoteSyncPayload(decision.payload);
+        persistSyncSuccess(decision.payload, remote.rowUpdatedAt, decision.reason);
+        updateProgressSyncStatus("Sync הושלם: Supabase היה חדש יותר ונמשך לדפדפן. רענן כדי לראות את כל הנתונים.", "ready");
+        return;
+      }
+      if (decision.action === "push") {
+        const pushed = await core.upsertRemoteProgress({ config, payload: decision.payload });
+        persistSyncSuccess(decision.payload, pushed.rowUpdatedAt, decision.reason);
+        updateProgressSyncStatus("Sync הושלם: הדפדפן היה חדש יותר והועלה ל-Supabase.", "ready");
+        return;
+      }
+      persistSyncSuccess(localPayload, remote?.rowUpdatedAt || localPayload.updatedAt, decision.reason);
+      updateProgressSyncStatus("Sync הושלם: אין שינוי בין הדפדפן ל-Supabase.", "ready");
+    } catch (err) {
+      updateProgressSyncStatus(`Sync נכשל: ${err.message || "unknown error"}`, "error");
+    }
   }
 
   // Wire export/import buttons (added to settings/profile area)
@@ -28365,10 +34347,1162 @@ document.addEventListener("DOMContentLoaded", () => {
     picker.onchange = (e) => { if (e.target.files[0]) importProgress(e.target.files[0]); };
     picker.click();
   });
-  // ===== end Export/Import =====
+  document.getElementById("btn-sync-config")?.addEventListener("click", () => {
+    const core = progressSyncCore();
+    const config = core?.normalizeSupabaseSyncConfig(promptForSupabaseSyncConfig());
+    updateProgressSyncStatus(
+      config?.ready ? "Sync מוגדר לסשן הנוכחי." : "Sync עדיין חסר credentials אמיתיים.",
+      config?.ready ? "ready" : "blocked",
+    );
+  });
+  document.getElementById("btn-sync-now")?.addEventListener("click", () => runProgressSync("sync"));
+  document.getElementById("btn-sync-pull")?.addEventListener("click", () => runProgressSync("pull"));
+  document.getElementById("btn-sync-push")?.addEventListener("click", () => runProgressSync("push"));
 
-  // =========== BOOT ===========
-  setTimeout(() => {
+  const teacherClassNameInput = document.getElementById("teacher-class-name");
+  const teacherCourseKeyInput = document.getElementById("teacher-course-key");
+  const teacherClassIdInput = document.getElementById("teacher-class-id");
+  const teacherStudentCsvInput = document.getElementById("teacher-student-csv");
+  const teacherClassStatusEl = document.getElementById("teacher-class-status");
+  const teacherStudentStatusEl = document.getElementById("teacher-student-status");
+  const teacherBulkStatusEl = document.getElementById("teacher-bulk-status");
+  const teacherStudentTableBody = document.getElementById("teacher-student-table-body");
+  const teacherHeatmapStatusEl = document.getElementById("teacher-heatmap-status");
+  const teacherHeatmapHead = document.getElementById("teacher-heatmap-head");
+  const teacherHeatmapBody = document.getElementById("teacher-heatmap-body");
+  const teacherExportStatusEl = document.getElementById("teacher-export-status");
+  const teacherRiskStatusEl = document.getElementById("teacher-risk-status");
+  const teacherRiskListEl = document.getElementById("teacher-risk-list");
+  const teacherAssignmentTitleInput = document.getElementById("teacher-assignment-title");
+  const teacherAssignmentTypeInput = document.getElementById("teacher-assignment-type");
+  const teacherAssignmentConceptInput = document.getElementById("teacher-assignment-concept");
+  const teacherAssignmentDueInput = document.getElementById("teacher-assignment-due");
+  const teacherAssignmentStatusEl = document.getElementById("teacher-assignment-status");
+  const teacherAssignmentListEl = document.getElementById("teacher-assignment-list");
+  const communityConceptKeyInput = document.getElementById("community-concept-key");
+  const communityThreadTitleInput = document.getElementById("community-thread-title");
+  const communityThreadBodyInput = document.getElementById("community-thread-body");
+  const communityDiscussionStatusEl = document.getElementById("community-discussion-status");
+  const communityThreadListEl = document.getElementById("community-thread-list");
+  const communityReputationStatusEl = document.getElementById("community-reputation-status");
+  const communityReputationListEl = document.getElementById("community-reputation-list");
+  const communityModerationStatusEl = document.getElementById("community-moderation-status");
+  const communityModerationListEl = document.getElementById("community-moderation-list");
+  const peerReviewConceptKeyInput = document.getElementById("peer-review-concept-key");
+  const peerReviewLevelInput = document.getElementById("peer-review-level");
+  const peerReviewSolutionInput = document.getElementById("peer-review-solution");
+  const peerReviewStatusEl = document.getElementById("peer-review-status");
+  const peerReviewMatchEl = document.getElementById("peer-review-match");
+  const peerReviewMatchIdInput = document.getElementById("peer-review-match-id");
+  const peerReviewCorrectnessInput = document.getElementById("peer-review-correctness");
+  const peerReviewClarityInput = document.getElementById("peer-review-clarity");
+  const peerReviewStrengthsInput = document.getElementById("peer-review-strengths");
+  const peerReviewImprovementsInput = document.getElementById("peer-review-improvements");
+  const mentorConceptKeyInput = document.getElementById("mentor-concept-key");
+  const mentorMatchIdInput = document.getElementById("mentor-match-id");
+  const mentorMessageBodyInput = document.getElementById("mentor-message-body");
+  const mentorRatingScoreInput = document.getElementById("mentor-rating-score");
+  const mentorRatingFeedbackInput = document.getElementById("mentor-rating-feedback");
+  const mentorMatchingStatusEl = document.getElementById("mentor-matching-status");
+  const mentorMatchSummaryEl = document.getElementById("mentor-match-summary");
+  const mentorMessageListEl = document.getElementById("mentor-message-list");
+  let latestTeacherStudentsReport = null;
+  let latestTeacherHeatmapReport = null;
+
+  function teacherClassCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.teacherClasses;
+  }
+
+  function updateTeacherClassStatus(message, state = "blocked") {
+    if (!teacherClassStatusEl) return;
+    teacherClassStatusEl.textContent = message;
+    teacherClassStatusEl.classList.remove("ready", "blocked", "error");
+    teacherClassStatusEl.classList.add(state);
+  }
+
+  async function createTeacherClassFromForm() {
+    const core = teacherClassCore();
+    if (!core) {
+      updateTeacherClassStatus("יצירת כיתה חסומה: מודול teacher-classes לא נטען.", "error");
+      return;
+    }
+    const draft = core.normalizeClassDraft({
+      name: teacherClassNameInput?.value || "",
+      courseKey: teacherCourseKeyInput?.value || core.DEFAULT_COURSE_KEY,
+    });
+    if (!draft.valid) {
+      updateTeacherClassStatus("יצירת כיתה חסומה: צריך שם כיתה וקורס.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateTeacherClassStatus("יוצר כיתה ב-Supabase...", "blocked");
+    try {
+      const created = await core.createSupabaseClass({ config, draft });
+      updateTeacherClassStatus(`כיתה נוצרה: ${created.name} (${created.courseKey}).`, "ready");
+      if (teacherClassIdInput && created.id) teacherClassIdInput.value = created.id;
+      if (teacherClassNameInput) teacherClassNameInput.value = "";
+    } catch (err) {
+      updateTeacherClassStatus(`יצירת כיתה נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function teacherStudentsCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.teacherStudents;
+  }
+
+  function updateTeacherStudentStatus(message, state = "blocked") {
+    if (!teacherStudentStatusEl) return;
+    teacherStudentStatusEl.textContent = message;
+    teacherStudentStatusEl.classList.remove("ready", "blocked", "error");
+    teacherStudentStatusEl.classList.add(state);
+  }
+
+  function renderTeacherStudentRows(students = []) {
+    if (!teacherStudentTableBody) return;
+    if (!students.length) {
+      teacherStudentTableBody.innerHTML = '<tr><td colspan="4">אין תלמידים בכיתה הזו.</td></tr>';
+      return;
+    }
+    teacherStudentTableBody.innerHTML = students.map((student) => `
+      <tr>
+        <td>${esc(student.displayName || "unknown/unavailable")}</td>
+        <td>${esc(student.status || "unknown/unavailable")}</td>
+        <td>${esc(student.joinedAt || "unknown/unavailable")}</td>
+        <td>${esc(student.lastActiveAt || "unknown/unavailable")}</td>
+      </tr>
+    `).join("");
+  }
+
+  async function loadTeacherStudentsFromForm() {
+    const core = teacherStudentsCore();
+    if (!core) {
+      updateTeacherStudentStatus("טעינת תלמידים חסומה: מודול teacher-students לא נטען.", "error");
+      return;
+    }
+    const classId = teacherClassIdInput?.value || "";
+    if (!core.normalizeClassId(classId).valid) {
+      updateTeacherStudentStatus("טעינת תלמידים חסומה: צריך Class ID תקין.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateTeacherStudentStatus("טוען תלמידים מ-Supabase...", "blocked");
+    try {
+      const report = await core.fetchClassStudents({ config, classId });
+      latestTeacherStudentsReport = report;
+      renderTeacherStudentRows(report.students);
+      updateTeacherStudentStatus(
+        report.students.length
+          ? `נטענו ${report.students.length} תלמידים.`
+          : "הכיתה קיימת אך אין תלמידים טעונים.",
+        "ready",
+      );
+    } catch (err) {
+      updateTeacherStudentStatus(`טעינת תלמידים נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function teacherBulkImportCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.teacherBulkImport;
+  }
+
+  function updateTeacherBulkStatus(message, state = "blocked") {
+    if (!teacherBulkStatusEl) return;
+    teacherBulkStatusEl.textContent = message;
+    teacherBulkStatusEl.classList.remove("ready", "blocked", "error");
+    teacherBulkStatusEl.classList.add(state);
+  }
+
+  function readFileAsText(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => resolve(String(event.target?.result || ""));
+      reader.onerror = () => reject(new Error("CSV read failed"));
+      reader.readAsText(file);
+    });
+  }
+
+  async function importTeacherStudentsCsvFromForm() {
+    const core = teacherBulkImportCore();
+    if (!core) {
+      updateTeacherBulkStatus("ייבוא CSV חסום: מודול teacher-bulk-import לא נטען.", "error");
+      return;
+    }
+    const classId = teacherClassIdInput?.value || "";
+    if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
+      updateTeacherBulkStatus("ייבוא CSV חסום: צריך Class ID תקין.", "blocked");
+      return;
+    }
+    const file = teacherStudentCsvInput?.files?.[0];
+    if (!file) {
+      updateTeacherBulkStatus("ייבוא CSV חסום: צריך לבחור קובץ CSV.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateTeacherBulkStatus("מייבא תלמידים מ-CSV ל-Supabase...", "blocked");
+    try {
+      const csvText = await readFileAsText(file);
+      const report = await core.bulkImportClassStudents({ config, classId, csvText });
+      updateTeacherBulkStatus(`יובאו ${report.imported}/${report.requested} תלמידים.`, "ready");
+      await loadTeacherStudentsFromForm();
+    } catch (err) {
+      updateTeacherBulkStatus(`ייבוא CSV נכשל: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function teacherHeatmapCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.teacherHeatmap;
+  }
+
+  function updateTeacherHeatmapStatus(message, state = "blocked") {
+    if (!teacherHeatmapStatusEl) return;
+    teacherHeatmapStatusEl.textContent = message;
+    teacherHeatmapStatusEl.classList.remove("ready", "blocked", "error");
+    teacherHeatmapStatusEl.classList.add(state);
+  }
+
+  function updateTeacherExportStatus(message, state = "blocked") {
+    if (!teacherExportStatusEl) return;
+    teacherExportStatusEl.textContent = message;
+    teacherExportStatusEl.classList.remove("ready", "blocked", "error");
+    teacherExportStatusEl.classList.add(state);
+  }
+
+  function renderTeacherHeatmap(report) {
+    if (!teacherHeatmapHead || !teacherHeatmapBody) return;
+    const students = Array.isArray(report?.students) ? report.students : [];
+    const concepts = Array.isArray(report?.concepts) ? report.concepts : [];
+    if (!students.length || !concepts.length) {
+      teacherHeatmapHead.innerHTML = "<tr><th>מושג</th></tr>";
+      teacherHeatmapBody.innerHTML = '<tr><td>אין נתוני mastery קיימים לכיתה הזו.</td></tr>';
+      return;
+    }
+    teacherHeatmapHead.innerHTML = `
+      <tr>
+        <th>מושג</th>
+        ${students.map((student) => `<th>${esc(student.name || "unknown/unavailable")}</th>`).join("")}
+      </tr>
+    `;
+    teacherHeatmapBody.innerHTML = concepts.map((conceptKey) => `
+      <tr>
+        <td>${esc(conceptKey)}</td>
+        ${students.map((student) => {
+          const cell = report.cells?.[`${student.id}::${conceptKey}`];
+          if (!cell) return '<td class="teacher-heatmap-cell unknown">unknown</td>';
+          return `<td class="teacher-heatmap-cell ${esc(cell.status)}" title="${esc(`${cell.correct}/${cell.attempts} correct · ${cell.lastEvidenceAt}`)}">${cell.masteryPct}%</td>`;
+        }).join("")}
+      </tr>
+    `).join("");
+  }
+
+  async function loadTeacherHeatmapFromForm() {
+    const core = teacherHeatmapCore();
+    if (!core) {
+      updateTeacherHeatmapStatus("טעינת heatmap חסומה: מודול teacher-heatmap לא נטען.", "error");
+      return;
+    }
+    const classId = teacherClassIdInput?.value || "";
+    if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
+      updateTeacherHeatmapStatus("טעינת heatmap חסומה: צריך Class ID תקין.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateTeacherHeatmapStatus("טוען mastery heatmap מ-Supabase...", "blocked");
+    try {
+      const report = await core.fetchClassConceptHeatmap({ config, classId });
+      latestTeacherHeatmapReport = report;
+      renderTeacherHeatmap(report);
+      updateTeacherHeatmapStatus(
+        report.rowCount
+          ? `נטענו ${report.rowCount} תאי mastery ל-${report.students.length} תלמידים ו-${report.concepts.length} מושגים.`
+          : "אין נתוני mastery קיימים לכיתה הזו.",
+        "ready",
+      );
+    } catch (err) {
+      updateTeacherHeatmapStatus(`טעינת heatmap נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function exportTeacherLiteClassReport() {
+    const core = teacherHeatmapCore();
+    if (!core || typeof core.buildTeacherLiteExport !== "function") {
+      updateTeacherExportStatus("ייצוא Teacher Lite חסום: מודול teacher-heatmap לא נטען.", "error");
+      return;
+    }
+    const report = core.buildTeacherLiteExport({
+      classId: teacherClassIdInput?.value || "",
+      generatedAt: new Date().toISOString(),
+      studentsReport: latestTeacherStudentsReport,
+      heatmapReport: latestTeacherHeatmapReport,
+    });
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const cleanClassId = String(report.classId || "unknown-unavailable").replace(/[^a-zA-Z0-9_-]/g, "-");
+    a.href = url;
+    a.download = `teacher-lite-${cleanClassId}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    updateTeacherExportStatus(
+      report.unavailable.students || report.unavailable.heatmap
+        ? "יוצא Teacher Lite עם נתונים חסרים מסומנים כ-unknown/unavailable."
+        : `יוצא Teacher Lite: ${report.students.length} תלמידים, ${report.heatmap.rowCount} תאי mastery.`,
+      "ready",
+    );
+  }
+
+  function teacherRiskAlertsCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.teacherRiskAlerts;
+  }
+
+  function updateTeacherRiskStatus(message, state = "blocked") {
+    if (!teacherRiskStatusEl) return;
+    teacherRiskStatusEl.textContent = message;
+    teacherRiskStatusEl.classList.remove("ready", "blocked", "error");
+    teacherRiskStatusEl.classList.add(state);
+  }
+
+  function renderTeacherRiskAlerts(alerts = []) {
+    if (!teacherRiskListEl) return;
+    if (!alerts.length) {
+      teacherRiskListEl.innerHTML = '<div class="teacher-risk-empty">אין התראות סיכון מנתונים אמיתיים.</div>';
+      return;
+    }
+    teacherRiskListEl.innerHTML = alerts.map((alert) => `
+      <div class="teacher-risk-item ${esc(alert.severity)}">
+        <strong>${esc(alert.studentName || "unknown/unavailable")}</strong>
+        <span>${esc(alert.type)}</span>
+        ${alert.conceptKey ? `<span>${esc(alert.conceptKey)}</span>` : ""}
+        <span>${esc(alert.metric || "")}</span>
+        <div>${esc(alert.message || "")}</div>
+      </div>
+    `).join("");
+  }
+
+  async function loadTeacherRiskAlertsFromForm() {
+    const core = teacherRiskAlertsCore();
+    if (!core) {
+      updateTeacherRiskStatus("טעינת סיכונים חסומה: מודול teacher-risk-alerts לא נטען.", "error");
+      return;
+    }
+    const classId = teacherClassIdInput?.value || "";
+    if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
+      updateTeacherRiskStatus("טעינת סיכונים חסומה: צריך Class ID תקין.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateTeacherRiskStatus("טוען סיכונים מ-Supabase...", "blocked");
+    try {
+      const report = await core.fetchClassRiskAlerts({ config, classId });
+      renderTeacherRiskAlerts(report.alerts);
+      updateTeacherRiskStatus(
+        report.alertCount ? `נטענו ${report.alertCount} התראות סיכון.` : "אין התראות סיכון מנתונים אמיתיים.",
+        "ready",
+      );
+    } catch (err) {
+      updateTeacherRiskStatus(`טעינת סיכונים נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function teacherAssignmentsCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.teacherAssignments;
+  }
+
+  function updateTeacherAssignmentStatus(message, state = "blocked") {
+    if (!teacherAssignmentStatusEl) return;
+    teacherAssignmentStatusEl.textContent = message;
+    teacherAssignmentStatusEl.classList.remove("ready", "blocked", "error");
+    teacherAssignmentStatusEl.classList.add(state);
+  }
+
+  function renderTeacherAssignments(assignments = []) {
+    if (!teacherAssignmentListEl) return;
+    if (!assignments.length) {
+      teacherAssignmentListEl.innerHTML = '<div class="teacher-assignment-empty">אין משימות קיימות לכיתה הזו.</div>';
+      return;
+    }
+    teacherAssignmentListEl.innerHTML = assignments.map((assignment) => `
+      <div class="teacher-assignment-item">
+        <strong>${esc(assignment.title || "unknown/unavailable")}</strong>
+        <div>${esc(assignment.assignmentType || "unknown/unavailable")} · ${esc(assignment.status || "unknown/unavailable")}</div>
+        <div>${esc(assignment.targetConceptKey || "unknown/unavailable")} · ${esc(assignment.dueAt || "unknown/unavailable")}</div>
+      </div>
+    `).join("");
+  }
+
+  function assignmentClassId() {
+    return teacherClassIdInput?.value || "";
+  }
+
+  async function createTeacherAssignmentFromForm() {
+    const core = teacherAssignmentsCore();
+    if (!core) {
+      updateTeacherAssignmentStatus("יצירת משימה חסומה: מודול teacher-assignments לא נטען.", "error");
+      return;
+    }
+    const classId = assignmentClassId();
+    if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
+      updateTeacherAssignmentStatus("יצירת משימה חסומה: צריך Class ID תקין.", "blocked");
+      return;
+    }
+    const draft = core.normalizeAssignmentDraft({
+      title: teacherAssignmentTitleInput?.value || "",
+      assignmentType: teacherAssignmentTypeInput?.value || "concept_practice",
+      targetConceptKey: teacherAssignmentConceptInput?.value || "",
+      dueAt: teacherAssignmentDueInput?.value || "",
+    });
+    if (!draft.valid) {
+      updateTeacherAssignmentStatus("יצירת משימה חסומה: צריך כותרת וסוג משימה תקין.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateTeacherAssignmentStatus("יוצר משימה ב-Supabase...", "blocked");
+    try {
+      const created = await core.createClassAssignment({ config, classId, draft });
+      updateTeacherAssignmentStatus(`משימה נוצרה: ${created.assignment.title}.`, "ready");
+      if (teacherAssignmentTitleInput) teacherAssignmentTitleInput.value = "";
+      await loadTeacherAssignmentsFromForm();
+    } catch (err) {
+      updateTeacherAssignmentStatus(`יצירת משימה נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function loadTeacherAssignmentsFromForm() {
+    const core = teacherAssignmentsCore();
+    if (!core) {
+      updateTeacherAssignmentStatus("טעינת משימות חסומה: מודול teacher-assignments לא נטען.", "error");
+      return;
+    }
+    const classId = assignmentClassId();
+    if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
+      updateTeacherAssignmentStatus("טעינת משימות חסומה: צריך Class ID תקין.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateTeacherAssignmentStatus("טוען משימות מ-Supabase...", "blocked");
+    try {
+      const report = await core.fetchClassAssignments({ config, classId });
+      renderTeacherAssignments(report.assignments);
+      updateTeacherAssignmentStatus(
+        report.assignments.length ? `נטענו ${report.assignments.length} משימות.` : "אין משימות קיימות לכיתה הזו.",
+        "ready",
+      );
+    } catch (err) {
+      updateTeacherAssignmentStatus(`טעינת משימות נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function communityDiscussionsCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.communityDiscussions;
+  }
+
+  function updateCommunityDiscussionStatus(message, state = "blocked") {
+    if (!communityDiscussionStatusEl) return;
+    communityDiscussionStatusEl.textContent = message;
+    communityDiscussionStatusEl.classList.remove("ready", "blocked", "error");
+    communityDiscussionStatusEl.classList.add(state);
+  }
+
+  function renderCommunityThreads(threads = []) {
+    if (!communityThreadListEl) return;
+    if (!threads.length) {
+      communityThreadListEl.innerHTML = '<div class="community-thread-empty">אין דיונים קיימים למושג הזה.</div>';
+      return;
+    }
+    communityThreadListEl.innerHTML = threads.map((thread) => `
+      <div class="community-thread-item" data-thread-id="${esc(thread.id || "")}">
+        <strong>${esc(thread.title || "unknown/unavailable")}</strong>
+        <div>${esc(thread.conceptKey || "unknown/unavailable")} · ${esc(thread.status || "unknown/unavailable")}</div>
+        <div>${esc(thread.createdAt || "unknown/unavailable")}</div>
+        <div class="community-thread-actions">
+          <button class="km-btn-mini" data-thread-vote="1" data-thread-id="${esc(thread.id || "")}" type="button">Upvote</button>
+          <button class="km-btn-mini" data-thread-vote="-1" data-thread-id="${esc(thread.id || "")}" type="button">Downvote</button>
+          <button class="km-btn-mini" data-thread-report data-thread-id="${esc(thread.id || "")}" type="button">דווח</button>
+          <button class="km-btn-mini" data-thread-moderate="lock_thread" data-thread-id="${esc(thread.id || "")}" type="button">נעל</button>
+          <button class="km-btn-mini" data-thread-moderate="hide_thread" data-thread-id="${esc(thread.id || "")}" type="button">הסתר</button>
+          <button class="km-btn-mini" data-thread-moderate="restore_thread" data-thread-id="${esc(thread.id || "")}" type="button">שחזר</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function communityConceptKey() {
+    return communityConceptKeyInput?.value || "";
+  }
+
+  async function loadCommunityThreadsFromForm() {
+    const core = communityDiscussionsCore();
+    if (!core) {
+      updateCommunityDiscussionStatus("טעינת דיונים חסומה: מודול community-discussions לא נטען.", "error");
+      return;
+    }
+    const conceptKey = communityConceptKey();
+    if (!conceptKey.trim()) {
+      updateCommunityDiscussionStatus("טעינת דיונים חסומה: צריך concept key.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateCommunityDiscussionStatus("טוען דיונים מ-Supabase...", "blocked");
+    try {
+      const report = await core.fetchConceptDiscussionThreads({ config, conceptKey });
+      renderCommunityThreads(report.threads);
+      updateCommunityDiscussionStatus(
+        report.threads.length ? `נטענו ${report.threads.length} דיונים.` : "אין דיונים קיימים למושג הזה.",
+        "ready",
+      );
+    } catch (err) {
+      updateCommunityDiscussionStatus(`טעינת דיונים נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function createCommunityThreadFromForm() {
+    const core = communityDiscussionsCore();
+    if (!core) {
+      updateCommunityDiscussionStatus("יצירת דיון חסומה: מודול community-discussions לא נטען.", "error");
+      return;
+    }
+    const draft = core.normalizeDiscussionDraft({
+      conceptKey: communityConceptKey(),
+      title: communityThreadTitleInput?.value || "",
+      body: communityThreadBodyInput?.value || "",
+    });
+    if (!draft.valid) {
+      updateCommunityDiscussionStatus("יצירת דיון חסומה: צריך concept key וכותרת.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateCommunityDiscussionStatus("יוצר דיון ב-Supabase...", "blocked");
+    try {
+      const created = await core.createConceptDiscussionThread({ config, draft });
+      updateCommunityDiscussionStatus(`דיון נוצר: ${created.thread.title}.`, "ready");
+      if (communityThreadTitleInput) communityThreadTitleInput.value = "";
+      if (communityThreadBodyInput) communityThreadBodyInput.value = "";
+      await loadCommunityThreadsFromForm();
+    } catch (err) {
+      updateCommunityDiscussionStatus(`יצירת דיון נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function communityVotesCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.communityVotes;
+  }
+
+  async function voteCommunityThread(threadId, vote) {
+    const core = communityVotesCore();
+    if (!core) {
+      updateCommunityDiscussionStatus("הצבעה חסומה: מודול community-votes לא נטען.", "error");
+      return;
+    }
+    if (!threadId) {
+      updateCommunityDiscussionStatus("הצבעה חסומה: חסר thread id.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateCommunityDiscussionStatus("שומר הצבעה ב-Supabase...", "blocked");
+    try {
+      const result = await core.upsertDiscussionVote({ config, threadId, vote });
+      updateCommunityDiscussionStatus(result.vote > 0 ? "Upvote נשמר." : "Downvote נשמר.", "ready");
+    } catch (err) {
+      updateCommunityDiscussionStatus(`שמירת הצבעה נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function communityReputationCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.communityReputation;
+  }
+
+  function updateCommunityReputationStatus(message, state = "blocked") {
+    if (!communityReputationStatusEl) return;
+    communityReputationStatusEl.textContent = message;
+    communityReputationStatusEl.classList.remove("ready", "blocked", "error");
+    communityReputationStatusEl.classList.add(state);
+  }
+
+  function renderCommunityReputation(rows = []) {
+    if (!communityReputationListEl) return;
+    if (!rows.length) {
+      communityReputationListEl.innerHTML = '<div class="community-reputation-empty">אין נתוני מוניטין מנתונים אמיתיים.</div>';
+      return;
+    }
+    communityReputationListEl.innerHTML = rows.map((row) => `
+      <div class="community-reputation-item">
+        <strong>${esc(row.userId || "unknown/unavailable")}</strong>
+        <div>${esc(String(row.reputationPoints ?? 0))} נקודות · ${esc(String(row.threadCount ?? 0))} דיונים · ${esc(String(row.receivedVotes ?? 0))} הצבעות</div>
+        <div>${esc(row.lastVoteAt || "unknown/unavailable")}</div>
+      </div>
+    `).join("");
+  }
+
+  async function loadCommunityReputationFromForm() {
+    const core = communityReputationCore();
+    if (!core) {
+      updateCommunityReputationStatus("טעינת מוניטין חסומה: מודול community-reputation לא נטען.", "error");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateCommunityReputationStatus("טוען מוניטין מ-Supabase...", "blocked");
+    try {
+      const report = await core.fetchCommunityReputation({ config });
+      renderCommunityReputation(report.rows);
+      updateCommunityReputationStatus(
+        report.totalUsers ? `נטען מוניטין עבור ${report.totalUsers} משתמשים.` : "אין נתוני מוניטין מנתונים אמיתיים.",
+        "ready",
+      );
+    } catch (err) {
+      updateCommunityReputationStatus(`טעינת מוניטין נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function communityModerationCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.communityModeration;
+  }
+
+  function updateCommunityModerationStatus(message, state = "blocked") {
+    if (!communityModerationStatusEl) return;
+    communityModerationStatusEl.textContent = message;
+    communityModerationStatusEl.classList.remove("ready", "blocked", "error");
+    communityModerationStatusEl.classList.add(state);
+  }
+
+  function renderCommunityModerationReports(reports = []) {
+    if (!communityModerationListEl) return;
+    if (!reports.length) {
+      communityModerationListEl.innerHTML = '<div class="community-moderation-empty">אין דיווחי moderation מנתונים אמיתיים.</div>';
+      return;
+    }
+    communityModerationListEl.innerHTML = reports.map((report) => {
+      const targetId = report.threadId || report.postId || "";
+      const targetType = report.threadId ? "thread" : "post";
+      const actionButtons = report.threadId
+        ? `
+          <button class="km-btn-mini" data-moderation-action="lock_thread" data-thread-id="${esc(report.threadId)}" type="button">נעל</button>
+          <button class="km-btn-mini" data-moderation-action="hide_thread" data-thread-id="${esc(report.threadId)}" type="button">הסתר</button>
+          <button class="km-btn-mini" data-moderation-action="restore_thread" data-thread-id="${esc(report.threadId)}" type="button">שחזר</button>
+        `
+        : `
+          <button class="km-btn-mini" data-moderation-action="hide_post" data-post-id="${esc(report.postId)}" type="button">הסתר פוסט</button>
+          <button class="km-btn-mini" data-moderation-action="restore_post" data-post-id="${esc(report.postId)}" type="button">שחזר פוסט</button>
+        `;
+      return `
+        <div class="community-moderation-item">
+          <strong>${esc(targetType)} · ${esc(targetId || "unknown/unavailable")}</strong>
+          <div>${esc(report.status || "unknown/unavailable")} · ${esc(report.createdAt || "unknown/unavailable")}</div>
+          <div>${esc(report.reason || "unknown/unavailable")}</div>
+          <div class="community-moderation-actions">${actionButtons}</div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function promptModerationReason(message) {
+    const reason = prompt(message, "");
+    return reason === null ? "" : reason.trim();
+  }
+
+  async function reportCommunityThread(threadId) {
+    const core = communityModerationCore();
+    if (!core) {
+      updateCommunityModerationStatus("דיווח חסום: מודול community-moderation לא נטען.", "error");
+      return;
+    }
+    if (!threadId) {
+      updateCommunityModerationStatus("דיווח חסום: חסר thread id.", "blocked");
+      return;
+    }
+    const reason = promptModerationReason("סיבת דיווח:");
+    if (!reason) {
+      updateCommunityModerationStatus("דיווח חסום: צריך סיבה אמיתית.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateCommunityModerationStatus("שולח דיווח ל-Supabase...", "blocked");
+    try {
+      const result = await core.reportDiscussionTarget({ config, threadId, reason });
+      updateCommunityModerationStatus(`דיווח נשמר: ${result.report.id || "unknown/unavailable"}.`, "ready");
+    } catch (err) {
+      updateCommunityModerationStatus(`שמירת דיווח נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function moderateCommunityThread(threadId, action) {
+    return moderateCommunityTarget({ threadId, action });
+  }
+
+  async function moderateCommunityTarget({ threadId = "", postId = "", action = "" } = {}) {
+    const core = communityModerationCore();
+    if (!core) {
+      updateCommunityModerationStatus("Moderation חסום: מודול community-moderation לא נטען.", "error");
+      return;
+    }
+    if (!threadId && !postId) {
+      updateCommunityModerationStatus("Moderation חסום: חסר target id.", "blocked");
+      return;
+    }
+    const reason = promptModerationReason("סיבת moderation:");
+    if (!reason) {
+      updateCommunityModerationStatus("Moderation חסום: צריך סיבה אמיתית.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateCommunityModerationStatus("מפעיל moderation ב-Supabase...", "blocked");
+    try {
+      const result = await core.applyDiscussionModeration({ config, threadId, postId, action, reason });
+      updateCommunityModerationStatus(`Moderation נשמר: ${result.action} -> ${result.newStatus}.`, "ready");
+      if (threadId) await loadCommunityThreadsFromForm();
+      await loadCommunityModerationReportsFromForm();
+    } catch (err) {
+      updateCommunityModerationStatus(`Moderation נכשל: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function loadCommunityModerationReportsFromForm() {
+    const core = communityModerationCore();
+    if (!core) {
+      updateCommunityModerationStatus("טעינת דיווחים חסומה: מודול community-moderation לא נטען.", "error");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateCommunityModerationStatus("טוען דיווחי moderation מ-Supabase...", "blocked");
+    try {
+      const report = await core.fetchModerationReports({ config, status: "open" });
+      renderCommunityModerationReports(report.reports);
+      updateCommunityModerationStatus(
+        report.totalReports ? `נטענו ${report.totalReports} דיווחים פתוחים.` : "אין דיווחי moderation מנתונים אמיתיים.",
+        "ready",
+      );
+    } catch (err) {
+      updateCommunityModerationStatus(`טעינת דיווחים נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function peerReviewCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.peerReview;
+  }
+
+  function updatePeerReviewStatus(message, state = "blocked") {
+    if (!peerReviewStatusEl) return;
+    peerReviewStatusEl.textContent = message;
+    peerReviewStatusEl.classList.remove("ready", "blocked", "error");
+    peerReviewStatusEl.classList.add(state);
+  }
+
+  function renderPeerReviewMatch(match) {
+    if (!peerReviewMatchEl) return;
+    if (!match?.matchId) {
+      peerReviewMatchEl.innerHTML = '<div class="peer-review-empty">אין match פעיל.</div>';
+      return;
+    }
+    peerReviewMatchEl.innerHTML = `
+      <div class="peer-review-match-item">
+        <strong>${esc(match.conceptKey || "unknown/unavailable")} · ${esc(match.level || "unknown/unavailable")}</strong>
+        <div>${esc(match.matchId || "unknown/unavailable")}</div>
+        <pre>${esc(match.solutionText || "unknown/unavailable")}</pre>
+      </div>
+    `;
+  }
+
+  async function submitPeerSolutionFromForm() {
+    const core = peerReviewCore();
+    if (!core) {
+      updatePeerReviewStatus("שליחת פתרון חסומה: מודול peer-review לא נטען.", "error");
+      return;
+    }
+    const draft = core.normalizePeerSolutionDraft({
+      conceptKey: peerReviewConceptKeyInput?.value || "",
+      level: peerReviewLevelInput?.value || "",
+      solutionText: peerReviewSolutionInput?.value || "",
+    });
+    if (!draft.valid) {
+      updatePeerReviewStatus("שליחת פתרון חסומה: צריך concept, רמה ופתרון.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updatePeerReviewStatus("שולח פתרון ל-Supabase...", "blocked");
+    try {
+      const result = await core.submitPeerSolution({ config, draft });
+      updatePeerReviewStatus(`פתרון נשלח: ${result.submission.id || "unknown/unavailable"}.`, "ready");
+      if (peerReviewSolutionInput) peerReviewSolutionInput.value = "";
+    } catch (err) {
+      updatePeerReviewStatus(`שליחת פתרון נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function claimPeerReviewFromForm() {
+    const core = peerReviewCore();
+    if (!core) {
+      updatePeerReviewStatus("Matching חסום: מודול peer-review לא נטען.", "error");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updatePeerReviewStatus("מחפש פתרון ל-review ב-Supabase...", "blocked");
+    try {
+      const match = await core.claimPeerReview({ config, level: peerReviewLevelInput?.value || "" });
+      renderPeerReviewMatch(match);
+      if (peerReviewMatchIdInput) peerReviewMatchIdInput.value = match.matchId || "";
+      updatePeerReviewStatus(
+        match.matchId ? `Match נטען: ${match.matchId}.` : "אין match זמין ל-review.",
+        match.matchId ? "ready" : "blocked",
+      );
+    } catch (err) {
+      updatePeerReviewStatus(`Matching נכשל: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function submitPeerReviewFromForm() {
+    const core = peerReviewCore();
+    if (!core) {
+      updatePeerReviewStatus("שליחת review חסומה: מודול peer-review לא נטען.", "error");
+      return;
+    }
+    const template = core.normalizePeerReviewTemplate({
+      matchId: peerReviewMatchIdInput?.value || "",
+      correctnessScore: peerReviewCorrectnessInput?.value || "",
+      clarityScore: peerReviewClarityInput?.value || "",
+      strengths: peerReviewStrengthsInput?.value || "",
+      improvements: peerReviewImprovementsInput?.value || "",
+    });
+    if (!template.valid) {
+      updatePeerReviewStatus("שליחת review חסומה: צריך match, ציונים ומשוב כתוב.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updatePeerReviewStatus("שולח review ל-Supabase...", "blocked");
+    try {
+      const result = await core.submitPeerReview({ config, template });
+      if (result.reviewId && result.xpAwarded > 0) {
+        awardLearningReward({
+          xp: result.xpAwarded,
+          source: "peer-review",
+          questionId: result.reviewId,
+        });
+        updateXPWidget(getXP());
+      }
+      updatePeerReviewStatus(`Review נשמר: ${result.reviewId || "unknown/unavailable"} · ${result.xpAwarded} XP.`, "ready");
+      if (peerReviewStrengthsInput) peerReviewStrengthsInput.value = "";
+      if (peerReviewImprovementsInput) peerReviewImprovementsInput.value = "";
+    } catch (err) {
+      updatePeerReviewStatus(`שליחת review נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  function mentorMatchingCore() {
+    return window.LUMEN_CORE && window.LUMEN_CORE.mentorMatching;
+  }
+
+  function updateMentorMatchingStatus(message, state = "blocked") {
+    if (!mentorMatchingStatusEl) return;
+    mentorMatchingStatusEl.textContent = message;
+    mentorMatchingStatusEl.classList.remove("ready", "blocked", "error");
+    mentorMatchingStatusEl.classList.add(state);
+  }
+
+  function mentorConceptKey() {
+    return mentorConceptKeyInput?.value || "";
+  }
+
+  function activeMentorMatchId() {
+    return mentorMatchIdInput?.value || "";
+  }
+
+  function renderMentorMatch(match, reputation = null) {
+    if (!mentorMatchSummaryEl) return;
+    if (!match?.matchId && !reputation?.mentorId) {
+      mentorMatchSummaryEl.innerHTML = '<div class="mentor-match-empty">אין match פעיל.</div>';
+      return;
+    }
+    mentorMatchSummaryEl.innerHTML = `
+      <div class="mentor-match-item">
+        <strong>${esc(match?.conceptKey || "unknown/unavailable")} · ${esc(match?.status || "unknown/unavailable")}</strong>
+        <div>Match: ${esc(match?.matchId || "unknown/unavailable")}</div>
+        <div>Mentor: ${esc(match?.mentorId || reputation?.mentorId || "unknown/unavailable")}</div>
+        ${reputation?.mentorId ? `<div>Rating: ${esc(String(reputation.averageRating))} · Sessions: ${esc(String(reputation.ratedSessions))} · Community rep: ${esc(String(reputation.communityReputation))}</div>` : ""}
+      </div>
+    `;
+  }
+
+  function renderMentorMessages(report) {
+    if (!mentorMessageListEl) return;
+    const messages = Array.isArray(report?.messages) ? report.messages : [];
+    if (!messages.length) {
+      mentorMessageListEl.innerHTML = '<div class="mentor-message-empty">אין הודעות mentor chat מנתונים אמיתיים.</div>';
+      return;
+    }
+    mentorMessageListEl.innerHTML = messages.map((message) => `
+      <div class="mentor-message-item">
+        <strong>${esc(message.senderId || "unknown/unavailable")}</strong>
+        <div>${esc(message.createdAt || "unknown/unavailable")}</div>
+        <div>${esc(message.body || "")}</div>
+      </div>
+    `).join("");
+  }
+
+  async function loadMentorEligibilityFromForm() {
+    const core = mentorMatchingCore();
+    if (!core) {
+      updateMentorMatchingStatus("Eligibility חסום: מודול mentor-matching לא נטען.", "error");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateMentorMatchingStatus("טוען mentor eligibility מ-Supabase...", "blocked");
+    try {
+      const eligibility = await core.fetchMentorEligibility({ config });
+      updateMentorMatchingStatus(
+        eligibility.eligible
+          ? `Eligible: ${eligibility.completedReviews} reviews · avg ${eligibility.averageReviewScore} · rep ${eligibility.communityReputation}.`
+          : `Not eligible: ${eligibility.completedReviews} reviews · avg ${eligibility.averageReviewScore} · rep ${eligibility.communityReputation}.`,
+        eligibility.eligible ? "ready" : "blocked",
+      );
+    } catch (err) {
+      updateMentorMatchingStatus(`טעינת eligibility נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function registerMentorAvailabilityFromForm() {
+    const core = mentorMatchingCore();
+    if (!core) {
+      updateMentorMatchingStatus("הרשמת מנטור חסומה: מודול mentor-matching לא נטען.", "error");
+      return;
+    }
+    const concept = core.normalizeMentorConcept(mentorConceptKey());
+    if (!concept.valid) {
+      updateMentorMatchingStatus("הרשמת מנטור חסומה: צריך concept key.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateMentorMatchingStatus("רושם זמינות מנטור ב-Supabase...", "blocked");
+    try {
+      const profile = await core.registerMentorAvailability({ config, conceptKey: concept.conceptKey });
+      updateMentorMatchingStatus(`מנטור פעיל עבור ${profile.conceptKey}.`, "ready");
+    } catch (err) {
+      updateMentorMatchingStatus(`הרשמת מנטור נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function requestMentorMatchFromForm() {
+    const core = mentorMatchingCore();
+    if (!core) {
+      updateMentorMatchingStatus("בקשת מנטור חסומה: מודול mentor-matching לא נטען.", "error");
+      return;
+    }
+    const concept = core.normalizeMentorConcept(mentorConceptKey());
+    if (!concept.valid) {
+      updateMentorMatchingStatus("בקשת מנטור חסומה: צריך concept key.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateMentorMatchingStatus("מבקש mentor match מ-Supabase...", "blocked");
+    try {
+      const match = await core.requestMentorMatch({ config, conceptKey: concept.conceptKey });
+      if (mentorMatchIdInput) mentorMatchIdInput.value = match.matchId || "";
+      const reputation = match.mentorId ? await core.fetchMentorReputation({ config, mentorId: match.mentorId }).catch(() => null) : null;
+      renderMentorMatch(match, reputation);
+      updateMentorMatchingStatus(`Mentor match פעיל: ${match.matchId}.`, "ready");
+    } catch (err) {
+      updateMentorMatchingStatus(`בקשת מנטור נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function loadMentorMessagesFromForm() {
+    const core = mentorMatchingCore();
+    if (!core) {
+      updateMentorMatchingStatus("טעינת chat חסומה: מודול mentor-matching לא נטען.", "error");
+      return;
+    }
+    const matchId = activeMentorMatchId();
+    if (!matchId) {
+      updateMentorMatchingStatus("טעינת chat חסומה: צריך Match ID.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateMentorMatchingStatus("טוען mentor chat מ-Supabase...", "blocked");
+    try {
+      const report = await core.fetchMentorMessages({ config, matchId });
+      renderMentorMessages(report);
+      updateMentorMatchingStatus(`Chat נטען: ${report.messages.length} הודעות · ${core.mentorRealtimeChannel(matchId)}.`, "ready");
+    } catch (err) {
+      updateMentorMatchingStatus(`טעינת chat נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function sendMentorMessageFromForm() {
+    const core = mentorMatchingCore();
+    if (!core) {
+      updateMentorMatchingStatus("שליחת הודעה חסומה: מודול mentor-matching לא נטען.", "error");
+      return;
+    }
+    const matchId = activeMentorMatchId();
+    const body = mentorMessageBodyInput?.value || "";
+    if (!matchId || !body.trim()) {
+      updateMentorMatchingStatus("שליחת הודעה חסומה: צריך Match ID וטקסט.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateMentorMatchingStatus("שולח mentor message ל-Supabase...", "blocked");
+    try {
+      const result = await core.sendMentorMessage({ config, matchId, body });
+      if (mentorMessageBodyInput) mentorMessageBodyInput.value = "";
+      updateMentorMatchingStatus(`הודעה נשלחה · ${result.realtimeChannel}.`, "ready");
+      await loadMentorMessagesFromForm();
+    } catch (err) {
+      updateMentorMatchingStatus(`שליחת הודעה נכשלה: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  async function rateMentorMatchFromForm() {
+    const core = mentorMatchingCore();
+    if (!core) {
+      updateMentorMatchingStatus("דירוג מנטור חסום: מודול mentor-matching לא נטען.", "error");
+      return;
+    }
+    const matchId = activeMentorMatchId();
+    if (!matchId) {
+      updateMentorMatchingStatus("דירוג מנטור חסום: צריך Match ID.", "blocked");
+      return;
+    }
+    const config = ensureSupabaseSyncConfig();
+    if (!config) return;
+    updateMentorMatchingStatus("שומר mentor rating ב-Supabase...", "blocked");
+    try {
+      const rating = await core.rateMentorMatch({
+        config,
+        matchId,
+        ratingScore: mentorRatingScoreInput?.value || "",
+        feedback: mentorRatingFeedbackInput?.value || "",
+      });
+      const reputation = rating.mentorId ? await core.fetchMentorReputation({ config, mentorId: rating.mentorId }).catch(() => null) : null;
+      renderMentorMatch({
+        matchId: rating.matchId,
+        mentorId: rating.mentorId,
+        conceptKey: mentorConceptKey(),
+        status: rating.status,
+      }, reputation);
+      updateMentorMatchingStatus(`Mentor rating נשמר: ${rating.ratingScore}/5.`, "ready");
+      if (mentorRatingFeedbackInput) mentorRatingFeedbackInput.value = "";
+    } catch (err) {
+      updateMentorMatchingStatus(`דירוג מנטור נכשל: ${err.message || "unknown error"}`, "error");
+    }
+  }
+
+  document.getElementById("btn-create-class")?.addEventListener("click", createTeacherClassFromForm);
+  document.getElementById("btn-load-class-students")?.addEventListener("click", loadTeacherStudentsFromForm);
+  document.getElementById("btn-import-class-students")?.addEventListener("click", importTeacherStudentsCsvFromForm);
+  document.getElementById("btn-load-concept-heatmap")?.addEventListener("click", loadTeacherHeatmapFromForm);
+  document.getElementById("btn-export-teacher-lite")?.addEventListener("click", exportTeacherLiteClassReport);
+  document.getElementById("btn-load-risk-alerts")?.addEventListener("click", loadTeacherRiskAlertsFromForm);
+  document.getElementById("btn-create-assignment")?.addEventListener("click", createTeacherAssignmentFromForm);
+  document.getElementById("btn-load-assignments")?.addEventListener("click", loadTeacherAssignmentsFromForm);
+  document.getElementById("btn-create-concept-thread")?.addEventListener("click", createCommunityThreadFromForm);
+  document.getElementById("btn-load-concept-threads")?.addEventListener("click", loadCommunityThreadsFromForm);
+  document.getElementById("btn-load-community-reputation")?.addEventListener("click", loadCommunityReputationFromForm);
+  document.getElementById("btn-load-moderation-reports")?.addEventListener("click", loadCommunityModerationReportsFromForm);
+  document.getElementById("btn-submit-peer-solution")?.addEventListener("click", submitPeerSolutionFromForm);
+  document.getElementById("btn-claim-peer-review")?.addEventListener("click", claimPeerReviewFromForm);
+  document.getElementById("btn-submit-peer-review")?.addEventListener("click", submitPeerReviewFromForm);
+  document.getElementById("btn-load-mentor-eligibility")?.addEventListener("click", loadMentorEligibilityFromForm);
+  document.getElementById("btn-register-mentor")?.addEventListener("click", registerMentorAvailabilityFromForm);
+  document.getElementById("btn-request-mentor")?.addEventListener("click", requestMentorMatchFromForm);
+  document.getElementById("btn-send-mentor-message")?.addEventListener("click", sendMentorMessageFromForm);
+  document.getElementById("btn-load-mentor-messages")?.addEventListener("click", loadMentorMessagesFromForm);
+  document.getElementById("btn-rate-mentor")?.addEventListener("click", rateMentorMatchFromForm);
+  communityThreadListEl?.addEventListener("click", (event) => {
+    const reportButton = event.target.closest("[data-thread-report]");
+    if (reportButton) {
+      reportCommunityThread(reportButton.dataset.threadId || "");
+      return;
+    }
+    const moderationButton = event.target.closest("[data-thread-moderate]");
+    if (moderationButton) {
+      moderateCommunityThread(moderationButton.dataset.threadId || "", moderationButton.dataset.threadModerate || "");
+      return;
+    }
+    const voteButton = event.target.closest("[data-thread-vote]");
+    if (!voteButton) return;
+    voteCommunityThread(voteButton.dataset.threadId || "", Number(voteButton.dataset.threadVote));
+  });
+  communityModerationListEl?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-moderation-action]");
+    if (!button) return;
+    moderateCommunityTarget({
+      threadId: button.dataset.threadId || "",
+      postId: button.dataset.postId || "",
+      action: button.dataset.moderationAction || "",
+    });
+  });
+  window.LUMEN_PROGRESS_SYNC = Object.freeze({
+    buildProgressSnapshot,
+    buildLocalSyncPayload,
+    runProgressSync,
+  });
+  window.LUMEN_TEACHER_CLASSES = Object.freeze({
+    createTeacherClassFromForm,
+    loadTeacherStudentsFromForm,
+    importTeacherStudentsCsvFromForm,
+    loadTeacherHeatmapFromForm,
+    loadTeacherRiskAlertsFromForm,
+    createTeacherAssignmentFromForm,
+    loadTeacherAssignmentsFromForm,
+  });
+  window.LUMEN_COMMUNITY = Object.freeze({
+    createCommunityThreadFromForm,
+    loadCommunityThreadsFromForm,
+    voteCommunityThread,
+    loadCommunityReputationFromForm,
+    reportCommunityThread,
+    moderateCommunityThread,
+    loadCommunityModerationReportsFromForm,
+  });
+  window.LUMEN_PEER_REVIEW = Object.freeze({
+    submitPeerSolutionFromForm,
+    claimPeerReviewFromForm,
+    submitPeerReviewFromForm,
+  });
+  window.LUMEN_MENTOR_MATCHING = Object.freeze({
+    loadMentorEligibilityFromForm,
+    registerMentorAvailabilityFromForm,
+    requestMentorMatchFromForm,
+    sendMentorMessageFromForm,
+    loadMentorMessagesFromForm,
+    rateMentorMatchFromForm,
+  });
+  {
+    const core = progressSyncCore();
+    const config = core?.normalizeSupabaseSyncConfig(readSupabaseSyncConfig());
+    const meta = readProgressSyncMeta();
+    updateProgressSyncStatus(
+      config?.ready
+        ? `Sync מוכן. סנכרון אחרון: ${meta.lastSyncedAt || "unknown/unavailable"}`
+        : "Sync לא מוגדר: נדרשים Supabase URL, anon key ו-access token אמיתי.",
+      config?.ready ? "ready" : "blocked",
+    );
+  }
+  // ===== end Export/Import + Supabase Sync =====
+
+   // =========== BOOT ===========
+   installFeatureErrorTelemetry();
+   setTimeout(() => {
     if (standaloneMuseumMode) {
       openProgrammingMuseum();
       document.body.classList.add("standalone-museum-ready");
@@ -28385,6 +35519,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (initialTabFromUrl === "language-tools") {
       openLanguageTools();
+      return;
+    }
+    if (initialTabFromUrl === "settings") {
+      openSettings();
       return;
     }
     // Mark Home tab as active on first load

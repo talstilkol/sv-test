@@ -3,21 +3,38 @@
   "date": "2026-04-28",
   "finishLine": {
     "target": "SVCollege AI & Full Stack only",
-    "ready": true,
-    "readiness": 100,
+    "ready": false,
+    "readiness": 96.7,
     "covered": 15,
     "partial": 0,
     "gap": 0,
     "modules": 15,
-    "releaseBlockers": 0,
-    "tabMatrixGaps": 0,
+    "releaseBlockers": 2,
+    "tabMatrixGaps": 4,
     "browserSmoke": {
       "desktop": "pass",
       "mobile": "pass",
       "report": "SVCOLLEGE_BROWSER_SMOKE.md"
     }
   },
-  "redFirstQueue": [],
+  "redFirstQueue": [
+    {
+      "title": "עיצוב רספונסיבי ו-CSS מתקדם",
+      "status": "covered",
+      "readiness": 75,
+      "level": "amber",
+      "nextAction": "Maintain practice, mock-exam coverage and tab health.",
+      "priority": 99
+    },
+    {
+      "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+      "status": "covered",
+      "readiness": 75,
+      "level": "amber",
+      "nextAction": "Maintain practice, mock-exam coverage and tab health.",
+      "priority": 99
+    }
+  ],
   "moduleEvidence": [
     {
       "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
@@ -36,14 +53,10 @@
         }
       ],
       "questions": {
-        "count": 110,
+        "count": 19,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -258,7 +271,7 @@
     {
       "title": "עיצוב רספונסיבי ו-CSS מתקדם",
       "status": "covered",
-      "readiness": 100,
+      "readiness": 75,
       "lessonFiles": [
         {
           "lessonId": "lesson_25",
@@ -267,14 +280,10 @@
         }
       ],
       "questions": {
-        "count": 70,
+        "count": 0,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -508,14 +517,10 @@
         }
       ],
       "questions": {
-        "count": 360,
+        "count": 55,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -754,14 +759,10 @@
         }
       ],
       "questions": {
-        "count": 335,
+        "count": 72,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -995,14 +996,10 @@
         }
       ],
       "questions": {
-        "count": 385,
+        "count": 12,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -1231,14 +1228,237 @@
         }
       ],
       "questions": {
-        "count": 263,
+        "count": 42,
         "files": [
           {
             "file": "data/questions_bank.js",
             "exists": true
           },
           {
-            "file": "data/questions_bank_seeded.js",
+            "file": "data/svcollege_questions_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_devops.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_ai_engineering.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_design_systems.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_questions_bridge.js",
+            "exists": true
+          }
+        ]
+      },
+      "activities": {
+        "count": 33,
+        "files": [
+          {
+            "file": "data/questions_trace.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_devops.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_ai_engineering.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_design_systems.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_traces_bridge.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_build.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_sql_orm.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_auth.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nextjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_nestjs.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_devops.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_ai_engineering.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_design_systems.js",
+            "exists": true
+          },
+          {
+            "file": "data/svcollege_builds_bridge.js",
+            "exists": true
+          },
+          {
+            "file": "data/questions_bug.js",
+            "exists": true
+          },
+          {
+            "file": "data/pair_match.js",
+            "exists": true
+          },
+          {
+            "file": "data/capstones.js",
+            "exists": true
+          }
+        ]
+      },
+      "tests": [
+        {
+          "file": "tests/svcollege-readiness.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-readiness-report.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/course-blueprints.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/mock-exam-svcollege.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/lesson-quiz-keys.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-sql-orm-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-auth-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nextjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-nestjs-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-devops-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-ai-engineering-content.test.js",
+          "exists": true
+        },
+        {
+          "file": "tests/svcollege-design-systems-content.test.js",
+          "exists": true
+        }
+      ],
+      "tabEvidence": {
+        "status": "mapped-through-course-blueprints",
+        "files": [
+          {
+            "file": "data/course_blueprints.js",
+            "exists": true
+          },
+          {
+            "file": "data/lesson_quiz_keys.js",
+            "exists": true
+          },
+          {
+            "file": "index.html",
+            "exists": true
+          },
+          {
+            "file": "app.js",
+            "exists": true
+          },
+          {
+            "file": "tests/course-blueprints.test.js",
+            "exists": true
+          },
+          {
+            "file": "tests/lesson-quiz-keys.test.js",
+            "exists": true
+          }
+        ]
+      },
+      "browserVerification": {
+        "status": "desktop-pass/mobile-pass",
+        "owner": "current",
+        "report": "SVCOLLEGE_BROWSER_SMOKE.md",
+        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
+      }
+    },
+    {
+      "title": "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
+      "status": "covered",
+      "readiness": 100,
+      "lessonFiles": [
+        {
+          "lessonId": "lesson_auth_security",
+          "file": "data/lesson_auth_security.js",
+          "exists": true
+        }
+      ],
+      "questions": {
+        "count": 44,
+        "files": [
+          {
+            "file": "data/questions_bank.js",
             "exists": true
           },
           {
@@ -1451,237 +1671,6 @@
       }
     },
     {
-      "title": "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
-      "status": "covered",
-      "readiness": 100,
-      "lessonFiles": [
-        {
-          "lessonId": "lesson_auth_security",
-          "file": "data/lesson_auth_security.js",
-          "exists": true
-        }
-      ],
-      "questions": {
-        "count": 133,
-        "files": [
-          {
-            "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_questions_sql_orm.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_questions_auth.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_questions_nextjs.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_questions_nestjs.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_questions_devops.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_questions_ai_engineering.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_questions_design_systems.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_questions_bridge.js",
-            "exists": true
-          }
-        ]
-      },
-      "activities": {
-        "count": 10,
-        "files": [
-          {
-            "file": "data/questions_trace.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_traces_sql_orm.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_traces_auth.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_traces_nextjs.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_traces_nestjs.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_traces_devops.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_traces_ai_engineering.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_traces_design_systems.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_traces_bridge.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_build.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_builds_sql_orm.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_builds_auth.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_builds_nextjs.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_builds_nestjs.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_builds_devops.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_builds_ai_engineering.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_builds_design_systems.js",
-            "exists": true
-          },
-          {
-            "file": "data/svcollege_builds_bridge.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bug.js",
-            "exists": true
-          },
-          {
-            "file": "data/pair_match.js",
-            "exists": true
-          },
-          {
-            "file": "data/capstones.js",
-            "exists": true
-          }
-        ]
-      },
-      "tests": [
-        {
-          "file": "tests/svcollege-readiness.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/svcollege-readiness-report.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/course-blueprints.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/mock-exam-svcollege.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/lesson-quiz-keys.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/svcollege-sql-orm-content.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/svcollege-auth-content.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/svcollege-nextjs-content.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/svcollege-nestjs-content.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/svcollege-devops-content.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/svcollege-ai-engineering-content.test.js",
-          "exists": true
-        },
-        {
-          "file": "tests/svcollege-design-systems-content.test.js",
-          "exists": true
-        }
-      ],
-      "tabEvidence": {
-        "status": "mapped-through-course-blueprints",
-        "files": [
-          {
-            "file": "data/course_blueprints.js",
-            "exists": true
-          },
-          {
-            "file": "data/lesson_quiz_keys.js",
-            "exists": true
-          },
-          {
-            "file": "index.html",
-            "exists": true
-          },
-          {
-            "file": "app.js",
-            "exists": true
-          },
-          {
-            "file": "tests/course-blueprints.test.js",
-            "exists": true
-          },
-          {
-            "file": "tests/lesson-quiz-keys.test.js",
-            "exists": true
-          }
-        ]
-      },
-      "browserVerification": {
-        "status": "desktop-pass/mobile-pass",
-        "owner": "current",
-        "report": "SVCOLLEGE_BROWSER_SMOKE.md",
-        "note": "Desktop all-tabs smoke and 390x844 mobile viewport smoke passed in the in-app browser."
-      }
-    },
-    {
       "title": "React ופיתוח Frontend מתקדם",
       "status": "covered",
       "readiness": 100,
@@ -1713,14 +1702,10 @@
         }
       ],
       "questions": {
-        "count": 460,
+        "count": 30,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -1949,14 +1934,10 @@
         }
       ],
       "questions": {
-        "count": 250,
+        "count": 12,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -2190,14 +2171,10 @@
         }
       ],
       "questions": {
-        "count": 206,
+        "count": 31,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -2421,14 +2398,10 @@
         }
       ],
       "questions": {
-        "count": 128,
+        "count": 44,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -2466,7 +2439,7 @@
         ]
       },
       "activities": {
-        "count": 10,
+        "count": 22,
         "files": [
           {
             "file": "data/questions_trace.js",
@@ -2657,14 +2630,10 @@
         }
       ],
       "questions": {
-        "count": 169,
+        "count": 39,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -2702,7 +2671,7 @@
         ]
       },
       "activities": {
-        "count": 11,
+        "count": 23,
         "files": [
           {
             "file": "data/questions_trace.js",
@@ -2888,14 +2857,10 @@
         }
       ],
       "questions": {
-        "count": 114,
+        "count": 38,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -2933,7 +2898,7 @@
         ]
       },
       "activities": {
-        "count": 10,
+        "count": 20,
         "files": [
           {
             "file": "data/questions_trace.js",
@@ -3110,7 +3075,7 @@
     {
       "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
       "status": "covered",
-      "readiness": 100,
+      "readiness": 75,
       "lessonFiles": [
         {
           "lessonId": "ai_development",
@@ -3119,14 +3084,10 @@
         }
       ],
       "questions": {
-        "count": 60,
+        "count": 0,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -3350,14 +3311,10 @@
         }
       ],
       "questions": {
-        "count": 133,
+        "count": 42,
         "files": [
           {
             "file": "data/questions_bank.js",
-            "exists": true
-          },
-          {
-            "file": "data/questions_bank_seeded.js",
             "exists": true
           },
           {
@@ -3395,7 +3352,7 @@
         ]
       },
       "activities": {
-        "count": 10,
+        "count": 24,
         "files": [
           {
             "file": "data/questions_trace.js",
@@ -3571,18 +3528,31 @@
     }
   ],
   "tabMatrix": {
-    "ready": true,
-    "strictCoverage": 100,
+    "ready": false,
+    "strictCoverage": 98.2,
     "strictCells": 225,
-    "passedCells": 225,
-    "strictGaps": 0,
+    "passedCells": 221,
+    "strictGaps": 4,
     "supportGaps": 0,
     "report": "SVCOLLEGE_TAB_MATRIX.md"
   },
   "noEvidenceGate": {
-    "status": "passed",
+    "status": "failed",
     "checkedCoveredModules": 15,
-    "failures": [],
+    "failures": [
+      {
+        "title": "עיצוב רספונסיבי ו-CSS מתקדם",
+        "missing": [
+          "practice"
+        ]
+      },
+      {
+        "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+        "missing": [
+          "practice"
+        ]
+      }
+    ],
     "rule": "`covered` is forbidden without lesson + practice + tab + test evidence."
   },
   "sourceAssets": {
@@ -3612,21 +3582,20 @@
     "optionFeedback": {
       "id": "optionFeedback",
       "label": "Per-Distractor Feedback",
-      "implemented": 1704,
-      "target": 1704,
+      "implemented": 105,
+      "target": 105,
       "unit": "MC questions",
       "coverage": 100,
       "status": "Done",
       "evidence": [
         "data/option_feedback.js",
-        "data/questions_bank.js",
-        "data/questions_bank_seeded.js"
+        "data/questions_bank.js"
       ],
       "outcomeMetric": "Option-specific remediation coverage across the full MC bank",
       "enforceStrict": false,
       "enforceEvidenceGate": true,
       "details": {
-        "optionExplanations": 7016
+        "optionExplanations": 620
       }
     },
     "courseBlueprints": {

@@ -1,0 +1,50 @@
+{
+  "reportVersion": "museum-evidence-fields-v1",
+  "date": "2026-04-30",
+  "target": "Museum source/evidence fields for historical and technical claims",
+  "policy": "Museum claims must expose source/evidence fields or remain unknown/unavailable; no historical or technical claim is backfilled without evidence.",
+  "summary": {
+    "checks": 5,
+    "passed": 5,
+    "failed": 0,
+    "ready": true
+  },
+  "checks": [
+    {
+      "id": "source-list-present",
+      "label": "AI museum source list exists",
+      "passed": true,
+      "status": "pass",
+      "detail": "Historical and technical AI claims must have explicit source entries."
+    },
+    {
+      "id": "source-panel-rendered",
+      "label": "Museum renders source/evidence links",
+      "passed": true,
+      "status": "pass",
+      "detail": "Source entries must be visible as external evidence links."
+    },
+    {
+      "id": "claim-readiness-policy",
+      "label": "Museum claim readiness asks for clear source or unknown state",
+      "passed": true,
+      "status": "pass",
+      "detail": "Technical claims must expose source and validation expectations."
+    },
+    {
+      "id": "video-tracker-evidence",
+      "label": "NotebookLM video tracker keeps source/replacement evidence explicit",
+      "passed": true,
+      "status": "pass",
+      "detail": "Video evidence must keep missing replacement data explicit."
+    },
+    {
+      "id": "museum-tests-lock-fields",
+      "label": "Museum tests lock evidence-bearing structures",
+      "passed": true,
+      "status": "pass",
+      "detail": "Museum tests must cover historical and technical claim structures."
+    }
+  ],
+  "failures": []
+}

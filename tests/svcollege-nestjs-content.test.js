@@ -93,10 +93,10 @@ describe("SVCollege Nest.js content", () => {
 
     expect(questions.mc).toHaveLength(24);
     expect(questions.fill).toHaveLength(10);
-    expect(context.SVCOLLEGE_NESTJS_TRACES).toHaveLength(3);
+    expect(context.SVCOLLEGE_NESTJS_TRACES).toHaveLength(13);
     expect(context.SVCOLLEGE_NESTJS_BUILDS).toHaveLength(3);
     expect(questions.bugHunt).toHaveLength(3);
-    expect(allPracticeItems(context)).toHaveLength(43);
+    expect(allPracticeItems(context)).toHaveLength(53);
 
     questions.mc.forEach((question) => {
       expect(question.options).toHaveLength(4);
@@ -110,6 +110,31 @@ describe("SVCollege Nest.js content", () => {
 
     allPracticeItems(context).forEach((item) => {
       expectPracticeMetadata(item);
+    });
+  });
+
+  it("adds trace activity to the next required Nest.js authoring gaps", () => {
+    const context = loadContext();
+    const tracedConcepts = context.SVCOLLEGE_NESTJS_TRACES.map((item) => item.conceptKey);
+
+    expect(tracedConcepts).toEqual(
+      expect.arrayContaining([
+        "lesson_nestjs::decorator",
+        "lesson_nestjs::DTO",
+        "lesson_nestjs::exception filter",
+        "lesson_nestjs::interceptor",
+        "lesson_nestjs::middleware",
+        "lesson_nestjs::Nest.js",
+        "lesson_nestjs::pipe",
+        "lesson_nestjs::provider",
+        "lesson_nestjs::repository pattern",
+        "lesson_nestjs::service",
+      ]),
+    );
+    context.SVCOLLEGE_NESTJS_TRACES.slice(3).forEach((trace) => {
+      expect(trace.steps).toHaveLength(3);
+      expect(trace.code).toContain("\n");
+      expectPracticeMetadata(trace);
     });
   });
 

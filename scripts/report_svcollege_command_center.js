@@ -49,7 +49,6 @@ const LESSON_FILE_BY_ID = Object.freeze({
 
 const QUESTION_EVIDENCE_FILES = Object.freeze([
   "data/questions_bank.js",
-  "data/questions_bank_seeded.js",
   "data/svcollege_questions_sql_orm.js",
   "data/svcollege_questions_auth.js",
   "data/svcollege_questions_nextjs.js",

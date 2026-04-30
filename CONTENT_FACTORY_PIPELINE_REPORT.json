@@ -1,0 +1,71 @@
+{
+  "reportVersion": "content-factory-pipeline-v1",
+  "date": "2026-04-30",
+  "target": "SVCollege content factory pipeline",
+  "policy": "Author questions manually, then pass validation, QA, distractor review, prerequisite metadata and reuse gates. Automatic question generation is forbidden.",
+  "summary": {
+    "checks": 8,
+    "passed": 8,
+    "failed": 0,
+    "ready": true
+  },
+  "checks": [
+    {
+      "id": "automatic-generation-removed",
+      "label": "Automatic question generation tools are removed",
+      "passed": true,
+      "status": "pass",
+      "detail": "No npm script may invoke a deleted automatic question generator."
+    },
+    {
+      "id": "strict-validation",
+      "label": "Strict bank validation is wired",
+      "passed": true,
+      "status": "pass",
+      "detail": "validate:strict must remain the schema/density gate."
+    },
+    {
+      "id": "question-qa",
+      "label": "Question QA gate is wired",
+      "passed": true,
+      "status": "pass",
+      "detail": "qa:questions:strict must keep prerequisite and no-fake-data policy."
+    },
+    {
+      "id": "distractor-review",
+      "label": "Distractor review is wired",
+      "passed": true,
+      "status": "pass",
+      "detail": "Distractor review must sample deterministically and detect bad options."
+    },
+    {
+      "id": "remediation-queue",
+      "label": "Remediation queue requires manual review",
+      "passed": true,
+      "status": "pass",
+      "detail": "Flagged items must go through manual review, not auto-fabricated rewrites."
+    },
+    {
+      "id": "prerequisite-metadata",
+      "label": "Prerequisite metadata gate is wired",
+      "passed": true,
+      "status": "pass",
+      "detail": "Lesson quiz keys keep question metadata connected to concept paths."
+    },
+    {
+      "id": "reuse-audit",
+      "label": "Question reuse audit is wired",
+      "passed": true,
+      "status": "pass",
+      "detail": "Learner-profile question reuse must stay audited."
+    },
+    {
+      "id": "pipeline-policy",
+      "label": "Pipeline policy document exists",
+      "passed": true,
+      "status": "pass",
+      "detail": "CONTENT_FACTORY_PIPELINE.md must document creation, QA, distractor review and prerequisite metadata."
+    }
+  ],
+  "blockers": []
+}

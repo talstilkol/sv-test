@@ -31,7 +31,8 @@ const DATA_DIR = path.join(ROOT, "data");
 // Mini sandbox to load all the JS data files (which use `var FOO = {...}`).
 function loadDataFiles() {
   const sandbox = { window: {}, console };
-  const files = fs.readdirSync(DATA_DIR).filter((f) => f.endsWith(".js"));
+  const files = fs.readdirSync(DATA_DIR)
+    .filter((f) => f.endsWith(".js") && f !== "questions_bank_seeded.js");
   for (const f of files) {
     const code = fs.readFileSync(path.join(DATA_DIR, f), "utf8");
     try {
@@ -76,7 +77,6 @@ function loadDataFiles() {
   return {
     lessons,
     bank,
-    seededBank: sandbox.QUESTIONS_BANK_SEEDED || { mc: [], fill: [] },
     guide: sandbox.QUICK_GUIDE || { topics: [] },
   };
 }
@@ -85,7 +85,7 @@ function ck(lessonId, conceptName) {
   return `${lessonId}::${conceptName}`;
 }
 
-function validate({ lessons, bank, seededBank, guide }) {
+function validate({ lessons, bank, guide }) {
   const validKeys = new Set();
   const conceptByKey = new Map();
   for (const L of lessons) {
@@ -96,9 +96,9 @@ function validate({ lessons, bank, seededBank, guide }) {
     }
   }
 
-  // Combine bank + seeded for coverage; validation runs on curated only
-  const combinedMC = [...(bank.mc || []), ...(seededBank.mc || [])];
-  const combinedFill = [...(bank.fill || []), ...(seededBank.fill || [])];
+  // Manual-only coverage. Generated/seeded archives are not loaded by validation.
+  const combinedMC = [...(bank.mc || [])].filter((question) => !question._seeded);
+  const combinedFill = [...(bank.fill || [])].filter((question) => !question._seeded);
 
   const errors = [];
   const warnings = [];
@@ -274,7 +274,7 @@ function validate({ lessons, bank, seededBank, guide }) {
     if (!q.explanation) warnings.push(`[${q.id}] missing explanation`);
   }
 
-  // -------- Coverage report (combined: curated + seeded) --------
+  // -------- Coverage report (manual curated only) --------
   const coverage = [];
   for (const [key, ref] of conceptByKey) {
     const mcCount = combinedMC.filter((q) => q.conceptKey === key).length;
@@ -336,8 +336,8 @@ function validate({ lessons, bank, seededBank, guide }) {
     curatedBuild: (bank.build || []).length,
     curatedMC: (bank.mc || []).length,
     curatedFill: (bank.fill || []).length,
-    seededMC: (seededBank.mc || []).length,
-    seededFill: (seededBank.fill || []).length,
+    seededMC: 0,
+    seededFill: 0,
   };
 }
 
@@ -350,7 +350,7 @@ function main() {
   console.log(
     `   ${data.lessons.length} lessons · ` +
       `Curated bank: ${(data.bank.mc || []).length} MC + ${(data.bank.fill || []).length} Fill + ${(data.bank.trace || []).length} Trace + ${(data.bank.bug || []).length} Bug + ${(data.bank.build || []).length} Build · ` +
-      `Seeded: ${(data.seededBank.mc || []).length} MC + ${(data.seededBank.fill || []).length} Fill · ` +
+      "Generated/seeded archives not loaded · " +
       `${(data.guide.topics || []).length} guide topics.`,
   );
 
@@ -434,9 +434,10 @@ function main() {
     console.log(`   ⤷ Add difficulty: <1-10> to each concept; controls extras + V-button rules.`);
   }
 
-  console.log("\n📊 Coverage (curated + seeded combined):");
+  console.log("\n📊 Coverage (manual curated only):");
   console.log(`   Total concepts: ${totalConcepts}`);
-  console.log(`   Total bank: ${curatedMC + seededMC} MC + ${curatedFill + seededFill} Fill = ${curatedMC + seededMC + curatedFill + seededFill}`);
+  console.log(`   Total manual bank: ${curatedMC} MC + ${curatedFill} Fill = ${curatedMC + curatedFill}`);
+  console.log("   Generated/seeded archives are not loaded by this validator");
   console.log(`   Concepts still needing more questions: ${coverage.length}/${totalConcepts}`);
   if (coverage.length > 0) {
     const byLesson = {};

@@ -1,5 +1,6 @@
 import {
   PILOT_PROTOCOL,
+  buildMetricsDashboard,
   buildOutcomeMetrics,
   buildStuckFeedbackEvent,
   evaluatePromotionGate,
@@ -146,5 +147,99 @@ describe("SVCollege learner outcome loop", () => {
       status: "ready-for-students",
       missing: [],
     });
+  });
+
+  it("builds a metrics dashboard from real retention, mastery, exam and QA evidence", () => {
+    const events = [
+      {
+        type: "answer",
+        timestamp: Date.UTC(2026, 3, 20, 8),
+        day: "2026-04-20",
+        conceptKey: "lesson_11::Array",
+        correct: true,
+      },
+      {
+        type: "mastery_change",
+        timestamp: Date.UTC(2026, 3, 20, 9),
+        day: "2026-04-20",
+        conceptKey: "lesson_11::Array",
+        masteryBefore: 4,
+        masteryAfter: 7,
+      },
+      {
+        type: "mock_exam",
+        timestamp: Date.UTC(2026, 3, 20, 10),
+        day: "2026-04-20",
+        scorePct: 62,
+      },
+      {
+        type: "view",
+        timestamp: Date.UTC(2026, 3, 21, 8),
+        day: "2026-04-21",
+      },
+      {
+        type: "mock_exam",
+        timestamp: Date.UTC(2026, 3, 27, 10),
+        day: "2026-04-27",
+        correctCount: 17,
+        totalQuestions: 20,
+      },
+    ];
+
+    const dashboard = buildMetricsDashboard({
+      events,
+      scores: {
+        "lesson_11::Array": { level: 7 },
+      },
+      modules: [
+        { id: "js", label: "JavaScript", conceptKeys: ["lesson_11::Array"] },
+      ],
+      questionQuality: {
+        summary: {
+          total: 568,
+          cleanQuestions: 420,
+          noteQuestions: 100,
+          blockerIssues: 0,
+          warningIssues: 12,
+          questionQualityIndex: 91.5,
+        },
+      },
+      now: Date.UTC(2026, 3, 28, 12),
+    });
+
+    expect(dashboard.retention.d1.status).toBe("active");
+    expect(dashboard.masteryVelocity).toMatchObject({
+      status: "measured",
+      gainedLevels: 3,
+      masteredConcepts: 1,
+      label: "3 levels/day",
+    });
+    expect(dashboard.examScoreUplift).toMatchObject({
+      status: "measured",
+      firstScorePct: 62,
+      latestScorePct: 85,
+      upliftPctPoints: 23,
+      label: "+23 pp",
+    });
+    expect(dashboard.questionQualityIndex).toMatchObject({
+      status: "measured",
+      indexPct: 91.5,
+      totalQuestions: 568,
+    });
+    expect(dashboard.readyForDecisions).toBe(true);
+  });
+
+  it("keeps dashboard metrics unknown when real evidence is missing", () => {
+    const dashboard = buildMetricsDashboard({
+      events: [],
+      scores: {},
+      modules: [{ id: "js", label: "JavaScript", conceptKeys: [] }],
+      now: Date.UTC(2026, 3, 28, 12),
+    });
+
+    expect(dashboard.masteryVelocity.label).toBe("unknown/unavailable");
+    expect(dashboard.examScoreUplift.label).toBe("unknown/unavailable");
+    expect(dashboard.questionQualityIndex.label).toBe("unknown/unavailable");
+    expect(dashboard.readyForDecisions).toBe(false);
   });
 });

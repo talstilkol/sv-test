@@ -8,27 +8,24 @@ const distractorAudit = require("./audit_distractors.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
-const REPORT_DATE = "2026-04-28";
+const REPORT_DATE = "2026-04-30";
 const JSON_REPORT_PATH = path.join(ROOT, "QUESTION_QUALITY_REPORT.json");
 const MD_REPORT_PATH = path.join(ROOT, "QUESTION_QUALITY_REPORT.md");
 
 function loadQuestionBanks() {
   const sandbox = { window: {}, console };
-  ["questions_bank.js", "questions_bank_seeded.js"].forEach((file) => {
+  ["questions_bank.js"].forEach((file) => {
     const code = fs.readFileSync(path.join(DATA_DIR, file), "utf8");
     vm.runInNewContext(code, sandbox, { filename: file });
   });
 
   const curated = sandbox.QUESTIONS_BANK || { mc: [], fill: [] };
-  const seeded = sandbox.QUESTIONS_BANK_SEEDED || { mc: [], fill: [] };
   return {
     mc: [
-      ...(curated.mc || []).map((q) => ({ ...q, kind: "mc", source: "curated" })),
-      ...(seeded.mc || []).map((q) => ({ ...q, kind: "mc", source: "seeded" })),
+      ...(curated.mc || []).map((q) => ({ ...q, kind: "mc", source: "manual" })),
     ],
     fill: [
-      ...(curated.fill || []).map((q) => ({ ...q, kind: "fill", source: "curated" })),
-      ...(seeded.fill || []).map((q) => ({ ...q, kind: "fill", source: "seeded" })),
+      ...(curated.fill || []).map((q) => ({ ...q, kind: "fill", source: "manual" })),
     ],
   };
 }
@@ -55,9 +52,6 @@ function auditMc(q) {
   if (!q.conceptKey) {
     addIssue(issues, "warning", "missing-concept-key", "Question has no conceptKey, so adaptive/prerequisite routing is weaker.");
   }
-  if (q.source === "seeded" && !q._seeded) {
-    addIssue(issues, "warning", "missing-seeded-flag", "Seeded MC is missing _seeded=true.");
-  }
   return issues;
 }
 
@@ -66,9 +60,6 @@ function auditFill(q) {
   if (!q.id) addIssue(issues, "blocker", "missing-id", "Missing fill id.");
   if (!q.conceptKey) {
     addIssue(issues, "warning", "missing-concept-key", "Fill has no conceptKey, so adaptive/prerequisite routing is weaker.");
-  }
-  if (q.source === "seeded" && !q._seeded) {
-    addIssue(issues, "warning", "missing-seeded-flag", "Seeded fill is missing _seeded=true.");
   }
   if (!q.code || typeof q.code !== "string") addIssue(issues, "blocker", "missing-code", "Missing code field.");
   if (!q.answer || typeof q.answer !== "string") addIssue(issues, "blocker", "missing-answer", "Missing answer field.");
@@ -176,8 +167,7 @@ function summarize(items) {
     total: items.length,
     mc: items.filter((item) => item.kind === "mc").length,
     fill: items.filter((item) => item.kind === "fill").length,
-    curated: items.filter((item) => item.source === "curated").length,
-    seeded: items.filter((item) => item.source === "seeded").length,
+    manual: items.filter((item) => item.source === "manual").length,
     blockerQuestions: 0,
     warningQuestions: 0,
     noteQuestions: 0,
@@ -247,7 +237,7 @@ function buildMarkdown(report, maxRows = 80) {
   const summary = report.summary;
   const queue = report.remediationQueue.slice(0, maxRows);
   const lines = [
-    "# Question Quality Report — 2026-04-28",
+    "# Question Quality Report — 2026-04-30",
     "",
     "Full-bank deterministic QA for MC and Fill questions. This report creates a `questionQuality` object for every question id and a remediation queue for warnings and notes.",
     "",
@@ -255,7 +245,7 @@ function buildMarkdown(report, maxRows = 80) {
     "",
     `- Total questions: ${summary.total}`,
     `- Mix: ${summary.mc} MC, ${summary.fill} Fill`,
-    `- Source mix: ${summary.curated} curated, ${summary.seeded} seeded`,
+    `- Source mix: ${summary.manual} manual`,
     `- Clean: ${summary.cleanQuestions}`,
     `- Notes only: ${summary.noteQuestions}`,
     `- Warning questions: ${summary.warningQuestions}`,

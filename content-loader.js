@@ -92,21 +92,36 @@
     ...(typeof SVCOLLEGE_DESIGN_SYSTEMS_BUILDS !== "undefined" ? SVCOLLEGE_DESIGN_SYSTEMS_BUILDS : []),
     ...(typeof SVCOLLEGE_BRIDGE_BUILDS !== "undefined" ? SVCOLLEGE_BRIDGE_BUILDS : []),
   ];
+  const practiceIdentity = (item, kind) =>
+    [
+      kind,
+      item && item.conceptKey,
+      item && (item.id || item.questionId || item.title || item.prompt || item.code || item.brokenCode || item.starter),
+    ].filter(Boolean).join("::");
+  const uniquePracticeItems = (items, kind) => {
+    const seen = new Set();
+    return (items || []).filter((item) => {
+      const key = practiceIdentity(item, kind);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  };
   // P1.4.3 — Bug Hunt questions grouped by conceptKey
-  const bugList = [
+  const bugList = uniquePracticeItems([
     ...(typeof QUESTIONS_BUG !== "undefined" ? QUESTIONS_BUG : []),
     ...svcollegeBugHunts,
-  ];
+  ], "bug");
   const bugsByKey = bugList.reduce((acc, b) => {
     if (!b.conceptKey) return acc;
     (acc[b.conceptKey] = acc[b.conceptKey] || []).push(b);
     return acc;
   }, {});
   // P1.4.4 — Mini Build questions grouped by conceptKey
-  const buildList = [
+  const buildList = uniquePracticeItems([
     ...(typeof QUESTIONS_BUILD !== "undefined" ? QUESTIONS_BUILD : []),
     ...svcollegeBuilds,
-  ];
+  ], "build");
   const buildsByKey = buildList.reduce((acc, b) => {
     if (!b.conceptKey) return acc;
     (acc[b.conceptKey] = acc[b.conceptKey] || []).push(b);
@@ -167,16 +182,6 @@
     return { what, need: need || what };
   };
   const isLowSignalExplanation = (value) => lowSignalExplanationRe.test(String(value || ""));
-  const isLowSignalGeneratedQuestion = (question) => {
-    const text = [
-      question && question.question,
-      question && question.prompt,
-      question && question.explanation,
-      question && question.code,
-      ...((question && question.options) || []),
-    ].filter(Boolean).join(" ");
-    return isLowSignalExplanation(text);
-  };
   let enrichedCount = 0;
   let extendedCount = 0;
   let antiPatternsCount = 0;
@@ -274,12 +279,15 @@
     });
   });
 
-  // Initial bank — curated only (seeded loaded lazily on demand)
+  // Manual-only bank. Generated/seeded question banks are not loaded by the portal.
   const primary = typeof QUESTIONS_BANK !== "undefined" ? QUESTIONS_BANK : { mc: [], fill: [] };
-  const traceList = [
+  const traceList = uniquePracticeItems([
     ...(typeof QUESTIONS_TRACE !== "undefined" ? QUESTIONS_TRACE : []),
     ...svcollegeTraces,
-  ];
+  ], "trace");
+  window.QUESTIONS_TRACE = traceList;
+  window.QUESTIONS_BUG = bugList;
+  window.QUESTIONS_BUILD = buildList;
   window.QUESTIONS_BANK = {
     mc: [...(primary.mc || []), ...svcollegeMC],
     fill: [...(primary.fill || []), ...svcollegeFill],
@@ -297,67 +305,139 @@
     CODE_BLOCKS.blocks = [...CODE_BLOCKS.blocks, ...SVCOLLEGE_CODE_BLOCKS];
   }
 
-  // Lazy loader for the heavy seeded bank (1.4MB).
-  // Loaded on demand when user opens Trainer / Study Mode.
-  // Idempotent — safe to call multiple times.
-  let seededLoadPromise = null;
-  window.ensureSeededBank = function ensureSeededBank() {
-    if (seededLoadPromise) return seededLoadPromise;
-    if (typeof window.QUESTIONS_BANK_SEEDED !== "undefined") {
-      // Already loaded
-      mergeSeededIntoBank();
-      return Promise.resolve(window.QUESTIONS_BANK);
-    }
-    seededLoadPromise = new Promise((resolve, reject) => {
-      const s = document.createElement("script");
-      s.src = "data/questions_bank_seeded.js";
-      s.async = true;
-      s.onload = () => {
-        mergeSeededIntoBank();
-        console.log(
-          `[LumenPortal] 🪶 Lazy-loaded seeded bank — ` +
-            `+${(window.QUESTIONS_BANK_SEEDED.mc || []).length} MC, ` +
-            `+${(window.QUESTIONS_BANK_SEEDED.fill || []).length} Fill`,
-        );
-        resolve(window.QUESTIONS_BANK);
-      };
-      s.onerror = (e) => {
-        console.error("[LumenPortal] Failed to load seeded bank:", e);
-        reject(e);
-      };
-      document.head.appendChild(s);
-    });
-    return seededLoadPromise;
-  };
+  window.QUESTIONS_BANK._manualOnly = true;
 
-  function mergeSeededIntoBank() {
-    const seeded = window.QUESTIONS_BANK_SEEDED || { mc: [], fill: [] };
-    // Avoid double-merge by checking marker
-    if (window.QUESTIONS_BANK._seededMerged) return;
-    const seededMC = (seeded.mc || []).filter((q) => !isLowSignalGeneratedQuestion(q));
-    const seededFill = (seeded.fill || []).filter((q) => !isLowSignalGeneratedQuestion(q));
-    window.QUESTIONS_BANK.mc = [
-      ...(primary.mc || []),
-      ...svcollegeMC,
-      ...seededMC,
-    ];
-    window.QUESTIONS_BANK.fill = [
-      ...(primary.fill || []),
-      ...svcollegeFill,
-      ...seededFill,
-    ];
-    window.QUESTIONS_BANK._seededMerged = true;
-    window.QUESTIONS_BANK._seededFiltered = {
-      mc: (seeded.mc || []).length - seededMC.length,
-      fill: (seeded.fill || []).length - seededFill.length,
-    };
+  function contentValidationIssue(severity, entity, id, code, message) {
+    return { severity, entity, id: id || "unknown/unavailable", code, message };
   }
+
+  function validateLoadedContent() {
+    const issues = [];
+    const lessonIds = new Set();
+    const validConceptKeys = new Set();
+    (window.LESSONS_DATA || []).forEach((lesson, lessonIndex) => {
+      if (!lesson || typeof lesson !== "object") {
+        issues.push(contentValidationIssue("blocker", "Lesson", `index:${lessonIndex}`, "invalid-lesson", "Lesson entry is not an object."));
+        return;
+      }
+      if (!lesson.id) issues.push(contentValidationIssue("blocker", "Lesson", lesson.title, "missing-id", "Lesson is missing id."));
+      if (lesson.id && lessonIds.has(lesson.id)) issues.push(contentValidationIssue("blocker", "Lesson", lesson.id, "duplicate-id", "Duplicate lesson id."));
+      if (lesson.id) lessonIds.add(lesson.id);
+      if (!lesson.title) issues.push(contentValidationIssue("warning", "Lesson", lesson.id, "missing-title", "Lesson is missing title."));
+      if (!Array.isArray(lesson.concepts)) {
+        issues.push(contentValidationIssue("blocker", "Lesson", lesson.id, "missing-concepts", "Lesson concepts must be an array."));
+        return;
+      }
+      lesson.concepts.forEach((concept, conceptIndex) => {
+        const conceptId = lesson.id && concept?.conceptName ? `${lesson.id}::${concept.conceptName}` : `${lesson.id || "lesson"}::index:${conceptIndex}`;
+        if (!concept?.conceptName) issues.push(contentValidationIssue("blocker", "Concept", conceptId, "missing-concept-name", "Concept is missing conceptName."));
+        if (lesson.id && concept?.conceptName) validConceptKeys.add(`${lesson.id}::${concept.conceptName}`);
+        if (!concept?.levels) issues.push(contentValidationIssue("warning", "Concept", conceptId, "missing-levels", "Concept is missing levels."));
+        if (typeof concept?.difficulty !== "number") issues.push(contentValidationIssue("warning", "Concept", conceptId, "missing-difficulty", "Concept is missing numeric difficulty."));
+      });
+    });
+
+    const validateQuestionKey = (question, entity) => {
+      if (!question?.conceptKey) {
+        issues.push(contentValidationIssue("warning", entity, question?.id, "missing-concept-key", `${entity} is missing conceptKey.`));
+        return;
+      }
+      if (!validConceptKeys.has(question.conceptKey)) {
+        issues.push(contentValidationIssue("blocker", entity, question.id, "unknown-concept-key", `${entity} conceptKey is not in LESSONS_DATA: ${question.conceptKey}`));
+      }
+    };
+    const validateMC = (question) => {
+      validateQuestionKey(question, "MCQuestion");
+      if (!question?.id) issues.push(contentValidationIssue("blocker", "MCQuestion", "", "missing-id", "MC question is missing id."));
+      if (!question?.question) issues.push(contentValidationIssue("blocker", "MCQuestion", question?.id, "missing-question", "MC question is missing prompt."));
+      if (!Array.isArray(question?.options) || question.options.length !== 4) issues.push(contentValidationIssue("blocker", "MCQuestion", question?.id, "bad-options", "MC question must have exactly four options."));
+      if (typeof question?.correctIndex !== "number" || question.correctIndex < 0 || question.correctIndex > 3) issues.push(contentValidationIssue("blocker", "MCQuestion", question?.id, "bad-correct-index", "MC correctIndex must be 0..3."));
+      if (!question?.explanation) issues.push(contentValidationIssue("warning", "MCQuestion", question?.id, "missing-explanation", "MC question is missing explanation."));
+    };
+    const validateFill = (question) => {
+      validateQuestionKey(question, "FillQuestion");
+      if (!question?.id) issues.push(contentValidationIssue("blocker", "FillQuestion", "", "missing-id", "Fill question is missing id."));
+      if (!question?.code || !String(question.code).includes("____")) issues.push(contentValidationIssue("blocker", "FillQuestion", question?.id, "missing-blank", "Fill code must contain ____ blank marker."));
+      if (!question?.answer) issues.push(contentValidationIssue("blocker", "FillQuestion", question?.id, "missing-answer", "Fill question is missing answer."));
+      if (!question?.explanation) issues.push(contentValidationIssue("warning", "FillQuestion", question?.id, "missing-explanation", "Fill question is missing explanation."));
+    };
+    const validateTrace = (question) => {
+      validateQuestionKey(question, "TraceQuestion");
+      if (!question?.id) issues.push(contentValidationIssue("blocker", "TraceQuestion", "", "missing-id", "Trace is missing id."));
+      if (!question?.code) issues.push(contentValidationIssue("blocker", "TraceQuestion", question?.id, "missing-code", "Trace is missing code."));
+      if (!Array.isArray(question?.steps) || question.steps.length === 0) issues.push(contentValidationIssue("blocker", "TraceQuestion", question?.id, "missing-steps", "Trace must have ordered steps."));
+      if (!question?.explanation) issues.push(contentValidationIssue("warning", "TraceQuestion", question?.id, "missing-explanation", "Trace is missing explanation."));
+    };
+    const validateBug = (question) => {
+      validateQuestionKey(question, "BugQuestion");
+      if (!question?.id) issues.push(contentValidationIssue("blocker", "BugQuestion", "", "missing-id", "Bug question is missing id."));
+      if (!question?.brokenCode) issues.push(contentValidationIssue("blocker", "BugQuestion", question?.id, "missing-broken-code", "Bug question is missing brokenCode."));
+      if (!Array.isArray(question?.options) || question.options.length !== 4) issues.push(contentValidationIssue("blocker", "BugQuestion", question?.id, "bad-options", "Bug question must have exactly four options."));
+      if (typeof question?.correctIndex !== "number" || question.correctIndex < 0 || question.correctIndex > 3) issues.push(contentValidationIssue("blocker", "BugQuestion", question?.id, "bad-correct-index", "Bug correctIndex must be 0..3."));
+      if (!question?.fix) issues.push(contentValidationIssue("warning", "BugQuestion", question?.id, "missing-fix", "Bug question is missing fix."));
+    };
+    const validateBuild = (question) => {
+      validateQuestionKey(question, "BuildQuestion");
+      if (!question?.id) issues.push(contentValidationIssue("blocker", "BuildQuestion", "", "missing-id", "Build question is missing id."));
+      if (!question?.prompt) issues.push(contentValidationIssue("blocker", "BuildQuestion", question?.id, "missing-prompt", "Build question is missing prompt."));
+      if (!question?.reference) issues.push(contentValidationIssue("warning", "BuildQuestion", question?.id, "missing-reference", "Build question is missing reference."));
+      if (!Array.isArray(question?.tests) || question.tests.length === 0) issues.push(contentValidationIssue("blocker", "BuildQuestion", question?.id, "missing-tests", "Build question must have deterministic tests."));
+    };
+
+    (window.QUESTIONS_BANK?.mc || []).forEach(validateMC);
+    (window.QUESTIONS_BANK?.fill || []).forEach(validateFill);
+    (window.QUESTIONS_BANK?.trace || []).forEach(validateTrace);
+    (window.QUESTIONS_BANK?.bug || []).forEach(validateBug);
+    (window.QUESTIONS_BANK?.build || []).forEach(validateBuild);
+
+    const blockers = issues.filter((issue) => issue.severity === "blocker");
+    return Object.freeze({
+      version: "runtime-content-validation-v1",
+      ready: blockers.length === 0,
+      issueCount: issues.length,
+      blockerCount: blockers.length,
+      warningCount: issues.length - blockers.length,
+      issues,
+    });
+  }
+
+  function renderContentValidationPanel(report) {
+    if (!report || report.issueCount === 0 || typeof document === "undefined") return;
+    const escapeValidationHtml = (value) => String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+    const mount = () => {
+      if (!document.body || document.getElementById("content-validation-panel")) return;
+      const panel = document.createElement("aside");
+      panel.id = "content-validation-panel";
+      panel.className = `content-validation-panel ${report.ready ? "warnings" : "blockers"}`;
+      panel.setAttribute("role", "status");
+      panel.setAttribute("aria-live", "polite");
+      const rows = report.issues.slice(0, 8).map((issue) =>
+        `<li><strong>${escapeValidationHtml(issue.severity)}/${escapeValidationHtml(issue.entity)}</strong> <code>${escapeValidationHtml(issue.id)}</code> — ${escapeValidationHtml(issue.message)}</li>`,
+      ).join("");
+      panel.innerHTML = `
+        <details open>
+          <summary>בדיקת תוכן: ${report.blockerCount} חוסמים · ${report.warningCount} אזהרות</summary>
+          <ul>${rows}</ul>
+        </details>`;
+      document.body.appendChild(panel);
+    };
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount, { once: true });
+    else mount();
+  }
+
+  const contentValidationReport = validateLoadedContent();
+  window.LUMEN_CONTENT_VALIDATION = contentValidationReport;
+  renderContentValidationPanel(contentValidationReport);
 
   const handMC = (primary.mc || []).length + svcollegeMC.length;
   const handFill = (primary.fill || []).length + svcollegeFill.length;
   console.log(
     `[LumenPortal] Loaded ${window.LESSONS_DATA.length} lessons · ` +
-      `Bank (curated only — seeded lazy): ${handMC} MC + ${handFill} Fill · ` +
+      `Bank (manual only): ${handMC} MC + ${handFill} Fill · ` +
       `${traceList.length} Trace · ` +
       `${(window.QUICK_GUIDE.topics || []).length} guide topics · ` +
       `${enrichedCount} concepts enriched · ` +

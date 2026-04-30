@@ -1,15 +1,15 @@
 const exporter = require("../scripts/export_svcollege_student_summary.js");
 
 describe("SVCollege student/teacher readiness export", () => {
-  it("builds a ready-for-exam summary from the existing release gates", () => {
+  it("builds a blocked exam summary when manual practice gates are incomplete", () => {
     const report = exporter.buildExport();
     expect(report.reportVersion).toBe("svcollege-student-readiness-export-v1");
-    expect(report.summary.readyForExamPractice).toBe(true);
-    expect(report.summary.blockers).toBe(0);
+    expect(report.summary.readyForExamPractice).toBe(false);
+    expect(report.summary.blockers).toBe(7);
     expect(report.summary.coveredModules).toBe(report.summary.totalModules);
-    expect(report.summary.readinessAverage).toBe(100);
-    expect(report.summary.tabCoverage).toBe(100);
-    expect(report.summary.tabCells).toBe("225/225");
+    expect(report.summary.readinessAverage).toBe(96.7);
+    expect(report.summary.tabCoverage).toBe(98.2);
+    expect(report.summary.tabCells).toBe("221/225");
     expect(report.summary.flowSimulationPassed).toBe(true);
   });
 
@@ -28,9 +28,9 @@ describe("SVCollege student/teacher readiness export", () => {
     const markdown = exporter.toMarkdown(report);
 
     expect(report.reportScope).toBe("weekly-progress");
-    expect(report.teacherWeeklyProgress.status).toBe("ready-for-exam-practice");
+    expect(report.teacherWeeklyProgress.status).toBe("blocked");
     expect(report.teacherWeeklyProgress.moduleCoverage).toBe("15/15");
-    expect(report.teacherWeeklyProgress.tabCoverage).toBe("225/225");
+    expect(report.teacherWeeklyProgress.tabCoverage).toBe("221/225");
     expect(report.teacherWeeklyProgress.recommendedReviewAgenda.length).toBeGreaterThan(0);
     expect(report.teacherWeeklyProgress.evidenceCommands).toEqual(expect.arrayContaining([
       "npm run svcollege:readiness:release",

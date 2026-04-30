@@ -1,0 +1,59 @@
+{
+  "reportVersion": "metrics-dashboard-v1",
+  "date": "2026-04-29",
+  "target": "SVCollege metrics dashboard",
+  "policy": "D1/D7 retention, mastery velocity, exam uplift and question quality index use only local learner evidence and repository QA reports.",
+  "summary": {
+    "checks": 6,
+    "passed": 6,
+    "failed": 0,
+    "ready": true,
+    "questionQualityIndex": 100,
+    "totalQuestions": 2840
+  },
+  "checks": [
+    {
+      "id": "core-dashboard",
+      "label": "Core metrics dashboard exists",
+      "passed": true,
+      "status": "pass",
+      "detail": "Outcome loop must compute D1/D7, mastery velocity, exam score uplift and question quality index."
+    },
+    {
+      "id": "no-fake-policy",
+      "label": "Missing evidence remains unknown/unavailable",
+      "passed": true,
+      "status": "pass",
+      "detail": "Metrics dashboard must not backfill or fabricate missing learner evidence."
+    },
+    {
+      "id": "learning-evidence-ui",
+      "label": "Learning Evidence renders dashboard cards",
+      "passed": true,
+      "status": "pass",
+      "detail": "The portal must expose the dashboard inside Learning Evidence."
+    },
+    {
+      "id": "dashboard-styles",
+      "label": "Dashboard styles are present",
+      "passed": true,
+      "status": "pass",
+      "detail": "Metrics cards need a distinct, compact layout."
+    },
+    {
+      "id": "quality-index-source",
+      "label": "Question quality index comes from real QA report",
+      "passed": true,
+      "status": "pass",
+      "detail": "Question QA report index: 100% across 2840 questions."
+    },
+    {
+      "id": "package-scripts",
+      "label": "Metrics dashboard gate is wired",
+      "passed": true,
+      "status": "pass",
+      "detail": "package.json must expose summary/write/strict metrics dashboard commands."
+    }
+  ],
+  "blockers": []
+}

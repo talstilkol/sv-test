@@ -11,7 +11,7 @@ const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
 const JSON_PATH = path.join(ROOT, "QUESTION_QA_CHECKLIST.json");
 const MD_PATH = path.join(ROOT, "QUESTION_QA_CHECKLIST.md");
-const REPORT_DATE = "2026-04-28";
+const REPORT_DATE = "2026-04-30";
 const SAMPLE_RATIO = 0.1;
 const HARD_LEVEL = 4;
 const MAX_GATE_ROWS = 80;
@@ -341,8 +341,7 @@ function summarize(totalQuestions, sample) {
     sampleSize: sample.length,
     mc: sample.filter((item) => item.kind === "mc").length,
     fill: sample.filter((item) => item.kind === "fill").length,
-    curated: sample.filter((item) => item.source === "curated").length,
-    seeded: sample.filter((item) => item.source === "seeded").length,
+    manual: sample.filter((item) => item.source === "manual").length,
   };
 }
 
@@ -395,7 +394,7 @@ function buildMarkdown(checklist) {
     `- Sample ratio: ${Math.round(s.sampleRatio * 100)}%`,
     `- Sample size: ${s.sampleSize}`,
     `- Sample mix: ${s.mc} MC, ${s.fill} Fill`,
-    `- Source mix: ${s.curated} curated, ${s.seeded} seeded`,
+    `- Source mix: ${s.manual} manual`,
     "",
     "## SVCollege Prerequisite Gate",
     "",

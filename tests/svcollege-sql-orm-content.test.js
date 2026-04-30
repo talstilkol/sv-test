@@ -126,9 +126,36 @@ describe("SVCollege SQL/ORM session content", () => {
     const context = loadContext();
     const items = allQuestionLikeItems(context);
 
-    expect(items).toHaveLength(36);
+    expect(items).toHaveLength(46);
     items.forEach((item) => {
       expectPracticeMetadata(item);
+    });
+  });
+
+  it("adds real trace activities for the SQL/ORM P6.3.1 authoring batch", () => {
+    const context = loadContext();
+    const expectedKeys = [
+      "lesson_sql_orm::column",
+      "lesson_sql_orm::database",
+      "lesson_sql_orm::migration",
+      "lesson_sql_orm::ORM",
+      "lesson_sql_orm::PostgreSQL",
+      "lesson_sql_orm::primary key",
+      "lesson_sql_orm::relation",
+      "lesson_sql_orm::row",
+      "lesson_sql_orm::SQL",
+      "lesson_sql_orm::table",
+    ];
+    const traces = context.SVCOLLEGE_SQL_ORM_TRACES.filter((item) =>
+      expectedKeys.includes(item.conceptKey),
+    );
+
+    expect(traces.map((item) => item.conceptKey)).toEqual(expectedKeys);
+    traces.forEach((trace) => {
+      expect(trace.id).toMatch(/^trace_svsql_/);
+      expect(trace.steps.length).toBeGreaterThanOrEqual(2);
+      expect(trace.explanation.length).toBeGreaterThan(30);
+      expect(trace.requiredConcepts).toContain(trace.conceptKey);
     });
   });
 

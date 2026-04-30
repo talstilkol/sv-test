@@ -1,38 +1,38 @@
 # SVCollege Student Readiness Export — 2026-04-29
 
 - Target: SVCollege AI & Full Stack
-- Ready for exam practice: Yes
-- Blockers: 0
+- Ready for exam practice: No
+- Blockers: 7
 - Modules: 15/15
-- Readiness average: 100%
-- Tab coverage: 100% (225/225)
+- Readiness average: 96.7%
+- Tab coverage: 98.2% (221/225)
 - Mock variants: 3
 - Flow simulation: Pass
 
 ## Critical Counters
 
-- Without questions: 0
-- Without hard question: 0
+- Without questions: 131
+- Without hard question: 170
 - Without one-line definition: 0
 - Without prerequisite entry: 0
-- Code concepts without code proof: 0
+- Code concepts without code proof: 142
 
 ## Next 5 Actions
 
 | Concept | Risk | Action |
 |---|---:|---|
-| react_blueprint::Performance Optimization | 27 | לבדוק ידנית בסימולציית תלמיד נקייה. |
-| lesson_15::Closure | 25 | לבדוק ידנית בסימולציית תלמיד נקייה. |
-| react_blueprint::State Management | 25 | לבדוק ידנית בסימולציית תלמיד נקייה. |
-| react_blueprint::Testing Strategies | 25 | לבדוק ידנית בסימולציית תלמיד נקייה. |
-| lesson_25::responsive design | 24 | לבדוק ידנית בסימולציית תלמיד נקייה. |
+| react_blueprint::Performance Optimization | 172 | להוסיף שאלת עומק ברמה 6/7 עם הסבר ודיסטרקטורים. |
+| react_blueprint::State Management | 170 | להוסיף שאלת עומק ברמה 6/7 עם הסבר ודיסטרקטורים. |
+| lesson_25::add/delete movie | 169 | להוסיף שאלת עומק ברמה 6/7 עם הסבר ודיסטרקטורים. |
+| react_blueprint::Composition vs Inheritance | 168 | להוסיף שאלת עומק ברמה 6/7 עם הסבר ודיסטרקטורים. |
+| react_blueprint::Code Splitting | 168 | להוסיף שאלת עומק ברמה 6/7 עם הסבר ודיסטרקטורים. |
 
 ## Teacher Weekly Progress
 
-- Status: ready-for-exam-practice
+- Status: blocked
 - Module coverage: 15/15
-- Tab coverage: 225/225
-- Recommended review agenda: react_blueprint::Performance Optimization, lesson_15::Closure, react_blueprint::State Management
+- Tab coverage: 221/225
+- Recommended review agenda: react_blueprint::Performance Optimization, react_blueprint::State Management, lesson_25::add/delete movie
 
 ## Learner Outcome Loop
 

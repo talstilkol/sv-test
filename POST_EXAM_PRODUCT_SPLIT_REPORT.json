@@ -1,0 +1,301 @@
+{
+  "reportVersion": "post-exam-product-split-v1",
+  "date": "2026-04-30",
+  "target": "Phase 10 W49 Post-Exam Product Split",
+  "policy": "Post-exam expansion is gated by repository evidence. Missing pricing, usage, learner or review evidence remains unknown/unavailable.",
+  "summary": {
+    "tracks": 9,
+    "readyTracks": 9,
+    "checks": 20,
+    "passed": 20,
+    "failed": 0,
+    "ready": true
+  },
+  "packageScriptReady": true,
+  "tracks": [
+    {
+      "id": "future-portal-specs",
+      "closes": "P10.5.1",
+      "label": "Split non-SVCollege course mappings into future portal specs",
+      "ready": true,
+      "checks": [
+        {
+          "id": "portal-boundary-ready",
+          "label": "Portal boundary gate is ready",
+          "passed": true,
+          "status": "pass",
+          "detail": "6/6 portal boundary checks passed.",
+          "evidence": [
+            "PORTAL_BOUNDARY_POLICY.md",
+            "PORTAL_BOUNDARY_REPORT.json"
+          ]
+        },
+        {
+          "id": "future-spec-rule",
+          "label": "Future mappings are separate specs",
+          "passed": true,
+          "status": "pass",
+          "detail": "Non-SVCollege providers must not become active navigation inside Exam Edition.",
+          "evidence": [
+            "PORTAL_BOUNDARY_POLICY.md"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    {
+      "id": "portal-template",
+      "closes": "P10.5.2",
+      "label": "Create a reusable portal template contract",
+      "ready": true,
+      "checks": [
+        {
+          "id": "template-doc",
+          "label": "Template documents blueprint, tags, questions, proof gates, tabs and smoke tests",
+          "passed": true,
+          "status": "pass",
+          "detail": "POST_EXAM_PORTAL_TEMPLATE.md must describe every required portal surface.",
+          "evidence": [
+            "POST_EXAM_PORTAL_TEMPLATE.md"
+          ]
+        },
+        {
+          "id": "schema-contract-ready",
+          "label": "Content schema contract is ready",
+          "passed": true,
+          "status": "pass",
+          "detail": "9/9 schema checks passed.",
+          "evidence": [
+            "CONTENT_SCHEMA_CONTRACT.md",
+            "CONTENT_SCHEMA_CONTRACT_REPORT.json"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    {
+      "id": "teacher-lite-v2",
+      "closes": "P10.5.3",
+      "label": "Define Teacher Lite v2 from actual exam data",
+      "ready": true,
+      "checks": [
+        {
+          "id": "teacher-export-and-heatmap",
+          "label": "Teacher Lite exposes progress table, heatmap and export",
+          "passed": true,
+          "status": "pass",
+          "detail": "Teacher Lite v2 must use real class/student/heatmap modules, not invented rosters.",
+          "evidence": [
+            "app.js",
+            "src/core/teacher-heatmap.js",
+            "tests/teacher-lite-ui.test.js"
+          ]
+        },
+        {
+          "id": "exam-audit-export",
+          "label": "Teacher/mentor export uses exam evidence",
+          "passed": true,
+          "status": "pass",
+          "detail": "Teacher Lite v2 must summarize proof blockers from exam evidence.",
+          "evidence": [
+            "app.js",
+            "tests/content-studio.test.js"
+          ]
+        },
+        {
+          "id": "teacher-kit-v2",
+          "label": "Teacher kit documents weak-topic and D1/D7 review",
+          "passed": true,
+          "status": "pass",
+          "detail": "Teacher docs must keep missing student data explicit.",
+          "evidence": [
+            "TEACHER_ONBOARDING_KIT.md"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    {
+      "id": "sync-v2-privacy",
+      "closes": "P10.5.4",
+      "label": "Define Sync v2 privacy model",
+      "ready": true,
+      "checks": [
+        {
+          "id": "sync-alpha-ready",
+          "label": "Sync Alpha gate is ready",
+          "passed": true,
+          "status": "pass",
+          "detail": "6/6 Sync checks passed.",
+          "evidence": [
+            "SYNC_ALPHA_REPORT.json",
+            "SYNC_ALPHA_POLICY.md",
+            "src/core/progress-sync.js"
+          ]
+        },
+        {
+          "id": "sync-policy",
+          "label": "Sync policy is local-first, cloud optional and deterministic",
+          "passed": true,
+          "status": "pass",
+          "detail": "Sync v2 must stay opt-in and conflict-safe.",
+          "evidence": [
+            "SYNC_ALPHA_POLICY.md"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    {
+      "id": "ai-tutor-v2-eval",
+      "closes": "P10.5.5",
+      "label": "Define AI Tutor v2 eval set and guardrails",
+      "ready": true,
+      "checks": [
+        {
+          "id": "ai-alpha-ready",
+          "label": "AI Tutor Alpha gate is ready",
+          "passed": true,
+          "status": "pass",
+          "detail": "7/7 AI Tutor checks passed.",
+          "evidence": [
+            "AI_TUTOR_ALPHA_REPORT.json",
+            "AI_TUTOR_ALPHA_POLICY.md",
+            "supabase/functions/ai-tutor/index.ts"
+          ]
+        },
+        {
+          "id": "ai-eval-policy",
+          "label": "AI policy covers Socratic hints, answer leak prevention and misconception repair",
+          "passed": true,
+          "status": "pass",
+          "detail": "AI Tutor v2 must be evaluated for hinting and repair, not answer leakage.",
+          "evidence": [
+            "AI_TUTOR_ALPHA_POLICY.md"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    {
+      "id": "premium-boundary",
+      "closes": "P10.5.6",
+      "label": "Define premium experience rules",
+      "ready": true,
+      "checks": [
+        {
+          "id": "pricing-ready",
+          "label": "Pricing packaging gate is ready",
+          "passed": true,
+          "status": "pass",
+          "detail": "5/5 pricing checks passed.",
+          "evidence": [
+            "PRICING_PACKAGING_PLAN.md",
+            "PRICING_PACKAGING_PLAN_REPORT.json"
+          ]
+        },
+        {
+          "id": "exam-content-not-locked",
+          "label": "Premium cannot lock exam-critical knowledge",
+          "passed": true,
+          "status": "pass",
+          "detail": "Premium can add service and enrichment only.",
+          "evidence": [
+            "PRICING_PACKAGING_PLAN.md"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    {
+      "id": "business-kpis",
+      "closes": "P10.5.7",
+      "label": "Add business KPIs",
+      "ready": true,
+      "checks": [
+        {
+          "id": "metrics-ready",
+          "label": "Metrics dashboard gate is ready",
+          "passed": true,
+          "status": "pass",
+          "detail": "6/6 metrics checks passed.",
+          "evidence": [
+            "METRICS_DASHBOARD_REPORT.json",
+            "src/core/outcome-loop.js"
+          ]
+        },
+        {
+          "id": "kpi-policy",
+          "label": "KPIs include D1/D7, mastery velocity, exam uplift and question quality index",
+          "passed": true,
+          "status": "pass",
+          "detail": "Business KPIs must come from local evidence and QA reports.",
+          "evidence": [
+            "METRICS_DASHBOARD_REPORT.md"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    {
+      "id": "quarterly-roadmap-review",
+      "closes": "P10.5.8",
+      "label": "Add quarterly roadmap review",
+      "ready": true,
+      "checks": [
+        {
+          "id": "roadmap-ready",
+          "label": "Roadmap waves gate is ready",
+          "passed": true,
+          "status": "pass",
+          "detail": "3/3 roadmap waves ready.",
+          "evidence": [
+            "ROADMAP_90_DAY_WAVES.md",
+            "ROADMAP_90_DAY_WAVES.json"
+          ]
+        },
+        {
+          "id": "quarterly-rule",
+          "label": "Roadmap review uses freeze, cut or promote decisions from evidence",
+          "passed": true,
+          "status": "pass",
+          "detail": "Quarterly review must not promote features without usage evidence.",
+          "evidence": [
+            "ROADMAP_90_DAY_WAVES.md"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    {
+      "id": "manual-promotion",
+      "closes": "P10.5.9",
+      "label": "Promote legacy generated questions only after manual review",
+      "ready": true,
+      "checks": [
+        {
+          "id": "reuse-ready",
+          "label": "Question reuse audit is ready",
+          "passed": true,
+          "status": "pass",
+          "detail": "863 questions audited; 0 duplicate identities.",
+          "evidence": [
+            "QUESTION_REUSE_AUDIT_REPORT.json"
+          ]
+        },
+        {
+          "id": "promotion-policy",
+          "label": "Legacy promotion requires explicit human review evidence",
+          "passed": true,
+          "status": "pass",
+          "detail": "Legacy generated questions cannot become hand-curated by coverage pressure alone.",
+          "evidence": [
+            "SEEDED_QUESTION_PROMOTION_POLICY.md"
+          ]
+        }
+      ],
+      "blockers": []
+    }
+  ],
+  "blockers": []
+}
