@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.2";
+var QUESTIONS_BANK_VERSION = "2.1.3";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -40,6 +40,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 11 sub-batch: Array, boolean, By Value and By Reference MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.3",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 11 sub-batch: filter, find and forEach MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -295,6 +301,140 @@ var QUESTIONS_BANK = {
         "✅ נכון: spread יוצר מערך חדש עם אותם איברים בשכבה הראשונה.",
         "❌ push משנה את המקור ומחזיר את האורך החדש, לא עותק מערך.",
         "❌ length הוא מספר, לא עותק של המערך.",
+      ],
+    },
+    {
+      id: "mc_l11_filter_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::filter", level: 4,
+      question: "מה יודפס?\n\nconst ages = [15, 21, 12, 40, 18];\nconst adults = ages.filter(age => age >= 18);\nconsole.log(adults);",
+      options: [
+        "[21, 40, 18]",
+        "[15, 12]",
+        "21",
+        "[15, 21, 12, 40, 18]",
+      ],
+      correctIndex: 0,
+      explanation: "filter מחזירה מערך חדש שמכיל רק את האיברים שעבורם ה-callback החזיר true.",
+      optionFeedback: [
+        "✅ נכון: רק הגילים 21, 40 ו-18 עומדים בתנאי age >= 18.",
+        "❌ אלה דווקא הגילים שלא עברו את התנאי.",
+        "❌ filter לא מחזירה איבר יחיד; היא מחזירה מערך של כל ההתאמות.",
+        "❌ זה המערך המקורי. filter יוצרת מערך חדש ומסונן.",
+      ],
+    },
+    {
+      id: "mc_l11_filter_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::filter", level: 6,
+      question: "איזה משפט נכון לגבי filter?",
+      options: [
+        "היא משנה את המערך המקורי ומחזירה את האורך החדש",
+        "היא יוצרת מערך חדש ושומרת רק איברים שהחזירו true",
+        "היא עוצרת אחרי ההתאמה הראשונה",
+        "היא מיועדת רק להדפסה ללא ערך חזרה",
+      ],
+      correctIndex: 1,
+      explanation: "filter היא non-mutating: היא לא הורסת את המקור, אלא בונה מערך חדש לפי תנאי boolean.",
+      optionFeedback: [
+        "❌ זה מתאים יותר ל-mutating methods כמו push בהקשר של שינוי מקור.",
+        "✅ נכון: תנאי true מכניס איבר למערך החדש, false משאיר אותו בחוץ.",
+        "❌ עצירה אחרי התאמה ראשונה היא התנהגות של find.",
+        "❌ פעולה להדפסה בלבד מתאימה יותר ל-forEach.",
+      ],
+    },
+    {
+      id: "mc_l11_find_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::find", level: 3,
+      question: "מה יודפס?\n\nconst users = [{ id: 1, name: 'Dan' }, { id: 2, name: 'Lee' }];\nconst user = users.find(u => u.id === 2);\nconsole.log(user.name);",
+      options: ["Lee", "Dan", "[{ id: 2, name: 'Lee' }]", "undefined"],
+      correctIndex: 0,
+      explanation: "find מחזירה את האיבר הראשון שעומד בתנאי. במקרה הזה זה האובייקט של Lee.",
+      optionFeedback: [
+        "✅ נכון: find מצאה את המשתמש עם id 2, ולכן user.name הוא Lee.",
+        "❌ Dan הוא המשתמש הראשון, אבל התנאי מחפש id 2.",
+        "❌ find מחזירה אובייקט יחיד, לא מערך עם אובייקט.",
+        "❌ קיים משתמש שעומד בתנאי, לכן לא מתקבל undefined.",
+      ],
+    },
+    {
+      id: "mc_l11_find_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::find", level: 5,
+      question: "מה ההבדל החשוב בין find ל-filter כשמחפשים משתמש אחד לפי id?",
+      options: [
+        "find מחזירה את ההתאמה הראשונה כאיבר יחיד; filter מחזירה מערך של כל ההתאמות",
+        "filter מחזירה אובייקט יחיד; find מחזירה מערך של כל ההתאמות",
+        "find משנה את המערך המקורי; filter לא",
+        "find מחזירה את האינדקס המספרי; filter מחזירה את האיבר עצמו",
+      ],
+      correctIndex: 0,
+      explanation: "find מתאימה כשצריך פריט יחיד. filter מתאימה כשצריך רשימת פריטים שעומדים בתנאי.",
+      optionFeedback: [
+        "✅ נכון: זה ההבדל המעשי שמונע צורך ב-filter(...)[0].",
+        "❌ הפוך: find מחזירה איבר יחיד, ו-filter מחזירה מערך.",
+        "❌ find לא משנה את המערך המקורי.",
+        "❌ find מחזירה את האיבר עצמו או undefined, לא את האינדקס.",
+      ],
+    },
+    {
+      id: "mc_l11_find_manual_003", topicId: "topic_arrays", conceptKey: "lesson_11::find", level: 6,
+      question: "מה מוחזר אם find לא מוצאת אף איבר שעומד בתנאי?",
+      options: ["undefined", "null", "[]", "false"],
+      correctIndex: 0,
+      explanation: "כאשר אין התאמה, find מחזירה undefined. היא לא מחזירה מערך ריק כי היא לא מחזירה מערך בכלל.",
+      optionFeedback: [
+        "✅ נכון: find מחזירה undefined כשאין איבר מתאים.",
+        "❌ null לא מוחזר אוטומטית על ידי find.",
+        "❌ מערך ריק הוא תוצאה אפשרית של filter, לא find.",
+        "❌ false יכול להיות תוצאת callback, אבל לא ערך ההחזרה של find כשאין התאמה.",
+      ],
+    },
+    {
+      id: "mc_l11_foreach_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::forEach", level: 3,
+      question: "מה התפקיד של forEach?",
+      options: [
+        "להריץ פעולה אחת על כל איבר במערך",
+        "להחזיר מערך חדש באותו אורך",
+        "להחזיר רק את האיבר הראשון שעומד בתנאי",
+        "למחוק אוטומטית איברים שלא עברו תנאי",
+      ],
+      correctIndex: 0,
+      explanation: "forEach עוברת על כל איבר ומריצה callback. היא מיועדת לפעולה, לא לבניית מערך חדש.",
+      optionFeedback: [
+        "✅ נכון: forEach מתאימה כשצריך לבצע פעולה לכל איבר.",
+        "❌ זה מתאר map.",
+        "❌ זה מתאר find.",
+        "❌ זה מתאר רעיון של filter, וגם filter לא מוחקת מהמקור.",
+      ],
+    },
+    {
+      id: "mc_l11_foreach_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::forEach", level: 5,
+      question: "מה יודפס?\n\nconst names = ['Dan', 'Ron'];\nconst result = names.forEach(name => console.log(name));\nconsole.log(result);",
+      options: [
+        "Dan ואז Ron ואז undefined",
+        "['Dan', 'Ron']",
+        "Dan בלבד",
+        "מערך חדש עם ערכי console.log",
+      ],
+      correctIndex: 0,
+      explanation: "ה-callback מדפיס Dan ו-Ron. ערך ההחזרה של forEach עצמו הוא undefined.",
+      optionFeedback: [
+        "✅ נכון: ההדפסות מגיעות מה-callback, ולאחר מכן result הוא undefined.",
+        "❌ forEach לא מחזירה את המערך המקורי.",
+        "❌ היא עוברת על כל האיברים, לא רק הראשון.",
+        "❌ forEach לא בונה מערך חדש מתוצאות callback.",
+      ],
+    },
+    {
+      id: "mc_l11_foreach_manual_003", topicId: "topic_arrays", conceptKey: "lesson_11::forEach", level: 6,
+      question: "מתי forEach היא הבחירה הפחות טובה?",
+      options: [
+        "כשצריך לבנות מערך חדש מהתוצאות",
+        "כשצריך לבצע console.log לכל פריט",
+        "כשצריך לעדכן counter חיצוני במעבר על רשימה",
+        "כשצריך להריץ פעולה side-effect לכל איבר",
+      ],
+      correctIndex: 0,
+      explanation: "אם צריך מערך חדש, map או filter מתאימות יותר. forEach נועדה לפעולות ולא מחזירה תוצאה שימושית.",
+      optionFeedback: [
+        "✅ נכון: לבניית מערך חדש עדיף להשתמש במתודה שמחזירה מערך.",
+        "❌ הדפסה לכל פריט היא שימוש טבעי ב-forEach.",
+        "❌ עדכון counter הוא side-effect אפשרי, גם אם לא תמיד סגנון מועדף.",
+        "❌ פעולת side-effect לכל איבר היא בדיוק התחום שבו forEach מתאימה.",
       ],
     },
 
@@ -2283,6 +2423,34 @@ var QUESTIONS_BANK = {
       answer: "[...original]",
       hint: "השתמש ב-spread כדי ליצור מערך חדש.",
       explanation: "ה-spread פותח את original לתוך מערך חדש, ולכן push על safeCopy לא משנה את original.",
+    },
+    {
+      id: "fill_l11_filter_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::filter", level: 4,
+      code: "const ages = [15, 21, 12, 40, 18];\nconst adults = ages.____(age => age >= 18);\nconsole.log(adults);",
+      answer: "filter",
+      hint: "מתודת מערך שמחזירה רק איברים שעברו תנאי true.",
+      explanation: "filter בונה מערך חדש עם הגילים שעומדים בתנאי age >= 18.",
+    },
+    {
+      id: "fill_l11_find_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::find", level: 4,
+      code: "const users = [{ id: 1, name: 'Dan' }, { id: 2, name: 'Lee' }];\nconst selectedUser = users.____(user => user.id === 2);\nconsole.log(selectedUser.name);",
+      answer: "find",
+      hint: "מתודה שמחזירה את האיבר הראשון שעומד בתנאי.",
+      explanation: "find עוצרת בהתאמה הראשונה ומחזירה את האובייקט עצמו, לא מערך.",
+    },
+    {
+      id: "fill_l11_foreach_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::forEach", level: 3,
+      code: "const kids = ['Dan', 'Ron', 'Yael'];\nkids.____(kid => console.log(kid + ' got candy!'));",
+      answer: "forEach",
+      hint: "מתודה שמריצה פעולה לכל איבר ולא מחזירה מערך חדש.",
+      explanation: "forEach עוברת על כל ילד ומריצה את ה-callback עבורו.",
+    },
+    {
+      id: "fill_l11_foreach_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::forEach", level: 5,
+      code: "const names = ['Dan', 'Ron'];\nconst result = names.forEach(name => console.log(name));\nconsole.log(result); // ____",
+      answer: "undefined",
+      hint: "ערך ההחזרה של forEach כשהיא מסיימת לרוץ.",
+      explanation: "forEach מריצה פעולה לכל איבר, אבל ערך ההחזרה שלה הוא undefined.",
     },
 
     // ===== Functions =====

@@ -5,11 +5,11 @@ Date: 2026-04-30
 ## Summary
 
 - Ready for authoring: yes
-- Gap concepts: 538/568
-- MC gap concepts: 537
-- Fill gap concepts: 532
-- Strict MC questions still required: 1524
-- Strict Fill questions still required: 974
+- Gap concepts: 535/568
+- MC gap concepts: 534
+- Fill gap concepts: 529
+- Strict MC questions still required: 1516
+- Strict Fill questions still required: 970
 - Batches: 27
 
 ## Policy
@@ -26,14 +26,11 @@ Date: 2026-04-30
 - Owner: unknown/unavailable
 - Reviewer: unknown/unavailable
 - Concepts: 25
-- MC deficit: 61
-- Fill deficit: 37
+- MC deficit: 62
+- Fill deficit: 39
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_11::filter` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
-| `lesson_11::find` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
-| `lesson_11::forEach` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_11::function` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_11::Index` | P0-manual-mc-fill | 1 | 2 | unknown/unavailable |
 | `lesson_11::let` | P0-manual-fill | 0 | 2 | unknown/unavailable |
@@ -56,6 +53,9 @@ Date: 2026-04-30
 | `lesson_11::var` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_12::array` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_12::filter` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_12::forEach` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_12::index` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_12::lowercase` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
 ### QMAN-002 — JavaScript בסיסי ודינמיקה בדפדפן
 
@@ -63,14 +63,11 @@ Date: 2026-04-30
 - Owner: unknown/unavailable
 - Reviewer: unknown/unavailable
 - Concepts: 25
-- MC deficit: 70
-- Fill deficit: 41
+- MC deficit: 69
+- Fill deficit: 40
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_12::forEach` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_12::index` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_12::lowercase` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_12::map` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_12::spread` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_12::uppercase` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
@@ -93,21 +90,21 @@ Date: 2026-04-30
 | `lesson_13::getItem` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_13::inheritance` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_13::innerHTML` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
+| `lesson_13::instance` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_13::localStorage` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
+| `lesson_13::method` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
 ### QMAN-003 — JavaScript בסיסי ודינמיקה בדפדפן
 
 - Status: not-started
 - Owner: unknown/unavailable
 - Reviewer: unknown/unavailable
-- Concepts: 17
-- MC deficit: 46
-- Fill deficit: 31
+- Concepts: 14
+- MC deficit: 38
+- Fill deficit: 26
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_13::instance` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_13::localStorage` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
-| `lesson_13::method` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::Method` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::new` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::Object` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |

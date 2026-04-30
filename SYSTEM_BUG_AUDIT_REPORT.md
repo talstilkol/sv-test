@@ -13,7 +13,7 @@ This report is based only on repo evidence, current generated reports, strict ga
 |---|---:|
 | `npm run finish-line:pre-release:write` | Not ready; 17/18 passed; only blocker is `questions:coverage-targets:strict` |
 | `npm run master-plan:brutal-audit:write` | 221 items audited: DONE 8, FAKED 0, PARTIAL 6, NOT DONE 207 |
-| `npm run questions:coverage-targets:strict` | Failed as expected: `mcGapCount: 537`, `fillGapCount: 532`, `ready:false` |
+| `npm run questions:coverage-targets:strict` | Failed as expected: `mcGapCount: 534`, `fillGapCount: 529`, `ready:false` |
 | `npm run questions:activity-authoring-plan:strict` | Failed as expected: `totalGaps: 222`, `svcollegePriorityGaps: 0`, `ready:false` |
 | `npm run quality:remediation:strict` | Passed; remediation queue is 0 |
 | `npm run svcollege:readiness:release` | Passed |
@@ -51,7 +51,7 @@ This report is based only on repo evidence, current generated reports, strict ga
 
 The system is not currently blocked by SVCollege chrome, tab matrix, PWA, console errors, visual overlap, command center, export, or build-level release readiness. Those live gates pass.
 
-The main current blocker is honest learning coverage under the manual-only policy. `questions:coverage-targets:strict` still fails with `537` concepts missing enough MC coverage and `532` concepts missing enough Fill coverage. `MANUAL_QUESTION_AUTHORING_PLAN.md` says `1,524` MC questions and `974` Fill questions still need to be manually authored and reviewed to reach strict density across all 568 concepts.
+The main current blocker is honest learning coverage under the manual-only policy. `questions:coverage-targets:strict` still fails with `534` concepts missing enough MC coverage and `529` concepts missing enough Fill coverage. `MANUAL_QUESTION_AUTHORING_PLAN.md` says `1,516` MC questions and `970` Fill questions still need to be manually authored and reviewed to reach strict density across all 568 concepts.
 
 The second major issue is planning debt. `BRUTAL_MASTER_PLAN_AUDIT.md` now audits the active plan at 221 items: only 8 are verified DONE, 6 are PARTIAL, and 207 are NOT DONE. The good news is that the current strict audit reports `FAKED: 0`; the remaining problem is volume and verification, not known pretending in the current active slice.
 
@@ -59,8 +59,8 @@ The second major issue is planning debt. `BRUTAL_MASTER_PLAN_AUDIT.md` now audit
 
 | ID | Severity | Area | Problem | Evidence | Recommended Fix |
 |---|---|---|---|---|---|
-| SYS-AUDIT-001 | P0 | Manual question coverage | Finish Line 1 is not release-ready because strict manual MC/Fill density is still incomplete. | `questions:coverage-targets:strict`: `mcGapCount: 537`, `fillGapCount: 532`; `FINISH_LINE_PRERELEASE_REPORT.md`: 17/18 passed, 1 failed. | Continue `MANUAL_QUESTION_AUTHORING_PLAN.md` batches. A batch is DONE only after manual authoring, manual review, full option feedback, QA, source lesson verification, and strict gates. |
-| SYS-AUDIT-002 | P0 | Manual authoring capacity | The remaining strict deficit is large: `1,524` MC and `974` Fill questions. | `MANUAL_QUESTION_AUTHORING_PLAN.md`. | Assign real owner/reviewer per batch. Keep owner/reviewer as `unknown/unavailable` until a real person is assigned. |
+| SYS-AUDIT-001 | P0 | Manual question coverage | Finish Line 1 is not release-ready because strict manual MC/Fill density is still incomplete. | `questions:coverage-targets:strict`: `mcGapCount: 534`, `fillGapCount: 529`; `FINISH_LINE_PRERELEASE_REPORT.md`: 17/18 passed, 1 failed. | Continue `MANUAL_QUESTION_AUTHORING_PLAN.md` batches. A batch is DONE only after manual authoring, manual review, full option feedback, QA, source lesson verification, and strict gates. |
+| SYS-AUDIT-002 | P0 | Manual authoring capacity | The remaining strict deficit is large: `1,516` MC and `970` Fill questions. | `MANUAL_QUESTION_AUTHORING_PLAN.md`. | Assign real owner/reviewer per batch. Keep owner/reviewer as `unknown/unavailable` until a real person is assigned. |
 | SYS-AUDIT-003 | P1 | Activity practice depth | 222 non-priority concepts still lack Trace/Build/Bug activity coverage. | `questions:activity-authoring-plan:strict`: `totalGaps: 222`, `svcollegePriorityGaps: 0`. | Defer non-priority activity gaps until Finish Line 1 question coverage is green, then author real Trace/Build/Bug tasks with browser smoke. |
 | SYS-AUDIT-004 | P1 | Plan truth | The active master plan still has 207 NOT DONE and 6 PARTIAL items. | `BRUTAL_MASTER_PLAN_AUDIT.md`: 221 items, DONE 8, FAKED 0, PARTIAL 6, NOT DONE 207. | Keep `master-plan:brutal-audit:write` as a regular gate and do not use phase totals as release truth. |
 | SYS-AUDIT-005 | P1 | Keyboard accessibility | Keyboard navigation is still partial in the active task board. | `EXECUTION_TASKS.md`: `P1.2.2` remains `[~]`; `FWD-5.3` is open. | Add keyboard-only tests for Escape, Enter, Arrow navigation, tab movement, answer submit, focus return, and focus-visible states. |
