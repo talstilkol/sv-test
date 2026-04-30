@@ -80,21 +80,20 @@
     {
       "id": "optionFeedback",
       "label": "Per-Distractor Feedback",
-      "implemented": 1665,
-      "target": 1665,
+      "implemented": 222,
+      "target": 222,
       "unit": "MC questions",
       "coverage": 100,
       "status": "Done",
       "evidence": [
         "data/option_feedback.js",
-        "data/questions_bank.js",
-        "data/questions_bank_seeded.js"
+        "data/questions_bank.js"
       ],
       "outcomeMetric": "Option-specific remediation coverage across the full MC bank",
       "enforceStrict": false,
       "enforceEvidenceGate": true,
       "details": {
-        "optionExplanations": 6860
+        "optionExplanations": 1356
       }
     },
     {

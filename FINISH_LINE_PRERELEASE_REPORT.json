@@ -282,7 +282,7 @@
       "passed": true,
       "exitCode": 0,
       "detail": "passed",
-      "stdout": "> lumen-portal@2.1.0 test\n> vitest run --run\n\n\n RUN  v4.1.5 /Users/tal/.codex/worktrees/bd35/חומרים לשיעור\n\n\n Test Files  152 passed (152)\n      Tests  622 passed (622)\n   Start at  13:50:52\n   Duration  3.54s (transform 1.33s, setup 0ms, import 2.71s, tests 7.79s, environment 22.35s)",
+      "stdout": "> lumen-portal@2.1.0 test\n> vitest run --run\n\n\n RUN  v4.1.5 /Users/tal/.codex/worktrees/bd35/חומרים לשיעור\n\n\n Test Files  152 passed (152)\n      Tests  622 passed (622)\n   Start at  14:02:51\n   Duration  3.59s (transform 1.31s, setup 0ms, import 2.54s, tests 7.71s, environment 23.20s)",
       "stderr": ""
     },
     {
@@ -298,7 +298,7 @@
       "passed": true,
       "exitCode": 0,
       "detail": "passed",
-      "stdout": "> lumen-portal@2.1.0 build\n> vite build\n\nvite v8.0.10 building client environment for production...\n\u001b[2K\rtransforming...✓ 36 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/assets/manifest-CB5kUCM5.json          1.12 kB │ gzip:  0.57 kB\ndist/index.html                           102.10 kB │ gzip: 20.47 kB\ndist/assets/index-DDEpfRTZ.css            465.34 kB │ gzip: 75.95 kB\ndist/assets/rolldown-runtime-lhHHWwHU.js    0.15 kB │ gzip:  0.15 kB\ndist/assets/utils-DA3C9xv-.js               0.16 kB │ gzip:  0.14 kB\ndist/assets/views-DypBxYrn.js               1.15 kB │ gzip:  0.62 kB\ndist/assets/ui-C1wGTzuN.js                  1.54 kB │ gzip:  0.58 kB\ndist/assets/index-DO9ZacsW.js               1.78 kB │ gzip:  0.96 kB\ndist/assets/core-hrllUkwp.js              141.36 kB │ gzip: 42.50 kB\n\n✓ built in 68ms",
+      "stdout": "> lumen-portal@2.1.0 build\n> vite build\n\nvite v8.0.10 building client environment for production...\n\u001b[2K\rtransforming...✓ 36 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/assets/manifest-CB5kUCM5.json          1.12 kB │ gzip:  0.57 kB\ndist/index.html                           102.10 kB │ gzip: 20.47 kB\ndist/assets/index-DDEpfRTZ.css            465.34 kB │ gzip: 75.95 kB\ndist/assets/rolldown-runtime-lhHHWwHU.js    0.15 kB │ gzip:  0.15 kB\ndist/assets/utils-DA3C9xv-.js               0.16 kB │ gzip:  0.14 kB\ndist/assets/views-DypBxYrn.js               1.15 kB │ gzip:  0.62 kB\ndist/assets/ui-C1wGTzuN.js                  1.54 kB │ gzip:  0.58 kB\ndist/assets/index-DO9ZacsW.js               1.78 kB │ gzip:  0.96 kB\ndist/assets/core-hrllUkwp.js              141.36 kB │ gzip: 42.50 kB\n\n✓ built in 67ms",
       "stderr": ""
     }
   ],

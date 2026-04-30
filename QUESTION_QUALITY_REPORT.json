@@ -3,14 +3,14 @@
   "date": "2026-04-30",
   "source": "repo",
   "summary": {
-    "total": 261,
-    "mc": 132,
-    "fill": 129,
-    "manual": 261,
+    "total": 409,
+    "mc": 222,
+    "fill": 187,
+    "manual": 409,
     "blockerQuestions": 0,
     "warningQuestions": 0,
     "noteQuestions": 0,
-    "cleanQuestions": 261,
+    "cleanQuestions": 409,
     "blockerIssues": 0,
     "warningIssues": 0,
     "noteIssues": 0,
@@ -992,6 +992,578 @@
       "issueCodes": [],
       "status": "clean"
     },
+    "fill_html_css_a11y_009": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_html_css_box_009": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_html_css_cascade_009": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_html_css_cascade_010": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_html_css_doc_009": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_html_css_label_009": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_html_css_selector_009": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_html_css_semantic_009": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_array_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_array_manual_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_boolean_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_boolean_manual_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_by_reference_manual_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_by_reference_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_by_value_manual_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_filter_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_find_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_foreach_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_foreach_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_function_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_index_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_index_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_let_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_let_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_map_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_number_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_number_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_object_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_object_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_pointer_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_pointer_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_pop_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_push_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_scope_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_scope_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_shift_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_sort_manual_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_splice_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_splice_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_spread_manual_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_add_delete_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_add_delete_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_bg_color_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_bg_color_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "fill_l25_flex_001": {
       "score": 100,
       "difficulty": 4,
@@ -1044,6 +1616,84 @@
       "issueCodes": [],
       "status": "clean"
     },
+    "fill_l25_navbar_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_navbar_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_padding_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_padding_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_rating_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_rating_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "fill_l25_responsive_001": {
       "score": 100,
       "difficulty": 5,
@@ -1058,6 +1708,58 @@
       "status": "clean"
     },
     "fill_l25_responsive_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_rounded_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_rounded_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_search_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_search_002": {
       "score": 100,
       "difficulty": 5,
       "clarity": 100,
@@ -1096,6 +1798,32 @@
       "issueCodes": [],
       "status": "clean"
     },
+    "fill_l25_tailwind_install_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_tailwind_install_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "fill_l25_utility_001": {
       "score": 100,
       "difficulty": 4,
@@ -1112,6 +1840,32 @@
     "fill_l25_utility_002": {
       "score": 100,
       "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_validation_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l25_validation_002": {
+      "score": 100,
+      "difficulty": 5,
       "clarity": 100,
       "distractorQuality": null,
       "issueCounts": {
@@ -2383,6 +3137,58 @@
       "issueCodes": [],
       "status": "clean"
     },
+    "mc_html_css_a11y_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_a11y_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_box_004": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_cascade_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "mc_html_css_deep_001": {
       "score": 100,
       "difficulty": 6,
@@ -2410,6 +3216,123 @@
       "status": "clean"
     },
     "mc_html_css_deep_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_doc_002": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_doc_003": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_form_004": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_form_005": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_label_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_label_003": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_selector_003": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_semantic_003": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_html_css_semantic_004": {
       "score": 100,
       "difficulty": 6,
       "clarity": 100,
@@ -2477,6 +3400,734 @@
     "mc_inner_001": {
       "score": 100,
       "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_array_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_array_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_boolean_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_boolean_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_by_reference_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_by_reference_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_by_value_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_by_value_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_filter_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_filter_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_find_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_find_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_find_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_foreach_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_foreach_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_foreach_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_function_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_function_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_index_manual_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_map_manual_001": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_number_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_number_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_number_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_object_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_object_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_object_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_pointer_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_pointer_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_pointer_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_pop_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_pop_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_pop_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_push_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_push_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_push_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_reduce_manual_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_reduce_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_scope_manual_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_scope_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_shift_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_shift_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_shift_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_sort_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_sort_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_sort_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_splice_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_splice_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_splice_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_spread_manual_001": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_spread_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_add_delete_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_add_delete_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_add_delete_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_bg_color_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_bg_color_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_bg_color_003": {
+      "score": 100,
+      "difficulty": 6,
       "clarity": 100,
       "distractorQuality": 100,
       "issueCounts": {
@@ -2565,6 +4216,123 @@
       "issueCodes": [],
       "status": "clean"
     },
+    "mc_l25_navbar_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_navbar_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_navbar_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_padding_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_padding_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_padding_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_rating_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_rating_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_rating_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "mc_l25_responsive_001": {
       "score": 100,
       "difficulty": 3,
@@ -2592,6 +4360,84 @@
       "status": "clean"
     },
     "mc_l25_responsive_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_rounded_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_rounded_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_rounded_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_search_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_search_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_search_003": {
       "score": 100,
       "difficulty": 6,
       "clarity": 100,
@@ -2643,6 +4489,45 @@
       "issueCodes": [],
       "status": "clean"
     },
+    "mc_l25_tailwind_install_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_tailwind_install_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_tailwind_install_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "mc_l25_utility_001": {
       "score": 100,
       "difficulty": 3,
@@ -2670,6 +4555,45 @@
       "status": "clean"
     },
     "mc_l25_utility_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_validation_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_validation_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l25_validation_003": {
       "score": 100,
       "difficulty": 6,
       "clarity": 100,

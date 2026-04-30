@@ -17,15 +17,15 @@
 
 | מדד | כמות |
 |---|---:|
-| בוצעו | 740 |
-| סך משימות מסומנות | 896 |
-| בוצעו מתוך סך הכול | 740/896 (83%) |
-| נותרו פעילות: פתוחות + חלקיות + חסומות | 141 |
-| פתוחות | 134 |
+| בוצעו | 741 |
+| סך משימות מסומנות | 901 |
+| בוצעו מתוך סך הכול | 741/901 (82%) |
+| נותרו פעילות: פתוחות + חלקיות + חסומות | 145 |
+| פתוחות | 138 |
 | בעבודה / חלקיות | 6 |
 | חסומות | 1 |
 | נדחו / לאחר Finish Line 1 | 15 |
-| נותרו כולל נדחות | 156 |
+| נותרו כולל נדחות | 160 |
 
 ## מצב Finish Line 1
 
@@ -36,7 +36,7 @@
 | `MANUAL_QUESTION_AUTHORING_PLAN` | `1482` שאלות MC ידניות ו-`949` Fill ידניות עדיין נדרשות ליעד strict |
 | התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה + תתי-batch Lesson 11 הושלמו ככיסוי authored: `90` MC ו-`58` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
 | `QUESTION_ACTIVITY_AUTHORING_PLAN` | `222` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
-| `BRUTAL_MASTER_PLAN_AUDIT` | `221` פריטים: `DONE 8`, `FAKED 0`, `PARTIAL 6`, `NOT DONE 207` |
+| `BRUTAL_MASTER_PLAN_AUDIT` | `226` פריטים: `DONE 8`, `FAKED 0`, `PARTIAL 6`, `NOT DONE 212` |
 
 ## משימות שנותרו לבצע — ראשונות
 
@@ -68,7 +68,7 @@
 - [~] AUDIT-FIX-28 — Vite migration (build/dev/preview working; full app.js module extraction pending)
 - [~] AUDIT-FIX-29 — TypeScript migration (bootstrap + lib ports + core scoring module done; views pending)
 
-## פתוחות (134)
+## פתוחות (138)
 
 ### 📊 סיכום התקדמות > Kimi 2.6 Consolidated Issues Reconciliation — 2026-04-30
 
@@ -77,8 +77,15 @@
 - [ ] KIMI-AUDIT-3 — להוסיף `report:source-of-truth` שמסכם live gates מול historic audit ומונע סתירות כמו `FEATURE_COVERAGE 100%` מול `questions:coverage-targets red`.
 - [ ] KIMI-AUDIT-4 — להוסיף SEO backlog לא חוסם: OG tags, JSON-LD, canonical/meta social only after Finish Line 1.
 - [ ] KIMI-AUDIT-5 — להגדיר החלטת telemetry אמיתית: local-only Bug Agent עכשיו; Sentry/Plausible רק עם חשבון אמיתי, privacy notice ו-PII policy.
-- [ ] KIMI-AUDIT-6 — לעדכן את `SYSTEM_BUG_AUDIT_REPORT.md` עם reconciliation הזה בריצה הבאה.
 - [ ] KIMI-AUDIT-7 — אם Kimi/סוכן אחר ממשיך, עליו להריץ live gates לפני סימון בעיה כפתוחה; אין להסתמך על AUDIT ישן בלי אימות.
+
+### 📊 סיכום התקדמות > Live System Bug Audit Addendum — 2026-04-30
+
+- [ ] SYS-AUDIT-016 — לתקן drift במטאדאטה של דוחות generated: `FEATURE_COVERAGE_REPORT.md`, `QUESTION_REMEDIATION_QUEUE.md` ו-`METRICS_DASHBOARD_REPORT.md` צריכים run date/scope אמיתי או סימון historical.
+- [ ] SYS-AUDIT-017 — לבצע allowlist מלא ל-154 מופעי `innerHTML` ול-`document.write` אחד ב-`app.js`, כולל data origin, escaping/sanitizer, owner ו-smoke.
+- [ ] SYS-AUDIT-018 — להגדיר trust boundary לכל 164 מופעי `localStorage` ב-`app.js`: progress/XP/evidence מקומיים אינם ראיית ציון מאומתת בלי backend/auth אמיתי.
+- [ ] SYS-AUDIT-019 — אחרי Finish Line 1 לפרק payload ו-CSS לפי feature; build עובר אבל עדיין מוציא `dist/app.js` 1.6MB, `dist/style.css` 594KB ו-`dist/assets/index-DDEpfRTZ.css` 454KB.
+- [ ] SYS-AUDIT-020 — לאחד scope של דוחות שאלות: active manual bank, archive/generated, concept-density coverage ו-dashboard display, ולהוסיף gate שמזהה דוח stale.
 
 ### 📊 סיכום התקדמות > Forward Execution Plan — 2026-04-30 > P0 — כיסוי שאלות ידני מלא לכל הפורטל
 
@@ -144,6 +151,8 @@
 - [ ] FWD-8.10 — telemetry חיצוני כמו Sentry/Plausible רק אחרי חשבון אמיתי, privacy notice, PII policy ואישור מפורש; עד אז Bug Agent נשאר local-only.
 
 ### 📊 סיכום התקדמות > Forward Execution Plan — 2026-04-30 > P2 — Museum Expansion Backlog from 2026-04-30 review
+
+> בעלות נוכחית: Kimi 2.6. לא לבצע כאן לפני Finish Line 1 אלא אם יש חסימה ישירה להכנה למבחן.
 
 - [ ] MUSEUM-FWD-0.1 — להגדיר source-of-truth חדש לנתוני מוזיאון מחוץ ל-`app.js`: schema לאגף, אולם, מוצג, מקור, תלות מושגים, מחיר XP/coins, דרכון, סרטון, בדיקת ידע ידנית.
 - [ ] MUSEUM-FWD-0.2 — להוסיף gate שמונע פרסום מוזיאון אם יש אולם עם טענה היסטורית/טכנית ללא source או `unknown/unavailable`.
@@ -265,7 +274,11 @@
 
 ## משימות שהושלמו — בסוף
 
-בוצעו 740 מתוך 896 משימות מסומנות. הפירוט המלא עבר לארכיון: [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
+בוצעו 741 מתוך 901 משימות מסומנות. הפירוט המלא עבר לארכיון: [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
+
+### הושלם בסבב הנוכחי
+
+- [V] KIMI-AUDIT-6 — עודכן [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) עם reconciliation חי: finish-line, master-plan brutal audit, manual coverage, report drift, DOM/storage inventory, tests ו-build.
 
 | אזור | משימות שהושלמו |
 |---|---:|

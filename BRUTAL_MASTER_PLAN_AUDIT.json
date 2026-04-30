@@ -5,7 +5,7 @@
     "DONE": 8,
     "FAKED": 0,
     "PARTIAL": 6,
-    "NOT DONE": 207
+    "NOT DONE": 212
   },
   "items": [
     {
@@ -13,7 +13,7 @@
       "line": 47,
       "id": "P0",
       "sourceStatus": "[ ]",
-      "text": "| SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `541` פערי MC ו-`536` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |",
+      "text": "| SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `520` פערי MC ו-`515` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |",
       "kind": "checkbox",
       "auditStatus": "NOT DONE",
       "confidence": "high",
@@ -24,7 +24,7 @@
       "line": 48,
       "id": "P0",
       "sourceStatus": "[ ]",
-      "text": "| SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,532` MC ו-`981` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |",
+      "text": "| SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,482` MC ו-`949` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |",
       "kind": "checkbox",
       "auditStatus": "NOT DONE",
       "confidence": "high",
@@ -46,7 +46,7 @@
       "line": 50,
       "id": "P1",
       "sourceStatus": "[ ]",
-      "text": "| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `221` פריטים יש `207` NOT DONE ו-`6` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |",
+      "text": "| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `226` פריטים יש `212` NOT DONE ו-`6` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |",
       "kind": "checkbox",
       "auditStatus": "NOT DONE",
       "confidence": "high",
@@ -175,7 +175,62 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 71,
+      "line": 62,
+      "id": "P1",
+      "sourceStatus": "[ ]",
+      "text": "| SYS-AUDIT-016 | [ ] | P1 | לתקן drift במטאדאטה של דוחות generated: `FEATURE_COVERAGE_REPORT.md` ו-`QUESTION_REMEDIATION_QUEUE.md` עדיין מתחילים ב-`2026-04-28`, ו-`METRICS_DASHBOARD_REPORT.md` ב-`2026-04-29` למרות counter עדכני; כל דוח חייב run date/scope אמיתי או סימון historical. |",
+      "kind": "checkbox",
+      "auditStatus": "NOT DONE",
+      "confidence": "high",
+      "reason": "The source plan itself marks this as open/deferred."
+    },
+    {
+      "file": "MASTER_PLAN.md",
+      "line": 63,
+      "id": "P1",
+      "sourceStatus": "[ ]",
+      "text": "| SYS-AUDIT-017 | [ ] | P1 | לבצע allowlist מלא ל-154 מופעי `innerHTML` ול-`document.write` אחד ב-`app.js`, עם data origin, escaping/sanitizer, owner ו-smoke לכל נתיב פעיל. |",
+      "kind": "checkbox",
+      "auditStatus": "NOT DONE",
+      "confidence": "high",
+      "reason": "The source plan itself marks this as open/deferred."
+    },
+    {
+      "file": "MASTER_PLAN.md",
+      "line": 64,
+      "id": "P1",
+      "sourceStatus": "[ ]",
+      "text": "| SYS-AUDIT-018 | [ ] | P1 | להגדיר trust boundary לכל 164 מופעי `localStorage` ב-`app.js`: progress/XP/evidence מקומיים הם עזר לימודי בלבד ולא ראיית ציון מאומתת בלי backend/auth אמיתי. |",
+      "kind": "checkbox",
+      "auditStatus": "NOT DONE",
+      "confidence": "high",
+      "reason": "The source plan itself marks this as open/deferred."
+    },
+    {
+      "file": "MASTER_PLAN.md",
+      "line": 65,
+      "id": "P2",
+      "sourceStatus": "[ ]",
+      "text": "| SYS-AUDIT-019 | [ ] | P2 | אחרי Finish Line 1: לפרק payload ו-CSS לפי feature. build נוכחי עובר אבל עדיין מוציא `dist/app.js` 1.6MB, `dist/style.css` 594KB ו-`dist/assets/index-DDEpfRTZ.css` 454KB. |",
+      "kind": "checkbox",
+      "auditStatus": "NOT DONE",
+      "confidence": "high",
+      "reason": "The source plan itself marks this as open/deferred."
+    },
+    {
+      "file": "MASTER_PLAN.md",
+      "line": 66,
+      "id": "P1",
+      "sourceStatus": "[ ]",
+      "text": "| SYS-AUDIT-020 | [ ] | P1 | לאחד scope של דוחות שאלות: להפריד active manual bank, archive/generated, concept-density coverage ו-dashboard display, ולהוסיף gate שמזהה קובץ דוח stale אחרי strict/write. |",
+      "kind": "checkbox",
+      "auditStatus": "NOT DONE",
+      "confidence": "high",
+      "reason": "The source plan itself marks this as open/deferred."
+    },
+    {
+      "file": "MASTER_PLAN.md",
+      "line": 76,
       "id": "BUG-AUDIT-001",
       "sourceStatus": "[ ]",
       "text": "לסגור `222/568` פערי פעילות Trace/Build/Bug באמצעות תוכן אמיתי בלבד, לפי [QUESTION_ACTIVITY_AUTHORING_PLAN.md](QUESTION_ACTIVITY_AUTHORING_PLAN.md).",
@@ -186,7 +241,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 72,
+      "line": 77,
       "id": "BUG-AUDIT-002",
       "sourceStatus": "[V]",
       "text": "נסגרו `9` פערי SVCollege-priority ב-Design Systems באמצעות Trace ידני; [QUESTION_ACTIVITY_AUTHORING_PLAN.md](QUESTION_ACTIVITY_AUTHORING_PLAN.md) מציג עכשיו `svcollegePriorityGaps: 0`.",
@@ -197,7 +252,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 73,
+      "line": 78,
       "id": "BUG-AUDIT-003",
       "sourceStatus": "[ ]",
       "text": "להשאיר `222` פערים לא-עדיפותיים ב-deferred עד סגירת SVCollege, ואז לשייך אותם לפורטל מתאים.",
@@ -208,7 +263,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 74,
+      "line": 79,
       "id": "BUG-AUDIT-004",
       "sourceStatus": "[ ]",
       "text": "להשלים בדיקות keyboard-only ל-Esc/Enter/Arrow, ניווט מושגים, מעבר שיעור, פתיחת/סגירת טאבים ומצבי focus.",
@@ -219,7 +274,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 75,
+      "line": 80,
       "id": "BUG-AUDIT-005",
       "sourceStatus": "[ ]",
       "text": "להמשיך פירוק `app.js` למודולי `src/` קטנים: lesson renderer, chrome/menu, settings, bug log, question panels.",
@@ -230,7 +285,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 76,
+      "line": 81,
       "id": "BUG-AUDIT-006",
       "sourceStatus": "[ ]",
       "text": "לסגור Cross-device Sync מול Supabase אמיתי: auth, conflict handling, recovery, export/import. נתונים חסרים נשארים `unknown/unavailable`.",
@@ -241,7 +296,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 77,
+      "line": 82,
       "id": "BUG-AUDIT-007",
       "sourceStatus": "[ ]",
       "text": "ליישב סטטוס Per-Distractor Feedback: אם `coverage:features:strict` מוכיח `1704/1704`, לסמן את המשימה הישנה כסגורה/מוחלפת.",
@@ -252,7 +307,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 78,
+      "line": 83,
       "id": "BUG-AUDIT-008",
       "sourceStatus": "[ ]",
       "text": "לסמן מסמכי audit ישנים כ-historical כדי שלא ייראו כבאגים פעילים.",
@@ -263,7 +318,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 79,
+      "line": 84,
       "id": "BUG-AUDIT-009",
       "sourceStatus": "[ ]",
       "text": "להוסיף export/report deterministic ללוג Bug Agent כדי שניתן יהיה לראות, לתקן ולנקות באגים בלי טלמטריה מזויפת.",
@@ -274,7 +329,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 80,
+      "line": 85,
       "id": "BUG-AUDIT-010",
       "sourceStatus": "[ ]",
       "text": "לשמור `svcollege:pwa-offline:strict` כחובה בכל שינוי שמוסיף `data/` או `src/core/` scripts.",
@@ -285,7 +340,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 81,
+      "line": 86,
       "id": "BUG-AUDIT-011",
       "sourceStatus": "[ ]",
       "text": "להוסיף gate חוסם ל-activity coverage רק אחרי שיש יעד ריאלי ותוכן אמיתי שמאפשר מעבר.",
@@ -296,7 +351,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 82,
+      "line": 87,
       "id": "BUG-AUDIT-012",
       "sourceStatus": "[ ]",
       "text": "להריץ browser visual smoke/overlap אחרי כל שינוי UI, לא רק בדיקות יחידה.",
@@ -307,7 +362,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 83,
+      "line": 88,
       "id": "BUG-AUDIT-013",
       "sourceStatus": "[ ]",
       "text": "להוסיף smoke בדפדפן לטאב Trace/Build/Bug עבור מושגים מייצגים מכל batch activity חדש.",
@@ -318,7 +373,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 84,
+      "line": 89,
       "id": "BUG-AUDIT-014",
       "sourceStatus": "[ ]",
       "text": "להריץ פיילוט 10 תלמידים אמיתי ולמדוד D1/D7, stuck events, mastery movement ו-promotion outcomes.",
@@ -329,7 +384,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 85,
+      "line": 90,
       "id": "BUG-AUDIT-015",
       "sourceStatus": "[ ]",
       "text": "לאחד מקור אמת תפעולי: `EXECUTION_TASKS.md` לביצוע שוטף, `MASTER_PLAN.md` ל-backlog, ולסמן סעיפים legacy/historical כדי למנוע status drift.",
@@ -340,7 +395,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 86,
+      "line": 91,
       "id": "BUG-AUDIT-016",
       "sourceStatus": "[ ]",
       "text": "לרכז או לגזור אוטומטית את גרסת cache וציפיות assets מתוך `service-worker.js`/`index.html` במקום לעדכן כמה קבצים ידנית.",
@@ -351,7 +406,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 87,
+      "line": 92,
       "id": "BUG-AUDIT-017",
       "sourceStatus": "[ ]",
       "text": "להוסיף browser smoke דטרמיניסטי למושג אחד לפחות מכל batch activity חדש ב-Lessons 11-17, SQL/ORM וב-foundation/tooling, כולל Trace/Build/Bug לא ריקים.",
@@ -362,7 +417,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 88,
+      "line": 93,
       "id": "BUG-AUDIT-018",
       "sourceStatus": "[ ]",
       "text": "לרכז metadata של דוחות generated או לגזור תאריך מריצת release אחת, כדי שדוחות עם מספרים עדכניים לא יישארו עם תאריך ישן.",
@@ -373,7 +428,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 89,
+      "line": 94,
       "id": "BUG-AUDIT-019",
       "sourceStatus": "[ ]",
       "text": "לפני release/commit ליצור inventory של קבצים מיועדים, להפריד generated artifacts, ולא לשחרר מתוך worktree מלוכלך ללא בעלות ברורה.",
@@ -384,7 +439,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 90,
+      "line": 95,
       "id": "BUG-AUDIT-020",
       "sourceStatus": "[V]",
       "text": "`questions:activity-authoring-plan:strict` הוקשח ונכשל עכשיו על `ready:false`; פערי Trace/Build/Bug לא יכולים להיראות ירוקים לפני authoring ידני אמיתי.",
@@ -395,7 +450,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 91,
+      "line": 96,
       "id": "BUG-AUDIT-021",
       "sourceStatus": "[ ]",
       "text": "לכתוב/לסקור ידנית MC/Fill במקום להסתמך על legacy generated bank; אחרי באטצ' החסמים הראשון `questions:coverage-targets` מציג אמת: `558` פערי MC ו-`552` פערי Fill ידניים.",
@@ -406,7 +461,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 92,
+      "line": 97,
       "id": "BUG-AUDIT-022",
       "sourceStatus": "[ ]",
       "text": "אחרי סגירת Finish Line 1 לפרק payload frontend: לצמצם stylesheet גלובלי גדול ו-core chunk גדול באמצעות חלוקת styles/modules לפי feature עם smoke tests.",
@@ -417,7 +472,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 93,
+      "line": 98,
       "id": "BUG-AUDIT-023",
       "sourceStatus": "[ ]",
       "text": "לתקן overclaim בסטטוס התוכנית: `BRUTAL_MASTER_PLAN_AUDIT.md` מצא 759 פריטים, מתוכם 332 DONE, 368 PARTIAL, 50 NOT DONE ו-9 FAKED. אין להציג Phase כ-100% עד שכל פריט FAKED/PARTIAL מקבל ראיה אמיתית או מסומן מחדש.",
@@ -428,7 +483,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 94,
+      "line": 99,
       "id": "BUG-AUDIT-024",
       "sourceStatus": "[ ]",
       "text": "להוריד ל-PARTIAL/NOT DONE כל `[V]` שתלוי בפיילוט, D1/D7, real usage, pricing, post-exam review או learner outcome אמיתי עד שיש נתוני אמת.",
@@ -439,7 +494,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 95,
+      "line": 100,
       "id": "BUG-AUDIT-025",
       "sourceStatus": "[ ]",
       "text": "להפוך את `brutal-master-plan-audit` לשער קבוע לפני release: כל `FAKED` חייב להיות 0, וכל `PARTIAL` חייב להיות מוצדק עם owner וקריטריון סגירה.",
@@ -450,7 +505,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 96,
+      "line": 101,
       "id": "BUG-AUDIT-026",
       "sourceStatus": "[ ]",
       "text": "למנוע drift בזמן batch חלקי: cache version, HTML script version, service-worker tests ודוחות smoke צריכים להיגזר ממקור אחד או להיבדק ב-gate אחד.",
@@ -461,7 +516,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 97,
+      "line": 102,
       "id": "BUG-AUDIT-027",
       "sourceStatus": "[ ]",
       "text": "לנקות כל gate ישן שעדיין מציג legacy generated/seeded כשווה ערך לחומר ידני; release לא ירוק עד ש-`validate:strict` ו-`questions:coverage-targets:strict` משקפים ידני בלבד.",
@@ -472,7 +527,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 98,
+      "line": 103,
       "id": "BUG-AUDIT-028",
       "sourceStatus": "[V]",
       "text": "נוספה `MANUAL_QUESTION_AUTHORING_PLAN.md/json` עם `28` באטצ'ים ל-`558` פערי MC ו-`552` פערי Fill; owner/reviewer נשארים `unknown/unavailable` עד הקצאה אמיתית.",
@@ -483,7 +538,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 99,
+      "line": 104,
       "id": "BUG-AUDIT-029",
       "sourceStatus": "[ ]",
       "text": "להוציא את `data/questions_bank_seeded.js` מהנתיב הפעיל לגמרי: להשאיר כארכיון legacy או למחוק אחרי שהפריטים השימושיים נכתבו מחדש ידנית.",
@@ -494,7 +549,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 100,
+      "line": 105,
       "id": "BUG-AUDIT-030",
       "sourceStatus": "[V]",
       "text": "נוסף `guard:no-auto-questions` שמוודא שאין פונקציות runtime מסוג `generatedMC`, `makeCodeFill`, `ensureSeededBank`, שאין סקריפטי seed פעילים, וש-`questions_bank_seeded.js` נשאר ארכיון לא פעיל בלבד.",
@@ -505,7 +560,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 101,
+      "line": 106,
       "id": "BUG-AUDIT-031",
       "sourceStatus": "[V]",
       "text": "נכתבו ידנית `27` MC ו-`18` Fill ל-`lesson_25` ו-`ai_development`; `svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict` ו-`exam:mock-variants:strict` ירוקים בלי generated bank.",
@@ -516,7 +571,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 102,
+      "line": 107,
       "id": "BUG-AUDIT-032",
       "sourceStatus": "[ ]",
       "text": "לבצע reconciliation קבוע לדוחות ישנים מול live gates: דוח Kimi 2.6 הראה שחלק מ-`AUDIT_2026` מיושן אחרי Vite/PWA/a11y/theme/tests, ולכן אין לסמן בעיה כפתוחה בלי פקודת אימות עדכנית.",
@@ -527,7 +582,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 103,
+      "line": 108,
       "id": "BUG-AUDIT-033",
       "sourceStatus": "[ ]",
       "text": "לסמן דוחות audit ישנים כ-`historical/superseded` או להוסיף בראשם מצב עדכני, כדי שלא ימשיכו לספור `683` remediation issues או `0 tests` אחרי שהשערים החיים אומרים אחרת.",
@@ -538,7 +593,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 104,
+      "line": 109,
       "id": "BUG-AUDIT-034",
       "sourceStatus": "[ ]",
       "text": "לתקן תאריכי generated reports שנתקעים על `2026-04-28`; כל דוח שנכתב מחדש חייב לשקף run date/version אמיתיים או metadata שמצהיר שהוא historical.",
@@ -549,7 +604,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 105,
+      "line": 110,
       "id": "BUG-AUDIT-035",
       "sourceStatus": "[ ]",
       "text": "להוסיף source-of-truth report שמפריד בין Feature Coverage, Manual Question Coverage, SVCollege Release Readiness, Activity Coverage ו-Historical Audit כדי למנוע סתירות בין דוחות.",
@@ -560,7 +615,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 106,
+      "line": 111,
       "id": "BUG-AUDIT-036",
       "sourceStatus": "[ ]",
       "text": "להוסיף SEO backlog לא חוסם אחרי Finish Line 1: OG tags, JSON-LD, canonical/social metadata ובדיקת preview, בלי לעכב את הכנת המבחן.",
@@ -571,7 +626,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 107,
+      "line": 112,
       "id": "BUG-AUDIT-037",
       "sourceStatus": "[ ]",
       "text": "להחליט telemetry אמיתי: Bug Agent local-only נשאר ברירת מחדל; Sentry/Plausible/analytics רק עם חשבון אמיתי, privacy notice, PII policy ואישור מפורש.",
@@ -582,7 +637,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 108,
+      "line": 113,
       "id": "BUG-AUDIT-038",
       "sourceStatus": "[V]",
       "text": "נוסף `questions:blocker-map:strict` כדי למנוע ערבוב בין מודולים דומים; אחרי authoring ידני ל-`lesson_25` ו-`ai_development`, הדוח מציג `releaseQuestionDeficit: 0`, `strictMcDeficit: 0`, `strictFillDeficit: 0`.",
@@ -593,7 +648,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 109,
+      "line": 114,
       "id": "BUG-AUDIT-039",
       "sourceStatus": "[ ]",
       "text": "להשלים את הכיסוי הידני המלא שנותר לפי `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,572` MC ידניות ו-`1,007` Fill ידניות עדיין נדרשות כדי ש-`questions:coverage-targets:strict` יהיה ירוק לכל 568 המושגים. `FINISH_LINE_PRERELEASE_REPORT.md` מאשר שזה החסם היחיד מתוך `18` שערי pre-release.",
@@ -604,7 +659,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 110,
+      "line": 115,
       "id": "BUG-AUDIT-040",
       "sourceStatus": "[V]",
       "text": "נוסף `finish-line:pre-release` / `FINISH_LINE_PRERELEASE_REPORT.md` שמריץ no-auto-questions, סריקת native-random, QA, SVCollege gates, tests ו-build ברצף ומדווח `17/18` ירוק בלי לעצור בכשל הראשון.",
@@ -615,7 +670,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 111,
+      "line": 116,
       "id": "BUG-AUDIT-041",
       "sourceStatus": "[ ]",
       "text": "לבצע security inventory לכל `.innerHTML`/`document.write` שמקבל data-originated strings. להתחיל מ-Pair Match, Achievements, Reflections, feedback ו-PDF print; לתקן רק עם `esc(...)`, DOM API או sanitizer קיים, ולהוסיף gate סטטי שמונע regression.",
@@ -626,7 +681,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 112,
+      "line": 117,
       "id": "BUG-AUDIT-042",
       "sourceStatus": "[ ]",
       "text": "להוסיף CSP מדורג: קודם report-only/בדיקת תאימות ל-PWA, fonts ו-inline scripts קיימים; אחר כך להקשיח בלי לשבור local/offline learning. לא לסמן DONE בלי browser smoke.",
@@ -637,7 +692,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 113,
+      "line": 118,
       "id": "BUG-AUDIT-043",
       "sourceStatus": "[ ]",
       "text": "להגדיר trust boundary ל-localStorage: progress מקומי הוא עזר לימודי בלבד, לא ראיית ציון/מאסטר מאומתת. לא להשתמש ב-HMAC עם מפתח hardcoded כ\"פתרון אבטחה\"; אימות אמיתי רק עם backend/auth אמיתי.",
@@ -648,7 +703,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 114,
+      "line": 119,
       "id": "BUG-AUDIT-044",
       "sourceStatus": "[ ]",
       "text": "להשלים a11y/keyboard hardening לפי live UI: skip-to-content, focus trap במודלים, return focus, Arrow navigation בתפריטי עץ ורשימות, ו-reduced-motion לכל transition/animation.",
@@ -659,7 +714,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 115,
+      "line": 120,
       "id": "BUG-AUDIT-045",
       "sourceStatus": "[ ]",
       "text": "להוסיף mobile/visual smoke חובה אחרי שינויי chrome/menus: שיעור 11, בנק שאלות, תפריט תצוגה שמאלי, sidebar ימני, focus mode ו-scroll rail.",
@@ -670,7 +725,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 116,
+      "line": 121,
       "id": "BUG-AUDIT-046",
       "sourceStatus": "[ ]",
       "text": "אחרי Finish Line 1 בלבד: להמשיך פירוק bundle לפי view/feature עם dynamic import, בלי להחזיר `questions_bank_seeded.js` או טעינת data שאינה נדרשת למסך הנוכחי.",
@@ -681,7 +736,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 117,
+      "line": 122,
       "id": "BUG-AUDIT-047",
       "sourceStatus": "[ ]",
       "text": "אחרי התייצבות UI: לפצל/לצמצם CSS לפי feature, למדוד bundle size ב-build, ולהוסיף threshold מדיד במקום טענה כללית על \"500KB CSS\".",
@@ -692,7 +747,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 118,
+      "line": 123,
       "id": "BUG-AUDIT-048",
       "sourceStatus": "[ ]",
       "text": "להוסיף Offline UX indicator ודוח cache effectiveness מקומי בלבד: מצב offline, assets חסרים, cache version, last update. אין analytics חיצוני בלי privacy policy ואישור מפורש.",
@@ -703,7 +758,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 119,
+      "line": 124,
       "id": "BUG-AUDIT-049",
       "sourceStatus": "[ ]",
       "text": "להפוך את דוחות Kimi/AUDIT חיצוניים ל-input בלבד: כל claim חייב live gate עדכני. הדוח `f5798c` כולל טענות מיושנות על Vite, a11y, seeded bank ומספרי tests ולכן לא ייספר כמקור אמת ללא אימות.",
@@ -714,7 +769,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 120,
+      "line": 125,
       "id": "BUG-AUDIT-050",
       "sourceStatus": "[ ]",
       "text": "להוסיף Playwright E2E production-like לזרימות ליבה: פתיחת שיעור, מעבר מושג, פתיחת בנק שאלות, מענה MC/Fill ידני, שמירת התקדמות, חזרה לבית וטעינה offline.",
@@ -725,7 +780,7 @@
     },
     {
       "file": "MASTER_PLAN.md",
-      "line": 121,
+      "line": 126,
       "id": "BUG-AUDIT-051",
       "sourceStatus": "[V]",
       "text": "צומצמה שכבת התכנון ל-`docs/plans/` עם אינדקס קנוני, Finish Line, מדיניות תוכן ידנית, backlog דחוי, agent handoff ומפת הגירה `05_LEGACY_DOC_MIGRATION.md`; קבצי legacy ישנים נמחקו רק אחרי שהתוכן העדכני והרלוונטי שלהם נשמר או סומן כמיושן, ובלי למחוק דוחות/gates חיים.",

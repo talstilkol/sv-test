@@ -16,7 +16,7 @@
 
 > **עדכון Exam Sprint 2026-04-29:** נוסף P-0.3 ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md): ספרינט 7 ימים לפני מבחן. הוא מתמקד ב-weakest 10, no-repeat simulation, harder-after-correct, wrong-answer repair, smoke מובייל/פוקוס, וגיבוש `Exam Edition RC`.
 
-> **עדכון System Bug Audit 2026-04-30:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `221` פריטים: `DONE 8`, `FAKED 0`, `PARTIAL 6`, `NOT DONE 207`.
+> **עדכון System Bug Audit 2026-04-30:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `226` פריטים: `DONE 8`, `FAKED 0`, `PARTIAL 6`, `NOT DONE 212`.
 
 > **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `520` פערי MC ו-`515` פערי Fill ידניים; `MANUAL_QUESTION_AUTHORING_PLAN.md` דורש עדיין `1,482` MC ו-`949` Fill ידניות.
 
@@ -47,7 +47,7 @@
 | SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `520` פערי MC ו-`515` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |
 | SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,482` MC ו-`949` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |
 | SYS-AUDIT-003 | [ ] | P1 | להשאיר `222` פערי Trace/Build/Bug לא-עדיפותיים אחרי Finish Line 1, ואז לסגור אותם עם תוכן ידני ו-browser smoke. |
-| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `221` פריטים יש `207` NOT DONE ו-`6` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |
+| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `226` פריטים יש `212` NOT DONE ו-`6` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |
 | SYS-AUDIT-005 | [ ] | P1 | להשלים keyboard-only coverage ל-Escape/Enter/Arrow, focus return, מעבר טאבים, מעבר מושגים ו-submit answer. |
 | SYS-AUDIT-006 | [ ] | P1 | להמשיך פירוק `app.js`/views רק אחרי Finish Line 1 ירוק, עם tests לכל slice. |
 | SYS-AUDIT-007 | [ ] | P1 | להוכיח Cross-device Sync מול backend/auth אמיתי; עד אז זה alpha מקומי בלבד. |
@@ -59,6 +59,11 @@
 | SYS-AUDIT-013 | [ ] | P2 | לרכז cache version וציפיות assets ממקור אחד כדי למנוע drift ב-PWA. |
 | SYS-AUDIT-014 | [ ] | P2 | להשאיר `data/questions_bank_seeded.js` כארכיון לא פעיל או למחוק רק אחרי שכל פריט שימושי נכתב מחדש ידנית ונבדק. |
 | SYS-AUDIT-015 | [ ] | P2 | אחרי Finish Line 1 בלבד: SEO, telemetry חיצוני, payload optimization, מוזיאון/חנות/קהילה. |
+| SYS-AUDIT-016 | [ ] | P1 | לתקן drift במטאדאטה של דוחות generated: `FEATURE_COVERAGE_REPORT.md` ו-`QUESTION_REMEDIATION_QUEUE.md` עדיין מתחילים ב-`2026-04-28`, ו-`METRICS_DASHBOARD_REPORT.md` ב-`2026-04-29` למרות counter עדכני; כל דוח חייב run date/scope אמיתי או סימון historical. |
+| SYS-AUDIT-017 | [ ] | P1 | לבצע allowlist מלא ל-154 מופעי `innerHTML` ול-`document.write` אחד ב-`app.js`, עם data origin, escaping/sanitizer, owner ו-smoke לכל נתיב פעיל. |
+| SYS-AUDIT-018 | [ ] | P1 | להגדיר trust boundary לכל 164 מופעי `localStorage` ב-`app.js`: progress/XP/evidence מקומיים הם עזר לימודי בלבד ולא ראיית ציון מאומתת בלי backend/auth אמיתי. |
+| SYS-AUDIT-019 | [ ] | P2 | אחרי Finish Line 1: לפרק payload ו-CSS לפי feature. build נוכחי עובר אבל עדיין מוציא `dist/app.js` 1.6MB, `dist/style.css` 594KB ו-`dist/assets/index-DDEpfRTZ.css` 454KB. |
+| SYS-AUDIT-020 | [ ] | P1 | לאחד scope של דוחות שאלות: להפריד active manual bank, archive/generated, concept-density coverage ו-dashboard display, ולהוסיף gate שמזהה קובץ דוח stale אחרי strict/write. |
 
 ## 0B. Historical System Bug Audit Backlog — 2026-04-30
 
