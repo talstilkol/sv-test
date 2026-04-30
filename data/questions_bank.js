@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.5";
+var QUESTIONS_BANK_VERSION = "2.1.6";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -58,6 +58,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 11 sub-batch: number, object and Pointer MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.6",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 11 sub-batch: pop, push, reduce and scope MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -677,6 +683,181 @@ var QUESTIONS_BANK = {
         "❌ JavaScript לא יוצר עותק עמוק אוטומטי בהשמה רגילה.",
         "❌ number הוא primitive שעובר לפי ערך; pointer רלוונטי לאובייקטים/מערכים.",
         "❌ const לא מקפיא מאפיינים פנימיים.",
+      ],
+    },
+    {
+      id: "mc_l11_pop_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::pop", level: 3,
+      question: "מה pop עושה למערך?",
+      options: [
+        "מסירה את האיבר האחרון ומחזירה אותו",
+        "מוסיפה איבר לסוף ומחזירה את המערך",
+        "יוצרת מערך חדש בלי לשנות את המקור",
+        "מסירה את האיבר הראשון ומחזירה אותו",
+      ],
+      correctIndex: 0,
+      explanation: "pop היא מתודה שמשנה את המערך המקורי: היא מסירה את האיבר האחרון ומחזירה את אותו איבר.",
+      optionFeedback: [
+        "✅ נכון: pop עובדת על סוף המערך, משנה אותו, ומחזירה את הפריט שהוסר.",
+        "❌ זה מתאר יותר את כיוון הפעולה של push, לא pop.",
+        "❌ pop אינה immutable; היא משנה את המערך המקורי.",
+        "❌ הסרה מההתחלה היא shift, לא pop.",
+      ],
+    },
+    {
+      id: "mc_l11_pop_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::pop", level: 5,
+      question: "מה יודפס?\n\nconst tasks = ['Clean', 'Wash'];\nconst doneTask = tasks.pop();\nconsole.log(doneTask);\nconsole.log(tasks);",
+      options: [
+        "'Wash' ואז ['Clean']",
+        "'Clean' ואז ['Wash']",
+        "2 ואז ['Clean']",
+        "['Clean', 'Wash'] ואז []",
+      ],
+      correctIndex: 0,
+      explanation: "pop מסירה את האיבר האחרון. כאן Wash הוסר והוחזר ל-doneTask, ובמערך נשאר Clean.",
+      optionFeedback: [
+        "✅ נכון: האיבר האחרון יצא מהמערך והוחזר.",
+        "❌ Clean הוא האיבר הראשון; pop פועלת מהסוף.",
+        "❌ push מחזירה אורך; pop מחזירה את האיבר שהוסר.",
+        "❌ pop לא מחזירה את כל המערך ולא מרוקנת את כולו במקרה הזה.",
+      ],
+    },
+    {
+      id: "mc_l11_pop_manual_003", topicId: "topic_arrays", conceptKey: "lesson_11::pop", level: 6,
+      question: "מתי pop היא בחירה לא נכונה?",
+      options: [
+        "כשרוצים להסיר את האיבר הראשון ברשימה",
+        "כשרוצים לקחת את האיבר האחרון ולעדכן את המערך",
+        "כשרוצים לשמור את הפריט שהוסר במשתנה",
+        "כשרוצים לצמצם את אורך המערך באחד מהסוף",
+      ],
+      correctIndex: 0,
+      explanation: "pop תמיד פועלת על קצה הסוף של המערך. להסרה מההתחלה משתמשים ב-shift או בלוגיקה אחרת.",
+      optionFeedback: [
+        "✅ נכון: האיבר הראשון אינו היעד של pop.",
+        "❌ זה שימוש טבעי ב-pop.",
+        "❌ pop מחזירה את האיבר שהוסר, ולכן אפשר לשמור אותו.",
+        "❌ זו בדיוק הפעולה ש-pop מבצעת.",
+      ],
+    },
+    {
+      id: "mc_l11_push_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::push", level: 3,
+      question: "מה push עושה למערך?",
+      options: [
+        "מוסיפה איבר אחד או יותר לסוף המערך ומשנה את המקור",
+        "מסירה את האיבר האחרון ומחזירה אותו",
+        "מחזירה מערך חדש באותו אורך",
+        "מחפשת את האיבר הראשון שעומד בתנאי",
+      ],
+      correctIndex: 0,
+      explanation: "push מוסיפה לקצה המערך המקורי. היא mutating method, ולכן צריך להיזהר כשעובדים עם state.",
+      optionFeedback: [
+        "✅ נכון: push מוסיפה לסוף ומשנה את אותו מערך.",
+        "❌ זה תיאור של pop.",
+        "❌ זה דומה ל-map, לא push.",
+        "❌ זה תיאור של find.",
+      ],
+    },
+    {
+      id: "mc_l11_push_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::push", level: 5,
+      question: "מה יודפס?\n\nconst cart = ['Bread'];\nconst newLength = cart.push('Milk');\nconsole.log(cart);\nconsole.log(newLength);",
+      options: [
+        "['Bread', 'Milk'] ואז 2",
+        "['Bread'] ואז 'Milk'",
+        "['Milk', 'Bread'] ואז 2",
+        "['Bread', 'Milk'] ואז ['Bread']",
+      ],
+      correctIndex: 0,
+      explanation: "push מוסיפה את Milk לסוף המערך ומחזירה את האורך החדש של המערך, שהוא 2.",
+      optionFeedback: [
+        "✅ נכון: המערך השתנה והאורך החדש הוחזר.",
+        "❌ המערך המקורי כן השתנה, וערך ההחזרה אינו הפריט שנוסף.",
+        "❌ push מוסיפה לסוף, לא להתחלה.",
+        "❌ ערך ההחזרה של push הוא מספר האורך החדש, לא עותק של המערך.",
+      ],
+    },
+    {
+      id: "mc_l11_push_manual_003", topicId: "topic_arrays", conceptKey: "lesson_11::push", level: 6,
+      question: "למה צריך להיזהר עם push בקוד שמצפה לעבודה immutable?",
+      options: [
+        "כי push משנה את המערך המקורי במקום",
+        "כי push מוחקת את האיבר האחרון",
+        "כי ערך ההחזרה של push הוא הפריט שנוסף",
+        "כי push עובדת רק על מחרוזות",
+      ],
+      correctIndex: 0,
+      explanation: "החומר מדגיש ש-push פוגע במערך עצמו. אם צריך עותק חדש, משתמשים בדפוס כמו spread.",
+      optionFeedback: [
+        "✅ נכון: זו הסיבה המרכזית להיזהר עם push.",
+        "❌ מחיקת האיבר האחרון היא pop.",
+        "❌ push מחזירה את האורך החדש של המערך, לא את הפריט שנוסף.",
+        "❌ push היא מתודת מערך, לא מתודת string.",
+      ],
+    },
+    {
+      id: "mc_l11_reduce_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::reduce", level: 5,
+      question: "מה תפקיד ה-accumulator ב-reduce?",
+      options: [
+        "לשמור את התוצאה הצבורה בין צעדי המעבר על המערך",
+        "להחזיק רק את האיבר האחרון במערך",
+        "לסמן את האינדקס הראשון במערך",
+        "למחוק איברים שלא עברו תנאי",
+      ],
+      correctIndex: 0,
+      explanation: "ב-reduce ה-accumulator הוא 'הקופה' שזוכרת את התוצאה שנבנתה עד עכשיו ומקבלת עדכון בכל איבר.",
+      optionFeedback: [
+        "✅ נכון: acc הוא הזיכרון המתגלגל של reduce.",
+        "❌ האיבר האחרון אינו תפקיד ה-accumulator.",
+        "❌ אינדקס הוא מושג אחר; reduce יכולה לקבל אינדקס בקולבק אבל זה לא acc.",
+        "❌ מחיקת איברים לפי תנאי קשורה ל-filter, לא reduce.",
+      ],
+    },
+    {
+      id: "mc_l11_reduce_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::reduce", level: 6,
+      question: "מה יודפס?\n\nconst bills = [100, 50, 20];\nconst total = bills.reduce((acc, current) => acc + current, 0);\nconsole.log(total);",
+      options: ["170", "0", "[100, 50, 20]", "20"],
+      correctIndex: 0,
+      explanation: "reduce מתחיל מ-0 ומוסיף אליו 100, אחר כך 50, ואז 20. התוצאה הסופית היא 170.",
+      optionFeedback: [
+        "✅ נכון: זה סכום כל הערכים עם ערך התחלתי 0.",
+        "❌ 0 הוא רק הערך ההתחלתי, לא התוצאה הסופית.",
+        "❌ reduce מצמצמת לערך יחיד, לא מחזירה את המערך המקורי.",
+        "❌ 20 הוא האיבר האחרון, לא הסכום הצבור.",
+      ],
+    },
+    {
+      id: "mc_l11_scope_manual_001", topicId: "topic_functions", conceptKey: "lesson_11::scope", level: 5,
+      question: "איזה תיאור הכי מדויק ל-scope?",
+      options: [
+        "תחום הגישה שבו משתנים ופונקציות זמינים לשימוש",
+        "מתודה שמוסיפה איבר לסוף מערך",
+        "טיפוס שמחזיק רק מספרים",
+        "כלי שממיר מערך למחרוזת",
+      ],
+      correctIndex: 0,
+      explanation: "scope מגדיר איפה מזהים כמו משתנים ופונקציות נגישים: גלובלי, פונקציה או בלוק.",
+      optionFeedback: [
+        "✅ נכון: scope הוא גבול הנגישות של שמות בקוד.",
+        "❌ זו push, לא scope.",
+        "❌ number הוא טיפוס נתונים, לא scope.",
+        "❌ המרה למחרוזת קשורה ל-toString או join, לא scope.",
+      ],
+    },
+    {
+      id: "mc_l11_scope_manual_002", topicId: "topic_functions", conceptKey: "lesson_11::scope", level: 6,
+      question: "מה יקרה בקוד הבא?\n\nif (true) {\n  const secretBase = 'Batcave';\n}\nconsole.log(secretBase);",
+      options: [
+        "ReferenceError כי secretBase נולד בתוך block scope",
+        "יודפס Batcave כי בלוק if לא מגביל const",
+        "יודפס undefined כי const מתאפס מחוץ לבלוק",
+        "יודפס true כי התנאי התקיים",
+      ],
+      correctIndex: 0,
+      explanation: "const ו-let זמינים רק בתוך הבלוק שבו נוצרו. מחוץ לבלוק השם secretBase אינו קיים.",
+      optionFeedback: [
+        "✅ נכון: זה גבול ה-block scope.",
+        "❌ בלוק if כן מגביל const ו-let.",
+        "❌ השם לא קיים מחוץ לבלוק; זו לא הצבה ל-undefined.",
+        "❌ ערך התנאי לא מחליף את ערך המשתנה.",
       ],
     },
 
@@ -2932,6 +3113,34 @@ var QUESTIONS_BANK = {
       answer: "100",
       hint: "ערך התחלתי תלת-ספרתי לסכום.",
       explanation: "הפרמטר השני של reduce הוא הערך ההתחלתי של ה-accumulator.",
+    },
+    {
+      id: "fill_l11_pop_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::pop", level: 4,
+      code: "const tasks = ['Clean', 'Wash'];\nconst doneTask = tasks.____();\nconsole.log(doneTask); // 'Wash'",
+      answer: "pop",
+      hint: "מתודת מערך שמסירה ומחזירה את האיבר האחרון.",
+      explanation: "pop פועלת על סוף המערך, משנה את tasks, ומחזירה את Wash למשתנה doneTask.",
+    },
+    {
+      id: "fill_l11_push_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::push", level: 4,
+      code: "const cart = ['Bread'];\nconst newLength = cart.____('Milk');\nconsole.log(newLength); // 2",
+      answer: "push",
+      hint: "מתודת מערך שמוסיפה לסוף ומחזירה את האורך החדש.",
+      explanation: "push מוסיפה את Milk לקצה cart ומחזירה את אורך המערך אחרי ההוספה.",
+    },
+    {
+      id: "fill_l11_scope_manual_001", topicId: "topic_functions", conceptKey: "lesson_11::scope", level: 4,
+      code: "if (true) {\n  const secretBase = 'Batcave';\n}\nconsole.log(____ secretBase); // 'undefined'",
+      answer: "typeof",
+      hint: "אופרטור שמחזיר את סוג השם בלי לזרוק ReferenceError על שם לא קיים.",
+      explanation: "secretBase נגיש רק בתוך הבלוק. typeof על שם לא קיים מחזיר 'undefined'.",
+    },
+    {
+      id: "fill_l11_scope_manual_002", topicId: "topic_functions", conceptKey: "lesson_11::scope", level: 6,
+      code: "const globalHero = 'Batman';\nfunction ____() {\n  const secretBase = 'Batcave';\n  return secretBase;\n}",
+      answer: "doSecret",
+      hint: "שם פונקציה שמחזיקה משתנה פנימי שלא נגיש מבחוץ.",
+      explanation: "המשתנה secretBase נולד בתוך הפונקציה ולכן נגיש רק ב-scope שלה. שם הפונקציה מאפשר לקרוא לקוד הזה מבחוץ בלי לחשוף את המשתנה המקומי.",
     },
 
     // ===== Objects / OOP =====

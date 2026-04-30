@@ -32,9 +32,9 @@
 | שער | מצב חי |
 |---|---|
 | `finish-line:pre-release` | 17/18 עברו; חסום על `questions:coverage-targets:strict` |
-| `QUESTION_COVERAGE_TARGETS` | `mcGapCount: 528`, `fillGapCount: 522`, `ready:false` |
-| `MANUAL_QUESTION_AUTHORING_PLAN` | `1503` שאלות MC ידניות ו-`958` Fill ידניות עדיין נדרשות ליעד strict |
-| התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה + תתי-batch Lesson 11 הושלמו ככיסוי authored: `69` MC ו-`49` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
+| `QUESTION_COVERAGE_TARGETS` | `mcGapCount: 524`, `fillGapCount: 519`, `ready:false` |
+| `MANUAL_QUESTION_AUTHORING_PLAN` | `1493` שאלות MC ידניות ו-`954` Fill ידניות עדיין נדרשות ליעד strict |
+| התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה + תתי-batch Lesson 11 הושלמו ככיסוי authored: `79` MC ו-`53` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
 | `QUESTION_ACTIVITY_AUTHORING_PLAN` | `222` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
 | `BRUTAL_MASTER_PLAN_AUDIT` | `221` פריטים: `DONE 8`, `FAKED 0`, `PARTIAL 6`, `NOT DONE 207` |
 
@@ -46,7 +46,7 @@
 
 ### 📊 סיכום התקדמות > Forward Execution Plan — 2026-04-30 > Gate סופי לסגירת Finish Line 1
 
-- [!] FWD-9.4 — `npm run questions:coverage-targets:strict` — חסום עד השלמת `1,503` MC ידניות ו-`958` Fill ידניות לפי [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md).
+- [!] FWD-9.4 — `npm run questions:coverage-targets:strict` — חסום עד השלמת `1,493` MC ידניות ו-`954` Fill ידניות לפי [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md).
 
 ## בעבודה / חלקיות (6)
 
