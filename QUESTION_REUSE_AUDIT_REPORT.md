@@ -2,8 +2,8 @@
 
 - Date: 2026-04-29
 - Target: SVCollege question reuse by learner profile contract and concept tag
-- Questions audited: 863
-- Concept tags: 374
+- Questions audited: 917
+- Concept tags: 376
 - Duplicate concept/kind/question identities: 0
 - Missing conceptKey: 0
 - Profile contract checks: 9/9
@@ -29,23 +29,23 @@
 | Concept | Questions | Kinds | Sources | Max level |
 |---|---:|---|---|---:|
 | `lesson_22::useState` | 8 | mc:1, fill:2, trace:1, bug:1, build:3 | curated:8 | 4 |
+| `ai_development::AI Code Review` | 7 | mc:3, fill:2, bug:1, build:1 | curated:5, svcollege-curated:2 | 6 |
+| `lesson_25::responsive design` | 7 | mc:3, fill:2, trace:1, build:1 | curated:6, svcollege-curated:1 | 6 |
+| `ai_development::Prompt Engineering` | 6 | mc:3, fill:2, trace:1 | curated:5, svcollege-curated:1 | 6 |
+| `lesson_25::flex` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_25::grid` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_25::Tailwind CSS` | 6 | mc:3, fill:2, bug:1 | curated:6 | 6 |
+| `lesson_25::utility classes` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
 | `lesson_ai_engineering::tool calling` | 6 | mc:2, fill:1, trace:1, bug:1, build:1 | svcollege-curated:6 | 6 |
 | `lesson_auth_security::authorization` | 6 | mc:2, fill:1, trace:1, bug:1, build:1 | svcollege-curated:6 | 6 |
 | `lesson_design_systems::form field composition` | 6 | mc:2, fill:1, trace:1, bug:1, build:1 | svcollege-curated:6 | 6 |
 | `lesson_devops_deploy::CI` | 6 | mc:2, fill:1, trace:1, bug:1, build:1 | svcollege-curated:6 | 5 |
 | `lesson_devops_deploy::Docker Compose` | 6 | mc:2, fill:1, trace:1, bug:1, build:1 | svcollege-curated:6 | 6 |
 | `lesson_sql_orm::JOIN` | 6 | mc:2, fill:2, trace:1, bug:1 | svcollege-curated:6 | 6 |
+| `ai_development::Cursor` | 5 | mc:3, fill:2 | curated:5 | 6 |
+| `ai_development::Windsurf` | 5 | mc:3, fill:2 | curated:5 | 6 |
 | `lesson_15::Asynchronous` | 5 | mc:1, fill:2, trace:1, build:1 | curated:5 | 5 |
 | `lesson_21::props` | 5 | mc:1, fill:1, trace:1, bug:1, build:1 | curated:5 | 3 |
 | `lesson_24::useEffect` | 5 | mc:1, fill:1, trace:1, bug:1, build:1 | curated:5 | 5 |
 | `lesson_ai_engineering::RAG` | 5 | mc:1, fill:1, trace:1, bug:1, build:1 | svcollege-curated:5 | 6 |
-| `lesson_auth_security::middleware guard` | 5 | mc:2, fill:1, trace:1, build:1 | svcollege-curated:5 | 5 |
-| `lesson_nestjs::controller` | 5 | mc:2, fill:1, bug:1, build:1 | svcollege-curated:5 | 6 |
-| `lesson_nestjs::dependency injection` | 5 | mc:2, fill:1, trace:1, bug:1 | svcollege-curated:5 | 6 |
-| `lesson_nestjs::validation pipe` | 5 | mc:2, fill:1, trace:1, bug:1 | svcollege-curated:5 | 6 |
-| `lesson_nextjs::client component` | 5 | mc:2, fill:1, trace:1, bug:1 | svcollege-curated:5 | 5 |
-| `lesson_nextjs::file-system routing` | 5 | mc:2, fill:2, trace:1 | curated:2, svcollege-curated:3 | 6 |
-| `lesson_nextjs::route handler` | 5 | mc:2, fill:1, trace:1, build:1 | svcollege-curated:5 | 6 |
-| `lesson_sql_orm::SQL` | 5 | mc:2, fill:2, trace:1 | svcollege-curated:5 | 5 |
-| `lesson_tooling_git::npm scripts` | 5 | mc:1, fill:1, trace:1, bug:1, build:1 | curated:4, svcollege-curated:1 | 4 |
 

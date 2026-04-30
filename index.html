@@ -19,7 +19,7 @@
       href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css?v=concept-sprint-v68" />
+    <link rel="stylesheet" href="style.css?v=concept-sprint-v69" />
     <!-- P1.3 — PWA -->
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236366f1'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' fill='white' font-family='Arial,sans-serif'%3EL%3C/text%3E%3C/svg%3E" />
@@ -194,6 +194,10 @@
           <select class="vm-jumper" id="vm-concept-jumper" aria-label="קפוץ למושג בשיעור הנוכחי">
             <option value="">בחר מושג...</option>
           </select>
+        </div>
+        <div class="vm-section" id="vm-concept-parts-section" hidden>
+          <div class="vm-label">🧩 חלקי המושג</div>
+          <div class="vm-concept-parts" id="vm-concept-parts" aria-label="חלקי המושג הנוכחי"></div>
         </div>
         <div class="vm-section">
           <div class="vm-label">🎬 מצבים מהירים</div>
@@ -1398,7 +1402,7 @@
     <!-- P4.6.4 — HTML sanitization must patch legacy rendering before app.js -->
     <script src="lib/vendor/dompurify.min.js"></script>
     <script src="src/core/sanitize-early.js"></script>
-    <script src="app.js?v=concept-sprint-v68"></script>
+    <script src="app.js?v=concept-sprint-v69"></script>
     <script type="module" src="/src/main.js?v=core-bootstrap-v2"></script>
 
     <!-- W12 — Achievements overlay -->

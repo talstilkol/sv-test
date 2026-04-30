@@ -10,128 +10,20 @@
   "sourceCoverage": {
     "concepts": 568,
     "relevantConcepts": 568,
-    "activityReadyConcepts": 337,
-    "activityGapCount": 231,
+    "activityReadyConcepts": 346,
+    "activityGapCount": 222,
     "ready": false
   },
   "summary": {
-    "totalGaps": 231,
+    "totalGaps": 222,
     "nextBatchSize": 40,
-    "svcollegePriorityGaps": 9,
+    "svcollegePriorityGaps": 0,
     "deferredNonPriorityGaps": 222,
     "ready": false
   },
   "nextBatch": [
     {
       "order": 1,
-      "key": "lesson_design_systems::asChild slot",
-      "lessonId": "lesson_design_systems",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "asChild slot",
-      "trace": 0,
-      "build": 0,
-      "bug": 0,
-      "nextActivity": "trace",
-      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
-    },
-    {
-      "order": 2,
-      "key": "lesson_design_systems::cn helper",
-      "lessonId": "lesson_design_systems",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "cn helper",
-      "trace": 0,
-      "build": 0,
-      "bug": 0,
-      "nextActivity": "trace",
-      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
-    },
-    {
-      "order": 3,
-      "key": "lesson_design_systems::component registry",
-      "lessonId": "lesson_design_systems",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "component registry",
-      "trace": 0,
-      "build": 0,
-      "bug": 0,
-      "nextActivity": "trace",
-      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
-    },
-    {
-      "order": 4,
-      "key": "lesson_design_systems::cva",
-      "lessonId": "lesson_design_systems",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "cva",
-      "trace": 0,
-      "build": 0,
-      "bug": 0,
-      "nextActivity": "trace",
-      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
-    },
-    {
-      "order": 5,
-      "key": "lesson_design_systems::design system testing",
-      "lessonId": "lesson_design_systems",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "design system testing",
-      "trace": 0,
-      "build": 0,
-      "bug": 0,
-      "nextActivity": "trace",
-      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
-    },
-    {
-      "order": 6,
-      "key": "lesson_design_systems::design tokens",
-      "lessonId": "lesson_design_systems",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "design tokens",
-      "trace": 0,
-      "build": 0,
-      "bug": 0,
-      "nextActivity": "trace",
-      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
-    },
-    {
-      "order": 7,
-      "key": "lesson_design_systems::Radix primitives",
-      "lessonId": "lesson_design_systems",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "Radix primitives",
-      "trace": 0,
-      "build": 0,
-      "bug": 0,
-      "nextActivity": "trace",
-      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
-    },
-    {
-      "order": 8,
-      "key": "lesson_design_systems::shadcn/UI",
-      "lessonId": "lesson_design_systems",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "shadcn/UI",
-      "trace": 0,
-      "build": 0,
-      "bug": 0,
-      "nextActivity": "trace",
-      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
-    },
-    {
-      "order": 9,
-      "key": "lesson_design_systems::theme tokens",
-      "lessonId": "lesson_design_systems",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "theme tokens",
-      "trace": 0,
-      "build": 0,
-      "bug": 0,
-      "nextActivity": "trace",
-      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
-    },
-    {
-      "order": 10,
       "key": "ai_development::AI",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -143,7 +35,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 11,
+      "order": 2,
       "key": "ai_development::AI Code Review",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -155,7 +47,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 12,
+      "order": 3,
       "key": "ai_development::AI Limitations",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -167,7 +59,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 13,
+      "order": 4,
       "key": "ai_development::AI Pair Programming",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -179,7 +71,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 14,
+      "order": 5,
       "key": "ai_development::ChatGPT",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -191,7 +83,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 15,
+      "order": 6,
       "key": "ai_development::Claude Code",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -203,7 +95,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 16,
+      "order": 7,
       "key": "ai_development::Context Window",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -215,7 +107,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 17,
+      "order": 8,
       "key": "ai_development::Copilot",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -227,7 +119,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 18,
+      "order": 9,
       "key": "ai_development::Cursor",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -239,7 +131,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 19,
+      "order": 10,
       "key": "ai_development::Hallucinations",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -251,7 +143,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 20,
+      "order": 11,
       "key": "ai_development::Prompt Engineering",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -263,7 +155,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 21,
+      "order": 12,
       "key": "ai_development::Windsurf",
       "lessonId": "ai_development",
       "lessonTitle": "שימוש נכון ב-AI בפיתוח",
@@ -275,7 +167,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 22,
+      "order": 13,
       "key": "lesson_18::email",
       "lessonId": "lesson_18",
       "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
@@ -287,7 +179,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 23,
+      "order": 14,
       "key": "lesson_18::form",
       "lessonId": "lesson_18",
       "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
@@ -299,7 +191,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 24,
+      "order": 15,
       "key": "lesson_18::GET",
       "lessonId": "lesson_18",
       "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
@@ -311,7 +203,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 25,
+      "order": 16,
       "key": "lesson_18::Node.js",
       "lessonId": "lesson_18",
       "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
@@ -323,7 +215,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 26,
+      "order": 17,
       "key": "lesson_18::password",
       "lessonId": "lesson_18",
       "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
@@ -335,7 +227,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 27,
+      "order": 18,
       "key": "lesson_18::server",
       "lessonId": "lesson_18",
       "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
@@ -347,7 +239,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 28,
+      "order": 19,
       "key": "lesson_18::server-side storage",
       "lessonId": "lesson_18",
       "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
@@ -359,7 +251,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 29,
+      "order": 20,
       "key": "lesson_18::username",
       "lessonId": "lesson_18",
       "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
@@ -371,7 +263,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 30,
+      "order": 21,
       "key": "lesson_18::validation",
       "lessonId": "lesson_18",
       "lessonTitle": "שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון",
@@ -383,7 +275,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 31,
+      "order": 22,
       "key": "lesson_19::alert",
       "lessonId": "lesson_19",
       "lessonTitle": "חזרה וסיכום JavaScript",
@@ -395,7 +287,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 32,
+      "order": 23,
       "key": "lesson_19::array",
       "lessonId": "lesson_19",
       "lessonTitle": "חזרה וסיכום JavaScript",
@@ -407,7 +299,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 33,
+      "order": 24,
       "key": "lesson_19::array of objects",
       "lessonId": "lesson_19",
       "lessonTitle": "חזרה וסיכום JavaScript",
@@ -419,7 +311,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 34,
+      "order": 25,
       "key": "lesson_19::arrow function",
       "lessonId": "lesson_19",
       "lessonTitle": "חזרה וסיכום JavaScript",
@@ -431,7 +323,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 35,
+      "order": 26,
       "key": "lesson_19::break",
       "lessonId": "lesson_19",
       "lessonTitle": "חזרה וסיכום JavaScript",
@@ -443,7 +335,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 36,
+      "order": 27,
       "key": "lesson_19::camelCase",
       "lessonId": "lesson_19",
       "lessonTitle": "חזרה וסיכום JavaScript",
@@ -455,7 +347,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 37,
+      "order": 28,
       "key": "lesson_19::catch",
       "lessonId": "lesson_19",
       "lessonTitle": "חזרה וסיכום JavaScript",
@@ -467,7 +359,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 38,
+      "order": 29,
       "key": "lesson_19::class",
       "lessonId": "lesson_19",
       "lessonTitle": "חזרה וסיכום JavaScript",
@@ -479,7 +371,7 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 39,
+      "order": 30,
       "key": "lesson_19::closure",
       "lessonId": "lesson_19",
       "lessonTitle": "חזרה וסיכום JavaScript",
@@ -491,11 +383,119 @@
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     },
     {
-      "order": 40,
+      "order": 31,
       "key": "lesson_19::console.log",
       "lessonId": "lesson_19",
       "lessonTitle": "חזרה וסיכום JavaScript",
       "conceptName": "console.log",
+      "trace": 0,
+      "build": 0,
+      "bug": 0,
+      "nextActivity": "trace",
+      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
+    },
+    {
+      "order": 32,
+      "key": "lesson_19::const",
+      "lessonId": "lesson_19",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "const",
+      "trace": 0,
+      "build": 0,
+      "bug": 0,
+      "nextActivity": "trace",
+      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
+    },
+    {
+      "order": 33,
+      "key": "lesson_19::continue",
+      "lessonId": "lesson_19",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "continue",
+      "trace": 0,
+      "build": 0,
+      "bug": 0,
+      "nextActivity": "trace",
+      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
+    },
+    {
+      "order": 34,
+      "key": "lesson_19::cookies",
+      "lessonId": "lesson_19",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "cookies",
+      "trace": 0,
+      "build": 0,
+      "bug": 0,
+      "nextActivity": "trace",
+      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
+    },
+    {
+      "order": 35,
+      "key": "lesson_19::Data Types",
+      "lessonId": "lesson_19",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "Data Types",
+      "trace": 0,
+      "build": 0,
+      "bug": 0,
+      "nextActivity": "trace",
+      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
+    },
+    {
+      "order": 36,
+      "key": "lesson_19::debugger",
+      "lessonId": "lesson_19",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "debugger",
+      "trace": 0,
+      "build": 0,
+      "bug": 0,
+      "nextActivity": "trace",
+      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
+    },
+    {
+      "order": 37,
+      "key": "lesson_19::destructuring",
+      "lessonId": "lesson_19",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "destructuring",
+      "trace": 0,
+      "build": 0,
+      "bug": 0,
+      "nextActivity": "trace",
+      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
+    },
+    {
+      "order": 38,
+      "key": "lesson_19::do while",
+      "lessonId": "lesson_19",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "do while",
+      "trace": 0,
+      "build": 0,
+      "bug": 0,
+      "nextActivity": "trace",
+      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
+    },
+    {
+      "order": 39,
+      "key": "lesson_19::DOM",
+      "lessonId": "lesson_19",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "DOM",
+      "trace": 0,
+      "build": 0,
+      "bug": 0,
+      "nextActivity": "trace",
+      "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
+    },
+    {
+      "order": 40,
+      "key": "lesson_19::event",
+      "lessonId": "lesson_19",
+      "lessonTitle": "חזרה וסיכום JavaScript",
+      "conceptName": "event",
       "trace": 0,
       "build": 0,
       "bug": 0,

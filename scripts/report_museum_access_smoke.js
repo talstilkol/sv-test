@@ -128,9 +128,9 @@ function buildReport() {
     checks,
     "offline-shell-updated",
     "Current app/cache shell includes the latest museum access assets",
-    html.includes("app.js?v=concept-sprint-v68") &&
-      html.includes("style.css?v=concept-sprint-v68") &&
-      read("service-worker.js").includes('const CACHE_VERSION = "lumen-v2.4.129"') &&
+    html.includes("app.js?v=concept-sprint-v69") &&
+      html.includes("style.css?v=concept-sprint-v69") &&
+      read("service-worker.js").includes('const CACHE_VERSION = "lumen-v2.4.130"') &&
       css.includes(".museum-access-gate") &&
       css.includes(".xp-access-panel"),
     "The offline shell must reference the current app/css versions and access-gate styles.",

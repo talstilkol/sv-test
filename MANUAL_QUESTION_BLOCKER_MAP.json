@@ -1,0 +1,177 @@
+{
+  "reportVersion": "manual-question-blocker-map-v1",
+  "date": "2026-04-30",
+  "policy": {
+    "manualOnly": true,
+    "generatesQuestions": false,
+    "mutatesQuestionBank": false,
+    "readinessSource": "scripts/report_svcollege_readiness.js",
+    "coverageSource": "scripts/report_question_coverage_targets.js",
+    "mcTargetPerConcept": 3,
+    "fillTargetPerCodeConcept": 2
+  },
+  "summary": {
+    "releaseBlockers": 0,
+    "targetModules": 2,
+    "mappedTargetModules": 2,
+    "conceptCount": 9,
+    "releaseQuestionDeficit": 0,
+    "strictMcDeficit": 0,
+    "strictFillDeficit": 0,
+    "missingCoverageRows": 0,
+    "mappingReady": true
+  },
+  "modules": [
+    {
+      "title": "עיצוב רספונסיבי ו-CSS מתקדם",
+      "readiness": 100,
+      "status": "covered",
+      "lessonIds": [
+        "lesson_25"
+      ],
+      "conceptCount": 5,
+      "releaseQuestionTarget": 10,
+      "releaseQuestionCount": 25,
+      "releaseQuestionDeficit": 0,
+      "strictMcDeficit": 0,
+      "strictFillDeficit": 0,
+      "missingCoverageRows": [],
+      "concepts": [
+        {
+          "key": "lesson_25::Tailwind CSS",
+          "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+          "conceptName": "Tailwind CSS",
+          "mappedInCoverageTargets": true,
+          "requiresFill": true,
+          "manualMC": 3,
+          "manualFill": 2,
+          "requiredMC": 3,
+          "requiredFill": 2,
+          "mcDeficit": 0,
+          "fillDeficit": 0
+        },
+        {
+          "key": "lesson_25::utility classes",
+          "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+          "conceptName": "utility classes",
+          "mappedInCoverageTargets": true,
+          "requiresFill": true,
+          "manualMC": 3,
+          "manualFill": 2,
+          "requiredMC": 3,
+          "requiredFill": 2,
+          "mcDeficit": 0,
+          "fillDeficit": 0
+        },
+        {
+          "key": "lesson_25::responsive design",
+          "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+          "conceptName": "responsive design",
+          "mappedInCoverageTargets": true,
+          "requiresFill": true,
+          "manualMC": 3,
+          "manualFill": 2,
+          "requiredMC": 3,
+          "requiredFill": 2,
+          "mcDeficit": 0,
+          "fillDeficit": 0
+        },
+        {
+          "key": "lesson_25::grid",
+          "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+          "conceptName": "grid",
+          "mappedInCoverageTargets": true,
+          "requiresFill": true,
+          "manualMC": 3,
+          "manualFill": 2,
+          "requiredMC": 3,
+          "requiredFill": 2,
+          "mcDeficit": 0,
+          "fillDeficit": 0
+        },
+        {
+          "key": "lesson_25::flex",
+          "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
+          "conceptName": "flex",
+          "mappedInCoverageTargets": true,
+          "requiresFill": true,
+          "manualMC": 3,
+          "manualFill": 2,
+          "requiredMC": 3,
+          "requiredFill": 2,
+          "mcDeficit": 0,
+          "fillDeficit": 0
+        }
+      ]
+    },
+    {
+      "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
+      "readiness": 100,
+      "status": "covered",
+      "lessonIds": [
+        "ai_development"
+      ],
+      "conceptCount": 4,
+      "releaseQuestionTarget": 8,
+      "releaseQuestionCount": 20,
+      "releaseQuestionDeficit": 0,
+      "strictMcDeficit": 0,
+      "strictFillDeficit": 0,
+      "missingCoverageRows": [],
+      "concepts": [
+        {
+          "key": "ai_development::Cursor",
+          "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+          "conceptName": "Cursor",
+          "mappedInCoverageTargets": true,
+          "requiresFill": true,
+          "manualMC": 3,
+          "manualFill": 2,
+          "requiredMC": 3,
+          "requiredFill": 2,
+          "mcDeficit": 0,
+          "fillDeficit": 0
+        },
+        {
+          "key": "ai_development::Windsurf",
+          "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+          "conceptName": "Windsurf",
+          "mappedInCoverageTargets": true,
+          "requiresFill": true,
+          "manualMC": 3,
+          "manualFill": 2,
+          "requiredMC": 3,
+          "requiredFill": 2,
+          "mcDeficit": 0,
+          "fillDeficit": 0
+        },
+        {
+          "key": "ai_development::Prompt Engineering",
+          "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+          "conceptName": "Prompt Engineering",
+          "mappedInCoverageTargets": true,
+          "requiresFill": true,
+          "manualMC": 3,
+          "manualFill": 2,
+          "requiredMC": 3,
+          "requiredFill": 2,
+          "mcDeficit": 0,
+          "fillDeficit": 0
+        },
+        {
+          "key": "ai_development::AI Code Review",
+          "lessonTitle": "שימוש נכון ב-AI בפיתוח",
+          "conceptName": "AI Code Review",
+          "mappedInCoverageTargets": true,
+          "requiresFill": true,
+          "manualMC": 3,
+          "manualFill": 2,
+          "requiredMC": 3,
+          "requiredFill": 2,
+          "mcDeficit": 0,
+          "fillDeficit": 0
+        }
+      ]
+    }
+  ]
+}

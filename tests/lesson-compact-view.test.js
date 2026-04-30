@@ -69,16 +69,22 @@ describe("lesson compact views", () => {
     expect(app).toContain('class="lesson-control-rail"');
     expect(app).toContain('data-page-section="תצוגה ופעולות"');
     expect(app).toContain('class="concept-actions concept-actions-rail"');
-    expect(app).toContain("${renderLessonControlRail(actionButtonsHTML, stepTabsHTML)}");
+    expect(app).toContain("${renderLessonControlRail(actionButtonsHTML)}");
     expect(css).toContain(".lesson-concept-shell");
     expect(css).toContain(".lesson-control-rail");
     expect(css).toContain(".concept-actions-rail .concept-btn");
   });
 
-  it("moves concept learning steps into left-side tabs", () => {
+  it("moves concept learning steps into the left display menu", () => {
+    expect(html).toContain('id="vm-concept-parts"');
+    expect(html).toContain('id="vm-concept-parts-section"');
     expect(app).toContain("let selectedConceptStepByConcept = {}");
     expect(app).toContain("function renderConceptStepTabs");
     expect(app).toContain("function renderConceptStep");
+    expect(app).toContain("function updateViewModeConceptParts");
+    expect(app).toContain("window.viewModeRenderConceptParts = renderConceptParts");
+    expect(app).toContain("updateViewModeConceptParts(lastRenderedConceptStepTabsHTML)");
+    expect(app).toContain('document.querySelectorAll("[data-concept-step-tab]")');
     expect(app).toContain('class="concept-step-panel');
     expect(app).toContain('class="concept-step-tab');
     expect(app).toContain('data-concept-step-tab="${esc(step.id)}"');
@@ -94,6 +100,8 @@ describe("lesson compact views", () => {
     expect(css).toContain(".concept-step-tabs");
     expect(css).toContain(".concept-step-tab.active");
     expect(css).toContain(".concept-step-panel > header");
+    expect(css).toContain(".vm-concept-parts");
+    expect(css).toContain(".vm-concept-parts .concept-step-tabs");
   });
 
   it("adds a left scroll rail for in-page lesson sections", () => {
@@ -122,27 +130,32 @@ describe("lesson compact views", () => {
     expect(css).toContain(".lesson-concept-chip.active");
   });
 
-  it("compresses lesson chrome into nested one-line menus", () => {
+  it("compresses lesson chrome into simple one-line tree rows", () => {
     expect(app).toContain("function renderLessonTopMenus");
+    expect(app).toContain("let lessonMenuOpenState");
     expect(app).toContain('class="lesson-menu-stack"');
+    expect(app).toContain('class="lesson-tree-row lesson-tree-path-row"');
+    expect(app).toContain('class="lesson-tree-label"');
+    expect(app).toContain('class="lesson-tree-scroll lesson-path-strip"');
+    expect(app).toContain('data-lesson-menu-path');
     expect(app).toContain('data-lesson-menu-concepts');
     expect(app).toContain('data-lesson-menu-modes');
-    expect(app).toContain('data-lesson-menu-steps');
-    expect(app).toContain("בית -> שיעורים -> <button");
-    expect(app).toContain('class="site-breadcrumb-concept"');
-    expect(app).toContain("${esc(conceptName)} (${esc(conceptIndex + 1)}/${esc(concepts.length)})");
+    expect(app).toContain('data-lesson-menu-toggle="concepts"');
+    expect(app).toContain('data-lesson-menu-toggle="tabs"');
+    expect(app).toContain("שיעור ${esc(lessonNumber)} - ${esc(lesson.title)}");
+    expect(app).toContain("${esc(selectedConcept.conceptName)} (${esc(selectedIndex + 1)}/${esc(concepts.length)})");
     expect(app.indexOf('data-lesson-menu-concepts')).toBeLessThan(app.indexOf('data-lesson-menu-modes'));
-    expect(app.indexOf('data-lesson-menu-modes')).toBeLessThan(app.indexOf('data-lesson-menu-steps'));
     expect(app).toContain("${renderLessonTopMenus(lesson, concepts, selectedConcept)}");
-    expect(app).toContain("${renderLessonTopMenus(lesson, concepts, selectedConcept, { stepTabsHTML: lastRenderedConceptStepTabsHTML })}");
+    expect(app).not.toContain("data-lesson-menu-" + "steps");
+    expect(app).not.toContain("lesson-step-menu-" + "strip");
     expect(app).not.toContain('<h3 class="lesson-body-title">${esc(lesson.title)}</h3>');
     expect(css).toContain(".lesson-menu-stack");
-    expect(css).toContain(".lesson-menu-row > summary");
-    expect(css).toContain(".lesson-menu-row[open]");
-    expect(css).toContain("grid-template-columns: minmax(5.8rem, 7.2rem) minmax(0, 1fr)");
-    expect(css).toContain(".lesson-menu-row[open] > .lesson-menu-strip");
-    expect(css).toContain(".lesson-menu-row[open] > summary span");
-    expect(css).toContain(".lesson-step-menu-strip .concept-step-tabs");
+    expect(css).toContain(".lesson-tree-row");
+    expect(css).toContain("grid-template-columns: minmax(5.4rem, 7rem) minmax(0, 1fr)");
+    expect(css).toContain(".lesson-tree-label");
+    expect(css).toContain(".lesson-tree-scroll");
+    expect(css).toContain(".lesson-path-chip");
+    expect(css).toContain(".lesson-tab-strip .lesson-compact-toolbar");
     expect(css).toContain("body.lesson-reading-mode .top-nav");
   });
 

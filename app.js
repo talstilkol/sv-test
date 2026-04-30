@@ -7572,6 +7572,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const panel = document.getElementById("view-mode-panel");
     const closeBtn = document.getElementById("vm-close");
     const jumper = document.getElementById("vm-concept-jumper");
+    const conceptPartsSection = document.getElementById("vm-concept-parts-section");
+    const conceptParts = document.getElementById("vm-concept-parts");
     if (!fab || !panel) return;
 
     // All toggle keys
@@ -7695,6 +7697,13 @@ document.addEventListener("DOMContentLoaded", () => {
         opt.disabled = true;
         jumper.appendChild(opt);
       }
+    }
+
+    function renderConceptParts(stepTabsHTML = "") {
+      if (!conceptPartsSection || !conceptParts) return;
+      const html = String(stepTabsHTML || "").trim();
+      conceptParts.innerHTML = html;
+      conceptPartsSection.hidden = html.length === 0;
     }
 
     applyState();
@@ -8112,6 +8121,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Expose for outside callers (when lesson changes, refresh jumper)
     window.viewModeRefreshJumper = rebuildJumper;
+    window.viewModeRenderConceptParts = renderConceptParts;
   })();
 
   // =========== SETTINGS TAB ===========
@@ -29105,6 +29115,21 @@ document.addEventListener("DOMContentLoaded", () => {
     renderContent();
   }
 
+  let lessonMenuOpenState = {
+    concepts: true,
+    tabs: true,
+  };
+
+  function isLessonMenuOpen(key) {
+    return lessonMenuOpenState[key] !== false;
+  }
+
+  function toggleLessonMenuOpen(key) {
+    if (!(key in lessonMenuOpenState)) return;
+    lessonMenuOpenState[key] = !isLessonMenuOpen(key);
+    renderContent();
+  }
+
   function conceptStepStateKey(lesson, concept) {
     return `${lesson.id}::${concept.conceptName}`;
   }
@@ -29126,6 +29151,12 @@ document.addEventListener("DOMContentLoaded", () => {
       </nav>`;
   }
 
+  function updateViewModeConceptParts(stepTabsHTML = "") {
+    if (typeof window.viewModeRenderConceptParts === "function") {
+      window.viewModeRenderConceptParts(stepTabsHTML);
+    }
+  }
+
   function renderConceptStep(id, title, body, options = {}) {
     if (!body) return "";
     const active = options.active === true;
@@ -29144,7 +29175,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </section>`;
   }
 
-  function renderLessonControlRail(actionsHTML = "", stepTabsHTML = "") {
+  function renderLessonControlRail(actionsHTML = "") {
     return `
       <aside class="lesson-control-rail" data-page-section="תצוגה ופעולות" aria-label="תצוגה ופעולות למושג">
         ${actionsHTML ? `<div class="concept-actions concept-actions-rail">${actionsHTML}</div>` : ""}
@@ -29449,56 +29480,89 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let lastRenderedConceptStepTabsHTML = "";
 
-  function renderLessonTopMenus(lesson, concepts, selectedConcept, options = {}) {
+  function renderLessonTopMenus(lesson, concepts, selectedConcept) {
     const selectedIndex = concepts.findIndex((item) => item.conceptName === selectedConcept.conceptName);
     const lessonIndex = lessonIndexById(lesson.id);
     const nextLesson = (window.LESSONS_DATA || [])[lessonIndex + 1] || null;
-    const stepTabsHTML = options.stepTabsHTML || "";
+    const lessonNumber = lessonIndex >= 0 ? lessonIndex + 1 : "";
+    const conceptsOpen = isLessonMenuOpen("concepts");
+    const tabsOpen = conceptsOpen && isLessonMenuOpen("tabs");
+    const compactLabel = LESSON_COMPACT_MODES[lessonCompactMode]?.label || "מלא";
     return `
       <section class="lesson-menu-stack" data-page-section="תפריטי שיעור" aria-label="תפריטי שיעור מקוצרים">
-        <details class="lesson-menu-row" data-lesson-menu-concepts>
-          <summary>
-            <strong>מושגים</strong>
-            <span>${esc(selectedConcept.conceptName)} · ${esc(selectedIndex + 1)} מתוך ${esc(concepts.length)}</span>
-          </summary>
-          <div class="lesson-menu-strip lesson-concept-chip-strip" role="list" aria-label="מושגי השיעור">
-            <span class="lesson-menu-actions" role="group" aria-label="מעבר בין מושגים ושיעורים">
-              <button type="button" class="lesson-nav-step" data-lesson-step="-1" ${selectedIndex <= 0 ? "disabled" : ""}>הקודם</button>
-              <button type="button" class="lesson-nav-step primary" data-lesson-step="1" ${selectedIndex >= concepts.length - 1 ? "disabled" : ""}>המושג הבא</button>
-              ${nextLesson ? `<button type="button" class="lesson-nav-next-lesson" data-lesson-next="${esc(nextLesson.id)}">השיעור הבא</button>` : ""}
-            </span>
-            ${concepts.map((concept, index) => `
-              <button
-                type="button"
-                role="listitem"
-                class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""}"
-                data-lesson-concept-jump="${esc(concept.conceptName)}"
-                title="פתח את ${esc(concept.conceptName)}">
-                <span>${esc(index + 1)}</span>
-                ${esc(concept.conceptName)}
-              </button>
-            `).join("")}
+        <div class="lesson-tree-row lesson-tree-path-row" data-lesson-menu-path>
+          <button
+            type="button"
+            class="lesson-tree-label"
+            data-lesson-menu-toggle="concepts"
+            aria-expanded="${conceptsOpen ? "true" : "false"}">
+            <span>מסלול</span>
+            <small>${conceptsOpen ? "פתוח" : "סגור"}</small>
+          </button>
+          <div class="lesson-tree-scroll lesson-path-strip" aria-label="מיקום נוכחי במסלול">
+            <button type="button" class="lesson-path-chip" data-lesson-home>בית</button>
+            <span class="lesson-path-separator" aria-hidden="true">→</span>
+            <button type="button" class="lesson-path-chip" data-lesson-home>שיעורים</button>
+            <span class="lesson-path-separator" aria-hidden="true">→</span>
+            <button
+              type="button"
+              class="lesson-path-chip lesson-path-lesson"
+              data-lesson-menu-toggle="concepts"
+              aria-expanded="${conceptsOpen ? "true" : "false"}">
+              שיעור ${esc(lessonNumber)} - ${esc(lesson.title)}
+            </button>
+            <span class="lesson-path-separator" aria-hidden="true">→</span>
+            <button
+              type="button"
+              class="lesson-path-chip lesson-path-concept"
+              data-lesson-menu-toggle="tabs"
+              aria-expanded="${tabsOpen ? "true" : "false"}">
+              ${esc(selectedConcept.conceptName)} (${esc(selectedIndex + 1)}/${esc(concepts.length)})
+            </button>
           </div>
-          <details class="lesson-menu-row" data-lesson-menu-modes>
-            <summary>
-              <strong>טאבים</strong>
-              <span>${esc(LESSON_COMPACT_MODES[lessonCompactMode]?.label || "מלא")} · שורה אחת · השוואות · שאלות</span>
-            </summary>
-            ${renderLessonCompactToolbar({ lesson, concept: selectedConcept })}
-            ${renderLessonQuestionBankPanel(lesson, selectedConcept)}
-            ${stepTabsHTML ? `
-              <details class="lesson-menu-row" data-lesson-menu-steps>
-                <summary>
-                  <strong>חלקי מושג</strong>
-                  <span>הסבר ורמה · תרשים · דימוי · קוד והרצה · העמקה · שאלות</span>
-                </summary>
-                <div class="lesson-menu-strip lesson-step-menu-strip">
-                  ${stepTabsHTML}
-                </div>
-              </details>
-            ` : ""}
-          </details>
-        </details>
+        </div>
+        ${conceptsOpen ? `
+          <div class="lesson-tree-row" data-lesson-menu-concepts>
+            <button
+              type="button"
+              class="lesson-tree-label"
+              data-lesson-menu-toggle="tabs"
+              aria-expanded="${tabsOpen ? "true" : "false"}">
+              <span>מושגים</span>
+              <small>${esc(selectedIndex + 1)}/${esc(concepts.length)}</small>
+            </button>
+            <div class="lesson-tree-scroll lesson-concept-chip-strip" role="list" aria-label="מושגי השיעור">
+              <span class="lesson-menu-actions" role="group" aria-label="מעבר בין מושגים ושיעורים">
+                <button type="button" class="lesson-nav-step" data-lesson-step="-1" ${selectedIndex <= 0 ? "disabled" : ""}>הקודם</button>
+                <button type="button" class="lesson-nav-step primary" data-lesson-step="1" ${selectedIndex >= concepts.length - 1 ? "disabled" : ""}>המושג הבא</button>
+                ${nextLesson ? `<button type="button" class="lesson-nav-next-lesson" data-lesson-next="${esc(nextLesson.id)}">השיעור הבא</button>` : ""}
+              </span>
+              ${concepts.map((concept, index) => `
+                <button
+                  type="button"
+                  role="listitem"
+                  class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""}"
+                  data-lesson-concept-jump="${esc(concept.conceptName)}"
+                  title="פתח את ${esc(concept.conceptName)}">
+                  <span>${esc(index + 1)}</span>
+                  ${esc(concept.conceptName)}
+                </button>
+              `).join("")}
+            </div>
+          </div>
+        ` : ""}
+        ${tabsOpen ? `
+          <div class="lesson-tree-row" data-lesson-menu-modes>
+            <div class="lesson-tree-label lesson-tree-label-static">
+              <span>טאבים</span>
+              <small>${esc(compactLabel)}</small>
+            </div>
+            <div class="lesson-tree-scroll lesson-tab-strip">
+              ${renderLessonCompactToolbar({ lesson, concept: selectedConcept })}
+            </div>
+          </div>
+          ${renderLessonQuestionBankPanel(lesson, selectedConcept)}
+        ` : ""}
       </section>`;
   }
 
@@ -29571,6 +29635,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function wireLessonCompactToolbar() {
+    lessonBody.querySelectorAll("[data-lesson-menu-toggle]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        toggleLessonMenuOpen(btn.getAttribute("data-lesson-menu-toggle") || "");
+      });
+    });
+    lessonBody.querySelectorAll("[data-lesson-home]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.getElementById("open-home")?.click();
+      });
+    });
     lessonBody.querySelectorAll("[data-lesson-qbank-toggle]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const lesson = window.LESSONS_DATA.find((item) => item.id === currentLessonId);
@@ -29678,7 +29752,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (lessonId) openLesson(lessonId);
       });
     });
-    lessonBody.querySelectorAll("[data-concept-step-tab]").forEach((btn) => {
+    document.querySelectorAll("[data-concept-step-tab]").forEach((btn) => {
       btn.addEventListener("click", (event) => {
         event.preventDefault();
         const stepId = btn.getAttribute("data-concept-step-tab") || "definition";
@@ -29799,6 +29873,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (concepts.length === 0) {
       lessonBody.innerHTML = `
         <div class="concept-card"><p>אין מושגים זמינים בשיעור זה.</p></div>`;
+      updateViewModeConceptParts("");
       hidePageScrollRail();
       return;
     }
@@ -29824,6 +29899,7 @@ document.addEventListener("DOMContentLoaded", () => {
             : renderLessonComparisonOverview(lesson, concepts)
         }
       `;
+      updateViewModeConceptParts("");
       wireLessonCompactToolbar();
       wireLessonQuestionBankPanel(lesson, selectedConcept);
       wireLessonConceptNavigator(lesson, concepts, selectedConcept);
@@ -29833,7 +29909,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const conceptCardHTML = renderConceptCard(lesson, selectedConcept, concepts.indexOf(selectedConcept));
     lessonBody.innerHTML = `
-      ${renderLessonTopMenus(lesson, concepts, selectedConcept, { stepTabsHTML: lastRenderedConceptStepTabsHTML })}
+      ${renderLessonTopMenus(lesson, concepts, selectedConcept)}
       ${
         lesson.videoScript
           ? `
@@ -29849,6 +29925,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${conceptCardHTML}
       </div>
     `;
+    updateViewModeConceptParts(lastRenderedConceptStepTabsHTML);
 
     // Wire per-concept controls (simplify / illustration / etc.)
     wireLessonCompactToolbar();
@@ -30367,7 +30444,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
         <div class="lesson-concept-shell">
-          ${renderLessonControlRail(actionButtonsHTML, stepTabsHTML)}
+          ${renderLessonControlRail(actionButtonsHTML)}
           <div class="concept-main-flow">
             ${conceptStepsHTML}
           </div>

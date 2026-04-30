@@ -89,10 +89,10 @@ describe("SVCollege Design Systems content", () => {
 
     expect(questions.mc).toHaveLength(18);
     expect(questions.fill).toHaveLength(8);
-    expect(context.SVCOLLEGE_DESIGN_SYSTEMS_TRACES).toHaveLength(2);
+    expect(context.SVCOLLEGE_DESIGN_SYSTEMS_TRACES).toHaveLength(11);
     expect(context.SVCOLLEGE_DESIGN_SYSTEMS_BUILDS).toHaveLength(2);
     expect(questions.bugHunt).toHaveLength(2);
-    expect(allPracticeItems(context)).toHaveLength(32);
+    expect(allPracticeItems(context)).toHaveLength(41);
 
     questions.mc.forEach((question) => {
       expect(question.options).toHaveLength(4);
@@ -106,6 +106,25 @@ describe("SVCollege Design Systems content", () => {
 
     allPracticeItems(context).forEach((item) => {
       expectPracticeMetadata(item);
+    });
+  });
+
+  it("adds Trace activity for every remaining code-bearing Design Systems concept", () => {
+    const context = loadContext();
+    const traceKeys = new Set(context.SVCOLLEGE_DESIGN_SYSTEMS_TRACES.map((item) => item.conceptKey));
+
+    [
+      "lesson_design_systems::shadcn/UI",
+      "lesson_design_systems::Radix primitives",
+      "lesson_design_systems::design tokens",
+      "lesson_design_systems::cn helper",
+      "lesson_design_systems::cva",
+      "lesson_design_systems::asChild slot",
+      "lesson_design_systems::theme tokens",
+      "lesson_design_systems::component registry",
+      "lesson_design_systems::design system testing",
+    ].forEach((key) => {
+      expect(traceKeys.has(key)).toBe(true);
     });
   });
 

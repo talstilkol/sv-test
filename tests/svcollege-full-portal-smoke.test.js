@@ -10,17 +10,17 @@ describe("SVCollege full portal desktop/mobile smoke", () => {
     expect(first.summary.checks).toBe(9);
   });
 
-  it("keeps desktop primary-action blockers visible when critical flows are not ready", () => {
+  it("keeps desktop primary actions green when critical flows are ready", () => {
     const report = fullPortalSmoke.buildReport();
 
-    expect(report.summary.desktopReady).toBe(false);
+    expect(report.summary.desktopReady).toBe(true);
     expect(report.desktopChecks.map((check) => check.id)).toEqual([
       "desktop-top-tabs",
       "desktop-context-tree",
       "desktop-primary-actions",
       "desktop-lesson-navigation",
     ]);
-    expect(report.desktopChecks.find((check) => check.id === "desktop-primary-actions").passed).toBe(false);
+    expect(report.desktopChecks.find((check) => check.id === "desktop-primary-actions").passed).toBe(true);
   });
 
   it("closes mobile top tabs, drawer, right tree and focus mode coverage", () => {
@@ -41,8 +41,8 @@ describe("SVCollege full portal desktop/mobile smoke", () => {
     const markdown = fullPortalSmoke.toMarkdown(fullPortalSmoke.buildReport());
 
     expect(markdown).toContain("# SVCollege Full Portal Smoke");
-    expect(markdown).toContain("Desktop ready: No");
+    expect(markdown).toContain("Desktop ready: Yes");
     expect(markdown).toContain("Mobile ready: Yes");
-    expect(markdown).toContain("Ready: No");
+    expect(markdown).toContain("Ready: Yes");
   });
 });

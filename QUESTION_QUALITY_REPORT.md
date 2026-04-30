@@ -4,10 +4,10 @@ Full-bank deterministic QA for MC and Fill questions. This report creates a `que
 
 ## Summary
 
-- Total questions: 216
-- Mix: 105 MC, 111 Fill
-- Source mix: 216 manual
-- Clean: 216
+- Total questions: 261
+- Mix: 132 MC, 129 Fill
+- Source mix: 261 manual
+- Clean: 261
 - Notes only: 0
 - Warning questions: 0
 - Blocker questions: 0

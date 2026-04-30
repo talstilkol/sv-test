@@ -16,20 +16,20 @@
     "fillTargetPerCodeConcept": 2
   },
   "sourceMix": {
-    "curatedMC": 105,
+    "curatedMC": 132,
     "ignoredGeneratedMC": 0,
-    "curatedFill": 111,
+    "curatedFill": 129,
     "ignoredGeneratedFill": 0
   },
   "summary": {
     "totalConcepts": 568,
-    "mcReadyConcepts": 1,
-    "mcGapCount": 567,
+    "mcReadyConcepts": 10,
+    "mcGapCount": 558,
     "codeExampleConcepts": 568,
-    "fillReadyConcepts": 7,
-    "fillGapCount": 561,
-    "handCuratedMcPromotionBacklog": 567,
-    "handCuratedFillPromotionBacklog": 561,
+    "fillReadyConcepts": 16,
+    "fillGapCount": 552,
+    "handCuratedMcPromotionBacklog": 558,
+    "handCuratedFillPromotionBacklog": 552,
     "ready": false
   },
   "gaps": {
@@ -38,24 +38,6 @@
         "key": "ai_development::AI",
         "lessonTitle": "שימוש נכון ב-AI בפיתוח",
         "conceptName": "AI",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "ai_development::Cursor",
-        "lessonTitle": "שימוש נכון ב-AI בפיתוח",
-        "conceptName": "Cursor",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "ai_development::Windsurf",
-        "lessonTitle": "שימוש נכון ב-AI בפיתוח",
-        "conceptName": "Windsurf",
         "mc": {
           "curated": 0,
           "total": 0
@@ -89,27 +71,9 @@
         }
       },
       {
-        "key": "ai_development::Prompt Engineering",
-        "lessonTitle": "שימוש נכון ב-AI בפיתוח",
-        "conceptName": "Prompt Engineering",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "ai_development::AI Pair Programming",
         "lessonTitle": "שימוש נכון ב-AI בפיתוח",
         "conceptName": "AI Pair Programming",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "ai_development::AI Code Review",
-        "lessonTitle": "שימוש נכון ב-AI בפיתוח",
-        "conceptName": "AI Code Review",
         "mc": {
           "curated": 0,
           "total": 0
@@ -3059,51 +3023,6 @@
         }
       },
       {
-        "key": "lesson_25::Tailwind CSS",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "Tailwind CSS",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::utility classes",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "utility classes",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::responsive design",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "responsive design",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::flex",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "flex",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::grid",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "grid",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_25::padding",
         "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
         "conceptName": "padding",
@@ -5149,24 +5068,6 @@
         }
       },
       {
-        "key": "ai_development::Cursor",
-        "lessonTitle": "שימוש נכון ב-AI בפיתוח",
-        "conceptName": "Cursor",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "ai_development::Windsurf",
-        "lessonTitle": "שימוש נכון ב-AI בפיתוח",
-        "conceptName": "Windsurf",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "ai_development::Claude Code",
         "lessonTitle": "שימוש נכון ב-AI בפיתוח",
         "conceptName": "Claude Code",
@@ -5194,27 +5095,9 @@
         }
       },
       {
-        "key": "ai_development::Prompt Engineering",
-        "lessonTitle": "שימוש נכון ב-AI בפיתוח",
-        "conceptName": "Prompt Engineering",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "ai_development::AI Pair Programming",
         "lessonTitle": "שימוש נכון ב-AI בפיתוח",
         "conceptName": "AI Pair Programming",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "ai_development::AI Code Review",
-        "lessonTitle": "שימוש נכון ב-AI בפיתוח",
-        "conceptName": "AI Code Review",
         "fill": {
           "curated": 0,
           "total": 0
@@ -8131,51 +8014,6 @@
         "key": "lesson_24::cleanup",
         "lessonTitle": "שיעור 24 — useEffect, useMemo, useRef",
         "conceptName": "cleanup",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::Tailwind CSS",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "Tailwind CSS",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::utility classes",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "utility classes",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::responsive design",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "responsive design",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::flex",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "flex",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::grid",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "grid",
         "fill": {
           "curated": 0,
           "total": 0

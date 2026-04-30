@@ -8,20 +8,20 @@
   ],
   "reportScope": "weekly-progress",
   "summary": {
-    "readyForExamPractice": false,
-    "blockers": 7,
-    "readinessAverage": 96.7,
+    "readyForExamPractice": true,
+    "blockers": 0,
+    "readinessAverage": 100,
     "coveredModules": 15,
     "totalModules": 15,
-    "tabCoverage": 98.2,
-    "tabCells": "221/225",
+    "tabCoverage": 100,
+    "tabCells": "225/225",
     "weakestCriticalCounters": {
       "totalConcepts": 498,
-      "withoutQuestions": 131,
-      "withoutHardQuestion": 170,
+      "withoutQuestions": 129,
+      "withoutHardQuestion": 168,
       "withoutDefinition": 0,
       "withoutPrerequisiteEntry": 0,
-      "codeConceptsWithoutProof": 142
+      "codeConceptsWithoutProof": 140
     },
     "mockVariants": 3,
     "flowSimulationPassed": true
@@ -54,9 +54,9 @@
     }
   ],
   "teacherWeeklyProgress": {
-    "status": "blocked",
+    "status": "ready-for-exam-practice",
     "moduleCoverage": "15/15",
-    "tabCoverage": "221/225",
+    "tabCoverage": "225/225",
     "recommendedReviewAgenda": [
       "react_blueprint::Performance Optimization",
       "react_blueprint::State Management",

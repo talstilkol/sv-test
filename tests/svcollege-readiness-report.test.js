@@ -37,15 +37,12 @@ describe("SVCollege readiness report", () => {
     });
   });
 
-  it("keeps Finish Line 1 blocked until manual practice evidence covers every module", () => {
+  it("keeps Finish Line 1 ready after manual practice evidence covers every module", () => {
     const report = svcollegeReadiness.buildReport();
 
-    expect(report.summary.finishLineReady).toBe(false);
-    expect(report.releaseBlockers).toEqual([
-      "עיצוב רספונסיבי ו-CSS מתקדם (covered, 75%)",
-      "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI (covered, 75%)",
-    ]);
+    expect(report.summary.finishLineReady).toBe(true);
+    expect(report.releaseBlockers).toEqual([]);
     expect(report.modules.some((module) => module.status === "gap")).toBe(false);
-    expect(report.modules.every((module) => module.readiness >= 75)).toBe(true);
+    expect(report.modules.every((module) => module.readiness === 100)).toBe(true);
   });
 });

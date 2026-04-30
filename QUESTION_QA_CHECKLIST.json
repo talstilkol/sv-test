@@ -9,12 +9,12 @@
     "svcollegePrerequisiteGate": true
   },
   "summary": {
-    "totalQuestions": 216,
+    "totalQuestions": 261,
     "sampleRatio": 0.1,
-    "sampleSize": 22,
-    "mc": 8,
-    "fill": 14,
-    "manual": 22
+    "sampleSize": 27,
+    "mc": 12,
+    "fill": 15,
+    "manual": 27
   },
   "gates": {
     "svcollegePrerequisites": {
@@ -7142,13 +7142,33 @@
       ]
     },
     {
+      "id": "mc_l25_grid_003",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_25::grid",
+      "level": 6,
+      "prompt": "איזו טעות נפוצה ב-Grid תגרום לכרטיסים לא להסתדר בעמודות?",
+      "order": 4,
+      "reviewStatus": "pending",
+      "checks": [
+        "correct-answer-verified",
+        "explanation-matches-answer",
+        "prerequisites-and-terms-covered",
+        "difficulty-fits-lesson-order",
+        "hebrew-is-clear",
+        "four-options-exactly",
+        "distractors-are-common-mistakes",
+        "no-guessing-cues"
+      ]
+    },
+    {
       "id": "fill_exam_props_001",
       "kind": "fill",
       "source": "manual",
       "conceptKey": "lesson_22::props",
       "level": 5,
       "prompt": "function Card(input) {\n  return <h2>{input.____}</h2>;\n}",
-      "order": 4,
+      "order": 5,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7168,7 +7188,7 @@
       "conceptKey": "lesson_16::File System",
       "level": 5,
       "prompt": "import { readFile } from 'node:fs/promises';\nconst text = await readFile('notes.txt', '____');",
-      "order": 5,
+      "order": 6,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7188,7 +7208,27 @@
       "conceptKey": "lesson_tooling_git::Git",
       "level": 6,
       "prompt": "למה Git לא נחשב רק 'שמירה של קבצים'?",
-      "order": 6,
+      "order": 7,
+      "reviewStatus": "pending",
+      "checks": [
+        "correct-answer-verified",
+        "explanation-matches-answer",
+        "prerequisites-and-terms-covered",
+        "difficulty-fits-lesson-order",
+        "hebrew-is-clear",
+        "four-options-exactly",
+        "distractors-are-common-mistakes",
+        "no-guessing-cues"
+      ]
+    },
+    {
+      "id": "mc_l25_flex_001",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_25::flex",
+      "level": 3,
+      "prompt": "מה עושה display flex על parent?",
+      "order": 8,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7208,7 +7248,7 @@
       "conceptKey": "lesson_html_css_foundations::CSS selector",
       "level": 3,
       "prompt": "____ {\n  padding: 16px;\n  border: 1px solid #ddd;\n}",
-      "order": 7,
+      "order": 9,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7228,7 +7268,7 @@
       "conceptKey": "lesson_design_systems::component registry",
       "level": 5,
       "prompt": "const registry = {\n  Button,\n  Card,\n  ____\n};\nconst Component = registry[name];",
-      "order": 8,
+      "order": 10,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7242,13 +7282,33 @@
       ]
     },
     {
+      "id": "mc_ai_dev_cursor_002",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "ai_development::Cursor",
+      "level": 5,
+      "prompt": "מה התפקיד של קובץ .cursorrules בפרויקט?",
+      "order": 11,
+      "reviewStatus": "pending",
+      "checks": [
+        "correct-answer-verified",
+        "explanation-matches-answer",
+        "prerequisites-and-terms-covered",
+        "difficulty-fits-lesson-order",
+        "hebrew-is-clear",
+        "four-options-exactly",
+        "distractors-are-common-mistakes",
+        "no-guessing-cues"
+      ]
+    },
+    {
       "id": "fill_obj_004",
       "kind": "fill",
       "source": "manual",
       "conceptKey": "lesson_13::inheritance",
       "level": 5,
       "prompt": "class Admin ____ User {\n  canDeleteUsers() { return true; }\n}",
-      "order": 9,
+      "order": 12,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7268,7 +7328,7 @@
       "conceptKey": "lesson_11::push",
       "level": 1,
       "prompt": "const arr = [1, 2];\narr.____(3);\nconsole.log(arr); // [1, 2, 3]",
-      "order": 10,
+      "order": 13,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7288,7 +7348,7 @@
       "conceptKey": "lesson_20::findOne",
       "level": 4,
       "prompt": "const user = await User.____({ email: 'a@b.com' });",
-      "order": 11,
+      "order": 14,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7308,7 +7368,7 @@
       "conceptKey": "lesson_tooling_git::npm scripts",
       "level": 3,
       "prompt": "איפה מגדירים פקודות כמו npm run dev ו-npm test?",
-      "order": 12,
+      "order": 15,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7328,7 +7388,7 @@
       "conceptKey": "lesson_tooling_git::repository",
       "level": 5,
       "prompt": "git ____ https://github.com/team/app.git\ncd app",
-      "order": 13,
+      "order": 16,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7348,7 +7408,7 @@
       "conceptKey": "lesson_13::localStorage",
       "level": 3,
       "prompt": "const tasks = [{id:1}];\nlocalStorage.setItem('tasks', JSON.____(tasks));",
-      "order": 14,
+      "order": 17,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7368,7 +7428,7 @@
       "conceptKey": "lesson_nextjs::image optimization",
       "level": 5,
       "prompt": "<Image src=\"/hero.png\" alt=\"Dashboard\" width={1200} height={____} />",
-      "order": 15,
+      "order": 18,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7379,6 +7439,26 @@
         "single-clear-blank",
         "answer-not-leaked",
         "hint-narrows-without-revealing"
+      ]
+    },
+    {
+      "id": "mc_ai_dev_review_001",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "ai_development::AI Code Review",
+      "level": 3,
+      "prompt": "מה AI Code Review צריך לבדוק מעבר ל-'הקוד נראה יפה'?",
+      "order": 19,
+      "reviewStatus": "pending",
+      "checks": [
+        "correct-answer-verified",
+        "explanation-matches-answer",
+        "prerequisites-and-terms-covered",
+        "difficulty-fits-lesson-order",
+        "hebrew-is-clear",
+        "four-options-exactly",
+        "distractors-are-common-mistakes",
+        "no-guessing-cues"
       ]
     },
     {
@@ -7388,7 +7468,7 @@
       "conceptKey": "lesson_15::Promise",
       "level": 5,
       "prompt": "const p = new Promise((____, reject) => {\n  setTimeout(() => /* fulfill with 'hello' */, 1000);\n});",
-      "order": 16,
+      "order": 20,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7402,13 +7482,53 @@
       ]
     },
     {
+      "id": "fill_l25_tailwind_002",
+      "kind": "fill",
+      "source": "manual",
+      "conceptKey": "lesson_25::Tailwind CSS",
+      "level": 5,
+      "prompt": "<button className=\"px-4 py-2 bg-blue-500 hover:bg-blue-700 ____\">Save</button>",
+      "order": 21,
+      "reviewStatus": "pending",
+      "checks": [
+        "correct-answer-verified",
+        "explanation-matches-answer",
+        "prerequisites-and-terms-covered",
+        "difficulty-fits-lesson-order",
+        "hebrew-is-clear",
+        "single-clear-blank",
+        "answer-not-leaked",
+        "hint-narrows-without-revealing"
+      ]
+    },
+    {
+      "id": "mc_ai_dev_cursor_001",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "ai_development::Cursor",
+      "level": 3,
+      "prompt": "מתי נכון להשתמש ב-Cursor Cmd+K?",
+      "order": 22,
+      "reviewStatus": "pending",
+      "checks": [
+        "correct-answer-verified",
+        "explanation-matches-answer",
+        "prerequisites-and-terms-covered",
+        "difficulty-fits-lesson-order",
+        "hebrew-is-clear",
+        "four-options-exactly",
+        "distractors-are-common-mistakes",
+        "no-guessing-cues"
+      ]
+    },
+    {
       "id": "mc_middleware_001",
       "kind": "mc",
       "source": "manual",
       "conceptKey": "lesson_17::middleware",
       "level": 5,
       "prompt": "מה תפקיד הפרמטר next ב-middleware?",
-      "order": 17,
+      "order": 23,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7428,7 +7548,7 @@
       "conceptKey": "lesson_html_css_foundations::CSS selector",
       "level": 3,
       "prompt": "איזה selector בוחר אלמנט עם class בשם card?",
-      "order": 18,
+      "order": 24,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7448,7 +7568,7 @@
       "conceptKey": "lesson_tooling_git::staging area",
       "level": 6,
       "prompt": "שינית שני קבצים, אבל רק אחד קשור לבאג שאתה מתקן. מה הפעולה הנכונה לפני commit?",
-      "order": 19,
+      "order": 25,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7462,13 +7582,33 @@
       ]
     },
     {
-      "id": "fill_exam_side_effect_001",
+      "id": "mc_l25_flex_002",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_25::flex",
+      "level": 4,
+      "prompt": "איזה className מתאים ל-navbar עם לוגו בקצה אחד וקישורים בקצה השני?",
+      "order": 26,
+      "reviewStatus": "pending",
+      "checks": [
+        "correct-answer-verified",
+        "explanation-matches-answer",
+        "prerequisites-and-terms-covered",
+        "difficulty-fits-lesson-order",
+        "hebrew-is-clear",
+        "four-options-exactly",
+        "distractors-are-common-mistakes",
+        "no-guessing-cues"
+      ]
+    },
+    {
+      "id": "fill_ai_dev_review_001",
       "kind": "fill",
       "source": "manual",
-      "conceptKey": "lesson_24::side effect",
+      "conceptKey": "ai_development::AI Code Review",
       "level": 5,
-      "prompt": "useEffect(() => {\n  document.title = pageTitle;\n}, [pageTitle]);\n// The effect updates the ____",
-      "order": 20,
+      "prompt": "const review = ['logic', 'security', 'performance', '____'];",
+      "order": 27,
       "reviewStatus": "pending",
       "checks": [
         "correct-answer-verified",
@@ -7479,46 +7619,6 @@
         "single-clear-blank",
         "answer-not-leaked",
         "hint-narrows-without-revealing"
-      ]
-    },
-    {
-      "id": "mc_var_001",
-      "kind": "mc",
-      "source": "manual",
-      "conceptKey": "lesson_11::let",
-      "level": 1,
-      "prompt": "מה יודפס?\n\nlet x = 5;\nx = 8;\nconsole.log(x);",
-      "order": 21,
-      "reviewStatus": "pending",
-      "checks": [
-        "correct-answer-verified",
-        "explanation-matches-answer",
-        "prerequisites-and-terms-covered",
-        "difficulty-fits-lesson-order",
-        "hebrew-is-clear",
-        "four-options-exactly",
-        "distractors-are-common-mistakes",
-        "no-guessing-cues"
-      ]
-    },
-    {
-      "id": "mc_node_002",
-      "kind": "mc",
-      "source": "manual",
-      "conceptKey": "lesson_16::package.json",
-      "level": 3,
-      "prompt": "מה תפקיד package.json?",
-      "order": 22,
-      "reviewStatus": "pending",
-      "checks": [
-        "correct-answer-verified",
-        "explanation-matches-answer",
-        "prerequisites-and-terms-covered",
-        "difficulty-fits-lesson-order",
-        "hebrew-is-clear",
-        "four-options-exactly",
-        "distractors-are-common-mistakes",
-        "no-guessing-cues"
       ]
     }
   ]

@@ -7,19 +7,16 @@
     "covered": 15,
     "partial": 0,
     "gap": 0,
-    "green": 13,
-    "amber": 2,
+    "green": 15,
+    "amber": 0,
     "red": 0,
-    "averageReadiness": 96.7,
-    "finishLineReady": false
+    "averageReadiness": 100,
+    "finishLineReady": true
   },
   "validation": {
     "failures": []
   },
-  "releaseBlockers": [
-    "עיצוב רספונסיבי ו-CSS מתקדם (covered, 75%)",
-    "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI (covered, 75%)"
-  ],
+  "releaseBlockers": [],
   "modules": [
     {
       "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
@@ -60,8 +57,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 11,
-        "fill": 8,
+        "mc": 26,
+        "fill": 18,
         "trace": 7,
         "miniBuild": 2,
         "bugHunt": 1,
@@ -74,8 +71,8 @@
     {
       "title": "עיצוב רספונסיבי ו-CSS מתקדם",
       "status": "covered",
-      "readiness": 75,
-      "level": "amber",
+      "readiness": 100,
+      "level": "green",
       "lessonIds": [
         "lesson_25"
       ],
@@ -100,12 +97,12 @@
         "declaredStatus": 100,
         "lessonCoverage": 100,
         "conceptCoverage": 100,
-        "questionCoverage": 0,
+        "questionCoverage": 100,
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 0,
-        "fill": 0,
+        "mc": 15,
+        "fill": 10,
         "trace": 5,
         "miniBuild": 1,
         "bugHunt": 1,
@@ -456,8 +453,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 19,
-        "fill": 11,
+        "mc": 34,
+        "fill": 21,
         "trace": 25,
         "miniBuild": 14,
         "bugHunt": 11,
@@ -566,8 +563,8 @@
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 18,
-        "fill": 13,
+        "mc": 33,
+        "fill": 23,
         "trace": 7,
         "miniBuild": 3,
         "bugHunt": 3,
@@ -788,8 +785,8 @@
     {
       "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
       "status": "covered",
-      "readiness": 75,
-      "level": "amber",
+      "readiness": 100,
+      "level": "green",
       "lessonIds": [
         "ai_development"
       ],
@@ -812,12 +809,12 @@
         "declaredStatus": 100,
         "lessonCoverage": 100,
         "conceptCoverage": 100,
-        "questionCoverage": 0,
+        "questionCoverage": 100,
         "activityCoverage": 100
       },
       "counts": {
-        "mc": 0,
-        "fill": 0,
+        "mc": 12,
+        "fill": 8,
         "trace": 1,
         "miniBuild": 1,
         "bugHunt": 1,

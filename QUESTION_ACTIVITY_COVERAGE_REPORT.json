@@ -7,15 +7,15 @@
     "rule": "A code-bearing concept is activity-ready only when it has at least one Trace, Mini Build, or Bug Hunt item tied to its real conceptKey."
   },
   "sourceMix": {
-    "trace": 326,
+    "trace": 335,
     "build": 43,
     "bug": 33
   },
   "summary": {
     "concepts": 568,
     "relevantConcepts": 568,
-    "activityReadyConcepts": 337,
-    "activityGapCount": 231,
+    "activityReadyConcepts": 346,
+    "activityGapCount": 222,
     "ready": false
   },
   "gaps": [
@@ -1615,78 +1615,6 @@
       "key": "lesson_closures::closure in useEffect",
       "lessonTitle": "Closures — סגירות (הגורם השכיח לבאגים ב-React)",
       "conceptName": "closure in useEffect",
-      "trace": 0,
-      "build": 0,
-      "bug": 0
-    },
-    {
-      "key": "lesson_design_systems::shadcn/UI",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "shadcn/UI",
-      "trace": 0,
-      "build": 0,
-      "bug": 0
-    },
-    {
-      "key": "lesson_design_systems::Radix primitives",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "Radix primitives",
-      "trace": 0,
-      "build": 0,
-      "bug": 0
-    },
-    {
-      "key": "lesson_design_systems::design tokens",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "design tokens",
-      "trace": 0,
-      "build": 0,
-      "bug": 0
-    },
-    {
-      "key": "lesson_design_systems::cn helper",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "cn helper",
-      "trace": 0,
-      "build": 0,
-      "bug": 0
-    },
-    {
-      "key": "lesson_design_systems::cva",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "cva",
-      "trace": 0,
-      "build": 0,
-      "bug": 0
-    },
-    {
-      "key": "lesson_design_systems::asChild slot",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "asChild slot",
-      "trace": 0,
-      "build": 0,
-      "bug": 0
-    },
-    {
-      "key": "lesson_design_systems::theme tokens",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "theme tokens",
-      "trace": 0,
-      "build": 0,
-      "bug": 0
-    },
-    {
-      "key": "lesson_design_systems::component registry",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "component registry",
-      "trace": 0,
-      "build": 0,
-      "bug": 0
-    },
-    {
-      "key": "lesson_design_systems::design system testing",
-      "lessonTitle": "Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
-      "conceptName": "design system testing",
       "trace": 0,
       "build": 0,
       "bug": 0

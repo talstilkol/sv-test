@@ -5,16 +5,12 @@
   "template": "svcollege_fullstack",
   "targetSize": 55,
   "moduleCount": 15,
-  "bankSize": 216,
+  "bankSize": 261,
   "summary": {
     "variants": 3,
-    "blockers": 3,
-    "blockerCodes": [
-      "svcollege-variant-a:missing-modules",
-      "svcollege-variant-b:missing-modules",
-      "svcollege-variant-c:missing-modules"
-    ],
-    "passed": false
+    "blockers": 0,
+    "blockerCodes": [],
+    "passed": true
   },
   "variants": [
     {
@@ -33,10 +29,10 @@
         {
           "index": 2,
           "title": "עיצוב רספונסיבי ו-CSS מתקדם",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
+          "questionId": "mc:mc_l25_flex_001",
+          "conceptKey": "lesson_25::flex",
+          "kind": "mc",
+          "covered": true
         },
         {
           "index": 3,
@@ -97,9 +93,9 @@
         {
           "index": 10,
           "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
-          "questionId": "fill:fill_exam_radix_primitives_001",
-          "conceptKey": "lesson_design_systems::Radix primitives",
-          "kind": "fill",
+          "questionId": "mc:mc_l25_responsive_001",
+          "conceptKey": "lesson_25::responsive design",
+          "kind": "mc",
           "covered": true
         },
         {
@@ -129,10 +125,10 @@
         {
           "index": 14,
           "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
+          "questionId": "mc:mc_ai_dev_windsurf_001",
+          "conceptKey": "ai_development::Windsurf",
+          "kind": "mc",
+          "covered": true
         },
         {
           "index": 15,
@@ -143,27 +139,10 @@
           "covered": true
         }
       ],
-      "missingModules": [
-        {
-          "index": 2,
-          "title": "עיצוב רספונסיבי ו-CSS מתקדם",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
-        },
-        {
-          "index": 14,
-          "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
-        }
-      ],
+      "missingModules": [],
       "kindMix": {
-        "mc": 18,
-        "fill": 37
+        "mc": 21,
+        "fill": 34
       }
     },
     {
@@ -182,10 +161,10 @@
         {
           "index": 2,
           "title": "עיצוב רספונסיבי ו-CSS מתקדם",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
+          "questionId": "fill:fill_l25_grid_002",
+          "conceptKey": "lesson_25::grid",
+          "kind": "fill",
+          "covered": true
         },
         {
           "index": 3,
@@ -230,9 +209,9 @@
         {
           "index": 8,
           "title": "React ופיתוח Frontend מתקדם",
-          "questionId": "fill:fill_router_001",
-          "conceptKey": "lesson_23::BrowserRouter",
-          "kind": "fill",
+          "questionId": "mc:mc_l25_flex_002",
+          "conceptKey": "lesson_25::flex",
+          "kind": "mc",
           "covered": true
         },
         {
@@ -246,8 +225,8 @@
         {
           "index": 10,
           "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
-          "questionId": "fill:fill_design_002",
-          "conceptKey": "lesson_design_systems::theme tokens",
+          "questionId": "fill:fill_l25_tailwind_002",
+          "conceptKey": "lesson_25::Tailwind CSS",
           "kind": "fill",
           "covered": true
         },
@@ -278,10 +257,10 @@
         {
           "index": 14,
           "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
+          "questionId": "fill:fill_ai_dev_windsurf_001",
+          "conceptKey": "ai_development::Windsurf",
+          "kind": "fill",
+          "covered": true
         },
         {
           "index": 15,
@@ -292,27 +271,10 @@
           "covered": true
         }
       ],
-      "missingModules": [
-        {
-          "index": 2,
-          "title": "עיצוב רספונסיבי ו-CSS מתקדם",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
-        },
-        {
-          "index": 14,
-          "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
-        }
-      ],
+      "missingModules": [],
       "kindMix": {
-        "fill": 28,
-        "mc": 27
+        "fill": 31,
+        "mc": 24
       }
     },
     {
@@ -331,10 +293,10 @@
         {
           "index": 2,
           "title": "עיצוב רספונסיבי ו-CSS מתקדם",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
+          "questionId": "mc:mc_l25_flex_003",
+          "conceptKey": "lesson_25::flex",
+          "kind": "mc",
+          "covered": true
         },
         {
           "index": 3,
@@ -379,9 +341,9 @@
         {
           "index": 8,
           "title": "React ופיתוח Frontend מתקדם",
-          "questionId": "mc:mc_react_002",
-          "conceptKey": "lesson_21::props",
-          "kind": "mc",
+          "questionId": "fill:fill_l25_tailwind_001",
+          "conceptKey": "lesson_25::Tailwind CSS",
+          "kind": "fill",
           "covered": true
         },
         {
@@ -395,9 +357,9 @@
         {
           "index": 10,
           "title": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
-          "questionId": "fill:fill_design_004",
-          "conceptKey": "lesson_design_systems::accessible primitive",
-          "kind": "fill",
+          "questionId": "mc:mc_l25_utility_003",
+          "conceptKey": "lesson_25::utility classes",
+          "kind": "mc",
           "covered": true
         },
         {
@@ -427,10 +389,10 @@
         {
           "index": 14,
           "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
+          "questionId": "fill:fill_ai_dev_cursor_002",
+          "conceptKey": "ai_development::Cursor",
+          "kind": "fill",
+          "covered": true
         },
         {
           "index": 15,
@@ -441,27 +403,10 @@
           "covered": true
         }
       ],
-      "missingModules": [
-        {
-          "index": 2,
-          "title": "עיצוב רספונסיבי ו-CSS מתקדם",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
-        },
-        {
-          "index": 14,
-          "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
-          "questionId": "",
-          "conceptKey": "",
-          "kind": "",
-          "covered": false
-        }
-      ],
+      "missingModules": [],
       "kindMix": {
-        "fill": 30,
-        "mc": 25
+        "fill": 29,
+        "mc": 26
       }
     }
   ]

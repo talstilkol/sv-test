@@ -378,6 +378,172 @@ var OPTION_FEEDBACK = {
     "❌ module.exports = default export. exports.x = named export.",
     "❌ __dirname לא קיים ב-ESM — צריך import.meta.dirname.",
   ],
+
+  // ============== SVCollege Release Blocker — Lesson 25 Responsive CSS ==============
+  mc_l25_tailwind_001: [
+    "✅ נכון. Tailwind הוא utility-first: מרכיבים עיצוב בתוך className עם utilities קטנות.",
+    "❌ style object הוא inline style רגיל, לא דפוס Tailwind שנלמד בשיעור.",
+    "❌ Tailwind לא מחליף JSX; הוא משנה את דרך כתיבת ה-CSS.",
+    "❌ Tailwind רץ כחלק מ-build/style pipeline, לא כ-CSS צד שרת.",
+  ],
+  mc_l25_tailwind_002: [
+    "✅ נכון. זה צירוף utilities אמיתי לכפתור: padding, רקע, טקסט לבן ופינות.",
+    "❌ button-primary הוא שם class ידני; זה לא מראה שימוש ב-utilities של Tailwind.",
+    "❌ style אינו className, והערך padding:4 לא דוגמת Tailwind תקינה.",
+    "❌ אלה מילים מעולמות שונים ולא className לעיצוב כפתור.",
+  ],
+  mc_l25_tailwind_003: [
+    "✅ נכון. Tailwind build/JIT משאיר בעיקר utilities שנעשה בהם שימוש.",
+    "❌ CSS לא נמחק בזמן runtime; הבחירה נעשית בשלב build/compile.",
+    "❌ localStorage לא קשור לגודל CSS.",
+    "❌ Tailwind לא מגביל לצבע אחד; הוא מספק סולם צבעים מוגדר.",
+  ],
+  mc_l25_utility_001: [
+    "✅ נכון. utility class היא class קטנה וממוקדת כמו p-4 או text-lg.",
+    "❌ class אחת שמכילה את כל האתר היא ההפך מגישת utility.",
+    "❌ Promise הוא מושג JavaScript, לא class עיצובית.",
+    "❌ Tailwind לא יוצר קובץ CSS נפרד לכל קומפוננטה לפי השם הזה.",
+  ],
+  mc_l25_utility_002: [
+    "✅ נכון. p-6 מגדיר padding ו-bg-gray-100 מגדיר רקע אפור בהיר.",
+    "❌ אלה hooks של React, לא utilities של CSS.",
+    "❌ GET/POST הם HTTP methods, לא עיצוב.",
+    "❌ schema/migration שייכים למסד נתונים, לא ל-Tailwind.",
+  ],
+  mc_l25_utility_003: [
+    "✅ נכון. utilities מפחיתות specificity battles ומחברות לעיצוב צפוי מתוך tokens.",
+    "❌ עדיין חייבים להבין layout; utilities הן כלי ביטוי, לא תחליף להבנה.",
+    "❌ utility class לא הופכת UI לשרת Express.",
+    "❌ state של React נשמר בקומפוננטות/hooks, לא ב-utility class.",
+  ],
+  mc_l25_responsive_001: [
+    "✅ נכון. בלי prefix זה הבסיס למובייל, ו-md:/lg: מרחיבים למסכים גדולים.",
+    "❌ md: אינו לטלפון בלבד; הוא min-width למסך בינוני ומעלה.",
+    "❌ Tailwind מאפשר לכתוב באותו className עם prefixes, לא CSS נפרד לכל מכשיר.",
+    "❌ טעינת האתר לא תלויה בכך שהמסך קטן.",
+  ],
+  mc_l25_responsive_002: [
+    "✅ נכון. flex-col הוא mobile default ו-md:flex-row משנה לשורה במסך בינוני ומעלה.",
+    "❌ זה עושה ההפך: שורה כברירת מחדל ועמודה מ-md.",
+    "❌ זו רשת/הסתרה, לא מעבר עמודה-שורה ב-flex.",
+    "❌ אין attribute כזה ב-Tailwind שמייצר responsive layout.",
+  ],
+  mc_l25_responsive_003: [
+    "✅ נכון. breakpoints של Tailwind הם min-width ומצטברים כלפי מעלה.",
+    "❌ זה תיאור של max-width/desktop-first, לא Tailwind default.",
+    "❌ breakpoints הם CSS media queries, לא JavaScript resize handler.",
+    "❌ responsive CSS לא משנה מסד נתונים.",
+  ],
+  mc_l25_grid_001: [
+    "✅ נכון. Grid מתאים לפריסה דו-ממדית של שורות ועמודות.",
+    "❌ קריאת API שייכת ל-fetch/HTTP, לא ל-layout.",
+    "❌ session הוא נושא auth/state, לא CSS Grid.",
+    "❌ כפתור בודד בדרך כלל לא צריך Grid; זה תרחיש חד-צירי או style פשוט.",
+  ],
+  mc_l25_grid_002: [
+    "✅ נכון. זה layout responsive: 1/2/3 עמודות לפי breakpoint.",
+    "❌ CSS Grid לא יוצר שרתי Node.",
+    "❌ אין כאן hidden; הכרטיסים לא מוסתרים.",
+    "❌ זה Grid, לא Flex, כי parent מקבל class grid.",
+  ],
+  mc_l25_grid_003: [
+    "✅ נכון. grid-cols-* לא עובד כמצופה בלי class grid שמפעיל display:grid.",
+    "❌ gap-4 הוא תקין ומוסיף רווחים בין תאים.",
+    "❌ div לילדים הוא שימוש רגיל ב-Grid.",
+    "❌ md:grid-cols-2 הוא variant תקין אם parent הוא grid.",
+  ],
+  mc_l25_flex_001: [
+    "✅ נכון. Flex מסדר ילדים על main axis אחד, row או column.",
+    "❌ Flex הוא CSS layout, לא מסד נתונים.",
+    "❌ display:flex לא מוחק padding.",
+    "❌ useEffect הוא hook של React, לא תוצאה של Flexbox.",
+  ],
+  mc_l25_flex_002: [
+    "✅ נכון. זה המתכון הקלאסי ל-navbar: שורה, מרכוז וקצוות.",
+    "❌ Grid יכול לבנות navbar, אבל זו לא התבנית הפשוטה שנשאלה.",
+    "❌ hidden md:block שולט בהצגה, לא בסידור לוגו וקישורים.",
+    "❌ padding ופינות לא מפזרים את הילדים לקצוות.",
+  ],
+  mc_l25_flex_003: [
+    "✅ נכון. ב-flex-col הציר הראשי אנכי והציר המשני אופקי.",
+    "❌ שניהם עדיין עובדים, רק על צירים שונים.",
+    "❌ items-center לא נעול לגובה; ב-flex-col הוא שולט בציר האופקי.",
+    "❌ justify-center אינו קשור ל-grid-template-columns.",
+  ],
+
+  // ============== SVCollege Release Blocker — AI Development Tools ==============
+  mc_ai_dev_cursor_001: [
+    "✅ נכון. Cmd+K מתאים לעריכה מקומית וממוקדת בקובץ הפעיל.",
+    "❌ מחיקת repo היא פעולה מסוכנת ולא תרחיש לשימוש רגיל ב-Cursor.",
+    "❌ Cursor לא מחליף Git; הוא יכול לסייע בכתיבה וב-review.",
+    "❌ פריסה בלי בדיקות היא גבול שצריך לחסום, לא שימוש נכון.",
+  ],
+  mc_ai_dev_cursor_002: [
+    "✅ נכון. .cursorrules נותן ל-Cursor כללי פרויקט קבועים.",
+    "❌ package.json מגדיר scripts ותלויות; .cursorrules לא מחליף אותו.",
+    "❌ אסור לשמור סודות בקובץ כללים שנכנס ל-repo.",
+    "❌ הקובץ לא מפעיל build אוטומטי בכל הקלדה.",
+  ],
+  mc_ai_dev_cursor_003: [
+    "✅ נכון. בלי diff review אפשר לקבל שינוי לא קשור או שבירת contract.",
+    "❌ AI לא מבטיח שיפור ביצועים; צריך למדוד.",
+    "❌ autocomplete לא שובר HTML מעצם קיומו; הסיכון הוא שינוי לא מבוקר ב-diff.",
+    "❌ Git ממשיך לשמור היסטוריה; הבעיה היא איכות השינוי.",
+  ],
+  mc_ai_dev_windsurf_001: [
+    "✅ נכון. Cascade הוא agent loop עם תכנון, tools, diff והרצה.",
+    "❌ Windsurf אינו ספריית CSS ל-Grid.",
+    "❌ vector DB הוא רכיב AI אחר; לא ההגדרה של Windsurf Cascade.",
+    "❌ פקודת git אחת לא מחליפה review ותהליך agentic.",
+  ],
+  mc_ai_dev_windsurf_002: [
+    "✅ נכון. Windsurf מתאים למשימה רב-קבצית עם הרצת בדיקות.",
+    "❌ צבע לכפתור אחד הוא שינוי קטן שאפשר לעשות ידנית או inline edit.",
+    "❌ בדיקת משתנה יחיד אינה מנצלת agent loop רב-שלבי.",
+    "❌ H1 סטטי הוא שינוי זעיר, לא משימת Windsurf חזקה.",
+  ],
+  mc_ai_dev_windsurf_003: [
+    "✅ נכון. סוכן יכול לערוך הרבה קבצים, ולכן חובה לשלוט ב-scope ולקרוא diff.",
+    "❌ אישור כתיבה לא קשור ליכולת עברית.",
+    "❌ לא כל tool call שגוי; הבעיה היא blast radius בלי פיקוח.",
+    "❌ מותר להריץ בדיקות; זה חלק בריא מה-loop.",
+  ],
+  mc_ai_dev_prompt_001: [
+    "✅ נכון. Prompt חזק צריך מטרה, הקשר, מגבלות וקריטריוני קבלה.",
+    "❌ ניסוח רגשי לא מוסיף scope, constraints או בדיקה שאפשר להריץ.",
+    "❌ צבע Tailwind לא עוזר לתקן באג אם לא הוגדר הקובץ והמצב הצפוי.",
+    "❌ מזהה מספרי בלי הקשר לא נותן למודל קריטריון הצלחה.",
+  ],
+  mc_ai_dev_prompt_002: [
+    "✅ נכון. זה prompt עם scope, constraints, contract ושער בדיקות.",
+    "❌ בקשה רחבה בלי קובץ או contract תגרום ל-drift ותיקונים לא קשורים.",
+    "❌ יופי קוד לא מגדיר behavior, acceptance criteria או בדיקה.",
+    "❌ ויתור על scope/reviewer מעביר ownership לכלי במקום למפתח.",
+  ],
+  mc_ai_dev_prompt_003: [
+    "✅ נכון. Constraints ודוגמאות נגדיות מונעים פתרון שנשמע טוב אבל מפר כלל.",
+    "❌ הארכת תשובה אינה מטרה; דיוק הגבולות הוא המטרה.",
+    "❌ prompt טוב לא מדלג על בדיקות, הוא דורש אותן.",
+    "❌ manual review עדיין נדרש גם עם prompt טוב.",
+  ],
+  mc_ai_dev_review_001: [
+    "✅ נכון. Review מחפש סיכונים התנהגותיים: לוגיקה, אבטחה, contracts, בדיקות ו-edge cases.",
+    "❌ מספר השורות לא אומר אם השינוי בטוח.",
+    "❌ צבעי Tailwind הם רק חלק קטן ולא עיקר review.",
+    "❌ emoji לא מודד איכות או בטיחות קוד.",
+  ],
+  mc_ai_dev_review_002: [
+    "✅ נכון. זו הוראה ממוקדת ל-review של diff מול דרישה, בלי שינוי לא מבוקר.",
+    "❌ כתיבה מחדש של כל הקוד מגדילה סיכון ו-scope.",
+    "❌ בדיקות ירוקות לא מוכיחות שאין בעיית product/security.",
+    "❌ התעלמות מטסטים מפספסת regression coverage.",
+  ],
+  mc_ai_dev_review_003: [
+    "✅ נכון. בעל הקוד אחראי ל-production ולהקשר העסקי, גם אם AI עזר לבדוק.",
+    "❌ AI יכול לקרוא diff, אבל זה לא שווה אחריות אנושית.",
+    "❌ AI review יכול להתייחס ליותר מ-formatting; האחריות האנושית עדיין נדרשת.",
+    "❌ review אנושי אינו אסור; הוא הכרחי במערכות אמיתיות.",
+  ],
 };
 
 // Export to global scope

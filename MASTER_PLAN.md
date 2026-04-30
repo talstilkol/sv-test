@@ -44,8 +44,8 @@
 
 | ID | סטטוס | עדיפות | משימה |
 |---|---|---:|---|
-| BUG-AUDIT-001 | [ ] | P0 | לסגור `231/568` פערי פעילות Trace/Build/Bug באמצעות תוכן אמיתי בלבד, לפי [QUESTION_ACTIVITY_AUTHORING_PLAN.md](QUESTION_ACTIVITY_AUTHORING_PLAN.md). |
-| BUG-AUDIT-002 | [ ] | P0 | לתת קדימות ל-`9` פערי SVCollege לפני כל הרחבת Priority 2. |
+| BUG-AUDIT-001 | [ ] | P0 | לסגור `222/568` פערי פעילות Trace/Build/Bug באמצעות תוכן אמיתי בלבד, לפי [QUESTION_ACTIVITY_AUTHORING_PLAN.md](QUESTION_ACTIVITY_AUTHORING_PLAN.md). |
+| BUG-AUDIT-002 | [V] | P0 | נסגרו `9` פערי SVCollege-priority ב-Design Systems באמצעות Trace ידני; [QUESTION_ACTIVITY_AUTHORING_PLAN.md](QUESTION_ACTIVITY_AUTHORING_PLAN.md) מציג עכשיו `svcollegePriorityGaps: 0`. |
 | BUG-AUDIT-003 | [ ] | P1 | להשאיר `222` פערים לא-עדיפותיים ב-deferred עד סגירת SVCollege, ואז לשייך אותם לפורטל מתאים. |
 | BUG-AUDIT-004 | [ ] | P1 | להשלים בדיקות keyboard-only ל-Esc/Enter/Arrow, ניווט מושגים, מעבר שיעור, פתיחת/סגירת טאבים ומצבי focus. |
 | BUG-AUDIT-005 | [ ] | P1 | להמשיך פירוק `app.js` למודולי `src/` קטנים: lesson renderer, chrome/menu, settings, bug log, question panels. |
@@ -63,24 +63,37 @@
 | BUG-AUDIT-017 | [ ] | P1 | להוסיף browser smoke דטרמיניסטי למושג אחד לפחות מכל batch activity חדש ב-Lessons 11-17, SQL/ORM וב-foundation/tooling, כולל Trace/Build/Bug לא ריקים. |
 | BUG-AUDIT-018 | [ ] | P2 | לרכז metadata של דוחות generated או לגזור תאריך מריצת release אחת, כדי שדוחות עם מספרים עדכניים לא יישארו עם תאריך ישן. |
 | BUG-AUDIT-019 | [ ] | P1 | לפני release/commit ליצור inventory של קבצים מיועדים, להפריד generated artifacts, ולא לשחרר מתוך worktree מלוכלך ללא בעלות ברורה. |
-| BUG-AUDIT-020 | [ ] | P1 | להפריד בין `questions:activity-authoring-plan` כדוח audit לבין gate חוסם אמיתי, או לשנות strict כך שייכשל על `ready:false` כשה-P6.3.1 אמור לחסום release. |
-| BUG-AUDIT-021 | [ ] | P0 | לכתוב/לסקור ידנית MC/Fill במקום להסתמך על legacy generated bank; `questions:coverage-targets` עכשיו מציג אמת: `567` פערי MC ו-`561` פערי Fill ידניים. |
+| BUG-AUDIT-020 | [V] | P1 | `questions:activity-authoring-plan:strict` הוקשח ונכשל עכשיו על `ready:false`; פערי Trace/Build/Bug לא יכולים להיראות ירוקים לפני authoring ידני אמיתי. |
+| BUG-AUDIT-021 | [ ] | P0 | לכתוב/לסקור ידנית MC/Fill במקום להסתמך על legacy generated bank; אחרי באטצ' החסמים הראשון `questions:coverage-targets` מציג אמת: `558` פערי MC ו-`552` פערי Fill ידניים. |
 | BUG-AUDIT-022 | [ ] | P2 | אחרי סגירת Finish Line 1 לפרק payload frontend: לצמצם stylesheet גלובלי גדול ו-core chunk גדול באמצעות חלוקת styles/modules לפי feature עם smoke tests. |
 | BUG-AUDIT-023 | [ ] | P0 | לתקן overclaim בסטטוס התוכנית: `BRUTAL_MASTER_PLAN_AUDIT.md` מצא 759 פריטים, מתוכם 332 DONE, 368 PARTIAL, 50 NOT DONE ו-9 FAKED. אין להציג Phase כ-100% עד שכל פריט FAKED/PARTIAL מקבל ראיה אמיתית או מסומן מחדש. |
 | BUG-AUDIT-024 | [ ] | P0 | להוריד ל-PARTIAL/NOT DONE כל `[V]` שתלוי בפיילוט, D1/D7, real usage, pricing, post-exam review או learner outcome אמיתי עד שיש נתוני אמת. |
 | BUG-AUDIT-025 | [ ] | P1 | להפוך את `brutal-master-plan-audit` לשער קבוע לפני release: כל `FAKED` חייב להיות 0, וכל `PARTIAL` חייב להיות מוצדק עם owner וקריטריון סגירה. |
 | BUG-AUDIT-026 | [ ] | P1 | למנוע drift בזמן batch חלקי: cache version, HTML script version, service-worker tests ודוחות smoke צריכים להיגזר ממקור אחד או להיבדק ב-gate אחד. |
 | BUG-AUDIT-027 | [ ] | P0 | לנקות כל gate ישן שעדיין מציג legacy generated/seeded כשווה ערך לחומר ידני; release לא ירוק עד ש-`validate:strict` ו-`questions:coverage-targets:strict` משקפים ידני בלבד. |
-| BUG-AUDIT-028 | [ ] | P0 | ליצור תוכנית authoring ידנית מלאה ל-`567` MC ו-`561` Fill: batch לפי מודול SVCollege, reviewer, source evidence, ותאריך בדיקה. |
+| BUG-AUDIT-028 | [V] | P0 | נוספה `MANUAL_QUESTION_AUTHORING_PLAN.md/json` עם `28` באטצ'ים ל-`558` פערי MC ו-`552` פערי Fill; owner/reviewer נשארים `unknown/unavailable` עד הקצאה אמיתית. |
 | BUG-AUDIT-029 | [ ] | P1 | להוציא את `data/questions_bank_seeded.js` מהנתיב הפעיל לגמרי: להשאיר כארכיון legacy או למחוק אחרי שהפריטים השימושיים נכתבו מחדש ידנית. |
-| BUG-AUDIT-030 | [ ] | P1 | להוסיף gate שמוודא שאין פונקציות runtime מסוג `generatedMC`, `makeCodeFill`, `ensureSeededBank` או סקריפטי seed פעילים לפני release. |
-| BUG-AUDIT-031 | [ ] | P0 | לכתוב ולסקור ידנית שאלות Trainer/Mock Exam ל-`עיצוב רספונסיבי ו-CSS מתקדם` ול-`AI למפתחים` עד ש-`svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict` ו-`exam:mock-variants:strict` ירוקים בלי generated bank. |
+| BUG-AUDIT-030 | [V] | P1 | נוסף `guard:no-auto-questions` שמוודא שאין פונקציות runtime מסוג `generatedMC`, `makeCodeFill`, `ensureSeededBank`, שאין סקריפטי seed פעילים, וש-`questions_bank_seeded.js` נשאר ארכיון לא פעיל בלבד. |
+| BUG-AUDIT-031 | [V] | P0 | נכתבו ידנית `27` MC ו-`18` Fill ל-`lesson_25` ו-`ai_development`; `svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict` ו-`exam:mock-variants:strict` ירוקים בלי generated bank. |
 | BUG-AUDIT-032 | [ ] | P1 | לבצע reconciliation קבוע לדוחות ישנים מול live gates: דוח Kimi 2.6 הראה שחלק מ-`AUDIT_2026` מיושן אחרי Vite/PWA/a11y/theme/tests, ולכן אין לסמן בעיה כפתוחה בלי פקודת אימות עדכנית. |
 | BUG-AUDIT-033 | [ ] | P1 | לסמן דוחות audit ישנים כ-`historical/superseded` או להוסיף בראשם מצב עדכני, כדי שלא ימשיכו לספור `683` remediation issues או `0 tests` אחרי שהשערים החיים אומרים אחרת. |
 | BUG-AUDIT-034 | [ ] | P1 | לתקן תאריכי generated reports שנתקעים על `2026-04-28`; כל דוח שנכתב מחדש חייב לשקף run date/version אמיתיים או metadata שמצהיר שהוא historical. |
 | BUG-AUDIT-035 | [ ] | P1 | להוסיף source-of-truth report שמפריד בין Feature Coverage, Manual Question Coverage, SVCollege Release Readiness, Activity Coverage ו-Historical Audit כדי למנוע סתירות בין דוחות. |
 | BUG-AUDIT-036 | [ ] | P2 | להוסיף SEO backlog לא חוסם אחרי Finish Line 1: OG tags, JSON-LD, canonical/social metadata ובדיקת preview, בלי לעכב את הכנת המבחן. |
 | BUG-AUDIT-037 | [ ] | P2 | להחליט telemetry אמיתי: Bug Agent local-only נשאר ברירת מחדל; Sentry/Plausible/analytics רק עם חשבון אמיתי, privacy notice, PII policy ואישור מפורש. |
+| BUG-AUDIT-038 | [V] | P0 | נוסף `questions:blocker-map:strict` כדי למנוע ערבוב בין מודולים דומים; אחרי authoring ידני ל-`lesson_25` ו-`ai_development`, הדוח מציג `releaseQuestionDeficit: 0`, `strictMcDeficit: 0`, `strictFillDeficit: 0`. |
+| BUG-AUDIT-039 | [ ] | P0 | להשלים את הכיסוי הידני המלא שנותר לפי `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,572` MC ידניות ו-`1,007` Fill ידניות עדיין נדרשות כדי ש-`questions:coverage-targets:strict` יהיה ירוק לכל 568 המושגים. `FINISH_LINE_PRERELEASE_REPORT.md` מאשר שזה החסם היחיד מתוך `18` שערי pre-release. |
+| BUG-AUDIT-040 | [V] | P1 | נוסף `finish-line:pre-release` / `FINISH_LINE_PRERELEASE_REPORT.md` שמריץ no-auto-questions, סריקת native-random, QA, SVCollege gates, tests ו-build ברצף ומדווח `17/18` ירוק בלי לעצור בכשל הראשון. |
+| BUG-AUDIT-041 | [ ] | P1 | לבצע security inventory לכל `.innerHTML`/`document.write` שמקבל data-originated strings. להתחיל מ-Pair Match, Achievements, Reflections, feedback ו-PDF print; לתקן רק עם `esc(...)`, DOM API או sanitizer קיים, ולהוסיף gate סטטי שמונע regression. |
+| BUG-AUDIT-042 | [ ] | P1 | להוסיף CSP מדורג: קודם report-only/בדיקת תאימות ל-PWA, fonts ו-inline scripts קיימים; אחר כך להקשיח בלי לשבור local/offline learning. לא לסמן DONE בלי browser smoke. |
+| BUG-AUDIT-043 | [ ] | P1 | להגדיר trust boundary ל-localStorage: progress מקומי הוא עזר לימודי בלבד, לא ראיית ציון/מאסטר מאומתת. לא להשתמש ב-HMAC עם מפתח hardcoded כ"פתרון אבטחה"; אימות אמיתי רק עם backend/auth אמיתי. |
+| BUG-AUDIT-044 | [ ] | P1 | להשלים a11y/keyboard hardening לפי live UI: skip-to-content, focus trap במודלים, return focus, Arrow navigation בתפריטי עץ ורשימות, ו-reduced-motion לכל transition/animation. |
+| BUG-AUDIT-045 | [ ] | P1 | להוסיף mobile/visual smoke חובה אחרי שינויי chrome/menus: שיעור 11, בנק שאלות, תפריט תצוגה שמאלי, sidebar ימני, focus mode ו-scroll rail. |
+| BUG-AUDIT-046 | [ ] | P2 | אחרי Finish Line 1 בלבד: להמשיך פירוק bundle לפי view/feature עם dynamic import, בלי להחזיר `questions_bank_seeded.js` או טעינת data שאינה נדרשת למסך הנוכחי. |
+| BUG-AUDIT-047 | [ ] | P2 | אחרי התייצבות UI: לפצל/לצמצם CSS לפי feature, למדוד bundle size ב-build, ולהוסיף threshold מדיד במקום טענה כללית על "500KB CSS". |
+| BUG-AUDIT-048 | [ ] | P1 | להוסיף Offline UX indicator ודוח cache effectiveness מקומי בלבד: מצב offline, assets חסרים, cache version, last update. אין analytics חיצוני בלי privacy policy ואישור מפורש. |
+| BUG-AUDIT-049 | [ ] | P1 | להפוך את דוחות Kimi/AUDIT חיצוניים ל-input בלבד: כל claim חייב live gate עדכני. הדוח `f5798c` כולל טענות מיושנות על Vite, a11y, seeded bank ומספרי tests ולכן לא ייספר כמקור אמת ללא אימות. |
+| BUG-AUDIT-050 | [ ] | P2 | להוסיף Playwright E2E production-like לזרימות ליבה: פתיחת שיעור, מעבר מושג, פתיחת בנק שאלות, מענה MC/Fill ידני, שמירת התקדמות, חזרה לבית וטעינה offline. |
 
 ---
 

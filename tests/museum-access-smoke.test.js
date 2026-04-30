@@ -1,14 +1,14 @@
 const museumAccessSmoke = require("../scripts/report_museum_access_smoke.js");
 
 describe("museum access smoke", () => {
-  it("keeps museum locks separate while exposing SVCollege manual-practice blockers", () => {
+  it("keeps museum locks separate while SVCollege manual-practice blockers are closed", () => {
     const first = museumAccessSmoke.buildReport();
     const second = museumAccessSmoke.buildReport();
 
     expect(second).toEqual(first);
     expect(first.reportVersion).toBe("museum-access-smoke-v1");
-    expect(first.summary.ready).toBe(false);
-    expect(first.summary.failed).toBeGreaterThan(0);
+    expect(first.summary.ready).toBe(true);
+    expect(first.summary.failed).toBe(0);
     expect(first.checks.map((check) => check.id)).toEqual([
       "museum-xp-gates-present",
       "museum-tabs-present",

@@ -24,17 +24,14 @@ describe("SVCollege practice feedback and repair loop", () => {
     const report = tabMatrix.buildReport();
     const app = read("app.js");
 
-    expect(report.summary.ready).toBe(false);
+    expect(report.summary.ready).toBe(true);
     expect(report.modules).toHaveLength(15);
     report.modules.forEach((module) => {
       expect(module.counts.prereq).toBeGreaterThan(0);
       expect(module.cells.find((cell) => cell.id === "studyMode").passed).toBe(true);
       expect(module.cells.find((cell) => cell.id === "prerequisites").passed).toBe(true);
     });
-    expect(report.strictGaps).toEqual(expect.arrayContaining([
-      "עיצוב רספונסיבי ו-CSS מתקדם::trainer",
-      "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI::trainer",
-    ]));
+    expect(report.strictGaps).toEqual([]);
 
     expect(app).toContain("function schedulePrerequisiteRewindForRecord(record)");
     expect(app).toContain("function startWrongAnswerRecovery(record)");

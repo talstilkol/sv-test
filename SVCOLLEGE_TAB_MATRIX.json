@@ -68,20 +68,15 @@
     "modules": 15,
     "strictTabs": 15,
     "strictCells": 225,
-    "passedCells": 221,
-    "strictCoverage": 98.2,
-    "strictGaps": 4,
+    "passedCells": 225,
+    "strictCoverage": 100,
+    "strictGaps": 0,
     "supportTabs": 7,
     "supportPassed": 7,
     "supportGaps": 0,
-    "ready": false
+    "ready": true
   },
-  "strictGaps": [
-    "עיצוב רספונסיבי ו-CSS מתקדם::trainer",
-    "עיצוב רספונסיבי ו-CSS מתקדם::mockExam",
-    "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI::trainer",
-    "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI::mockExam"
-  ],
+  "strictGaps": [],
   "supportGaps": [],
   "supportTabs": [
     {
@@ -138,8 +133,8 @@
       "counts": {
         "lessons": 2,
         "concepts": 7,
-        "mc": 11,
-        "fill": 8,
+        "mc": 26,
+        "fill": 18,
         "trace": 7,
         "bug": 1,
         "build": 2,
@@ -182,7 +177,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 19
+          "metric": 44
         },
         {
           "id": "flashcards",
@@ -194,7 +189,7 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 19
+          "metric": 44
         },
         {
           "id": "codeTrace",
@@ -251,8 +246,8 @@
       "counts": {
         "lessons": 1,
         "concepts": 5,
-        "mc": 0,
-        "fill": 0,
+        "mc": 15,
+        "fill": 10,
         "trace": 5,
         "bug": 1,
         "build": 1,
@@ -294,8 +289,8 @@
         {
           "id": "trainer",
           "label": "מאמן",
-          "passed": false,
-          "metric": 0
+          "passed": true,
+          "metric": 25
         },
         {
           "id": "flashcards",
@@ -306,8 +301,8 @@
         {
           "id": "mockExam",
           "label": "מבחן",
-          "passed": false,
-          "metric": 0
+          "passed": true,
+          "metric": 25
         },
         {
           "id": "codeTrace",
@@ -352,11 +347,8 @@
           "metric": 1
         }
       ],
-      "coverage": 86.7,
-      "gaps": [
-        "trainer",
-        "mockExam"
-      ]
+      "coverage": 100,
+      "gaps": []
     },
     {
       "title": "JavaScript בסיסי ודינמיקה בדפדפן",
@@ -944,8 +936,8 @@
       "counts": {
         "lessons": 5,
         "concepts": 5,
-        "mc": 19,
-        "fill": 11,
+        "mc": 34,
+        "fill": 21,
         "trace": 25,
         "bug": 11,
         "build": 14,
@@ -988,7 +980,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 30
+          "metric": 55
         },
         {
           "id": "flashcards",
@@ -1000,7 +992,7 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 30
+          "metric": 55
         },
         {
           "id": "codeTrace",
@@ -1173,8 +1165,8 @@
       "counts": {
         "lessons": 3,
         "concepts": 14,
-        "mc": 18,
-        "fill": 13,
+        "mc": 33,
+        "fill": 23,
         "trace": 7,
         "bug": 3,
         "build": 3,
@@ -1217,7 +1209,7 @@
           "id": "trainer",
           "label": "מאמן",
           "passed": true,
-          "metric": 31
+          "metric": 56
         },
         {
           "id": "flashcards",
@@ -1229,7 +1221,7 @@
           "id": "mockExam",
           "label": "מבחן",
           "passed": true,
-          "metric": 31
+          "metric": 56
         },
         {
           "id": "codeTrace",
@@ -1626,8 +1618,8 @@
       "counts": {
         "lessons": 1,
         "concepts": 4,
-        "mc": 0,
-        "fill": 0,
+        "mc": 12,
+        "fill": 8,
         "trace": 1,
         "bug": 1,
         "build": 1,
@@ -1669,8 +1661,8 @@
         {
           "id": "trainer",
           "label": "מאמן",
-          "passed": false,
-          "metric": 0
+          "passed": true,
+          "metric": 20
         },
         {
           "id": "flashcards",
@@ -1681,8 +1673,8 @@
         {
           "id": "mockExam",
           "label": "מבחן",
-          "passed": false,
-          "metric": 0
+          "passed": true,
+          "metric": 20
         },
         {
           "id": "codeTrace",
@@ -1727,11 +1719,8 @@
           "metric": 1
         }
       ],
-      "coverage": 86.7,
-      "gaps": [
-        "trainer",
-        "mockExam"
-      ]
+      "coverage": 100,
+      "gaps": []
     },
     {
       "title": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",

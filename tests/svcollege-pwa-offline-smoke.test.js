@@ -28,8 +28,8 @@ describe("SVCollege PWA offline smoke", () => {
     const assets = pwaOfflineSmoke.buildReport().assetResults.map((asset) => asset.asset);
 
     expect(assets).toEqual(expect.arrayContaining([
-      "/style.css?v=concept-sprint-v68",
-      "/app.js?v=concept-sprint-v68",
+      "/style.css?v=concept-sprint-v69",
+      "/app.js?v=concept-sprint-v69",
       "/src/main.js?v=core-bootstrap-v2",
       "/src/core/question-prerequisites.js?v=question-prereq-v2",
       "/src/core/outcome-loop.js",

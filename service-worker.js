@@ -2,7 +2,7 @@
 // Caches the app shell + primary lessons for offline use.
 // Cache strategy: cache-first for static assets, network-first for HTML.
 
-const CACHE_VERSION = "lumen-v2.4.129";
+const CACHE_VERSION = "lumen-v2.4.130";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 // Resources that MUST be available offline (the App Shell + core data)
@@ -11,9 +11,9 @@ const SHELL_ASSETS = [
   "/index.html",
   "/manifest.json",
   "/style.css",
-  "/style.css?v=concept-sprint-v68",
+  "/style.css?v=concept-sprint-v69",
   "/app.js",
-  "/app.js?v=concept-sprint-v68",
+  "/app.js?v=concept-sprint-v69",
   "/content-loader.js",
   "/content-loader.js?v=content-validation-v1",
   "/src/main.js",

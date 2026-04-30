@@ -5,9 +5,9 @@ Date: 2026-04-30
 ## Summary
 
 - Ready: no
-- Activity-ready concepts: 337/568
-- Activity gaps: 231
-- Source mix: 326 Trace · 43 Mini Build · 33 Bug Hunt
+- Activity-ready concepts: 346/568
+- Activity gaps: 222
+- Source mix: 335 Trace · 43 Mini Build · 33 Bug Hunt
 
 ## Policy
 

@@ -1,0 +1,313 @@
+{
+  "reportVersion": "finish-line-prerelease-v1",
+  "date": "2026-04-30",
+  "policy": {
+    "manualQuestionsOnly": true,
+    "generatesQuestions": false,
+    "noFakeData": true,
+    "noNativeRandom": true,
+    "continueAfterFailure": true
+  },
+  "summary": {
+    "execute": true,
+    "checks": 18,
+    "passed": 17,
+    "failed": 1,
+    "notRun": 0,
+    "ready": false
+  },
+  "checks": [
+    {
+      "id": "no-native-random-scan",
+      "label": "No native random API in active source",
+      "commandText": "internal active-source scan",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "No native random API token found.",
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "id": "guard-no-auto-questions",
+      "label": "No automatic question generation",
+      "command": "npm",
+      "args": [
+        "run",
+        "guard:no-auto-questions"
+      ],
+      "commandText": "npm run guard:no-auto-questions",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 guard:no-auto-questions\n> node scripts/report_no_auto_question_generation.js --strict --summary\n\n{\n  \"checks\": 5,\n  \"passed\": 5,\n  \"failed\": 0,\n  \"ready\": true\n}",
+      "stderr": ""
+    },
+    {
+      "id": "validate-strict",
+      "label": "Question bank strict validation",
+      "command": "npm",
+      "args": [
+        "run",
+        "validate:strict"
+      ],
+      "commandText": "npm run validate:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 validate:strict\n> node scripts/validate_bank.js --strict\n\n📦 Loading data files...\n🔒 STRICT mode — warnings, boilerplate, and missing-difficulty are errors.\n   29 lessons · Curated bank: 132 MC + 129 Fill + 335 Trace + 33 Bug + 43 Build · Generated/seeded archives not loaded · 22 guide topics.\n\n🔍 Validating curated bank...\n✅ No errors.\n\n✅ No boilerplate content detected.\n\n📊 Coverage (manual curated only):\n   Total concepts: 568\n   Total manual bank: 132 MC + 129 Fill = 261\n   Generated/seeded archives are not loaded by this validator\n   Concepts still needing more questions: 559/568\n      50 - חזרה וסיכום JavaScript\n      38 - שיעור 17 - HTTP, Express, REST API\n      32 - שיעור 13 - Objects, DOM, Classes & Storage\n      30 - Database, MongoDB, Mongoose\n      30 - שיעור 26 — TypeScript + React+TS\n      28 - שיעור 11 - Arrays, Functions, and Scope\n      27 - שיעור 16 - Node.js, npm, Modules, File System\n      23 - שיעור 21 — React בסיסי\n      21 - שיעור 23 — Router, Context API\n      20 - שיעור 27 — שיעורי בית TS + Budget Manager\n      19 - AI Engineering - OpenAI, Vercel AI SDK, RAG ו-Agents\n      19 - Auth & Security - אימות, הרשאות וגבולות אבטחה\n      18 - שיעור 15 - Errors, Closure, Async, Promise, Fetch\n      18 - שיעור 22 — useState, Immutable State\n      18 - Next.js Full-Stack - Routing, SSR, API ו-SEO\n      17 - DevOps Foundations - Vercel, Docker, CI/CD ו-Testing\n      17 - SQL/PostgreSQL/ORM - בסיסי נתונים רלציוניים\n      16 - שיעור 24 — useEffect, useMemo, useRef\n      16 - Nest.js Bridge - Modules, Controllers, Providers ו-DI\n      12 - שיעור 12 - תרגול מתודות מערך",
+      "stderr": ""
+    },
+    {
+      "id": "qa-questions-strict",
+      "label": "Question QA strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "qa:questions:strict"
+      ],
+      "commandText": "npm run qa:questions:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 qa:questions:strict\n> node scripts/build_question_qa_checklist.js --strict --summary\n\n{\n  \"reportVersion\": \"question-qa-checklist-v2\",\n  \"date\": \"2026-04-30\",\n  \"policy\": {\n    \"deterministic\": true,\n    \"sampleRatio\": 0.1,\n    \"manualReviewRequired\": true,\n    \"noFakeData\": true,\n    \"svcollegePrerequisiteGate\": true\n  },\n  \"summary\": {\n    \"totalQuestions\": 261,\n    \"sampleRatio\": 0.1,\n    \"sampleSize\": 27,\n    \"mc\": 12,\n    \"fill\": 15,\n    \"manual\": 27\n  },\n  \"gates\": {\n    \"svcollegePrerequisites\": {\n      \"totalQuestions\": 259,\n      \"hardQuestions\": 240,\n      \"complexConceptQuestions\": 256,\n      \"questionsRequiringAid\": 257,\n      \"questionsWithIssues\": 0,\n      \"totalIssues\": 0,\n      \"issueCounts\": {\n        \"missingPrerequisites\": 0,\n        \"missingGlossaryTerms\": 0,\n        \"hardQuestionWithoutAid\": 0,\n        \"repeatedLowSignalExplanation\": 0\n      },\n      \"ready\": true\n    }\n  }\n}",
+      "stderr": ""
+    },
+    {
+      "id": "quality-questions-strict",
+      "label": "Question quality strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "quality:questions:strict"
+      ],
+      "commandText": "npm run quality:questions:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 quality:questions:strict\n> node scripts/report_question_quality.js --strict\n\n# Question Quality Report — 2026-04-30\n\nFull-bank deterministic QA for MC and Fill questions. This report creates a `questionQuality` object for every question id and a remediation queue for warnings and notes.\n\n## Summary\n\n- Total questions: 261\n- Mix: 132 MC, 129 Fill\n- Source mix: 261 manual\n- Clean: 261\n- Notes only: 0\n- Warning questions: 0\n- Blocker questions: 0\n- Issue counts: 0 blockers, 0 warnings, 0 notes\n- Question Quality Index: 100% warning-free\n\n## Gates Covered\n\n- MC: duplicate options, near-duplicate distractors, length-cue risk, generic wording, missing explanation, missing conceptKey.\n- Fill: blank count, missing answer/code/explanation/hint, visible answer leakage, one-character ambiguity, missing conceptKey.\n\n## Remediation Queue\n\nShowing first 0 of 0 queued issues.\n\n| # | Severity | Code | ID | Kind | Source | Concept | Message |\n|---:|---|---|---|---|---|---|---|\n\n## Strict Policy\n\n- `--strict` fails only on blocker-level issues.\n- Warnings and notes are review/remediation work; they are intentionally visible but non-blocking until promoted by policy.",
+      "stderr": ""
+    },
+    {
+      "id": "questions-blocker-map-strict",
+      "label": "Manual blocker map strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "questions:blocker-map:strict"
+      ],
+      "commandText": "npm run questions:blocker-map:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 questions:blocker-map:strict\n> node scripts/report_manual_question_blocker_map.js --strict --summary\n\n{\n  \"releaseBlockers\": 0,\n  \"targetModules\": 2,\n  \"mappedTargetModules\": 2,\n  \"conceptCount\": 9,\n  \"releaseQuestionDeficit\": 0,\n  \"strictMcDeficit\": 0,\n  \"strictFillDeficit\": 0,\n  \"missingCoverageRows\": 0,\n  \"mappingReady\": true\n}",
+      "stderr": ""
+    },
+    {
+      "id": "questions-coverage-targets-strict",
+      "label": "Manual question coverage target strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "questions:coverage-targets:strict"
+      ],
+      "commandText": "npm run questions:coverage-targets:strict",
+      "status": "fail",
+      "passed": false,
+      "exitCode": 1,
+      "detail": "  \"handCuratedMcPromotionBacklog\": 558, |   \"handCuratedFillPromotionBacklog\": 552 | }",
+      "stdout": "> lumen-portal@2.1.0 questions:coverage-targets:strict\n> node scripts/report_question_coverage_targets.js --strict --summary\n\n{\n  \"ready\": false,\n  \"totalConcepts\": 568,\n  \"mcGapCount\": 558,\n  \"fillGapCount\": 552,\n  \"handCuratedMcPromotionBacklog\": 558,\n  \"handCuratedFillPromotionBacklog\": 552\n}",
+      "stderr": ""
+    },
+    {
+      "id": "questions-reuse-audit-strict",
+      "label": "Question reuse audit strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "questions:reuse-audit:strict"
+      ],
+      "commandText": "npm run questions:reuse-audit:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 questions:reuse-audit:strict\n> node scripts/report_question_reuse_audit.js --strict --summary\n\n{\n  \"questions\": 917,\n  \"conceptTags\": 376,\n  \"missingConceptKey\": 0,\n  \"duplicateIdentityIssues\": 0,\n  \"profileContractChecks\": 9,\n  \"failedProfileContractChecks\": 0,\n  \"profileExports\": 0,\n  \"failedProfileExports\": 0,\n  \"legacyGeneratedFiltered\": 0,\n  \"ready\": true\n}",
+      "stderr": ""
+    },
+    {
+      "id": "svcollege-readiness-release",
+      "label": "SVCollege release readiness",
+      "command": "npm",
+      "args": [
+        "run",
+        "svcollege:readiness:release"
+      ],
+      "commandText": "npm run svcollege:readiness:release",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 svcollege:readiness:release\n> node scripts/report_svcollege_readiness.js --release-gate --summary\n\nSVCollege readiness: 100% average, 15/15 covered, 0 gaps.",
+      "stderr": ""
+    },
+    {
+      "id": "svcollege-tab-matrix-strict",
+      "label": "SVCollege tab matrix strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "svcollege:tab-matrix:strict"
+      ],
+      "commandText": "npm run svcollege:tab-matrix:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 svcollege:tab-matrix:strict\n> node scripts/report_svcollege_tab_matrix.js --strict --summary\n\nSVCollege tab matrix: 100% strict coverage, 0 strict gaps, 0 support gaps.",
+      "stderr": ""
+    },
+    {
+      "id": "svcollege-critical-flows-strict",
+      "label": "SVCollege critical flows strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "svcollege:critical-flows:strict"
+      ],
+      "commandText": "npm run svcollege:critical-flows:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 svcollege:critical-flows:strict\n> node scripts/report_svcollege_critical_flows.js --strict --summary\n\n{\n  \"flows\": 6,\n  \"passed\": 6,\n  \"failed\": 0,\n  \"modules\": 15,\n  \"ready\": true\n}",
+      "stderr": ""
+    },
+    {
+      "id": "svcollege-command-center-strict",
+      "label": "SVCollege command center strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "svcollege:command-center:strict"
+      ],
+      "commandText": "npm run svcollege:command-center:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 svcollege:command-center:strict\n> node scripts/report_svcollege_command_center.js --strict --summary\n\nSVCollege command center: 100% readiness, 0 blockers, 0 queued modules.",
+      "stderr": ""
+    },
+    {
+      "id": "svcollege-student-export-strict",
+      "label": "SVCollege student export strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "svcollege:student-export:strict"
+      ],
+      "commandText": "npm run svcollege:student-export:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 svcollege:student-export:strict\n> node scripts/export_svcollege_student_summary.js --strict --summary\n\n{\n  \"readyForExamPractice\": true,\n  \"blockers\": 0,\n  \"readinessAverage\": 100,\n  \"coveredModules\": 15,\n  \"totalModules\": 15,\n  \"tabCoverage\": 100,\n  \"tabCells\": \"225/225\",\n  \"weakestCriticalCounters\": {\n    \"totalConcepts\": 498,\n    \"withoutQuestions\": 129,\n    \"withoutHardQuestion\": 168,\n    \"withoutDefinition\": 0,\n    \"withoutPrerequisiteEntry\": 0,\n    \"codeConceptsWithoutProof\": 140\n  },\n  \"mockVariants\": 3,\n  \"flowSimulationPassed\": true\n}",
+      "stderr": ""
+    },
+    {
+      "id": "exam-mock-variants-strict",
+      "label": "SVCollege mock variants strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "exam:mock-variants:strict"
+      ],
+      "commandText": "npm run exam:mock-variants:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 exam:mock-variants:strict\n> node scripts/report_mock_exam_variants.js --strict --summary\n\n{\n  \"variants\": 3,\n  \"blockers\": 0,\n  \"blockerCodes\": [],\n  \"passed\": true\n}",
+      "stderr": ""
+    },
+    {
+      "id": "svcollege-console-gate-strict",
+      "label": "SVCollege console gate strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "svcollege:console-gate:strict"
+      ],
+      "commandText": "npm run svcollege:console-gate:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 svcollege:console-gate:strict\n> node scripts/report_svcollege_console_gate.js --strict --summary\n\n{\n  \"checks\": 5,\n  \"passed\": 5,\n  \"failed\": 0,\n  \"criticalFlows\": 6,\n  \"ready\": true\n}",
+      "stderr": ""
+    },
+    {
+      "id": "svcollege-pwa-offline-strict",
+      "label": "SVCollege PWA offline strict",
+      "command": "npm",
+      "args": [
+        "run",
+        "svcollege:pwa-offline:strict"
+      ],
+      "commandText": "npm run svcollege:pwa-offline:strict",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 svcollege:pwa-offline:strict\n> node scripts/report_svcollege_pwa_offline_smoke.js --strict --summary\n\n{\n  \"assets\": 181,\n  \"cachedAssets\": 181,\n  \"failedAssets\": 0,\n  \"strategyChecks\": 13,\n  \"failedStrategyChecks\": 0,\n  \"ready\": true\n}",
+      "stderr": ""
+    },
+    {
+      "id": "vitest-run",
+      "label": "Vitest full suite",
+      "command": "npm",
+      "args": [
+        "test",
+        "--",
+        "--run"
+      ],
+      "commandText": "npm test -- --run",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 test\n> vitest run --run\n\n\n RUN  v4.1.5 /Users/tal/.codex/worktrees/bd35/חומרים לשיעור\n\n\n Test Files  152 passed (152)\n      Tests  622 passed (622)\n   Start at  10:44:23\n   Duration  3.58s (transform 1.54s, setup 0ms, import 2.96s, tests 7.43s, environment 23.05s)",
+      "stderr": ""
+    },
+    {
+      "id": "vite-build",
+      "label": "Production build",
+      "command": "npm",
+      "args": [
+        "run",
+        "build"
+      ],
+      "commandText": "npm run build",
+      "status": "pass",
+      "passed": true,
+      "exitCode": 0,
+      "detail": "passed",
+      "stdout": "> lumen-portal@2.1.0 build\n> vite build\n\nvite v8.0.10 building client environment for production...\n\u001b[2K\rtransforming...✓ 36 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/assets/manifest-CB5kUCM5.json          1.12 kB │ gzip:  0.57 kB\ndist/index.html                           101.83 kB │ gzip: 20.44 kB\ndist/assets/index-DeULZ3L-.css            465.06 kB │ gzip: 75.83 kB\ndist/assets/rolldown-runtime-lhHHWwHU.js    0.15 kB │ gzip:  0.15 kB\ndist/assets/utils-DA3C9xv-.js               0.16 kB │ gzip:  0.14 kB\ndist/assets/views-DypBxYrn.js               1.15 kB │ gzip:  0.62 kB\ndist/assets/ui-C1wGTzuN.js                  1.54 kB │ gzip:  0.58 kB\ndist/assets/index-BVGR5Kgf.js               1.78 kB │ gzip:  0.96 kB\ndist/assets/core-hrllUkwp.js              141.36 kB │ gzip: 42.50 kB\n\n✓ built in 69ms",
+      "stderr": ""
+    }
+  ],
+  "blockers": [
+    {
+      "id": "questions-coverage-targets-strict",
+      "label": "Manual question coverage target strict",
+      "command": "npm run questions:coverage-targets:strict",
+      "detail": "  \"handCuratedMcPromotionBacklog\": 558, |   \"handCuratedFillPromotionBacklog\": 552 | }"
+    }
+  ]
+}

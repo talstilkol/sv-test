@@ -3,8 +3,8 @@
   "date": "2026-04-29",
   "target": "SVCollege question reuse by learner profile contract and concept tag",
   "summary": {
-    "questions": 863,
-    "conceptTags": 374,
+    "questions": 917,
+    "conceptTags": 376,
     "missingConceptKey": 0,
     "duplicateIdentityIssues": 0,
     "profileContractChecks": 9,
@@ -65,26 +65,56 @@
   "conceptBuckets": [
     {
       "conceptKey": "ai_development::AI Code Review",
-      "total": 2,
+      "total": 7,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "bug": 1,
         "build": 1
       },
       "sources": {
+        "curated": 5,
         "svcollege-curated": 2
       },
-      "maxLevel": 4
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "ai_development::Cursor",
+      "total": 5,
+      "kinds": {
+        "mc": 3,
+        "fill": 2
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 6
     },
     {
       "conceptKey": "ai_development::Prompt Engineering",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
+        "curated": 5,
         "svcollege-curated": 1
       },
-      "maxLevel": 4
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "ai_development::Windsurf",
+      "total": 5,
+      "kinds": {
+        "mc": 3,
+        "fill": 2
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::Array",
@@ -2477,38 +2507,44 @@
     },
     {
       "conceptKey": "lesson_25::flex",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 4
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_25::grid",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 4
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_25::responsive design",
-      "total": 2,
+      "total": 7,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1,
         "build": 1
       },
       "sources": {
-        "curated": 1,
+        "curated": 6,
         "svcollege-curated": 1
       },
-      "maxLevel": 5
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_25::rounded",
@@ -2523,25 +2559,29 @@
     },
     {
       "conceptKey": "lesson_25::Tailwind CSS",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "bug": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 4
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_25::utility classes",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_26::array type",
@@ -3323,37 +3363,40 @@
     },
     {
       "conceptKey": "lesson_design_systems::asChild slot",
-      "total": 2,
+      "total": 3,
       "kinds": {
         "mc": 1,
-        "fill": 1
+        "fill": 1,
+        "trace": 1
       },
       "sources": {
-        "svcollege-curated": 2
+        "svcollege-curated": 3
       },
       "maxLevel": 6
     },
     {
       "conceptKey": "lesson_design_systems::cn helper",
-      "total": 2,
+      "total": 3,
       "kinds": {
         "mc": 1,
-        "fill": 1
+        "fill": 1,
+        "trace": 1
       },
       "sources": {
-        "svcollege-curated": 2
+        "svcollege-curated": 3
       },
-      "maxLevel": 4
+      "maxLevel": 5
     },
     {
       "conceptKey": "lesson_design_systems::component registry",
-      "total": 3,
+      "total": 4,
       "kinds": {
         "mc": 2,
-        "fill": 1
+        "fill": 1,
+        "trace": 1
       },
       "sources": {
-        "svcollege-curated": 2,
+        "svcollege-curated": 3,
         "curated": 1
       },
       "maxLevel": 5
@@ -3374,38 +3417,41 @@
     },
     {
       "conceptKey": "lesson_design_systems::cva",
-      "total": 3,
+      "total": 4,
       "kinds": {
         "mc": 2,
-        "fill": 1
+        "fill": 1,
+        "trace": 1
       },
       "sources": {
-        "svcollege-curated": 2,
+        "svcollege-curated": 3,
         "curated": 1
       },
       "maxLevel": 6
     },
     {
       "conceptKey": "lesson_design_systems::design system testing",
-      "total": 2,
+      "total": 3,
       "kinds": {
         "mc": 1,
-        "fill": 1
+        "fill": 1,
+        "trace": 1
       },
       "sources": {
-        "svcollege-curated": 2
+        "svcollege-curated": 3
       },
       "maxLevel": 6
     },
     {
       "conceptKey": "lesson_design_systems::design tokens",
-      "total": 2,
+      "total": 3,
       "kinds": {
         "mc": 1,
-        "fill": 1
+        "fill": 1,
+        "trace": 1
       },
       "sources": {
-        "svcollege-curated": 2
+        "svcollege-curated": 3
       },
       "maxLevel": 5
     },
@@ -3426,38 +3472,41 @@
     },
     {
       "conceptKey": "lesson_design_systems::Radix primitives",
-      "total": 4,
+      "total": 5,
       "kinds": {
         "mc": 2,
-        "fill": 2
+        "fill": 2,
+        "trace": 1
       },
       "sources": {
-        "svcollege-curated": 3,
+        "svcollege-curated": 4,
         "curated": 1
       },
       "maxLevel": 6
     },
     {
       "conceptKey": "lesson_design_systems::shadcn/UI",
-      "total": 3,
+      "total": 4,
       "kinds": {
         "mc": 2,
-        "fill": 1
+        "fill": 1,
+        "trace": 1
       },
       "sources": {
-        "svcollege-curated": 3
+        "svcollege-curated": 4
       },
-      "maxLevel": 5
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_design_systems::theme tokens",
-      "total": 3,
+      "total": 4,
       "kinds": {
         "mc": 2,
-        "fill": 1
+        "fill": 1,
+        "trace": 1
       },
       "sources": {
-        "svcollege-curated": 2,
+        "svcollege-curated": 3,
         "curated": 1
       },
       "maxLevel": 5

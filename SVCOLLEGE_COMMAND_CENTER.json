@@ -3,38 +3,21 @@
   "date": "2026-04-28",
   "finishLine": {
     "target": "SVCollege AI & Full Stack only",
-    "ready": false,
-    "readiness": 96.7,
+    "ready": true,
+    "readiness": 100,
     "covered": 15,
     "partial": 0,
     "gap": 0,
     "modules": 15,
-    "releaseBlockers": 2,
-    "tabMatrixGaps": 4,
+    "releaseBlockers": 0,
+    "tabMatrixGaps": 0,
     "browserSmoke": {
       "desktop": "pass",
       "mobile": "pass",
       "report": "SVCOLLEGE_BROWSER_SMOKE.md"
     }
   },
-  "redFirstQueue": [
-    {
-      "title": "עיצוב רספונסיבי ו-CSS מתקדם",
-      "status": "covered",
-      "readiness": 75,
-      "level": "amber",
-      "nextAction": "Maintain practice, mock-exam coverage and tab health.",
-      "priority": 99
-    },
-    {
-      "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
-      "status": "covered",
-      "readiness": 75,
-      "level": "amber",
-      "nextAction": "Maintain practice, mock-exam coverage and tab health.",
-      "priority": 99
-    }
-  ],
+  "redFirstQueue": [],
   "moduleEvidence": [
     {
       "title": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
@@ -53,7 +36,7 @@
         }
       ],
       "questions": {
-        "count": 19,
+        "count": 44,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -271,7 +254,7 @@
     {
       "title": "עיצוב רספונסיבי ו-CSS מתקדם",
       "status": "covered",
-      "readiness": 75,
+      "readiness": 100,
       "lessonFiles": [
         {
           "lessonId": "lesson_25",
@@ -280,7 +263,7 @@
         }
       ],
       "questions": {
-        "count": 0,
+        "count": 25,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -1702,7 +1685,7 @@
         }
       ],
       "questions": {
-        "count": 30,
+        "count": 55,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -2171,7 +2154,7 @@
         }
       ],
       "questions": {
-        "count": 31,
+        "count": 56,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -3075,7 +3058,7 @@
     {
       "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
       "status": "covered",
-      "readiness": 75,
+      "readiness": 100,
       "lessonFiles": [
         {
           "lessonId": "ai_development",
@@ -3084,7 +3067,7 @@
         }
       ],
       "questions": {
-        "count": 0,
+        "count": 20,
         "files": [
           {
             "file": "data/questions_bank.js",
@@ -3528,31 +3511,18 @@
     }
   ],
   "tabMatrix": {
-    "ready": false,
-    "strictCoverage": 98.2,
+    "ready": true,
+    "strictCoverage": 100,
     "strictCells": 225,
-    "passedCells": 221,
-    "strictGaps": 4,
+    "passedCells": 225,
+    "strictGaps": 0,
     "supportGaps": 0,
     "report": "SVCOLLEGE_TAB_MATRIX.md"
   },
   "noEvidenceGate": {
-    "status": "failed",
+    "status": "passed",
     "checkedCoveredModules": 15,
-    "failures": [
-      {
-        "title": "עיצוב רספונסיבי ו-CSS מתקדם",
-        "missing": [
-          "practice"
-        ]
-      },
-      {
-        "title": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
-        "missing": [
-          "practice"
-        ]
-      }
-    ],
+    "failures": [],
     "rule": "`covered` is forbidden without lesson + practice + tab + test evidence."
   },
   "sourceAssets": {
@@ -3582,8 +3552,8 @@
     "optionFeedback": {
       "id": "optionFeedback",
       "label": "Per-Distractor Feedback",
-      "implemented": 105,
-      "target": 105,
+      "implemented": 132,
+      "target": 132,
       "unit": "MC questions",
       "coverage": 100,
       "status": "Done",
@@ -3595,7 +3565,7 @@
       "enforceStrict": false,
       "enforceEvidenceGate": true,
       "details": {
-        "optionExplanations": 620
+        "optionExplanations": 836
       }
     },
     "courseBlueprints": {

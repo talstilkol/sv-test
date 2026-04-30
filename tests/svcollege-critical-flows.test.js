@@ -18,20 +18,17 @@ describe("SVCollege critical practice flow smoke", () => {
     ]);
   });
 
-  it("keeps critical flow blockers visible until manual Trainer/Mock coverage is authored", () => {
+  it("keeps every critical flow green after manual Trainer/Mock coverage is authored", () => {
     const report = criticalFlows.buildReport();
 
-    expect(report.summary.ready).toBe(false);
-    expect(report.summary.passed).toBe(4);
-    expect(report.summary.failed).toBe(2);
+    expect(report.summary.ready).toBe(true);
+    expect(report.summary.passed).toBe(6);
+    expect(report.summary.failed).toBe(0);
     expect(report.summary.modules).toBe(15);
     report.flows.forEach((flow) => {
       expect(flow.coverage.totalModules).toBe(15);
     });
-    expect(report.flows.filter((flow) => !flow.passed).map((flow) => flow.id)).toEqual([
-      "trainer",
-      "mockExam",
-    ]);
+    expect(report.flows.filter((flow) => !flow.passed)).toEqual([]);
   });
 
   it("renders a readable gate report for release review", () => {
@@ -44,6 +41,6 @@ describe("SVCollege critical practice flow smoke", () => {
     expect(markdown).toContain("Bug Hunt");
     expect(markdown).toContain("Mini Build");
     expect(markdown).toContain("Code Trace");
-    expect(markdown).toContain("Ready: No");
+    expect(markdown).toContain("Ready: Yes");
   });
 });
