@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.6";
+var QUESTIONS_BANK_VERSION = "2.1.7";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -64,6 +64,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 11 sub-batch: pop, push, reduce and scope MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.7",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 11 sub-batch: shift, sort, splice and spread MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -858,6 +864,204 @@ var QUESTIONS_BANK = {
         "❌ בלוק if כן מגביל const ו-let.",
         "❌ השם לא קיים מחוץ לבלוק; זו לא הצבה ל-undefined.",
         "❌ ערך התנאי לא מחליף את ערך המשתנה.",
+      ],
+    },
+    {
+      id: "mc_l11_shift_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::shift", level: 3,
+      question: "מה shift עושה למערך?",
+      options: [
+        "מסירה את האיבר הראשון ומחזירה אותו",
+        "מסירה את האיבר האחרון ומחזירה אותו",
+        "מוסיפה איבר לסוף המערך",
+        "יוצרת עותק חדש בלי לשנות את המקור",
+      ],
+      correctIndex: 0,
+      explanation: "shift פועלת על אינדקס 0: היא מסירה את האיבר הראשון, מחזירה אותו, ומזיזה את שאר האיברים שמאלה.",
+      optionFeedback: [
+        "✅ נכון: shift עובדת מההתחלה של המערך.",
+        "❌ זו פעולה של pop, לא shift.",
+        "❌ זו פעולה של push.",
+        "❌ shift משנה את המערך המקורי.",
+      ],
+    },
+    {
+      id: "mc_l11_shift_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::shift", level: 5,
+      question: "מה יודפס?\n\nconst train = ['Locomotive', 'Car1', 'Car2'];\nconst head = train.shift();\nconsole.log(head);\nconsole.log(train);",
+      options: [
+        "head הוא 'Locomotive'; train נשאר עם Car1 ו-Car2",
+        "head הוא 'Car2'; train נשאר עם Locomotive ו-Car1",
+        "head הוא המספר 3; train נשאר עם Car1 ו-Car2",
+        "head הוא מערך חדש שמכיל רק את Locomotive",
+      ],
+      correctIndex: 0,
+      explanation: "shift מחזירה את האיבר הראשון ומסירה אותו מהמערך. לכן head הוא Locomotive, והמערך מתחיל מ-Car1.",
+      optionFeedback: [
+        "✅ נכון: האיבר הראשון הוסר והוחזר.",
+        "❌ Car2 הוא האיבר האחרון; זו חשיבה של pop.",
+        "❌ shift מחזירה את האיבר שהוסר, לא את האורך.",
+        "❌ ערך ההחזרה הוא האיבר עצמו, לא מערך חדש.",
+      ],
+    },
+    {
+      id: "mc_l11_shift_manual_003", topicId: "topic_arrays", conceptKey: "lesson_11::shift", level: 6,
+      question: "למה shift יכולה להיות יקרה יותר מ-pop במערך גדול?",
+      options: [
+        "כי אחרי הסרת אינדקס 0 שאר האיברים צריכים לזוז מקום",
+        "כי shift מפעילה סידור מספרי לפני שליפת הראש",
+        "כי shift יוצרת עותק עמוק של כל אובייקט",
+        "כי shift מחזירה Promise",
+      ],
+      correctIndex: 0,
+      explanation: "החומר מציין שמחיקה מהתחלה גורמת לשינוי אינדקסים של האיברים שנותרו. לכן במערכים גדולים זו פעולה כבדה יותר ממחיקה מהסוף.",
+      optionFeedback: [
+        "✅ נכון: הסרת הראש מחייבת דחיסה מחדש של הרצף.",
+        "❌ מיון מספרי הוא תפקיד של sort עם comparator, לא shift.",
+        "❌ shift לא יוצרת עותק עמוק.",
+        "❌ shift היא פעולה סינכרונית של מערך, לא Promise.",
+      ],
+    },
+    {
+      id: "mc_l11_sort_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::sort", level: 4,
+      question: "מה הבעיה ב-[1, 10, 2].sort() בלי comparator?",
+      options: [
+        "המיון ברירת מחדל מתייחס לערכים כמו טקסט",
+        "sort מוחקת את כל המספרים הזוגיים",
+        "sort מחזירה רק את מספר האיברים שמוינו",
+        "sort עובדת רק על מערכים ריקים",
+      ],
+      correctIndex: 0,
+      explanation: "ברירת המחדל של sort היא מיון לקסיקוגרפי לפי ייצוג טקסטואלי, ולכן 10 יכול לבוא לפני 2.",
+      optionFeedback: [
+        "✅ נכון: לכן צריך comparator מספרי כמו (a, b) => a - b.",
+        "❌ sort לא מסננת איברים.",
+        "❌ sort אינה מחזירה מונה של איברים; היא מסדרת את המערך.",
+        "❌ sort עובדת על מערכים עם ערכים, אבל צריך להנחות אותה נכון במספרים.",
+      ],
+    },
+    {
+      id: "mc_l11_sort_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::sort", level: 5,
+      question: "מה יודפס?\n\nconst scores = [40, 1, 5, 200];\nscores.sort((a, b) => a - b);\nconsole.log(scores);",
+      options: [
+        "[1, 5, 40, 200]",
+        "[200, 40, 5, 1]",
+        "[1, 200, 40, 5]",
+        "[40, 1, 5, 200]",
+      ],
+      correctIndex: 0,
+      explanation: "ה-comparator a - b ממיין מספרים בסדר עולה, והמערך עצמו משתנה.",
+      optionFeedback: [
+        "✅ נכון: זה מיון מספרי עולה.",
+        "❌ זה היה מיון יורד עם comparator הפוך.",
+        "❌ זה מערבב בין מיון טקסטואלי למספרי.",
+        "❌ sort עם comparator משנה את הסדר המקורי.",
+      ],
+    },
+    {
+      id: "mc_l11_sort_manual_003", topicId: "topic_arrays", conceptKey: "lesson_11::sort", level: 6,
+      question: "איזה משפט נכון לגבי sort?",
+      options: [
+        "sort משנה את המערך המקורי, וצריך comparator למיון מספרי אמין",
+        "sort משאירה את המקור כמו שהיה ומחזירה עותק ממוין",
+        "sort מחזירה רק את האיבר הראשון אחרי מיון",
+        "sort מחשבת סכום מצטבר בעזרת acc ו-current",
+      ],
+      correctIndex: 0,
+      explanation: "sort היא mutating method. במיון מספרים צריך להעביר comparator, אחרת מקבלים מיון טקסטואלי שעלול להטעות.",
+      optionFeedback: [
+        "✅ נכון: שתי הנקודות הן עיקר החומר על sort.",
+        "❌ sort משנה במקום; היא לא מחזירה עותק ממוין חדש.",
+        "❌ החזרת איבר ראשון מתארת find בתנאים מסוימים, לא sort.",
+        "❌ accumulator הוא מושג של reduce.",
+      ],
+    },
+    {
+      id: "mc_l11_splice_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::splice", level: 3,
+      question: "מה splice מאפשרת לעשות?",
+      options: [
+        "להסיר או להכניס איברים במקום מדויק במערך",
+        "להמיר מערך למחרוזת עם פסיקים",
+        "למיין מספרים בסדר עולה בלבד",
+        "להחזיר true או false לפי תנאי",
+      ],
+      correctIndex: 0,
+      explanation: "splice היא 'סכין' למקום ספציפי במערך: מתחילים באינדקס, קובעים כמה למחוק, ואפשר גם להכניס ערכים.",
+      optionFeedback: [
+        "✅ נכון: splice מטפלת באמצע המערך לפי אינדקס.",
+        "❌ זה תיאור של toString.",
+        "❌ זה קשור ל-sort עם comparator.",
+        "❌ true/false לפי תנאי קשור ל-some/every או בדיקות תנאי, לא splice.",
+      ],
+    },
+    {
+      id: "mc_l11_splice_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::splice", level: 5,
+      question: "מה יהיה תוכן fruits אחרי הקוד?\n\nconst fruits = ['Apple', 'Banana', 'Cherry'];\nfruits.splice(1, 1, 'Kiwi');",
+      options: [
+        "['Apple', 'Kiwi', 'Cherry']",
+        "Kiwi נכנס לראש הרשימה לפני Apple",
+        "Kiwi נוסף אחרי Banana בלי למחוק אותה",
+        "['Apple', 'Cherry']",
+      ],
+      correctIndex: 0,
+      explanation: "מתחילים באינדקס 1, מוחקים איבר אחד, ומכניסים Kiwi באותו מקום במקום Banana.",
+      optionFeedback: [
+        "✅ נכון: Banana הוחלף ב-Kiwi.",
+        "❌ splice כאן מתחילה באינדקס 1, לא בראש הרשימה.",
+        "❌ Banana נמחקת כי הפרמטר השני הוא 1.",
+        "❌ זה היה נכון אם היינו מוחקים בלי להכניס Kiwi.",
+      ],
+    },
+    {
+      id: "mc_l11_splice_manual_003", topicId: "topic_arrays", conceptKey: "lesson_11::splice", level: 6,
+      question: "למה splice דורשת זהירות בקוד שמצפה לאי-שינוי של מערכים?",
+      options: [
+        "כי splice משנה את המערך המקורי במקום",
+        "כי splice עובדת רק על מספרים",
+        "כי splice מחזירה טקסט של האיברים שנמחקו",
+        "כי splice לא יכולה למחוק איברים",
+      ],
+      correctIndex: 0,
+      explanation: "החומר מתאר את splice כ-mutating: היא חותכת או מכניסה לתוך אותו מערך, בלי ליצור עותק חדש.",
+      optionFeedback: [
+        "✅ נכון: זו נקודת הזהירות המרכזית.",
+        "❌ splice עובדת על מערכים מכל סוגי הערכים.",
+        "❌ splice מחזירה מערך של האיברים שנמחקו, לא טקסט.",
+        "❌ מחיקה היא אחת הפעולות המרכזיות שלה.",
+      ],
+    },
+    {
+      id: "mc_l11_spread_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::spread", level: 5,
+      question: "מה עושה spread במערך?",
+      options: [
+        "פורס את איברי המערך לתוך מערך או קריאה אחרת",
+        "מסיר את האיבר האחרון ומחזיר אותו",
+        "ממיין את המערך במקום",
+        "מצמצם מערך לערך יחיד עם accumulator",
+      ],
+      correctIndex: 0,
+      explanation: "spread מסומן בשלוש נקודות ומרחיב iterable לאיברים נפרדים, למשל כדי לבנות עותק חדש.",
+      optionFeedback: [
+        "✅ נכון: זה תפקיד של שלוש הנקודות.",
+        "❌ זה pop.",
+        "❌ זה sort.",
+        "❌ זה reduce.",
+      ],
+    },
+    {
+      id: "mc_l11_spread_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::spread", level: 6,
+      question: "מה יודפס?\n\nconst oldNumbers = [1, 2];\nconst newNumbers = [...oldNumbers, 3];\noldNumbers.push(9);\nconsole.log(newNumbers);",
+      options: [
+        "[1, 2, 3]",
+        "[1, 2, 3, 9]",
+        "[9, 1, 2, 3]",
+        "[1, 2, 9]",
+      ],
+      correctIndex: 0,
+      explanation: "spread יצר מערך חדש עם הערכים שהיו אז ב-oldNumbers ועוד 3. ה-push המאוחר משנה רק את oldNumbers.",
+      optionFeedback: [
+        "✅ נכון: newNumbers הוא עותק חדש שנבנה בזמן ה-spread.",
+        "❌ 9 נוסף ל-oldNumbers אחרי יצירת newNumbers.",
+        "❌ push מוסיפה לסוף oldNumbers, לא לתחילת newNumbers.",
+        "❌ 3 כבר נמצא ב-newNumbers, ו-9 לא נוסף אליו.",
       ],
     },
 
@@ -3141,6 +3345,41 @@ var QUESTIONS_BANK = {
       answer: "doSecret",
       hint: "שם פונקציה שמחזיקה משתנה פנימי שלא נגיש מבחוץ.",
       explanation: "המשתנה secretBase נולד בתוך הפונקציה ולכן נגיש רק ב-scope שלה. שם הפונקציה מאפשר לקרוא לקוד הזה מבחוץ בלי לחשוף את המשתנה המקומי.",
+    },
+    {
+      id: "fill_l11_shift_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::shift", level: 4,
+      code: "const train = ['Locomotive', 'Car1', 'Car2'];\nconst head = train.____();\nconsole.log(head); // 'Locomotive'",
+      answer: "shift",
+      hint: "מתודת מערך שמסירה ומחזירה את האיבר הראשון.",
+      explanation: "shift פועלת על אינדקס 0, מחזירה את האיבר הראשון, ומעדכנת את המערך המקורי.",
+    },
+    {
+      id: "fill_l11_sort_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::sort", level: 5,
+      code: "const scores = [40, 1, 5, 200];\nscores.____((a, b) => a - b);\nconsole.log(scores); // [1, 5, 40, 200]",
+      answer: "sort",
+      hint: "מתודת מערך שמסדרת את הערכים במקום.",
+      explanation: "sort עם comparator מספרי משנה את scores לסדר עולה אמיתי.",
+    },
+    {
+      id: "fill_l11_splice_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::splice", level: 4,
+      code: "const fruits = ['Apple', 'Banana', 'Cherry'];\nfruits.____(1, 1, 'Kiwi');\nconsole.log(fruits);",
+      answer: "splice",
+      hint: "מתודת מערך שמתחילה באינדקס, מוחקת כמות, ויכולה להכניס ערכים.",
+      explanation: "splice(1, 1, 'Kiwi') מחליפה את Banana ב-Kiwi בתוך המערך המקורי.",
+    },
+    {
+      id: "fill_l11_splice_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::splice", level: 6,
+      code: "const fruits = ['Apple', 'Banana', 'Cherry'];\nconst removed = fruits.splice(____, 1);\nconsole.log(removed);",
+      answer: "fruits.indexOf('Banana')",
+      hint: "חשב את האינדקס של Banana במקום לכתוב מספר קשיח.",
+      explanation: "fruits.indexOf('Banana') מחזיר את מיקום Banana, ואז splice מוחקת איבר אחד מהמיקום הזה.",
+    },
+    {
+      id: "fill_l11_spread_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::spread", level: 5,
+      code: "const oldNumbers = [1, 2];\nconst newNumbers = [____oldNumbers, 3];\nconsole.log(newNumbers);",
+      answer: "...",
+      hint: "שלוש נקודות שפורסות את איברי המערך לתוך מערך חדש.",
+      explanation: "spread פורס את oldNumbers לערכים 1 ו-2, ואז מוסיפים 3 למערך החדש.",
     },
 
     // ===== Objects / OOP =====

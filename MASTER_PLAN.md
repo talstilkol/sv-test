@@ -4,7 +4,7 @@
 
 > **עדכון 2026-04-28:** מסמך זה הוא תוכנית legacy ממוקדת בנק שאלות. תוכנית האב הפעילה היא [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md), והביצוע היומי נמצא ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md). קו הסיום הראשון גובר על המסמך הזה: כיסוי מלא של `SVCollege — קורס AI & Full Stack` בכל הפורטל לפני הרחבות אחרות.
 
-> **עדכון Finish Line 1:** אחרי ביטול הבנק האוטומטי, שערי SVCollege עצמם חזרו לירוק (`svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict`). קו הסיום עדיין לא נסגר כי `questions:coverage-targets:strict` אדום: `524` פערי MC ו-`519` פערי Fill ידניים.
+> **עדכון Finish Line 1:** אחרי ביטול הבנק האוטומטי, שערי SVCollege עצמם חזרו לירוק (`svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict`). קו הסיום עדיין לא נסגר כי `questions:coverage-targets:strict` אדום: `520` פערי MC ו-`515` פערי Fill ידניים.
 
 > **עדכון XP Economy 2026-04-29:** תוכנית החנות והכלכלה החדשה נמצאת ב-[XP_REWARD_STORE_MASTER_PLAN.md](XP_REWARD_STORE_MASTER_PLAN.md). היא מוסיפה 100 רמות XP לא לינאריות, Coins, חנות חוויות, כרטיסים למוזיאון ושער רמה 100 שמחייב שליטה מלאה. היא Priority 2 ואינה חוסמת חומר חובה למבחן.
 
@@ -18,7 +18,7 @@
 
 > **עדכון System Bug Audit 2026-04-30:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `221` פריטים: `DONE 8`, `FAKED 0`, `PARTIAL 6`, `NOT DONE 207`.
 
-> **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `524` פערי MC ו-`519` פערי Fill ידניים; `MANUAL_QUESTION_AUTHORING_PLAN.md` דורש עדיין `1,493` MC ו-`954` Fill ידניות.
+> **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `520` פערי MC ו-`515` פערי Fill ידניים; `MANUAL_QUESTION_AUTHORING_PLAN.md` דורש עדיין `1,482` MC ו-`949` Fill ידניות.
 
 > **עדכון Forward Execution 2026-04-30:** רשימת המשימות התפעולית המעודכנת נמצאת ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md) תחת `Forward Execution Plan — 2026-04-30`. סדר העבודה המחייב: קודם שני מודולי SVCollege שחסרים Trainer/Mock Exam ידניים, אחר כך כל backlog השאלות הידניות, אחר כך פערי Trace/Build/Bug, ורק בסוף מוזיאון/חנות/קהילה/Sync/פירוק frontend.
 
@@ -44,8 +44,8 @@
 
 | ID | סטטוס | עדיפות | משימה |
 |---|---|---:|---|
-| SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `524` פערי MC ו-`519` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |
-| SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,493` MC ו-`954` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |
+| SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `520` פערי MC ו-`515` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |
+| SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,482` MC ו-`949` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |
 | SYS-AUDIT-003 | [ ] | P1 | להשאיר `222` פערי Trace/Build/Bug לא-עדיפותיים אחרי Finish Line 1, ואז לסגור אותם עם תוכן ידני ו-browser smoke. |
 | SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `221` פריטים יש `207` NOT DONE ו-`6` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |
 | SYS-AUDIT-005 | [ ] | P1 | להשלים keyboard-only coverage ל-Escape/Enter/Arrow, focus return, מעבר טאבים, מעבר מושגים ו-submit answer. |
