@@ -12,11 +12,11 @@
   "summary": {
     "readyForAuthoring": true,
     "totalConcepts": 568,
-    "gapConcepts": 559,
-    "mcGapCount": 558,
-    "fillGapCount": 552,
-    "strictMcDeficit": 1572,
-    "strictFillDeficit": 1007,
+    "gapConcepts": 557,
+    "mcGapCount": 556,
+    "fillGapCount": 550,
+    "strictMcDeficit": 1566,
+    "strictFillDeficit": 1003,
     "batches": 28,
     "missingPlannedKeys": 0
   },
@@ -30,40 +30,6 @@
       "sourceEvidenceStatus": "lesson-data-present",
       "status": "not-started",
       "items": [
-        {
-          "key": "lesson_25::add/delete movie",
-          "lessonId": "lesson_25",
-          "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-          "conceptName": "add/delete movie",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_25::bg color",
-          "lessonId": "lesson_25",
-          "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-          "conceptName": "bg color",
-          "moduleTitle": "יסודות האינטרנט — HTML בסיסי + HTML/CSS",
-          "moduleIndex": 0,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
         {
           "key": "lesson_25::navbar",
           "lessonId": "lesson_25",
@@ -320,9 +286,9 @@
           "manualReviewDate": "unknown/unavailable"
         }
       ],
-      "conceptCount": 17,
-      "mcDeficit": 40,
-      "fillDeficit": 26
+      "conceptCount": 15,
+      "mcDeficit": 34,
+      "fillDeficit": 22
     },
     {
       "id": "QMAN-002",

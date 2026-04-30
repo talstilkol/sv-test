@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.0";
+var QUESTIONS_BANK_VERSION = "2.1.1";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -28,6 +28,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual authoring batch for SVCollege release blockers: lesson_25 responsive CSS and ai_development tools.",
+  },
+  {
+    v: "2.1.1",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 sub-batch: add/delete movie and bg color MC/Fill coverage from lesson_25 source material.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -1434,6 +1440,78 @@ var QUESTIONS_BANK = {
       correctIndex: 0,
       explanation: "ב-flex-col הצירים מתחלפים: main axis הוא אנכי, cross axis הוא אופקי.",
     },
+    {
+      id: "mc_l25_add_delete_001", topicId: "topic_css", conceptKey: "lesson_25::add/delete movie", level: 3,
+      question: "בפרויקט סרטים ב-React, איזו פעולה מוסיפה סרט ל-state בצורה immutable?",
+      options: [
+        "setMovies(prev => [...prev, newMovie])",
+        "movies.push(newMovie); setMovies(movies)",
+        "setMovies(prev => prev.filter(m => m.id !== newMovie.id))",
+        "delete movies[newMovie.id]",
+      ],
+      correctIndex: 0,
+      explanation: "הוספה immutable יוצרת מערך חדש עם spread. push משנה את אותו מערך ולכן עלול לא לגרום ל-render צפוי.",
+    },
+    {
+      id: "mc_l25_add_delete_002", topicId: "topic_css", conceptKey: "lesson_25::add/delete movie", level: 5,
+      question: "איך מוחקים סרט לפי id בלי לשנות את מערך הסרטים המקורי?",
+      options: [
+        "setMovies(prev => prev.filter(movie => movie.id !== idToDelete))",
+        "movies.splice(idToDelete, 1); setMovies(movies)",
+        "setMovies(prev => prev.map(movie => movie.id))",
+        "setMovies([]) בכל מחיקה",
+      ],
+      correctIndex: 0,
+      explanation: "filter מחזירה מערך חדש שמכיל רק את הסרטים שלא נמחקו. כך נשמרת immutability וה-render נשאר צפוי.",
+    },
+    {
+      id: "mc_l25_add_delete_003", topicId: "topic_css", conceptKey: "lesson_25::add/delete movie", level: 6,
+      question: "מה הבעיה המרכזית בקוד הבא?\n\nmovies.push(newMovie);\nsetMovies(movies);",
+      options: [
+        "React מקבל את אותה הפניית מערך, ולכן עלול לדלג על re-render",
+        "push מחזיר מערך חדש ולכן אין בעיית הפניה",
+        "React משכפל את המערך עמוקות לפני ההשוואה",
+        "newMovie חייב להגיע מ-localStorage",
+      ],
+      correctIndex: 0,
+      explanation: "push משנה את המערך במקום. React מסתמך על הפניות חדשות כדי לזהות שינוי state בצורה אמינה.",
+    },
+    {
+      id: "mc_l25_bg_color_001", topicId: "topic_css", conceptKey: "lesson_25::bg color", level: 3,
+      question: "איזה class של Tailwind מגדיר רקע כחול בעוצמה בינונית?",
+      options: [
+        "bg-blue-500",
+        "text-blue-500",
+        "border-blue-500",
+        "blue-bg-500",
+      ],
+      correctIndex: 0,
+      explanation: "הסינטקס של צבע רקע ב-Tailwind הוא bg-{color}-{shade}; לכן bg-blue-500 מגדיר רקע כחול בעוצמה 500.",
+    },
+    {
+      id: "mc_l25_bg_color_002", topicId: "topic_css", conceptKey: "lesson_25::bg color", level: 5,
+      question: "איזה className יוצר כפתור עם רקע אינדיגו שמתכהה במעבר עכבר?",
+      options: [
+        "bg-indigo-600 hover:bg-indigo-700 text-white",
+        "bg-indigo-600 hover:text-indigo-700 text-white",
+        "text-indigo-600 hover:bg-indigo-700 bg-white",
+        "border-indigo-600 hover:border-indigo-700 text-white",
+      ],
+      correctIndex: 0,
+      explanation: "bg-indigo-600 קובע את צבע הרקע הבסיסי, ו-hover:bg-indigo-700 משנה את צבע הרקע במצב hover.",
+    },
+    {
+      id: "mc_l25_bg_color_003", topicId: "topic_css", conceptKey: "lesson_25::bg color", level: 6,
+      question: "מה חייבים לבדוק כשבוחרים bg color לרכיב קריא?",
+      options: [
+        "ניגוד מול צבע הטקסט וגם מצב hover או dark mode אם קיימים",
+        "רק שהמספר אחרי הצבע יהיה גדול ככל האפשר",
+        "שהצבע יופיע גם בשם קובץ ה-component",
+        "שכל הילדים ברכיב יקבלו אותו route",
+      ],
+      correctIndex: 0,
+      explanation: "בחירת רקע אינה רק שם צבע; צריך לוודא contrast מול הטקסט ולבדוק states כמו hover או dark:bg כדי שהרכיב יישאר קריא.",
+    },
 
     // ===== SVCollege Release Blocker — AI Development Tools =====
     {
@@ -2466,6 +2544,34 @@ var QUESTIONS_BANK = {
       answer: "items-center",
       hint: "ממרכז על הציר המשני.",
       explanation: "items-center ממרכז את הילדים על ה-cross axis; יחד עם justify-center מקבלים מרכוז מלא.",
+    },
+    {
+      id: "fill_l25_add_delete_001", topicId: "topic_css", conceptKey: "lesson_25::add/delete movie", level: 5,
+      code: "const addMovie = (draft) => {\n  setMovies(prev => ____);\n};",
+      answer: "[...prev, draft]",
+      hint: "ביטוי spread שמחזיר מערך חדש עם כל הקודמים ועוד הפריט החדש.",
+      explanation: "הביטוי [...prev, draft] שומר את הסרטים הקיימים ומוסיף את הסרט החדש למערך חדש, בלי לשנות את prev במקום.",
+    },
+    {
+      id: "fill_l25_add_delete_002", topicId: "topic_css", conceptKey: "lesson_25::add/delete movie", level: 5,
+      code: "const deleteMovie = (idToDelete) => {\n  setMovies(prev => prev.____(movie => movie.id !== idToDelete));\n};",
+      answer: "filter",
+      hint: "מתודת מערך שמחזירה רק איברים שעוברים תנאי.",
+      explanation: "filter משאירה את כל הסרטים שה-id שלהם שונה מה-id למחיקה, ומחזירה מערך חדש.",
+    },
+    {
+      id: "fill_l25_bg_color_001", topicId: "topic_css", conceptKey: "lesson_25::bg color", level: 4,
+      code: "<div className=\"____ text-white p-4 rounded\">כרטיס כחול</div>",
+      answer: "bg-blue-500",
+      hint: "התחביר הוא bg, שם צבע, ואז עוצמה.",
+      explanation: "bg-blue-500 הוא utility שמגדיר צבע רקע כחול בעוצמה 500; text-white מטפל רק בצבע הטקסט.",
+    },
+    {
+      id: "fill_l25_bg_color_002", topicId: "topic_css", conceptKey: "lesson_25::bg color", level: 5,
+      code: "<button className=\"bg-indigo-600 ____ text-white px-4 py-2 rounded\">Save</button>",
+      answer: "hover:bg-indigo-700",
+      hint: "variant של hover שמשנה את צבע הרקע.",
+      explanation: "hover:bg-indigo-700 משנה את צבע הרקע רק במעבר עכבר, מעל bg-indigo-600 שמגדיר את מצב הבסיס.",
     },
     {
       id: "fill_ai_dev_cursor_001", topicId: "topic_ai_development", conceptKey: "ai_development::Cursor", level: 5,

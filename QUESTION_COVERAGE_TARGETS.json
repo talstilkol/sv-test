@@ -16,20 +16,20 @@
     "fillTargetPerCodeConcept": 2
   },
   "sourceMix": {
-    "curatedMC": 132,
+    "curatedMC": 138,
     "ignoredGeneratedMC": 0,
-    "curatedFill": 129,
+    "curatedFill": 133,
     "ignoredGeneratedFill": 0
   },
   "summary": {
     "totalConcepts": 568,
-    "mcReadyConcepts": 10,
-    "mcGapCount": 558,
+    "mcReadyConcepts": 12,
+    "mcGapCount": 556,
     "codeExampleConcepts": 568,
-    "fillReadyConcepts": 16,
-    "fillGapCount": 552,
-    "handCuratedMcPromotionBacklog": 558,
-    "handCuratedFillPromotionBacklog": 552,
+    "fillReadyConcepts": 18,
+    "fillGapCount": 550,
+    "handCuratedMcPromotionBacklog": 556,
+    "handCuratedFillPromotionBacklog": 550,
     "ready": false
   },
   "gaps": {
@@ -3032,15 +3032,6 @@
         }
       },
       {
-        "key": "lesson_25::bg color",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "bg color",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_25::rounded",
         "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
         "conceptName": "rounded",
@@ -3071,15 +3062,6 @@
         "key": "lesson_25::search",
         "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
         "conceptName": "search",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::add/delete movie",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "add/delete movie",
         "mc": {
           "curated": 0,
           "total": 0
@@ -8029,15 +8011,6 @@
         }
       },
       {
-        "key": "lesson_25::bg color",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "bg color",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_25::rounded",
         "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
         "conceptName": "rounded",
@@ -8068,15 +8041,6 @@
         "key": "lesson_25::search",
         "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
         "conceptName": "search",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_25::add/delete movie",
-        "lessonTitle": "שיעור 25 — Tailwind CSS + פרויקט סרטים",
-        "conceptName": "add/delete movie",
         "fill": {
           "curated": 0,
           "total": 0
