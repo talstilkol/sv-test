@@ -80,8 +80,8 @@
     {
       "id": "optionFeedback",
       "label": "Per-Distractor Feedback",
-      "implemented": 259,
-      "target": 259,
+      "implemented": 271,
+      "target": 271,
       "unit": "MC questions",
       "coverage": 100,
       "status": "Done",
@@ -93,7 +93,7 @@
       "enforceStrict": false,
       "enforceEvidenceGate": true,
       "details": {
-        "optionExplanations": 1504
+        "optionExplanations": 1552
       }
     },
     {

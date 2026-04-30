@@ -16,20 +16,20 @@
     "fillTargetPerCodeConcept": 2
   },
   "sourceMix": {
-    "curatedMC": 259,
+    "curatedMC": 271,
     "ignoredGeneratedMC": 0,
-    "curatedFill": 211,
+    "curatedFill": 217,
     "ignoredGeneratedFill": 0
   },
   "summary": {
     "totalConcepts": 568,
-    "mcReadyConcepts": 61,
-    "mcGapCount": 507,
+    "mcReadyConcepts": 65,
+    "mcGapCount": 503,
     "codeExampleConcepts": 568,
-    "fillReadyConcepts": 66,
-    "fillGapCount": 502,
-    "handCuratedMcPromotionBacklog": 507,
-    "handCuratedFillPromotionBacklog": 502,
+    "fillReadyConcepts": 70,
+    "fillGapCount": 498,
+    "handCuratedMcPromotionBacklog": 503,
+    "handCuratedFillPromotionBacklog": 498,
     "ready": false
   },
   "gaps": {
@@ -113,42 +113,6 @@
         "mc": {
           "curated": 1,
           "total": 1
-        }
-      },
-      {
-        "key": "lesson_12::יצירת מערך חדש (new array)",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "יצירת מערך חדש (new array)",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::סינון לפי תנאי",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "סינון לפי תנאי",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::יצירת מערך חדש מתוך קיים",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "יצירת מערך חדש מתוך קיים",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::עבודה עם ערכים לפי אינדקס",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "עבודה עם ערכים לפי אינדקס",
-        "mc": {
-          "curated": 0,
-          "total": 0
         }
       },
       {
@@ -4678,42 +4642,6 @@
         "fill": {
           "curated": 0,
           "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::יצירת מערך חדש (new array)",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "יצירת מערך חדש (new array)",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::סינון לפי תנאי",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "סינון לפי תנאי",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::יצירת מערך חדש מתוך קיים",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "יצירת מערך חדש מתוך קיים",
-        "fill": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_12::עבודה עם ערכים לפי אינדקס",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "עבודה עם ערכים לפי אינדקס",
-        "fill": {
-          "curated": 1,
-          "total": 1
         }
       },
       {

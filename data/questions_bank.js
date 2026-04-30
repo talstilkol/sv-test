@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.10";
+var QUESTIONS_BANK_VERSION = "2.1.11";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -88,6 +88,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 12 sub-batch: forEach, spread, uppercase and lowercase MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.11",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 12 sub-batch: Hebrew array creation, derived arrays, conditional filtering and index-value work coverage.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -1746,6 +1752,222 @@ var QUESTIONS_BANK = {
         "❌ strings לא משתנות במקום, וגם המערך המקורי לא מתעדכן אוטומטית.",
         "❌ הפעולה משנה case בלבד, לא מנקה תווים.",
         "❌ אינדקס התאמה קשור ל-indexOf/findIndex, לא ל-toLowerCase.",
+      ],
+    },
+    {
+      id: "mc_l12_new_array_he_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::יצירת מערך חדש (new array)", level: 3,
+      question: "איזו דרך יוצרת מערך חדש וברור לקריאה?",
+      options: [
+        "const items = [];",
+        "const items = 0;",
+        "const items = { length: 0 };",
+        "const items = true;",
+      ],
+      correctIndex: 0,
+      explanation: "ליטרל [] הוא הדרך הפשוטה והברורה ליצור מערך חדש. שאר האפשרויות יוצרות טיפוסים אחרים.",
+      optionFeedback: [
+        "✅ נכון: [] יוצר מערך חדש.",
+        "❌ זה מספר, לא מערך.",
+        "❌ זה אובייקט עם מאפיין length, לא Array אמיתי עם מתודות מערך.",
+        "❌ זה boolean, לא אוסף איברים.",
+      ],
+    },
+    {
+      id: "mc_l12_new_array_he_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::יצירת מערך חדש (new array)", level: 5,
+      question: "מה נכון לגבי הקוד?\n\nconst base = [1, 2];\nconst created = [...base, 3];\nbase.push(9);",
+      options: [
+        "created נשאר מערך נפרד שנוצר לפני ה-push",
+        "created הופך אוטומטית לאותו מערך כמו base",
+        "spread מוחק את base אחרי יצירת created",
+        "created הוא מחרוזת כי השתמשנו בפסיקים",
+      ],
+      correctIndex: 0,
+      explanation: "created נוצר כ-reference חדש עם הערכים שהיו ב-base בזמן הפריסה ועוד 3. ה-push המאוחר משנה רק את base.",
+      optionFeedback: [
+        "✅ נכון: נוצר מערך חדש עם reference נפרד.",
+        "❌ spread לא הופך שני משתנים לאותו מערך.",
+        "❌ spread לא מוחק את המקור.",
+        "❌ הסוגריים המרובעים יוצרים מערך, לא מחרוזת.",
+      ],
+    },
+    {
+      id: "mc_l12_new_array_he_manual_003", topicId: "topic_arrays", conceptKey: "lesson_12::יצירת מערך חדש (new array)", level: 6,
+      question: "למה לרוב עדיף `[]` על `new Array(5)` כשמתחילים מערך חדש?",
+      options: [
+        "`new Array(5)` יוצר מערך holey באורך 5 ולא מערך עם הערך 5",
+        "`[]` יוצר אובייקט רגיל ולא מערך",
+        "`new Array(5)` תמיד ממלא חמישה אפסים",
+        "`[]` משנה את כל המערכים הקיימים בזיכרון",
+      ],
+      correctIndex: 0,
+      explanation: "החומר מזהיר ש-new Array(5) יוצר מערך באורך 5 עם חורים, וזה שונה ממערך שמכיל את הערך 5.",
+      optionFeedback: [
+        "✅ נכון: זו מלכודת מוכרת של constructor.",
+        "❌ [] הוא literal של מערך אמיתי.",
+        "❌ הוא לא ממלא אפסים אוטומטית.",
+        "❌ יצירת literal חדש לא משנה מערכים קיימים.",
+      ],
+    },
+    {
+      id: "mc_l12_create_from_existing_he_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::יצירת מערך חדש מתוך קיים", level: 3,
+      question: "מה המטרה של יצירת מערך חדש מתוך קיים בעזרת map?",
+      options: [
+        "לקבל מערך חדש עם ערך תוצאה אחד לכל איבר מקור",
+        "למחוק איברים מהמערך המקורי לפי תנאי",
+        "להחזיר רק את האינדקס הראשון שעבר בדיקה",
+        "להפוך את המערך למחרוזת אחת",
+      ],
+      correctIndex: 0,
+      explanation: "map מייצרת מערך חדש מתוך קיים תוך טרנספורמציה של כל איבר.",
+      optionFeedback: [
+        "✅ נכון: map שומרת על cardinality ומחזירה מערך חדש.",
+        "❌ זה לא מוחק מהמקור; סינון שייך ל-filter.",
+        "❌ אינדקס ראשון קשור ל-findIndex.",
+        "❌ המרה למחרוזת שייכת ל-join/toString.",
+      ],
+    },
+    {
+      id: "mc_l12_create_from_existing_he_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::יצירת מערך חדש מתוך קיים", level: 5,
+      question: "מה יודפס?\n\nconst users = [{ name: 'Dana' }, { name: 'Avi' }];\nconst names = users.map((user) => user.name);\nconsole.log(names.join('|'));\nconsole.log(users.length);",
+      options: [
+        "Dana|Avi ואז 2",
+        "Dana|Avi ואז 0",
+        "[object Object] ואז 2",
+        "undefined ואז 2",
+      ],
+      correctIndex: 0,
+      explanation: "names הוא מערך חדש של שמות בלבד. users המקורי לא השתנה ולכן אורכו נשאר 2.",
+      optionFeedback: [
+        "✅ נכון: map שלפה user.name לכל משתמש.",
+        "❌ map לא מרוקנת את users.",
+        "❌ [object Object] היה אופייני להמרת אובייקטים גולמית, לא לשליפת name.",
+        "❌ callback מחזיר name, ולכן names אינו undefined.",
+      ],
+    },
+    {
+      id: "mc_l12_create_from_existing_he_manual_003", topicId: "topic_arrays", conceptKey: "lesson_12::יצירת מערך חדש מתוך קיים", level: 6,
+      question: "מה ההבדל המרכזי בין יצירת מערך חדש מתוך קיים עם map לבין סינון עם filter?",
+      options: [
+        "map שומרת אורך, filter יכולה להחזיר פחות איברים",
+        "filter תמיד שומרת אורך, map תמיד מקצרת",
+        "map משנה את המקור, filter לא יוצרת מערך חדש",
+        "שתיהן מחזירות undefined",
+      ],
+      correctIndex: 0,
+      explanation: "map מחזירה ערך אחד לכל איבר מקור, ולכן האורך נשמר. filter מחזירה רק איברים שעברו predicate.",
+      optionFeedback: [
+        "✅ נכון: זה ההבדל המבני המרכזי.",
+        "❌ זה הפוך מההתנהגות הנכונה.",
+        "❌ שתיהן מחזירות מערך חדש ולא חייבות לשנות את המקור.",
+        "❌ undefined מתאים יותר ל-forEach.",
+      ],
+    },
+    {
+      id: "mc_l12_condition_filter_he_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::סינון לפי תנאי", level: 3,
+      question: "מהו predicate בסינון לפי תנאי?",
+      options: [
+        "פונקציה או ביטוי שמחזירים true או false לכל איבר",
+        "מערך חדש שמכיל תמיד את כל האיברים",
+        "שם של אינדקס במערך",
+        "פקודה שממיינת מספרים מהקטן לגדול",
+      ],
+      correctIndex: 0,
+      explanation: "filter משתמשת ב-predicate: אם התוצאה true האיבר נכנס למערך החדש, ואם false הוא נשאר בחוץ.",
+      optionFeedback: [
+        "✅ נכון: predicate הוא תנאי boolean.",
+        "❌ סינון לא מחזיר תמיד את כל האיברים.",
+        "❌ אינדקס הוא מיקום, לא תנאי.",
+        "❌ מיון שייך ל-sort.",
+      ],
+    },
+    {
+      id: "mc_l12_condition_filter_he_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::סינון לפי תנאי", level: 5,
+      question: "איזה מוצר יישאר אחרי הסינון?\n\nconst products = [\n  { name: 'A', price: 80, inStock: true },\n  { name: 'B', price: 120, inStock: true },\n  { name: 'C', price: 60, inStock: false }\n];\nconst visible = products.filter((p) => p.inStock && p.price < 100);",
+      options: [
+        "רק A",
+        "A ו-B",
+        "A ו-C",
+        "אף מוצר",
+      ],
+      correctIndex: 0,
+      explanation: "A הוא גם במלאי וגם זול מ-100. B יקר מדי, ו-C לא במלאי.",
+      optionFeedback: [
+        "✅ נכון: A עובר את שני התנאים.",
+        "❌ B לא עובר את תנאי המחיר.",
+        "❌ C לא עובר את תנאי המלאי.",
+        "❌ A כן עומד בכל התנאים.",
+      ],
+    },
+    {
+      id: "mc_l12_condition_filter_he_manual_003", topicId: "topic_arrays", conceptKey: "lesson_12::סינון לפי תנאי", level: 6,
+      question: "למה לעיתים עדיף לאחד כמה תנאים בתוך filter אחד?",
+      options: [
+        "כדי לבצע מעבר אחד על הנתונים ולמנוע הקצאות ביניים מיותרות",
+        "כי JavaScript לא מאפשר שרשור filter",
+        "כי `&&` משנה את המערך המקורי במקום",
+        "כי filter יחיד תמיד מחזיר יותר איברים",
+      ],
+      correctIndex: 0,
+      explanation: "החומר מציין ששרשור filter מרובים יכול ליצור כמה מעברים וכמה מערכי ביניים. predicate אחד מורכב יכול להיות יעיל וברור.",
+      optionFeedback: [
+        "✅ נכון: זה מצמצם עבודה והקצאות.",
+        "❌ אפשר לשרשר filter, אבל לא תמיד כדאי.",
+        "❌ && רק מחבר תנאים בוליאניים.",
+        "❌ מספר האיברים תלוי בתנאי, לא במספר הקריאות.",
+      ],
+    },
+    {
+      id: "mc_l12_index_values_he_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::עבודה עם ערכים לפי אינדקס", level: 3,
+      question: "מה מאפשרת עבודה עם ערכים לפי אינדקס?",
+      options: [
+        "קריאה או עדכון של מיקום מדויק במערך",
+        "סינון אוטומטי של כל האיברים הזוגיים",
+        "יצירת מחרוזת חדשה באותיות קטנות",
+        "מחיקת כל המערך ללא תנאי",
+      ],
+      correctIndex: 0,
+      explanation: "arr[i] מאפשר לגשת ישירות לאיבר במיקום i, ואפשר גם להציב ערך חדש באותו מיקום.",
+      optionFeedback: [
+        "✅ נכון: אינדקס הוא כתובת של מיקום במערך.",
+        "❌ סינון לפי זוגיות דורש filter ותנאי.",
+        "❌ זה שייך ל-toLowerCase על strings.",
+        "❌ גישה לפי אינדקס לא מוחקת את כל המערך.",
+      ],
+    },
+    {
+      id: "mc_l12_index_values_he_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::עבודה עם ערכים לפי אינדקס", level: 5,
+      question: "מה יודפס?\n\nconst colors = ['red', 'green', 'blue'];\ncolors[1] = 'yellow';\nconsole.log(colors[1]);\nconsole.log(colors.length);",
+      options: [
+        "yellow ואז 3",
+        "green ואז 3",
+        "yellow ואז 4",
+        "undefined ואז 2",
+      ],
+      correctIndex: 0,
+      explanation: "האיבר באינדקס 1 הוחלף, אבל החלפה לא מוסיפה איבר חדש ולכן האורך נשאר 3.",
+      optionFeedback: [
+        "✅ נכון: green הוחלף ב-yellow והאורך לא השתנה.",
+        "❌ הערך הישן כבר הוחלף.",
+        "❌ השמה לאינדקס קיים לא מוסיפה איבר.",
+        "❌ אינדקס 1 קיים והמערך עדיין באורך 3.",
+      ],
+    },
+    {
+      id: "mc_l12_index_values_he_manual_003", topicId: "topic_arrays", conceptKey: "lesson_12::עבודה עם ערכים לפי אינדקס", level: 6,
+      question: "מה הסיכון בעדכון ישיר כמו `arr[i] = value` בתוך state של React?",
+      options: [
+        "זה mutation שעלול להשאיר את אותו reference ולכן React לא יזהה שינוי צפוי",
+        "זה תמיד זורק SyntaxError",
+        "זה הופך את המערך לאובייקט רגיל",
+        "זה מפעיל filter על כל האיברים",
+      ],
+      correctIndex: 0,
+      explanation: "בעבודה עם state עדיף ליצור מערך חדש, למשל עם map לפי אינדקס, כדי לקבל reference חדש ולעדכן UI בצורה צפויה.",
+      optionFeedback: [
+        "✅ נכון: זה בדיוק ההבדל בין mutation לעדכון immutable.",
+        "❌ התחביר תקין ב-JavaScript.",
+        "❌ השמה לאינדקס לא משנה את הטיפוס של המערך.",
+        "❌ filter לא רץ אוטומטית.",
       ],
     },
 
@@ -4232,6 +4454,48 @@ var QUESTIONS_BANK = {
       answer: "true",
       hint: "בדוק מה הערך אחרי נרמול לאותיות קטנות.",
       explanation: "toLowerCase מחזירה את 'react', ולכן ההשוואה מול 'react' מחזירה true.",
+    },
+    {
+      id: "fill_l12_new_array_he_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::יצירת מערך חדש (new array)", level: 3,
+      code: "const empty = ____;\nempty.push('first');\nconsole.log(empty.length);",
+      answer: "[]",
+      hint: "ליטרל של מערך ריק.",
+      explanation: "[] יוצר מערך חדש ריק. אחרי push אחד האורך שלו הוא 1.",
+    },
+    {
+      id: "fill_l12_new_array_he_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::יצירת מערך חדש (new array)", level: 5,
+      code: "const base = [1, 2];\nconst created = [____base, 3];\nconsole.log(created.join(','));",
+      answer: "...",
+      hint: "הסימן שפורש את איברי base לתוך מערך חדש.",
+      explanation: "spread פורס את איברי base ואז מוסיפים 3. התוצאה היא מערך חדש עם 1,2,3.",
+    },
+    {
+      id: "fill_l12_create_from_existing_he_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::יצירת מערך חדש מתוך קיים", level: 4,
+      code: "const users = [{ name: 'Dana' }, { name: 'Avi' }];\nconst names = users.____((user) => user.name);\nconsole.log(names.join('|'));",
+      answer: "map",
+      hint: "מתודה שמחזירה ערך חדש לכל איבר מקור ושומרת על אותו אורך.",
+      explanation: "map יוצרת מערך חדש מתוך users ומחזירה את name של כל user.",
+    },
+    {
+      id: "fill_l12_condition_filter_he_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::סינון לפי תנאי", level: 4,
+      code: "const products = [{ price: 80, inStock: true }, { price: 120, inStock: true }];\nconst visible = products.filter((p) => p.inStock ____ p.price < 100);",
+      answer: "&&",
+      hint: "אופרטור בוליאני שמחייב את שני התנאים יחד.",
+      explanation: "&& מחייב שגם inStock יהיה true וגם price יהיה קטן מ-100.",
+    },
+    {
+      id: "fill_l12_condition_filter_he_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::סינון לפי תנאי", level: 6,
+      code: "const nums = [3, 8, 12];\nconst selected = nums.filter((n) => n > ____);\nconsole.log(selected.join(','));",
+      answer: "5",
+      hint: "בחר סף שמשאיר את 8 ו-12 ומוציא את 3.",
+      explanation: "כאשר הסף הוא 5, רק 8 ו-12 מחזירים true עבור התנאי n > 5.",
+    },
+    {
+      id: "fill_l12_index_values_he_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::עבודה עם ערכים לפי אינדקס", level: 4,
+      code: "const colors = ['red', 'green', 'blue'];\nconst second = ____;\nconsole.log(second);",
+      answer: "colors[1]",
+      hint: "האינדקס השני במערך הוא 1.",
+      explanation: "מערכים מתחילים באינדקס 0, ולכן colors[1] שולף את האיבר השני.",
     },
 
     // ===== Objects / OOP =====

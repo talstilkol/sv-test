@@ -5,11 +5,11 @@ Date: 2026-04-30
 ## Summary
 
 - Ready for authoring: yes
-- Gap concepts: 507/568
-- MC gap concepts: 507
-- Fill gap concepts: 502
-- Strict MC questions still required: 1445
-- Strict Fill questions still required: 925
+- Gap concepts: 503/568
+- MC gap concepts: 503
+- Fill gap concepts: 498
+- Strict MC questions still required: 1433
+- Strict Fill questions still required: 919
 - Batches: 26
 
 ## Policy
@@ -26,15 +26,11 @@ Date: 2026-04-30
 - Owner: unknown/unavailable
 - Reviewer: unknown/unavailable
 - Concepts: 25
-- MC deficit: 68
-- Fill deficit: 39
+- MC deficit: 66
+- Fill deficit: 40
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_12::יצירת מערך חדש (new array)` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_12::יצירת מערך חדש מתוך קיים` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
-| `lesson_12::סינון לפי תנאי` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_12::עבודה עם ערכים לפי אינדקס` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_13::appendChild` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::attribute` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::class` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
@@ -56,22 +52,22 @@ Date: 2026-04-30
 | `lesson_13::Method` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::new` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::Object` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
+| `lesson_13::Property` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
+| `lesson_13::querySelector` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
+| `lesson_13::querySelectorAll` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_13::removeChild` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
 ### QMAN-002 — JavaScript בסיסי ודינמיקה בדפדפן
 
 - Status: not-started
 - Owner: unknown/unavailable
 - Reviewer: unknown/unavailable
-- Concepts: 11
-- MC deficit: 30
-- Fill deficit: 21
+- Concepts: 7
+- MC deficit: 20
+- Fill deficit: 14
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_13::Property` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
-| `lesson_13::querySelector` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
-| `lesson_13::querySelectorAll` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_13::removeChild` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::replaceChild` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::sessionStorage` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
 | `lesson_13::setAttribute` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |

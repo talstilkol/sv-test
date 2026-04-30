@@ -3,17 +3,17 @@
   "date": "2026-04-30",
   "source": "repo",
   "summary": {
-    "total": 470,
-    "mc": 259,
-    "fill": 211,
-    "manual": 470,
+    "total": 488,
+    "mc": 271,
+    "fill": 217,
+    "manual": 488,
     "blockerQuestions": 0,
     "warningQuestions": 0,
-    "noteQuestions": 10,
-    "cleanQuestions": 460,
+    "noteQuestions": 16,
+    "cleanQuestions": 472,
     "blockerIssues": 0,
     "warningIssues": 0,
-    "noteIssues": 11,
+    "noteIssues": 17,
     "questionQualityIndex": 100
   },
   "questionQuality": {
@@ -1644,6 +1644,47 @@
       ],
       "status": "note"
     },
+    "fill_l12_condition_filter_he_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_condition_filter_he_manual_002": {
+      "score": 92,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "one-character-answer"
+      ],
+      "status": "note"
+    },
+    "fill_l12_create_from_existing_he_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "fill_l12_filter_manual_001": {
       "score": 100,
       "difficulty": 4,
@@ -1726,6 +1767,19 @@
       ],
       "status": "note"
     },
+    "fill_l12_index_values_he_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
     "fill_l12_lowercase_manual_001": {
       "score": 100,
       "difficulty": 4,
@@ -1768,6 +1822,32 @@
     "fill_l12_map_manual_002": {
       "score": 100,
       "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_new_array_he_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_new_array_he_manual_002": {
+      "score": 100,
+      "difficulty": 5,
       "clarity": 100,
       "distractorQuality": null,
       "issueCounts": {
@@ -4588,6 +4668,90 @@
       "issueCodes": [],
       "status": "clean"
     },
+    "mc_l12_condition_filter_he_manual_001": {
+      "score": 92,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "generic-wording"
+      ],
+      "status": "note"
+    },
+    "mc_l12_condition_filter_he_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_condition_filter_he_manual_003": {
+      "score": 92,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "generic-wording"
+      ],
+      "status": "note"
+    },
+    "mc_l12_create_from_existing_he_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_create_from_existing_he_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_create_from_existing_he_manual_003": {
+      "score": 92,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "generic-wording"
+      ],
+      "status": "note"
+    },
     "mc_l12_filter_manual_001": {
       "score": 92,
       "difficulty": 3,
@@ -4712,6 +4876,47 @@
       ],
       "status": "note"
     },
+    "mc_l12_index_values_he_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_index_values_he_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_index_values_he_manual_003": {
+      "score": 92,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "generic-wording"
+      ],
+      "status": "note"
+    },
     "mc_l12_lowercase_manual_001": {
       "score": 100,
       "difficulty": 3,
@@ -4780,6 +4985,47 @@
       "status": "clean"
     },
     "mc_l12_map_manual_003": {
+      "score": 92,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "generic-wording"
+      ],
+      "status": "note"
+    },
+    "mc_l12_new_array_he_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_new_array_he_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_new_array_he_manual_003": {
       "score": 92,
       "difficulty": 6,
       "clarity": 100,
@@ -6171,6 +6417,16 @@
       "priority": 2
     },
     {
+      "id": "mc_l12_index_values_he_manual_003",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::עבודה עם ערכים לפי אינדקס",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 2 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
       "id": "mc_l12_lowercase_manual_002",
       "kind": "mc",
       "source": "manual",
@@ -6178,6 +6434,36 @@
       "severity": "note",
       "code": "generic-wording",
       "message": "Option 3 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
+      "id": "mc_l12_new_array_he_manual_003",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::יצירת מערך חדש (new array)",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 3 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
+      "id": "mc_l12_condition_filter_he_manual_003",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::סינון לפי תנאי",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 4 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
+      "id": "mc_l12_condition_filter_he_manual_001",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::סינון לפי תנאי",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 2 uses broad wording that can cue test-taking instead of knowledge.",
       "priority": 2
     },
     {
@@ -6195,6 +6481,16 @@
       "kind": "fill",
       "source": "manual",
       "conceptKey": "lesson_12::index",
+      "severity": "note",
+      "code": "one-character-answer",
+      "message": "One-character fill answer can be ambiguous without a strong hint.",
+      "priority": 2
+    },
+    {
+      "id": "fill_l12_condition_filter_he_manual_002",
+      "kind": "fill",
+      "source": "manual",
+      "conceptKey": "lesson_12::סינון לפי תנאי",
       "severity": "note",
       "code": "one-character-answer",
       "message": "One-character fill answer can be ambiguous without a strong hint.",
@@ -6225,6 +6521,16 @@
       "kind": "mc",
       "source": "manual",
       "conceptKey": "lesson_12::map",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 2 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
+      "id": "mc_l12_create_from_existing_he_manual_003",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::יצירת מערך חדש מתוך קיים",
       "severity": "note",
       "code": "generic-wording",
       "message": "Option 2 uses broad wording that can cue test-taking instead of knowledge.",
