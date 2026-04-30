@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.13";
+var QUESTIONS_BANK_VERSION = "2.1.14";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -106,6 +106,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 13 sub-batch: createElement, document, Document Object Model and DOM MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.14",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 13 sub-batch: extends, getElementById, getElementsByClassName and getElementsByTagName MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -2378,6 +2384,186 @@ var QUESTIONS_BANK = {
         "❌ שינוי DOM בדפדפן לא כותב את קובץ ה-HTML המקורי.",
         "❌ אין קשר למחיקת localStorage.",
         "❌ שינוי textContent יכול להופיע מיד בלי reload.",
+      ],
+    },
+    {
+      id: "mc_l13_extends_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::extends", level: 5,
+      question: "מה עושה `extends` בדוגמה הזו?\n\nclass Animal {\n  breathe() { return 'air'; }\n}\nclass Dog extends Animal {}",
+      options: [
+        "Dog מקבלת את ההתנהגות של Animal דרך שרשרת הירושה",
+        "Animal נמחקת ונשארת רק Dog",
+        "Dog הופכת לאלמנט DOM",
+        "extends שומרת את Dog ב-localStorage",
+      ],
+      correctIndex: 0,
+      explanation: "extends מחברת מחלקת בן למחלקת אב. מופעים של Dog יוכלו להשתמש במתודות שמוגדרות ב-Animal.",
+      optionFeedback: [
+        "✅ נכון: extends יוצר קשר ירושה בין מחלקת הבן למחלקת האב.",
+        "❌ המחלקה Animal לא נמחקת.",
+        "❌ מחלקה אינה אלמנט DOM.",
+        "❌ localStorage אינו חלק ממנגנון ירושה.",
+      ],
+    },
+    {
+      id: "mc_l13_extends_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::extends", level: 6,
+      question: "מה היתרון המרכזי של `class Admin extends User`?",
+      options: [
+        "אפשר לשתף התנהגות בסיסית מ-User ולהוסיף יכולות ייחודיות ל-Admin",
+        "כל User הופך אוטומטית ל-Admin",
+        "Admin לא צריך constructor אם User לא קיים",
+        "extends מונע שימוש במתודות",
+      ],
+      correctIndex: 0,
+      explanation: "extends מתאים כשיש בסיס משותף ורוצים להרחיב אותו. Admin יכול לרשת login מ-User ולהוסיף הרשאות ניהול.",
+      optionFeedback: [
+        "✅ נכון: ירושה חוסכת שכפול ומאפשרת הרחבה ממוקדת.",
+        "❌ הירושה לא משנה מופעים קיימים של User ל-Admin.",
+        "❌ אם User לא מוגדרת, הקוד לא תקין.",
+        "❌ להפך: extends מאפשר שימוש במתודות האב.",
+      ],
+    },
+    {
+      id: "mc_l13_get_element_by_id_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::getElementById", level: 3,
+      question: "מה מחזירה `document.getElementById('login')` כאשר קיים בדף `<button id=\"login\">`?",
+      options: [
+        "את אלמנט הכפתור היחיד עם id בשם login",
+        "רשימה של כל הכפתורים בדף",
+        "מחרוזת בשם login בלבד",
+        "את כל האלמנטים עם class בשם login",
+      ],
+      correctIndex: 0,
+      explanation: "getElementById מחפשת id ייחודי ומחזירה אלמנט יחיד, או null אם אין התאמה.",
+      optionFeedback: [
+        "✅ נכון: id אמור להיות ייחודי ולכן מוחזר אלמנט אחד.",
+        "❌ רשימה של כפתורים דורשת selector או getElements מתאים.",
+        "❌ המתודה מחזירה Element, לא רק מחרוזת.",
+        "❌ חיפוש class נעשה עם getElementsByClassName או selector.",
+      ],
+    },
+    {
+      id: "mc_l13_get_element_by_id_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::getElementById", level: 4,
+      question: "מה חשוב לבדוק אחרי `const box = document.getElementById('box')` לפני שינוי `box.textContent`?",
+      options: [
+        "ש-box אינו null",
+        "ש-box נשמר קודם ב-sessionStorage",
+        "ש-box הוא HTMLCollection של כמה אלמנטים",
+        "ש-box נוצר עם class",
+      ],
+      correctIndex: 0,
+      explanation: "אם לא נמצא אלמנט עם id כזה, getElementById מחזירה null. קריאה ל-textContent על null תגרום לשגיאת runtime.",
+      optionFeedback: [
+        "✅ נכון: בדיקת null מונעת קריסה כשהאלמנט לא קיים.",
+        "❌ storage אינו תנאי לשינוי DOM.",
+        "❌ getElementById מחזירה אלמנט יחיד או null, לא HTMLCollection.",
+        "❌ מקור האלמנט אינו חייב להיות class תכנותי.",
+      ],
+    },
+    {
+      id: "mc_l13_get_by_class_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::getElementsByClassName", level: 3,
+      question: "מה מחזירה `document.getElementsByClassName('card')`?",
+      options: [
+        "אוסף של כל האלמנטים שיש להם class בשם card",
+        "אלמנט אחד בלבד לפי id בשם card",
+        "מחלקת JavaScript חדשה בשם card",
+        "את ה-CSS של כל הדף",
+      ],
+      correctIndex: 0,
+      explanation: "getElementsByClassName מחזירה HTMLCollection של אלמנטים שחולקים class מסוים.",
+      optionFeedback: [
+        "✅ נכון: class מיועד לקבוצה, ולכן מוחזר אוסף.",
+        "❌ id יחיד מחפשים עם getElementById.",
+        "❌ CSS class אינו JavaScript class.",
+        "❌ המתודה מחזירה אלמנטים, לא קובץ CSS.",
+      ],
+    },
+    {
+      id: "mc_l13_get_by_class_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::getElementsByClassName", level: 4,
+      question: "למה לרוב צריך לולאה אחרי `getElementsByClassName`?",
+      options: [
+        "כי מוחזר אוסף אלמנטים וצריך לטפל בכל אחד בנפרד",
+        "כי המתודה מחזירה Promise",
+        "כי כל class נמחק אחרי קריאה אחת",
+        "כי HTMLCollection שומר רק את שם ה-class",
+      ],
+      correctIndex: 0,
+      explanation: "המתודה מחזירה collection. כדי לשנות צבע או טקסט לכל פריט צריך לעבור על כל האלמנטים באוסף.",
+      optionFeedback: [
+        "✅ נכון: שינוי קבוצה דורש מעבר על כל איבר באוסף.",
+        "❌ getElementsByClassName אינה אסינכרונית ואינה מחזירה Promise.",
+        "❌ הקריאה לא מוחקת class מהאלמנטים.",
+        "❌ HTMLCollection מחזיק אלמנטים שנמצאו, לא רק את שם ה-class.",
+      ],
+    },
+    {
+      id: "mc_l13_get_by_class_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::getElementsByClassName", level: 5,
+      question: "איזה שימוש מתאים במיוחד ל-`getElementsByClassName('warning-msg')`?",
+      options: [
+        "להדגיש את כל הודעות האזהרה שחולקות אותו class",
+        "ליצור warning חדש בזיכרון",
+        "לקרוא ערך localStorage בשם warning-msg",
+        "להפעיל constructor של מחלקת Warning",
+      ],
+      correctIndex: 0,
+      explanation: "כאשר כמה אלמנטים מסומנים באותו class, אפשר לאסוף אותם וליישם עליהם פעולה אחידה.",
+      optionFeedback: [
+        "✅ נכון: זה שימוש קלאסי באיתור קבוצה לפי class.",
+        "❌ יצירת אלמנט חדש נעשית עם createElement.",
+        "❌ localStorage.getItem קורא אחסון, לא DOM.",
+        "❌ constructor של class תכנותי אינו קשור לאיתור HTML class.",
+      ],
+    },
+    {
+      id: "mc_l13_get_by_tag_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::getElementsByTagName", level: 3,
+      question: "מה מחזירה `document.getElementsByTagName('p')`?",
+      options: [
+        "אוסף של כל תגיות p במסמך",
+        "פסקה אחת לפי id בשם p",
+        "כל האלמנטים עם class בשם p",
+        "מחרוזת שמכילה את האות p",
+      ],
+      correctIndex: 0,
+      explanation: "getElementsByTagName אוספת אלמנטים לפי שם תגית HTML, למשל כל הפסקאות.",
+      optionFeedback: [
+        "✅ נכון: החיפוש הוא לפי סוג tag.",
+        "❌ id מחפשים עם getElementById.",
+        "❌ class מחפשים עם getElementsByClassName או selector.",
+        "❌ התוצאה היא אוסף אלמנטים, לא מחרוזת.",
+      ],
+    },
+    {
+      id: "mc_l13_get_by_tag_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::getElementsByTagName", level: 4,
+      question: "מתי עדיף להשתמש ב-`getElementsByTagName('li')`?",
+      options: [
+        "כשצריך לטפל בכל פריטי הרשימה מסוג li בלי קשר ל-class שלהם",
+        "כשצריך למצוא אלמנט יחיד לפי id מדויק",
+        "כשצריך לשמור רשימה בדפדפן",
+        "כשצריך להגדיר מחלקת JavaScript חדשה",
+      ],
+      correctIndex: 0,
+      explanation: "חיפוש לפי tag מתאים כשרוצים את כל האלמנטים מסוג מסוים, למשל כל פריטי רשימה.",
+      optionFeedback: [
+        "✅ נכון: tag name מתאר את סוג האלמנט עצמו.",
+        "❌ id מדויק מתאים ל-getElementById.",
+        "❌ אחסון בדפדפן קשור ל-localStorage/sessionStorage.",
+        "❌ class תכנותי אינו קשור לשם תגית HTML.",
+      ],
+    },
+    {
+      id: "mc_l13_get_by_tag_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::getElementsByTagName", level: 5,
+      question: "מה ההבדל בין חיפוש לפי tag לבין חיפוש לפי class?",
+      options: [
+        "tag מחפש סוג תגית כמו p או div; class מחפש סימון קבוצתי כמו card",
+        "tag מחפש רק באחסון ו-class מחפש רק בשרת",
+        "tag מחזיר את התגית הראשונה ו-class מחזיר CSSStyleSheet",
+        "אין הבדל בין השניים",
+      ],
+      correctIndex: 0,
+      explanation: "tag הוא שם האלמנט ב-HTML. class הוא מאפיין שמסמן קבוצה עיצובית/לוגית שיכולה להופיע על סוגי תגיות שונים.",
+      optionFeedback: [
+        "✅ נכון: אלה שני ממדי חיפוש שונים בעץ ה-DOM.",
+        "❌ שניהם חיפושי DOM מקומיים.",
+        "❌ getElementsByTagName מחזיר אוסף, ו-class selector לא מחזיר CSSStyleSheet.",
+        "❌ יש הבדל מהותי בין סוג תגית לבין class.",
       ],
     },
 
@@ -4999,6 +5185,48 @@ var QUESTIONS_BANK = {
       answer: "liveTree",
       hint: "הדפדפן בונה מבנה חי מתוך HTML.",
       explanation: "הדפדפן מפרש HTML ובונה DOM חי. JavaScript עובד מול העץ הזה, לא רק מול הטקסט המקורי.",
+    },
+    {
+      id: "fill_l13_extends_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::extends", level: 5,
+      code: "class User {\n  login() { return 'ok'; }\n}\nclass Admin ____ User {\n  deletePost() { return true; }\n}",
+      answer: "extends",
+      hint: "מילת המפתח שמחברת מחלקת בן למחלקת אב.",
+      explanation: "extends מצהירה ש-Admin יורשת מ-User ולכן יכולה לקבל את התנהגות הבסיס ולהוסיף יכולות משלה.",
+    },
+    {
+      id: "fill_l13_get_element_by_id_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::getElementById", level: 4,
+      code: "const button = document.____('login');\nif (button) button.textContent = 'כניסה';",
+      answer: "getElementById",
+      hint: "מתודת document שמאתרת אלמנט לפי id יחיד.",
+      explanation: "getElementById מחפשת id מדויק ומחזירה אלמנט יחיד או null אם הוא לא קיים.",
+    },
+    {
+      id: "fill_l13_get_by_class_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::getElementsByClassName", level: 4,
+      code: "const cards = document.____('card');\nfor (let i = 0; i < cards.length; i++) {\n  cards[i].classList.add('ready');\n}",
+      answer: "getElementsByClassName",
+      hint: "מתודה שמחזירה אוסף אלמנטים לפי class משותף.",
+      explanation: "getElementsByClassName מחזירה HTMLCollection של כל האלמנטים שחולקים את ה-class שנמסר.",
+    },
+    {
+      id: "fill_l13_get_by_class_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::getElementsByClassName", level: 5,
+      code: "const warnings = document.getElementsByClassName('warning-msg');\nconst count = warnings.____;",
+      answer: "length",
+      hint: "מאפיין שמספר כמה אלמנטים נמצאו באוסף.",
+      explanation: "האוסף שמוחזר מחזיק length, ולכן אפשר לדעת כמה הודעות warning נמצאו לפני מעבר בלולאה.",
+    },
+    {
+      id: "fill_l13_get_by_tag_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::getElementsByTagName", level: 4,
+      code: "const paragraphs = document.____('p');\nfor (let i = 0; i < paragraphs.length; i++) {\n  paragraphs[i].style.color = 'blue';\n}",
+      answer: "getElementsByTagName",
+      hint: "מתודה שמחזירה אוסף אלמנטים לפי שם תגית.",
+      explanation: "getElementsByTagName('p') מחזירה את כל פסקאות p במסמך כדי שאפשר יהיה לעבור עליהן.",
+    },
+    {
+      id: "fill_l13_get_by_tag_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::getElementsByTagName", level: 5,
+      code: "const items = document.getElementsByTagName('li');\nconst firstText = items[0].____;",
+      answer: "textContent",
+      hint: "מאפיין DOM שמחזיר את הטקסט של אלמנט.",
+      explanation: "אחרי שאיתרנו תגיות li, אפשר לגשת לאיבר לפי אינדקס ולקרוא ממנו textContent.",
     },
 
     // ===== Objects / OOP =====

@@ -16,20 +16,20 @@
     "fillTargetPerCodeConcept": 2
   },
   "sourceMix": {
-    "curatedMC": 293,
+    "curatedMC": 303,
     "ignoredGeneratedMC": 0,
-    "curatedFill": 230,
+    "curatedFill": 236,
     "ignoredGeneratedFill": 0
   },
   "summary": {
     "totalConcepts": 568,
-    "mcReadyConcepts": 73,
-    "mcGapCount": 495,
+    "mcReadyConcepts": 77,
+    "mcGapCount": 491,
     "codeExampleConcepts": 568,
-    "fillReadyConcepts": 78,
-    "fillGapCount": 490,
-    "handCuratedMcPromotionBacklog": 495,
-    "handCuratedFillPromotionBacklog": 490,
+    "fillReadyConcepts": 82,
+    "fillGapCount": 486,
+    "handCuratedMcPromotionBacklog": 491,
+    "handCuratedFillPromotionBacklog": 486,
     "ready": false
   },
   "gaps": {
@@ -152,33 +152,6 @@
         }
       },
       {
-        "key": "lesson_13::getElementById",
-        "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-        "conceptName": "getElementById",
-        "mc": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_13::getElementsByTagName",
-        "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-        "conceptName": "getElementsByTagName",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_13::getElementsByClassName",
-        "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-        "conceptName": "getElementsByClassName",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_13::innerHTML",
         "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
         "conceptName": "innerHTML",
@@ -257,15 +230,6 @@
         "mc": {
           "curated": 0,
           "total": 0
-        }
-      },
-      {
-        "key": "lesson_13::extends",
-        "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-        "conceptName": "extends",
-        "mc": {
-          "curated": 1,
-          "total": 1
         }
       },
       {
@@ -4609,33 +4573,6 @@
         }
       },
       {
-        "key": "lesson_13::getElementById",
-        "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-        "conceptName": "getElementById",
-        "fill": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_13::getElementsByTagName",
-        "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-        "conceptName": "getElementsByTagName",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_13::getElementsByClassName",
-        "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-        "conceptName": "getElementsByClassName",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_13::innerHTML",
         "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
         "conceptName": "innerHTML",
@@ -4711,15 +4648,6 @@
         "key": "lesson_13::inheritance",
         "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
         "conceptName": "inheritance",
-        "fill": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_13::extends",
-        "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-        "conceptName": "extends",
         "fill": {
           "curated": 1,
           "total": 1
