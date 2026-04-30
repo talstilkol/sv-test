@@ -17,9 +17,9 @@
 
 | מדד | כמות |
 |---|---:|
-| בוצעו | 742 |
-| סך משימות מסומנות | 902 |
-| בוצעו מתוך סך הכול | 742/902 (82%) |
+| בוצעו | 743 |
+| סך משימות מסומנות | 903 |
+| בוצעו מתוך סך הכול | 743/903 (82%) |
 | נותרו פעילות: פתוחות + חלקיות + חסומות | 145 |
 | פתוחות | 138 |
 | בעבודה / חלקיות | 6 |
@@ -32,11 +32,11 @@
 | שער | מצב חי |
 |---|---|
 | `finish-line:pre-release` | 17/18 עברו; חסום על `questions:coverage-targets:strict` |
-| `QUESTION_COVERAGE_TARGETS` | `mcGapCount: 515`, `fillGapCount: 510`, `ready:false` |
-| `MANUAL_QUESTION_AUTHORING_PLAN` | `1469` שאלות MC ידניות ו-`941` Fill ידניות עדיין נדרשות ליעד strict |
-| התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה + תתי-batch Lesson 11 הושלמו ככיסוי authored: `103` MC ו-`66` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
+| `QUESTION_COVERAGE_TARGETS` | `mcGapCount: 511`, `fillGapCount: 506`, `ready:false` |
+| `MANUAL_QUESTION_AUTHORING_PLAN` | `1457` שאלות MC ידניות ו-`933` Fill ידניות עדיין נדרשות ליעד strict |
+| התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה + תתי-batch Lesson 11 + תת-batch Lesson 12 ראשון הושלמו ככיסוי authored: `115` MC ו-`74` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
 | `QUESTION_ACTIVITY_AUTHORING_PLAN` | `222` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
-| `BRUTAL_MASTER_PLAN_AUDIT` | `233` פריטים: `DONE 10`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 216` |
+| `BRUTAL_MASTER_PLAN_AUDIT` | `234` פריטים: `DONE 11`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 216` |
 
 ## משימות שנותרו לבצע — ראשונות
 
@@ -46,7 +46,7 @@
 
 ### 📊 סיכום התקדמות > Forward Execution Plan — 2026-04-30 > Gate סופי לסגירת Finish Line 1
 
-- [!] FWD-9.4 — `npm run questions:coverage-targets:strict` — חסום עד השלמת `1,469` MC ידניות ו-`941` Fill ידניות לפי [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md).
+- [!] FWD-9.4 — `npm run questions:coverage-targets:strict` — חסום עד השלמת `1,457` MC ידניות ו-`933` Fill ידניות לפי [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md).
 
 ## בעבודה / חלקיות (6)
 
@@ -274,10 +274,11 @@
 
 ## משימות שהושלמו — בסוף
 
-בוצעו 742 מתוך 902 משימות מסומנות. הפירוט המלא עבר לארכיון: [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
+בוצעו 743 מתוך 903 משימות מסומנות. הפירוט המלא עבר לארכיון: [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
 
 ### הושלם בסבב הנוכחי
 
+- [V] QMAN-001A — נכתבו ידנית 12 MC ו-8 Fill ל-`lesson_12::array`, `lesson_12::index`, `lesson_12::map`, `lesson_12::filter`; `validate:strict`, `qa:questions:strict` ו-`quality:questions:strict` ירוקים, ו-`questions:coverage-targets:strict` ירד ל-`511`/`506` פערים.
 - [V] KIMI-AUDIT-6 — עודכן [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) עם reconciliation חי: finish-line, master-plan brutal audit, manual coverage, report drift, DOM/storage inventory, tests ו-build.
 - [V] SYS-AUDIT-021 — תוקנו שני טסטים עם ספירות hardcoded אחרי באטצ' שאלות ידני; עכשיו הם בודקים invariants ו-`npm test -- --run` ירוק.
 

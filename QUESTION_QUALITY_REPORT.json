@@ -3,17 +3,17 @@
   "date": "2026-04-30",
   "source": "repo",
   "summary": {
-    "total": 430,
-    "mc": 235,
-    "fill": 195,
-    "manual": 430,
+    "total": 450,
+    "mc": 247,
+    "fill": 203,
+    "manual": 450,
     "blockerQuestions": 0,
     "warningQuestions": 0,
-    "noteQuestions": 0,
-    "cleanQuestions": 430,
+    "noteQuestions": 7,
+    "cleanQuestions": 443,
     "blockerIssues": 0,
     "warningIssues": 0,
-    "noteIssues": 0,
+    "noteIssues": 8,
     "questionQualityIndex": 100
   },
   "questionQuality": {
@@ -1604,6 +1604,116 @@
       "status": "clean"
     },
     "fill_l11_var_manual_001": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_array_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_array_manual_002": {
+      "score": 92,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "one-character-answer"
+      ],
+      "status": "note"
+    },
+    "fill_l12_filter_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_filter_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_index_manual_001": {
+      "score": 92,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "one-character-answer"
+      ],
+      "status": "note"
+    },
+    "fill_l12_index_manual_002": {
+      "score": 92,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "one-character-answer"
+      ],
+      "status": "note"
+    },
+    "fill_l12_map_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l12_map_manual_002": {
       "score": 100,
       "difficulty": 6,
       "clarity": 100,
@@ -4333,6 +4443,171 @@
       "issueCodes": [],
       "status": "clean"
     },
+    "mc_l12_array_manual_001": {
+      "score": 92,
+      "difficulty": 2,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "generic-wording"
+      ],
+      "status": "note"
+    },
+    "mc_l12_array_manual_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_array_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_filter_manual_001": {
+      "score": 92,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "generic-wording"
+      ],
+      "status": "note"
+    },
+    "mc_l12_filter_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_filter_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_index_manual_001": {
+      "score": 100,
+      "difficulty": 2,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_index_manual_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_index_manual_003": {
+      "score": 84,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 84,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 2
+      },
+      "issueCodes": [
+        "generic-wording",
+        "generic-wording"
+      ],
+      "status": "note"
+    },
+    "mc_l12_map_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_map_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l12_map_manual_003": {
+      "score": 92,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 92,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 1
+      },
+      "issueCodes": [
+        "generic-wording"
+      ],
+      "status": "note"
+    },
     "mc_l25_add_delete_001": {
       "score": 100,
       "difficulty": 3,
@@ -5608,5 +5883,86 @@
       "status": "clean"
     }
   },
-  "remediationQueue": []
+  "remediationQueue": [
+    {
+      "id": "mc_l12_index_manual_003",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::index",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 4 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
+      "id": "mc_l12_array_manual_001",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::array",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 2 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
+      "id": "fill_l12_index_manual_002",
+      "kind": "fill",
+      "source": "manual",
+      "conceptKey": "lesson_12::index",
+      "severity": "note",
+      "code": "one-character-answer",
+      "message": "One-character fill answer can be ambiguous without a strong hint.",
+      "priority": 2
+    },
+    {
+      "id": "fill_l12_index_manual_001",
+      "kind": "fill",
+      "source": "manual",
+      "conceptKey": "lesson_12::index",
+      "severity": "note",
+      "code": "one-character-answer",
+      "message": "One-character fill answer can be ambiguous without a strong hint.",
+      "priority": 2
+    },
+    {
+      "id": "mc_l12_filter_manual_001",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::filter",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 2 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
+      "id": "mc_l12_map_manual_003",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::map",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 2 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    },
+    {
+      "id": "fill_l12_array_manual_002",
+      "kind": "fill",
+      "source": "manual",
+      "conceptKey": "lesson_12::array",
+      "severity": "note",
+      "code": "one-character-answer",
+      "message": "One-character fill answer can be ambiguous without a strong hint.",
+      "priority": 2
+    },
+    {
+      "id": "mc_l12_index_manual_003",
+      "kind": "mc",
+      "source": "manual",
+      "conceptKey": "lesson_12::index",
+      "severity": "note",
+      "code": "generic-wording",
+      "message": "Option 2 uses broad wording that can cue test-taking instead of knowledge.",
+      "priority": 2
+    }
+  ]
 }

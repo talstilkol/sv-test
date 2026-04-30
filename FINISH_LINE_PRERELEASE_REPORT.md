@@ -27,7 +27,7 @@ Version: finish-line-prerelease-v1
 | Question QA strict | pass | `npm run qa:questions:strict` | passed |
 | Question quality strict | pass | `npm run quality:questions:strict` | passed |
 | Manual blocker map strict | pass | `npm run questions:blocker-map:strict` | passed |
-| Manual question coverage target strict | fail | `npm run questions:coverage-targets:strict` |   "handCuratedMcPromotionBacklog": 515, /   "handCuratedFillPromotionBacklog": 510 / } |
+| Manual question coverage target strict | fail | `npm run questions:coverage-targets:strict` |   "handCuratedMcPromotionBacklog": 511, /   "handCuratedFillPromotionBacklog": 506 / } |
 | Question reuse audit strict | pass | `npm run questions:reuse-audit:strict` | passed |
 | SVCollege release readiness | pass | `npm run svcollege:readiness:release` | passed |
 | SVCollege tab matrix strict | pass | `npm run svcollege:tab-matrix:strict` | passed |
@@ -42,4 +42,4 @@ Version: finish-line-prerelease-v1
 
 ## Blockers
 
-- questions-coverage-targets-strict:   "handCuratedMcPromotionBacklog": 515, |   "handCuratedFillPromotionBacklog": 510 | }
+- questions-coverage-targets-strict:   "handCuratedMcPromotionBacklog": 511, |   "handCuratedFillPromotionBacklog": 506 | }

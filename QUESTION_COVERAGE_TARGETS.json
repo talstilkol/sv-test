@@ -16,20 +16,20 @@
     "fillTargetPerCodeConcept": 2
   },
   "sourceMix": {
-    "curatedMC": 235,
+    "curatedMC": 247,
     "ignoredGeneratedMC": 0,
-    "curatedFill": 195,
+    "curatedFill": 203,
     "ignoredGeneratedFill": 0
   },
   "summary": {
     "totalConcepts": 568,
-    "mcReadyConcepts": 53,
-    "mcGapCount": 515,
+    "mcReadyConcepts": 57,
+    "mcGapCount": 511,
     "codeExampleConcepts": 568,
-    "fillReadyConcepts": 58,
-    "fillGapCount": 510,
-    "handCuratedMcPromotionBacklog": 515,
-    "handCuratedFillPromotionBacklog": 510,
+    "fillReadyConcepts": 62,
+    "fillGapCount": 506,
+    "handCuratedMcPromotionBacklog": 511,
+    "handCuratedFillPromotionBacklog": 506,
     "ready": false
   },
   "gaps": {
@@ -116,27 +116,9 @@
         }
       },
       {
-        "key": "lesson_12::map",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "map",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_12::forEach",
         "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
         "conceptName": "forEach",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::filter",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "filter",
         "mc": {
           "curated": 0,
           "total": 0
@@ -164,24 +146,6 @@
         "key": "lesson_12::lowercase",
         "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
         "conceptName": "lowercase",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::index",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "index",
-        "mc": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::array",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "array",
         "mc": {
           "curated": 0,
           "total": 0
@@ -4753,27 +4717,9 @@
         }
       },
       {
-        "key": "lesson_12::map",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "map",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_12::forEach",
         "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
         "conceptName": "forEach",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::filter",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "filter",
         "fill": {
           "curated": 0,
           "total": 0
@@ -4801,24 +4747,6 @@
         "key": "lesson_12::lowercase",
         "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
         "conceptName": "lowercase",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::index",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "index",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_12::array",
-        "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-        "conceptName": "array",
         "fill": {
           "curated": 0,
           "total": 0

@@ -12,11 +12,11 @@
   "summary": {
     "readyForAuthoring": true,
     "totalConcepts": 568,
-    "gapConcepts": 515,
-    "mcGapCount": 515,
-    "fillGapCount": 510,
-    "strictMcDeficit": 1469,
-    "strictFillDeficit": 941,
+    "gapConcepts": 511,
+    "mcGapCount": 511,
+    "fillGapCount": 506,
+    "strictMcDeficit": 1457,
+    "strictFillDeficit": 933,
     "batches": 26,
     "missingPlannedKeys": 0
   },
@@ -30,40 +30,6 @@
       "sourceEvidenceStatus": "lesson-data-present",
       "status": "not-started",
       "items": [
-        {
-          "key": "lesson_12::array",
-          "lessonId": "lesson_12",
-          "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-          "conceptName": "array",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 12 - תרגול מתודות מערך",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_12::filter",
-          "lessonId": "lesson_12",
-          "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-          "conceptName": "filter",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 12 - תרגול מתודות מערך",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
         {
           "key": "lesson_12::forEach",
           "lessonId": "lesson_12",
@@ -82,44 +48,10 @@
           "manualReviewDate": "unknown/unavailable"
         },
         {
-          "key": "lesson_12::index",
-          "lessonId": "lesson_12",
-          "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-          "conceptName": "index",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 12 - תרגול מתודות מערך",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
           "key": "lesson_12::lowercase",
           "lessonId": "lesson_12",
           "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
           "conceptName": "lowercase",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 12 - תרגול מתודות מערך",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_12::map",
-          "lessonId": "lesson_12",
-          "lessonTitle": "שיעור 12 - תרגול מתודות מערך",
-          "conceptName": "map",
           "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
           "moduleIndex": 2,
           "priority": "P0-manual-mc-fill",
@@ -454,21 +386,7 @@
           "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        }
-      ],
-      "conceptCount": 25,
-      "mcDeficit": 71,
-      "fillDeficit": 42
-    },
-    {
-      "id": "QMAN-002",
-      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-      "priority": "P0-manual-mc-fill",
-      "owner": "unknown/unavailable",
-      "reviewer": "unknown/unavailable",
-      "sourceEvidenceStatus": "lesson-data-present",
-      "status": "not-started",
-      "items": [
+        },
         {
           "key": "lesson_13::inheritance",
           "lessonId": "lesson_13",
@@ -536,7 +454,21 @@
           "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        },
+        }
+      ],
+      "conceptCount": 25,
+      "mcDeficit": 69,
+      "fillDeficit": 40
+    },
+    {
+      "id": "QMAN-002",
+      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "priority": "P0-manual-mc-fill",
+      "owner": "unknown/unavailable",
+      "reviewer": "unknown/unavailable",
+      "sourceEvidenceStatus": "lesson-data-present",
+      "status": "not-started",
+      "items": [
         {
           "key": "lesson_13::method",
           "lessonId": "lesson_13",
@@ -793,9 +725,9 @@
           "manualReviewDate": "unknown/unavailable"
         }
       ],
-      "conceptCount": 19,
-      "mcDeficit": 51,
-      "fillDeficit": 34
+      "conceptCount": 15,
+      "mcDeficit": 41,
+      "fillDeficit": 28
     },
     {
       "id": "QMAN-003",

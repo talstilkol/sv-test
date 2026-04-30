@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.8";
+var QUESTIONS_BANK_VERSION = "2.1.9";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -76,6 +76,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 11 sub-batch: string, toString, undefined, unshift and var MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.9",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 12 sub-batch: array, index, map and filter MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -1302,6 +1308,222 @@ var QUESTIONS_BANK = {
         "❌ var יכול להחזיק כל ערך JavaScript.",
         "❌ var עדיין נתמך, אבל פחות מומלץ.",
         "❌ let לא דולף מחוץ לבלוק if.",
+      ],
+    },
+    {
+      id: "mc_l12_array_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::array", level: 2,
+      question: "מה הכי נכון לגבי array בשיעור 12?",
+      options: [
+        "מבנה מסודר שמחזיק ערכים לפי אינדקסים",
+        "פונקציה שמחזירה תמיד undefined",
+        "דרך להמיר טקסט לאותיות גדולות",
+        "משתנה שמותר לו להחזיק רק מספר אחד",
+      ],
+      correctIndex: 0,
+      explanation: "array הוא אוסף מסודר. כל ערך נמצא במיקום מספרי, והאינדקסים מתחילים ב-0.",
+      optionFeedback: [
+        "✅ נכון: מערך שומר סדר וגישה לפי אינדקס.",
+        "❌ זה לא תיאור של מערך; forEach למשל מחזירה undefined.",
+        "❌ זה קשור ל-toUpperCase, לא למערך.",
+        "❌ מערך יכול להחזיק כמה ערכים ואף סוגים שונים.",
+      ],
+    },
+    {
+      id: "mc_l12_array_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::array", level: 4,
+      question: "מה יודפס?\n\nconst mixed = [42, 'hello', true, [1, 2]];\nconsole.log(mixed.length);",
+      options: [
+        "4",
+        "5",
+        "3",
+        "undefined",
+      ],
+      correctIndex: 0,
+      explanation: "המערך הפנימי [1, 2] נספר כאיבר אחד בתוך mixed, ולכן יש ארבעה איברים.",
+      optionFeedback: [
+        "✅ נכון: 42, 'hello', true והמערך הפנימי הם ארבעה איברים.",
+        "❌ הערכים בתוך המערך הפנימי לא נספרים כאיברים נפרדים של mixed.",
+        "❌ פספסת את המערך הפנימי כאיבר רביעי.",
+        "❌ length קיים על מערך.",
+      ],
+    },
+    {
+      id: "mc_l12_array_manual_003", topicId: "topic_arrays", conceptKey: "lesson_12::array", level: 6,
+      question: "מה נכון לגבי מערך מקונן כמו const data = [['A'], ['B']]?",
+      options: [
+        "data[0][0] מחזיר את 'A'",
+        "data[0] מחזיר את 'A' ישירות",
+        "data.length הוא 4",
+        "מערך לא יכול להכיל מערך אחר",
+      ],
+      correctIndex: 0,
+      explanation: "data[0] הוא המערך הפנימי הראשון, ובתוכו אינדקס 0 מחזיר 'A'.",
+      optionFeedback: [
+        "✅ נכון: צריך שני אינדקסים כדי להיכנס למערך הפנימי.",
+        "❌ data[0] מחזיר ['A'], לא את הערך הפנימי ישירות.",
+        "❌ יש שני איברים חיצוניים, לכן length הוא 2.",
+        "❌ JavaScript מאפשר מערך בתוך מערך.",
+      ],
+    },
+    {
+      id: "mc_l12_index_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::index", level: 2,
+      question: "באיזה אינדקס נמצא האיבר הראשון במערך JavaScript?",
+      options: [
+        "0",
+        "1",
+        "length",
+        "-1",
+      ],
+      correctIndex: 0,
+      explanation: "אינדקסים במערך JavaScript מתחילים ב-0, ולכן האיבר הראשון הוא arr[0].",
+      optionFeedback: [
+        "✅ נכון: מערכים ב-JavaScript הם zero-based.",
+        "❌ 1 הוא האיבר השני.",
+        "❌ length הוא מספר האיברים, לא אינדקס ראשון.",
+        "❌ -1 אינו אינדקס רגיל לקריאת האיבר הראשון במערך.",
+      ],
+    },
+    {
+      id: "mc_l12_index_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::index", level: 4,
+      question: "מה יודפס?\n\nconst fruits = ['apple', 'banana', 'orange'];\nconsole.log(fruits[fruits.length - 1]);",
+      options: [
+        "'orange'",
+        "'banana'",
+        "undefined",
+        "3",
+      ],
+      correctIndex: 0,
+      explanation: "length הוא 3, ולכן length - 1 הוא 2. fruits[2] הוא 'orange'.",
+      optionFeedback: [
+        "✅ נכון: האיבר האחרון נמצא באינדקס length - 1.",
+        "❌ banana נמצא באינדקס 1.",
+        "❌ undefined היה מתקבל מ-fruits[3].",
+        "❌ 3 הוא אורך המערך, לא הערך באינדקס האחרון.",
+      ],
+    },
+    {
+      id: "mc_l12_index_manual_003", topicId: "topic_arrays", conceptKey: "lesson_12::index", level: 6,
+      question: "מה הבעיה בקוד הבא?\n\nconst names = ['Dana', 'Avi'];\nconsole.log(names[names.length]);",
+      options: [
+        "names.length מצביע אחרי האיבר האחרון ולכן מתקבל undefined",
+        "names.length תמיד מחזיר את האיבר האחרון",
+        "מערך לא תומך בגישה עם סוגריים מרובעים",
+        "האינדקס האחרון הוא תמיד 0",
+      ],
+      correctIndex: 0,
+      explanation: "אם length הוא 2, האינדקסים התקפים הם 0 ו-1. names[2] לא קיים.",
+      optionFeedback: [
+        "✅ נכון: זו שגיאת off-by-one קלאסית.",
+        "❌ length מחזיר מספר איברים, לא איבר.",
+        "❌ גישה עם [] היא הדרך הרגילה לקרוא איבר לפי אינדקס.",
+        "❌ 0 הוא האינדקס הראשון, לא תמיד האחרון.",
+      ],
+    },
+    {
+      id: "mc_l12_map_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::map", level: 3,
+      question: "מה מחזירה map?",
+      options: [
+        "מערך חדש באותו אורך, עם תוצאה אחת לכל איבר",
+        "undefined אחרי מעבר על כל איבר",
+        "מערך קצר יותר רק עם איברים שעברו תנאי",
+        "האיבר הראשון שעובר תנאי",
+      ],
+      correctIndex: 0,
+      explanation: "map מפעילה callback על כל איבר ומחזירה מערך חדש באותו אורך.",
+      optionFeedback: [
+        "✅ נכון: map היא טרנספורמציה של כל איבר.",
+        "❌ זה מאפיין של forEach.",
+        "❌ זה filter.",
+        "❌ זה find.",
+      ],
+    },
+    {
+      id: "mc_l12_map_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::map", level: 5,
+      question: "מה יודפס?\n\nconst prices = [10, 20, 30];\nconst withTax = prices.map((price) => price * 1.17);\nconsole.log(prices.length, withTax.length);",
+      options: [
+        "3 3",
+        "3 0",
+        "0 3",
+        "undefined 3",
+      ],
+      correctIndex: 0,
+      explanation: "map לא משנה את אורך המקור. היא יוצרת מערך חדש עם איבר תוצאה לכל איבר מקור.",
+      optionFeedback: [
+        "✅ נכון: שני המערכים באורך 3.",
+        "❌ withTax אינו ריק; map מחזירה שלוש תוצאות.",
+        "❌ prices לא נמחק או השתנה לאורך 0.",
+        "❌ length קיים על מערכים.",
+      ],
+    },
+    {
+      id: "mc_l12_map_manual_003", topicId: "topic_arrays", conceptKey: "lesson_12::map", level: 6,
+      question: "למה הקוד הבא מחזיר [undefined, undefined]?\n\nconst nums = [1, 2];\nconst doubled = nums.map((n) => { n * 2; });",
+      options: [
+        "בגוף עם {} צריך return מפורש מתוך callback",
+        "map תמיד מחזירה undefined",
+        "n * 2 משנה את המערך המקורי במקום להחזיר ערך",
+        "map עובדת רק על strings",
+      ],
+      correctIndex: 0,
+      explanation: "Arrow function עם גוף בלוק לא מחזירה ביטוי אוטומטית. בלי return, כל קריאה מחזירה undefined.",
+      optionFeedback: [
+        "✅ נכון: צריך לכתוב return n * 2 או להסיר את הסוגריים המסולסלים.",
+        "❌ map כן מחזירה מערך חדש.",
+        "❌ n * 2 רק מחשב ערך; הוא לא משנה את המערך.",
+        "❌ map עובדת על מערכים מכל סוגי ערכים.",
+      ],
+    },
+    {
+      id: "mc_l12_filter_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::filter", level: 3,
+      question: "מה מחזירה filter?",
+      options: [
+        "מערך חדש עם רק האיברים שהחזירו true בתנאי",
+        "מערך חדש באותו אורך תמיד",
+        "undefined אחרי ביצוע פעולה על כל איבר",
+        "מחרוזת עם כל האיברים מחוברים",
+      ],
+      correctIndex: 0,
+      explanation: "filter משתמשת ב-predicate. רק איברים שעוברים את התנאי נשארים במערך החדש.",
+      optionFeedback: [
+        "✅ נכון: זהו סינון לפי תנאי.",
+        "❌ map שומרת אורך; filter יכולה להחזיר מערך קצר יותר.",
+        "❌ זה forEach.",
+        "❌ זה דומה ל-toString/join, לא filter.",
+      ],
+    },
+    {
+      id: "mc_l12_filter_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::filter", level: 5,
+      question: "מה יודפס?\n\nconst scores = [45, 82, 91, 33];\nconst passed = scores.filter((score) => score >= 60);\nconsole.log(passed);",
+      options: [
+        "[82, 91]",
+        "[45, 82, 91, 33]",
+        "[45, 33]",
+        "undefined",
+      ],
+      correctIndex: 0,
+      explanation: "רק 82 ו-91 עומדים בתנאי score >= 60.",
+      optionFeedback: [
+        "✅ נכון: רק הציונים שעברו את הסף נשארים.",
+        "❌ זה מערך המקור, אבל filter מחזירה רק התאמות.",
+        "❌ 45 ו-33 לא עומדים בתנאי.",
+        "❌ filter מחזירה מערך, לא undefined.",
+      ],
+    },
+    {
+      id: "mc_l12_filter_manual_003", topicId: "topic_arrays", conceptKey: "lesson_12::filter", level: 6,
+      question: "למה הקוד הבא לא משנה את users?\n\nusers.filter((user) => user.active);",
+      options: [
+        "filter מחזירה מערך חדש וצריך לשמור את התוצאה",
+        "filter משנה את המקור רק אם משתמשים ב-const",
+        "filter מוחקת אוטומטית איברים שלא עברו תנאי",
+        "filter עובדת רק על numbers",
+      ],
+      correctIndex: 0,
+      explanation: "filter אינה mutating. אם לא שומרים את הערך המוחזר, התוצאה נעלמת והמערך המקורי נשאר כפי שהיה.",
+      optionFeedback: [
+        "✅ נכון: צריך למשל const activeUsers = users.filter(...).",
+        "❌ const לא משנה את התנהגות filter.",
+        "❌ filter לא מוחקת מהמקור.",
+        "❌ filter עובדת על מערכים של אובייקטים, strings, numbers ועוד.",
       ],
     },
 
@@ -3676,6 +3898,62 @@ var QUESTIONS_BANK = {
       answer: "var",
       hint: "הצהרת משתנה ישנה שהיא function-scoped.",
       explanation: "var תחום לפונקציה ולא לבלוק, ולכן mode זמין אחרי בלוק ה-if בתוך demo.",
+    },
+    {
+      id: "fill_l12_array_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::array", level: 3,
+      code: "const mixed = [42, 'hello', true, [1, 2]];\nconsole.log(mixed.____); // 4",
+      answer: "length",
+      hint: "מאפיין שמחזיר כמה איברים יש במערך החיצוני.",
+      explanation: "length מחזיר את מספר האיברים במערך. המערך הפנימי נספר כאיבר אחד.",
+    },
+    {
+      id: "fill_l12_array_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::array", level: 5,
+      code: "const mixed = [42, 'hello', true, [1, 2]];\nconsole.log(mixed[3][____]); // 1",
+      answer: "0",
+      hint: "האיבר הראשון בתוך המערך הפנימי.",
+      explanation: "mixed[3] הוא [1, 2]. כדי לקרוא את 1 צריך אינדקס 0 בתוך המערך הפנימי.",
+    },
+    {
+      id: "fill_l12_index_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::index", level: 3,
+      code: "const fruits = ['apple', 'banana', 'orange'];\nconsole.log(fruits[____]); // 'apple'",
+      answer: "0",
+      hint: "האינדקס הראשון במערך JavaScript.",
+      explanation: "מערכים ב-JavaScript מתחילים באינדקס 0, ולכן fruits[0] הוא האיבר הראשון.",
+    },
+    {
+      id: "fill_l12_index_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::index", level: 5,
+      code: "const fruits = ['apple', 'banana', 'orange'];\nconst last = fruits[fruits.length - ____];\nconsole.log(last); // 'orange'",
+      answer: "1",
+      hint: "האיבר האחרון נמצא באורך פחות אחד.",
+      explanation: "האינדקס האחרון הוא length - 1 כי האינדקס הראשון הוא 0.",
+    },
+    {
+      id: "fill_l12_map_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::map", level: 4,
+      code: "const prices = [10, 20, 30];\nconst withTax = prices.____((price) => price * 1.17);",
+      answer: "map",
+      hint: "מתודה שמחזירה מערך חדש עם תוצאה לכל איבר.",
+      explanation: "map עוברת על כל price ומחזירה מערך חדש עם הערכים אחרי חישוב המס.",
+    },
+    {
+      id: "fill_l12_map_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::map", level: 6,
+      code: "const nums = [1, 2];\nconst doubled = nums.map((n) => {\n  ____ n * 2;\n});",
+      answer: "return",
+      hint: "בגוף callback עם סוגריים מסולסלים צריך החזרה מפורשת.",
+      explanation: "כאשר callback של map נכתב כבלוק, צריך return כדי שכל איבר יחזיר ערך למערך החדש.",
+    },
+    {
+      id: "fill_l12_filter_manual_001", topicId: "topic_arrays", conceptKey: "lesson_12::filter", level: 4,
+      code: "const scores = [45, 82, 91, 33];\nconst passed = scores.____((score) => score >= 60);",
+      answer: "filter",
+      hint: "מתודה שמחזירה רק איברים שעוברים תנאי.",
+      explanation: "filter משאירה במערך החדש רק ציונים שהחזירו true עבור score >= 60.",
+    },
+    {
+      id: "fill_l12_filter_manual_002", topicId: "topic_arrays", conceptKey: "lesson_12::filter", level: 6,
+      code: "const users = [{ name: 'Tal', points: 8 }, { name: 'Noa', points: 3 }];\nconst readyUsers = users.filter((user) => ____);",
+      answer: "user.points >= 5",
+      hint: "כתוב תנאי שמחזיר true רק למשתמש עם מספיק נקודות.",
+      explanation: "filter צריכה predicate שמחזיר boolean. התנאי user.points >= 5 משאיר רק משתמשים שהגיעו לסף.",
     },
 
     // ===== Objects / OOP =====

@@ -4,7 +4,7 @@
 
 > **עדכון 2026-04-28:** מסמך זה הוא תוכנית legacy ממוקדת בנק שאלות. תוכנית האב הפעילה היא [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md), והביצוע היומי נמצא ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md). קו הסיום הראשון גובר על המסמך הזה: כיסוי מלא של `SVCollege — קורס AI & Full Stack` בכל הפורטל לפני הרחבות אחרות.
 
-> **עדכון Finish Line 1:** אחרי ביטול הבנק האוטומטי, שערי SVCollege עצמם חזרו לירוק (`svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict`). קו הסיום עדיין לא נסגר כי `questions:coverage-targets:strict` אדום: `515` פערי MC ו-`510` פערי Fill ידניים.
+> **עדכון Finish Line 1:** אחרי ביטול הבנק האוטומטי, שערי SVCollege עצמם חזרו לירוק (`svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict`). קו הסיום עדיין לא נסגר כי `questions:coverage-targets:strict` אדום: `511` פערי MC ו-`506` פערי Fill ידניים.
 
 > **עדכון XP Economy 2026-04-29:** תוכנית החנות והכלכלה החדשה נמצאת ב-[XP_REWARD_STORE_MASTER_PLAN.md](XP_REWARD_STORE_MASTER_PLAN.md). היא מוסיפה 100 רמות XP לא לינאריות, Coins, חנות חוויות, כרטיסים למוזיאון ושער רמה 100 שמחייב שליטה מלאה. היא Priority 2 ואינה חוסמת חומר חובה למבחן.
 
@@ -16,9 +16,9 @@
 
 > **עדכון Exam Sprint 2026-04-29:** נוסף P-0.3 ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md): ספרינט 7 ימים לפני מבחן. הוא מתמקד ב-weakest 10, no-repeat simulation, harder-after-correct, wrong-answer repair, smoke מובייל/פוקוס, וגיבוש `Exam Edition RC`.
 
-> **עדכון System Bug Audit 2026-04-30:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `233` פריטים: `DONE 10`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 216`.
+> **עדכון System Bug Audit 2026-04-30:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `234` פריטים: `DONE 11`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 216`.
 
-> **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `515` פערי MC ו-`510` פערי Fill ידניים; `MANUAL_QUESTION_AUTHORING_PLAN.md` דורש עדיין `1,469` MC ו-`941` Fill ידניות.
+> **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `511` פערי MC ו-`506` פערי Fill ידניים; `MANUAL_QUESTION_AUTHORING_PLAN.md` דורש עדיין `1,457` MC ו-`933` Fill ידניות. הבנק הידני הפעיל עומד על `247` MC ו-`203` Fill.
 
 > **עדכון Forward Execution 2026-04-30:** רשימת המשימות התפעולית המעודכנת נמצאת ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md) תחת `Forward Execution Plan — 2026-04-30`. סדר העבודה המחייב: קודם שני מודולי SVCollege שחסרים Trainer/Mock Exam ידניים, אחר כך כל backlog השאלות הידניות, אחר כך פערי Trace/Build/Bug, ורק בסוף מוזיאון/חנות/קהילה/Sync/פירוק frontend.
 
@@ -44,10 +44,10 @@
 
 | ID | סטטוס | עדיפות | משימה |
 |---|---|---:|---|
-| SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `515` פערי MC ו-`510` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |
-| SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,469` MC ו-`941` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |
+| SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `511` פערי MC ו-`506` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |
+| SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,457` MC ו-`933` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |
 | SYS-AUDIT-003 | [ ] | P1 | להשאיר `222` פערי Trace/Build/Bug לא-עדיפותיים אחרי Finish Line 1, ואז לסגור אותם עם תוכן ידני ו-browser smoke. |
-| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `233` פריטים יש `216` NOT DONE ו-`7` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |
+| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `234` פריטים יש `216` NOT DONE ו-`7` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |
 | SYS-AUDIT-005 | [ ] | P1 | להשלים keyboard-only coverage ל-Escape/Enter/Arrow, focus return, מעבר טאבים, מעבר מושגים ו-submit answer. |
 | SYS-AUDIT-006 | [ ] | P1 | להמשיך פירוק `app.js`/views רק אחרי Finish Line 1 ירוק, עם tests לכל slice. |
 | SYS-AUDIT-007 | [ ] | P1 | להוכיח Cross-device Sync מול backend/auth אמיתי; עד אז זה alpha מקומי בלבד. |
@@ -94,14 +94,14 @@
 | BUG-AUDIT-018 | [ ] | P2 | לרכז metadata של דוחות generated או לגזור תאריך מריצת release אחת, כדי שדוחות עם מספרים עדכניים לא יישארו עם תאריך ישן. |
 | BUG-AUDIT-019 | [ ] | P1 | לפני release/commit ליצור inventory של קבצים מיועדים, להפריד generated artifacts, ולא לשחרר מתוך worktree מלוכלך ללא בעלות ברורה. |
 | BUG-AUDIT-020 | [V] | P1 | `questions:activity-authoring-plan:strict` הוקשח ונכשל עכשיו על `ready:false`; פערי Trace/Build/Bug לא יכולים להיראות ירוקים לפני authoring ידני אמיתי. |
-| BUG-AUDIT-021 | [ ] | P0 | לכתוב/לסקור ידנית MC/Fill במקום להסתמך על legacy generated bank; אחרי באטצ' החסמים הראשון `questions:coverage-targets` מציג אמת: `558` פערי MC ו-`552` פערי Fill ידניים. |
+| BUG-AUDIT-021 | [ ] | P0 | לכתוב/לסקור ידנית MC/Fill במקום להסתמך על legacy generated bank; אחרי תת-batch Lesson 12 הראשון `questions:coverage-targets` מציג אמת: `511` פערי MC ו-`506` פערי Fill ידניים. |
 | BUG-AUDIT-022 | [ ] | P2 | אחרי סגירת Finish Line 1 לפרק payload frontend: לצמצם stylesheet גלובלי גדול ו-core chunk גדול באמצעות חלוקת styles/modules לפי feature עם smoke tests. |
-| BUG-AUDIT-023 | [ ] | P0 | לתקן overclaim בסטטוס התוכנית: `BRUTAL_MASTER_PLAN_AUDIT.md` מצא 759 פריטים, מתוכם 332 DONE, 368 PARTIAL, 50 NOT DONE ו-9 FAKED. אין להציג Phase כ-100% עד שכל פריט FAKED/PARTIAL מקבל ראיה אמיתית או מסומן מחדש. |
+| BUG-AUDIT-023 | [ ] | P0 | לתקן overclaim בסטטוס התוכנית: `BRUTAL_MASTER_PLAN_AUDIT.md` מצא עכשיו `234` פריטים, מתוכם `11` DONE, `7` PARTIAL, `216` NOT DONE ו-`0` FAKED. אין להציג Phase כ-100% עד שכל פריט PARTIAL מקבל ראיה אמיתית או מסומן מחדש. |
 | BUG-AUDIT-024 | [ ] | P0 | להוריד ל-PARTIAL/NOT DONE כל `[V]` שתלוי בפיילוט, D1/D7, real usage, pricing, post-exam review או learner outcome אמיתי עד שיש נתוני אמת. |
 | BUG-AUDIT-025 | [ ] | P1 | להפוך את `brutal-master-plan-audit` לשער קבוע לפני release: כל `FAKED` חייב להיות 0, וכל `PARTIAL` חייב להיות מוצדק עם owner וקריטריון סגירה. |
 | BUG-AUDIT-026 | [ ] | P1 | למנוע drift בזמן batch חלקי: cache version, HTML script version, service-worker tests ודוחות smoke צריכים להיגזר ממקור אחד או להיבדק ב-gate אחד. |
 | BUG-AUDIT-027 | [ ] | P0 | לנקות כל gate ישן שעדיין מציג legacy generated/seeded כשווה ערך לחומר ידני; release לא ירוק עד ש-`validate:strict` ו-`questions:coverage-targets:strict` משקפים ידני בלבד. |
-| BUG-AUDIT-028 | [V] | P0 | נוספה `MANUAL_QUESTION_AUTHORING_PLAN.md/json` עם `28` באטצ'ים ל-`558` פערי MC ו-`552` פערי Fill; owner/reviewer נשארים `unknown/unavailable` עד הקצאה אמיתית. |
+| BUG-AUDIT-028 | [V] | P0 | נוספה ומתעדכנת `MANUAL_QUESTION_AUTHORING_PLAN.md/json`; אחרי תת-batch Lesson 12 הראשון נותרו `26` באטצ'ים, `511` פערי MC ו-`506` פערי Fill; owner/reviewer נשארים `unknown/unavailable` עד הקצאה אמיתית. |
 | BUG-AUDIT-029 | [ ] | P1 | להוציא את `data/questions_bank_seeded.js` מהנתיב הפעיל לגמרי: להשאיר כארכיון legacy או למחוק אחרי שהפריטים השימושיים נכתבו מחדש ידנית. |
 | BUG-AUDIT-030 | [V] | P1 | נוסף `guard:no-auto-questions` שמוודא שאין פונקציות runtime מסוג `generatedMC`, `makeCodeFill`, `ensureSeededBank`, שאין סקריפטי seed פעילים, וש-`questions_bank_seeded.js` נשאר ארכיון לא פעיל בלבד. |
 | BUG-AUDIT-031 | [V] | P0 | נכתבו ידנית `27` MC ו-`18` Fill ל-`lesson_25` ו-`ai_development`; `svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict` ו-`exam:mock-variants:strict` ירוקים בלי generated bank. |
@@ -112,7 +112,7 @@
 | BUG-AUDIT-036 | [ ] | P2 | להוסיף SEO backlog לא חוסם אחרי Finish Line 1: OG tags, JSON-LD, canonical/social metadata ובדיקת preview, בלי לעכב את הכנת המבחן. |
 | BUG-AUDIT-037 | [ ] | P2 | להחליט telemetry אמיתי: Bug Agent local-only נשאר ברירת מחדל; Sentry/Plausible/analytics רק עם חשבון אמיתי, privacy notice, PII policy ואישור מפורש. |
 | BUG-AUDIT-038 | [V] | P0 | נוסף `questions:blocker-map:strict` כדי למנוע ערבוב בין מודולים דומים; אחרי authoring ידני ל-`lesson_25` ו-`ai_development`, הדוח מציג `releaseQuestionDeficit: 0`, `strictMcDeficit: 0`, `strictFillDeficit: 0`. |
-| BUG-AUDIT-039 | [ ] | P0 | להשלים את הכיסוי הידני המלא שנותר לפי `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,572` MC ידניות ו-`1,007` Fill ידניות עדיין נדרשות כדי ש-`questions:coverage-targets:strict` יהיה ירוק לכל 568 המושגים. `FINISH_LINE_PRERELEASE_REPORT.md` מאשר שזה החסם היחיד מתוך `18` שערי pre-release. |
+| BUG-AUDIT-039 | [ ] | P0 | להשלים את הכיסוי הידני המלא שנותר לפי `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,457` MC ידניות ו-`933` Fill ידניות עדיין נדרשות כדי ש-`questions:coverage-targets:strict` יהיה ירוק לכל 568 המושגים. `FINISH_LINE_PRERELEASE_REPORT.md` מאשר שזה החסם היחיד מתוך `18` שערי pre-release. |
 | BUG-AUDIT-040 | [V] | P1 | נוסף `finish-line:pre-release` / `FINISH_LINE_PRERELEASE_REPORT.md` שמריץ no-auto-questions, סריקת native-random, QA, SVCollege gates, tests ו-build ברצף ומדווח `17/18` ירוק בלי לעצור בכשל הראשון. |
 | BUG-AUDIT-041 | [ ] | P1 | לבצע security inventory לכל `.innerHTML`/`document.write` שמקבל data-originated strings. להתחיל מ-Pair Match, Achievements, Reflections, feedback ו-PDF print; לתקן רק עם `esc(...)`, DOM API או sanitizer קיים, ולהוסיף gate סטטי שמונע regression. |
 | BUG-AUDIT-042 | [ ] | P1 | להוסיף CSP מדורג: קודם report-only/בדיקת תאימות ל-PWA, fonts ו-inline scripts קיימים; אחר כך להקשיח בלי לשבור local/offline learning. לא לסמן DONE בלי browser smoke. |
@@ -298,21 +298,15 @@ lesson_27: type, interface, enum, string, number, boolean, void
 
 ---
 
-## 7. אוטומציה — איך מייצרים מהר
+## 7. תהליך כתיבה ידנית בלבד
 
-### שלב A — סקריפט המייצר seed שאלות אוטומטית
-ב-`app.js` כבר קיים מנוע `buildQuestion` שמייצר MC ו-fill דינמית. אפשר להריץ אותו offline על כל מושג, להציל את התוצאה ל-JSON, ולעבור עליה ידנית לליטוש איכות.
+סעיף האוטומציה הישן מבוטל. אסור ליצור שאלות בעזרת seed script, prompt ל-LLM, generator או הרחבת תוכן אוטומטית. כל שאלה שנכנסת לבנק הפעיל חייבת להיכתב ידנית מול חומר השיעור, לקבל `conceptKey` אמיתי, לקבל feedback לכל אפשרות MC, ולעבור validation/QA לפני commit.
 
-### שלב B — שימוש ב-LLM בעקבות תבנית קבועה
-פרומפט מומלץ למודל:
-```
-Generate 3 multiple-choice questions and 2 code-completion questions for the JavaScript/React concept "<conceptName>".
-Use the following definition: "<level-junior explanation>".
-Code example: <codeExample>
-For each MC: 4 options, level 1-6, plausible distractors.
-For each fill: blank one meaningful token (the concept name itself if possible).
-Output as a JS object matching the bank schema.
-```
+### שלב A — בחירת מושג מתוך תוכנית authoring
+פותחים את [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md), בוחרים את המושגים הראשונים לפי סדר P0, וקוראים את חומר השיעור המקורי לפני כתיבה.
+
+### שלב B — כתיבה ידנית ובדיקה קפדנית
+כותבים ידנית 3 MC ו-2 Fill לכל מושג חסר, בלי placeholder ובלי תשובה שדולפת בקוד. אם אין מספיק ידע מקור, מסמנים `unknown/unavailable` ולא ממלאים תוכן מומצא.
 
 ### שלב C — סקריפט וולידציה
 לפני merge — לוודא:

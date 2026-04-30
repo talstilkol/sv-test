@@ -3,7 +3,7 @@
   "date": "2026-04-29",
   "target": "SVCollege question reuse by learner profile contract and concept tag",
   "summary": {
-    "questions": 1086,
+    "questions": 1106,
     "conceptTags": 384,
     "missingConceptKey": 0,
     "duplicateIdentityIssues": 0,
@@ -484,25 +484,29 @@
     },
     {
       "conceptKey": "lesson_12::array",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 2
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_12::filter",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_12::forEach",
@@ -517,14 +521,16 @@
     },
     {
       "conceptKey": "lesson_12::index",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 2
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_12::lowercase",
@@ -539,14 +545,16 @@
     },
     {
       "conceptKey": "lesson_12::map",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_12::spread",
