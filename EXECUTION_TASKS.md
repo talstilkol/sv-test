@@ -36,6 +36,7 @@
 | `MANUAL_QUESTION_AUTHORING_PLAN` | `1532` שאלות MC ידניות ו-`981` Fill ידניות עדיין נדרשות ליעד strict |
 | התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה הושלמה ככיסוי authored: `40` MC ו-`26` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
 | `QUESTION_ACTIVITY_AUTHORING_PLAN` | `222` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
+| `BRUTAL_MASTER_PLAN_AUDIT` | `221` פריטים: `DONE 8`, `FAKED 0`, `PARTIAL 6`, `NOT DONE 207` |
 
 ## משימות שנותרו לבצע — ראשונות
 

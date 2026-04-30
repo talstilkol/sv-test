@@ -4,7 +4,7 @@
 
 > **עדכון 2026-04-28:** מסמך זה הוא תוכנית legacy ממוקדת בנק שאלות. תוכנית האב הפעילה היא [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md), והביצוע היומי נמצא ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md). קו הסיום הראשון גובר על המסמך הזה: כיסוי מלא של `SVCollege — קורס AI & Full Stack` בכל הפורטל לפני הרחבות אחרות.
 
-> **עדכון Finish Line 1:** אחרי ביטול הבנק האוטומטי, מיפוי מודול×טאב כבר לא ירוק מלא: `SVCOLLEGE_TAB_MATRIX.md` מדווח `221/225` תאים קשיחים, `4` פערי טאב, ו־`15/15` מודולי SVCollege קיימים אבל `2` מודולים חסומים לכיסוי Trainer/Mock Exam ידני. אין לסגור את קו הסיום עד שהפערים נסגרים בשאלות ידניות שעברו בדיקה.
+> **עדכון Finish Line 1:** אחרי ביטול הבנק האוטומטי, שערי SVCollege עצמם חזרו לירוק (`svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict`). קו הסיום עדיין לא נסגר כי `questions:coverage-targets:strict` אדום: `541` פערי MC ו-`536` פערי Fill ידניים.
 
 > **עדכון XP Economy 2026-04-29:** תוכנית החנות והכלכלה החדשה נמצאת ב-[XP_REWARD_STORE_MASTER_PLAN.md](XP_REWARD_STORE_MASTER_PLAN.md). היא מוסיפה 100 רמות XP לא לינאריות, Coins, חנות חוויות, כרטיסים למוזיאון ושער רמה 100 שמחייב שליטה מלאה. היא Priority 2 ואינה חוסמת חומר חובה למבחן.
 
@@ -16,9 +16,9 @@
 
 > **עדכון Exam Sprint 2026-04-29:** נוסף P-0.3 ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md): ספרינט 7 ימים לפני מבחן. הוא מתמקד ב-weakest 10, no-repeat simulation, harder-after-correct, wrong-answer repair, smoke מובייל/פוקוס, וגיבוש `Exam Edition RC`.
 
-> **עדכון System Bug Audit 2026-04-30:** נוסף [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md). אחרי מדיניות manual-only, `validate:strict`, QA, tests ו-build עוברים, אבל release gates של SVCollege אדומים: `2` release blockers, `4` tab gaps, `2` critical-flow failures, ו-`questions:coverage-targets:strict` נכשל עם `567` MC ו-`561` Fill פערים ידניים. משימות התיקון נרשמו בסעיף `0A` למטה.
+> **עדכון System Bug Audit 2026-04-30:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `221` פריטים: `DONE 8`, `FAKED 0`, `PARTIAL 6`, `NOT DONE 207`.
 
-> **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `567` פערי MC ו-`561` פערי Fill ידניים.
+> **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `541` פערי MC ו-`536` פערי Fill ידניים; `MANUAL_QUESTION_AUTHORING_PLAN.md` דורש עדיין `1,532` MC ו-`981` Fill ידניות.
 
 > **עדכון Forward Execution 2026-04-30:** רשימת המשימות התפעולית המעודכנת נמצאת ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md) תחת `Forward Execution Plan — 2026-04-30`. סדר העבודה המחייב: קודם שני מודולי SVCollege שחסרים Trainer/Mock Exam ידניים, אחר כך כל backlog השאלות הידניות, אחר כך פערי Trace/Build/Bug, ורק בסוף מוזיאון/חנות/קהילה/Sync/פירוק frontend.
 
@@ -38,7 +38,31 @@
 
 ---
 
-## 0A. System Bug Audit Backlog — 2026-04-30
+## 0A. Current Verified System Bug Backlog — 2026-04-30
+
+מקור עדכני: [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md), [FINISH_LINE_PRERELEASE_REPORT.md](FINISH_LINE_PRERELEASE_REPORT.md), [BRUTAL_MASTER_PLAN_AUDIT.md](BRUTAL_MASTER_PLAN_AUDIT.md), [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md). רק ממצאים שאומתו בפקודות חיות נכנסים לכאן כמצב פעיל.
+
+| ID | סטטוס | עדיפות | משימה |
+|---|---|---:|---|
+| SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `541` פערי MC ו-`536` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |
+| SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,532` MC ו-`981` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |
+| SYS-AUDIT-003 | [ ] | P1 | להשאיר `222` פערי Trace/Build/Bug לא-עדיפותיים אחרי Finish Line 1, ואז לסגור אותם עם תוכן ידני ו-browser smoke. |
+| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `221` פריטים יש `207` NOT DONE ו-`6` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |
+| SYS-AUDIT-005 | [ ] | P1 | להשלים keyboard-only coverage ל-Escape/Enter/Arrow, focus return, מעבר טאבים, מעבר מושגים ו-submit answer. |
+| SYS-AUDIT-006 | [ ] | P1 | להמשיך פירוק `app.js`/views רק אחרי Finish Line 1 ירוק, עם tests לכל slice. |
+| SYS-AUDIT-007 | [ ] | P1 | להוכיח Cross-device Sync מול backend/auth אמיתי; עד אז זה alpha מקומי בלבד. |
+| SYS-AUDIT-008 | [ ] | P1 | להריץ פיילוט 10 תלמידים אמיתי לפני כל claim על D1/D7, mastery movement או promotion outcome. |
+| SYS-AUDIT-009 | [ ] | P1 | לבצע security inventory ל-`.innerHTML`/`document.write`, CSP מדורג ו-trust boundary ל-localStorage. |
+| SYS-AUDIT-010 | [ ] | P1 | להוסיף source-of-truth report שמבדיל live gates מדוחות historical/superseded. |
+| SYS-AUDIT-011 | [ ] | P1 | להוסיף export/report deterministic ללוג Bug Agent, ללא PII וללא telemetry מזויפת. |
+| SYS-AUDIT-012 | [ ] | P2 | להוסיף Playwright E2E production-like לזרימות ליבה: שיעור, מושג, בנק שאלות, MC/Fill, progress, בית ו-offline reload. |
+| SYS-AUDIT-013 | [ ] | P2 | לרכז cache version וציפיות assets ממקור אחד כדי למנוע drift ב-PWA. |
+| SYS-AUDIT-014 | [ ] | P2 | להשאיר `data/questions_bank_seeded.js` כארכיון לא פעיל או למחוק רק אחרי שכל פריט שימושי נכתב מחדש ידנית ונבדק. |
+| SYS-AUDIT-015 | [ ] | P2 | אחרי Finish Line 1 בלבד: SEO, telemetry חיצוני, payload optimization, מוזיאון/חנות/קהילה. |
+
+## 0B. Historical System Bug Audit Backlog — 2026-04-30
+
+הסעיף הבא נשמר כהיסטוריה של משימות שכבר נוספו בעבר. בחלק מהשורות יש מספרים ישנים או מצב שהשתנה אחרי gates חיים. אם יש סתירה, סעיף `0A` והדוחות החיים גוברים.
 
 מקור: [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md). העיקרון המחייב: לסגור קודם פערים שמחזקים הכנה אמיתית למבחן SVCollege, ורק אחר כך הרחבות מוזיאון/חנות/קהילה.
 
