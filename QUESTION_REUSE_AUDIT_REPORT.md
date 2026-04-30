@@ -2,8 +2,8 @@
 
 - Date: 2026-04-29
 - Target: SVCollege question reuse by learner profile contract and concept tag
-- Questions audited: 917
-- Concept tags: 376
+- Questions audited: 1086
+- Concept tags: 384
 - Duplicate concept/kind/question identities: 0
 - Missing conceptKey: 0
 - Profile contract checks: 9/9
@@ -30,22 +30,22 @@
 |---|---:|---|---|---:|
 | `lesson_22::useState` | 8 | mc:1, fill:2, trace:1, bug:1, build:3 | curated:8 | 4 |
 | `ai_development::AI Code Review` | 7 | mc:3, fill:2, bug:1, build:1 | curated:5, svcollege-curated:2 | 6 |
+| `lesson_11::Array` | 7 | mc:3, fill:2, trace:1, build:1 | curated:7 | 5 |
+| `lesson_11::By Reference` | 7 | mc:3, fill:2, trace:1, build:1 | curated:7 | 6 |
+| `lesson_11::function` | 7 | mc:3, fill:2, trace:1, build:1 | curated:7 | 6 |
 | `lesson_25::responsive design` | 7 | mc:3, fill:2, trace:1, build:1 | curated:6, svcollege-curated:1 | 6 |
 | `ai_development::Prompt Engineering` | 6 | mc:3, fill:2, trace:1 | curated:5, svcollege-curated:1 | 6 |
-| `lesson_25::flex` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
-| `lesson_25::grid` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
-| `lesson_25::Tailwind CSS` | 6 | mc:3, fill:2, bug:1 | curated:6 | 6 |
-| `lesson_25::utility classes` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
-| `lesson_ai_engineering::tool calling` | 6 | mc:2, fill:1, trace:1, bug:1, build:1 | svcollege-curated:6 | 6 |
-| `lesson_auth_security::authorization` | 6 | mc:2, fill:1, trace:1, bug:1, build:1 | svcollege-curated:6 | 6 |
-| `lesson_design_systems::form field composition` | 6 | mc:2, fill:1, trace:1, bug:1, build:1 | svcollege-curated:6 | 6 |
-| `lesson_devops_deploy::CI` | 6 | mc:2, fill:1, trace:1, bug:1, build:1 | svcollege-curated:6 | 5 |
-| `lesson_devops_deploy::Docker Compose` | 6 | mc:2, fill:1, trace:1, bug:1, build:1 | svcollege-curated:6 | 6 |
-| `lesson_sql_orm::JOIN` | 6 | mc:2, fill:2, trace:1, bug:1 | svcollege-curated:6 | 6 |
-| `ai_development::Cursor` | 5 | mc:3, fill:2 | curated:5 | 6 |
-| `ai_development::Windsurf` | 5 | mc:3, fill:2 | curated:5 | 6 |
-| `lesson_15::Asynchronous` | 5 | mc:1, fill:2, trace:1, build:1 | curated:5 | 5 |
-| `lesson_21::props` | 5 | mc:1, fill:1, trace:1, bug:1, build:1 | curated:5 | 3 |
-| `lesson_24::useEffect` | 5 | mc:1, fill:1, trace:1, bug:1, build:1 | curated:5 | 5 |
-| `lesson_ai_engineering::RAG` | 5 | mc:1, fill:1, trace:1, bug:1, build:1 | svcollege-curated:5 | 6 |
+| `lesson_11::boolean` | 6 | mc:3, fill:2, trace:1 | curated:6 | 5 |
+| `lesson_11::By Value` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_11::filter` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_11::find` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_11::forEach` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_11::Index` | 6 | mc:3, fill:2, trace:1 | curated:6 | 5 |
+| `lesson_11::let` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_11::map` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_11::number` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_11::object` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_11::Pointer` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_11::pop` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+| `lesson_11::push` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
 

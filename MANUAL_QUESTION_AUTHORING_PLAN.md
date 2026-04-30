@@ -5,11 +5,11 @@ Date: 2026-04-30
 ## Summary
 
 - Ready for authoring: yes
-- Gap concepts: 520/568
-- MC gap concepts: 520
-- Fill gap concepts: 515
-- Strict MC questions still required: 1482
-- Strict Fill questions still required: 949
+- Gap concepts: 515/568
+- MC gap concepts: 515
+- Fill gap concepts: 510
+- Strict MC questions still required: 1469
+- Strict Fill questions still required: 941
 - Batches: 26
 
 ## Policy
@@ -27,15 +27,10 @@ Date: 2026-04-30
 - Reviewer: unknown/unavailable
 - Concepts: 25
 - MC deficit: 71
-- Fill deficit: 43
+- Fill deficit: 42
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_11::string` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
-| `lesson_11::toString` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_11::undefined` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
-| `lesson_11::unshift` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_11::var` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_12::array` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_12::filter` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_12::forEach` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
@@ -56,23 +51,23 @@ Date: 2026-04-30
 | `lesson_13::document` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::Document Object Model` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_13::DOM` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_13::extends` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
+| `lesson_13::getElementById` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
+| `lesson_13::getElementsByClassName` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_13::getElementsByTagName` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_13::getItem` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 
 ### QMAN-002 — JavaScript בסיסי ודינמיקה בדפדפן
 
 - Status: not-started
 - Owner: unknown/unavailable
 - Reviewer: unknown/unavailable
-- Concepts: 24
-- MC deficit: 64
-- Fill deficit: 41
+- Concepts: 19
+- MC deficit: 51
+- Fill deficit: 34
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_13::extends` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
-| `lesson_13::getElementById` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
-| `lesson_13::getElementsByClassName` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_13::getElementsByTagName` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_13::getItem` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_13::inheritance` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_13::innerHTML` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
 | `lesson_13::instance` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |

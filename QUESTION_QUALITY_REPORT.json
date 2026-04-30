@@ -3,14 +3,14 @@
   "date": "2026-04-30",
   "source": "repo",
   "summary": {
-    "total": 409,
-    "mc": 222,
-    "fill": 187,
-    "manual": 409,
+    "total": 430,
+    "mc": 235,
+    "fill": 195,
+    "manual": 430,
     "blockerQuestions": 0,
     "warningQuestions": 0,
     "noteQuestions": 0,
-    "cleanQuestions": 409,
+    "cleanQuestions": 430,
     "blockerIssues": 0,
     "warningIssues": 0,
     "noteIssues": 0,
@@ -1502,6 +1502,110 @@
     "fill_l11_spread_manual_001": {
       "score": 100,
       "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_string_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_to_string_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_to_string_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_undefined_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_undefined_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_unshift_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_unshift_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": null,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "fill_l11_var_manual_001": {
+      "score": 100,
+      "difficulty": 6,
       "clarity": 100,
       "distractorQuality": null,
       "issueCounts": {
@@ -4048,6 +4152,175 @@
       "status": "clean"
     },
     "mc_l11_spread_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_string_manual_001": {
+      "score": 100,
+      "difficulty": 2,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_string_manual_002": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_string_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_to_string_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_to_string_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_to_string_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_undefined_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_undefined_manual_002": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_unshift_manual_001": {
+      "score": 100,
+      "difficulty": 3,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_unshift_manual_002": {
+      "score": 100,
+      "difficulty": 5,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_unshift_manual_003": {
+      "score": 100,
+      "difficulty": 6,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_var_manual_001": {
+      "score": 100,
+      "difficulty": 4,
+      "clarity": 100,
+      "distractorQuality": 100,
+      "issueCounts": {
+        "blocker": 0,
+        "warning": 0,
+        "note": 0
+      },
+      "issueCodes": [],
+      "status": "clean"
+    },
+    "mc_l11_var_manual_002": {
       "score": 100,
       "difficulty": 6,
       "clarity": 100,

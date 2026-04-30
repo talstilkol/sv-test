@@ -7,8 +7,12 @@ describe("question reuse audit", () => {
 
     expect(second).toEqual(first);
     expect(first.reportVersion).toBe("question-reuse-audit-v1");
-    expect(first.summary.questions).toBe(1065);
-    expect(first.summary.conceptTags).toBe(384);
+    expect(first.summary.questions).toBeGreaterThanOrEqual(1086);
+    expect(first.summary.questions).toBe(
+      first.conceptBuckets.reduce((total, bucket) => total + bucket.total, 0),
+    );
+    expect(first.summary.conceptTags).toBe(first.conceptBuckets.length);
+    expect(first.summary.conceptTags).toBeGreaterThanOrEqual(384);
     expect(first.summary.legacyGeneratedFiltered).toBe(0);
   });
 

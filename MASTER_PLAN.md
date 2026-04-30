@@ -4,7 +4,7 @@
 
 > **עדכון 2026-04-28:** מסמך זה הוא תוכנית legacy ממוקדת בנק שאלות. תוכנית האב הפעילה היא [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md), והביצוע היומי נמצא ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md). קו הסיום הראשון גובר על המסמך הזה: כיסוי מלא של `SVCollege — קורס AI & Full Stack` בכל הפורטל לפני הרחבות אחרות.
 
-> **עדכון Finish Line 1:** אחרי ביטול הבנק האוטומטי, שערי SVCollege עצמם חזרו לירוק (`svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict`). קו הסיום עדיין לא נסגר כי `questions:coverage-targets:strict` אדום: `520` פערי MC ו-`515` פערי Fill ידניים.
+> **עדכון Finish Line 1:** אחרי ביטול הבנק האוטומטי, שערי SVCollege עצמם חזרו לירוק (`svcollege:readiness:release`, `svcollege:tab-matrix:strict`, `svcollege:critical-flows:strict`, `svcollege:command-center:strict`, `svcollege:student-export:strict`). קו הסיום עדיין לא נסגר כי `questions:coverage-targets:strict` אדום: `515` פערי MC ו-`510` פערי Fill ידניים.
 
 > **עדכון XP Economy 2026-04-29:** תוכנית החנות והכלכלה החדשה נמצאת ב-[XP_REWARD_STORE_MASTER_PLAN.md](XP_REWARD_STORE_MASTER_PLAN.md). היא מוסיפה 100 רמות XP לא לינאריות, Coins, חנות חוויות, כרטיסים למוזיאון ושער רמה 100 שמחייב שליטה מלאה. היא Priority 2 ואינה חוסמת חומר חובה למבחן.
 
@@ -16,9 +16,9 @@
 
 > **עדכון Exam Sprint 2026-04-29:** נוסף P-0.3 ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md): ספרינט 7 ימים לפני מבחן. הוא מתמקד ב-weakest 10, no-repeat simulation, harder-after-correct, wrong-answer repair, smoke מובייל/פוקוס, וגיבוש `Exam Edition RC`.
 
-> **עדכון System Bug Audit 2026-04-30:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `226` פריטים: `DONE 8`, `FAKED 0`, `PARTIAL 6`, `NOT DONE 212`.
+> **עדכון System Bug Audit 2026-04-30:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `233` פריטים: `DONE 10`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 216`.
 
-> **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `520` פערי MC ו-`515` פערי Fill ידניים; `MANUAL_QUESTION_AUTHORING_PLAN.md` דורש עדיין `1,482` MC ו-`949` Fill ידניות.
+> **עדכון Manual Questions 2026-04-30:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `515` פערי MC ו-`510` פערי Fill ידניים; `MANUAL_QUESTION_AUTHORING_PLAN.md` דורש עדיין `1,469` MC ו-`941` Fill ידניות.
 
 > **עדכון Forward Execution 2026-04-30:** רשימת המשימות התפעולית המעודכנת נמצאת ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md) תחת `Forward Execution Plan — 2026-04-30`. סדר העבודה המחייב: קודם שני מודולי SVCollege שחסרים Trainer/Mock Exam ידניים, אחר כך כל backlog השאלות הידניות, אחר כך פערי Trace/Build/Bug, ורק בסוף מוזיאון/חנות/קהילה/Sync/פירוק frontend.
 
@@ -44,10 +44,10 @@
 
 | ID | סטטוס | עדיפות | משימה |
 |---|---|---:|---|
-| SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `520` פערי MC ו-`515` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |
-| SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,482` MC ו-`949` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |
+| SYS-AUDIT-001 | [ ] | P0 | לסגור את `questions:coverage-targets:strict`: `515` פערי MC ו-`510` פערי Fill, ללא יצירה אוטומטית וללא שאלות לא-בדוקות. |
+| SYS-AUDIT-002 | [ ] | P0 | להשלים את `MANUAL_QUESTION_AUTHORING_PLAN.md`: `1,469` MC ו-`941` Fill ידניות, עם owner/reviewer אמיתיים לכל batch. |
 | SYS-AUDIT-003 | [ ] | P1 | להשאיר `222` פערי Trace/Build/Bug לא-עדיפותיים אחרי Finish Line 1, ואז לסגור אותם עם תוכן ידני ו-browser smoke. |
-| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `226` פריטים יש `212` NOT DONE ו-`6` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |
+| SYS-AUDIT-004 | [ ] | P1 | לטפל ב-`BRUTAL_MASTER_PLAN_AUDIT`: מתוך `233` פריטים יש `216` NOT DONE ו-`7` PARTIAL; אין להציג phase כגמור עד שיש ראיית gate. |
 | SYS-AUDIT-005 | [ ] | P1 | להשלים keyboard-only coverage ל-Escape/Enter/Arrow, focus return, מעבר טאבים, מעבר מושגים ו-submit answer. |
 | SYS-AUDIT-006 | [ ] | P1 | להמשיך פירוק `app.js`/views רק אחרי Finish Line 1 ירוק, עם tests לכל slice. |
 | SYS-AUDIT-007 | [ ] | P1 | להוכיח Cross-device Sync מול backend/auth אמיתי; עד אז זה alpha מקומי בלבד. |
@@ -64,6 +64,7 @@
 | SYS-AUDIT-018 | [ ] | P1 | להגדיר trust boundary לכל 164 מופעי `localStorage` ב-`app.js`: progress/XP/evidence מקומיים הם עזר לימודי בלבד ולא ראיית ציון מאומתת בלי backend/auth אמיתי. |
 | SYS-AUDIT-019 | [ ] | P2 | אחרי Finish Line 1: לפרק payload ו-CSS לפי feature. build נוכחי עובר אבל עדיין מוציא `dist/app.js` 1.6MB, `dist/style.css` 594KB ו-`dist/assets/index-DDEpfRTZ.css` 454KB. |
 | SYS-AUDIT-020 | [ ] | P1 | לאחד scope של דוחות שאלות: להפריד active manual bank, archive/generated, concept-density coverage ו-dashboard display, ולהוסיף gate שמזהה קובץ דוח stale אחרי strict/write. |
+| SYS-AUDIT-021 | [V] | P1 | תוקנו טסטים עם ספירות frozen אחרי באטצ' ידני: `tests/question-quality-report.test.js` ו-`tests/question-reuse-audit.test.js` עברו לבדוק invariants במקום hardcoded totals; `npm test -- --run` ירוק. |
 
 ## 0B. Historical System Bug Audit Backlog — 2026-04-30
 

@@ -12,11 +12,11 @@
   "summary": {
     "readyForAuthoring": true,
     "totalConcepts": 568,
-    "gapConcepts": 520,
-    "mcGapCount": 520,
-    "fillGapCount": 515,
-    "strictMcDeficit": 1482,
-    "strictFillDeficit": 949,
+    "gapConcepts": 515,
+    "mcGapCount": 515,
+    "fillGapCount": 510,
+    "strictMcDeficit": 1469,
+    "strictFillDeficit": 941,
     "batches": 26,
     "missingPlannedKeys": 0
   },
@@ -30,91 +30,6 @@
       "sourceEvidenceStatus": "lesson-data-present",
       "status": "not-started",
       "items": [
-        {
-          "key": "lesson_11::string",
-          "lessonId": "lesson_11",
-          "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-          "conceptName": "string",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 11 - Arrays, Functions, and Scope",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_11::toString",
-          "lessonId": "lesson_11",
-          "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-          "conceptName": "toString",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 11 - Arrays, Functions, and Scope",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_11::undefined",
-          "lessonId": "lesson_11",
-          "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-          "conceptName": "undefined",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 1,
-          "mcDeficit": 2,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 11 - Arrays, Functions, and Scope",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_11::unshift",
-          "lessonId": "lesson_11",
-          "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-          "conceptName": "unshift",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 11 - Arrays, Functions, and Scope",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_11::var",
-          "lessonId": "lesson_11",
-          "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-          "conceptName": "var",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 1,
-          "mcDeficit": 2,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 11 - Arrays, Functions, and Scope",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
         {
           "key": "lesson_12::array",
           "lessonId": "lesson_12",
@@ -454,21 +369,7 @@
           "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        }
-      ],
-      "conceptCount": 25,
-      "mcDeficit": 71,
-      "fillDeficit": 43
-    },
-    {
-      "id": "QMAN-002",
-      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-      "priority": "P0-manual-mc-fill",
-      "owner": "unknown/unavailable",
-      "reviewer": "unknown/unavailable",
-      "sourceEvidenceStatus": "lesson-data-present",
-      "status": "not-started",
-      "items": [
+        },
         {
           "key": "lesson_13::extends",
           "lessonId": "lesson_13",
@@ -553,7 +454,21 @@
           "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        },
+        }
+      ],
+      "conceptCount": 25,
+      "mcDeficit": 71,
+      "fillDeficit": 42
+    },
+    {
+      "id": "QMAN-002",
+      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "priority": "P0-manual-mc-fill",
+      "owner": "unknown/unavailable",
+      "reviewer": "unknown/unavailable",
+      "sourceEvidenceStatus": "lesson-data-present",
+      "status": "not-started",
+      "items": [
         {
           "key": "lesson_13::inheritance",
           "lessonId": "lesson_13",
@@ -878,9 +793,9 @@
           "manualReviewDate": "unknown/unavailable"
         }
       ],
-      "conceptCount": 24,
-      "mcDeficit": 64,
-      "fillDeficit": 41
+      "conceptCount": 19,
+      "mcDeficit": 51,
+      "fillDeficit": 34
     },
     {
       "id": "QMAN-003",

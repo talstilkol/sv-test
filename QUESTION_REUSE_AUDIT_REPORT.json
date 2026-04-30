@@ -3,8 +3,8 @@
   "date": "2026-04-29",
   "target": "SVCollege question reuse by learner profile contract and concept tag",
   "summary": {
-    "questions": 917,
-    "conceptTags": 376,
+    "questions": 1086,
+    "conceptTags": 384,
     "missingConceptKey": 0,
     "duplicateIdentityIssues": 0,
     "profileContractChecks": 9,
@@ -118,16 +118,17 @@
     },
     {
       "conceptKey": "lesson_11::Array",
-      "total": 3,
+      "total": 7,
       "kinds": {
-        "mc": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1,
         "build": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 7
       },
-      "maxLevel": 2
+      "maxLevel": 5
     },
     {
       "conceptKey": "lesson_11::arrow function",
@@ -143,317 +144,343 @@
     },
     {
       "conceptKey": "lesson_11::boolean",
-      "total": 2,
+      "total": 6,
       "kinds": {
-        "mc": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 2
+        "curated": 6
       },
-      "maxLevel": 2
+      "maxLevel": 5
     },
     {
       "conceptKey": "lesson_11::By Reference",
-      "total": 3,
+      "total": 7,
       "kinds": {
-        "mc": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1,
         "build": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 7
       },
-      "maxLevel": 5
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::By Value",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 1,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
-      "maxLevel": 5
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::filter",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 1,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::find",
-      "total": 2,
+      "total": 6,
       "kinds": {
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 2
+        "curated": 6
       },
-      "maxLevel": 4
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::forEach",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::function",
-      "total": 4,
+      "total": 7,
       "kinds": {
-        "mc": 1,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1,
         "build": 1
       },
       "sources": {
-        "curated": 4
+        "curated": 7
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::Index",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 2,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
-      "maxLevel": 4
+      "maxLevel": 5
     },
     {
       "conceptKey": "lesson_11::let",
-      "total": 4,
+      "total": 6,
       "kinds": {
         "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 4
+        "curated": 6
       },
       "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::map",
-      "total": 4,
+      "total": 6,
       "kinds": {
-        "mc": 2,
-        "fill": 1,
-        "trace": 1
-      },
-      "sources": {
-        "curated": 4
-      },
-      "maxLevel": 4
-    },
-    {
-      "conceptKey": "lesson_11::number",
-      "total": 1,
-      "kinds": {
-        "trace": 1
-      },
-      "sources": {
-        "curated": 1
-      },
-      "maxLevel": 2
-    },
-    {
-      "conceptKey": "lesson_11::object",
-      "total": 1,
-      "kinds": {
-        "trace": 1
-      },
-      "sources": {
-        "curated": 1
-      },
-      "maxLevel": 3
-    },
-    {
-      "conceptKey": "lesson_11::Pointer",
-      "total": 1,
-      "kinds": {
-        "trace": 1
-      },
-      "sources": {
-        "curated": 1
-      },
-      "maxLevel": 4
-    },
-    {
-      "conceptKey": "lesson_11::pop",
-      "total": 2,
-      "kinds": {
-        "fill": 1,
-        "trace": 1
-      },
-      "sources": {
-        "curated": 2
-      },
-      "maxLevel": 3
-    },
-    {
-      "conceptKey": "lesson_11::push",
-      "total": 2,
-      "kinds": {
-        "fill": 1,
-        "trace": 1
-      },
-      "sources": {
-        "curated": 2
-      },
-      "maxLevel": 3
-    },
-    {
-      "conceptKey": "lesson_11::reduce",
-      "total": 4,
-      "kinds": {
-        "mc": 1,
+        "mc": 3,
         "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 4
+        "curated": 6
       },
-      "maxLevel": 5
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_11::number",
+      "total": 6,
+      "kinds": {
+        "mc": 3,
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_11::object",
+      "total": 6,
+      "kinds": {
+        "mc": 3,
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_11::Pointer",
+      "total": 6,
+      "kinds": {
+        "mc": 3,
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_11::pop",
+      "total": 6,
+      "kinds": {
+        "mc": 3,
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_11::push",
+      "total": 6,
+      "kinds": {
+        "mc": 3,
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_11::reduce",
+      "total": 6,
+      "kinds": {
+        "mc": 3,
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 6
+      },
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::scope",
-      "total": 2,
+      "total": 6,
       "kinds": {
-        "mc": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 2
+        "curated": 6
       },
-      "maxLevel": 4
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::shift",
-      "total": 2,
+      "total": 6,
       "kinds": {
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 2
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::sort",
-      "total": 2,
+      "total": 6,
       "kinds": {
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 2
+        "curated": 6
       },
-      "maxLevel": 4
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::splice",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 4
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::spread",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 1,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
-      "maxLevel": 5
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::string",
-      "total": 2,
+      "total": 6,
       "kinds": {
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 2
+        "curated": 6
       },
-      "maxLevel": 5
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::toString",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::undefined",
-      "total": 2,
+      "total": 6,
       "kinds": {
-        "mc": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 2
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::unshift",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_11::var",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 1,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
-      "maxLevel": 5
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_12::array",
@@ -2506,6 +2533,30 @@
       "maxLevel": 5
     },
     {
+      "conceptKey": "lesson_25::add/delete movie",
+      "total": 5,
+      "kinds": {
+        "mc": 3,
+        "fill": 2
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_25::bg color",
+      "total": 5,
+      "kinds": {
+        "mc": 3,
+        "fill": 2
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
       "conceptKey": "lesson_25::flex",
       "total": 6,
       "kinds": {
@@ -2532,6 +2583,42 @@
       "maxLevel": 6
     },
     {
+      "conceptKey": "lesson_25::navbar",
+      "total": 5,
+      "kinds": {
+        "mc": 3,
+        "fill": 2
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_25::padding",
+      "total": 5,
+      "kinds": {
+        "mc": 3,
+        "fill": 2
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_25::rating",
+      "total": 5,
+      "kinds": {
+        "mc": 3,
+        "fill": 2
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
       "conceptKey": "lesson_25::responsive design",
       "total": 7,
       "kinds": {
@@ -2548,14 +2635,28 @@
     },
     {
       "conceptKey": "lesson_25::rounded",
-      "total": 1,
+      "total": 6,
       "kinds": {
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 1
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_25::search",
+      "total": 5,
+      "kinds": {
+        "mc": 3,
+        "fill": 2
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_25::Tailwind CSS",
@@ -2571,6 +2672,18 @@
       "maxLevel": 6
     },
     {
+      "conceptKey": "lesson_25::Tailwind installation",
+      "total": 5,
+      "kinds": {
+        "mc": 3,
+        "fill": 2
+      },
+      "sources": {
+        "curated": 5
+      },
+      "maxLevel": 6
+    },
+    {
       "conceptKey": "lesson_25::utility classes",
       "total": 6,
       "kinds": {
@@ -2580,6 +2693,18 @@
       },
       "sources": {
         "curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_25::validation",
+      "total": 5,
+      "kinds": {
+        "mc": 3,
+        "fill": 2
+      },
+      "sources": {
+        "curated": 5
       },
       "maxLevel": 6
     },
@@ -3741,106 +3866,107 @@
     },
     {
       "conceptKey": "lesson_html_css_foundations::accessibility basics",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 1,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
-      "maxLevel": 4
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_html_css_foundations::box model",
-      "total": 4,
+      "total": 6,
       "kinds": {
-        "mc": 2,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 4
+        "curated": 6
       },
       "maxLevel": 6
     },
     {
       "conceptKey": "lesson_html_css_foundations::cascade and specificity",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 2,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
       "maxLevel": 6
     },
     {
       "conceptKey": "lesson_html_css_foundations::CSS selector",
-      "total": 4,
+      "total": 6,
       "kinds": {
-        "mc": 2,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 4
+        "curated": 6
       },
       "maxLevel": 6
     },
     {
       "conceptKey": "lesson_html_css_foundations::HTML document",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 1,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
       "maxLevel": 5
     },
     {
       "conceptKey": "lesson_html_css_foundations::HTML form",
-      "total": 4,
+      "total": 6,
       "kinds": {
-        "mc": 1,
+        "mc": 3,
         "fill": 2,
         "build": 1
       },
       "sources": {
-        "curated": 4
+        "curated": 6
       },
       "maxLevel": 5
     },
     {
       "conceptKey": "lesson_html_css_foundations::label",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 1,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 5
     },
     {
       "conceptKey": "lesson_html_css_foundations::semantic HTML",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 1,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_nestjs::controller",

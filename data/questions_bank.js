@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.7";
+var QUESTIONS_BANK_VERSION = "2.1.8";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -70,6 +70,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 11 sub-batch: shift, sort, splice and spread MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.8",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 11 sub-batch: string, toString, undefined, unshift and var MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -1062,6 +1068,240 @@ var QUESTIONS_BANK = {
         "❌ 9 נוסף ל-oldNumbers אחרי יצירת newNumbers.",
         "❌ push מוסיפה לסוף oldNumbers, לא לתחילת newNumbers.",
         "❌ 3 כבר נמצא ב-newNumbers, ו-9 לא נוסף אליו.",
+      ],
+    },
+    {
+      id: "mc_l11_string_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::string", level: 2,
+      question: "איזה ערך הוא string ב-JavaScript?",
+      options: [
+        "'Tal'",
+        "42",
+        "true",
+        "undefined",
+      ],
+      correctIndex: 0,
+      explanation: "string הוא טקסט. ב-JavaScript ערך טקסטואלי נכתב בדרך כלל בתוך גרשיים או מירכאות.",
+      optionFeedback: [
+        "✅ נכון: ערך בתוך גרשיים הוא מחרוזת.",
+        "❌ 42 הוא number.",
+        "❌ true הוא boolean.",
+        "❌ undefined הוא ערך חסר, לא טקסט.",
+      ],
+    },
+    {
+      id: "mc_l11_string_manual_002", topicId: "topic_variables", conceptKey: "lesson_11::string", level: 4,
+      question: "מה יודפס?\n\nconst word = 'JavaScript';\nconsole.log(word.length);",
+      options: [
+        "10",
+        "'JavaScript'",
+        "undefined",
+        "9",
+      ],
+      correctIndex: 0,
+      explanation: "length של string מחזיר את מספר התווים במחרוזת. ב-'JavaScript' יש 10 תווים.",
+      optionFeedback: [
+        "✅ נכון: length מחזיר מספר תווים.",
+        "❌ זה הערך המקורי, לא תוצאת word.length.",
+        "❌ length קיים על string ולכן לא מתקבל undefined.",
+        "❌ חסר תו אחד בספירה.",
+      ],
+    },
+    {
+      id: "mc_l11_string_manual_003", topicId: "topic_variables", conceptKey: "lesson_11::string", level: 6,
+      question: "מה יודפס?\n\nconst a = '5';\nconst b = 5;\nconsole.log(typeof a, typeof b);",
+      options: [
+        "string number",
+        "number number",
+        "string string",
+        "undefined number",
+      ],
+      correctIndex: 0,
+      explanation: "הגרשיים הופכים את a למחרוזת. b הוא מספר אמיתי בלי גרשיים.",
+      optionFeedback: [
+        "✅ נכון: typeof מזהה את a כ-string ואת b כ-number.",
+        "❌ a כתוב בתוך גרשיים ולכן אינו number.",
+        "❌ b אינו כתוב כטקסט ולכן אינו string.",
+        "❌ a קיבל ערך מפורש ולכן אינו undefined.",
+      ],
+    },
+    {
+      id: "mc_l11_to_string_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::toString", level: 3,
+      question: "מה עושה toString בדרך כלל?",
+      options: [
+        "ממיר ערך לייצוג טקסטואלי",
+        "מוסיף איבר לתחילת מערך",
+        "מוחק ערך מאובייקט",
+        "בודק אם משתנה קיים בסקופ",
+      ],
+      correctIndex: 0,
+      explanation: "toString מחזירה ייצוג string של ערך, למשל מספר או מערך.",
+      optionFeedback: [
+        "✅ נכון: המטרה היא לקבל טקסט שמייצג את הערך.",
+        "❌ זה unshift.",
+        "❌ toString לא מוחקת מאפיינים.",
+        "❌ בדיקת סקופ אינה תפקיד של toString.",
+      ],
+    },
+    {
+      id: "mc_l11_to_string_manual_002", topicId: "topic_variables", conceptKey: "lesson_11::toString", level: 5,
+      question: "מה יודפס?\n\nconst value = 42;\nconsole.log(value.toString());",
+      options: [
+        "'42'",
+        "number value",
+        "undefined",
+        "'value'",
+      ],
+      correctIndex: 0,
+      explanation: "toString על number מחזירה מחרוזת שמייצגת את המספר.",
+      optionFeedback: [
+        "✅ נכון: התוכן נראה כמו 42, אבל הטיפוס הוא string.",
+        "❌ זה מתאר את הטיפוס לפני ההמרה, לא את הערך שמודפס.",
+        "❌ toString קיימת על מספרים רגילים.",
+        "❌ toString מחזירה את ערך המספר, לא את שם המשתנה.",
+      ],
+    },
+    {
+      id: "mc_l11_to_string_manual_003", topicId: "topic_arrays", conceptKey: "lesson_11::toString", level: 6,
+      question: "מה יודפס?\n\nconst items = ['A', 'B', 'C'];\nconsole.log(items.toString());",
+      options: [
+        "'A,B,C'",
+        "3",
+        "'ABC'",
+        "undefined",
+      ],
+      correctIndex: 0,
+      explanation: "Array.prototype.toString מחבר את איברי המערך למחרוזת עם פסיקים בין האיברים.",
+      optionFeedback: [
+        "✅ נכון: המערך הופך למחרוזת מופרדת בפסיקים.",
+        "❌ 3 הוא האורך של המערך, לא תוצאת toString.",
+        "❌ toString של מערך שומר פסיקים בין איברים.",
+        "❌ למערך יש toString מובנה.",
+      ],
+    },
+    {
+      id: "mc_l11_undefined_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::undefined", level: 4,
+      question: "מה יודפס?\n\nlet score;\nconsole.log(score);",
+      options: [
+        "undefined",
+        "null",
+        "0",
+        "false",
+      ],
+      correctIndex: 0,
+      explanation: "משתנה שהוצהר אבל לא קיבל ערך מקבל undefined.",
+      optionFeedback: [
+        "✅ נכון: יש הצהרה בלי הצבה.",
+        "❌ null הוא ערך שמציבים בכוונה.",
+        "❌ JavaScript לא ממלא 0 אוטומטית.",
+        "❌ false הוא boolean מפורש, לא ערך ברירת מחדל.",
+      ],
+    },
+    {
+      id: "mc_l11_undefined_manual_002", topicId: "topic_objects", conceptKey: "lesson_11::undefined", level: 6,
+      question: "מה יודפס?\n\nconst user = { name: 'Tal' };\nconsole.log(user.age);",
+      options: [
+        "undefined",
+        "'Tal'",
+        "null",
+        "ReferenceError",
+      ],
+      correctIndex: 0,
+      explanation: "גישה למאפיין שלא קיים באובייקט מחזירה undefined.",
+      optionFeedback: [
+        "✅ נכון: age לא קיים על user.",
+        "❌ name קיים, אבל לא ביקשנו user.name.",
+        "❌ JavaScript לא מחזיר null אוטומטית למאפיין חסר.",
+        "❌ האובייקט user קיים, ולכן אין ReferenceError.",
+      ],
+    },
+    {
+      id: "mc_l11_unshift_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::unshift", level: 3,
+      question: "מה עושה unshift במערך?",
+      options: [
+        "מוסיף איבר לתחילת המערך",
+        "מוסיף איבר לסוף המערך",
+        "מסיר את האיבר הראשון",
+        "יוצר מערך חדש בלי לשנות את המקור",
+      ],
+      correctIndex: 0,
+      explanation: "unshift מוסיפה איבר אחד או יותר בתחילת המערך ומשנה את המערך המקורי.",
+      optionFeedback: [
+        "✅ נכון: unshift פועלת בתחילת המערך.",
+        "❌ זה push.",
+        "❌ זה shift.",
+        "❌ unshift היא פעולה mutating, היא משנה את המקור.",
+      ],
+    },
+    {
+      id: "mc_l11_unshift_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::unshift", level: 5,
+      question: "מה יודפס?\n\nconst queue = ['B', 'C'];\nconst result = queue.unshift('A');\nconsole.log(queue, result);",
+      options: [
+        "['A', 'B', 'C'] 3",
+        "['B', 'C', 'A'] 3",
+        "['A', 'B', 'C'] 'A'",
+        "['B', 'C'] 2",
+      ],
+      correctIndex: 0,
+      explanation: "unshift מוסיפה לתחילת המערך ומחזירה את האורך החדש של המערך.",
+      optionFeedback: [
+        "✅ נכון: המערך השתנה, והאורך החדש הוא 3.",
+        "❌ הוספה לסוף היא push, לא unshift.",
+        "❌ unshift מחזירה length חדש, לא את הערך שהוסף.",
+        "❌ המערך המקורי כן משתנה.",
+      ],
+    },
+    {
+      id: "mc_l11_unshift_manual_003", topicId: "topic_arrays", conceptKey: "lesson_11::unshift", level: 6,
+      question: "איזו שורה הכי מתאימה כשחייבים להוסיף משימה לתחילת אותו מערך קיים?",
+      options: [
+        "tasks.unshift(newTask);",
+        "tasks.push(newTask);",
+        "tasks = tasks.filter(newTask);",
+        "tasks.toString(newTask);",
+      ],
+      correctIndex: 0,
+      explanation: "unshift היא הבחירה הישירה להוספה בתחילת אותו מערך קיים.",
+      optionFeedback: [
+        "✅ נכון: זה מוסיף את newTask בתחילת tasks.",
+        "❌ push מוסיפה לסוף.",
+        "❌ filter מסננת לפי תנאי ולא מוסיפה משימה.",
+        "❌ toString ממירה לטקסט ולא מוסיפה איבר.",
+      ],
+    },
+    {
+      id: "mc_l11_var_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::var", level: 4,
+      question: "מה יודפס?\n\nif (true) {\n  var status = 'ready';\n}\nconsole.log(status);",
+      options: [
+        "'ready'",
+        "undefined",
+        "ReferenceError",
+        "'status'",
+      ],
+      correctIndex: 0,
+      explanation: "var אינו block-scoped. בקטע גלובלי כזה המשתנה זמין גם אחרי בלוק ה-if.",
+      optionFeedback: [
+        "✅ נכון: var דולף מחוץ לבלוק.",
+        "❌ status קיבל ערך בתוך ה-if.",
+        "❌ עם var אין ReferenceError מחוץ לבלוק הזה.",
+        "❌ מודפס הערך, לא שם המשתנה.",
+      ],
+    },
+    {
+      id: "mc_l11_var_manual_002", topicId: "topic_variables", conceptKey: "lesson_11::var", level: 6,
+      question: "למה בקוד מודרני בדרך כלל מעדיפים let או const על var?",
+      options: [
+        "כי let/const הם block-scoped וברורים יותר",
+        "כי var לא יכול להחזיק string",
+        "כי var עובד רק בדפדפנים ישנים",
+        "כי let דולף מחוץ לבלוק if",
+      ],
+      correctIndex: 0,
+      explanation: "let ו-const מוגבלים לבלוק, ולכן מצמצמים דליפות scope וטעויות hoisting נפוצות.",
+      optionFeedback: [
+        "✅ נכון: block scope מקטין הפתעות.",
+        "❌ var יכול להחזיק כל ערך JavaScript.",
+        "❌ var עדיין נתמך, אבל פחות מומלץ.",
+        "❌ let לא דולף מחוץ לבלוק if.",
       ],
     },
 
@@ -3380,6 +3620,62 @@ var QUESTIONS_BANK = {
       answer: "...",
       hint: "שלוש נקודות שפורסות את איברי המערך לתוך מערך חדש.",
       explanation: "spread פורס את oldNumbers לערכים 1 ו-2, ואז מוסיפים 3 למערך החדש.",
+    },
+    {
+      id: "fill_l11_string_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::string", level: 4,
+      code: "const title = 'Portal';\nconsole.log(typeof title); // ____",
+      answer: "string",
+      hint: "typeof על ערך טקסטואלי בתוך גרשיים.",
+      explanation: "title מחזיק טקסט בתוך גרשיים, ולכן typeof מחזיר string.",
+    },
+    {
+      id: "fill_l11_to_string_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::toString", level: 4,
+      code: "const count = 7;\nconst label = count.____();\nconsole.log(typeof label); // 'string'",
+      answer: "toString",
+      hint: "מתודה שמחזירה ייצוג טקסטואלי של הערך.",
+      explanation: "toString ממירה את המספר 7 למחרוזת '7'.",
+    },
+    {
+      id: "fill_l11_to_string_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::toString", level: 6,
+      code: "const tags = ['js', 'dom'];\nconsole.log(tags.____()); // 'js,dom'",
+      answer: "toString",
+      hint: "מתודת המרה לטקסט שקיימת גם על מערכים.",
+      explanation: "toString של מערך מחבר את האיברים למחרוזת עם פסיקים.",
+    },
+    {
+      id: "fill_l11_undefined_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::undefined", level: 4,
+      code: "let selected;\nconsole.log(selected); // ____",
+      answer: "undefined",
+      hint: "המשתנה הוצהר, אבל לא קיבל ערך.",
+      explanation: "משתנה שהוצהר ללא הצבה מחזיק undefined.",
+    },
+    {
+      id: "fill_l11_undefined_manual_002", topicId: "topic_objects", conceptKey: "lesson_11::undefined", level: 6,
+      code: "const user = { name: 'Tal' };\nconsole.log(user.email); // ____",
+      answer: "undefined",
+      hint: "המאפיין email לא קיים באובייקט.",
+      explanation: "גישה למאפיין חסר באובייקט מחזירה undefined.",
+    },
+    {
+      id: "fill_l11_unshift_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::unshift", level: 4,
+      code: "const steps = ['practice', 'exam'];\nsteps.____('learn');\nconsole.log(steps); // ['learn', 'practice', 'exam']",
+      answer: "unshift",
+      hint: "מתודה שמוסיפה איבר בתחילת המערך.",
+      explanation: "unshift מוסיפה את 'learn' לתחילת steps ומשנה את המערך המקורי.",
+    },
+    {
+      id: "fill_l11_unshift_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::unshift", level: 6,
+      code: "const numbers = [2, 3];\nconst length = numbers.____(1);\nconsole.log(length); // 3",
+      answer: "unshift",
+      hint: "המתודה מחזירה את האורך החדש אחרי הוספה לתחילת המערך.",
+      explanation: "unshift(1) מוסיפה את 1 בתחילת numbers ומחזירה את האורך החדש: 3.",
+    },
+    {
+      id: "fill_l11_var_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::var", level: 6,
+      code: "function demo() {\n  if (true) {\n    ____ mode = 'old';\n  }\n  return mode;\n}",
+      answer: "var",
+      hint: "הצהרת משתנה ישנה שהיא function-scoped.",
+      explanation: "var תחום לפונקציה ולא לבלוק, ולכן mode זמין אחרי בלוק ה-if בתוך demo.",
     },
 
     // ===== Objects / OOP =====
