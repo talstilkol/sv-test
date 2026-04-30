@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.11";
+var QUESTIONS_BANK_VERSION = "2.1.12";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -94,6 +94,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 12 sub-batch: Hebrew array creation, derived arrays, conditional filtering and index-value work coverage.",
+  },
+  {
+    v: "2.1.12",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 13 sub-batch: appendChild, attribute, class and constructor MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -1968,6 +1974,206 @@ var QUESTIONS_BANK = {
         "❌ התחביר תקין ב-JavaScript.",
         "❌ השמה לאינדקס לא משנה את הטיפוס של המערך.",
         "❌ filter לא רץ אוטומטית.",
+      ],
+    },
+
+    // ===== Lesson 13 — DOM / Classes manual coverage =====
+    {
+      id: "mc_l13_append_child_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::appendChild", level: 3,
+      question: "מה עושה `appendChild` בדוגמה הזו?\n\nconst list = document.getElementById('tasks');\nconst li = document.createElement('li');\nli.textContent = 'Read';\nlist.appendChild(li);",
+      options: [
+        "יוצר את li בזיכרון בלבד ולא מציג אותו",
+        "מוסיף את li כילד אחרון בתוך list",
+        "מוחק את list מה-DOM",
+        "מחליף את כל ה-HTML של הדף",
+      ],
+      correctIndex: 1,
+      explanation: "appendChild מחבר Node קיים אל אלמנט אב. כאן ה-li שנוצר בזיכרון נכנס כילד אחרון של הרשימה ולכן יוצג בדף.",
+      optionFeedback: [
+        "❌ זה התפקיד של createElement לפני החיבור לעץ.",
+        "✅ נכון: appendChild מכניס את הילד אל תוך האב, בסוף רשימת הילדים שלו.",
+        "❌ מחיקה נעשית עם removeChild, לא עם appendChild.",
+        "❌ appendChild לא מחליף את כל הדף; הוא מוסיף Node נקודתי לאב שנבחר.",
+      ],
+    },
+    {
+      id: "mc_l13_append_child_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::appendChild", level: 4,
+      question: "למה אלמנט שנוצר עם `document.createElement('li')` לא מופיע מיד על המסך?",
+      options: [
+        "כי הוא עדיין Node מנותק בזיכרון עד שמחברים אותו לעץ ה-DOM",
+        "כי createElement עובד רק בתוך CSS",
+        "כי חייבים לשמור אותו קודם ב-localStorage",
+        "כי כל אלמנט חדש חייב constructor של class",
+      ],
+      correctIndex: 0,
+      explanation: "createElement יוצר אלמנט מנותק. רק חיבור ל-parent קיים, למשל עם appendChild, מכניס אותו לעץ החי של הדף.",
+      optionFeedback: [
+        "✅ נכון: עד שאין parent ב-DOM, האלמנט קיים בזיכרון בלבד.",
+        "❌ createElement היא DOM API של JavaScript, לא CSS.",
+        "❌ localStorage אינו שלב בהצגת אלמנט חדש.",
+        "❌ constructor שייך למחלקות; לא צריך אותו כדי להוסיף Node ל-DOM.",
+      ],
+    },
+    {
+      id: "mc_l13_append_child_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::appendChild", level: 5,
+      question: "מה חשוב לוודא לפני הקריאה `parent.appendChild(child)`?",
+      options: [
+        "שה-parent הוא אלמנט DOM קיים ולא null",
+        "שה-child הוא string רגיל בלבד",
+        "שה-parent נשמר תחת key בשם parent",
+        "שה-child כבר נמחק עם removeChild",
+      ],
+      correctIndex: 0,
+      explanation: "אם parent הוא null, הקריאה תיכשל כי אין אובייקט שעליו אפשר להפעיל appendChild. child צריך להיות Node מתאים.",
+      optionFeedback: [
+        "✅ נכון: קודם מאתרים או יוצרים parent תקין, ואז מחברים אליו Node.",
+        "❌ appendChild מקבל Node, לא מחרוזת רגילה.",
+        "❌ שם key באחסון לא קשור לחיבור DOM.",
+        "❌ אם הילד כבר נמחק בלי reference תקין, אין מה להוסיף.",
+      ],
+    },
+    {
+      id: "mc_l13_attribute_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::attribute", level: 3,
+      question: "איזה חלק הוא attribute בשורת HTML הזו?\n\n<img src=\"avatar.png\" alt=\"תמונת פרופיל\">",
+      options: [
+        "img בלבד",
+        "src ו-alt",
+        "avatar.png בלבד",
+        "תמונת פרופיל בלבד",
+      ],
+      correctIndex: 1,
+      explanation: "attribute הוא שם מאפיין שנמצא בתג הפתיחה ומוסיף מידע לתג. כאן src ו-alt הם attributes, והערכים שלהם מופיעים אחרי סימן השוויון.",
+      optionFeedback: [
+        "❌ img הוא שם התג, לא attribute.",
+        "✅ נכון: src ו-alt הם שמות המאפיינים של תגית התמונה.",
+        "❌ avatar.png הוא value של attribute בשם src.",
+        "❌ הטקסט הוא value של attribute בשם alt.",
+      ],
+    },
+    {
+      id: "mc_l13_attribute_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::attribute", level: 4,
+      question: "מה ההבדל בין attribute לבין value בדוגמה `<a href=\"/home\">בית</a>`?",
+      options: [
+        "href הוא attribute ו-/home הוא הערך שלו",
+        "/home הוא attribute ו-href הוא הערך שלו",
+        "בית הוא attribute של הקישור",
+        "אין attributes בקישור HTML",
+      ],
+      correctIndex: 0,
+      explanation: "attribute הוא שם המאפיין שנכתב בתג הפתיחה. הערך שלו הוא המידע שמוצמד אליו, במקרה הזה יעד הקישור.",
+      optionFeedback: [
+        "✅ נכון: href הוא שם המאפיין, ו-/home הוא ה-value שמגדיר יעד.",
+        "❌ הסדר הפוך: href הוא השם, לא הערך.",
+        "❌ בית הוא תוכן הקישור בין תג הפתיחה והסגירה.",
+        "❌ לתג a יש attributes נפוצים כמו href, target ו-aria-label.",
+      ],
+    },
+    {
+      id: "mc_l13_attribute_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::attribute", level: 5,
+      question: "מתי נבחר לשנות attribute דרך JavaScript?",
+      options: [
+        "כשצריך לעדכן מידע תפקודי של אלמנט, למשל href או alt, בעקבות מצב באפליקציה",
+        "כשצריך להריץ לולאת for על כל מספר",
+        "כשצריך להצהיר על משתנה חדש עם let",
+        "כשצריך ליצור class חדש לכל כפתור",
+      ],
+      correctIndex: 0,
+      explanation: "Attributes הם מידע על האלמנט. JavaScript יכול לקרוא או לעדכן אותם כאשר היעד, הטקסט החלופי, מזהה או data attribute צריכים להשתנות בזמן ריצה.",
+      optionFeedback: [
+        "✅ נכון: שינוי attribute מתאים כשמאפיין של האלמנט תלוי במצב הנוכחי.",
+        "❌ לולאה אינה סיבה לשינוי attribute בפני עצמה.",
+        "❌ let מגדיר משתנה ב-JavaScript, לא מאפיין HTML.",
+        "❌ class תכנותי הוא מושג אחר מ-attribute HTML.",
+      ],
+    },
+    {
+      id: "mc_l13_class_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::class", level: 4,
+      question: "מהי `class` ב-JavaScript?",
+      options: [
+        "תבנית לייצור אובייקטים עם מבנה ומתודות משותפות",
+        "שם של class ב-CSS בלבד",
+        "דרך לשמור נתונים בדפדפן",
+        "מערך שמתחיל באינדקס 1",
+      ],
+      correctIndex: 0,
+      explanation: "class היא תבנית ES6 ליצירת מופעים. היא מרכזת constructor ומתודות כדי לייצר אובייקטים דומים בלי לשכפל קוד.",
+      optionFeedback: [
+        "✅ נכון: class היא blueprint לאובייקטים מאותו סוג.",
+        "❌ CSS class ו-JavaScript class הם מושגים שונים.",
+        "❌ שמירת נתונים בדפדפן נעשית בכלים כמו localStorage.",
+        "❌ מערכים מתחילים באינדקס 0, וזה לא קשור למחלקות.",
+      ],
+    },
+    {
+      id: "mc_l13_class_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::class", level: 5,
+      question: "איזו שורה יוצרת מופע מתוך המחלקה `User`?",
+      options: [
+        "const user = User;",
+        "const user = new User('Tal');",
+        "class user = User('Tal');",
+        "User.appendChild('Tal');",
+      ],
+      correctIndex: 1,
+      explanation: "האופרטור new מפעיל את המחלקה כיצרן של מופע חדש ומריץ את constructor עם הארגומנטים שנמסרו.",
+      optionFeedback: [
+        "❌ זו רק הצבעה על המחלקה עצמה, לא יצירת מופע.",
+        "✅ נכון: new User('Tal') יוצר instance חדש של User.",
+        "❌ זה אינו תחביר JavaScript תקין.",
+        "❌ appendChild שייך ל-DOM ולא ליצירת מופע class.",
+      ],
+    },
+    {
+      id: "mc_l13_constructor_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::constructor", level: 4,
+      question: "מתי `constructor` רץ במחלקה?",
+      options: [
+        "ברגע שיוצרים מופע חדש עם `new`",
+        "בכל פעם שמרעננים CSS",
+        "רק אחרי קריאה ל-appendChild",
+        "רק כשמשתנה מוגדר עם var",
+      ],
+      correctIndex: 0,
+      explanation: "constructor הוא מתודת האתחול של class. הוא רץ אוטומטית בזמן יצירת instance חדש עם new.",
+      optionFeedback: [
+        "✅ נכון: new מפעיל את constructor ומעביר אליו את הארגומנטים.",
+        "❌ CSS refresh אינו מפעיל constructor של JavaScript.",
+        "❌ appendChild הוא DOM API ולא חלק ממחזור יצירת מופע.",
+        "❌ var לא קשור להפעלת constructor.",
+      ],
+    },
+    {
+      id: "mc_l13_constructor_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::constructor", level: 5,
+      question: "מה התפקיד של `this.name = username` בתוך constructor?",
+      options: [
+        "לשמור על המופע החדש מאפיין בשם name עם הערך שהגיע מבחוץ",
+        "ליצור משתנה גלובלי בשם username",
+        "להוסיף תגית HTML חדשה למסך",
+        "לשנות את שם המחלקה עצמה",
+      ],
+      correctIndex: 0,
+      explanation: "בתוך constructor, this מצביע על המופע החדש. השמה ל-this.name מוסיפה או מעדכנת מאפיין אישי של אותו מופע.",
+      optionFeedback: [
+        "✅ נכון: זה בדיוק אתחול state של האובייקט החדש.",
+        "❌ this.name אינו משתנה גלובלי.",
+        "❌ יצירת תגית נעשית עם createElement, לא עם this.name.",
+        "❌ שם המחלקה לא משתנה דרך מאפיין של המופע.",
+      ],
+    },
+    {
+      id: "mc_l13_constructor_manual_003", topicId: "topic_objects", conceptKey: "lesson_13::constructor", level: 6,
+      question: "מה יודפס?\n\nclass User {\n  constructor(name) {\n    this.name = name;\n  }\n}\nconst a = new User('Dana');\nconst b = new User('Tal');\nconsole.log(a.name + ',' + b.name);",
+      options: [
+        "Dana,Tal",
+        "Tal,Tal",
+        "undefined,undefined",
+        "User,User",
+      ],
+      correctIndex: 0,
+      explanation: "כל קריאה ל-new יוצרת מופע נפרד. constructor מציב לכל מופע את הערך שנמסר לו, לכן a ו-b לא חולקים את אותו name.",
+      optionFeedback: [
+        "✅ נכון: לכל instance יש מאפיין name עצמאי.",
+        "❌ הערך של b לא דורס את a; אלה מופעים נפרדים.",
+        "❌ constructor כן מציב name על כל מופע.",
+        "❌ User הוא שם המחלקה, לא הערך שנשמר ב-this.name.",
       ],
     },
 
@@ -4496,6 +4702,57 @@ var QUESTIONS_BANK = {
       answer: "colors[1]",
       hint: "האינדקס השני במערך הוא 1.",
       explanation: "מערכים מתחילים באינדקס 0, ולכן colors[1] שולף את האיבר השני.",
+    },
+
+    // ===== Lesson 13 — DOM / Classes manual Fill coverage =====
+    {
+      id: "fill_l13_append_child_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::appendChild", level: 4,
+      code: "const list = document.getElementById('tasks');\nconst item = document.createElement('li');\nitem.textContent = 'Read';\nlist.____(item);",
+      answer: "appendChild",
+      hint: "המתודה שמחברת Node כילד אחרון של parent.",
+      explanation: "appendChild מקבלת Node ומוסיפה אותו לסוף רשימת הילדים של אלמנט האב.",
+    },
+    {
+      id: "fill_l13_append_child_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::appendChild", level: 5,
+      code: "const parent = document.querySelector('#menu');\nconst child = document.createElement('button');\nconst result = parent ? 'readyTo____' : 'missingParent';",
+      answer: "append",
+      hint: "שם קצר לפעולת החיבור אחרי שמצאנו parent תקין.",
+      explanation: "לפני שמחברים ילד עם appendChild צריך לוודא שה-parent קיים. אחרת הקריאה תיכשל.",
+    },
+    {
+      id: "fill_l13_attribute_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::attribute", level: 4,
+      code: "<img ____=\"avatar.png\" alt=\"תמונת פרופיל\">",
+      answer: "src",
+      hint: "ה-attribute שמגדיר את מקור התמונה.",
+      explanation: "src הוא attribute של תגית img. הערך שלו מצביע על קובץ התמונה שהדפדפן יטען.",
+    },
+    {
+      id: "fill_l13_attribute_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::attribute", level: 5,
+      code: "const link = document.querySelector('a');\nconst target = link.getAttribute('____');",
+      answer: "href",
+      hint: "ה-attribute שמגדיר יעד של קישור.",
+      explanation: "href הוא attribute של תגית a. getAttribute קוראת את הערך שהוגדר בתג.",
+    },
+    {
+      id: "fill_l13_class_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::class", level: 4,
+      code: "____ User {\n  constructor(name) {\n    this.name = name;\n  }\n}",
+      answer: "class",
+      hint: "מילת המפתח שמצהירה על תבנית ליצירת אובייקטים.",
+      explanation: "class פותחת תבנית לייצור מופעים. בתוך המחלקה אפשר להגדיר constructor ומתודות.",
+    },
+    {
+      id: "fill_l13_constructor_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::constructor", level: 4,
+      code: "class User {\n  ____(name) {\n    this.name = name;\n  }\n}",
+      answer: "constructor",
+      hint: "המתודה המיוחדת שרצה בזמן new.",
+      explanation: "constructor הוא שלב האתחול של מופע חדש. הוא מקבל את הארגומנטים שנמסרו ל-new.",
+    },
+    {
+      id: "fill_l13_constructor_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::constructor", level: 5,
+      code: "class User {\n  constructor(inputName) {\n    this.____ = inputName;\n  }\n}\nconst user = new User('Dana');",
+      answer: "displayName",
+      hint: "שם מאפיין ברור שבו נשמר השם להצגה.",
+      explanation: "this.displayName שומר את הערך שהגיע ל-constructor על המופע שנוצר. לכל instance יכול להיות ערך אחר.",
     },
 
     // ===== Objects / OOP =====

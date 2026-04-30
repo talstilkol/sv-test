@@ -12,11 +12,11 @@
   "summary": {
     "readyForAuthoring": true,
     "totalConcepts": 568,
-    "gapConcepts": 503,
-    "mcGapCount": 503,
-    "fillGapCount": 498,
-    "strictMcDeficit": 1433,
-    "strictFillDeficit": 919,
+    "gapConcepts": 499,
+    "mcGapCount": 499,
+    "fillGapCount": 494,
+    "strictMcDeficit": 1422,
+    "strictFillDeficit": 912,
     "batches": 26,
     "missingPlannedKeys": 0
   },
@@ -30,74 +30,6 @@
       "sourceEvidenceStatus": "lesson-data-present",
       "status": "not-started",
       "items": [
-        {
-          "key": "lesson_13::appendChild",
-          "lessonId": "lesson_13",
-          "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "conceptName": "appendChild",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_13::attribute",
-          "lessonId": "lesson_13",
-          "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "conceptName": "attribute",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_13::class",
-          "lessonId": "lesson_13",
-          "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "conceptName": "class",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 1,
-          "mcDeficit": 2,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_13::constructor",
-          "lessonId": "lesson_13",
-          "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "conceptName": "constructor",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
         {
           "key": "lesson_13::createElement",
           "lessonId": "lesson_13",
@@ -454,21 +386,7 @@
           "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        }
-      ],
-      "conceptCount": 25,
-      "mcDeficit": 66,
-      "fillDeficit": 40
-    },
-    {
-      "id": "QMAN-002",
-      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-      "priority": "P0-manual-mc-fill",
-      "owner": "unknown/unavailable",
-      "reviewer": "unknown/unavailable",
-      "sourceEvidenceStatus": "lesson-data-present",
-      "status": "not-started",
-      "items": [
+        },
         {
           "key": "lesson_13::replaceChild",
           "lessonId": "lesson_13",
@@ -536,7 +454,21 @@
           "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        },
+        }
+      ],
+      "conceptCount": 25,
+      "mcDeficit": 66,
+      "fillDeficit": 41
+    },
+    {
+      "id": "QMAN-002",
+      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
+      "priority": "P0-manual-mc-fill",
+      "owner": "unknown/unavailable",
+      "reviewer": "unknown/unavailable",
+      "sourceEvidenceStatus": "lesson-data-present",
+      "status": "not-started",
+      "items": [
         {
           "key": "lesson_13::style",
           "lessonId": "lesson_13",
@@ -589,9 +521,9 @@
           "manualReviewDate": "unknown/unavailable"
         }
       ],
-      "conceptCount": 7,
-      "mcDeficit": 20,
-      "fillDeficit": 14
+      "conceptCount": 3,
+      "mcDeficit": 9,
+      "fillDeficit": 6
     },
     {
       "id": "QMAN-003",
