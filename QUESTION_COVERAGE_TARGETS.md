@@ -5,10 +5,10 @@ Date: 2026-04-30
 ## Summary
 
 - Ready: no
-- MC target: 77/568 concepts have at least 3 manually authored MC questions
-- Fill target: 82/568 code concepts have at least 2 manually authored Fill questions
-- Source mix: 303 manual MC + 236 manual Fill
-- Hand-curated promotion backlog: 491 MC concepts, 486 Fill concepts
+- MC target: 82/568 concepts have at least 3 manually authored MC questions
+- Fill target: 87/568 code concepts have at least 2 manually authored Fill questions
+- Source mix: 316 manual MC + 243 manual Fill
+- Hand-curated promotion backlog: 486 MC concepts, 481 Fill concepts
 
 ## Policy
 

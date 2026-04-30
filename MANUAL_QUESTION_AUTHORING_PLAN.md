@@ -5,11 +5,11 @@ Date: 2026-04-30
 ## Summary
 
 - Ready for authoring: yes
-- Gap concepts: 491/568
-- MC gap concepts: 491
-- Fill gap concepts: 486
-- Strict MC questions still required: 1401
-- Strict Fill questions still required: 900
+- Gap concepts: 486/568
+- MC gap concepts: 486
+- Fill gap concepts: 481
+- Strict MC questions still required: 1388
+- Strict Fill questions still required: 893
 - Batches: 25
 
 ## Policy
@@ -25,17 +25,12 @@ Date: 2026-04-30
 - Status: not-started
 - Owner: unknown/unavailable
 - Reviewer: unknown/unavailable
-- Concepts: 20
-- MC deficit: 54
-- Fill deficit: 35
+- Concepts: 15
+- MC deficit: 41
+- Fill deficit: 28
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_13::getItem` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
-| `lesson_13::inheritance` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
-| `lesson_13::innerHTML` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
-| `lesson_13::instance` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_13::localStorage` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_13::method` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::Method` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::new` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |

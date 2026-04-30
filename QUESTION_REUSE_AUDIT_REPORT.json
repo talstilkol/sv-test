@@ -3,7 +3,7 @@
   "date": "2026-04-29",
   "target": "SVCollege question reuse by learner profile contract and concept tag",
   "summary": {
-    "questions": 1195,
+    "questions": 1215,
     "conceptTags": 384,
     "missingConceptKey": 0,
     "duplicateIdentityIssues": 0,
@@ -799,63 +799,68 @@
     },
     {
       "conceptKey": "lesson_13::getItem",
-      "total": 2,
+      "total": 6,
       "kinds": {
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 2
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 5
     },
     {
       "conceptKey": "lesson_13::inheritance",
-      "total": 2,
+      "total": 6,
       "kinds": {
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 2
+        "curated": 6
       },
-      "maxLevel": 5
+      "maxLevel": 6
     },
     {
       "conceptKey": "lesson_13::innerHTML",
-      "total": 2,
+      "total": 6,
       "kinds": {
-        "mc": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 2
+        "curated": 6
+      },
+      "maxLevel": 6
+    },
+    {
+      "conceptKey": "lesson_13::instance",
+      "total": 6,
+      "kinds": {
+        "mc": 3,
+        "fill": 2,
+        "trace": 1
+      },
+      "sources": {
+        "curated": 6
       },
       "maxLevel": 5
     },
     {
-      "conceptKey": "lesson_13::instance",
-      "total": 1,
-      "kinds": {
-        "trace": 1
-      },
-      "sources": {
-        "curated": 1
-      },
-      "maxLevel": 3
-    },
-    {
       "conceptKey": "lesson_13::localStorage",
-      "total": 3,
+      "total": 6,
       "kinds": {
-        "mc": 1,
-        "fill": 1,
+        "mc": 3,
+        "fill": 2,
         "trace": 1
       },
       "sources": {
-        "curated": 3
+        "curated": 6
       },
-      "maxLevel": 3
+      "maxLevel": 5
     },
     {
       "conceptKey": "lesson_13::method",

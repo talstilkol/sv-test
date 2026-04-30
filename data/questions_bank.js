@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.14";
+var QUESTIONS_BANK_VERSION = "2.1.15";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -112,6 +112,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 13 sub-batch: extends, getElementById, getElementsByClassName and getElementsByTagName MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.15",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 13 sub-batch: getItem, inheritance, innerHTML, instance and localStorage MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -2564,6 +2570,240 @@ var QUESTIONS_BANK = {
         "❌ שניהם חיפושי DOM מקומיים.",
         "❌ getElementsByTagName מחזיר אוסף, ו-class selector לא מחזיר CSSStyleSheet.",
         "❌ יש הבדל מהותי בין סוג תגית לבין class.",
+      ],
+    },
+    {
+      id: "mc_l13_get_item_manual_001", topicId: "topic_storage", conceptKey: "lesson_13::getItem", level: 3,
+      question: "מה עושה `localStorage.getItem('theme')`?",
+      options: [
+        "קורא את המחרוזת שנשמרה תחת המפתח theme, או מחזיר null אם אין ערך",
+        "שומר ערך חדש תחת המפתח theme",
+        "מוחק את כל האחסון המקומי",
+        "יוצר אלמנט DOM בשם theme",
+      ],
+      correctIndex: 0,
+      explanation: "getItem היא פעולת קריאה מ-Web Storage. היא מחזירה string שנשמר מראש, או null כשאין מפתח כזה.",
+      optionFeedback: [
+        "✅ נכון: getItem קוראת ערך לפי key ומחזירה string או null.",
+        "❌ שמירה נעשית עם setItem, לא getItem.",
+        "❌ מחיקה נעשית עם removeItem או clear.",
+        "❌ Storage אינו יוצר אלמנטים בעץ ה-DOM.",
+      ],
+    },
+    {
+      id: "mc_l13_get_item_manual_002", topicId: "topic_storage", conceptKey: "lesson_13::getItem", level: 4,
+      question: "למה חשוב לבדוק את תוצאת `getItem` לפני `JSON.parse`?",
+      options: [
+        "כי המפתח עלול לא להיות קיים ואז getItem תחזיר null",
+        "כי getItem ממירה את הערך למספר פיקסלים",
+        "כי JSON.parse שומר אוטומטית ב-localStorage",
+        "כי getItem משנה את מבנה האובייקט המקורי",
+      ],
+      correctIndex: 0,
+      explanation: "אם אין ערך שמור, getItem מחזירה null. קוד טעינה יציב צריך לטפל בערך חסר לפני פירוק JSON.",
+      optionFeedback: [
+        "✅ נכון: ערך חסר הוא מצב תקין שצריך לטפל בו.",
+        "❌ getItem מחזירה string או null, לא מספר פיקסלים.",
+        "❌ JSON.parse רק מפרק מחרוזת JSON; הוא לא שומר דבר.",
+        "❌ קריאה מ-storage לא משנה אובייקטים קיימים.",
+      ],
+    },
+    {
+      id: "mc_l13_get_item_manual_003", topicId: "topic_storage", conceptKey: "lesson_13::getItem", level: 5,
+      question: "איזה קוד טעינה מתמודד נכון עם ערך חסר ב-localStorage?",
+      options: [
+        "const raw = localStorage.getItem('tasks');\nconst tasks = raw ? JSON.parse(raw) : [];",
+        "const tasks = JSON.parse(localStorage.getItem('tasks')).map(Boolean);",
+        "const tasks = localStorage.setItem('tasks');",
+        "const tasks = document.getItem('tasks') || [];",
+      ],
+      correctIndex: 0,
+      explanation: "הקוד שומר fallback למערך ריק כאשר אין מחרוזת שמורה, ורק אז מפעיל JSON.parse על ערך קיים.",
+      optionFeedback: [
+        "✅ נכון: קודם קוראים, בודקים, ורק אז מפרקים JSON.",
+        "❌ אם getItem מחזירה null, JSON.parse(null) אינו מייצג מערך משימות תקין.",
+        "❌ setItem היא פעולת כתיבה ואינה מחזירה את המשימות.",
+        "❌ document אינו ממשק Web Storage.",
+      ],
+    },
+    {
+      id: "mc_l13_inheritance_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::inheritance", level: 4,
+      question: "מהי ירושה (`inheritance`) במחלקות JavaScript?",
+      options: [
+        "מנגנון שבו מחלקת בן מקבלת מתודות ומאפיינים ממחלקת אב",
+        "שמירת אובייקט ב-localStorage",
+        "בחירת אלמנט מתוך ה-DOM לפי id",
+        "המרת מערך למחרוזת JSON",
+      ],
+      correctIndex: 0,
+      explanation: "ירושה מאפשרת להגדיר התנהגות משותפת במחלקת אב ולהרחיב אותה במחלקות בן.",
+      optionFeedback: [
+        "✅ נכון: זה הרעיון המרכזי של inheritance.",
+        "❌ אחסון בדפדפן אינו ירושה.",
+        "❌ בחירת DOM היא פעולה אחרת לגמרי.",
+        "❌ JSON מתאר ייצוג נתונים, לא קשר בין מחלקות.",
+      ],
+    },
+    {
+      id: "mc_l13_inheritance_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::inheritance", level: 5,
+      question: "למה ירושה יכולה לחסוך שכפול קוד?",
+      options: [
+        "כי מתודה משותפת נכתבת במחלקת האב ונגישה למחלקות הבן",
+        "כי כל מופע נמחק אחרי קריאה למתודה",
+        "כי כל class הופכת אוטומטית ל-HTML tag",
+        "כי localStorage מעתיק מתודות לכל אובייקט",
+      ],
+      correctIndex: 0,
+      explanation: "כאשר כמה סוגים חולקים פעולה בסיסית, שמים אותה במחלקת האב. מחלקות הבן יורשות אותה ומוסיפות רק את ההבדלים.",
+      optionFeedback: [
+        "✅ נכון: זו סיבה מעשית להשתמש בירושה.",
+        "❌ קריאה למתודה לא מוחקת מופעים.",
+        "❌ class תכנותית אינה תגית HTML.",
+        "❌ localStorage שומר מחרוזות ואינו מעתיק מתודות.",
+      ],
+    },
+    {
+      id: "mc_l13_inheritance_manual_003", topicId: "topic_objects", conceptKey: "lesson_13::inheritance", level: 6,
+      question: "באיזה מצב ירושה היא בחירה סבירה?",
+      options: [
+        "כאשר `Admin` הוא סוג מיוחד של `User` ומשתף איתו פעולות בסיסיות",
+        "כאשר רוצים לשמור צבע רקע בין רענונים",
+        "כאשר רוצים לבחור את כל תגיות p בדף",
+        "כאשר רוצים להחליף טקסט באלמנט אחד",
+      ],
+      correctIndex: 0,
+      explanation: "ירושה מתאימה לקשר is-a: Admin הוא User עם יכולות נוספות. שאר האפשרויות הן DOM או storage.",
+      optionFeedback: [
+        "✅ נכון: זה קשר ירושה טבעי בין מחלקות.",
+        "❌ שמירת צבע רקע היא שימוש ב-storage.",
+        "❌ בחירת תגיות היא שימוש ב-DOM query.",
+        "❌ שינוי טקסט אינו מצדיק ירושה.",
+      ],
+    },
+    {
+      id: "mc_l13_inner_html_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::innerHTML", level: 4,
+      question: "מה עושה ההצבה `box.innerHTML = '<strong>Hi</strong>'`?",
+      options: [
+        "מחליפה את תוכן האלמנט ומפרשת את המחרוזת כ-HTML",
+        "מציגה תגית strong כטקסט רגיל בתוך המסך",
+        "שומרת את המחרוזת ב-localStorage",
+        "יוצרת מחלקת JavaScript בשם strong",
+      ],
+      correctIndex: 0,
+      explanation: "innerHTML מחליף את התוכן הפנימי של אלמנט ומאפשר לדפדפן לפרש תגיות HTML במחרוזת.",
+      optionFeedback: [
+        "✅ נכון: innerHTML מתאים כאשר מכניסים markup מבוקר.",
+        "❌ להצגת סימנים כטקסט רגיל משתמשים לרוב ב-textContent.",
+        "❌ ההצבה משנה DOM, לא storage.",
+        "❌ תגית strong אינה מחלקת JavaScript.",
+      ],
+    },
+    {
+      id: "mc_l13_inner_html_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::innerHTML", level: 6,
+      question: "מדוע לא כדאי להציב קלט משתמש לא מסונן ישירות ל-`innerHTML`?",
+      options: [
+        "כי תגיות או סקריפטים בתוך הקלט עלולים להפוך ל-markup מסוכן",
+        "כי innerHTML עובד רק עם מספרים",
+        "כי sessionStorage מוסיף תגיות HTML לקלט",
+        "כי getElementById מפסיק לעבוד אחרי innerHTML",
+      ],
+      correctIndex: 0,
+      explanation: "innerHTML מפרש HTML. קלט לא מסונן עלול להכניס markup שלא התכוונו להציג, ולכן לקלט טקסטואלי עדיף textContent או sanitizer אמיתי.",
+      optionFeedback: [
+        "✅ נכון: זה סיכון XSS בסיסי.",
+        "❌ innerHTML מקבל מחרוזת HTML, לא רק מספרים.",
+        "❌ sessionStorage אינו משנה קלט ל-markup.",
+        "❌ getElementById לא מפסיק לעבוד בגלל הצבת innerHTML.",
+      ],
+    },
+    {
+      id: "mc_l13_instance_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::instance", level: 3,
+      question: "מהו `dog` בקוד הבא?\n\nclass Dog {}\nconst dog = new Dog();",
+      options: [
+        "instance של המחלקה Dog",
+        "שם של תגית HTML",
+        "מפתח ב-localStorage",
+        "מתודת document",
+      ],
+      correctIndex: 0,
+      explanation: "new Dog() יוצר אובייקט ממשי לפי התבנית של המחלקה Dog. האובייקט הזה נקרא instance.",
+      optionFeedback: [
+        "✅ נכון: dog הוא מופע שנוצר מהמחלקה.",
+        "❌ Dog כאן היא מחלקת JavaScript, לא תגית HTML.",
+        "❌ לא נוצר מפתח storage בקוד הזה.",
+        "❌ document אינו מעורב ביצירת instance.",
+      ],
+    },
+    {
+      id: "mc_l13_instance_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::instance", level: 4,
+      question: "מה ההבדל בין `class User {}` לבין `const tal = new User()`?",
+      options: [
+        "`User` היא התבנית; `tal` הוא instance שנוצר ממנה",
+        "`User` הוא אובייקט DOM; `tal` הוא כלל CSS",
+        "`tal` הוא constructor; `User` הוא sessionStorage",
+        "אין הבדל בין מחלקה לבין מופע",
+      ],
+      correctIndex: 0,
+      explanation: "המחלקה מתארת את המבנה וההתנהגות. instance הוא אובייקט מסוים שנוצר מהמחלקה.",
+      optionFeedback: [
+        "✅ נכון: זו ההבחנה החשובה בין blueprint לבין אובייקט חי.",
+        "❌ אין כאן DOM או CSS.",
+        "❌ constructor נמצא בתוך המחלקה; sessionStorage אינו קשור.",
+        "❌ יש הבדל בסיסי בין הגדרה לבין מופע.",
+      ],
+    },
+    {
+      id: "mc_l13_instance_manual_003", topicId: "topic_objects", conceptKey: "lesson_13::instance", level: 5,
+      question: "למה יוצרים כמה instances מאותה מחלקה?",
+      options: [
+        "כדי לקבל כמה אובייקטים עם אותה התנהגות בסיסית אבל state נפרד",
+        "כדי שכל instance ישנה את קוד המחלקה המקורי",
+        "כדי לשמור כל מתודה כקובץ HTML",
+        "כדי להפוך class ל-localStorage",
+      ],
+      correctIndex: 0,
+      explanation: "כל מופע יכול לשמור ערכי state משלו, למשל name אחר, ועדיין להשתמש במתודות שהמחלקה מגדירה.",
+      optionFeedback: [
+        "✅ נכון: shared behavior עם state נפרד הוא שימוש מרכזי ב-instances.",
+        "❌ יצירת מופע לא משנה את קוד המחלקה.",
+        "❌ מתודות אינן נשמרות כקבצי HTML.",
+        "❌ localStorage אינו מחליף class.",
+      ],
+    },
+    {
+      id: "mc_l13_local_storage_manual_001", topicId: "topic_storage", conceptKey: "lesson_13::localStorage", level: 4,
+      question: "מה מאפיין את `localStorage`?",
+      options: [
+        "אחסון key-value בדפדפן שנשמר גם אחרי סגירת הטאב",
+        "אחסון שנמחק בעקבות כל פעולת map במערך",
+        "שרת Node.js שמריץ קוד JavaScript",
+        "אוסף אלמנטים לפי class",
+      ],
+      correctIndex: 0,
+      explanation: "localStorage שומר מחרוזות בדפדפן תחת מפתחות. הערכים נשארים עד שמוחקים אותם או שהמשתמש מנקה את נתוני האתר.",
+      optionFeedback: [
+        "✅ נכון: זה אחסון מקומי מתמשך בדפדפן.",
+        "❌ פעולות מערך כמו map אינן מוחקות localStorage.",
+        "❌ Node.js הוא runtime בצד שרת/מחשב, לא Web Storage.",
+        "❌ אוסף אלמנטים לפי class שייך ל-DOM.",
+      ],
+    },
+    {
+      id: "mc_l13_local_storage_manual_002", topicId: "topic_storage", conceptKey: "lesson_13::localStorage", level: 5,
+      question: "איזה ערך מתאים לשמור ב-localStorage בפורטל לימוד מקומי?",
+      options: [
+        "העדפת תצוגה כמו מצב כהה או תפריט מקופל",
+        "סיסמה גלויה של המשתמש",
+        "מפתח API סודי של שרת",
+        "אלמנט DOM חי מתוך הדף",
+      ],
+      correctIndex: 0,
+      explanation: "localStorage מתאים להעדפות מקומיות לא רגישות. לא שומרים בו סודות או אובייקטי DOM חיים.",
+      optionFeedback: [
+        "✅ נכון: העדפת UI לא רגישה היא שימוש מתאים.",
+        "❌ סיסמה גלויה אינה צריכה להישמר ב-localStorage.",
+        "❌ מפתח API סודי אסור לחשוף בדפדפן.",
+        "❌ DOM node אינו נשמר כמחרוזת שימושית ב-localStorage.",
       ],
     },
 
@@ -5227,6 +5467,55 @@ var QUESTIONS_BANK = {
       answer: "textContent",
       hint: "מאפיין DOM שמחזיר את הטקסט של אלמנט.",
       explanation: "אחרי שאיתרנו תגיות li, אפשר לגשת לאיבר לפי אינדקס ולקרוא ממנו textContent.",
+    },
+    {
+      id: "fill_l13_get_item_manual_001", topicId: "topic_storage", conceptKey: "lesson_13::getItem", level: 4,
+      code: "const savedTheme = localStorage.____('theme');\nconst theme = savedTheme || 'dark';",
+      answer: "getItem",
+      hint: "מתודת Web Storage שקוראת ערך לפי key.",
+      explanation: "getItem קוראת מחרוזת שנשמרה תחת key מסוים ומחזירה null אם אין ערך.",
+    },
+    {
+      id: "fill_l13_inheritance_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::inheritance", level: 5,
+      code: "class Animal {\n  breathe() { return true; }\n}\nclass Dog ____ Animal {}\nconst dog = new Dog();",
+      answer: "extends",
+      hint: "מילת המפתח שמבטאת קשר ירושה בין מחלקת בן למחלקת אב.",
+      explanation: "extends יוצר את קשר הירושה: Dog היא מחלקת בן של Animal ולכן מופע Dog מקבל גישה להתנהגות האב.",
+    },
+    {
+      id: "fill_l13_inner_html_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::innerHTML", level: 4,
+      code: "const box = document.getElementById('message');\nbox.____ = '<strong>Saved</strong>';",
+      answer: "innerHTML",
+      hint: "מאפיין DOM שמחליף תוכן פנימי ומפרש תגיות HTML.",
+      explanation: "innerHTML מחליף את התוכן הפנימי של האלמנט ומפרש את המחרוזת כ-markup.",
+    },
+    {
+      id: "fill_l13_inner_html_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::innerHTML", level: 6,
+      code: "const safeLabel = document.getElementById('label');\nsafeLabel.____ = userInput;",
+      answer: "textContent",
+      hint: "המאפיין המועדף להצגת קלט כטקסט רגיל בלי לפרש תגיות.",
+      explanation: "כאשר הערך מגיע ממשתמש, textContent מציג אותו כטקסט ולא כ-HTML. זה מקטין סיכון XSS לעומת innerHTML.",
+    },
+    {
+      id: "fill_l13_instance_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::instance", level: 4,
+      code: "class User {}\nconst tal = ____ User();",
+      answer: "new",
+      hint: "מילת המפתח שיוצרת מופע ממחלקה.",
+      explanation: "new מפעילה את המחלקה כתבנית ויוצרת instance חדש בשם tal.",
+    },
+    {
+      id: "fill_l13_instance_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::instance", level: 5,
+      code: "class User {}\nconst tal = new User();\nconst isUserInstance = tal ____ User;",
+      answer: "instanceof",
+      hint: "אופרטור שבודק אם אובייקט נוצר ממחלקה מסוימת.",
+      explanation: "instanceof בודק את שרשרת ה-prototype ומחזיר true כאשר tal הוא מופע של User.",
+    },
+    {
+      id: "fill_l13_local_storage_manual_001", topicId: "topic_storage", conceptKey: "lesson_13::localStorage", level: 5,
+      code: "const settings = { theme: 'dark' };\nlocalStorage.setItem('settings', JSON.____(settings));",
+      answer: "stringify",
+      hint: "מתודת JSON שהופכת אובייקט למחרוזת לפני שמירה.",
+      explanation: "localStorage שומר מחרוזות בלבד. JSON.stringify ממיר אובייקט למחרוזת JSON לפני setItem.",
     },
 
     // ===== Objects / OOP =====

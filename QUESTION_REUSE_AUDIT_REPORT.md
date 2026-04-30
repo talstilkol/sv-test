@@ -2,7 +2,7 @@
 
 - Date: 2026-04-29
 - Target: SVCollege question reuse by learner profile contract and concept tag
-- Questions audited: 1195
+- Questions audited: 1215
 - Concept tags: 384
 - Duplicate concept/kind/question identities: 0
 - Missing conceptKey: 0
