@@ -17,9 +17,9 @@
 
 | מדד | כמות |
 |---|---:|
-| בוצעו | 746 |
-| סך משימות מסומנות | 906 |
-| בוצעו מתוך סך הכול | 746/906 (82%) |
+| בוצעו | 747 |
+| סך משימות מסומנות | 907 |
+| בוצעו מתוך סך הכול | 747/907 (82%) |
 | נותרו פעילות: פתוחות + חלקיות + חסומות | 145 |
 | פתוחות | 138 |
 | בעבודה / חלקיות | 6 |
@@ -32,11 +32,11 @@
 | שער | מצב חי |
 |---|---|
 | `finish-line:pre-release` | 17/18 עברו; חסום על `questions:coverage-targets:strict` |
-| `QUESTION_COVERAGE_TARGETS` | `mcGapCount: 499`, `fillGapCount: 494`, `ready:false` |
-| `MANUAL_QUESTION_AUTHORING_PLAN` | `1422` שאלות MC ידניות ו-`912` Fill ידניות עדיין נדרשות ליעד strict |
-| התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה + תתי-batch Lesson 11 + שלושה תתי-batch Lesson 12 + תת-batch Lesson 13 הושלמו ככיסוי authored: `150` MC ו-`95` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
+| `QUESTION_COVERAGE_TARGETS` | `mcGapCount: 495`, `fillGapCount: 490`, `ready:false` |
+| `MANUAL_QUESTION_AUTHORING_PLAN` | `1411` שאלות MC ידניות ו-`906` Fill ידניות עדיין נדרשות ליעד strict |
+| התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה + תתי-batch Lesson 11 + שלושה תתי-batch Lesson 12 + שני תתי-batch Lesson 13 הושלמו ככיסוי authored: `161` MC ו-`101` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
 | `QUESTION_ACTIVITY_AUTHORING_PLAN` | `222` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
-| `BRUTAL_MASTER_PLAN_AUDIT` | `237` פריטים: `DONE 14`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 216` |
+| `BRUTAL_MASTER_PLAN_AUDIT` | `238` פריטים: `DONE 15`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 216` |
 
 ## משימות שנותרו לבצע — ראשונות
 
@@ -46,7 +46,7 @@
 
 ### 📊 סיכום התקדמות > Forward Execution Plan — 2026-04-30 > Gate סופי לסגירת Finish Line 1
 
-- [!] FWD-9.4 — `npm run questions:coverage-targets:strict` — חסום עד השלמת `1,422` MC ידניות ו-`912` Fill ידניות לפי [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md).
+- [!] FWD-9.4 — `npm run questions:coverage-targets:strict` — חסום עד השלמת `1,411` MC ידניות ו-`906` Fill ידניות לפי [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md).
 
 ## בעבודה / חלקיות (6)
 
@@ -274,10 +274,11 @@
 
 ## משימות שהושלמו — בסוף
 
-בוצעו 746 מתוך 906 משימות מסומנות. הפירוט המלא עבר לארכיון: [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
+בוצעו 747 מתוך 907 משימות מסומנות. הפירוט המלא עבר לארכיון: [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
 
 ### הושלם בסבב הנוכחי
 
+- [V] QMAN-001E — נכתבו ידנית 11 MC ו-6 Fill ל-`lesson_13::createElement`, `lesson_13::document`, `lesson_13::Document Object Model`, `lesson_13::DOM`; `validate:strict`, `qa:questions:strict` ו-`quality:questions:strict` ירוקים, ו-`questions:coverage-targets:strict` ירד ל-`495`/`490` פערים.
 - [V] QMAN-001D — נכתבו ידנית 11 MC ו-7 Fill ל-`lesson_13::appendChild`, `lesson_13::attribute`, `lesson_13::class`, `lesson_13::constructor`; `validate:strict`, `qa:questions:strict` ו-`quality:questions:strict` ירוקים, ו-`questions:coverage-targets:strict` ירד ל-`499`/`494` פערים.
 - [V] QMAN-001C — נכתבו ידנית 12 MC ו-6 Fill ל-`lesson_12::יצירת מערך חדש (new array)`, `lesson_12::יצירת מערך חדש מתוך קיים`, `lesson_12::סינון לפי תנאי`, `lesson_12::עבודה עם ערכים לפי אינדקס`; `validate:strict`, `qa:questions:strict` ו-`quality:questions:strict` ירוקים, ו-`questions:coverage-targets:strict` ירד ל-`503`/`498` פערים.
 - [V] QMAN-001B — נכתבו ידנית 12 MC ו-8 Fill ל-`lesson_12::forEach`, `lesson_12::spread`, `lesson_12::uppercase`, `lesson_12::lowercase`; `validate:strict`, `qa:questions:strict` ו-`quality:questions:strict` ירוקים, ו-`questions:coverage-targets:strict` ירד ל-`507`/`502` פערים.

@@ -9,7 +9,7 @@
     "failed": 0,
     "ready": true,
     "questionQualityIndex": 100,
-    "totalQuestions": 506
+    "totalQuestions": 523
   },
   "checks": [
     {
@@ -45,7 +45,7 @@
       "label": "Question quality index comes from real QA report",
       "passed": true,
       "status": "pass",
-      "detail": "Question QA report index: 100% across 506 questions."
+      "detail": "Question QA report index: 100% across 523 questions."
     },
     {
       "id": "package-scripts",

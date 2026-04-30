@@ -2,7 +2,7 @@
 
 - Date: 2026-04-29
 - Target: SVCollege question reuse by learner profile contract and concept tag
-- Questions audited: 1162
+- Questions audited: 1179
 - Concept tags: 384
 - Duplicate concept/kind/question identities: 0
 - Missing conceptKey: 0
@@ -34,6 +34,7 @@
 | `lesson_11::By Reference` | 7 | mc:3, fill:2, trace:1, build:1 | curated:7 | 6 |
 | `lesson_11::function` | 7 | mc:3, fill:2, trace:1, build:1 | curated:7 | 6 |
 | `lesson_13::class` | 7 | mc:3, fill:2, trace:1, build:1 | curated:7 | 5 |
+| `lesson_13::DOM` | 7 | mc:3, fill:2, trace:1, bug:1 | curated:6, svcollege-curated:1 | 5 |
 | `lesson_25::responsive design` | 7 | mc:3, fill:2, trace:1, build:1 | curated:6, svcollege-curated:1 | 6 |
 | `ai_development::Prompt Engineering` | 6 | mc:3, fill:2, trace:1 | curated:5, svcollege-curated:1 | 6 |
 | `lesson_11::boolean` | 6 | mc:3, fill:2, trace:1 | curated:6 | 5 |
@@ -47,5 +48,4 @@
 | `lesson_11::number` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
 | `lesson_11::object` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
 | `lesson_11::Pointer` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
-| `lesson_11::pop` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
 

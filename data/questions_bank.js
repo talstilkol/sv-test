@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.12";
+var QUESTIONS_BANK_VERSION = "2.1.13";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -100,6 +100,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 13 sub-batch: appendChild, attribute, class and constructor MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.13",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 13 sub-batch: createElement, document, Document Object Model and DOM MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -2174,6 +2180,204 @@ var QUESTIONS_BANK = {
         "❌ הערך של b לא דורס את a; אלה מופעים נפרדים.",
         "❌ constructor כן מציב name על כל מופע.",
         "❌ User הוא שם המחלקה, לא הערך שנשמר ב-this.name.",
+      ],
+    },
+    {
+      id: "mc_l13_create_element_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::createElement", level: 3,
+      question: "מה מחזירה הקריאה `document.createElement('li')`?",
+      options: [
+        "אלמנט li חדש בזיכרון, שעדיין לא מחובר למסך",
+        "את כל תגיות li שכבר קיימות בדף",
+        "מחרוזת HTML שמוצגת מיד בדף",
+        "ערך שנשמר ב-localStorage",
+      ],
+      correctIndex: 0,
+      explanation: "createElement יוצר Node חדש ומנותק. כדי לראות אותו במסך צריך להגדיר לו תוכן/מאפיינים ואז לחבר אותו ל-parent קיים.",
+      optionFeedback: [
+        "✅ נכון: האלמנט נוצר כ-Node חי בזיכרון אבל עדיין אינו חלק מעץ ה-DOM.",
+        "❌ שליפת אלמנטים קיימים נעשית עם selector או getElements, לא createElement.",
+        "❌ createElement לא מציג מחרוזת מיד; הוא מחזיר אובייקט Element.",
+        "❌ localStorage אינו קשור ליצירת אלמנט DOM.",
+      ],
+    },
+    {
+      id: "mc_l13_create_element_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::createElement", level: 4,
+      question: "איזה רצף נכון לבניית פריט רשימה חדש שמופיע במסך?",
+      options: [
+        "createElement ואז textContent ואז appendChild",
+        "appendChild ואז createElement ואז localStorage",
+        "getItem ואז setItem ואז constructor",
+        "innerHTML ואז removeChild ואז new",
+      ],
+      correctIndex: 0,
+      explanation: "קודם יוצרים אלמנט, אחר כך ממלאים אותו בתוכן או attributes, ולבסוף מחברים אותו לאב קיים עם appendChild.",
+      optionFeedback: [
+        "✅ נכון: זה הסדר הבריא והקריא ליצירת Node והכנסתו לעץ.",
+        "❌ אי אפשר להוסיף ילד לפני שיש Node להוסיף.",
+        "❌ getItem/setItem הם Web Storage, לא בניית DOM.",
+        "❌ innerHTML/removeChild/new לא מתארים את רצף היצירה והחיבור.",
+      ],
+    },
+    {
+      id: "mc_l13_document_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::document", level: 3,
+      question: "מה מייצג האובייקט הגלובלי `document` בדפדפן?",
+      options: [
+        "את קובץ ה-HTML הטעון כעץ שאפשר לגשת אליו דרך JavaScript",
+        "את מסד הנתונים של השרת",
+        "את כל המשתנים שהוגדרו עם const",
+        "את קובץ ה-CSS בלבד",
+      ],
+      correctIndex: 0,
+      explanation: "document הוא נקודת הכניסה המרכזית של JavaScript למסמך ה-HTML ול-DOM שנבנה ממנו.",
+      optionFeedback: [
+        "✅ נכון: document נותן גישה לעץ המסמך, לאיתור אלמנטים וליצירת אלמנטים.",
+        "❌ מסד נתונים בשרת אינו מיוצג על ידי document.",
+        "❌ משתני JavaScript אינם נשמרים בתוך document.",
+        "❌ CSS משפיע על עיצוב, אבל document מייצג את מסמך ה-HTML/DOM.",
+      ],
+    },
+    {
+      id: "mc_l13_document_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::document", level: 4,
+      question: "למה רוב פעולות איתור האלמנטים מתחילות ב-`document`?",
+      options: [
+        "כי הוא השורש שמחזיק את ה-DOM API של הדף הנוכחי",
+        "כי הוא מחליף את כל פונקציות JavaScript הרגילות",
+        "כי הוא שולח בקשת HTTP לשרת בכל חיפוש",
+        "כי הוא עובד רק אחרי שמירה ב-sessionStorage",
+      ],
+      correctIndex: 0,
+      explanation: "ה-document הוא ההקשר של המסמך הנוכחי. דרכו קוראים ל-getElementById, querySelector, createElement ועוד פעולות DOM.",
+      optionFeedback: [
+        "✅ נכון: document הוא שער הכניסה לעץ הדף ולמתודות DOM.",
+        "❌ הוא לא מחליף פונקציות JavaScript כלליות.",
+        "❌ איתור DOM מקומי לא שולח HTTP request.",
+        "❌ sessionStorage אינו תנאי לשימוש ב-document.",
+      ],
+    },
+    {
+      id: "mc_l13_document_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::document", level: 5,
+      question: "איזו שורה משתמשת נכון ב-`document` כדי למצוא אלמנט יחיד לפי id?",
+      options: [
+        "const title = document.getElementById('title');",
+        "const title = document.getItem('title');",
+        "const title = localStorage.querySelector('title');",
+        "const title = new document('title');",
+      ],
+      correctIndex: 0,
+      explanation: "getElementById היא מתודת DOM על document שמחזירה אלמנט יחיד לפי id או null אם לא נמצא.",
+      optionFeedback: [
+        "✅ נכון: זו הקריאה הישירה לאיתור id בתוך המסמך.",
+        "❌ getItem שייך ל-Web Storage ולא לאיתור DOM.",
+        "❌ querySelector שייך ל-document או לאלמנט DOM, לא ל-localStorage.",
+        "❌ document אינו מחלקה שיוצרים עם new.",
+      ],
+    },
+    {
+      id: "mc_l13_dom_full_name_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::Document Object Model", level: 4,
+      question: "מה המשמעות של השם Document Object Model?",
+      options: [
+        "מודל שמייצג את המסמך כאוסף אובייקטים היררכי",
+        "מודל שממיר JavaScript לקובץ תמונה",
+        "ספריית CSS לעיצוב כפתורים",
+        "שיטה לשמירת סיסמאות בדפדפן",
+      ],
+      correctIndex: 0,
+      explanation: "Document Object Model הוא ייצוג בזיכרון של המסמך: תגיות הופכות לאובייקטים בעץ, ו-JavaScript יכול לקרוא ולשנות אותם.",
+      optionFeedback: [
+        "✅ נכון: הדף הופך לעץ אובייקטים שאפשר לגשת אליו.",
+        "❌ DOM אינו ממיר JavaScript לתמונה.",
+        "❌ DOM אינו ספריית CSS.",
+        "❌ אחסון סיסמאות אינו התפקיד של DOM.",
+      ],
+    },
+    {
+      id: "mc_l13_dom_full_name_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::Document Object Model", level: 5,
+      question: "למה חשוב לחשוב על DOM כעל עץ?",
+      options: [
+        "כי לכל אלמנט יש יחס של אב, ילד או אח בתוך מבנה המסמך",
+        "כי כל תגית HTML היא מערך של מספרים",
+        "כי אין דרך לשנות אלמנט יחיד בדף",
+        "כי כל שינוי DOM נשמר אוטומטית בשרת",
+      ],
+      correctIndex: 0,
+      explanation: "מבנה העץ מסביר למה appendChild, removeChild ו-querySelector פועלים על יחסים בין Nodes ולא על טקסט שטוח.",
+      optionFeedback: [
+        "✅ נכון: DOM הוא היררכיה של Nodes עם יחסי parent/child/sibling.",
+        "❌ תגית אינה מערך מספרים.",
+        "❌ אפשר לשנות אלמנט יחיד דרך reference אליו.",
+        "❌ שינוי DOM הוא מקומי בדפדפן ולא נשמר בשרת אוטומטית.",
+      ],
+    },
+    {
+      id: "mc_l13_dom_full_name_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::Document Object Model", level: 6,
+      question: "איזה תיאור הכי מדויק ל-DOM בזמן טעינת דף?",
+      options: [
+        "הדפדפן מפרש HTML ובונה ייצוג אובייקטים חי ש-JavaScript יכול לשנות",
+        "Node.js שומר את כל התגיות בקובץ JSON בשרת",
+        "CSS מוחק את ה-HTML ומחליף אותו במחלקות",
+        "localStorage בונה עץ מתוך כל המפתחות השמורים",
+      ],
+      correctIndex: 0,
+      explanation: "מנוע הדפדפן מפרש את המסמך ובונה DOM חי. שינויי JavaScript ב-DOM יכולים להשפיע על מה שמוצג למשתמש.",
+      optionFeedback: [
+        "✅ נכון: זה החיבור בין HTML, אובייקטים בזיכרון ו-JavaScript.",
+        "❌ Node.js בצד שרת אינו בונה את DOM הדפדפן.",
+        "❌ CSS מעצב את האלמנטים, הוא לא מחליף את ה-HTML.",
+        "❌ localStorage הוא אחסון key-value, לא מודל מסמך.",
+      ],
+    },
+    {
+      id: "mc_l13_dom_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::DOM", level: 3,
+      question: "מה מאפשר ה-DOM ל-JavaScript לעשות?",
+      options: [
+        "לגשת לאלמנטים בדף, לשנות אותם, ליצור אותם או להסיר אותם",
+        "להריץ npm install בתוך הדפדפן",
+        "להפוך כל string אוטומטית למספר",
+        "לשמור נתונים בענן בלי שרת",
+      ],
+      correctIndex: 0,
+      explanation: "DOM הוא שכבת העבודה שמאפשרת לקוד JavaScript לשלוט במבנה ובתוכן של הדף בדפדפן.",
+      optionFeedback: [
+        "✅ נכון: DOM הוא הממשק בין JavaScript לבין המסך/המסמך.",
+        "❌ npm install הוא כלי Node/CLI, לא DOM.",
+        "❌ המרת טיפוסים אינה תפקיד DOM.",
+        "❌ שמירה בענן דורשת backend/API, לא DOM בלבד.",
+      ],
+    },
+    {
+      id: "mc_l13_dom_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::DOM", level: 4,
+      question: "מה ההבדל בין HTML לבין DOM?",
+      options: [
+        "HTML הוא המקור הטקסטואלי; DOM הוא הייצוג החי שהדפדפן בנה ממנו",
+        "DOM הוא קובץ CSS ו-HTML הוא מסד נתונים",
+        "HTML עובד רק בשרת ו-DOM עובד רק ב-Node.js",
+        "אין הבדל, אלה שני שמות לאותו קובץ",
+      ],
+      correctIndex: 0,
+      explanation: "HTML הוא markup. הדפדפן מפרש אותו ובונה DOM בזיכרון, שיכול להשתנות גם אחרי שהקובץ המקורי נטען.",
+      optionFeedback: [
+        "✅ נכון: DOM הוא מצב חי בזיכרון, לא רק הטקסט המקורי.",
+        "❌ DOM אינו קובץ CSS.",
+        "❌ DOM הוא מושג מרכזי בדפדפן, לא רק Node.js.",
+        "❌ יש הבדל חשוב בין מקור HTML לבין עץ DOM חי.",
+      ],
+    },
+    {
+      id: "mc_l13_dom_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::DOM", level: 5,
+      question: "מה יקרה אם JavaScript משנה `title.textContent` אחרי שהדף נטען?",
+      options: [
+        "ה-DOM יתעדכן והטקסט שמוצג למשתמש יכול להשתנות",
+        "קובץ ה-HTML המקורי בדיסק ייכתב מחדש",
+        "כל localStorage יימחק",
+        "הדפדפן חייב להיטען מחדש לפני שהשינוי נראה",
+      ],
+      correctIndex: 0,
+      explanation: "שינוי DOM משפיע על העץ החי בדפדפן ולכן יכול להתבטא מיד במסך, בלי לשנות את קובץ המקור.",
+      optionFeedback: [
+        "✅ נכון: זה היתרון של DOM חי ודינמי.",
+        "❌ שינוי DOM בדפדפן לא כותב את קובץ ה-HTML המקורי.",
+        "❌ אין קשר למחיקת localStorage.",
+        "❌ שינוי textContent יכול להופיע מיד בלי reload.",
       ],
     },
 
@@ -4753,6 +4957,48 @@ var QUESTIONS_BANK = {
       answer: "displayName",
       hint: "שם מאפיין ברור שבו נשמר השם להצגה.",
       explanation: "this.displayName שומר את הערך שהגיע ל-constructor על המופע שנוצר. לכל instance יכול להיות ערך אחר.",
+    },
+    {
+      id: "fill_l13_create_element_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::createElement", level: 4,
+      code: "const item = document.____('li');\nitem.textContent = 'Read';",
+      answer: "createElement",
+      hint: "מתודת document שיוצרת Element חדש בזיכרון.",
+      explanation: "createElement מקבלת שם תגית ומחזירה Element מנותק. צריך לחבר אותו ל-DOM כדי שיופיע.",
+    },
+    {
+      id: "fill_l13_document_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::document", level: 4,
+      code: "const title = ____.getElementById('title');\ntitle.textContent = 'Hello';",
+      answer: "document",
+      hint: "אובייקט הגישה הראשי למסמך בדפדפן.",
+      explanation: "document הוא נקודת הכניסה לעץ ה-DOM של הדף הנוכחי.",
+    },
+    {
+      id: "fill_l13_document_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::document", level: 5,
+      code: "const card = ____.querySelector('.card.active');\nif (card) card.classList.add('ready');",
+      answer: "document",
+      hint: "השורש שממנו מחפשים selector בכל הדף.",
+      explanation: "document.querySelector מחפש התאמה ראשונה בתוך המסמך כולו.",
+    },
+    {
+      id: "fill_l13_dom_full_name_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::Document Object Model", level: 5,
+      code: "const model = 'Document Object Model';\nconst idea = model.includes('Object') ? '____' : 'flatText';",
+      answer: "objectTree",
+      hint: "המודל מייצג את המסמך כעץ אובייקטים.",
+      explanation: "Document Object Model מתאר ייצוג היררכי של המסמך כאובייקטים שאפשר לקרוא ולשנות.",
+    },
+    {
+      id: "fill_l13_dom_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::DOM", level: 4,
+      code: "const title = document.querySelector('h1');\ntitle.textContent = 'Updated';\nconst result = 'changed____';",
+      answer: "Screen",
+      hint: "השינוי ב-DOM יכול להשפיע על מה שהמשתמש רואה.",
+      explanation: "DOM הוא הממשק החי בין JavaScript לבין המסך. שינוי textContent יכול להופיע מיד למשתמש.",
+    },
+    {
+      id: "fill_l13_dom_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::DOM", level: 5,
+      code: "const source = '<h1>Hello</h1>';\nconst browserBuilds = source.includes('<h1>') ? '____' : 'plainString';",
+      answer: "liveTree",
+      hint: "הדפדפן בונה מבנה חי מתוך HTML.",
+      explanation: "הדפדפן מפרש HTML ובונה DOM חי. JavaScript עובד מול העץ הזה, לא רק מול הטקסט המקורי.",
     },
 
     // ===== Objects / OOP =====

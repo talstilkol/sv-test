@@ -12,12 +12,12 @@
   "summary": {
     "readyForAuthoring": true,
     "totalConcepts": 568,
-    "gapConcepts": 499,
-    "mcGapCount": 499,
-    "fillGapCount": 494,
-    "strictMcDeficit": 1422,
-    "strictFillDeficit": 912,
-    "batches": 26,
+    "gapConcepts": 495,
+    "mcGapCount": 495,
+    "fillGapCount": 490,
+    "strictMcDeficit": 1411,
+    "strictFillDeficit": 906,
+    "batches": 25,
     "missingPlannedKeys": 0
   },
   "batches": [
@@ -30,74 +30,6 @@
       "sourceEvidenceStatus": "lesson-data-present",
       "status": "not-started",
       "items": [
-        {
-          "key": "lesson_13::createElement",
-          "lessonId": "lesson_13",
-          "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "conceptName": "createElement",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 1,
-          "mcDeficit": 2,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_13::document",
-          "lessonId": "lesson_13",
-          "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "conceptName": "document",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_13::Document Object Model",
-          "lessonId": "lesson_13",
-          "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "conceptName": "Document Object Model",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 1,
-          "fillDeficit": 1,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
-        {
-          "key": "lesson_13::DOM",
-          "lessonId": "lesson_13",
-          "lessonTitle": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "conceptName": "DOM",
-          "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-          "moduleIndex": 2,
-          "priority": "P0-manual-mc-fill",
-          "mcCurrent": 0,
-          "mcDeficit": 3,
-          "fillCurrent": 0,
-          "fillDeficit": 2,
-          "requiresFill": true,
-          "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
-          "reviewer": "unknown/unavailable",
-          "manualReviewDate": "unknown/unavailable"
-        },
         {
           "key": "lesson_13::extends",
           "lessonId": "lesson_13",
@@ -454,21 +386,7 @@
           "sourceEvidence": "שיעור 13 - Objects, DOM, Classes & Storage",
           "reviewer": "unknown/unavailable",
           "manualReviewDate": "unknown/unavailable"
-        }
-      ],
-      "conceptCount": 25,
-      "mcDeficit": 66,
-      "fillDeficit": 41
-    },
-    {
-      "id": "QMAN-002",
-      "moduleTitle": "JavaScript בסיסי ודינמיקה בדפדפן",
-      "priority": "P0-manual-mc-fill",
-      "owner": "unknown/unavailable",
-      "reviewer": "unknown/unavailable",
-      "sourceEvidenceStatus": "lesson-data-present",
-      "status": "not-started",
-      "items": [
+        },
         {
           "key": "lesson_13::style",
           "lessonId": "lesson_13",
@@ -521,12 +439,12 @@
           "manualReviewDate": "unknown/unavailable"
         }
       ],
-      "conceptCount": 3,
-      "mcDeficit": 9,
-      "fillDeficit": 6
+      "conceptCount": 24,
+      "mcDeficit": 64,
+      "fillDeficit": 41
     },
     {
-      "id": "QMAN-003",
+      "id": "QMAN-002",
       "moduleTitle": "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -965,7 +883,7 @@
       "fillDeficit": 40
     },
     {
-      "id": "QMAN-004",
+      "id": "QMAN-003",
       "moduleTitle": "JavaScript מודרני וכלי פיתוח — ES6, Git, ESLint, Prettier",
       "priority": "P0-manual-mc",
       "owner": "unknown/unavailable",
@@ -1217,7 +1135,7 @@
       "fillDeficit": 22
     },
     {
-      "id": "QMAN-005",
+      "id": "QMAN-004",
       "moduleTitle": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -1656,7 +1574,7 @@
       "fillDeficit": 48
     },
     {
-      "id": "QMAN-006",
+      "id": "QMAN-005",
       "moduleTitle": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -2095,7 +2013,7 @@
       "fillDeficit": 47
     },
     {
-      "id": "QMAN-007",
+      "id": "QMAN-006",
       "moduleTitle": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -2534,7 +2452,7 @@
       "fillDeficit": 50
     },
     {
-      "id": "QMAN-008",
+      "id": "QMAN-007",
       "moduleTitle": "פיתוח צד-שרת בסיסי — Node.js, npm, Express, REST, middleware",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -2582,7 +2500,7 @@
       "fillDeficit": 4
     },
     {
-      "id": "QMAN-009",
+      "id": "QMAN-008",
       "moduleTitle": "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -3021,7 +2939,7 @@
       "fillDeficit": 44
     },
     {
-      "id": "QMAN-010",
+      "id": "QMAN-009",
       "moduleTitle": "בסיסי נתונים ומידול מידע — MongoDB/Mongoose + PostgreSQL/Prisma/Drizzle",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -3409,7 +3327,7 @@
       "fillDeficit": 39
     },
     {
-      "id": "QMAN-011",
+      "id": "QMAN-010",
       "moduleTitle": "אימות ואבטחה — JWT, Cookies, Supabase/Appwrite/Firebase/Kinde",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -3746,7 +3664,7 @@
       "fillDeficit": 32
     },
     {
-      "id": "QMAN-012",
+      "id": "QMAN-011",
       "moduleTitle": "React ופיתוח Frontend מתקדם",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -4185,7 +4103,7 @@
       "fillDeficit": 47
     },
     {
-      "id": "QMAN-013",
+      "id": "QMAN-012",
       "moduleTitle": "React ופיתוח Frontend מתקדם",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -4624,7 +4542,7 @@
       "fillDeficit": 46
     },
     {
-      "id": "QMAN-014",
+      "id": "QMAN-013",
       "moduleTitle": "React ופיתוח Frontend מתקדם",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -5063,7 +4981,7 @@
       "fillDeficit": 48
     },
     {
-      "id": "QMAN-015",
+      "id": "QMAN-014",
       "moduleTitle": "React ופיתוח Frontend מתקדם",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -5128,7 +5046,7 @@
       "fillDeficit": 4
     },
     {
-      "id": "QMAN-016",
+      "id": "QMAN-015",
       "moduleTitle": "TypeScript ופטרנים מתקדמים ב-React",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -5567,7 +5485,7 @@
       "fillDeficit": 46
     },
     {
-      "id": "QMAN-017",
+      "id": "QMAN-016",
       "moduleTitle": "TypeScript ופטרנים מתקדמים ב-React",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -6006,7 +5924,7 @@
       "fillDeficit": 50
     },
     {
-      "id": "QMAN-018",
+      "id": "QMAN-017",
       "moduleTitle": "מערכות עיצוב ו-UI מודרני — Tailwind + shadcn/UI",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -6241,7 +6159,7 @@
       "fillDeficit": 21
     },
     {
-      "id": "QMAN-019",
+      "id": "QMAN-018",
       "moduleTitle": "פיתוח Full-Stack עם Next.js — SSR, API Routes, SEO",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -6561,7 +6479,7 @@
       "fillDeficit": 31
     },
     {
-      "id": "QMAN-020",
+      "id": "QMAN-019",
       "moduleTitle": "תשתיות, DevOps ו-CI/CD — Vercel, Docker, Docker Compose, testing",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -6864,7 +6782,7 @@
       "fillDeficit": 29
     },
     {
-      "id": "QMAN-021",
+      "id": "QMAN-020",
       "moduleTitle": "Frameworks צד-שרת — Nest.js modules + dependency injection",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -7150,7 +7068,7 @@
       "fillDeficit": 28
     },
     {
-      "id": "QMAN-022",
+      "id": "QMAN-021",
       "moduleTitle": "AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -7300,7 +7218,7 @@
       "fillDeficit": 16
     },
     {
-      "id": "QMAN-023",
+      "id": "QMAN-022",
       "moduleTitle": "הנדסת AI מעשית — Vercel AI SDK, OpenAI, LangChain, RAG, Agents, Fine-tuning",
       "priority": "P0-manual-mc-fill",
       "owner": "unknown/unavailable",
@@ -7637,7 +7555,7 @@
       "fillDeficit": 34
     },
     {
-      "id": "QMAN-024",
+      "id": "QMAN-023",
       "moduleTitle": "Unmapped / deferred",
       "priority": "P2-deferred",
       "owner": "unknown/unavailable",
@@ -8076,7 +7994,7 @@
       "fillDeficit": 49
     },
     {
-      "id": "QMAN-025",
+      "id": "QMAN-024",
       "moduleTitle": "Unmapped / deferred",
       "priority": "P2-deferred",
       "owner": "unknown/unavailable",
@@ -8515,7 +8433,7 @@
       "fillDeficit": 50
     },
     {
-      "id": "QMAN-026",
+      "id": "QMAN-025",
       "moduleTitle": "Unmapped / deferred",
       "priority": "P2-deferred",
       "owner": "unknown/unavailable",
