@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.1";
+var QUESTIONS_BANK_VERSION = "2.1.2";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -34,6 +34,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 sub-batch: add/delete movie, bg color, navbar, padding, rating, rounded, search, Tailwind installation and validation MC/Fill coverage from lesson_25 source material.",
+  },
+  {
+    v: "2.1.2",
+    date: "2026-04-30",
+    changes:
+      "Manual QMAN-001 Lesson 11 sub-batch: Array, boolean, By Value and By Reference MC/Fill coverage with hand-authored option feedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -166,6 +172,130 @@ var QUESTIONS_BANK = {
       options: ["[1, 2]", "[1, 2, 3]", "a נשאר מערך פנימי", "שגיאה"],
       correctIndex: 1,
       explanation: "spread (...) פורש את a לתוך b ויוצר מערך חדש [1, 2, 3].",
+    },
+    {
+      id: "mc_l11_array_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::Array", level: 3,
+      question: "איזה תיאור הכי מדויק למערך ב-JavaScript?",
+      options: [
+        "רצף ערכים תחת משתנה אחד, עם גישה לפי אינדקס",
+        "משתנה שמחזיק רק true או false",
+        "פונקציה שמופעלת אוטומטית בכל טעינת דף",
+        "אובייקט שחייב להכיל רק טקסטים",
+      ],
+      correctIndex: 0,
+      explanation: "מערך שומר רצף של ערכים תחת שם אחד, והגישה לכל פריט נעשית לפי אינדקס מספרי שמתחיל מ-0.",
+      optionFeedback: [
+        "✅ נכון: מערך הוא אוסף מסודר של ערכים, והאינדקס הוא הדרך לשלוף פריט מסוים.",
+        "❌ זה מתאר boolean, לא Array.",
+        "❌ פונקציה היא בלוק קוד להפעלה, לא מבנה שמחזיק רשימת ערכים.",
+        "❌ מערך יכול להכיל טקסטים, מספרים, אובייקטים ועוד; הוא לא מוגבל לטקסטים.",
+      ],
+    },
+    {
+      id: "mc_l11_array_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::Array", level: 5,
+      question: "מה יודפס?\n\nconst scores = [100, 95, 80];\nconsole.log(scores[1]);",
+      options: ["100", "95", "80", "undefined"],
+      correctIndex: 1,
+      explanation: "האינדקס הראשון הוא 0, ולכן scores[1] שולף את הערך השני במערך: 95.",
+      optionFeedback: [
+        "❌ 100 נמצא ב-scores[0], לא ב-scores[1].",
+        "✅ נכון: אינדקסים במערך מתחילים מ-0, לכן האיבר השני הוא 95.",
+        "❌ 80 נמצא ב-scores[2].",
+        "❌ האינדקס 1 קיים במערך הזה ולכן לא מתקבל undefined.",
+      ],
+    },
+    {
+      id: "mc_l11_boolean_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::boolean", level: 3,
+      question: "מה יודפס?\n\nconst hasAccess = true;\nif (hasAccess) {\n  console.log('open');\n} else {\n  console.log('closed');\n}",
+      options: ["open", "closed", "true", "undefined"],
+      correctIndex: 0,
+      explanation: "boolean מסוג true גורם ל-if לרוץ, ולכן יודפס 'open'.",
+      optionFeedback: [
+        "✅ נכון: התנאי true ולכן נכנסים לבלוק ה-if.",
+        "❌ closed יודפס רק אם hasAccess היה false.",
+        "❌ הערך true לא מודפס כאן; הוא רק קובע איזה בלוק ירוץ.",
+        "❌ hasAccess מוגדר במפורש ולכן אין כאן undefined.",
+      ],
+    },
+    {
+      id: "mc_l11_boolean_manual_002", topicId: "topic_variables", conceptKey: "lesson_11::boolean", level: 5,
+      question: "למה עדיף לשמור מצב התחברות כ-boolean כמו isLoggedIn במקום כמחרוזת 'yes'?",
+      options: [
+        "כי boolean מייצג אמת/שקר ישירות ומתאים לתנאי if",
+        "כי מחרוזות לא יכולות להופיע בתוך if",
+        "כי boolean מאפשר לשמור כמה ערכים במקביל",
+        "כי boolean הוא סוג של מערך",
+      ],
+      correctIndex: 0,
+      explanation: "boolean מיועד למצבי אמת/שקר. כך התנאי קורא ישירות את המשמעות: if (isLoggedIn).",
+      optionFeedback: [
+        "✅ נכון: boolean נותן משמעות לוגית נקייה בלי להשוות לטקסטים כמו 'yes'.",
+        "❌ מחרוזות יכולות להופיע בתנאי, אבל זה פחות מדויק ועלול לבלבל.",
+        "❌ boolean מחזיק רק true או false, לא כמה ערכים.",
+        "❌ boolean הוא primitive לוגי, לא מערך.",
+      ],
+    },
+    {
+      id: "mc_l11_by_value_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::By Value", level: 3,
+      question: "מה יודפס?\n\nlet original = 'red';\nlet copy = original;\ncopy = 'blue';\nconsole.log(original);",
+      options: ["red", "blue", "undefined", "['red', 'blue']"],
+      correctIndex: 0,
+      explanation: "מחרוזת היא primitive ולכן מועתקת By Value. שינוי copy לא משנה את original.",
+      optionFeedback: [
+        "✅ נכון: original קיבל עותק עצמאי של הערך ולא מושפע משינוי copy.",
+        "❌ blue נמצא עכשיו ב-copy, לא ב-original.",
+        "❌ original הוגדר וקיבל ערך.",
+        "❌ אין כאן מערך; אלה שתי מחרוזות נפרדות.",
+      ],
+    },
+    {
+      id: "mc_l11_by_value_manual_002", topicId: "topic_variables", conceptKey: "lesson_11::By Value", level: 6,
+      question: "איזו פעולה מדגימה By Value בצורה נכונה?",
+      options: [
+        "let b = a כאשר a הוא מספר, ואז שינוי b לא משנה את a",
+        "const b = a כאשר a הוא מערך, ואז b.push משנה גם את a",
+        "const b = a כאשר a הוא אובייקט, ואז שינוי שדה דרך b משנה את a",
+        "קריאה ל-arr.push שמוסיפה פריט למערך המקורי",
+      ],
+      correctIndex: 0,
+      explanation: "By Value מתרחש בפרימיטיבים כמו number, string ו-boolean. כל משתנה מקבל עותק עצמאי של הערך.",
+      optionFeedback: [
+        "✅ נכון: מספר הוא primitive, וההעתקה יוצרת ערך עצמאי.",
+        "❌ זה By Reference, כי מערך הוא אובייקט ושני המשתנים מצביעים לאותו מערך.",
+        "❌ זה By Reference, כי אובייקט משותף דרך הפניה.",
+        "❌ push משנה מערך קיים; זו לא הדגמה של העתקת primitive לפי ערך.",
+      ],
+    },
+    {
+      id: "mc_l11_by_reference_manual_001", topicId: "topic_objects", conceptKey: "lesson_11::By Reference", level: 4,
+      question: "מה יודפס?\n\nconst basket1 = ['Milk'];\nconst basket2 = basket1;\nbasket2.push('Apple');\nconsole.log(basket1.length);",
+      options: ["1", "2", "0", "undefined"],
+      correctIndex: 1,
+      explanation: "basket2 אינו מערך חדש אלא הפניה לאותו מערך. push דרך basket2 משנה גם את basket1.",
+      optionFeedback: [
+        "❌ זה היה נכון רק אם basket2 היה עותק חדש.",
+        "✅ נכון: שני המשתנים מפנים לאותו מערך, ולכן האורך הוא 2.",
+        "❌ המערך לא ריק; הוא התחיל עם Milk וקיבל Apple.",
+        "❌ length קיים במערך ומחזיר מספר.",
+      ],
+    },
+    {
+      id: "mc_l11_by_reference_manual_002", topicId: "topic_objects", conceptKey: "lesson_11::By Reference", level: 6,
+      question: "איך יוצרים מערך חדש כדי לא לשנות את המקור בטעות?",
+      options: [
+        "מציבים משתנה נוסף שמצביע למערך המקורי",
+        "פורסים את איברי המקור לתוך מערך חדש עם spread",
+        "מפעילים push על המערך המקורי ושומרים את התוצאה",
+        "שומרים רק את האורך של המערך המקורי",
+      ],
+      correctIndex: 1,
+      explanation: "spread פותח את איברי המערך לתוך מערך חדש, וכך לא משתפים את אותה הפניה של המערך המקורי.",
+      optionFeedback: [
+        "❌ זו העתקת הפניה בלבד; שני המשתנים עדיין מצביעים לאותו מערך.",
+        "✅ נכון: spread יוצר מערך חדש עם אותם איברים בשכבה הראשונה.",
+        "❌ push משנה את המקור ומחזיר את האורך החדש, לא עותק מערך.",
+        "❌ length הוא מספר, לא עותק של המערך.",
+      ],
     },
 
     // ===== Topic 4 — Functions =====
@@ -2104,6 +2234,55 @@ var QUESTIONS_BANK = {
       answer: "push",
       hint: "מוסיפה איבר לסוף המערך.",
       explanation: "push משנה את המערך במקום ומחזירה את האורך החדש.",
+    },
+    {
+      id: "fill_l11_array_manual_001", topicId: "topic_arrays", conceptKey: "lesson_11::Array", level: 3,
+      code: "const scores = ____;\nconsole.log(scores[0]); // 100",
+      answer: "[100, 95, 80]",
+      hint: "כתוב literal של מערך עם שלושה ציונים.",
+      explanation: "סוגריים מרובעים יוצרים Array. האיבר הראשון במערך הזה הוא 100.",
+    },
+    {
+      id: "fill_l11_array_manual_002", topicId: "topic_arrays", conceptKey: "lesson_11::Array", level: 4,
+      code: "const fruits = ['Apple', 'Banana', 'Cherry'];\nconst secondFruit = ____;\nconsole.log(secondFruit); // 'Banana'",
+      answer: "fruits[1]",
+      hint: "שלוף את האיבר השני בעזרת אינדקס שמתחיל מ-0.",
+      explanation: "Banana היא האיבר השני במערך, ולכן שולפים אותה עם fruits[1].",
+    },
+    {
+      id: "fill_l11_boolean_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::boolean", level: 3,
+      code: "const isReady = ____;\nif (isReady) {\n  console.log('Start');\n}",
+      answer: "true",
+      hint: "הערך שגורם ל-if לרוץ.",
+      explanation: "boolean מסוג true מפעיל את בלוק ה-if.",
+    },
+    {
+      id: "fill_l11_boolean_manual_002", topicId: "topic_variables", conceptKey: "lesson_11::boolean", level: 4,
+      code: "const isLoggedIn = false;\nconsole.log(typeof isLoggedIn); // '____'",
+      answer: "boolean",
+      hint: "שם הטיפוס של true/false ב-JavaScript.",
+      explanation: "typeof על ערך true או false מחזיר את המחרוזת 'boolean'.",
+    },
+    {
+      id: "fill_l11_by_value_manual_001", topicId: "topic_variables", conceptKey: "lesson_11::By Value", level: 5,
+      code: "let base = 5;\nlet copy = base;\ncopy = 10;\nconst baseStayedFive = base === 5;\nconsole.log(baseStayedFive); // ____",
+      answer: "true",
+      hint: "מספרים מועתקים לפי ערך, ולכן base לא משתנה כש-copy משתנה.",
+      explanation: "base ו-copy מחזיקים שני ערכי number עצמאיים. שינוי copy לא משנה את base, ולכן הבדיקה מחזירה true.",
+    },
+    {
+      id: "fill_l11_by_reference_manual_001", topicId: "topic_objects", conceptKey: "lesson_11::By Reference", level: 5,
+      code: "const arr1 = [1, 2];\nconst arr2 = arr1;\narr2.push(3);\nconst sharedReference = arr1.length === 3;\nconsole.log(sharedReference); // ____",
+      answer: "true",
+      hint: "arr1 ו-arr2 מצביעים לאותו מערך, לכן האורך של arr1 השתנה.",
+      explanation: "מערכים מועברים בהפניה. push דרך arr2 משנה את אותו מערך שגם arr1 מצביע אליו, ולכן הבדיקה מחזירה true.",
+    },
+    {
+      id: "fill_l11_by_reference_manual_002", topicId: "topic_objects", conceptKey: "lesson_11::By Reference", level: 6,
+      code: "const original = ['Milk'];\nconst safeCopy = ____;\nsafeCopy.push('Apple');\nconsole.log(original); // ['Milk']",
+      answer: "[...original]",
+      hint: "השתמש ב-spread כדי ליצור מערך חדש.",
+      explanation: "ה-spread פותח את original לתוך מערך חדש, ולכן push על safeCopy לא משנה את original.",
     },
 
     // ===== Functions =====

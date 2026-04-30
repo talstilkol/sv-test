@@ -16,20 +16,20 @@
     "fillTargetPerCodeConcept": 2
   },
   "sourceMix": {
-    "curatedMC": 172,
+    "curatedMC": 180,
     "ignoredGeneratedMC": 0,
-    "curatedFill": 155,
+    "curatedFill": 162,
     "ignoredGeneratedFill": 0
   },
   "summary": {
     "totalConcepts": 568,
-    "mcReadyConcepts": 27,
-    "mcGapCount": 541,
+    "mcReadyConcepts": 31,
+    "mcGapCount": 537,
     "codeExampleConcepts": 568,
-    "fillReadyConcepts": 32,
-    "fillGapCount": 536,
-    "handCuratedMcPromotionBacklog": 541,
-    "handCuratedFillPromotionBacklog": 536,
+    "fillReadyConcepts": 36,
+    "fillGapCount": 532,
+    "handCuratedMcPromotionBacklog": 537,
+    "handCuratedFillPromotionBacklog": 532,
     "ready": false
   },
   "gaps": {
@@ -107,39 +107,12 @@
         }
       },
       {
-        "key": "lesson_11::Array",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "Array",
-        "mc": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
         "key": "lesson_11::Index",
         "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
         "conceptName": "Index",
         "mc": {
           "curated": 2,
           "total": 2
-        }
-      },
-      {
-        "key": "lesson_11::By Value",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "By Value",
-        "mc": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_11::By Reference",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "By Reference",
-        "mc": {
-          "curated": 1,
-          "total": 1
         }
       },
       {
@@ -155,15 +128,6 @@
         "key": "lesson_11::undefined",
         "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
         "conceptName": "undefined",
-        "mc": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_11::boolean",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "boolean",
         "mc": {
           "curated": 1,
           "total": 1
@@ -4978,36 +4942,9 @@
         }
       },
       {
-        "key": "lesson_11::Array",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "Array",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
         "key": "lesson_11::Index",
         "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
         "conceptName": "Index",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_11::By Value",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "By Value",
-        "fill": {
-          "curated": 1,
-          "total": 1
-        }
-      },
-      {
-        "key": "lesson_11::By Reference",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "By Reference",
         "fill": {
           "curated": 0,
           "total": 0
@@ -5026,15 +4963,6 @@
         "key": "lesson_11::undefined",
         "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
         "conceptName": "undefined",
-        "fill": {
-          "curated": 0,
-          "total": 0
-        }
-      },
-      {
-        "key": "lesson_11::boolean",
-        "lessonTitle": "שיעור 11 - Arrays, Functions, and Scope",
-        "conceptName": "boolean",
         "fill": {
           "curated": 0,
           "total": 0

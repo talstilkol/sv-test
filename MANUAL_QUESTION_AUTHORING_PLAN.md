@@ -5,11 +5,11 @@ Date: 2026-04-30
 ## Summary
 
 - Ready for authoring: yes
-- Gap concepts: 542/568
-- MC gap concepts: 541
-- Fill gap concepts: 536
-- Strict MC questions still required: 1532
-- Strict Fill questions still required: 981
+- Gap concepts: 538/568
+- MC gap concepts: 537
+- Fill gap concepts: 532
+- Strict MC questions still required: 1524
+- Strict Fill questions still required: 974
 - Batches: 27
 
 ## Policy
@@ -26,15 +26,11 @@ Date: 2026-04-30
 - Owner: unknown/unavailable
 - Reviewer: unknown/unavailable
 - Concepts: 25
-- MC deficit: 58
+- MC deficit: 61
 - Fill deficit: 37
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_11::Array` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
-| `lesson_11::boolean` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
-| `lesson_11::By Reference` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
-| `lesson_11::By Value` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_11::filter` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_11::find` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_11::forEach` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
@@ -56,6 +52,10 @@ Date: 2026-04-30
 | `lesson_11::string` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
 | `lesson_11::toString` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_11::undefined` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
+| `lesson_11::unshift` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_11::var` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
+| `lesson_12::array` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_12::filter` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 
 ### QMAN-002 — JavaScript בסיסי ודינמיקה בדפדפן
 
@@ -64,14 +64,10 @@ Date: 2026-04-30
 - Reviewer: unknown/unavailable
 - Concepts: 25
 - MC deficit: 70
-- Fill deficit: 42
+- Fill deficit: 41
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_11::unshift` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_11::var` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
-| `lesson_12::array` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_12::filter` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_12::forEach` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_12::index` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_12::lowercase` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
@@ -93,22 +89,22 @@ Date: 2026-04-30
 | `lesson_13::extends` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_13::getElementById` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_13::getElementsByClassName` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_13::getElementsByTagName` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
+| `lesson_13::getItem` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
+| `lesson_13::inheritance` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
+| `lesson_13::innerHTML` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
 
 ### QMAN-003 — JavaScript בסיסי ודינמיקה בדפדפן
 
 - Status: not-started
 - Owner: unknown/unavailable
 - Reviewer: unknown/unavailable
-- Concepts: 21
-- MC deficit: 57
-- Fill deficit: 37
+- Concepts: 17
+- MC deficit: 46
+- Fill deficit: 31
 
 | Concept key | Priority | MC deficit | Fill deficit | Review date |
 |---|---|---:|---:|---|
-| `lesson_13::getElementsByTagName` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
-| `lesson_13::getItem` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
-| `lesson_13::inheritance` | P0-manual-mc-fill | 3 | 1 | unknown/unavailable |
-| `lesson_13::innerHTML` | P0-manual-mc-fill | 2 | 2 | unknown/unavailable |
 | `lesson_13::instance` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |
 | `lesson_13::localStorage` | P0-manual-mc-fill | 2 | 1 | unknown/unavailable |
 | `lesson_13::method` | P0-manual-mc-fill | 3 | 2 | unknown/unavailable |

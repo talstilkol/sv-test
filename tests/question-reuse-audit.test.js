@@ -7,7 +7,7 @@ describe("question reuse audit", () => {
 
     expect(second).toEqual(first);
     expect(first.reportVersion).toBe("question-reuse-audit-v1");
-    expect(first.summary.questions).toBe(983);
+    expect(first.summary.questions).toBe(998);
     expect(first.summary.conceptTags).toBe(384);
     expect(first.summary.legacyGeneratedFiltered).toBe(0);
   });
