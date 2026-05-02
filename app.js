@@ -1,3 +1,44 @@
+// =========== SYNCHRONOUS auto-restore from local server (must run before any profile init) ===========
+(function syncRestoreProfile() {
+  try {
+    // Sync XHR is acceptable here: trusted local server, runs once at boot
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/api/profile", false); // sync
+    xhr.send(null);
+    if (xhr.status !== 200) return;
+    const data = JSON.parse(xhr.responseText);
+    if (!data || data.empty) return;
+    const localSavedAt = localStorage.getItem("lumenportal:autosave:lastSavedAt") || "";
+    if (localSavedAt && data.savedAt && localSavedAt >= data.savedAt) return;
+    if (data.profilesIndex && Array.isArray(data.profilesIndex)) {
+      localStorage.setItem("lumenportal:profiles:v1", JSON.stringify(data.profilesIndex));
+    }
+    const activeId = data.activeProfileId
+      || (Array.isArray(data.profilesIndex) && data.profilesIndex[0] && data.profilesIndex[0].id)
+      || "";
+    if (activeId) {
+      localStorage.setItem("lumenportal:userId:v1", activeId);
+      localStorage.setItem("lumenportal:activeProfile:v1", activeId);
+    }
+    // Re-prefix logical keys with the active profile id (collectProfileScopedEntries strips it on save)
+    const prefix = activeId ? `lumenportal:profile:${activeId}:` : "";
+    const restoreSection = (section) => {
+      Object.entries(section || {}).forEach(([k, v]) => {
+        const physicalKey = prefix && !k.startsWith("lumenportal:profile:") ? prefix + k : k;
+        localStorage.setItem(physicalKey, v);
+      });
+    };
+    restoreSection(data.scores);
+    restoreSection(data.proficiency);
+    restoreSection(data.answeredQuestions);
+    restoreSection(data.weaknesses);
+    localStorage.setItem("lumenportal:autosave:lastSavedAt", data.savedAt || new Date().toISOString());
+    console.log("[lumen-autosave] sync-restored profile (saved at: " + (data.savedAt || "unknown") + ", active: " + activeId + ")");
+  } catch (e) {
+    // No server-side persistence (e.g. python http.server) — silent
+  }
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
   const standaloneMuseumMode = (() => {
     try {
@@ -36142,9 +36183,169 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // ===== end Export/Import + Supabase Sync =====
 
-   // =========== BOOT ===========
-   installFeatureErrorTelemetry();
-   setTimeout(() => {
+  // =========== Local Auto-Save (server-backed file persistence) ===========
+  const LOCAL_AUTOSAVE_URL = "/api/profile";
+  let localAutoSaveTimer = null;
+  let localAutoSaveLastJson = "";
+
+  async function localAutoSaveLoad() {
+    try {
+      const res = await fetch(LOCAL_AUTOSAVE_URL, { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data || data.empty) return;
+
+      // Server file is source of truth. ALWAYS restore profilesIndex + activeProfileId.
+      // (We use the file's savedAt timestamp to compare; if browser is newer, skip.)
+      const localSavedAt = localStorage.getItem("lumenportal:autosave:lastSavedAt") || "";
+      if (localSavedAt && data.savedAt && localSavedAt >= data.savedAt) {
+        // Browser already has equal-or-newer state
+        return;
+      }
+
+      if (data.profilesIndex && Array.isArray(data.profilesIndex)) {
+        localStorage.setItem("lumenportal:profiles:v1", JSON.stringify(data.profilesIndex));
+      }
+      if (data.activeProfileId) {
+        localStorage.setItem("lumenportal:userId:v1", data.activeProfileId);
+        localStorage.setItem("lumenportal:activeProfile:v1", data.activeProfileId);
+      }
+
+      // Restore raw scores/proficiency/etc. (these use logical keys with profile prefix)
+      Object.entries(data.scores || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+      Object.entries(data.proficiency || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+      Object.entries(data.answeredQuestions || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+      Object.entries(data.weaknesses || {}).forEach(([k, v]) => localStorage.setItem(k, v));
+
+      // Also restore economy if present
+      if (data.economy && typeof importEconomyExport === "function") {
+        try { importEconomyExport(data.economy); } catch (_) {}
+      }
+
+      // Track that we restored
+      localStorage.setItem("lumenportal:autosave:lastSavedAt", data.savedAt || new Date().toISOString());
+      console.log("[lumen-autosave] restored profile from disk (saved at: " + (data.savedAt || "unknown") + ")");
+    } catch (e) {
+      // Server might not have the API (e.g. running on python http.server)
+      console.log("[lumen-autosave] no server-side persistence available");
+    }
+  }
+
+  async function localAutoSaveFlush() {
+    try {
+      const snapshot = (typeof buildProgressSnapshot === "function")
+        ? buildProgressSnapshot()
+        : null;
+      if (!snapshot) return;
+      // Also include the profiles index + active id for full restore
+      try {
+        snapshot.profilesIndex = JSON.parse(localStorage.getItem("lumenportal:profiles:v1") || "[]");
+        snapshot.activeProfileId = localStorage.getItem("lumenportal:activeProfile:v1")
+          || localStorage.getItem("lumenportal:userId:v1") || "";
+      } catch (_) {}
+
+      // SAFETY GUARD #1: don't save without an active profile id (boot race)
+      if (!snapshot.activeProfileId) return;
+
+      // SAFETY GUARD #2: refuse to write empty data over a non-empty disk file
+      // (protects against clear+reload race where buildProgressSnapshot can't see
+      // user data because profile init didn't fully run yet)
+      const isEmpty =
+        Object.keys(snapshot.scores || {}).length === 0 &&
+        Object.keys(snapshot.proficiency || {}).length === 0 &&
+        Object.keys(snapshot.answeredQuestions || {}).length === 0 &&
+        Object.keys(snapshot.weaknesses || {}).length === 0 &&
+        (!snapshot.economy || (snapshot.economy.xp === 0 && snapshot.economy.coins === 0));
+      if (isEmpty) {
+        // First, peek at disk. If disk has data, never overwrite with empty.
+        try {
+          const peek = await fetch(LOCAL_AUTOSAVE_URL, { cache: "no-store" });
+          if (peek.ok) {
+            const onDisk = await peek.json();
+            if (onDisk && !onDisk.empty) {
+              const diskHasData =
+                (onDisk.scores && Object.keys(onDisk.scores).length > 0) ||
+                (onDisk.proficiency && Object.keys(onDisk.proficiency).length > 0) ||
+                (onDisk.answeredQuestions && Object.keys(onDisk.answeredQuestions).length > 0) ||
+                (onDisk.economy && (onDisk.economy.xp > 0 || onDisk.economy.coins > 0));
+              if (diskHasData) return; // never wipe disk
+            }
+          }
+        } catch (_) {}
+        // Disk is also empty — only save during early boot if we have a real first-time profile
+        if ((Date.now() - localAutoSaveBootAt) < 8000) return;
+      }
+
+      const json = JSON.stringify(snapshot);
+      if (json === localAutoSaveLastJson) return; // dedupe identical writes
+      localAutoSaveLastJson = json;
+      await fetch(LOCAL_AUTOSAVE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: json,
+        keepalive: true,
+      });
+    } catch (e) {
+      // Silent — autosave is best-effort
+    }
+  }
+  const localAutoSaveBootAt = Date.now();
+
+  function scheduleLocalAutoSave() {
+    if (localAutoSaveTimer) clearTimeout(localAutoSaveTimer);
+    localAutoSaveTimer = setTimeout(localAutoSaveFlush, 1500);
+  }
+
+  // Auto-save only fires AFTER user has actually interacted (click, key, answer).
+  // This prevents the boot sequence from overwriting disk with empty data.
+  let userHasInteracted = false;
+  function markUserInteracted() {
+    if (userHasInteracted) return;
+    userHasInteracted = true;
+    console.log("[lumen-autosave] user interaction detected — autosave armed");
+  }
+  // Watch for first real interaction
+  ["click", "keydown", "submit", "change", "input"].forEach((evt) => {
+    document.addEventListener(evt, markUserInteracted, { once: true, capture: true, passive: true });
+  });
+
+  // Hook into localStorage changes (works for any code path that writes state)
+  (function installAutoSaveHook() {
+    const origSet = Storage.prototype.setItem;
+    const origRm = Storage.prototype.removeItem;
+    Storage.prototype.setItem = function (key, value) {
+      const result = origSet.apply(this, arguments);
+      if (typeof key === "string" && key.startsWith("lumenportal:") && userHasInteracted) {
+        scheduleLocalAutoSave();
+      }
+      return result;
+    };
+    Storage.prototype.removeItem = function (key) {
+      const result = origRm.apply(this, arguments);
+      if (typeof key === "string" && key.startsWith("lumenportal:") && userHasInteracted) {
+        scheduleLocalAutoSave();
+      }
+      return result;
+    };
+  })();
+
+  // Save before unload (best-effort)
+  window.addEventListener("beforeunload", () => {
+    try { localAutoSaveFlush(); } catch (_) {}
+  });
+  window.addEventListener("pagehide", () => {
+    try { localAutoSaveFlush(); } catch (_) {}
+  });
+
+  // ===== end Local Auto-Save =====
+
+  // =========== BOOT ===========
+  installFeatureErrorTelemetry();
+  // Restore profile from server file BEFORE rendering anything dependent on profile
+  localAutoSaveLoad().finally(() => {
+    // continue boot with the original delay
+  });
+  setTimeout(() => {
     if (standaloneMuseumMode) {
       openProgrammingMuseum();
       document.body.classList.add("standalone-museum-ready");
