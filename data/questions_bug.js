@@ -539,6 +539,237 @@ const user = getUser(123); // 'abc' would now error at compile time`,
       "{ active: true } נוצר מחדש בכל render — מבחינת === הוא 'אובייקט חדש'. useEffect משווה לפי === ולא מכיר אותו → רץ שוב → re-render → loop. useMemo מייצב את ההפניה כל עוד deps לא משתנים. (חלופה: להעביר primitives [filter.active, filter.sortBy].)",
   },
 
+  // ============================================================================
+  // Lesson 19 — JS fundamentals bugs (top-gap manual batch 2026-05-02)
+  // ============================================================================
+  {
+    id: "bug_19_01",
+    conceptKey: "lesson_19::var",
+    level: 5,
+    title: "מסך setTimeout בלולאה מציג רק 5",
+    brokenCode:
+`for (var i = 0; i < 5; i++) {
+  setTimeout(() => console.log(i), 100);
+}`,
+    bugLine: 1,
+    hint: "מתי הפונקציה ב-setTimeout באמת קוראת ל-i?",
+    options: [
+      "var function-scoped — כל ה-callbacks חולקים את אותו i, ועד שהם רצים i כבר 5",
+      "setTimeout שגוי — חייב 0 במקום 100",
+      "console.log לא תומך במספרים",
+      "i צריך להיות מוגדר מחוץ לולאה"
+    ],
+    correctIndex: 0,
+    fix:
+`for (let i = 0; i < 5; i++) {
+  setTimeout(() => console.log(i), 100);
+}`,
+    explanation: "let block-scoped — יוצר binding חדש בכל איטרציה. ה-callbacks 'תופסים' i שונה לכל אחד. var function-scoped — i יחיד שמשתנה.",
+  },
+  {
+    id: "bug_19_02",
+    conceptKey: "lesson_19::fetch",
+    level: 5,
+    title: "API שמחזיר 404 לא תופס שגיאה",
+    brokenCode:
+`async function loadUser(id) {
+  try {
+    const res = await fetch(\`/api/users/\${id}\`);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error('failed:', err);
+  }
+}`,
+    bugLine: 4,
+    hint: "מתי fetch דוחה את ה-Promise?",
+    options: [
+      "fetch לא דוחה על HTTP errors (404/500) — חייב לבדוק res.ok ידנית",
+      "await לא עובד עם fetch",
+      "res.json() תמיד מחזיר null",
+      "צריך להוסיף .then אחרי fetch"
+    ],
+    correctIndex: 0,
+    fix:
+`async function loadUser(id) {
+  try {
+    const res = await fetch(\`/api/users/\${id}\`);
+    if (!res.ok) throw new Error(\`HTTP \${res.status}\`);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error('failed:', err);
+  }
+}`,
+    explanation: "fetch דוחה רק על network errors. 4xx/5xx נחשבים success (קיבלנו response). אם רוצים לתפוס אותם — בדוק res.ok ו-throw ידנית.",
+  },
+  {
+    id: "bug_19_03",
+    conceptKey: "lesson_19::nested object",
+    level: 4,
+    title: "TypeError על user undefined",
+    brokenCode:
+`function showCity(user) {
+  return user.address.city;
+}
+console.log(showCity(undefined));`,
+    bugLine: 2,
+    hint: "מה קורה כשuser הוא undefined?",
+    options: [
+      "אין הגנה — צריך optional chaining: user?.address?.city",
+      "city לא קיים אוטומטית",
+      "address צריך להיות array",
+      "user חייב להיות string"
+    ],
+    correctIndex: 0,
+    fix:
+`function showCity(user) {
+  return user?.address?.city ?? 'unknown';
+}
+console.log(showCity(undefined));`,
+    explanation: "user.address זורק TypeError כשuser undefined. ?. מחזיר undefined בבטחה. ?? מספק default אם undefined/null.",
+  },
+  {
+    id: "bug_19_04",
+    conceptKey: "lesson_19::throw",
+    level: 4,
+    title: "throw של string לא נותן stack trace",
+    brokenCode:
+`function validateAge(age) {
+  if (age < 0) throw 'age must be positive';
+  return age;
+}`,
+    bugLine: 2,
+    hint: "מה ההבדל בין throw 'string' ל-throw new Error()?",
+    options: [
+      "throw של string לא יוצר stack trace — קשה לאתר את המקור",
+      "throw לא תומך ב-strings בכלל",
+      "צריך להחזיר error לא לזרוק",
+      "validateAge חייב להיות async"
+    ],
+    correctIndex: 0,
+    fix:
+`function validateAge(age) {
+  if (age < 0) throw new Error('age must be positive');
+  return age;
+}`,
+    explanation: "Error object מספק name + message + stack trace. catch(e => e.message) — עובד גם עם string וגם עם Error. אבל debugging דורש stack trace.",
+  },
+  {
+    id: "bug_19_05",
+    conceptKey: "lesson_19::localStorage",
+    level: 4,
+    title: "localStorage שומר '[object Object]'",
+    brokenCode:
+`const settings = { theme: 'dark', lang: 'he' };
+localStorage.setItem('settings', settings);
+const back = localStorage.getItem('settings');
+console.log(back); // "[object Object]"`,
+    bugLine: 2,
+    hint: "אילו ערכים localStorage יודע לשמור?",
+    options: [
+      "localStorage שומר strings בלבד — חייב JSON.stringify לפני, JSON.parse אחרי",
+      "settings צריך להיות string מראש",
+      "localStorage לא תומך באובייקטים",
+      "צריך setObject במקום setItem"
+    ],
+    correctIndex: 0,
+    fix:
+`const settings = { theme: 'dark', lang: 'he' };
+localStorage.setItem('settings', JSON.stringify(settings));
+const raw = localStorage.getItem('settings');
+const back = raw ? JSON.parse(raw) : {};`,
+    explanation: "localStorage עושה String(value) על כל ערך → אובייקט נהיה '[object Object]'. JSON serialize/parse מתחזק את המבנה.",
+  },
+  {
+    id: "bug_19_06",
+    conceptKey: "lesson_19::promise",
+    level: 5,
+    title: "unhandled promise rejection",
+    brokenCode:
+`async function save(data) {
+  await fetch('/api/save', { method: 'POST', body: JSON.stringify(data) });
+}
+save({ name: 'X' });`,
+    bugLine: 4,
+    hint: "מה קורה אם fetch נכשל?",
+    options: [
+      "אם save() דוחה — אין catch, מקבלים UnhandledPromiseRejection",
+      "save חייב להחזיר ערך",
+      "fetch לא תואם async",
+      "JSON.stringify יזרוק שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`async function save(data) {
+  await fetch('/api/save', { method: 'POST', body: JSON.stringify(data) });
+}
+save({ name: 'X' }).catch(err => console.error('save failed:', err));`,
+    explanation: "כל async function שלא מטופלת בexcution צריכה .catch או try/await/catch. Unhandled rejections גורמים ל-warning או crash ב-Node.",
+  },
+
+  // ============================================================================
+  // Lesson 17 — Express bugs (top-gap manual batch 2026-05-02)
+  // ============================================================================
+  {
+    id: "bug_17_01",
+    conceptKey: "lesson_17::app.post",
+    level: 4,
+    title: "req.body undefined ב-POST",
+    brokenCode:
+`const app = express();
+app.post('/users', (req, res) => {
+  console.log(req.body); // undefined
+  res.json({ id: 1 });
+});`,
+    bugLine: 3,
+    hint: "מה Express צריך כדי לפרסר את ה-body?",
+    options: [
+      "חסר middleware — חייב app.use(express.json()) לפני ה-routes",
+      "POST לא תומך בbody",
+      "req.body צריך להיות req.params",
+      "JSON לא נתמך"
+    ],
+    correctIndex: 0,
+    fix:
+`const app = express();
+app.use(express.json());
+app.post('/users', (req, res) => {
+  console.log(req.body);
+  res.json({ id: 1 });
+});`,
+    explanation: "Express ב-default לא קורא את ה-request body. express.json() middleware קורא ומפרסר JSON ל-req.body. חייב לפני ה-routes.",
+  },
+  {
+    id: "bug_17_02",
+    conceptKey: "lesson_17::Path",
+    level: 4,
+    title: "path parameter כstring במקום number",
+    brokenCode:
+`app.get('/users/:id', (req, res) => {
+  const id = req.params.id;
+  if (id === 1) res.send('admin');
+  else res.send('user');
+});
+// GET /users/1 → 'user'?!`,
+    bugLine: 3,
+    hint: "מה הtype של req.params.id?",
+    options: [
+      "req.params.id תמיד string — צריך parseInt או ===  '1'",
+      "Express בעיה בparsing",
+      "צריך :id להיות :int",
+      "req.body במקום req.params"
+    ],
+    correctIndex: 0,
+    fix:
+`app.get('/users/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (id === 1) res.send('admin');
+  else res.send('user');
+});`,
+    explanation: "URL הוא string מטבעו. כל path/query parameters הם strings. השוואה === 1 (number) תמיד false. parseInt או String comparison.",
+  },
+
 ];
 
 // Export to global scope (no module system in this app)

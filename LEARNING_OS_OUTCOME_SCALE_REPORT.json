@@ -140,5 +140,13 @@
         "P7.6.8"
       ]
     }
-  ]
+  ],
+  "sourceOfTruth": {
+    "status": "active",
+    "reportVersion": "report-source-of-truth-v1",
+    "evaluatedAt": "2026-05-02",
+    "sourceDate": "2026-05-02",
+    "source": "report-active",
+    "reason": "fresh-to-source-of-truth"
+  }
 }
