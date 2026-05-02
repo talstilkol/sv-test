@@ -74,16 +74,19 @@
 - [ ] WORLD1-C6 — WCAG 2.1 AAA upgrade: contrast, focus-visible, screen reader announcements.
 - [ ] WORLD1-C7 — Service Worker v2: cache strategies מותאמות, background sync, push notifications API.
 
-### 🤖 World#1 — Phase D: INTELLIGENCE (שבועות 11-14) — AI-Powered Personalization
+### 🤖 World#1 — Phase D: INTELLIGENCE — דחוי (החלטת משתמש 2026-05-02)
 
-- [ ] WORLD1-D1 — Claude API integration: AI Tutor כ-edge function (Supabase) עם prompt caching.
-- [ ] WORLD1-D2 — Adaptive difficulty: ML model (lightweight, runs in browser) לבחירת שאלות לפי gaps.
-- [ ] WORLD1-D3 — Knowledge gap detector: ניתוח אוטומטי של weakest concepts מול mastery state.
-- [ ] WORLD1-D4 — Personalized study plan: AI-generated daily schedule לפי SRS state ו-time available.
-- [ ] WORLD1-D5 — AI Code Review: שליחת קוד תלמיד לClaude עם feedback structured.
-- [ ] WORLD1-D6 — Natural language Q&A: שאל בעברית, קבל הסבר מותאם לרמה.
-- [ ] WORLD1-D7 — Predictive analytics: at-risk student warning לפי SRS + activity patterns.
-- [ ] WORLD1-D8 — Cost guardrails: rate limiting, prompt caching, free tier vs premium.
+החליטו לוותר על AI Tutor כרגע. במקום זאת, להתמקד ב-deterministic personalization מבוסס נתונים שכבר קיימים (SRS state, mistakes, mastery levels). אם נחזור לזה — נתחיל עם cost-controlled MVP.
+
+- [DEFERRED] WORLD1-D1 — Claude API integration (AI Tutor)
+- [DEFERRED] WORLD1-D5 — AI Code Review
+- [DEFERRED] WORLD1-D6 — Natural language Q&A
+
+תחליפים deterministic שעדיין יוצרים אישיות:
+- [ ] WORLD1-D2 — Adaptive difficulty: bandit-style selection ע״ב SRS gaps (no ML, רק היוריסטיקה).
+- [ ] WORLD1-D3 — Knowledge gap detector: weakest concepts אוטומטי מ-mastery state.
+- [ ] WORLD1-D4 — Personalized study plan: schedule מ-SRS due dates + time available.
+- [ ] WORLD1-D7 — Predictive analytics: at-risk warning מ-SRS lapses + activity drop.
 
 ### 🌐 World#1 — Phase E: SCALE (שבועות 15-18) — Backend מלא + Community
 
