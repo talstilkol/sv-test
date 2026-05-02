@@ -37,10 +37,13 @@ describe("Keyboard Accessibility Contracts", () => {
     });
 
     it("has Escape handler for modal dialogs", () => {
-      const escapeInModal = appSource.match(
-        /modal.*addEventListener\("keydown".*Escape/s
-      );
-      expect(escapeInModal).not.toBeNull();
+      // Match a tight pattern: modal.addEventListener("keydown", ...) with
+      // event.key === "Escape" as the immediate body, no arbitrary code in between.
+      // This avoids false positives where modal references and Escape handlers
+      // exist in unrelated parts of the file.
+      const tightPattern =
+        /modal\.addEventListener\(\s*["']keydown["'],\s*\([^)]*\)\s*=>\s*\{\s*if\s*\(\s*event\.key\s*===?\s*["']Escape["']/;
+      expect(appSource).toMatch(tightPattern);
     });
 
     it("sets aria-expanded=false when closing menus via Escape", () => {

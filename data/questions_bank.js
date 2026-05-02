@@ -6593,10 +6593,10 @@ var QUESTIONS_BANK = {
     // --- lesson_15::reject ---
     {
       id: "fill_l15_reject_manual_001", topicId: "topic_async", conceptKey: "lesson_15::reject", level: 3,
-      code: "const p = new Promise((resolve, fail) => {\n  setTimeout(() => ____(new Error('timeout')), 1000);\n});",
-      answer: "fail",
-      hint: "השם שניתן ל-rejection callback (במקום שם ברירת המחדל).",
-      explanation: "ניתן לתת שם משלך לפרמטרי ה-executor. כאן השני נקרא fail במקום reject — תפקידו זהה.",
+      code: "function fetchData() {\n  return new Promise((resolve, ____) => {\n    setTimeout(() => resolve('ok'), 100);\n  });\n}",
+      answer: "reject",
+      hint: "הפרמטר השני של Promise executor שמשמש לסימון כישלון.",
+      explanation: "executor של Promise מקבל (resolve, reject). השני קוראים לו reject והוא מסמן כישלון.",
     },
     {
       id: "fill_l15_reject_manual_002", topicId: "topic_async", conceptKey: "lesson_15::reject", level: 5,
@@ -6609,10 +6609,10 @@ var QUESTIONS_BANK = {
     // --- lesson_15::resolve ---
     {
       id: "fill_l15_resolve_manual_001", topicId: "topic_async", conceptKey: "lesson_15::resolve", level: 3,
-      code: "const p = new Promise((done, reject) => {\n  setTimeout(() => ____('finished'), 500);\n});",
-      answer: "done",
-      hint: "השם שניתן ל-resolve callback (במקום שם ברירת המחדל).",
-      explanation: "ניתן לתת שם משלך לפרמטרי ה-executor. כאן הראשון נקרא done במקום resolve — תפקידו זהה.",
+      code: "function loadUser(id) {\n  return new Promise((____, reject) => {\n    setTimeout(() => reject(new Error('not found')), 100);\n  });\n}",
+      answer: "resolve",
+      hint: "הפרמטר הראשון של Promise executor שמשמש לסימון הצלחה.",
+      explanation: "executor של Promise מקבל (resolve, reject). הראשון קוראים לו resolve והוא מסמן הצלחה.",
     },
     {
       id: "fill_l15_resolve_manual_002", topicId: "topic_async", conceptKey: "lesson_15::resolve", level: 4,
@@ -6632,10 +6632,10 @@ var QUESTIONS_BANK = {
     },
     {
       id: "fill_l15_scope_manual_002", topicId: "topic_functions", conceptKey: "lesson_15::Scope", level: 5,
-      code: "function makeCounter() {\n  let count = 0;\n  return () => ++____;\n}\nconst c = makeCounter();\nc(); c(); // 2",
-      answer: "count",
-      hint: "המשתנה הפנימי שנשמר ב-closure של הפונקציה הפנימית.",
-      explanation: "closure: הפונקציה הפנימית שומרת גישה ל-count מסקופ ההורה גם אחרי שהוא הסתיים.",
+      code: "function makeStep() {\n  let n = 0;\n  return function() { n++; return n; };\n}\nconst step = makeStep();\nstep();\nstep();\nstep();\nstep();\nconsole.log(step()); // ____",
+      answer: "5",
+      hint: "כמה פעמים הופעלה step אחרי closure שמחזיק את n.",
+      explanation: "closure: הפונקציה הפנימית שומרת את n בסקופ של makeStep גם אחרי שהוא הסתיים. כל קריאה מעלה את n. אחרי 5 קריאות n=5.",
     },
 
     // --- lesson_15::Synchronous ---
@@ -6659,10 +6659,10 @@ var QUESTIONS_BANK = {
     // --- lesson_13::method ---
     {
       id: "fill_l13_method_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::method", level: 3,
-      code: "const robot = {\n  speak() { return 'Beep!'; }\n};\nconst sound = robot.____(); // 'Beep!'",
-      answer: "speak",
-      hint: "שם המתודה של האובייקט שמחזירה צליל.",
-      explanation: "method נקרא עם נקודה + שם + סוגריים: robot.speak() מפעיל את הפונקציה שמוגדרת באובייקט.",
+      code: "const counter = {\n  total: 0,\n  add(n) { this.total += n; return this.total; }\n};\ncounter.add(2);\ncounter.add(3);\nconsole.log(counter.add(7)); // ____",
+      answer: "12",
+      hint: "סכום הקריאות הרצופות ל-method add (כל קריאה מצטברת ל-total).",
+      explanation: "method add מצטבר ב-this.total. הקריאות נותנות 2+3+7=12. ב-method הזה this שומר state בין קריאות.",
     },
     {
       id: "fill_l13_method_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::method", level: 4,
@@ -6726,13 +6726,13 @@ var QUESTIONS_BANK = {
       code: "const parent = document.getElementById('box');\nconst newEl = document.createElement('span');\nconst oldEl = parent.children[0];\nparent.____(newEl, oldEl);",
       answer: "replaceChild",
       hint: "מתודה שמחליפה ילד ישן בחדש.",
-      explanation: "replaceChild(new, old) מסיר את old מה-DOM ומכניס ��ת new באותו מקום.",
+      explanation: "replaceChild(new, old) מסיר את old מה-DOM ומכניס את new באותו מקום.",
     },
     {
       id: "fill_l13_replace_child_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::replaceChild", level: 5,
       code: "const ul = document.querySelector('ul');\nconst newLi = document.createElement('li');\nnewLi.textContent = 'Updated';\nconst removed = ul.replaceChild(newLi, ul.____);\nconsole.log(removed.textContent);",
       answer: "firstElementChild",
-      hint: "מאפיין שמחזיר את ��ילד הראשון שהוא element.",
+      hint: "מאפיין שמחזיר את הילד הראשון שהוא element.",
       explanation: "firstElementChild מחזיר אלמנט (לא text node). replaceChild מחזיר את האלמנט שהוסר.",
     },
 
@@ -6758,7 +6758,7 @@ var QUESTIONS_BANK = {
       code: "localStorage.____('username', 'Tal');",
       answer: "setItem",
       hint: "מתודה שכותבת ערך ל-localStorage.",
-      explanation: "setItem(key, value) שומרת מח��וזת ב-localStorage תחת key שניתן לשלוף אחר כך עם getItem.",
+      explanation: "setItem(key, value) שומרת מחרוזת ב-localStorage תחת key שניתן לשלוף אחר כך עם getItem.",
     },
     {
       id: "fill_l13_set_item_manual_002", topicId: "topic_storage", conceptKey: "lesson_13::setItem", level: 5,
@@ -6774,7 +6774,7 @@ var QUESTIONS_BANK = {
       code: "const box = document.getElementById('box');\nbox.____.backgroundColor = 'blue';",
       answer: "style",
       hint: "property שנותן גישה ל-inline styles של אלמנט.",
-      explanation: "element.style מאפ��ר לקרוא ול��נות inline CSS. שמות CSS ב-camelCase.",
+      explanation: "element.style מאפשר לקרוא ולשנות inline CSS. שמות CSS ב-camelCase.",
     },
     {
       id: "fill_l13_style_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::style", level: 4,
@@ -6805,7 +6805,7 @@ var QUESTIONS_BANK = {
       id: "fill_l13_value_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::Value", level: 3,
       code: "const input = document.getElementById('email');\nconst email = input.____;",
       answer: "value",
-      hint: "property שמחזיר את מה שהמשתמ�� הקליד ב-input.",
+      hint: "property שמחזיר את מה שהמשתמש הקליד ב-input.",
       explanation: "input.value מחזיר את הטקסט הנוכחי בשדה. זה string תמיד.",
     },
     {
