@@ -7743,4 +7743,1165 @@ match (point) {
 
 ---
 
-**עודכן:** 2026-05-02 · ידני · §5 Object/Array/Function · §6 Arrow vs Regular · §7 Pointer Internals · 6-level translations לכל הקלסטרים · §32 useState · §33 array reference · 🔬 ניתוח מושגים בנפרד · 📦 בלוקי קוד ל-6 רמות (PHASE A)
+## 95-A. PHASE J — בלוקי תוכן ל-30 קלסטרים חדשים (orphan absorbers)
+
+> 30 הקלסטרים שנוספו עכשיו בעקבות 291 המושגים שלא היו בקלסטר. תוכן קומפקטי לכל אחד.
+
+---
+
+### §95. OOP & Classes Basics — class/extends/super/instance/new/method
+
+| Concept | מה |
+|---|---|
+| class | תבנית של object |
+| new | יוצר instance |
+| constructor | פונקציה ראשונית |
+| extends | יורש מclass אחר |
+| super | קורא לconstructor של parent |
+| instance | object שנוצר מclass |
+| method | פונקציה בתוך class |
+| Property | שדה בinstance |
+| inheritance | יורש שדות+מתודות |
+
+🧓 כתב class לדבר תבנית, new לייצר. extends יורש.
+👶 class=דפוס. new=פעולת ייצור. extends=סוג מיוחד יותר.
+💂 class הוא syntactic sugar על prototype chain. extends sets prototype.
+🎓 super() needed in derived constructor. ES2022 # for private.
+👨‍💻 prefer composition over inheritance. interfaces for contracts.
+🎩 internal slots: [[Construct]], [[HomeObject]], super.method dispatch.
+
+```js
+class Animal {
+  constructor(name) { this.name = name; }
+  greet() { return `Hi ${this.name}`; }
+}
+class Dog extends Animal {
+  constructor(name) { super(name); this.species = "dog"; }
+  bark() { return "Woof"; }
+}
+const d = new Dog("Rex");
+d instanceof Dog;     // true
+d instanceof Animal;  // true (prototype chain)
+```
+
+---
+
+### §96. DOM Basics — Document Object Model / style / attribute
+
+| Concept | מה |
+|---|---|
+| DOM | tree representation of HTML |
+| Document Object Model | full name |
+| style | inline CSS via JS |
+| attribute | HTML attribute (`id`, `class`, `data-*`) |
+| Value | input.value (current state) |
+
+🧓 DOM זה איך JavaScript רואה את ה-HTML.
+👶 כל אלמנט בדף = node בעץ.
+💂 DOM tree: document → html → body → ...
+🎓 read with .textContent, .style, .getAttribute. write similar.
+👨‍💻 prefer React/Vue over manual DOM. but know fundamentals.
+🎩 mutationObserver for tracking changes.
+
+```js
+document.body.style.background = "blue";
+document.querySelector("#app").setAttribute("data-id", "5");
+const v = document.querySelector("input").value;
+```
+
+---
+
+### §97. Browser Storage Full — localStorage / sessionStorage / cookies / setItem / getItem
+
+| API | persist | size | sync? |
+|---|---|---|---|
+| localStorage | until cleared | 5MB | sync |
+| sessionStorage | tab close | 5MB | sync |
+| cookies | configurable | 4KB | sync |
+| IndexedDB | until cleared | 100s MB | async |
+| Cache API | service worker | huge | async |
+
+🧓 localStorage נשאר. sessionStorage עד טאב נסגר. cookies קטנות.
+👶 דרכים לשמור מידע בדפדפן.
+💂 setItem/getItem/removeItem. JSON.stringify objects.
+🎓 cookies sent automatically. localStorage not.
+👨‍💻 never store secrets. use httpOnly cookie for tokens.
+🎩 storage events fire across tabs.
+
+```js
+localStorage.setItem("user", JSON.stringify({ name: "Tal" }));
+const u = JSON.parse(localStorage.getItem("user"));
+sessionStorage.setItem("draft", text);
+document.cookie = "lang=he; path=/";
+window.addEventListener("storage", e => console.log(e.key, e.newValue));
+```
+
+---
+
+### §98. Array Basics — Index / new array / iteration patterns
+
+| Pattern | תחביר |
+|---|---|
+| Index access | `arr[0]` |
+| Length | `arr.length` |
+| Create new | `[]`, `Array.from()`, `new Array(N)` |
+| Iterate | `for...of`, `forEach`, `map` |
+| Filter | `arr.filter()` |
+
+🧓 מערך = רשימה ממוספרת מ-0.
+👶 arr[0]=ראשון, arr.length=כמה יש.
+💂 zero-indexed. length is mutable property.
+🎓 sparse arrays (with holes) - performance pitfall.
+👨‍💻 Array.from for iterables. spread for copy.
+🎩 V8 Element Kinds: PACKED_SMI vs HOLEY_DOUBLE.
+
+```js
+const arr = ["a", "b", "c"];
+arr[0];                 // "a"
+arr.length;             // 3
+const copy = [...arr];
+const evens = [1,2,3,4].filter(n => n % 2 === 0);
+const range = Array.from({length: 5}, (_, i) => i);  // [0,1,2,3,4]
+```
+
+---
+
+### §99. String Basics — toString and conversion
+
+| Method | פעולה |
+|---|---|
+| toString() | convert any to string |
+| String(x) | same, more strict on null/undefined |
+| `${x}` | template implicit toString |
+| .toFixed(n) | number→string with N decimals |
+
+🧓 toString הופך משהו לטקסט.
+👶 כל אובייקט בJS יודע להפוך לטקסט.
+💂 (5).toString() → "5". null/undefined throw on toString.
+🎓 customize via toString method on class.
+👨‍💻 String() safer for null. Template literal common.
+🎩 Symbol.toPrimitive for custom coercion.
+
+```js
+(42).toString();           // "42"
+[1,2,3].toString();        // "1,2,3"
+({a:1}).toString();        // "[object Object]"
+const x = 3.14159;
+x.toFixed(2);              // "3.14"
+class Money { toString() { return `$${this.amount}`; } }
+```
+
+---
+
+### §100. Node.js fs API
+
+| Method | פעולה |
+|---|---|
+| fs.readFile | read file |
+| fs.writeFile | write file (overwrites) |
+| fs.appendFile | append to file |
+| fs.unlink | delete file |
+| fs.rename | rename/move |
+| fs.open | low-level handle |
+| fs.promises.* | Promise variants |
+
+🧓 fs = file system. דרכים לקרוא/לכתוב קבצים.
+👶 קריאה, כתיבה, מחיקה, שינוי שם.
+💂 callback-style legacy. Promise via fs.promises.
+🎓 readFile loads all into memory. createReadStream for large.
+👨‍💻 prefer fs/promises modern. async/await.
+🎩 zero-copy via sendfile() in some cases.
+
+```js
+import fs from "node:fs/promises";
+await fs.writeFile("out.txt", "hello");
+const data = await fs.readFile("out.txt", "utf8");
+await fs.appendFile("log.txt", `${new Date()}\n`);
+await fs.unlink("temp.txt");
+await fs.rename("old.txt", "new.txt");
+```
+
+---
+
+### §101. CLI Basics — dir / mkdir / CLI / Command Line
+
+| Command | פעולה |
+|---|---|
+| dir / ls | list files |
+| mkdir | create directory |
+| cd | change directory |
+| node file.js | run JS |
+| npm start | run npm script |
+| type nul / touch | create file |
+
+🧓 שורת פקודה זה איך מדברים עם המחשב בלי עכבר.
+👶 פקודות בטרמינל.
+💂 Windows: dir/type nul. Unix: ls/touch.
+🎓 PATH var, scripts in node_modules/.bin.
+👨‍💻 npx for one-off. corepack for tool versions.
+🎩 sh vs bash vs zsh. POSIX compatibility.
+
+```bash
+mkdir my-project
+cd my-project
+npm init -y
+echo "console.log('hi');" > index.js
+node index.js          # → "hi"
+```
+
+---
+
+### §102. JS Runtimes — Node.js / V8 / Server / Express
+
+| Term | מה |
+|---|---|
+| Node.js | JS runtime outside browser |
+| V8 | Google's JS engine |
+| module | code unit (CJS/ESM) |
+| Express | minimal HTTP server framework |
+| server | program that responds to requests |
+| Client | browser/mobile making requests |
+| Domain | example.com address |
+
+🧓 Node.js מריץ JS בלי דפדפן.
+👶 דרך להריץ JavaScript על שרת.
+💂 V8 (Chrome) + libuv (event loop) + bindings = Node.
+🎓 Bun, Deno alternative runtimes.
+👨‍💻 ES Modules (.mjs) + top-level await.
+🎩 worker_threads for CPU. cluster for multi-core.
+
+```js
+// server.js
+import express from "express";
+const app = express();
+app.get("/", (req, res) => res.send("Hello"));
+app.listen(3000);
+// run: node server.js
+```
+
+---
+
+### §103. HTTP Protocol Basics — REST / Request / Response / Status / port
+
+| Term | מה |
+|---|---|
+| HTTP | protocol of web |
+| Protocol | rules of communication |
+| Server | receives requests |
+| Client | sends requests |
+| Request | message from client |
+| Response | message from server |
+| Status Codes | 200, 404, 500... |
+| port | server listen address |
+| headers | metadata fields |
+| static files | unchanging assets |
+| REST API | resource-based HTTP API |
+| Query Parameters | `?key=value` |
+
+🧓 HTTP זה איך דפדפן מבקש מידע משרת.
+👶 שיחה: לקוח שואל, שרת עונה.
+💂 method (GET/POST) + path + headers + body. Status: 2xx ok, 4xx client err, 5xx server err.
+🎓 stateless. caching via headers. CORS for cross-origin.
+👨‍💻 always validate input. rate-limit. HTTPS.
+🎩 HTTP/2 multiplexing. HTTP/3 QUIC.
+
+```js
+// Client (browser):
+const res = await fetch("https://api.example.com/users?limit=10", {
+  method: "GET",
+  headers: { "Authorization": "Bearer token" }
+});
+console.log(res.status);  // 200
+const data = await res.json();
+
+// Server (Express):
+app.get("/users", (req, res) => {
+  res.status(200).json({ users: [...] });
+});
+```
+
+---
+
+### §104. Form Basics — email / password / username / form / validation
+
+| Field | type |
+|---|---|
+| email | input type="email" |
+| password | input type="password" |
+| username | input type="text" |
+| validation | check format/length |
+| server-side storage | DB persistence |
+
+🧓 טפסים = איך אנשים שולחים מידע לשרת.
+👶 שדות + כפתור שליחה.
+💂 client validation UX, server validation security.
+🎓 Zod/Joi schema. CSRF protection.
+👨‍💻 react-hook-form + zod. password rules: 8+ chars, mixed.
+🎩 TLS for transit. bcrypt+salt for storage.
+
+```html
+<form onsubmit="return validate()">
+  <input name="email" type="email" required>
+  <input name="password" type="password" minlength="8" required>
+  <button type="submit">Login</button>
+</form>
+```
+```js
+// Server validation (Zod)
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8)
+});
+const result = schema.safeParse(req.body);
+if (!result.success) return res.status(400).json(result.error);
+```
+
+---
+
+### §105. Browser Dev Tools — alert / console.log / debugger / network
+
+| Tool | פעולה |
+|---|---|
+| alert(x) | popup (legacy) |
+| console.log | print to console |
+| console.error | red print |
+| console.table | tabular |
+| debugger | breakpoint |
+| network tab | inspect HTTP |
+| script tab | breakpoints, step |
+
+🧓 כלים לבדוק קוד בדפדפן.
+👶 console.log שלי טוב יותר מalert.
+💂 F12 / Cmd+Opt+I.
+🎓 console.time/timeEnd, console.trace.
+👨‍💻 console.assert. logpoints (no debugger needed).
+🎩 Source maps. Performance tab. Memory snapshots.
+
+```js
+console.log("simple");
+console.error("oops");
+console.table([{a:1, b:2}, {a:3, b:4}]);
+console.time("op");
+heavyWork();
+console.timeEnd("op");           // op: 234ms
+debugger;                         // pauses if devtools open
+```
+
+---
+
+### §106. Control Flow — break / continue / return
+
+| Keyword | פעולה |
+|---|---|
+| break | exit loop/switch |
+| continue | skip to next iteration |
+| return | exit function with value |
+| throw | exit with error |
+
+🧓 דרכים לקפוץ או לצאת.
+👶 break=עצור, continue=דלג, return=סיים.
+💂 break exits innermost loop. labels for outer.
+🎓 return prevents else needed (early return pattern).
+👨‍💻 prefer functional (filter, find) over break.
+🎩 continue label, break label rare but useful.
+
+```js
+for (let i = 0; i < 10; i++) {
+  if (i === 5) break;        // stops at 5
+  if (i % 2 === 0) continue; // skips evens
+  console.log(i);            // 1, 3
+}
+function find(arr, target) {
+  for (const x of arr) if (x === target) return x;
+  return null;
+}
+```
+
+---
+
+### §107. JS Fundamentals — camelCase / hoisting / parameter / Data Types
+
+| Term | מה |
+|---|---|
+| camelCase | naming style |
+| hoisting | declarations move to top |
+| parameter | function input |
+| Data Types | primitives + reference |
+
+🧓 camelCase=myVariableName. hoisting=הצהרה כאילו בתחילת הקוד.
+👶 שמות פונקציות ומשתנים, איך הם עובדים.
+💂 var hoisted with undefined. let/const hoisted to TDZ.
+🎓 function declarations fully hoisted. expressions not.
+👨‍💻 always declare at top of scope for clarity.
+🎩 Lexical Environment vs Variable Environment.
+
+```js
+console.log(x);  // undefined (hoisted)
+var x = 5;
+
+console.log(y);  // ReferenceError (TDZ)
+let y = 5;
+
+greet();         // works (declaration hoisted)
+function greet() {}
+
+bye();           // ReferenceError
+const bye = () => {};
+
+function f(a, b = 10) { return a + b; }   // default param
+```
+
+---
+
+### §108. MongoDB Query Operators — $eq / $gt / $gte / $lt / $lte / $ne
+
+| Op | meaning |
+|---|---|
+| $eq | equals |
+| $ne | not equals |
+| $gt | greater than |
+| $gte | greater or equal |
+| $lt | less than |
+| $lte | less or equal |
+| $in | in array |
+| $nin | not in array |
+
+🧓 השוואות במונגו לחיפוש.
+👶 דרכים להשוות מספרים בquery.
+💂 Mongo syntax: { field: { $op: value } }.
+🎓 $in for OR multiple values. compound conditions via $and.
+👨‍💻 indexes critical for $gt/$lt range queries.
+🎩 Atlas search for full-text + range.
+
+```js
+// users older than 18
+db.users.find({ age: { $gt: 18 } });
+// price between 10 and 100
+db.products.find({ price: { $gte: 10, $lte: 100 } });
+// status not "deleted"
+db.posts.find({ status: { $ne: "deleted" } });
+// in list
+db.users.find({ role: { $in: ["admin", "mod"] } });
+```
+
+---
+
+### §109. MongoDB Basics — Cluster / Collection / Atlas / Connection String
+
+| Term | מה |
+|---|---|
+| Cluster | grouped DB instances |
+| Collection | bag of documents (like SQL table) |
+| Document | one record (like SQL row) |
+| Connection String | mongodb+srv://... |
+| MongoDB Atlas | cloud-managed Mongo |
+
+🧓 Mongo=מסד נתונים שמירת documents.
+👶 collection=תיקייה. document=מסמך.
+💂 schemaless (unlike SQL). JSON-like docs.
+🎓 replica set for HA. sharding for scale.
+👨‍💻 use Atlas free tier. always use schemas (Mongoose).
+🎩 storage engine WiredTiger. journal for durability.
+
+```js
+import { MongoClient } from "mongodb";
+const uri = "mongodb+srv://user:pass@cluster.mongodb.net/myapp";
+const client = new MongoClient(uri);
+await client.connect();
+const db = client.db("myapp");
+const users = db.collection("users");
+await users.insertOne({ name: "Tal" });
+```
+
+---
+
+### §110. MongoDB Modify — update / deleteOne / deleteMany / updateMany
+
+| Op | מה |
+|---|---|
+| updateOne | first match |
+| updateMany | all matches |
+| deleteOne | first match |
+| deleteMany | all matches |
+| replaceOne | full replacement |
+
+🧓 דרכים לעדכן ולמחוק.
+👶 לעדכן אחד או הרבה. למחוק אחד או הרבה.
+💂 atomic per-document. {} filter = all.
+🎓 returns { matchedCount, modifiedCount }.
+👨‍💻 always use specific filter. never empty {} delete.
+🎩 writeConcern: majority + journal.
+
+```js
+await users.updateOne({ email }, { $set: { active: true } });
+await users.updateMany({ role: "user" }, { $set: { tier: "free" } });
+await users.deleteOne({ email });
+await users.deleteMany({ active: false });
+```
+
+---
+
+### §111. React Project Files — App.jsx / index.html / main.jsx
+
+| File | תפקיד |
+|---|---|
+| index.html | root HTML, mount point |
+| main.jsx | app bootstrap, ReactDOM.render |
+| App.jsx | top-level component |
+| App.css | top-level styles |
+| {} | React JSX expression syntax |
+| CSS import | `import "./style.css"` |
+
+🧓 קבצי הבסיס של פרויקט React.
+👶 איפה מתחיל הקוד שלך.
+💂 Vite/CRA convention. main.jsx renders <App/> to #root.
+🎓 strict mode wrapper. error boundaries at App level.
+👨‍💻 keep main.jsx minimal. structure under src/.
+🎩 hydration: hydrateRoot for SSR.
+
+```html
+<!-- index.html -->
+<div id="root"></div>
+<script type="module" src="/src/main.jsx"></script>
+```
+```jsx
+// main.jsx
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import "./App.css";
+createRoot(document.getElementById("root")).render(<App />);
+```
+```jsx
+// App.jsx
+function App() { return <h1>Hello {name}</h1>; }
+export default App;
+```
+
+---
+
+### §112. React Styling — className / inline style
+
+| Method | תחביר |
+|---|---|
+| className | `className="card"` (string CSS class) |
+| inline style | `style={{color: "red"}}` (object) |
+| CSS Modules | `import s from "./x.module.css"` |
+| styled-components | `styled.div\`...\`` |
+| Tailwind | `className="bg-blue-500"` |
+
+🧓 דרכים לעצב קומפוננטה.
+👶 className לCSS חיצוני, style לpropsspecific.
+💂 className uses kebab-case in CSS but camelCase NOT — string only.
+🎓 inline style uses camelCase keys: backgroundColor, fontSize.
+👨‍💻 prefer Tailwind or CSS Modules over inline.
+🎩 styled-components: dynamic CSS, theme.
+
+```jsx
+// className
+<div className="card primary"></div>
+
+// inline style
+<div style={{ color: "red", fontSize: "1.2rem" }}></div>
+
+// CSS Modules
+import s from "./Card.module.css";
+<div className={s.card}></div>
+
+// Tailwind
+<div className="bg-blue-500 text-white p-4 rounded"></div>
+```
+
+---
+
+### §113. React Ecosystem — React / React Native / Vite / Component / Client Side
+
+| Term | מה |
+|---|---|
+| React | UI library |
+| React Native | mobile via JS |
+| Vite | build tool / dev server |
+| Component | reusable UI piece |
+| Client Side | browser execution |
+| RFC | proposal in React community |
+
+🧓 React ליצירת ממשקי משתמש בכמה פלטפורמות.
+👶 ספריות וכלים לבניית האתר.
+💂 React Web vs Native. Vite = fast dev server.
+🎓 SPA via React → SSR via Next.js.
+👨‍💻 keep dependencies lean. monitor bundle size.
+🎩 React 18 concurrent. Server Components.
+
+```bash
+# Create Vite + React project
+npm create vite@latest my-app -- --template react
+cd my-app
+npm install
+npm run dev   # http://localhost:5173
+```
+```jsx
+// Component
+function Card({ title }) { return <div>{title}</div>; }
+export default Card;
+```
+
+---
+
+### §114. React Components & Handlers — addPost / deletePost / MainScreen / element
+
+| Pattern | מה |
+|---|---|
+| handler | function for event |
+| event | user action (click, change) |
+| element | React element (JSX result) |
+| component | function returning JSX |
+
+🧓 קומפוננטות = חלקי דף. handlers = פעולות.
+👶 כפתורים שעושים דברים.
+💂 onClick={handler}. handler is function.
+🎓 stable handlers via useCallback if passed deeply.
+👨‍💻 name handlers `handleX` or `onX`. arrow class fields.
+🎩 SyntheticEvent pooling pre-React 17.
+
+```jsx
+function PostList({ posts, onAdd, onDelete }) {
+  return (
+    <div>
+      <button onClick={onAdd}>Add</button>
+      {posts.map(p => (
+        <div key={p.id}>
+          {p.title}
+          <button onClick={() => onDelete(p.id)}>Delete</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+---
+
+### §115. React Context Pattern — createContext / Provider / Prop Drilling
+
+| Term | מה |
+|---|---|
+| createContext | declares context |
+| Provider | wraps subtree, supplies value |
+| useContext | reads value |
+| Prop Drilling | passing props through many levels |
+
+🧓 context = רדיו ציבורי לכל הילדים.
+👶 דרך לשתף ערך בלי props.
+💂 createContext returns Provider+Consumer. useContext for hooks.
+🎓 split contexts: AuthCtx, ThemeCtx, etc. — avoid mega-context.
+👨‍💻 memoize value to prevent re-renders.
+🎩 useContextSelector (3rd party) for partial subscribe.
+
+```jsx
+const AuthCtx = createContext(null);
+
+function App() {
+  const [user, setUser] = useState(null);
+  const value = useMemo(() => ({ user, setUser }), [user]);
+  return <AuthCtx.Provider value={value}><Toolbar/></AuthCtx.Provider>;
+}
+
+function Toolbar() {
+  const { user } = useContext(AuthCtx);
+  return <p>{user?.name ?? "Guest"}</p>;
+}
+```
+
+---
+
+### §116. useRef Patterns — ref / ref.current / focus / state update
+
+| Pattern | מה |
+|---|---|
+| useRef | mutable container |
+| ref attribute | DOM element reference |
+| ref.current | the value |
+| focus | input.focus() |
+| forwardRef | pass ref through component |
+
+🧓 ref = מצביע פנימי שלא משפיע על רינדור.
+👶 דרך לגשת לDOM או לזכור משהו.
+💂 setting ref.current doesn't trigger re-render.
+🎓 useRef for: DOM, timers, prev values.
+👨‍💻 don't read ref.current in render — only effects.
+🎩 useImperativeHandle for exposing methods.
+
+```jsx
+function SearchBox() {
+  const inputRef = useRef(null);
+  useEffect(() => { inputRef.current.focus(); }, []);
+  return <input ref={inputRef} />;
+}
+
+function Counter() {
+  const renders = useRef(0);
+  renders.current++;   // doesn't re-render
+  return <p>Renders: {renders.current}</p>;
+}
+```
+
+---
+
+### §117. Tailwind Basics — utility classes / installation / responsive
+
+| Concept | מה |
+|---|---|
+| utility classes | small CSS atoms |
+| installation | npm + config |
+| responsive | sm:/md:/lg: prefixes |
+| dark mode | dark: prefix |
+| variants | hover:/focus:/disabled: |
+
+🧓 Tailwind = classes קטנות במקום CSS.
+👶 כל property = class אחד.
+💂 mobile-first. md: ל-768px+. lg: ל-1024px+.
+🎓 @apply for component classes. config-driven.
+👨‍💻 just-in-time scanning. no purge needed.
+🎩 plugin system. arbitrary values [123px].
+
+```html
+<button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded
+               md:px-6 md:py-3 dark:bg-gray-800">
+  Click
+</button>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <Card/> <Card/> <Card/>
+</div>
+```
+
+---
+
+### §118. TypeScript Setup — tsconfig.json / Compiler / .ts / models folder
+
+| File | תפקיד |
+|---|---|
+| tsconfig.json | compiler config |
+| .ts | TS source file |
+| .tsx | TS + JSX |
+| .js | JS output (or source) |
+| Compiler / tsc | TypeScript compiler |
+| models folder | type definitions |
+
+🧓 TypeScript מוסיף בדיקה מסוגי JavaScript.
+👶 כותבים ב-.ts → מתרגם ל-.js.
+💂 strict mode. noImplicitAny. exactOptionalPropertyTypes.
+🎓 incremental builds. project references.
+👨‍💻 tsc --noEmit for typecheck only. Vite handles bundle.
+🎩 declaration files (.d.ts) for ambient types.
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "strict": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler"
+  },
+  "include": ["src/**/*"]
+}
+```
+```ts
+// src/models/User.ts
+export interface User {
+  id: number;
+  name: string;
+  email?: string;
+}
+```
+
+---
+
+### §119. Auth Providers — Supabase / Firebase / Kinde / Appwrite
+
+| Provider | strength |
+|---|---|
+| Supabase | postgres + auth + realtime |
+| Firebase | full backend, Google |
+| Kinde | auth-focused |
+| Appwrite | open-source BaaS |
+| Clerk | premium auth UI |
+
+🧓 שירותים שמטפלים באימות בלי שתכתוב הכל.
+👶 חברות שעוזרות לעשות login.
+💂 SDK + dashboard. OAuth, magic link, MFA.
+🎓 free tier covers small apps. trade-off: vendor lock-in.
+👨‍💻 keep abstraction layer for portability.
+🎩 PKCE flow for SPAs. JWT signing.
+
+```js
+// Supabase
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(URL, KEY);
+await supabase.auth.signInWithPassword({ email, password });
+const { data } = await supabase.auth.getUser();
+
+// Firebase
+import { signInWithEmailAndPassword } from "firebase/auth";
+await signInWithEmailAndPassword(auth, email, password);
+```
+
+---
+
+### §120. Design System — shadcn / cn / variants / tokens / Radix / cva
+
+| Concept | מה |
+|---|---|
+| cn helper | clsx + tailwind-merge |
+| component variants | size/intent classes |
+| design tokens | CSS vars |
+| theme tokens | semantic naming |
+| Radix primitives | unstyled accessible components |
+| cva | class-variance-authority |
+| asChild slot | Radix slot pattern |
+
+🧓 design system = ספריית רכיבים עם עיצוב אחיד.
+👶 כפתורים וטפסים בסגנון אחיד.
+💂 shadcn copies code into your repo. cva for variants.
+🎓 tokens layer separate from components.
+👨‍💻 use cn() everywhere for conditional classes.
+🎩 a11y built-in via Radix.
+
+```ts
+// utils/cn.ts
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+export const cn = (...args) => twMerge(clsx(args));
+
+// Button.tsx
+import { cva } from "class-variance-authority";
+const button = cva("rounded font-medium", {
+  variants: {
+    intent: { primary: "bg-blue-500", danger: "bg-red-500" },
+    size: { sm: "px-2 py-1 text-sm", md: "px-4 py-2" }
+  }
+});
+<button className={cn(button({ intent: "primary", size: "md" }))}>Save</button>
+```
+
+---
+
+### §121. DevOps — build / health check / smoke / preview / release / Docker
+
+| Concept | מה |
+|---|---|
+| build command | compile/bundle |
+| smoke test | basic post-deploy |
+| preview deployment | per-PR URL |
+| production readiness | checklist |
+| health check | /health endpoint |
+| environment variables | runtime config |
+| Docker / Compose | containerization |
+| service | running process |
+
+🧓 כלי פריסה ובדיקה.
+👶 איך משחררים גרסה לאוויר.
+💂 build → test → deploy → smoke.
+🎓 12-factor app principles. immutable infra.
+👨‍💻 always rollback plan. canary releases.
+🎩 Kubernetes for orchestration at scale.
+
+```yaml
+# docker-compose.yml
+services:
+  web:
+    build: .
+    ports: ["3000:3000"]
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+```
+```js
+// /health endpoint
+app.get("/health", (req, res) => res.json({ status: "ok", uptime: process.uptime() }));
+```
+
+---
+
+### §122. HTML/CSS Basics — HTML doc / form / selector / semantic / cascade
+
+| Term | מה |
+|---|---|
+| HTML document | root structure |
+| HTML form | input collection |
+| CSS selector | rule target |
+| semantic HTML | meaningful tags (header, main, article) |
+| label | input description |
+| cascade | priority rules |
+| accessibility | a11y |
+
+🧓 HTML מבנה הדף, CSS עיצוב.
+👶 תגיות לסידור, classes לעיצוב.
+💂 semantic = better SEO + a11y.
+🎓 specificity: inline > id > class > tag.
+👨‍💻 always use <label for=>. ARIA when semantic isn't enough.
+🎩 cascade layers (CSS @layer).
+
+```html
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><h1>Title</h1></header>
+  <main>
+    <form>
+      <label for="email">Email</label>
+      <input id="email" type="email" required>
+    </form>
+  </main>
+</body>
+</html>
+```
+```css
+/* selector specificity */
+#submit { color: red; }       /* specificity 1,0,0 */
+.btn { color: blue; }          /* 0,1,0 */
+button { color: green; }       /* 0,0,1 */
+```
+
+---
+
+### §123. Nest.js — module / controller / service / DTO / pipe / guard
+
+| Building block | role |
+|---|---|
+| module | feature container |
+| controller | route handlers |
+| service | business logic |
+| provider | injectable |
+| DTO | data transfer object |
+| pipe | transform/validate |
+| guard | auth/authz |
+| interceptor | wrap handler |
+| decorator | metadata |
+
+🧓 Nest.js framework מבנה כמו Angular לbackend.
+👶 חלוקה למודולים לפי features.
+💂 dependency injection. opinionated structure.
+🎓 testing easy via DI. interceptors for cross-cutting.
+👨‍💻 prefer over plain Express in large teams.
+🎩 microservices via Nest patterns.
+
+```ts
+@Module({
+  controllers: [UserController],
+  providers: [UserService]
+})
+export class UserModule {}
+
+@Controller("users")
+export class UserController {
+  constructor(private svc: UserService) {}
+  @Get() findAll() { return this.svc.findAll(); }
+  @Post() @UseGuards(AuthGuard) create(@Body() dto: CreateUserDto) {
+    return this.svc.create(dto);
+  }
+}
+```
+
+---
+
+### §124. Next.js — App Router / SSR/SSG / API route / dynamic route
+
+| Concept | מה |
+|---|---|
+| App Router | new routing (file-based, RSC) |
+| dynamic route | `[id]` folder |
+| layout | shared shell |
+| API route | server endpoint |
+| metadata API | <head> tags |
+| SEO | search optimization |
+| image optimization | next/image |
+| client component | "use client" |
+| server component | default in App Router |
+| route handler | API endpoint |
+| server action | form mutation |
+
+🧓 Next.js = React + serverside features.
+👶 routing אוטומטי לפי תיקיות.
+💂 file-system routing. RSC streams.
+🎓 server components default. client opt-in.
+👨‍💻 minimize "use client" boundaries. cache strategically.
+🎩 PPR (partial prerendering).
+
+```tsx
+// app/users/[id]/page.tsx
+export default async function User({ params }) {
+  const user = await getUser(params.id);
+  return <h1>{user.name}</h1>;
+}
+
+// app/api/users/route.ts
+export async function GET() { return Response.json({ users: [] }); }
+
+// Client component
+"use client";
+import { useState } from "react";
+export default function Counter() { ... }
+```
+
+---
+
+### §125. SQL Concepts — table / row / column / JOIN / foreign key / migration
+
+| Term | מה |
+|---|---|
+| table | grid of rows |
+| row | record |
+| column | field |
+| primary key | unique row identifier |
+| foreign key | reference to PK in another table |
+| relation | logical link |
+| JOIN | combine tables |
+| migration | schema change script |
+| ORM | code abstraction (Prisma, Drizzle) |
+| transaction | atomic multi-op |
+| CRUD | create/read/update/delete |
+
+🧓 SQL = שפה לעבודה עם DB טבלאי.
+👶 טבלה כמו אקסל מקושר.
+💂 JOIN merges rows on key. transactions rollback on error.
+🎓 indexes for perf. ACID guarantees.
+👨‍💻 use ORM for type-safety. raw SQL for complex.
+🎩 query plan analysis. denormalization when justified.
+
+```sql
+CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT);
+CREATE TABLE posts (
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id),
+  title TEXT
+);
+
+SELECT u.name, p.title
+FROM users u
+LEFT JOIN posts p ON p.user_id = u.id;
+
+BEGIN;
+  INSERT INTO users (name) VALUES ('Tal') RETURNING id;
+  INSERT INTO posts (user_id, title) VALUES (1, 'Hello');
+COMMIT;
+```
+
+---
+
+### §126. Git Workflow — repository / branch / commit / pull request
+
+| Term | מה |
+|---|---|
+| repository (repo) | versioned project folder |
+| branch | parallel line of changes |
+| commit | snapshot of changes |
+| pull request (PR) | review + merge proposal |
+
+🧓 Git = ניהול גרסאות לקוד.
+👶 שמירת היסטוריה של שינויים.
+💂 main branch + feature branches. squash merge to main.
+🎓 conventional commits. semantic versioning.
+👨‍💻 small frequent commits. PR < 400 lines.
+🎩 git internals: object DB (blob, tree, commit, tag).
+
+```bash
+git init                      # new repo
+git checkout -b feature/login # new branch
+git add .                     # stage
+git commit -m "feat: add login form"
+git push origin feature/login
+
+# Then on GitHub: open PR, review, merge.
+```
+
+---
+
+### §127. Express Form Events — body-parser / event.preventDefault
+
+| API | פעולה |
+|---|---|
+| body-parser | parse req.body (deprecated, built into Express 4.16+) |
+| express.json() | JSON body parser |
+| express.urlencoded() | form-encoded parser |
+| event.preventDefault | stop default form submission |
+
+🧓 כלים לעיבוד טפסים בExpress.
+👶 פותחים את התוכן של POST.
+💂 express.json() built-in now.
+🎓 multipart needs multer.
+👨‍💻 always validate parsed body.
+🎩 streaming for large files.
+
+```js
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.post("/contact", (req, res) => {
+  console.log(req.body);     // { name: "Tal" }
+  res.json({ received: true });
+});
+```
+```html
+<form onsubmit="onSubmit(event)">
+  <input name="email">
+  <button>Send</button>
+</form>
+<script>
+  function onSubmit(e) {
+    e.preventDefault();      // stop browser submit
+    fetch("/contact", { method: "POST", body: new FormData(e.target) });
+  }
+</script>
+```
+
+---
+
+### §128. Scope Chain — scope / lexical / closure
+
+| Term | מה |
+|---|---|
+| scope | accessibility region |
+| scope chain | inner scope can access outer |
+| lexical | by code position (not call) |
+| closure | function + captured environment |
+
+🧓 scope chain = פונקציה רואה משתנים מההורה שלה.
+👶 הפונקציה זוכרת מה היה סביבה.
+💂 nested function looks up via chain.
+🎓 lexical = compile-time. dynamic = call-time (rare).
+👨‍💻 module pattern uses closures for privacy.
+🎩 [[Scopes]] internal slot. EnvironmentRecords.
+
+```js
+function outer() {
+  const x = 10;
+  function inner() {
+    console.log(x);   // 10 — found via scope chain
+  }
+  inner();
+}
+outer();
+
+// closure example
+function make() {
+  let count = 0;
+  return () => ++count;
+}
+const fn = make();
+fn();  // 1
+fn();  // 2  — count persists in closure
+```
+
+---
+
+✅ **30 קלסטרים חדשים נוספו עם תוכן מלא** (ידני, קומפקטי, אבל אמיתי).
+
+---
+
+**עודכן:** 2026-05-02 23:35 · ידני · §95-§128 (30 orphan-absorber clusters) · §5/6/7 + 6-level translations · §32 useState · §33 array reference · 🔬 ניתוח מושגים בנפרד · 📦 בלוקי קוד ל-6 רמות (PHASE A)
