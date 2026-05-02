@@ -598,6 +598,58 @@ var QUESTIONS_BANK = {
     {id:"mc_lds_aschild_002",topicId:"topic_design",conceptKey:"lesson_design_systems::asChild slot",level:6,question:"מה asChild prop ב-Radix UI?",options:["ה-component מעביר את ה-styling/behavior שלו ל-child במקום לרנדר element חדש","render twice","duplicate","CSS only"],correctIndex:0,explanation:"<Button asChild><Link href='/x'>Click</Link></Button> — ה-Button מתנהג כמו ה-Link (לא נמצא בDOM, רק מעביר behavior).",optionFeedback:["✅ נכון. polymorphic via Slot.","❌ render אחד.","❌ אין duplication.","❌ behavior, לא רק CSS."]},
     {id:"mc_lds_form_002",topicId:"topic_design",conceptKey:"lesson_design_systems::form field composition",level:5,question:"מה pattern של form field composition ב-shadcn/react-hook-form?",options:["FormField → FormItem → FormLabel + FormControl + FormDescription + FormMessage — כל אחד atomic","one big component","manual JSX","custom Hook"],correctIndex:0,explanation:"composition מאפשר כל field להחליט מה להציג. label אופציונלי, description אופציונלי, message מ-validation אוטומטי.",optionFeedback:["✅ נכון. composition over configuration.","❌ monolith קשה ל-customize.","❌ verbose ולא reusable.","❌ Hook נפרד מ-rendering."]},
 
+    // ----- top-gap manual MC batch #6 2026-05-02 — closing fill-gaps on 25 concepts -----
+    // lesson_20: Props, Value, update (Mongoose)
+    {id:"mc_l20_props_002",topicId:"topic_mongo",conceptKey:"lesson_20::Props",level:4,question:"מה המטרה של { required: true } בסכמת Mongoose?",options:["מבטיח שה-field חייב להיות מלא בעת השמירה — MongoDB יזרוק ValidationError אם חסר","מאיץ query","הגדרת type","צביעת ה-field"],correctIndex:0,explanation:"Schema Props כמו required/default/min/max מגדירים constraint. Mongoose בודק לפני save(). ValidationError עם message ברור.",optionFeedback:["✅ נכון. required = server-side validation.","❌ index הוא מה שמאיץ.","❌ type נפרד מ-required.","❌ אין קשר לתצוגה."]},
+    {id:"mc_l20_value_002",topicId:"topic_mongo",conceptKey:"lesson_20::Value",level:4,question:"איך קוראים value של field ממסמך Mongoose?",options:["const name = doc.name; — גישה ישירה לפרופרטי כמו object רגיל","doc.get('name')","doc['$name']","doc.value.name"],correctIndex:0,explanation:"Mongoose document מתנהג כ-JS object. doc.name, doc.age, doc._id — גישה טבעית. גם doc.toObject() ל-plain object.",optionFeedback:["✅ נכון. dot notation.","❌ get() קיים אבל verbose ולא נפוץ.","❌ $ prefix = MongoDB operator, לא property.","❌ אין .value wrapper."]},
+    {id:"mc_l20_update_002",topicId:"topic_mongo",conceptKey:"lesson_20::update",level:4,question:"מה ההבדל בין updateOne ל-findByIdAndUpdate ב-Mongoose?",options:["updateOne מחזיר result metadata (matchedCount/modifiedCount); findByIdAndUpdate מחזיר את המסמך עצמו (עם { new: true })","updateOne מהיר יותר","findByIdAndUpdate יוצר doc חדש","אין הבדל"],correctIndex:0,explanation:"findByIdAndUpdate מחזיר null אם לא נמצא, doc מעודכן עם new:true. updateOne טוב לbulk.",optionFeedback:["✅ נכון. תלוי אם צריך document.","❌ ביצועים דומים.","❌ upsert מוסיף doc חדש — לא default.","❌ ההבדל משמעותי בcodeflow."]},
+
+    // lesson_21: React Native, {} JSX expressions
+    {id:"mc_l21_native_002",topicId:"topic_react",conceptKey:"lesson_21::React Native",level:4,question:"מה ההבדל בין View ל-div ב-React Native?",options:["View = component mobile-native של React Native (FlexBox ברירת מחדל); div = HTML element שקיים רק בweb","View הוא HTML","View = div","אין הבדל"],correctIndex:0,explanation:"React Native לא מרנדר HTML/DOM. View → UIView (iOS) / ViewGroup (Android). Text, Image, TouchableOpacity — כולם native.",optionFeedback:["✅ נכון. View = cross-platform native container.","❌ View לא קשור ל-HTML.","❌ View ≠ div.","❌ ההבדל ארכיטקטוני."]},
+    {id:"mc_l21_jsxbraces_002",topicId:"topic_react",conceptKey:"lesson_21::{}",level:3,question:"מה מותר לכתוב בתוך {} ב-JSX?",options:["כל JS expression: משתנה, חישוב, ternary, map — אבל לא statements כמו if/for/while","רק strings","רק numbers","הכל כולל statements"],correctIndex:0,explanation:"{user.name}, {count * 2}, {isAdmin ? 'admin' : 'user'}, {items.map(x=><li>{x}</li>)} — כולם expressions. if-block אסור.",optionFeedback:["✅ נכון. expressions only.","❌ גם numbers, booleans, elements.","❌ גם strings, elements.","❌ statements (if/for) לא מותרים inline."]},
+
+    // lesson_22: object reference in React state
+    {id:"mc_l22_obj_ref_002",topicId:"topic_react",conceptKey:"lesson_22::object reference",level:5,question:"למה setUser(user) לא עובד אחרי user.age = 31?",options:["React משווה references — אותו object = אותה reference → לא מזהה שינוי → לא re-renders","user.age שונה","setUser מוגבל","React cache"],correctIndex:0,explanation:"React useState משווה עם Object.is. object.is(ref, ref) === true גם אחרי mutation. פתרון: setUser({ ...user, age: 31 }) — object חדש.",optionFeedback:["✅ נכון. immutability required.","❌ המושג הוא הreference, לא הvalue.","❌ setUser עובד עם כל value.","❌ אין mutation cache."]},
+
+    // lesson_23: Context value, React app components
+    {id:"mc_l23_value_002",topicId:"topic_react",conceptKey:"lesson_23::value",level:4,question:"מה קורה כש-Context.Provider מקבל { a, b, c } כ-value?",options:["כל consumer שמשתמש ב-useContext יקבל object חדש בכל render — עלול לגרום re-renders מיותרים","הנתונים מועברים רק פעם אחת","רק component ראשון מקבל","value מוקפא"],correctIndex:0,explanation:"{ a, b, c } = object literal חדש בכל render. מומלץ useMemo או context split לביצועים.",optionFeedback:["✅ נכון. object literal = new reference = consumer re-renders.","❌ consumer מקבל בכל parent re-render.","❌ כל consumers מקבלים.","❌ value חי ומתעדכן."]},
+    {id:"mc_l23_main_002",topicId:"topic_react",conceptKey:"lesson_23::MainScreen",level:5,question:"מדוע MainScreen מחזיק state של posts ולא PostList?",options:["MainScreen הוא smart container — מנהל state ומעביר ל-presentational children (AddPost, PostList) כ-props","כי הוא ראשון","ביצועים","random"],correctIndex:0,explanation:"lift state up — posts נחוצים גם ל-AddPost (add) וגם ל-PostList (display). הורה משותף = MainScreen.",optionFeedback:["✅ נכון. lift state to lowest common ancestor.","❌ הסיבה היא sharing state.","❌ ביצועים לא קשורים.","❌ ארכיטקטורה מכוונת."]},
+    {id:"mc_l23_addpost_002",topicId:"topic_react",conceptKey:"lesson_23::AddPost",level:4,question:"מה תפקיד onAdd ב-AddPost?",options:["callback prop שמאפשר ל-AddPost לתקשר כלפי מעלה להורה — controlled form pattern","render fn","hook","event"],correctIndex:0,explanation:"AddPost controlled: value + onChange (useState local) + onAdd(text) בsubmit. ההורה מחליט מה לעשות עם הtext.",optionFeedback:["✅ נכון. callback = bottom-up communication.","❌ render function = render prop pattern — שונה.","❌ hook = composable logic — לא prop.","❌ event = DOM level — onAdd = prop."]},
+    {id:"mc_l23_postlist_002",topicId:"topic_react",conceptKey:"lesson_23::PostList",level:4,question:"מה הפתרון ל-empty state ב-PostList?",options:["if (posts.length === 0) return <p>אין פוסטים. הוסף אחד!</p>","show null","hide list","loader"],correctIndex:0,explanation:"early return עם empty state message. UX טוב. alternative: conditional rendering {posts.length === 0 && <Empty />}.",optionFeedback:["✅ נכון. empty state UX.","❌ null = ריק לחלוטין — לא מסביר לuser.","❌ hide = אחד מול null — כנ\"ל.","❌ loader = loading state — שונה."]},
+
+    // lesson_24: DOM element via useRef
+    {id:"mc_l24_dom_002",topicId:"topic_react",conceptKey:"lesson_24::DOM element",level:5,question:"מתי ref.current זמין ב-useRef?",options:["רק אחרי שה-component נרנדר (mounted) — בתוך useEffect או event handler, לא ב-render עצמו","מיד בtop of component","בtime of declaration","never"],correctIndex:0,explanation:"ref.current = null עד שReact מוסיף את ה-DOM element. לכן useEffect([]) הוא המקום הנכון לגשת אליו.",optionFeedback:["✅ נכון. after mount.","❌ בrender — null עדיין.","❌ declaration = מגדיר ref, לא DOM.","❌ זמין post-mount."]},
+
+    // lesson_26: TypeScript models folder
+    {id:"mc_l26_models_002",topicId:"topic_typescript",conceptKey:"lesson_26::models folder",level:4,question:"מה היתרון של תיקיית models/ נפרדת ב-TypeScript project?",options:["centralized types — שינוי interface במקום אחד משפיע על כל components שמשתמשים בו; import ברור","ביצועים","אוטומציה","syntax sugar"],correctIndex:0,explanation:"src/models/User.ts → import { User } from '@/models/User'. single source of truth. refactoring בטוח.",optionFeedback:["✅ נכון. DRY typing.","❌ TS compile-time — לא runtime perf.","❌ אין magic.","❌ ארכיטקטורה, לא syntax."]},
+    {id:"mc_l26_todo_002",topicId:"topic_typescript",conceptKey:"lesson_26::Todo.ts",level:4,question:"מה שדה done ב-interface Todo?",options:["boolean — מציין אם הmission הושלמה (true) או לא (false)","string ('done'/'undone')","number","enum"],correctIndex:0,explanation:"interface Todo { id: number; text: string; done: boolean; createdAt: Date }. done: boolean נפוץ בפרויקטי todo.",optionFeedback:["✅ נכון. boolean for toggle state.","❌ string verbose, לא idiomatic.","❌ number יכול, אבל boolean ברור יותר.","❌ enum over-engineering כאן."]},
+
+    // lesson_27: TypeScript advanced — discriminated unions
+    {id:"mc_l27_genre_002",topicId:"topic_typescript",conceptKey:"lesson_27::Genre",level:5,question:"מה היתרון של type Genre = 'Fiction' | 'Science' | ... לעומת string?",options:["TypeScript יזרוק compile error אם תעביר ערך לא-תקין, ו-switch/case ייהנה מexhaustiveness check","faster","auto-complete בלבד","none"],correctIndex:0,explanation:"const _: never = g בdefault של switch — TypeScript יוודא שכל cases מכוסות. IDE completions bonus.",optionFeedback:["✅ נכון. type safety + exhaustiveness.","❌ TS type-only — לא runtime perf.","❌ exhaustiveness check = הערך המרכזי.","❌ יש יתרון ברור."]},
+    {id:"mc_l27_guest_002",topicId:"topic_typescript",conceptKey:"lesson_27::GuestUser",level:5,question:"מה discriminant ב-GuestUser?",options:["type: 'GUEST' — literal type שמאפשר לTypeScript לצמצם union ולדעת את הסוג הספציפי","id","name","interface שם"],correctIndex:0,explanation:"discriminated union: if (user.type === 'GUEST') — TS יודע שuser הוא GuestUser. type literal = discriminant.",optionFeedback:["✅ נכון. literal discriminant.","❌ id משותף לכל סוגים.","❌ name משותף לכל סוגים.","❌ שם ה-interface לא משפיע בruntime."]},
+    {id:"mc_l27_reguser_002",topicId:"topic_typescript",conceptKey:"lesson_27::RegisteredUser",level:5,question:"מה שדות ייחודיים ל-RegisteredUser שלא קיימים ב-GuestUser?",options:["email, password, joinedAt — שדות שייכים רק למשתמש רשום","id","type","name"],correctIndex:0,explanation:"RegisteredUser extends BaseUser עם type:'REGISTERED', email, password, joinedAt. GuestUser = רק type:'GUEST'.",optionFeedback:["✅ נכון. email+password+joinedAt unique.","❌ id ב-BaseUser — לשניהם.","❌ type לשניהם — ערך שונה.","❌ name ב-BaseUser — לשניהם."]},
+
+    // lesson_ai_engineering: retrieval ranking, guardrails, hallucination check
+    {id:"mc_lai_rank_002",topicId:"topic_ai",conceptKey:"lesson_ai_engineering::retrieval ranking",level:5,question:"למה מסנן ב-retrieval ranking לפי score >= 0.72?",options:["threshold מוודא רלוונטיות מינימלית — chunks מתחת לscore נמוך עלולים לבלבל את ה-LLM","ביצועים בלבד","חיסכון בtokens","0.72 = standard"],correctIndex:0,explanation:"RAG quality: garbage in = garbage out. פחות chunks אבל רלוונטיים יותר = תשובה טובה יותר.",optionFeedback:["✅ נכון. quality gate.","❌ relevance, לא perf.","❌ גם token saving אבל לא הסיבה העיקרית.","❌ threshold תלוי embeddings model."]},
+    {id:"mc_lai_guard_002",topicId:"topic_ai",conceptKey:"lesson_ai_engineering::guardrails",level:5,question:"מה הסדר הנכון של guardrails בpipeline?",options:["input check → LLM call → output check — בודקים לפני שליחה ואחרי קבלה","רק אחרי","רק לפני","אין סדר"],correctIndex:0,explanation:"Input: quota, PII, prompt injection. Output: private data, content policy. שתי שכבות = defense in depth.",optionFeedback:["✅ נכון. input + output layers.","❌ input check קריטי לפני LLM.","❌ output check קריטי אחרי LLM.","❌ שתי שכבות — סדר חשוב."]},
+    {id:"mc_lai_halluc_002",topicId:"topic_ai",conceptKey:"lesson_ai_engineering::hallucination check",level:5,question:"מה משמעות hasCitation && confidence !== 'unknown'?",options:["ה-answer מגובה במקורות ובטחון מוצהר — לא תשובה מומצאת מ-parameters בלבד","fast","cached","valid format"],correctIndex:0,explanation:"hallucination reduction: citations = grounding in retrieved docs. confidence לא 'unknown' = המודל לא מנחש.",optionFeedback:["✅ נכון. grounded + confident.","❌ לא קשור לביצועים.","❌ לא cache.","❌ format לא מעיד על accuracy."]},
+
+    // lesson_design_systems: testing
+    {id:"mc_lds_test_002",topicId:"topic_design",conceptKey:"lesson_design_systems::design system testing",level:5,question:"מה בודקים ב-Testing Library עבור design system?",options:["getByRole + assertion על enabled/disabled — semantic role + accessible name, לא CSS class","snapshot בלבד","visual only","unit tests בלבד"],correctIndex:0,explanation:"getByRole('button', { name: 'שמור' }) = semantic query. toBeEnabled()/toBeDisabled() = behavior assertion.",optionFeedback:["✅ נכון. semantic + behavior.","❌ snapshot = brittle, visual regression tool טוב יותר.","❌ visual testing = Chromatic/Percy — נפרד.","❌ integration + visual + unit — כולם."]},
+
+    // lesson_devops_deploy: smoke test, release checklist
+    {id:"mc_ldev_smoke_002",topicId:"topic_devops",conceptKey:"lesson_devops_deploy::smoke test",level:4,question:"מה smoke test בודק בdeploy?",options:["critical paths בלבד (/, /login, /health) — האם האפליקציה חיה ועונה, לא full regression","כל tests","DB migrations","logs"],correctIndex:0,explanation:"smoke test = quick sanity check בתוך 1-2 דקות. אם נכשל → rollback מיידי. לא מחליף full test suite.",optionFeedback:["✅ נכון. fast critical path check.","❌ full suite = יקר מדי בprod.","❌ migrations = נפרד (migration test).","❌ logs = monitoring — לא test."]},
+    {id:"mc_ldev_release_002",topicId:"topic_devops",conceptKey:"lesson_devops_deploy::release checklist",level:5,question:"מה הסעיף הראשון ב-release checklist?",options:["CI green — אם tests לא עוברים, אין deploy","env configured","smoke test","rollback"],correctIndex:0,explanation:"CI green = precondition. CI red = stop. env configured, migrations reviewed, smoke test — הסדר מהיר לאטי.",optionFeedback:["✅ נכון. CI = gate.","❌ env אחרי CI.","❌ smoke = post-deploy.","❌ rollback = know-how, לא step ראשון."]},
+
+    // lesson_nestjs: repository pattern
+    {id:"mc_lnest_repo_002",topicId:"topic_nestjs",conceptKey:"lesson_nestjs::repository pattern",level:5,question:"מה היתרון של Repository ב-NestJS מול גישה ישירה ל-Prisma/DB ב-Service?",options:["abstraction: Service לא יודע על DB implementation — ניתן להחליף ORM בלי לשנות business logic","ביצועים","caching","error handling"],correctIndex:0,explanation:"TasksRepository.findAll() → Service משתמש ב-repo, לא ב-Prisma ישירות. testing: mock the repo.",optionFeedback:["✅ נכון. abstraction layer.","❌ ביצועים דומים.","❌ cache = נפרד.","❌ error = נפרד."]},
+
+    // lesson_nextjs: Vercel deploy
+    {id:"mc_lnext_vercel_002",topicId:"topic_nextjs",conceptKey:"lesson_nextjs::Vercel deploy",level:4,question:"מה קורה אוטומטית ב-Vercel deploy?",options:["npm run build + SSR server + CDN edges — deploy מ-Git push; preview per branch","רק static","רק API routes","manual setup"],correctIndex:0,explanation:"Vercel = zero-config Next.js hosting. push to main → production. push to branch → preview URL.",optionFeedback:["✅ נכון. build + CDN + preview.","❌ SSR ו-API routes גם נתמכים.","❌ static + API routes + SSR.","❌ zero-config."]},
+
+    // lesson_sql_orm: Prisma
+    {id:"mc_lsql_prisma_002",topicId:"topic_sql",conceptKey:"lesson_sql_orm::Prisma",level:5,question:"מה היתרון של prisma.course.create({ data: { ... } }) על-פני raw SQL INSERT?",options:["type-safe: TypeScript יודע מה fields תקינים; auto-generate types מ-schema; validates at compile time","faster","simpler string","auto SQL"],correctIndex:0,explanation:"Prisma Client = type-safe query builder. schema.prisma → generate → prisma.course.create מוגדר typings.",optionFeedback:["✅ נכון. type-safety + DX.","❌ raw SQL יכול להיות מהיר יותר לcomplex queries.","❌ strings = less safe.","❌ query builder, לא just auto SQL."]},
+
     // ----- workbook_taskmanager — 12 missing -----
     {id:"mc_wb_taskmgr_001",topicId:"topic_workbook",conceptKey:"workbook_taskmanager::Task Manager",level:3,question:"מה features בסיסיים ב-Task Manager?",options:["add, list, complete, delete, persist (localStorage)","ML","AI","API"],correctIndex:0,explanation:"קומפוננטות בסיסיות לתרגול state, events, DOM, storage."},
     {id:"mc_wb_vars_001",topicId:"topic_workbook",conceptKey:"workbook_taskmanager::variables",level:2,question:"איך שומרים רשימת tasks?",options:["let tasks = []; (array of objects)","DB","API","string"],correctIndex:0,explanation:"In-memory array; persistent ב-localStorage."},
@@ -12236,6 +12288,234 @@ var QUESTIONS_BANK = {
       hint: "ה-component ב-shadcn ל-label של field (קושר ל-input אוטומטית).",
       explanation: "FormLabel + FormControl + FormMessage עובדים ביחד. ARIA attributes נקבעות אוטומטית. validation messages מהschema (zod).",
     },
+
+    // ===== top-gap Fill batch #6 2026-05-02 — closing fill-gaps on 25 concepts =====
+    // lesson_20: Props, Value, update (Mongoose)
+    {
+      id: "fill_l20_props_001", topicId: "topic_mongo", conceptKey: "lesson_20::Props",
+      level: 4,
+      code: "const UserSchema = new Schema({\n  name: { type: String, ____: true },\n  email: String\n});",
+      answer: "required",
+      hint: "prop שמוודא שה-field חייב להיות מלא בשמירה.",
+      explanation: "required: true = validation rule. Mongoose זורק ValidationError אם field חסר בעת save().",
+    },
+    {
+      id: "fill_l20_value_001", topicId: "topic_mongo", conceptKey: "lesson_20::Value",
+      level: 4,
+      code: "const user = await User.findById(id);\nconst userName = user.____;\nconsole.log(userName);",
+      answer: "name",
+      hint: "קורא value מ-field בשם 'name' ממסמך Mongoose.",
+      explanation: "Mongoose document = JS object. גישה ישירה לproperties כמו doc.name, doc.email, doc._id.",
+    },
+    {
+      id: "fill_l20_update_001", topicId: "topic_mongo", conceptKey: "lesson_20::update",
+      level: 5,
+      code: "await User.updateOne(\n  { name: 'Dana' },\n  { ____: { age: 31 } }\n);",
+      answer: "$set",
+      hint: "MongoDB operator שמעדכן fields ספציפיים בלי למחוק את שאר ה-document.",
+      explanation: "$set = partial update. ללא $set → המסמך יוחלף לגמרי. תמיד השתמש ב-$set לעדכון fields.",
+    },
+
+    // lesson_21: React Native, {} JSX expressions
+    {
+      id: "fill_l21_native_001", topicId: "topic_react", conceptKey: "lesson_21::React Native",
+      level: 4,
+      code: "import { ____, Text } from 'react-native';\nfunction App() {\n  return (\n    <View><Text>שלום!</Text></View>\n  );\n}",
+      answer: "View",
+      hint: "container ב-React Native — אקוויולנט ל-div ב-HTML, אך native.",
+      explanation: "View = FlexBox container ב-React Native. מרנדר UIView (iOS) / ViewGroup (Android). לא HTML.",
+    },
+    {
+      id: "fill_l21_jsxbraces_001", topicId: "topic_react", conceptKey: "lesson_21::{}",
+      level: 3,
+      code: "function Greeting({ name }) {\n  return <h1>שלום, {____}!</h1>;\n}",
+      answer: "name",
+      hint: "כותבים משתנה/expression בתוך {} ב-JSX כדי לרנדר ערך דינמי.",
+      explanation: "{name} = JS expression. JSX {} = escape מ-HTML ל-JS. כל expression: משתנה, חישוב, ternary, map.",
+    },
+
+    // lesson_22: object reference in React state
+    {
+      id: "fill_l22_obj_ref_001", topicId: "topic_react", conceptKey: "lesson_22::object reference",
+      level: 5,
+      code: "const [user, setUser] = useState({ name: 'Tal', age: 30 });\n// ✅ יוצר object חדש:\nsetUser({ ____user, age: 31 });",
+      answer: "...",
+      hint: "spread operator שמעתיק את שאר הפרופרטיס ויוצר object חדש.",
+      explanation: "{ ...user, age: 31 } = object חדש. React מזהה שינוי (Object.is) ומפעיל re-render. mutation ישיר לא יגרום re-render.",
+    },
+
+    // lesson_23: Context value, React app components
+    {
+      id: "fill_l23_value_001", topicId: "topic_react", conceptKey: "lesson_23::value",
+      level: 4,
+      code: "const ThemeContext = createContext('light');\nfunction App() {\n  return (\n    <ThemeContext.Provider ____='dark'>\n      <Page />\n    </ThemeContext.Provider>\n  );\n}",
+      answer: "value",
+      hint: "prop שמעביר את ה-context value לכל consumers.",
+      explanation: "value prop = מה שuseContext() יחזיר. יכול להיות כל type: string, number, object, function.",
+    },
+    {
+      id: "fill_l23_main_001", topicId: "topic_react", conceptKey: "lesson_23::MainScreen",
+      level: 5,
+      code: "function MainScreen() {\n  const [posts, setPosts] = useState([]);\n  const addPost = (text) =>\n    setPosts(prev => [...prev, { id: posts.length + 1, ____ }]);\n  return <PostList posts={posts} onDelete={deletePost} />;\n}",
+      answer: "text",
+      hint: "ה-field שמכיל את תוכן הפוסט החדש שהמשתמש הקליד.",
+      explanation: "{ ...prev items, text } = spread הposts הקיימים + object חדש עם text. short-hand property: { text } = { text: text }.",
+    },
+    {
+      id: "fill_l23_addpost_001", topicId: "topic_react", conceptKey: "lesson_23::AddPost",
+      level: 4,
+      code: "function AddPost({ onAdd }) {\n  const [text, setText] = useState('');\n  const submit = () => {\n    if (!text.trim()) return;\n    ____( text );\n    setText('');\n  };\n  return <button onClick={submit}>הוסף</button>;\n}",
+      answer: "onAdd",
+      hint: "קורא לcallback שהתקבל מההורה כ-prop.",
+      explanation: "onAdd(text) = תקשורת כלפי מעלה. ה-parent מחליט מה לעשות עם הtext. AddPost עצמה רק קולטת קלט.",
+    },
+    {
+      id: "fill_l23_postlist_001", topicId: "topic_react", conceptKey: "lesson_23::PostList",
+      level: 4,
+      code: "function PostList({ posts, onDelete }) {\n  if (posts.____ === 0) return <p>אין פוסטים.</p>;\n  return <ul>{posts.map(p => <li key={p.id}>{p.text}</li>)}</ul>;\n}",
+      answer: "length",
+      hint: "property שבודק מספר פריטים ב-array.",
+      explanation: "posts.length === 0 = empty state check. early return = clean pattern לempty state.",
+    },
+
+    // lesson_24: DOM element via useRef
+    {
+      id: "fill_l24_dom_001", topicId: "topic_react", conceptKey: "lesson_24::DOM element",
+      level: 5,
+      code: "function Card() {\n  const ref = useRef(null);\n  useEffect(() => {\n    console.log(ref.____.tagName);\n  }, []);\n  return <div ref={ref}><h2>כותרת</h2></div>;\n}",
+      answer: "current",
+      hint: "property של useRef שמחזיק את ה-DOM element עצמו.",
+      explanation: "ref.current = ה-DOM node האמיתי. null עד mount. גישה לתכונות DOM: tagName, offsetHeight, focus(), etc.",
+    },
+
+    // lesson_26: TypeScript models folder
+    {
+      id: "fill_l26_models_001", topicId: "topic_typescript", conceptKey: "lesson_26::models folder",
+      level: 4,
+      code: "// src/models/User.ts\nexport ____ User {\n  id: number;\n  name: string;\n  email: string;\n}",
+      answer: "interface",
+      hint: "מילת מפתח TypeScript להגדרת צורת אובייקט.",
+      explanation: "interface User ב-models/ = centralized type. import { User } from '@/models/User'. single source of truth.",
+    },
+    {
+      id: "fill_l26_todo_001", topicId: "topic_typescript", conceptKey: "lesson_26::Todo.ts",
+      level: 4,
+      code: "export interface Todo {\n  id: number;\n  text: string;\n  ____: boolean;\n  createdAt: Date;\n}",
+      answer: "done",
+      hint: "field שמסמן אם ה-todo הושלמה.",
+      explanation: "done: boolean = toggle state. true = הושלם, false = ממתין. TypeScript type-safe toggle.",
+    },
+
+    // lesson_27: TypeScript advanced — discriminated unions
+    {
+      id: "fill_l27_genre_001", topicId: "topic_typescript", conceptKey: "lesson_27::Genre",
+      level: 5,
+      code: "type Genre = 'Fiction' | 'Science' | 'History' | 'Biography';\nfunction getColor(g: ____): string {\n  switch (g) {\n    case 'Fiction': return 'blue';\n    default: return 'gray';\n  }\n}",
+      answer: "Genre",
+      hint: "שם ה-type שמגדיר את הז'אנרים המותרים.",
+      explanation: "g: Genre = TypeScript יאשר רק ערכים מהunion. compile error על 'Drama'. exhaustiveness check בswitch.",
+    },
+    {
+      id: "fill_l27_guest_001", topicId: "topic_typescript", conceptKey: "lesson_27::GuestUser",
+      level: 5,
+      code: "interface GuestUser extends BaseUser {\n  type: '____';\n}",
+      answer: "GUEST",
+      hint: "literal type שמשמש כdiscriminant ב-GuestUser.",
+      explanation: "type: 'GUEST' = discriminant. if (user.type === 'GUEST') → TS מצמצם ל-GuestUser. pattern נפוץ בdiscriminated unions.",
+    },
+    {
+      id: "fill_l27_reguser_001", topicId: "topic_typescript", conceptKey: "lesson_27::RegisteredUser",
+      level: 5,
+      code: "interface RegisteredUser extends BaseUser {\n  type: 'REGISTERED';\n  ____: string;\n  password: string;\n  joinedAt: Date;\n}",
+      answer: "email",
+      hint: "שדה ייחודי ל-RegisteredUser — כתובת אלקטרונית.",
+      explanation: "email + password + joinedAt = fields ייחודיים למשתמש רשום. GuestUser אין להם email/password.",
+    },
+
+    // lesson_ai_engineering: retrieval ranking, guardrails, hallucination check
+    {
+      id: "fill_lai_rank_001", topicId: "topic_ai", conceptKey: "lesson_ai_engineering::retrieval ranking",
+      level: 5,
+      code: "const selected = matches\n  .filter(m => m.____ >= 0.72)\n  .slice(0, 4);",
+      answer: "score",
+      hint: "property שמייצג רלוונטיות ה-chunk — ערך בין 0 ל-1.",
+      explanation: "score = cosine similarity / cross-encoder score. threshold 0.72 מוציא chunks לא-רלוונטיים.",
+    },
+    {
+      id: "fill_lai_guard_001", topicId: "topic_ai", conceptKey: "lesson_ai_engineering::guardrails",
+      level: 5,
+      code: "if (containsPrivateData(answer)) {\n  return ____;\n}",
+      answer: "safeFallback",
+      hint: "תשובה בטוחה שמוחזרת כשהתוצאה מ-LLM מכילה מידע פרטי.",
+      explanation: "safeFallback = output guardrail. מונע דליפת PII. part of defense-in-depth בpipeline AI.",
+    },
+    {
+      id: "fill_lai_halluc_001", topicId: "topic_ai", conceptKey: "lesson_ai_engineering::hallucination check",
+      level: 5,
+      code: "const hasCitation = answer.____.length > 0;\nconst isAllowed = hasCitation && answer.confidence !== 'unknown';",
+      answer: "sources",
+      hint: "property שמכיל מערך מקורות שה-AI ציטט.",
+      explanation: "sources.length > 0 = grounded. hasCitation + confidence !== 'unknown' = hallucination check.",
+    },
+
+    // lesson_design_systems: testing
+    {
+      id: "fill_lds_test_001", topicId: "topic_design", conceptKey: "lesson_design_systems::design system testing",
+      level: 5,
+      code: "expect(\n  screen.getByRole('button', { name: 'שמור' })\n).____();",
+      answer: "toBeEnabled",
+      hint: "assertion שבודק שה-button לא disabled.",
+      explanation: "toBeEnabled() = button אינטרקטיבי. toBeDisabled() = אחרת. semantic testing — לא class names.",
+    },
+
+    // lesson_devops_deploy: smoke test, release checklist
+    {
+      id: "fill_ldev_smoke_001", topicId: "topic_devops", conceptKey: "lesson_devops_deploy::smoke test",
+      level: 4,
+      code: "// smoke test script\nopen('/') -> assert ____\nopen('/login') -> assert form\nopen('/health') -> assert ok",
+      answer: "title",
+      hint: "בדיקת ה-smoke הפשוטה ביותר — האם ה-homepage מציג כותרת.",
+      explanation: "smoke test = critical path check. /, /login, /health — 3 endpoints. מהיר (1-2 דקות). fail = rollback.",
+    },
+    {
+      id: "fill_ldev_release_001", topicId: "topic_devops", conceptKey: "lesson_devops_deploy::release checklist",
+      level: 5,
+      code: "// release checklist\nGo only if: CI ____, env configured, migrations reviewed, smoke passed, rollback known.",
+      answer: "green",
+      hint: "תנאי ראשון ב-checklist — CI צריך לעבור.",
+      explanation: "CI green = tests pass = gate. env + migrations + smoke = verification steps. rollback = escape hatch.",
+    },
+
+    // lesson_nestjs: repository pattern
+    {
+      id: "fill_lnest_repo_001", topicId: "topic_nestjs", conceptKey: "lesson_nestjs::repository pattern",
+      level: 5,
+      code: "@Injectable()\nexport class TasksRepository {\n  ____(){ return this.db.task.findMany(); }\n}",
+      answer: "findAll",
+      hint: "method שמחזיר את כל הrecords מה-DB.",
+      explanation: "findAll() בrepository = abstraction מעל Prisma/TypeORM. Service קורא findAll() ולא יודע על ה-ORM.",
+    },
+
+    // lesson_nextjs: Vercel deploy
+    {
+      id: "fill_lnext_vercel_001", topicId: "topic_nextjs", conceptKey: "lesson_nextjs::Vercel deploy",
+      level: 4,
+      code: "// deploy ל-Vercel\nnpm run ____\n# Git push → auto deploy",
+      answer: "build",
+      hint: "פקודת Next.js שמבצעת compilation לפני deploy.",
+      explanation: "npm run build = next build. Vercel מריץ build אוטומטית בכל push. output: .next/",
+    },
+
+    // lesson_sql_orm: Prisma
+    {
+      id: "fill_lsql_prisma_001", topicId: "topic_sql", conceptKey: "lesson_sql_orm::Prisma",
+      level: 5,
+      code: "const course = await prisma.course.____({\n  data: { title: input.title, active: true }\n});",
+      answer: "create",
+      hint: "Prisma method שיוצר record חדש ב-DB.",
+      explanation: "prisma.course.create({ data: {...} }) = INSERT type-safe. מחזיר את ה-record שנוצר.",
+    },
+
     {
       id: "fill_l19_var_001", topicId: "topic_variables", conceptKey: "lesson_19::var", level: 4,
       code: "// scope של משתנה ניתן להחלפה בכל מקום בפונקציה\n____ counter = 0;",
