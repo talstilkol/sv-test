@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.18";
+var QUESTIONS_BANK_VERSION = "2.1.19";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-05-02";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -136,6 +136,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-05-02",
     changes:
       "Manual QMAN-005 Lesson 17 HTTP/Express/REST batch: HTTP, REST API, GET, POST, Express, Server, Request, Response, Status Codes, 1xx-2xx-3xx, 4xx-5xx, CRUD — 20 MC + 10 Fill with full optionFeedback.",
+  },
+  {
+    v: "2.1.19",
+    date: "2026-05-02",
+    changes:
+      "Manual QMAN-011 Lesson 21 React Basics + Vite batch: React, JSX, Component, props, Vite, npm create vite, npm install, npm run dev, main.jsx, index.html, className, map, Client Side Rendering — 17 MC + 10 Fill with full optionFeedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -3459,6 +3465,333 @@ var QUESTIONS_BANK = {
       ],
       correctIndex: 0,
       explanation: "class שמורה ב-JS להגדרת מחלקה. JSX מתורגם ל-JS ולכן צריך className.",
+    },
+
+    // ===== QMAN-011 Batch — lesson_21 React Basics + Vite (2026-05-02) =====
+
+    // --- lesson_21::React ---
+    {
+      id: "mc_l21_react_manual_001", topicId: "topic_react", conceptKey: "lesson_21::React", level: 3,
+      question: "מה React?",
+      options: [
+        "ספרייה ל-UI declarative מבוססת קומפוננטות עם Virtual DOM",
+        "מסד נתונים",
+        "שפת תכנות חדשה",
+        "סביבת runtime",
+      ],
+      correctIndex: 0,
+      explanation: "React היא ספרייה (לא framework) לבניית UIs. עיקרון: מתארים איך ה-UI נראה לפי state, React מטפל ברינדור.",
+      optionFeedback: [
+        "✅ נכון: React = UI library, declarative, components, virtual DOM.",
+        "❌ DB דרך MongoDB/Postgres.",
+        "❌ React רץ על JavaScript.",
+        "❌ Runtime הוא Node או דפדפן.",
+      ],
+    },
+    {
+      id: "mc_l21_react_manual_002", topicId: "topic_react", conceptKey: "lesson_21::React", level: 4,
+      question: "מה ההבדל בין React לבין vanilla JS DOM manipulation?",
+      options: [
+        "React מתאר איך ה-UI צריך להיראות לפי state, ומחשב את השינויים. Vanilla JS דורש manual DOM updates",
+        "React מהיר יותר תמיד",
+        "אין הבדל",
+        "Vanilla JS לא יכול ליצור UI",
+      ],
+      correctIndex: 0,
+      explanation: "Declarative (React) vs imperative (vanilla). React מטפל בdiffing דרך Virtual DOM ומעדכן רק מה שהשתנה.",
+      optionFeedback: [
+        "✅ נכון: declarative vs imperative, virtual DOM diffing.",
+        "❌ vanilla JS יכול להיות מהיר יותר במקרים פשוטים.",
+        "❌ ההבדל מהותי בגישה.",
+        "❌ vanilla JS בנה אתרים עשרות שנים.",
+      ],
+    },
+    {
+      id: "mc_l21_react_manual_003", topicId: "topic_react", conceptKey: "lesson_21::React", level: 5,
+      question: "למה React משתמש ב-Virtual DOM?",
+      options: [
+        "כי שינויים ב-DOM אמיתי יקרים — Virtual DOM מאפשר לחשב diff ולעדכן רק מה שהשתנה",
+        "כי אסור לגעת ב-DOM ישירות",
+        "כי Virtual DOM מהיר יותר תמיד",
+        "כדי שהקוד ייראה יפה",
+      ],
+      correctIndex: 0,
+      explanation: "Virtual DOM = JS objects בזיכרון. React משווה גרסאות ומעדכן רק מה שהשתנה. חוסך מ-developer לחשוב על DOM updates.",
+      optionFeedback: [
+        "✅ נכון: batch + diff = פחות עבודה ב-real DOM.",
+        "❌ אפשר לגעת ב-DOM, רק לא מומלץ במקביל ל-React.",
+        "❌ לא תמיד — לפעמים direct DOM מהיר יותר.",
+        "❌ זה performance optimization, לא קוסמטיקה.",
+      ],
+    },
+
+    // --- lesson_21::JSX ---
+    {
+      id: "mc_l21_jsx_manual_001", topicId: "topic_react", conceptKey: "lesson_21::JSX", level: 4,
+      question: "מה זה JSX?",
+      options: [
+        "תחביר דמוי-XML שמתורגם ל-React.createElement() קריאות",
+        "שפת markup חדשה",
+        "תחביר ל-CSS",
+        "פורמט קובץ JSON",
+      ],
+      correctIndex: 0,
+      explanation: "JSX מאפשר לכתוב UI בתחביר דמוי-HTML. בbuild time (Vite/Babel) מתורגם ל-React.createElement('div', props, children).",
+      optionFeedback: [
+        "✅ נכון: JSX = syntactic sugar ל-React.createElement.",
+        "❌ JSX אינו markup — הוא JS extension.",
+        "❌ JSX לא קשור ל-CSS.",
+        "❌ JSON לא דומה ל-JSX.",
+      ],
+    },
+    {
+      id: "mc_l21_jsx_manual_002", topicId: "topic_react", conceptKey: "lesson_21::JSX", level: 5,
+      question: "מהו תחביר ה-event handler הנכון ב-JSX?",
+      options: [
+        "camelCase + JS expression בסוגריים מסולסלים: onClick={fn}",
+        "lowercase + string: onclick=\"fn()\"",
+        "Svelte syntax: on:click={fn}",
+        "Angular syntax: (click)=\"fn()\"",
+      ],
+      correctIndex: 0,
+      explanation: "JSX משתמש ב-camelCase (onClick), values בתוך {} ל-JS expressions, ולא string ל-handlers.",
+      optionFeedback: [
+        "✅ נכון: onClick + curly braces + reference (לא string).",
+        "❌ HTML lowercase + string syntax — לא JSX.",
+        "❌ on:click הוא Svelte, לא React.",
+        "❌ (click) הוא Angular template syntax.",
+      ],
+    },
+
+    // --- lesson_21::Component ---
+    {
+      id: "mc_l21_comp_manual_001", topicId: "topic_react", conceptKey: "lesson_21::Component", level: 3,
+      question: "מהי הצורה הנכונה להגדיר function component?",
+      options: [
+        "פונקציה עם שם PascalCase שמחזירה JSX",
+        "אובייקט עם method render",
+        "מחרוזת HTML שמוקצית למשתנה",
+        "tag JSX שעוטף ילדים",
+      ],
+      correctIndex: 0,
+      explanation: "Function component: function PascalCase() { return JSX; }. PascalCase חובה כדי ש-JSX יזהה אותו כcomponent.",
+      optionFeedback: [
+        "✅ נכון: function + PascalCase + return JSX.",
+        "❌ class component עם render() — אבל כיום נדיר; לא function component.",
+        "❌ string אינו component — חסר reactive logic.",
+        "❌ זה usage של component, לא הגדרה.",
+      ],
+    },
+    {
+      id: "mc_l21_comp_manual_002", topicId: "topic_react", conceptKey: "lesson_21::Component", level: 4,
+      question: "מתי React מרנדר component מחדש?",
+      options: [
+        "כש-state משתנה (setState/useState), כשProps משתנים, או כשהורה רינדר מחדש",
+        "כל שניה אוטומטית",
+        "רק כשהמשתמש לוחץ",
+        "אף פעם בלי forceUpdate",
+      ],
+      correctIndex: 0,
+      explanation: "Trigger גורמים ל-rerender: state change, props change, parent rerender. React.memo מונע rerender מיותר.",
+      optionFeedback: [
+        "✅ נכון: state, props, parent — שלושת ה-triggers.",
+        "❌ React לא רץ על interval.",
+        "❌ events הם רק חלק מהtriggers.",
+        "❌ forceUpdate נדיר ולא נחוץ.",
+      ],
+    },
+
+    // --- lesson_21::props ---
+    {
+      id: "mc_l21_props_manual_001", topicId: "topic_react", conceptKey: "lesson_21::props", level: 3,
+      question: "מה props ב-React?",
+      options: [
+        "ארגומנטים שעוברים מ-parent component ל-child component",
+        "state פרטי של component",
+        "method של className",
+        "פונקציה גלובלית",
+      ],
+      correctIndex: 0,
+      explanation: "Props = arguments. הורה מעביר נתונים לילד דרך attributes ב-JSX. props הם read-only בילד.",
+      optionFeedback: [
+        "✅ נכון: props = parent → child arguments.",
+        "❌ state = פרטי, props = מבחוץ.",
+        "❌ className הוא prop ספציפי.",
+        "❌ props אינם global.",
+      ],
+    },
+    {
+      id: "mc_l21_props_manual_002", topicId: "topic_react", conceptKey: "lesson_21::props", level: 5,
+      question: "האם ילד יכול לשנות props ישירות?",
+      options: [
+        "לא — props הם read-only. שינוי דורש callback מההורה",
+        "כן בכל מצב",
+        "רק ב-class components",
+        "רק עם useState",
+      ],
+      correctIndex: 0,
+      explanation: "Props immutable בילד. שינוי = pattern של 'lifting state up' — ההורה מחזיק state ומעביר callback לילד.",
+      optionFeedback: [
+        "✅ נכון: read-only. הילד מבקש שינוי דרך callback.",
+        "❌ props תמיד read-only.",
+        "❌ זה תקף לכל סוג component.",
+        "❌ useState לא משנה props.",
+      ],
+    },
+
+    // --- lesson_21::Vite ---
+    {
+      id: "mc_l21_vite_manual_001", topicId: "topic_react", conceptKey: "lesson_21::Vite", level: 3,
+      question: "מה Vite?",
+      options: [
+        "כלי build מהיר לפיתוח frontend עם HMR ו-bundling ל-production",
+        "framework ל-React",
+        "מסד נתונים",
+        "שפת תכנות",
+      ],
+      correctIndex: 0,
+      explanation: "Vite = dev server + build tool. השתמש ב-ESBuild לפיתוח (מהיר), Rollup ל-production. תומך ב-React, Vue, Svelte.",
+      optionFeedback: [
+        "✅ נכון: Vite = modern build tool.",
+        "❌ Vite אגנוסטי — תומך בכמה frameworks.",
+        "❌ Vite לא DB.",
+        "❌ Vite הוא tool, לא שפה.",
+      ],
+    },
+    {
+      id: "mc_l21_vite_manual_002", topicId: "topic_react", conceptKey: "lesson_21::npm create vite@latest", level: 4,
+      question: "מה הפקודה ליצור פרויקט React חדש עם Vite?",
+      options: [
+        "npm create vite@latest -- --template react",
+        "npm install react",
+        "vite new my-app",
+        "create-react-app my-app",
+      ],
+      correctIndex: 0,
+      explanation: "npm create vite@latest מפעיל את ה-scaffolding interactive. עם --template react מקבלים תבנית React מוכנה.",
+      optionFeedback: [
+        "✅ נכון: זו הפקודה הסטנדרטית של Vite.",
+        "❌ זה רק מתקין React, לא יוצר פרויקט.",
+        "❌ לא קיים vite new.",
+        "❌ create-react-app הוא ישן וננטש.",
+      ],
+    },
+    {
+      id: "mc_l21_vite_manual_003", topicId: "topic_react", conceptKey: "lesson_21::npm run dev", level: 3,
+      question: "מה עושה npm run dev בפרויקט Vite?",
+      options: [
+        "מריץ dev server עם HMR (Hot Module Replacement)",
+        "בונה את הפרויקט ל-production",
+        "מתקין dependencies",
+        "מוחק את node_modules",
+      ],
+      correctIndex: 0,
+      explanation: "dev script ב-Vite מפעיל local server (לרוב localhost:5173) עם HMR — שינויים בקוד מתעדכנים בלי refresh.",
+      optionFeedback: [
+        "✅ נכון: dev = development server with HMR.",
+        "❌ build ל-production הוא npm run build.",
+        "❌ התקנה היא npm install.",
+        "❌ dev לא מוחק כלום.",
+      ],
+    },
+
+    // --- lesson_21::main.jsx ---
+    {
+      id: "mc_l21_main_jsx_manual_001", topicId: "topic_react", conceptKey: "lesson_21::main.jsx", level: 3,
+      question: "מה תפקיד main.jsx בפרויקט React?",
+      options: [
+        "Entry point — קורא ReactDOM.createRoot ומרנדר את App לתוך #root ב-HTML",
+        "מגדיר את כל הקומפוננטות",
+        "מכיל את ה-CSS",
+        "configurations של Vite",
+      ],
+      correctIndex: 0,
+      explanation: "main.jsx הוא bootstrap. ReactDOM.createRoot(document.getElementById('root')).render(<App />). זה היכן שReact מתחבר ל-DOM.",
+      optionFeedback: [
+        "✅ נכון: main.jsx = bootstrap.",
+        "❌ קומפוננטות בקבצים נפרדים.",
+        "❌ CSS ב-.css או imported.",
+        "❌ Vite config ב-vite.config.js.",
+      ],
+    },
+
+    // --- lesson_21::index.html ---
+    {
+      id: "mc_l21_index_html_manual_001", topicId: "topic_react", conceptKey: "lesson_21::index.html", level: 4,
+      question: "מה התפקיד של <div id='root'></div> ב-index.html?",
+      options: [
+        "Container ריק שאליו React מ-mount את כל ה-app",
+        "מציין את שם האתר",
+        "מטרת SEO בלבד",
+        "Footer של הדף",
+      ],
+      correctIndex: 0,
+      explanation: "ReactDOM.createRoot(document.getElementById('root')) מחפש את האלמנט הזה ומחבר אליו את העץ של React.",
+      optionFeedback: [
+        "✅ נכון: root container ל-React tree.",
+        "❌ שם האתר ב-<title>.",
+        "❌ זה לא קשור ל-SEO ספציפית.",
+        "❌ root מכיל את כל האפליקציה.",
+      ],
+    },
+
+    // --- lesson_21::className ---
+    {
+      id: "mc_l21_classname_manual_001", topicId: "topic_react", conceptKey: "lesson_21::className", level: 4,
+      question: "למה משתמשים ב-className ולא ב-class ב-JSX?",
+      options: [
+        "כי class היא מילה שמורה ב-JavaScript",
+        "כי React לא תומך ב-CSS",
+        "אסתטיקה בלבד",
+        "כי class עובד רק בHTML5",
+      ],
+      correctIndex: 0,
+      explanation: "JSX מתורגם ל-JS. class היא מילה שמורה (להגדרת מחלקות). לכן React משתמש ב-className כשם prop.",
+      optionFeedback: [
+        "✅ נכון: class הוא reserved word ב-JS.",
+        "❌ React תומך מצוין ב-CSS.",
+        "❌ זו סיבה טכנית, לא אסתטית.",
+      ],
+    },
+
+    // --- lesson_21::map ---
+    {
+      id: "mc_l21_map_manual_001", topicId: "topic_react", conceptKey: "lesson_21::map", level: 4,
+      question: "איך מציגים רשימה של פריטים ב-React?",
+      options: [
+        "{items.map(item => <li key={item.id}>{item.name}</li>)}",
+        "<for item in items><li>{item}</li></for>",
+        "items.forEach(item => render(item))",
+        "<repeat times={items.length}/>",
+      ],
+      correctIndex: 0,
+      explanation: "React משתמש ב-JS map() לרינדור רשימות. key prop חובה — עוזר ל-React לזהות שינויים יעילים.",
+      optionFeedback: [
+        "✅ נכון: map + JSX + key.",
+        "❌ אין loop syntax ב-JSX.",
+        "❌ forEach לא מחזיר ערך — לא מתאים ל-render.",
+        "❌ אין repeat element ב-React.",
+      ],
+    },
+
+    // --- lesson_21::Client Side ---
+    {
+      id: "mc_l21_csr_manual_001", topicId: "topic_react", conceptKey: "lesson_21::Client Side", level: 5,
+      question: "מה זה Client-Side Rendering (CSR)?",
+      options: [
+        "השרת שולח HTML ריק; הדפדפן מריץ JS ובונה את ה-UI",
+        "השרת מחזיר HTML מוכן",
+        "אין rendering בכלל",
+        "rendering רק במובייל",
+      ],
+      correctIndex: 0,
+      explanation: "CSR = הדפדפן בונה את ה-UI מ-JS. מהיר אחרי טעינה ראשונה אבל initial load איטי + SEO מאתגר. דרישת SSR/SSG.",
+      optionFeedback: [
+        "✅ נכון: CSR = browser builds UI from JS.",
+        "❌ זה SSR.",
+        "❌ rendering קורה — בdפדפן.",
+        "❌ CSR לא קשור למובייל ספציפית.",
+      ],
     },
 
     // ===== Topic 15 — useState / Immutable =====
@@ -6910,6 +7243,98 @@ var QUESTIONS_BANK = {
       answer: "stringify",
       hint: "מתודת JSON שהופכת אובייקט למחרוזת לפני שמירה.",
       explanation: "localStorage שומר מחרוזות בלבד. JSON.stringify ממיר אובייקט למחרוזת JSON לפני setItem.",
+    },
+
+    // ===== QMAN-011 Fill Batch — lesson_21 React Basics + Vite (2026-05-02) =====
+
+    // --- lesson_21::React ---
+    {
+      id: "fill_l21_react_manual_001", topicId: "topic_react", conceptKey: "lesson_21::React", level: 3,
+      code: "// React component must return JSX or null\nfunction Greeting() {\n  return ____;\n}",
+      answer: "<h1>Hello</h1>",
+      hint: "JSX מינימלי שמחזיר אלמנט h1 עם ברכה.",
+      explanation: "Component מחזיר JSX. יכול להיות אלמנט יחיד, fragment <>...</> או null (לא לרנדר כלום).",
+    },
+
+    // --- lesson_21::JSX ---
+    {
+      id: "fill_l21_jsx_manual_001", topicId: "topic_react", conceptKey: "lesson_21::JSX", level: 4,
+      code: "// JSX uses curly braces for expressions\nconst name = 'Tal';\nconst el = <h1>Hello, ____!</h1>;",
+      answer: "{name}",
+      hint: "תחביר JSX להזרקת ערך משתנה לתוך JSX.",
+      explanation: "{} ב-JSX מאפשר להזריק כל JS expression — משתנה, פונקציה או חישוב.",
+    },
+
+    // --- lesson_21::Component ---
+    {
+      id: "fill_l21_comp_manual_001", topicId: "topic_react", conceptKey: "lesson_21::Component", level: 3,
+      code: "// How many top-level elements can a React component return directly (without Fragment)?\n// A component must return a single root element\nconst maxRoots = ____;",
+      answer: "1",
+      hint: "מספר אלמנטים top-level שניתן להחזיר ישירות.",
+      explanation: "Component מחזיר אלמנט יחיד. למרובים — fragment <>...</> או div עוטף.",
+    },
+
+    // --- lesson_21::props ---
+    {
+      id: "fill_l21_props_manual_001", topicId: "topic_react", conceptKey: "lesson_21::props", level: 4,
+      code: "<MyButton onClick={handleClick} ____='Submit' />",
+      answer: "label",
+      hint: "שם prop נפוץ להעברת טקסט הכפתור.",
+      explanation: "label הוא prop קונבנציונלי לטקסט שמוצג בכפתור. ההורה מחליט מה הטקסט; הילד מציג אותו.",
+    },
+
+    // --- lesson_21::Vite ---
+    {
+      id: "fill_l21_vite_manual_001", topicId: "topic_react", conceptKey: "lesson_21::Vite", level: 4,
+      code: "// Vite config with React plugin\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nexport default defineConfig({ ____: [react()] });",
+      answer: "plugins",
+      hint: "ה-key ב-Vite config שמקבל מערך plugins.",
+      explanation: "vite.config.js: plugins הוא המערך לreact, vue, וכו׳. defineConfig({ plugins: [...] }) הוא ה-pattern.",
+    },
+
+    // --- lesson_21::main.jsx ---
+    {
+      id: "fill_l21_main_manual_001", topicId: "topic_react", conceptKey: "lesson_21::main.jsx", level: 4,
+      code: "import React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport App from './App.jsx';\nReactDOM.createRoot(document.getElementById('root')).____(<App />);",
+      answer: "render",
+      hint: "method של root שמרנדר את ה-tree לתוך ה-DOM.",
+      explanation: "createRoot מחזיר root object. .render(<App />) מתחיל את ה-React tree לתוך ה-DOM container.",
+    },
+
+    // --- lesson_21::index.html ---
+    {
+      id: "fill_l21_index_manual_001", topicId: "topic_react", conceptKey: "lesson_21::index.html", level: 3,
+      code: "<!-- Vite + React index.html -->\n<body>\n  <div ____='root'></div>\n  <script type='module' src='/src/main.jsx'></script>\n</body>",
+      answer: "id",
+      hint: "ה-attribute שמזהה את ה-container של React.",
+      explanation: "id='root' הוא הקונבנציה של Vite. main.jsx מחפש את האלמנט הזה כדי להתחיל את ה-tree.",
+    },
+
+    // --- lesson_21::className ---
+    {
+      id: "fill_l21_classname_manual_001", topicId: "topic_react", conceptKey: "lesson_21::className", level: 4,
+      code: "// Apply CSS styling to a JSX div\nfunction Box() {\n  return <div ____='box'>hi</div>;\n}",
+      answer: "className",
+      hint: "ה-prop של JSX להוספת CSS class.",
+      explanation: "ב-JSX משתמשים ב-className במקום class (כי class שמורה ב-JS).",
+    },
+
+    // --- lesson_21::map ---
+    {
+      id: "fill_l21_map_manual_001", topicId: "topic_react", conceptKey: "lesson_21::map", level: 4,
+      code: "// Render a list — what's the array method?\nconst names = ['Alice', 'Bob'];\n<ul>{names.____(n => <li key={n}>{n}</li>)}</ul>",
+      answer: "map",
+      hint: "מתודת array שמייצרת מערך חדש מתוצאת callback.",
+      explanation: "map() הופך כל item ל-JSX element. React מצפה למערך של elements לרינדור. key חובה.",
+    },
+
+    // --- lesson_21::npm install ---
+    {
+      id: "fill_l21_npm_install_manual_001", topicId: "topic_react", conceptKey: "lesson_21::npm install", level: 3,
+      code: "# After cloning a project, install dependencies\n$ ____",
+      answer: "npm install",
+      hint: "פקודה להתקנת dependencies שמופיעות ב-package.json.",
+      explanation: "npm install (או קיצור npm i) קורא את package.json ומתקין כל dependencies לתיקיית node_modules.",
     },
 
     // ===== QMAN-005 Fill Batch — lesson_17 HTTP/Express/REST (2026-05-02) =====
