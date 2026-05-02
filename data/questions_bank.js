@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.16";
+var QUESTIONS_BANK_VERSION = "2.1.17";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-05-02";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -124,6 +124,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-05-02",
     changes:
       "Manual QMAN-001 Lesson 13 completion batch: method, new, querySelectorAll, removeChild, replaceChild, setAttribute, setItem, style, super, Value — 30 MC + 20 Fill with full optionFeedback.",
+  },
+  {
+    v: "2.1.17",
+    date: "2026-05-02",
+    changes:
+      "Manual QMAN-002 Lesson 15 batch: anonymous function, catch, Error, Error Object, Exception, reject, resolve, Scope, Synchronous — 23 MC + 14 Fill with full optionFeedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -3923,6 +3929,438 @@ var QUESTIONS_BANK = {
       ],
     },
 
+    // ===== QMAN-002 Batch — lesson_15 manual questions (2026-05-02) =====
+
+    // --- lesson_15::anonymous function ---
+    {
+      id: "mc_l15_anon_manual_001", topicId: "topic_functions", conceptKey: "lesson_15::anonymous function", level: 3,
+      question: "מהי פונקציה אנונימית (anonymous function)?",
+      options: [
+        "פונקציה ללא שם, נכתבת בדרך כלל כביטוי או ארגומנט",
+        "פונקציה שלא מקבלת פרמטרים",
+        "פונקציה שלא מחזירה ערך",
+        "פונקציה שמוגדרת רק בתוך class",
+      ],
+      correctIndex: 0,
+      explanation: "anonymous function נכתבת ללא שם, למשל const f = function() {}. שכיח כ-callbacks: arr.map(function(x) { return x * 2; }).",
+      optionFeedback: [
+        "✅ נכון: anonymous = ללא שם, נשמרת במשתנה או נמסרת כארגומנט.",
+        "❌ פונקציה ללא פרמטרים נקראת nullary, לא anonymous.",
+        "❌ אי-החזרת ערך לא קשורה לאנונימיות.",
+        "❌ פונקציות אנונימיות יכולות להיות בכל מקום.",
+      ],
+    },
+    {
+      id: "mc_l15_anon_manual_002", topicId: "topic_functions", conceptKey: "lesson_15::anonymous function", level: 4,
+      question: "מה ההבדל בין הקוד הזה לבין named function?\n\nsetTimeout(function() { console.log('hi'); }, 1000);",
+      options: [
+        "הפונקציה אנונימית — קשה יותר לדבג כי אין לה שם ב-stack trace",
+        "הפונקציה לא תרוץ",
+        "אין הבדל",
+        "anonymous מהירה יותר",
+      ],
+      correctIndex: 0,
+      explanation: "anonymous functions מקשות על debugging — ב-stack trace יופיע 'anonymous'. עדיף לשם פונקציות בקוד שלא טריוויאלי.",
+      optionFeedback: [
+        "✅ נכון: ב-stack trace היא תופיע כ-'anonymous' או '<anonymous>'.",
+        "❌ הפונקציה תרוץ אחרי 1000ms.",
+        "❌ יש הבדל ב-debugging experience.",
+        "❌ אין הבדל ביצועים משמעותי.",
+      ],
+    },
+    {
+      id: "mc_l15_anon_manual_003", topicId: "topic_functions", conceptKey: "lesson_15::anonymous function", level: 5,
+      question: "איזה סוג פונקציה הוא הקוד הבא?\n\nconst greet = () => console.log('Hi');",
+      options: [
+        "Arrow function — סוג של anonymous function",
+        "Named function בשם greet",
+        "Class method",
+        "Async function",
+      ],
+      correctIndex: 0,
+      explanation: "arrow functions תמיד אנונימיות מבחינת ה-name property. השם 'greet' הוא של המשתנה, לא של הפונקציה.",
+      optionFeedback: [
+        "✅ נכון: arrow functions אנונימיות; greet הוא שם המשתנה.",
+        "❌ greet הוא שם המשתנה, לא של הפונקציה עצמה.",
+        "❌ זו לא class method — היא בסקופ הגלובלי.",
+        "❌ אין כאן async — אין מילת המפתח.",
+      ],
+    },
+
+    // --- lesson_15::catch ---
+    {
+      id: "mc_l15_catch_manual_001", topicId: "topic_errors", conceptKey: "lesson_15::catch", level: 3,
+      question: "מה תפקיד catch ב-try/catch?",
+      options: [
+        "תופס שגיאה שנזרקה ב-try ומאפשר לטפל בה בלי לקרוס",
+        "מריץ קוד אחרי שה-try מסתיים בהצלחה",
+        "מתחיל בלוק חדש של פונקציה",
+        "מחזיר ערך",
+      ],
+      correctIndex: 0,
+      explanation: "catch (err) { ... } מקבל את האובייקט Error שנזרק ב-try. מאפשר recovery וגם הצגת הודעה למשתמש.",
+      optionFeedback: [
+        "✅ נכון: catch תופס errors ומאפשר טיפול חינני.",
+        "❌ בלוק שרץ אחרי הצלחה הוא finally, לא catch.",
+        "❌ catch הוא חלק מ-try/catch, לא תחביר פונקציה.",
+        "❌ catch לא מחזיר ערך אוטומטית.",
+      ],
+    },
+    {
+      id: "mc_l15_catch_manual_002", topicId: "topic_errors", conceptKey: "lesson_15::catch", level: 4,
+      question: "מה יודפס?\n\ntry {\n  throw new Error('oops');\n} catch (e) {\n  console.log(e.message);\n}",
+      options: [
+        "oops",
+        "Error",
+        "undefined",
+        "השגיאה לא תיתפס",
+      ],
+      correctIndex: 0,
+      explanation: "catch מקבל את האובייקט Error. ל-Error יש property בשם message שמכיל את המחרוזת שהועברה ל-constructor.",
+      optionFeedback: [
+        "✅ נכון: e.message מכיל את 'oops' שהועבר ל-Error constructor.",
+        "❌ 'Error' הוא שם ה-class, לא המסר.",
+        "❌ message מוגדר עם 'oops'.",
+        "❌ catch אכן תופס את השגיאה.",
+      ],
+    },
+    {
+      id: "mc_l15_catch_manual_003", topicId: "topic_errors", conceptKey: "lesson_15::catch", level: 5,
+      question: "מה ההבדל בין catch בלי פרמטר ל-catch עם פרמטר?\n\ncatch {} vs catch (e) {}",
+      options: [
+        "catch בלי פרמטר (optional catch binding, ES2019+) משמש כשלא צריכים לגשת לאובייקט השגיאה",
+        "catch בלי פרמטר לא תופס שגיאות",
+        "אין הבדל",
+        "catch בלי פרמטר עובד רק ב-Node.js",
+      ],
+      correctIndex: 0,
+      explanation: "ES2019 הוסיפה optional catch binding — אפשר לכתוב catch {} כשלא משתמשים באובייקט השגיאה. נקי יותר.",
+      optionFeedback: [
+        "✅ נכון: optional catch binding (ES2019) שימושי כשלא צריך את e.",
+        "❌ catch בלי פרמטר עדיין תופס שגיאות.",
+        "❌ ההבדל — אם משתמשים ב-e או לא.",
+        "❌ נתמך בכל סביבה מודרנית.",
+      ],
+    },
+
+    // --- lesson_15::Error / Error Object ---
+    {
+      id: "mc_l15_error_manual_001", topicId: "topic_errors", conceptKey: "lesson_15::Error", level: 3,
+      question: "מה הצורה התקנית ליצור שגיאה ב-JS?",
+      options: [
+        "throw new Error('משהו השתבש')",
+        "throw 'משהו השתבש'",
+        "return Error('משהו השתבש')",
+        "console.error('משהו השתבש')",
+      ],
+      correctIndex: 0,
+      explanation: "throw new Error(...) הוא הסטנדרט — מקבלים אובייקט עם message, name ו-stack. throw של string חוקי אבל לא מומלץ.",
+      optionFeedback: [
+        "✅ נכון: new Error() נותן אובייקט עם stack trace.",
+        "❌ זריקת string חוקית אבל מאבדת את ה-stack.",
+        "❌ return לא יוצר exception — צריך throw.",
+        "❌ console.error רק מדפיס — לא מפסיק את הקוד.",
+      ],
+    },
+    {
+      id: "mc_l15_error_manual_002", topicId: "topic_errors", conceptKey: "lesson_15::Error Object", level: 4,
+      question: "אילו properties עיקריים יש לאובייקט Error?",
+      options: [
+        "message, name, stack",
+        "value, key, type",
+        "data, status, code",
+        "level, severity, time",
+      ],
+      correctIndex: 0,
+      explanation: "Error מספק: message (תיאור), name (סוג השגיאה כמו 'TypeError'), stack (שרשרת הקריאות).",
+      optionFeedback: [
+        "✅ נכון: message, name, stack — שלושת המרכזיים.",
+        "❌ אלה לא properties של Error.",
+        "❌ status הוא של HTTP responses, לא Error.",
+        "❌ severity קיים בלוגרים מסוימים, לא ב-Error.",
+      ],
+    },
+    {
+      id: "mc_l15_error_manual_003", topicId: "topic_errors", conceptKey: "lesson_15::Error", level: 5,
+      question: "מה ההבדל בין Error ל-TypeError?",
+      options: [
+        "TypeError הוא subclass של Error לסוג ספציפי של שגיאות (טיפוס לא תואם)",
+        "TypeError לא קיים ב-JS",
+        "אין הבדל",
+        "Error רק לשרת ו-TypeError רק לדפדפן",
+      ],
+      correctIndex: 0,
+      explanation: "JS מספק Error subclasses: TypeError, ReferenceError, RangeError, SyntaxError. שימושי לזיהוי סוג השגיאה ב-catch.",
+      optionFeedback: [
+        "✅ נכון: TypeError, ReferenceError, RangeError וכו׳ הם sublasses של Error.",
+        "❌ TypeError הוא built-in מובנה.",
+        "❌ יש הבדל — סוג שגיאה ספציפי.",
+        "❌ שניהם זמינים בכל סביבה.",
+      ],
+    },
+
+    // --- lesson_15::Exception ---
+    {
+      id: "mc_l15_exception_manual_001", topicId: "topic_errors", conceptKey: "lesson_15::Exception", level: 3,
+      question: "מה זה Exception ב-JavaScript?",
+      options: [
+        "אירוע שמשבש את הזרימה הרגילה — בדרך כלל שגיאה שנזרקה",
+        "שם נוסף ל-Promise",
+        "סוג של event listener",
+        "פונקציה מובנית",
+      ],
+      correctIndex: 0,
+      explanation: "Exception (חריג) הוא situation שדורש טיפול מיוחד. ב-JS משתמשים ב-throw/try/catch לניהול חריגים.",
+      optionFeedback: [
+        "✅ נכון: Exception = שיבוש זרימה, מטופל ע״י try/catch.",
+        "❌ Promise הוא מנגנון אסינכרוני, לא Exception.",
+        "❌ Exception לא קשור ל-events.",
+        "❌ Exception הוא קונספט, לא פונקציה.",
+      ],
+    },
+    {
+      id: "mc_l15_exception_manual_002", topicId: "topic_errors", conceptKey: "lesson_15::Exception", level: 5,
+      question: "למה לא לזרוק Exception לכל בעיה (כמו validation)?",
+      options: [
+        "Exceptions יקרות מבחינת ביצועים ומפריעות ל-control flow — עדיף return של תוצאה לבעיות צפויות",
+        "Exception תמיד גורם לקריסה",
+        "JavaScript לא תומך ב-throw",
+        "אין סיבה — תמיד עדיף לזרוק",
+      ],
+      correctIndex: 0,
+      explanation: "Exception עבור unexpected errors. עבור validation/business logic — return result objects ({ ok: false, error: '...' }).",
+      optionFeedback: [
+        "✅ נכון: throw רק ל-unexpected. validation errors הם flow רגיל.",
+        "❌ Exception לא תמיד גורם לקריסה אם יש catch.",
+        "❌ JS תומך מצוין ב-throw.",
+        "❌ יש סיבות טובות לא לזרוק (ביצועים, קריאות).",
+      ],
+    },
+
+    // --- lesson_15::reject ---
+    {
+      id: "mc_l15_reject_manual_001", topicId: "topic_async", conceptKey: "lesson_15::reject", level: 3,
+      question: "מה עושה reject() ב-Promise?",
+      options: [
+        "מסמן ש-Promise נכשל ומעביר את ה-error ל-catch",
+        "מבטל את ה-Promise בלי לטפל",
+        "ממתין לסיום async",
+        "ממיר string לאובייקט",
+      ],
+      correctIndex: 0,
+      explanation: "new Promise((resolve, reject) => { reject(error); }) — reject קורא ל-.catch או ל-await יזרוק.",
+      optionFeedback: [
+        "✅ נכון: reject מסמן כישלון ומעביר ל-catch.",
+        "❌ ביטול Promise (cancel) הוא מנגנון נפרד (AbortController).",
+        "❌ ההמתנה היא ע״י await או .then.",
+        "❌ reject לא קשור להמרת טיפוסים.",
+      ],
+    },
+    {
+      id: "mc_l15_reject_manual_002", topicId: "topic_async", conceptKey: "lesson_15::reject", level: 4,
+      question: "מה יקרה?\n\nconst p = new Promise((res, rej) => rej('fail'));\np.then(v => console.log('ok'))\n .catch(e => console.log('error:', e));",
+      options: [
+        "יודפס: error: fail",
+        "יודפס: ok",
+        "יודפס: error: undefined",
+        "השגיאה תהיה uncaught",
+      ],
+      correctIndex: 0,
+      explanation: "reject('fail') מעביר 'fail' ל-.catch. ה-then מדלג כי ה-Promise נכשל.",
+      optionFeedback: [
+        "✅ נכון: reject קופץ ל-catch, then מדולג.",
+        "❌ then לא רץ אחרי reject.",
+        "❌ הערך 'fail' הועבר במפורש.",
+        "❌ ה-catch תופס אותה.",
+      ],
+    },
+    {
+      id: "mc_l15_reject_manual_003", topicId: "topic_async", conceptKey: "lesson_15::reject", level: 5,
+      question: "מה הדרך הטובה ביותר לדחות Promise בעת שגיאה?",
+      options: [
+        "reject(new Error('משהו קרה')) — להעביר Error object עם stack trace",
+        "reject('error string')",
+        "throw new Error()",
+        "return null",
+      ],
+      correctIndex: 0,
+      explanation: "תמיד להעביר Error לreject — מקבלים stack trace. reject של string חוקי אבל גורע.",
+      optionFeedback: [
+        "✅ נכון: Error object שומר stack trace — קל יותר לדבג.",
+        "❌ string עובד אבל פוגע ב-debugging.",
+        "❌ throw בתוך executor ייתפס אוטומטית, אבל reject מפורש יותר.",
+        "❌ return לא דוחה את ה-Promise.",
+      ],
+    },
+
+    // --- lesson_15::resolve ---
+    {
+      id: "mc_l15_resolve_manual_001", topicId: "topic_async", conceptKey: "lesson_15::resolve", level: 3,
+      question: "מה עושה resolve() ב-Promise?",
+      options: [
+        "מסמן ש-Promise הצליח ומעביר את הערך ל-then",
+        "מבטל את ה-Promise",
+        "זורק שגיאה",
+        "מחכה לפעולה אסינכרונית",
+      ],
+      correctIndex: 0,
+      explanation: "new Promise((resolve, reject) => { resolve(value); }) — resolve קורא ל-.then(value => ...).",
+      optionFeedback: [
+        "✅ נכון: resolve = הצלחה, מעביר ערך ל-then.",
+        "❌ ביטול הוא מנגנון נפרד.",
+        "❌ resolve לא זורק — reject כן.",
+        "❌ ההמתנה היא תוצאה של resolve, לא הפעולה.",
+      ],
+    },
+    {
+      id: "mc_l15_resolve_manual_002", topicId: "topic_async", conceptKey: "lesson_15::resolve", level: 4,
+      question: "מה יודפס?\n\nconst p = Promise.resolve(42);\np.then(v => console.log(v));",
+      options: [
+        "42",
+        "Promise",
+        "undefined",
+        "שגיאה",
+      ],
+      correctIndex: 0,
+      explanation: "Promise.resolve(42) הוא shortcut ליצירת Promise שכבר succeeded עם הערך 42. then מקבל אותו.",
+      optionFeedback: [
+        "✅ נכון: Promise.resolve(value).then(v => v) מקבל את הערך.",
+        "❌ then מקבל את הערך שב-Promise, לא את ה-Promise עצמו.",
+        "❌ הערך מוגדר — 42.",
+        "❌ אין שגיאה.",
+      ],
+    },
+    {
+      id: "mc_l15_resolve_manual_003", topicId: "topic_async", conceptKey: "lesson_15::resolve", level: 5,
+      question: "מה ההבדל בין resolve(value) ל-resolve(promise)?",
+      options: [
+        "אם value הוא Promise, ה-outer Promise יחכה לו (chaining אוטומטי)",
+        "אין הבדל",
+        "resolve של Promise זורק שגיאה",
+        "resolve מקבל רק primitives",
+      ],
+      correctIndex: 0,
+      explanation: "resolve(p) כש-p הוא Promise — ה-outer Promise 'עוקב' אחרי p. תכונה חזקה של Promise chaining.",
+      optionFeedback: [
+        "✅ נכון: Promise unwrapping — chaining אוטומטי כש-resolve מקבל Promise.",
+        "❌ יש הבדל חשוב — chaining.",
+        "❌ resolve של Promise חוקי לחלוטין.",
+        "❌ resolve מקבל כל ערך כולל Promises.",
+      ],
+    },
+
+    // --- lesson_15::Scope ---
+    {
+      id: "mc_l15_scope_manual_001", topicId: "topic_functions", conceptKey: "lesson_15::Scope", level: 3,
+      question: "מהו Scope ב-JavaScript?",
+      options: [
+        "התחום שבו משתנים נגישים — global, function, או block",
+        "סוג של אובייקט",
+        "מתודה של Array",
+        "קובץ קונפיגורציה",
+      ],
+      correctIndex: 0,
+      explanation: "Scope קובע איפה משתנים זמינים. JS משתמש ב-lexical scoping — הסקופ נקבע לפי המיקום בקוד.",
+      optionFeedback: [
+        "✅ נכון: Scope = איזור נגישות של משתנים.",
+        "❌ Scope הוא קונספט, לא אובייקט.",
+        "❌ Scope לא קשור ל-Array.",
+        "❌ Scope הוא runtime concept ב-JS.",
+      ],
+    },
+    {
+      id: "mc_l15_scope_manual_002", topicId: "topic_functions", conceptKey: "lesson_15::Scope", level: 4,
+      question: "מה יודפס?\n\nfunction outer() {\n  let x = 10;\n  function inner() {\n    console.log(x);\n  }\n  inner();\n}\nouter();",
+      options: [
+        "10",
+        "undefined",
+        "ReferenceError",
+        "null",
+      ],
+      correctIndex: 0,
+      explanation: "inner יכולה לגשת ל-x של outer (lexical scoping — סקופ פנימי רואה את הסקופים החיצוניים).",
+      optionFeedback: [
+        "✅ נכון: lexical scoping — inner רואה את x של outer.",
+        "❌ x מוגדר ונגיש מ-inner.",
+        "❌ אין שגיאה — x ב-scope.",
+        "❌ x מוגדר כ-10.",
+      ],
+    },
+    {
+      id: "mc_l15_scope_manual_003", topicId: "topic_functions", conceptKey: "lesson_15::Scope", level: 5,
+      question: "מה יקרה?\n\nfunction test() {\n  if (true) {\n    var a = 1;\n    let b = 2;\n  }\n  console.log(a, b);\n}",
+      options: [
+        "ReferenceError על b — let block-scoped, b לא קיים מחוץ ל-if",
+        "מדפיס: 1 2",
+        "מדפיס: undefined undefined",
+        "מדפיס: 1 undefined",
+      ],
+      correctIndex: 0,
+      explanation: "var הוא function-scoped (a נגיש), let הוא block-scoped (b לא נגיש מחוץ ל-if). זה למה עדיף let.",
+      optionFeedback: [
+        "✅ נכון: var = function scope, let = block scope.",
+        "❌ b לא נגיש מחוץ לבלוק שלו.",
+        "❌ a כן מוגדר.",
+        "❌ b זורק ReferenceError, לא undefined.",
+      ],
+    },
+
+    // --- lesson_15::Synchronous ---
+    {
+      id: "mc_l15_sync_manual_001", topicId: "topic_async", conceptKey: "lesson_15::Synchronous", level: 3,
+      question: "מה זה קוד synchronous?",
+      options: [
+        "קוד שרץ שורה אחר שורה, כל שורה מחכה לסיום הקודמת",
+        "קוד שרץ במקביל",
+        "קוד שמחכה לאירועים",
+        "קוד עם setTimeout",
+      ],
+      correctIndex: 0,
+      explanation: "synchronous = blocking. JS הוא single-threaded ומעצם טבעו synchronous, אלא אם משתמשים ב-async APIs.",
+      optionFeedback: [
+        "✅ נכון: synchronous = שורה אחר שורה, blocking.",
+        "❌ ריצה במקביל היא parallel/concurrent.",
+        "❌ המתנה לאירועים היא async/event-driven.",
+        "❌ setTimeout דווקא asynchronous.",
+      ],
+    },
+    {
+      id: "mc_l15_sync_manual_002", topicId: "topic_async", conceptKey: "lesson_15::Synchronous", level: 4,
+      question: "מה יודפס?\n\nconsole.log('1');\nconsole.log('2');\nconsole.log('3');",
+      options: [
+        "1 2 3 — בסדר הזה, סינכרוני",
+        "סדר אקראי",
+        "3 2 1",
+        "רק 3",
+      ],
+      correctIndex: 0,
+      explanation: "console.log הוא סינכרוני. הקוד רץ בסדר שנכתב — המנוע לא מדלג ולא מעביר לסוף.",
+      optionFeedback: [
+        "✅ נכון: 1, 2, 3 — סדר כתיבה = סדר ביצוע.",
+        "❌ אין אקראיות בקוד סינכרוני.",
+        "❌ אין סיבה להפוך סדר.",
+        "❌ כל ה-console.log רצים.",
+      ],
+    },
+    {
+      id: "mc_l15_sync_manual_003", topicId: "topic_async", conceptKey: "lesson_15::Synchronous", level: 5,
+      question: "למה blocking sync code (כמו לולאה ארוכה) בעייתי בדפדפן?",
+      options: [
+        "JS חולק את ה-thread עם UI — לולאה ארוכה תקפיא את הדפדפן",
+        "Sync code לא עובד בדפדפן",
+        "הדפדפן יקרוס מיד",
+        "אין בעיה",
+      ],
+      correctIndex: 0,
+      explanation: "Main thread אחראי גם על UI rendering. blocking sync = UI freeze. צריך לחלק לחלקים או להשתמש ב-Web Workers.",
+      optionFeedback: [
+        "✅ נכון: thread אחד = freeze. Web Workers הם הפתרון לעבודות כבדות.",
+        "❌ Sync code עובד — אבל יכול לחסום.",
+        "❌ הדפדפן לא יקרוס, רק יוקפא.",
+        "❌ יש בעיה משמעותית של UX.",
+      ],
+    },
+
     // Lesson 15 — Errors / Closure
     {
       id: "mc_throw_001", topicId: "topic_errors", conceptKey: "lesson_15::throw", level: 4,
@@ -6084,6 +6522,136 @@ var QUESTIONS_BANK = {
       answer: "stringify",
       hint: "מתודת JSON שהופכת אובייקט למחרוזת לפני שמירה.",
       explanation: "localStorage שומר מחרוזות בלבד. JSON.stringify ממיר אובייקט למחרוזת JSON לפני setItem.",
+    },
+
+    // ===== QMAN-002 Fill Batch — lesson_15 manual (2026-05-02) =====
+
+    // --- lesson_15::anonymous function ---
+    {
+      id: "fill_l15_anon_manual_001", topicId: "topic_functions", conceptKey: "lesson_15::anonymous function", level: 3,
+      code: "const double = ____ (n) {\n  return n * 2;\n};\nconsole.log(double(5)); // 10",
+      answer: "function",
+      hint: "מילת המפתח שמתחילה הגדרת פונקציה אנונימית.",
+      explanation: "function expression ללא שם הוא anonymous function. נשמר במשתנה כדי שאפשר יהיה לקרוא לו.",
+    },
+    {
+      id: "fill_l15_anon_manual_002", topicId: "topic_functions", conceptKey: "lesson_15::anonymous function", level: 4,
+      code: "const numbers = [1, 2, 3];\nconst tripled = numbers.____(n => n * 3);\n// [3, 6, 9]",
+      answer: "map",
+      hint: "מתודה של מערך שמקבלת arrow function אנונימית.",
+      explanation: "map עוברת על איברי המערך עם anonymous arrow function ומייצרת מערך חדש עם הטרנספורמציה.",
+    },
+
+    // --- lesson_15::catch ---
+    {
+      id: "fill_l15_catch_manual_001", topicId: "topic_errors", conceptKey: "lesson_15::catch", level: 3,
+      code: "try {\n  riskyOperation();\n} ____ (err) {\n  console.error(err.message);\n}",
+      answer: "catch",
+      hint: "מילת המפתח שתופסת שגיאות מ-try.",
+      explanation: "catch (err) מקבל את אובייקט השגיאה שנזרק ב-try ומאפשר טיפול בלי לקרוס.",
+    },
+    {
+      id: "fill_l15_catch_manual_002", topicId: "topic_errors", conceptKey: "lesson_15::catch", level: 5,
+      code: "try {\n  await fetchUser(id);\n} catch (err) {\n  if (err.____ === 'NotFound') return null;\n  throw err;\n}",
+      answer: "code",
+      hint: "property שמכיל קוד שגיאה (custom או מ-API).",
+      explanation: "מקובל לסמן שגיאות בעזרת err.code. ניתן לטפל ספציפית או לזרוק שוב לטיפול ברמה גבוהה יותר.",
+    },
+
+    // --- lesson_15::Error ---
+    {
+      id: "fill_l15_error_manual_001", topicId: "topic_errors", conceptKey: "lesson_15::Error", level: 3,
+      code: "function divide(a, b) {\n  if (b === 0) throw new ____('Division by zero');\n  return a / b;\n}",
+      answer: "Error",
+      hint: "constructor מובנה ב-JS ליצירת אובייקט שגיאה.",
+      explanation: "new Error('msg') יוצר אובייקט שגיאה עם message ו-stack trace. throw מעיף אותו.",
+    },
+    {
+      id: "fill_l15_error_manual_002", topicId: "topic_errors", conceptKey: "lesson_15::Error Object", level: 4,
+      code: "try { JSON.parse('not json'); }\ncatch (e) { console.log(e.____); }\n// 'Unexpected token...'",
+      answer: "message",
+      hint: "property של Error שמכיל את התיאור.",
+      explanation: "כל אובייקט Error חושף message (תיאור), name (סוג) ו-stack (מסלול הקריאות).",
+    },
+
+    // --- lesson_15::Exception ---
+    {
+      id: "fill_l15_exception_manual_001", topicId: "topic_errors", conceptKey: "lesson_15::Exception", level: 4,
+      code: "function validate(user) {\n  if (!user.email) ____ new Error('Email required');\n}",
+      answer: "throw",
+      hint: "מילת המפתח שזורקת exception.",
+      explanation: "throw יוצר exception שמטפלים בו עם try/catch. ללא טיפול — הקוד עוצר.",
+    },
+    {
+      id: "fill_l15_exception_manual_002", topicId: "topic_errors", conceptKey: "lesson_15::Exception", level: 5,
+      code: "async function safe() {\n  try {\n    return await risky();\n  } catch (e) {\n    return { ok: false, ____: e.message };\n  }\n}",
+      answer: "error",
+      hint: "שדה מקובל בתוצאת result object שמחזיק את השגיאה.",
+      explanation: "במקום לזרוק exception לכל בעיה — מחזירים result object עם flag הצלחה/כישלון. שימושי ב-flow רגיל.",
+    },
+
+    // --- lesson_15::reject ---
+    {
+      id: "fill_l15_reject_manual_001", topicId: "topic_async", conceptKey: "lesson_15::reject", level: 3,
+      code: "const p = new Promise((resolve, fail) => {\n  setTimeout(() => ____(new Error('timeout')), 1000);\n});",
+      answer: "fail",
+      hint: "השם שניתן ל-rejection callback (במקום שם ברירת המחדל).",
+      explanation: "ניתן לתת שם משלך לפרמטרי ה-executor. כאן השני נקרא fail במקום reject — תפקידו זהה.",
+    },
+    {
+      id: "fill_l15_reject_manual_002", topicId: "topic_async", conceptKey: "lesson_15::reject", level: 5,
+      code: "fetchUser(id)\n  .then(handleUser)\n  .____(err => console.error('Failed:', err));",
+      answer: "catch",
+      hint: "מתודה שתופסת rejection מ-Promise.",
+      explanation: "promise.catch(fn) מטפל ב-rejection. שווה ערך ל-.then(undefined, fn).",
+    },
+
+    // --- lesson_15::resolve ---
+    {
+      id: "fill_l15_resolve_manual_001", topicId: "topic_async", conceptKey: "lesson_15::resolve", level: 3,
+      code: "const p = new Promise((done, reject) => {\n  setTimeout(() => ____('finished'), 500);\n});",
+      answer: "done",
+      hint: "השם שניתן ל-resolve callback (במקום שם ברירת המחדל).",
+      explanation: "ניתן לתת שם משלך לפרמטרי ה-executor. כאן הראשון נקרא done במקום resolve — תפקידו זהה.",
+    },
+    {
+      id: "fill_l15_resolve_manual_002", topicId: "topic_async", conceptKey: "lesson_15::resolve", level: 4,
+      code: "const ready = Promise.____(42);\nready.then(v => console.log(v)); // 42",
+      answer: "resolve",
+      hint: "static method של Promise שיוצרת Promise מוצלח מיד.",
+      explanation: "Promise.resolve(value) shortcut — Promise שכבר succeeded עם הערך. שימושי לבדיקות ולתאימות API.",
+    },
+
+    // --- lesson_15::Scope ---
+    {
+      id: "fill_l15_scope_manual_001", topicId: "topic_functions", conceptKey: "lesson_15::Scope", level: 3,
+      code: "function outer() {\n  ____ secret = 'hidden';\n  return () => secret;\n}",
+      answer: "let",
+      hint: "מילת מפתח להגדרת משתנה block-scoped.",
+      explanation: "let מגדיר משתנה בסקופ הפונקציה. closure מאפשר לפונקציה הפנימית לגשת אליו.",
+    },
+    {
+      id: "fill_l15_scope_manual_002", topicId: "topic_functions", conceptKey: "lesson_15::Scope", level: 5,
+      code: "function makeCounter() {\n  let count = 0;\n  return () => ++____;\n}\nconst c = makeCounter();\nc(); c(); // 2",
+      answer: "count",
+      hint: "המשתנה הפנימי שנשמר ב-closure של הפונקציה הפנימית.",
+      explanation: "closure: הפונקציה הפנימית שומרת גישה ל-count מסקופ ההורה גם אחרי שהוא הסתיים.",
+    },
+
+    // --- lesson_15::Synchronous ---
+    {
+      id: "fill_l15_sync_manual_001", topicId: "topic_async", conceptKey: "lesson_15::Synchronous", level: 4,
+      code: "// Synchronous code blocks\nconst result = ____('Heavy work...');\nconsole.log('After:', result);",
+      answer: "compute",
+      hint: "שם פונקציה סינכרונית כלשהי שמחזירה ערך.",
+      explanation: "פונקציה סינכרונית רצה ל-completion לפני שהשורה הבאה מתחילה — סדר ביצוע צפוי.",
+    },
+    {
+      id: "fill_l15_sync_manual_002", topicId: "topic_async", conceptKey: "lesson_15::Synchronous", level: 5,
+      code: "// Heavy sync work — better to break into chunks\nfunction process(items) {\n  if (items.length === 0) return;\n  const chunk = items.____(0, 100);\n  // process chunk...\n}",
+      answer: "slice",
+      hint: "מתודת מערך שמחזירה חלק מתוכו בלי לשנות את המקור.",
+      explanation: "כדי לא לחסום את ה-UI עם sync code כבד, מחלקים לחתיכות עם slice ומריצים כל אחת ב-setTimeout.",
     },
 
     // ===== QMAN-001 Fill Batch — lesson_13 manual (2026-05-02) =====
