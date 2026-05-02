@@ -357,7 +357,12 @@
     const validateFill = (question) => {
       validateQuestionKey(question, "FillQuestion");
       if (!question?.id) issues.push(contentValidationIssue("blocker", "FillQuestion", "", "missing-id", "Fill question is missing id."));
-      if (!question?.code || !String(question.code).includes("____")) issues.push(contentValidationIssue("blocker", "FillQuestion", question?.id, "missing-blank", "Fill code must contain ____ blank marker."));
+      // Two schemas coexist:
+      //   bank schema:      { code: "...____...", answer }   (questions_bank.js)
+      //   svcollege schema: { prompt: "...___...", answer }  (svcollege_questions_*.js)
+      const hasBankBlank = typeof question?.code === "string" && question.code.includes("____");
+      const hasSvBlank = typeof question?.prompt === "string" && /_{3,}/.test(question.prompt);
+      if (!hasBankBlank && !hasSvBlank) issues.push(contentValidationIssue("blocker", "FillQuestion", question?.id, "missing-blank", "Fill must contain blank marker (____ in code or ___ in prompt)."));
       if (!question?.answer) issues.push(contentValidationIssue("blocker", "FillQuestion", question?.id, "missing-answer", "Fill question is missing answer."));
       if (!question?.explanation) issues.push(contentValidationIssue("warning", "FillQuestion", question?.id, "missing-explanation", "Fill question is missing explanation."));
     };
