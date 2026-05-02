@@ -7497,6 +7497,153 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // =========== Modal Manager (must be defined before Pocket / ViewMode IIFEs that use it) ===========
+  const modalManager = window.__lumenModalManager || (() => {
+    const stack = [];
+    let keyboardBound = false;
+    const focusableSelector = [
+      "a[href]",
+      "area[href]",
+      "button:not([disabled])",
+      "input:not([disabled]):not([type='hidden'])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      "details summary",
+      "[contenteditable='true']",
+      "[tabindex]:not([tabindex='-1'])",
+    ].join(", ");
+
+    const resolveNode = (target, root) => {
+      if (!target) return null;
+      if (typeof target === "function") return target();
+      if (typeof target === "string" && root) return root.querySelector(target);
+      return target instanceof HTMLElement ? target : null;
+    };
+
+    const focusNode = (node) => {
+      if (!(node instanceof HTMLElement)) return;
+      try {
+        node.focus({ preventScroll: true });
+      } catch (_) {
+        try { node.focus(); } catch (_) {}
+      }
+    };
+
+    const getTabbableElements = (container) => {
+      if (!container || typeof container.querySelectorAll !== "function") return [];
+      return Array.from(container.querySelectorAll(focusableSelector)).filter((node) => {
+        if (!(node instanceof HTMLElement)) return false;
+        if (node.hidden) return false;
+        const style = getComputedStyle(node);
+        return style.display !== "none" && style.visibility !== "hidden";
+      });
+    };
+
+    const handleTab = (event, entry) => {
+      const container = entry.trapRoot || entry.modal;
+      const tabbables = getTabbableElements(container);
+      if (!tabbables.length) {
+        event.preventDefault();
+        if (entry.modal instanceof HTMLElement) focusNode(entry.modal);
+        return;
+      }
+      const first = tabbables[0];
+      const last = tabbables[tabbables.length - 1];
+      const active = document.activeElement;
+      const within = active && container && container.contains(active);
+      if (event.shiftKey) {
+        if (!within || active === first) {
+          event.preventDefault();
+          focusNode(last);
+        }
+        return;
+      }
+      if (!within || active === last) {
+        event.preventDefault();
+        focusNode(first);
+      }
+    };
+
+    const keydownHandler = (event) => {
+      const entry = stack[stack.length - 1];
+      if (!entry) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeModal(entry.modal);
+        return;
+      }
+      if (event.key === "Tab") {
+        handleTab(event, entry);
+      }
+    };
+
+    const bindKeyboard = (on) => {
+      if (on && !keyboardBound) {
+        document.addEventListener("keydown", keydownHandler);
+        keyboardBound = true;
+      }
+      if (!on && keyboardBound) {
+        document.removeEventListener("keydown", keydownHandler);
+        keyboardBound = false;
+      }
+    };
+
+    const open = (entry, ...args) => {
+      if (!entry || !entry.modal || typeof entry.open !== "function" || typeof entry.close !== "function") return;
+      const existing = stack.findIndex((item) => item.modal === entry.modal);
+      if (existing >= 0) stack.splice(existing, 1);
+      const modalEntry = {
+        modal: entry.modal,
+        close: entry.close,
+        trapRoot: entry.trapRoot || entry.modal,
+        focusTarget: entry.focusTarget,
+        restoreFocus: entry.restoreFocus !== false,
+        returnFocus: entry.restoreFocus !== false && document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : null,
+        closeInFlight: false,
+      };
+      entry.open(...args);
+      stack.push(modalEntry);
+      bindKeyboard(true);
+      const container = modalEntry.trapRoot || modalEntry.modal;
+      const target = resolveNode(modalEntry.focusTarget, container);
+      if (target) focusNode(target);
+      else {
+        const [first] = getTabbableElements(container);
+        if (first) focusNode(first);
+      }
+    };
+
+    const closeModal = (modal) => {
+      const index = stack.findIndex((item) => item.modal === modal);
+      if (index < 0) return;
+      const entry = stack[index];
+      if (entry.closeInFlight) return;
+      entry.closeInFlight = true;
+      stack.splice(index, 1);
+      try {
+        entry.close();
+      } finally {
+        if (entry.restoreFocus && entry.returnFocus && entry.returnFocus.isConnected) {
+          focusNode(entry.returnFocus);
+        }
+        if (stack.length === 0) bindKeyboard(false);
+      }
+    };
+
+    const createController = (entry) => ({
+      open: (...args) => open(entry, ...args),
+      close: () => closeModal(entry.modal),
+    });
+
+    return { open, close: closeModal, create: createController };
+  })();
+  window.__lumenModalManager = modalManager;
+  const createManagedModalController = typeof modalManager.create === "function"
+    ? (entry) => modalManager.create(entry)
+    : (entry) => ({ open: entry.open, close: entry.close });
+
   // =========== Pocket Concept Card — saved concepts panel ===========
   (function initPocket() {
     const POCKET_KEY = "lumenportal:pocket:v1";
@@ -7801,162 +7948,6 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     };
 
-    const modalManager = window.__lumenModalManager || (() => {
-      const stack = [];
-      let keyboardBound = false;
-      const focusableSelector = [
-        "a[href]",
-        "area[href]",
-        "button:not([disabled])",
-        "input:not([disabled]):not([type='hidden'])",
-        "select:not([disabled])",
-        "textarea:not([disabled])",
-        "details summary",
-        "[contenteditable='true']",
-        "[tabindex]:not([tabindex='-1'])",
-      ].join(", ");
-
-      const resolveNode = (target, root) => {
-        if (!target) return null;
-        if (typeof target === "function") return target();
-        if (typeof target === "string" && root) return root.querySelector(target);
-        return target instanceof HTMLElement ? target : null;
-      };
-
-      const focusNode = (node) => {
-        if (!(node instanceof HTMLElement)) return;
-        try {
-          node.focus({ preventScroll: true });
-        } catch (_) {
-          try { node.focus(); } catch (_) {}
-        }
-      };
-
-      const getTabbableElements = (container) => {
-        if (!container || typeof container.querySelectorAll !== "function") return [];
-        return Array.from(container.querySelectorAll(focusableSelector)).filter((node) => {
-          if (!(node instanceof HTMLElement)) return false;
-          if (node.hidden) return false;
-          const style = getComputedStyle(node);
-          return style.display !== "none" && style.visibility !== "hidden";
-        });
-      };
-
-      const handleTab = (event, entry) => {
-        const container = entry.trapRoot || entry.modal;
-        const tabbables = getTabbableElements(container);
-        if (!tabbables.length) {
-          event.preventDefault();
-          if (entry.modal instanceof HTMLElement) focusNode(entry.modal);
-          return;
-        }
-
-        const first = tabbables[0];
-        const last = tabbables[tabbables.length - 1];
-        const active = document.activeElement;
-        const within = active && container && container.contains(active);
-
-        if (event.shiftKey) {
-          if (!within || active === first) {
-            event.preventDefault();
-            focusNode(last);
-          }
-          return;
-        }
-
-        if (!within || active === last) {
-          event.preventDefault();
-          focusNode(first);
-        }
-      };
-
-      const keydownHandler = (event) => {
-        const entry = stack[stack.length - 1];
-        if (!entry) return;
-
-        if (event.key === "Escape") {
-          event.preventDefault();
-          closeModal(entry.modal);
-          return;
-        }
-
-        if (event.key === "Tab") {
-          handleTab(event, entry);
-        }
-      };
-
-      const bindKeyboard = (on) => {
-        if (on && !keyboardBound) {
-          document.addEventListener("keydown", keydownHandler);
-          keyboardBound = true;
-        }
-        if (!on && keyboardBound) {
-          document.removeEventListener("keydown", keydownHandler);
-          keyboardBound = false;
-        }
-      };
-
-      const open = (entry, ...args) => {
-        if (!entry || !entry.modal || typeof entry.open !== "function" || typeof entry.close !== "function") return;
-
-        const existing = stack.findIndex((item) => item.modal === entry.modal);
-        if (existing >= 0) stack.splice(existing, 1);
-
-        const modalEntry = {
-          modal: entry.modal,
-          close: entry.close,
-          trapRoot: entry.trapRoot || entry.modal,
-          focusTarget: entry.focusTarget,
-          restoreFocus: entry.restoreFocus !== false,
-          returnFocus: entry.restoreFocus !== false && document.activeElement instanceof HTMLElement
-            ? document.activeElement
-            : null,
-          closeInFlight: false,
-        };
-
-        entry.open(...args);
-        stack.push(modalEntry);
-        bindKeyboard(true);
-
-        const container = modalEntry.trapRoot || modalEntry.modal;
-        const target = resolveNode(modalEntry.focusTarget, container);
-        if (target) focusNode(target);
-        else {
-          const [first] = getTabbableElements(container);
-          if (first) focusNode(first);
-        }
-      };
-
-      const closeModal = (modal) => {
-        const index = stack.findIndex((item) => item.modal === modal);
-        if (index < 0) return;
-        const entry = stack[index];
-        if (entry.closeInFlight) return;
-        entry.closeInFlight = true;
-        stack.splice(index, 1);
-
-        try {
-          entry.close();
-        } finally {
-          if (entry.restoreFocus && entry.returnFocus && entry.returnFocus.isConnected) {
-            focusNode(entry.returnFocus);
-          }
-          if (stack.length === 0) bindKeyboard(false);
-        }
-      };
-
-      const createController = (entry) => ({
-        open: (...args) => open(entry, ...args),
-        close: () => closeModal(entry.modal),
-      });
-
-      return { open, close: closeModal, create: createController };
-    })();
-
-    window.__lumenModalManager = modalManager;
-    const createManagedModalController = typeof modalManager.create === "function"
-      ? (entry) => modalManager.create(entry)
-      : (entry) => ({ open: entry.open, close: entry.close });
 
     // ----- Glossary modal -----
     const glossaryModal = document.getElementById("glossary-modal");
@@ -26338,10 +26329,7 @@ document.addEventListener("DOMContentLoaded", () => {
       : null;
   }
 
-  const createManagedModalController = typeof window.__lumenModalManager?.create === "function"
-    ? (entry) => window.__lumenModalManager.create(entry)
-    : (entry) => ({ open: entry.open, close: entry.close });
-
+  // createManagedModalController already declared earlier in this DOMContentLoaded scope
   let supportScreenshotPayload = null;
   const supportReportModal = document.getElementById("support-report-modal");
   const supportReportModalController = createManagedModalController({
