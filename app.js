@@ -10291,10 +10291,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const dueBadge = due
               ? `<span class="km-due-badge" title="חזרה לפי SRS — הגיע מועד">🔁 חזרה מומלצת</span>`
               : "";
+            // PHASE-J: cluster badge in knowledge map
+            const cluster = (typeof window !== "undefined" && window.CLUSTER_INDEX)
+              ? window.CLUSTER_INDEX.findByConcept(lesson.id, c.conceptName)
+              : null;
+            const clusterBadge = cluster
+              ? `<span class="km-cluster-badge ${cluster.docSection ? "has-doc" : "no-doc"}" title="קלסטר השוואה: ${esc(cluster.title)} — ${cluster.members.length} חברים${cluster.docSection ? " · " + esc(cluster.docSection) : ""}" data-cluster-id="${esc(cluster.id)}">🧩 ${esc(cluster.title.slice(0, 28))}${cluster.title.length > 28 ? "…" : ""}</span>`
+              : "";
             return `
-              <div class="km-concept-row ${rowCls}" data-lesson="${esc(lesson.id)}" data-concept="${esc(c.conceptName)}">
+              <div class="km-concept-row ${rowCls}" data-lesson="${esc(lesson.id)}" data-concept="${esc(c.conceptName)}" ${cluster ? `data-cluster-id="${esc(cluster.id)}"` : ""}>
                 <div class="km-concept-name" title="פתח את המושג בשיעור">${esc(c.conceptName)}</div>
                 ${masteryBadge}
+                ${clusterBadge}
                 ${dueBadge}
                 ${bankBadges}
                 ${stages}
@@ -14188,6 +14196,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const stageBadge = `${question.kind === "fill" ? "✍️ השלמת קוד" : "🅰️ שאלה אמריקנית"}`;
     const progressBadge = `שלבים ברמה ${sc.level}: ${sc.passedMC ? "🅰️✅" : "🅰️◯"} ${needsCodeFill(concept) ? (sc.passedFill ? "✍️✅" : "✍️◯") : ""}`.trim();
+    // PHASE-K: cluster context in trainer card
+    const cluster = (typeof window !== "undefined" && window.CLUSTER_INDEX)
+      ? window.CLUSTER_INDEX.findByConcept(lesson.id, concept.conceptName)
+      : null;
+    const clusterContext = cluster
+      ? `<div class="trainer-cluster-context" data-cluster-id="${esc(cluster.id)}" title="המושג שייך לקלסטר השוואה">
+          <span class="tcc-icon">🧩</span>
+          <div class="tcc-body">
+            <strong>${esc(cluster.title)}</strong>
+            <span class="tcc-members">חברים: ${esc(cluster.members.join(" · "))}</span>
+            ${cluster.docSection ? `<span class="tcc-doc">📖 בלוק לימוד מאוחד: ${esc(cluster.docSection)}</span>` : ""}
+          </div>
+        </div>`
+      : "";
     const retestBanner = trainerCurrent.retestItem
       ? `<div class="adaptive-retest-banner">
           <strong>🔁 ${esc(trainerCurrent.retestItem.label || "שאלת תיקון")}</strong>
@@ -14236,6 +14258,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="tq-stage-badge">${stageBadge}</span>
         <span class="tq-progress-badge">${progressBadge}</span>
       </div>
+      ${clusterContext}
       ${retestBanner}
       ${renderTrainerConfidenceControls()}
       <div class="question-learning-layout trainer">
