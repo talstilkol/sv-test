@@ -106,8 +106,8 @@
 |---|-------|---------------|------|-------|
 | 29 | Trace/Build/Bug priority | 8 (lesson_19 traces) | 42 | 2-3 שעות |
 | 30 | Trace/Build/Bug שאר | 21 (8 bugs + 9 builds + 4 lesson_17 deferred) | 151 | 6-10 שעות |
-| 31-44 | MC ידניות | 115 (cumulative: +95 ב-2026-05-02 ארבעה batches) | ~1,273 | 40-60 שעות |
-| 45-50 | Fill ידניות | 124 (cumulative: +95 ב-2026-05-02 ארבעה batches) | ~769 | 25-35 שעות |
+| 31-44 | MC ידניות | 140 (cumulative: +120 ב-2026-05-02 חמישה batches) | ~1,248 | 40-60 שעות |
+| 45-50 | Fill ידניות | 149 (cumulative: +120 ב-2026-05-02 חמישה batches) | ~744 | 25-35 שעות |
 | 70 | Confidence calibration UI | 0 (כבר רשום ב-applyAnswer דרך recordConceptConfidenceCalibration) | UI לחזות עוד לא נבנתה | 2 שעות |
 | **חדש** | **Auto-pocket-on-failure** | **✅ הושלם 2026-05-02** | — | — |
 | 70 | Confidence calibration UI | 0 | 1 פיצ'ר | 2 שעות |
@@ -131,13 +131,13 @@
 
 - **בדיקות:** 779/781 עוברות (161 test files; 2 pre-existing failures: exam-cram-sheet, manual-blocker-question-authoring — לא הוכנסו בסשן זה; +7 unit tests מ-pocket-auto-sync)
 - **Quality Index:** validate non-strict ירוק; question-quality-report: 0 blockers; strict — 9 warnings פרי-existing מ-AI/Next/Nest concepts
-- **שאלות במאגר:** 1,031 MC + 609 Fill = **1,640 שאלות ידניות** (גידול +190 בסשן 2026-05-02 — ארבעה batches: +20+25+25+25 MC, +20+25+25+25 Fill)
+- **שאלות במאגר:** 1,056 MC + 634 Fill = **1,690 שאלות ידניות** (גידול +240 בסשן 2026-05-02 — חמישה batches: +20+25+25+25+25 MC, +20+25+25+25+25 Fill)
 - **Activity bank:** 348 Trace + 41 Bug + 52 Build = 441 (גידול +29 בסשן 2026-05-02)
 - **6 רמות מלאות:** 125/568 מושגים (118 SVCollege + 7 lesson_19: let/var/const/function/closure/promise/fetch)
 - **6 רמות חלקיות (simpleExplanation):** שאר 443 המושגים
-- **Per-distractor feedback:** 1,031/1,031 MC ✓ (כולל 95 חדשות מ-4 batches בסשן זה)
+- **Per-distractor feedback:** 1,056/1,056 MC ✓ (כולל 120 חדשות מ-5 batches בסשן זה)
 - **פיצ'ר חדש 2026-05-02:** Auto-pocket-on-failure — מושג שנכשלו בו מתווסף אוטומטית לכיס; שתי תשובות נכונות ברצף מסירות. respect ל-manual override (dismiss list).
-- **Cache version:** `top-bar-perf-v100` / `lumen-v2.4.135-autosave`
+- **Cache version:** `top-bar-perf-v101` / `lumen-v2.4.136-autosave`
 
 ---
 
