@@ -14,8 +14,8 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.15";
-var QUESTIONS_BANK_LAST_UPDATE = "2026-04-30";
+var QUESTIONS_BANK_VERSION = "2.1.16";
+var QUESTIONS_BANK_LAST_UPDATE = "2026-05-02";
 var QUESTIONS_BANK_CHANGELOG = [
   {
     v: "2.0.0",
@@ -118,6 +118,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-04-30",
     changes:
       "Manual QMAN-001 Lesson 13 sub-batch: getItem, inheritance, innerHTML, instance and localStorage MC/Fill coverage with hand-authored option feedback.",
+  },
+  {
+    v: "2.1.16",
+    date: "2026-05-02",
+    changes:
+      "Manual QMAN-001 Lesson 13 completion batch: method, new, querySelectorAll, removeChild, replaceChild, setAttribute, setItem, style, super, Value — 30 MC + 20 Fill with full optionFeedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -3355,6 +3361,568 @@ var QUESTIONS_BANK = {
       explanation: "class Dog extends Animal — Dog מקבלת את כל המתודות של Animal.",
     },
 
+    // ===== QMAN-001 Batch — lesson_13 manual questions (2026-05-02) =====
+
+    // --- lesson_13::method ---
+    {
+      id: "mc_l13_method_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::method", level: 3,
+      question: "מה ההבדל בין property ל-method באובייקט?",
+      options: [
+        "property מחזיק ערך, method הוא פונקציה ששייכת לאובייקט",
+        "method הוא תמיד מספר",
+        "property שייך רק למערכים",
+        "אין הבדל — שניהם אותו דבר",
+      ],
+      correctIndex: 0,
+      explanation: "method הוא פונקציה שמוגדרת בתוך אובייקט. property הוא כל שדה אחר (string, number, array וכו׳).",
+      optionFeedback: [
+        "✅ נכון: method = פונקציה בתוך אובייקט, property = ערך בתוך אובייקט.",
+        "❌ method הוא פונקציה, לא מספר.",
+        "❌ property קיים גם באובייקטים רגילים.",
+        "❌ יש הבדל ברור — method ניתן לקריאה עם ().",
+      ],
+    },
+    {
+      id: "mc_l13_method_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::method", level: 4,
+      question: "מה יודפס?\n\nconst dog = {\n  name: 'Rex',\n  bark() { return `${this.name} says Woof!`; }\n};\nconsole.log(dog.bark());",
+      options: [
+        "Rex says Woof!",
+        "undefined says Woof!",
+        "שגיאה — bark לא פונקציה",
+        "dog says Woof!",
+      ],
+      correctIndex: 0,
+      explanation: "כשקוראים ל-method דרך האובייקט (dog.bark()), this מצביע על האובייקט עצמו ולכן this.name === 'Rex'.",
+      optionFeedback: [
+        "✅ נכון: this בתוך method מצביע על האובייקט שעליו קראנו.",
+        "❌ this.name מוגדר כי קראנו דרך dog — לא undefined.",
+        "❌ bark מוגדרת כ-method תקין של האובייקט.",
+        "❌ this.name מחזיר את הערך 'Rex', לא את שם המשתנה.",
+      ],
+    },
+    {
+      id: "mc_l13_method_manual_003", topicId: "topic_objects", conceptKey: "lesson_13::method", level: 5,
+      question: "מה ההבדל בין שני הסינטקסים?\n\nconst obj = {\n  greet: function() { ... },\n  greet() { ... }\n};",
+      options: [
+        "אין הבדל פונקציונלי — שניהם מגדירים method על האובייקט",
+        "הראשון יוצר Closure והשני לא",
+        "השני הוא arrow function",
+        "הראשון עובד רק ב-Node.js",
+      ],
+      correctIndex: 0,
+      explanation: "ES6 method shorthand (greet() {}) הוא קיצור תחבירי ל-greet: function() {} — שניהם יוצרים method רגיל עם this.",
+      optionFeedback: [
+        "✅ נכון: method shorthand הוא סוכר תחבירי בלבד.",
+        "❌ שניהם יוצרים Closure באותו אופן.",
+        "❌ greet() {} אינו arrow function — יש לו this משלו.",
+        "❌ שניהם עובדים בכל סביבה שתומכת ב-ES6.",
+      ],
+    },
+
+    // --- lesson_13::new ---
+    {
+      id: "mc_l13_new_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::new", level: 3,
+      question: "מה עושה המילה new כשכותבים new Dog()?",
+      options: [
+        "יוצרת אובייקט חדש מהמחלקה Dog ומחזירה אותו",
+        "מוחקת את המחלקה Dog",
+        "מייבאת ספרייה חדשה",
+        "מגדירה משתנה גלובלי",
+      ],
+      correctIndex: 0,
+      explanation: "new יוצרת instance חדש — אובייקט ריק שמקושר ל-prototype של Dog, ואז ה-constructor רץ עליו.",
+      optionFeedback: [
+        "✅ נכון: new יוצרת instance חדש מה-class.",
+        "❌ new יוצרת, לא מוחקת.",
+        "❌ import/require מייבאים ספריות, לא new.",
+        "❌ new לא קשור להגדרת משתנים גלובליים.",
+      ],
+    },
+    {
+      id: "mc_l13_new_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::new", level: 4,
+      question: "מה יודפס?\n\nclass Car {\n  constructor(brand) {\n    this.brand = brand;\n  }\n}\nconst c = new Car('Toyota');\nconsole.log(c.brand);",
+      options: [
+        "Toyota",
+        "undefined",
+        "Car",
+        "שגיאה — חסר return",
+      ],
+      correctIndex: 0,
+      explanation: "new Car('Toyota') מריץ את ה-constructor שמציב this.brand = 'Toyota'. ה-new מחזיר אוטומטית את this.",
+      optionFeedback: [
+        "✅ נכון: constructor מקבל את הארגומנט ומציב אותו על this.",
+        "❌ brand מוגדר ב-constructor דרך this.brand = brand.",
+        "❌ c.brand מחזיר את הערך, לא את שם ה-class.",
+        "❌ constructor לא צריך return — new מחזיר את this אוטומטית.",
+      ],
+    },
+    {
+      id: "mc_l13_new_manual_003", topicId: "topic_objects", conceptKey: "lesson_13::new", level: 5,
+      question: "מה קורה אם שוכחים לכתוב new לפני קריאה ל-class?\n\nclass Dog { constructor(n) { this.name = n; } }\nconst d = Dog('Rex');",
+      options: [
+        "TypeError — Class constructor cannot be invoked without 'new'",
+        "d מקבל את הערך 'Rex'",
+        "נוצר אובייקט רגיל",
+        "הקוד עובד אבל this הוא window",
+      ],
+      correctIndex: 0,
+      explanation: "ES6 classes חייבות להיקרא עם new. בלי new, JavaScript זורק TypeError.",
+      optionFeedback: [
+        "✅ נכון: class מחייב new — זו הגנה מובנית ב-ES6.",
+        "❌ בלי new, class לא מחזירה ערך אלא זורקת שגיאה.",
+        "❌ אובייקט נוצר רק עם new.",
+        "❌ עבור function constructors ישנים (ES5) זה היה נכון, אבל class מונע את זה.",
+      ],
+    },
+
+    // --- lesson_13::querySelectorAll ---
+    {
+      id: "mc_l13_qsa_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::querySelectorAll", level: 3,
+      question: "מה מחזיר querySelectorAll('.item')?",
+      options: [
+        "NodeList — רשימה של כל האלמנטים עם class='item'",
+        "אלמנט אחד בלבד",
+        "מערך רגיל",
+        "string עם ה-HTML",
+      ],
+      correctIndex: 0,
+      explanation: "querySelectorAll מחזירה NodeList (דמוי-מערך) של כל האלמנטים שמתאימים ל-selector.",
+      optionFeedback: [
+        "✅ נכון: querySelectorAll מחזירה NodeList עם כל ההתאמות.",
+        "❌ אלמנט אחד מוחזר רק ע״י querySelector (בלי All).",
+        "❌ NodeList דומה למערך אבל אינו Array — אין לו push/pop.",
+        "❌ querySelectorAll מחזירה אלמנטים, לא טקסט HTML.",
+      ],
+    },
+    {
+      id: "mc_l13_qsa_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::querySelectorAll", level: 4,
+      question: "איך לולאים על תוצאות querySelectorAll?\n\nconst items = document.querySelectorAll('.card');",
+      options: [
+        "items.forEach(item => { ... })",
+        "items.map(item => { ... })",
+        "for (item in items) { ... }",
+        "items.push(newItem)",
+      ],
+      correctIndex: 0,
+      explanation: "NodeList תומך ב-forEach אבל לא ב-map/filter/reduce (כי זה לא Array). אפשר גם for...of.",
+      optionFeedback: [
+        "✅ נכון: forEach זמין על NodeList.",
+        "❌ map לא זמין ישירות על NodeList — צריך Array.from() קודם.",
+        "❌ for...in עובר על keys (אינדקסים + properties), לא מומלץ.",
+        "❌ push לא קיים על NodeList — היא read-only.",
+      ],
+    },
+    {
+      id: "mc_l13_qsa_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::querySelectorAll", level: 5,
+      question: "מה ההבדל בין querySelectorAll ל-getElementsByClassName?",
+      options: [
+        "querySelectorAll מחזירה NodeList סטטי, getElementsByClassName מחזירה HTMLCollection חי",
+        "הם זהים לחלוטין",
+        "getElementsByClassName מקבלת CSS selector מלא",
+        "querySelectorAll עובדת רק ב-Node.js",
+      ],
+      correctIndex: 0,
+      explanation: "HTMLCollection 'חי' מתעדכן אוטומטית כשה-DOM משתנה. NodeList סטטי הוא snapshot — לא משתנה.",
+      optionFeedback: [
+        "✅ נכון: ההבדל המרכזי הוא live vs. static collection.",
+        "❌ יש הבדלים משמעותיים ב-API ובהתנהגות.",
+        "❌ getElementsByClassName מקבלת רק שם class, לא CSS selector.",
+        "❌ querySelectorAll עובדת בדפדפן.",
+      ],
+    },
+
+    // --- lesson_13::removeChild ---
+    {
+      id: "mc_l13_remove_child_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::removeChild", level: 3,
+      question: "מה עושה removeChild?",
+      options: [
+        "מסיר אלמנט-ילד מאלמנט-אב ב-DOM",
+        "מוחק את כל ה-DOM",
+        "מסיר CSS class מאלמנט",
+        "מוחק קובץ מהשרת",
+      ],
+      correctIndex: 0,
+      explanation: "parent.removeChild(child) מסיר את ה-child מה-DOM. האלמנט עדיין קיים בזיכרון עד שאין הפניות אליו.",
+      optionFeedback: [
+        "✅ נכון: removeChild מסיר אלמנט ספציפי מתוך ההורה שלו.",
+        "❌ removeChild לא מוחק את כל ה-DOM, רק אלמנט אחד.",
+        "❌ הסרת class נעשית עם classList.remove().",
+        "❌ DOM אינו מערכת קבצים — removeChild עובד על אלמנטים.",
+      ],
+    },
+    {
+      id: "mc_l13_remove_child_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::removeChild", level: 4,
+      question: "מה יקרה?\n\nconst list = document.getElementById('myList');\nconst item = list.children[0];\nlist.removeChild(item);",
+      options: [
+        "האיבר הראשון ברשימה יוסר מהדף",
+        "כל הרשימה תימחק",
+        "שגיאה — children לא קיים",
+        "האיבר יוסתר אבל ישאר ב-DOM",
+      ],
+      correctIndex: 0,
+      explanation: "list.children[0] בוחר את הילד הראשון, ו-removeChild מסיר אותו מה-DOM בפועל.",
+      optionFeedback: [
+        "✅ נכון: removeChild מסיר את הילד הספציפי מההורה.",
+        "❌ removeChild מסיר רק את האלמנט שמועבר כארגומנט.",
+        "❌ children הוא property תקין שמחזיר HTMLCollection של ילדים.",
+        "❌ removeChild באמת מסיר מה-DOM, לא מסתיר (בניגוד ל-display:none).",
+      ],
+    },
+    {
+      id: "mc_l13_remove_child_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::removeChild", level: 5,
+      question: "מה ההבדל בין removeChild ל-remove?",
+      options: [
+        "removeChild נקרא על ההורה, remove נקרא על האלמנט עצמו",
+        "remove מסיר class ו-removeChild מסיר אלמנט",
+        "אין הבדל",
+        "remove עובד רק ב-IE",
+      ],
+      correctIndex: 0,
+      explanation: "parent.removeChild(child) vs. child.remove() — שניהם מסירים מה-DOM, אבל remove() קצר יותר (API חדש).",
+      optionFeedback: [
+        "✅ נכון: remove() הוא shortcut מודרני — לא צריך לפנות להורה.",
+        "❌ שניהם מסירים אלמנטים. classList.remove() מסיר class.",
+        "❌ יש הבדל בתחביר ובאיזה אלמנט קוראים.",
+        "❌ remove() לא נתמך ב-IE אבל עובד בכל דפדפן מודרני.",
+      ],
+    },
+
+    // --- lesson_13::replaceChild ---
+    {
+      id: "mc_l13_replace_child_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::replaceChild", level: 3,
+      question: "מה עושה replaceChild?",
+      options: [
+        "מחליף אלמנט-ילד באלמנט חדש בתוך ההורה",
+        "משנה את הטקסט של אלמנט",
+        "מעתיק אלמנט",
+        "מחליף את ה-CSS של אלמנט",
+      ],
+      correctIndex: 0,
+      explanation: "parent.replaceChild(newChild, oldChild) — מסיר את old ומכניס את new באותו מקום.",
+      optionFeedback: [
+        "✅ נכון: replaceChild מחליף ילד אחד באחר.",
+        "❌ שינוי טקסט נעשה עם textContent.",
+        "❌ העתקה נעשית עם cloneNode.",
+        "❌ שינוי CSS נעשה עם element.style או className.",
+      ],
+    },
+    {
+      id: "mc_l13_replace_child_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::replaceChild", level: 4,
+      question: "מה הסדר הנכון של הארגומנטים?\n\nparent.replaceChild(?, ?);",
+      options: [
+        "replaceChild(newChild, oldChild) — חדש ראשון, ישן שני",
+        "replaceChild(oldChild, newChild) — ישן ראשון, חדש שני",
+        "replaceChild(parent, child)",
+        "replaceChild(index, newChild)",
+      ],
+      correctIndex: 0,
+      explanation: "הסדר: חדש, ישן. הטריק לזכור: 'אני מכניס את החדש ומוציא את הישן'.",
+      optionFeedback: [
+        "✅ נכון: new first, old second.",
+        "❌ הסדר הפוך — החדש בא ראשון.",
+        "❌ ההורה הוא מי שקורא ל-method, לא ארגומנט.",
+        "❌ replaceChild לא עובד עם אינדקסים.",
+      ],
+    },
+    {
+      id: "mc_l13_replace_child_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::replaceChild", level: 5,
+      question: "מה קורה לאלמנט הישן אחרי replaceChild?",
+      options: [
+        "הוא מוסר מה-DOM אך עדיין קיים בזיכרון אם יש הפניה אליו",
+        "הוא נמחק לצמיתות מיד",
+        "הוא נשאר ב-DOM כ-hidden",
+        "הוא עובר לסוף ה-body",
+      ],
+      correctIndex: 0,
+      explanation: "replaceChild מחזיר את האלמנט שהוסר — אפשר לשמור אותו במשתנה ולהשתמש בו שוב.",
+      optionFeedback: [
+        "✅ נכון: הוסר מה-DOM אבל עדיין נגיש אם שמרנו reference.",
+        "❌ Garbage collection מוחק רק כשאין הפניות.",
+        "❌ הוא לא hidden — הוא פשוט לא בעץ.",
+        "❌ הוא לא עובר לשום מקום אלא יוצא מה-DOM.",
+      ],
+    },
+
+    // --- lesson_13::setAttribute ---
+    {
+      id: "mc_l13_set_attr_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::setAttribute", level: 3,
+      question: "מה עושה setAttribute?",
+      options: [
+        "מוסיף או משנה attribute על אלמנט HTML",
+        "מגדיר משתנה גלובלי",
+        "יוצר אלמנט חדש",
+        "מוחק attribute",
+      ],
+      correctIndex: 0,
+      explanation: "element.setAttribute('name', 'value') מגדיר attribute — למשל setAttribute('href', 'https://...').",
+      optionFeedback: [
+        "✅ נכון: setAttribute מגדיר או מעדכן attribute.",
+        "❌ משתנים גלובליים מוגדרים עם var/let/const.",
+        "❌ יצירת אלמנט נעשית עם createElement.",
+        "❌ מחיקת attribute נעשית עם removeAttribute.",
+      ],
+    },
+    {
+      id: "mc_l13_set_attr_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::setAttribute", level: 4,
+      question: "מה ההבדל בין element.id = 'main' לבין element.setAttribute('id', 'main')?",
+      options: [
+        "שניהם עושים את אותו דבר — מגדירים את ה-id attribute",
+        "setAttribute עובד רק עם class",
+        "הראשון לא שומר ב-DOM",
+        "השני יוצר אלמנט חדש",
+      ],
+      correctIndex: 0,
+      explanation: "עבור attributes סטנדרטיים (id, className, href) אפשר לגשת כ-property. setAttribute עובד עם כל attribute כולל custom.",
+      optionFeedback: [
+        "✅ נכון: שתי הדרכים מעדכנות את ה-DOM. setAttribute גנרי יותר.",
+        "❌ setAttribute עובד עם כל attribute.",
+        "❌ שתי הדרכים משפיעות על ה-DOM.",
+        "❌ setAttribute לא יוצר אלמנט.",
+      ],
+    },
+    {
+      id: "mc_l13_set_attr_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::setAttribute", level: 5,
+      question: "מתי חובה להשתמש ב-setAttribute ולא ב-property ישיר?",
+      options: [
+        "כשרוצים להגדיר data-* attributes או attributes שאינם סטנדרטיים",
+        "תמיד — property לא עובד",
+        "רק כשעובדים עם SVG",
+        "רק ב-IE",
+      ],
+      correctIndex: 0,
+      explanation: "data-* attributes ו-custom attributes אינם נגישים כ-property. setAttribute הוא הדרך הגנרית.",
+      optionFeedback: [
+        "✅ נכון: data-* ו-custom attributes דורשים setAttribute.",
+        "❌ property עובד מצוין עבור attributes סטנדרטיים.",
+        "❌ SVG דורש setAttribute לרוב, אבל זה לא הסיבה היחידה.",
+        "❌ זה לא קשור ל-IE.",
+      ],
+    },
+
+    // --- lesson_13::setItem ---
+    {
+      id: "mc_l13_set_item_manual_001", topicId: "topic_storage", conceptKey: "lesson_13::setItem", level: 3,
+      question: "מה עושה localStorage.setItem('name', 'Tal')?",
+      options: [
+        "שומר את הערך 'Tal' תחת המפתח 'name' באחסון הדפדפן",
+        "יוצר משתנה בשם name",
+        "שולח את הנתון לשרת",
+        "מגדיר cookie",
+      ],
+      correctIndex: 0,
+      explanation: "setItem שומר זוג key-value ב-localStorage. הנתון נשאר גם אחרי סגירת הדפדפן.",
+      optionFeedback: [
+        "✅ נכון: setItem שומר key-value שנשמר גם אחרי סגירה.",
+        "❌ setItem לא יוצר משתנה JS, אלא שומר ב-storage.",
+        "❌ localStorage הוא מקומי — לא שולח לשרת.",
+        "❌ Cookie הוא API נפרד (document.cookie).",
+      ],
+    },
+    {
+      id: "mc_l13_set_item_manual_002", topicId: "topic_storage", conceptKey: "lesson_13::setItem", level: 4,
+      question: "למה חשוב לעשות JSON.stringify לפני setItem כשרוצים לשמור אובייקט?",
+      options: [
+        "כי localStorage שומר רק strings — בלי stringify נקבל '[object Object]'",
+        "כי זה מאיץ את השמירה",
+        "כי זה מצפין את הנתון",
+        "אין צורך — אפשר לשמור אובייקטים ישירות",
+      ],
+      correctIndex: 0,
+      explanation: "localStorage מאחסן רק strings. בלי JSON.stringify, הוא יקרא ל-.toString() שמחזיר '[object Object]'.",
+      optionFeedback: [
+        "✅ נכון: localStorage = strings only. JSON.stringify שומר את המבנה.",
+        "❌ stringify לא משפיע על מהירות.",
+        "❌ JSON.stringify לא מצפין — הנתון קריא.",
+        "❌ שמירה ישירה של אובייקט תגרום לאובדן נתונים.",
+      ],
+    },
+    {
+      id: "mc_l13_set_item_manual_003", topicId: "topic_storage", conceptKey: "lesson_13::setItem", level: 5,
+      question: "מה הזוג הנכון של פעולות לשמירה ושליפה של מערך ב-localStorage?",
+      options: [
+        "setItem(key, JSON.stringify(arr)) ושליפה עם JSON.parse(getItem(key))",
+        "setItem(key, arr) ושליפה עם getItem(key)",
+        "push(key, arr) ושליפה עם pop(key)",
+        "save(key, arr) ושליפה עם load(key)",
+      ],
+      correctIndex: 0,
+      explanation: "stringify בכתיבה + parse בקריאה = הדרך התקינה. בלי זה, מערך הופך ל-string מרופט.",
+      optionFeedback: [
+        "✅ נכון: stringify/parse שומרים ומשחזרים את המבנה.",
+        "❌ בלי stringify, המערך יאבד את המבנה שלו.",
+        "❌ push/pop הם מתודות של Array, לא localStorage.",
+        "❌ save/load לא קיימים ב-localStorage API.",
+      ],
+    },
+
+    // --- lesson_13::style ---
+    {
+      id: "mc_l13_style_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::style", level: 3,
+      question: "איך משנים את צבע הרקע של אלמנט ב-JavaScript?",
+      options: [
+        "element.style.backgroundColor = 'red'",
+        "element.css('background-color', 'red')",
+        "element.color = 'red'",
+        "document.setCSS(element, 'red')",
+      ],
+      correctIndex: 0,
+      explanation: "element.style מאפשר לשנות inline styles ישירות. שמות CSS עם מקף הופכים ל-camelCase.",
+      optionFeedback: [
+        "✅ נכון: style property + camelCase = שינוי inline style.",
+        "❌ .css() שייך ל-jQuery, לא ל-vanilla JS.",
+        "❌ element.color לא קיים — צריך element.style.color.",
+        "❌ document.setCSS לא קיים ב-DOM API.",
+      ],
+    },
+    {
+      id: "mc_l13_style_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::style", level: 4,
+      question: "למה background-color הופך ל-backgroundColor ב-JavaScript?",
+      options: [
+        "כי מקף (-) אינו תו חוקי בשמות properties ב-JS — לכן משתמשים ב-camelCase",
+        "כי CSS ו-JS הם שפות שונות לגמרי",
+        "כי backgroundColor מהיר יותר",
+        "זה באג בדפדפן",
+      ],
+      correctIndex: 0,
+      explanation: "ב-JS, obj.background-color יתפרש כ-obj.background פחות color. camelCase פותר את הבעיה.",
+      optionFeedback: [
+        "✅ נכון: מקף הוא operator (חיסור) ב-JS, לכן צריך camelCase.",
+        "❌ הסיבה ספציפית — מקף הוא operator.",
+        "❌ אין הבדל בביצועים.",
+        "❌ זו תכנון מכוון, לא באג.",
+      ],
+    },
+    {
+      id: "mc_l13_style_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::style", level: 5,
+      question: "מה ההבדל בין element.style.color לבין getComputedStyle(element).color?",
+      options: [
+        "style קורא רק inline styles, getComputedStyle מחזיר את הסגנון הסופי מכל המקורות",
+        "אין הבדל",
+        "getComputedStyle משנה סגנונות",
+        "style לא עובד על אלמנטים מוסתרים",
+      ],
+      correctIndex: 0,
+      explanation: "element.style רואה רק מה שהוגדר ב-style attribute. getComputedStyle מחזיר את התוצאה הסופית (CSS files + inline + inherited).",
+      optionFeedback: [
+        "✅ נכון: getComputedStyle = final computed value מכל cascade.",
+        "❌ יש הבדל חשוב — style רואה רק inline.",
+        "❌ getComputedStyle הוא readonly — לקריאה בלבד.",
+        "❌ element.style עובד גם על אלמנטים מוסתרים.",
+      ],
+    },
+
+    // --- lesson_13::super ---
+    {
+      id: "mc_l13_super_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::super", level: 4,
+      question: "מה עושה super() בתוך constructor של class שיורשת?",
+      options: [
+        "קורא ל-constructor של מחלקת האב",
+        "מוחק את מחלקת האב",
+        "יוצר instance חדש של האב",
+        "מגדיר variable גלובלי",
+      ],
+      correctIndex: 0,
+      explanation: "super() מפעיל את ה-constructor של ה-parent class. חובה לקרוא לו לפני שימוש ב-this.",
+      optionFeedback: [
+        "✅ נכון: super() = 'הרץ את constructor של האב'.",
+        "❌ super לא מוחק כלום.",
+        "❌ super() לא יוצר instance נפרד — הוא מאתחל את this הנוכחי.",
+        "❌ super אינו קשור למשתנים גלובליים.",
+      ],
+    },
+    {
+      id: "mc_l13_super_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::super", level: 5,
+      question: "מה יודפס?\n\nclass Animal {\n  constructor(name) { this.name = name; }\n}\nclass Dog extends Animal {\n  constructor(name, breed) {\n    super(name);\n    this.breed = breed;\n  }\n}\nconst d = new Dog('Rex', 'Labrador');\nconsole.log(d.name, d.breed);",
+      options: [
+        "Rex Labrador",
+        "undefined Labrador",
+        "שגיאה — חסר super",
+        "Rex undefined",
+      ],
+      correctIndex: 0,
+      explanation: "super(name) מעביר את 'Rex' ל-Animal constructor שמציב this.name. אחריו this.breed = 'Labrador'.",
+      optionFeedback: [
+        "✅ נכון: super(name) מאתחל name דרך Animal, ואז breed מוגדר ב-Dog.",
+        "❌ name מוגדר דרך super(name) שמפעיל את Animal constructor.",
+        "❌ super כן קיים בקוד — בשורה הראשונה של Dog constructor.",
+        "❌ breed מוגדר אחרי super(name).",
+      ],
+    },
+    {
+      id: "mc_l13_super_manual_003", topicId: "topic_objects", conceptKey: "lesson_13::super", level: 6,
+      question: "מה קורה אם משתמשים ב-this לפני super() ב-constructor של class שיורשת?",
+      options: [
+        "ReferenceError — Must call super constructor before using 'this'",
+        "this יהיה undefined",
+        "הקוד עובד בלי בעיה",
+        "this מצביע על window",
+      ],
+      correctIndex: 0,
+      explanation: "ES6 מחייב קריאה ל-super() לפני כל שימוש ב-this ב-derived class. זה מוודא שהאב אותחל קודם.",
+      optionFeedback: [
+        "✅ נכון: this לא מאותחל עד שsuper() רץ — זו הגנה מובנית.",
+        "❌ לא undefined — פשוט שגיאה מיידית.",
+        "❌ JavaScript יזרוק ReferenceError.",
+        "❌ this לא מצביע על window בתוך class.",
+      ],
+    },
+
+    // --- lesson_13::Value (property value concept) ---
+    {
+      id: "mc_l13_value_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::Value", level: 3,
+      question: "איך קוראים את הטקסט שהמשתמש הקליד ב-input?",
+      options: [
+        "element.value",
+        "element.text",
+        "element.innerHTML",
+        "element.content",
+      ],
+      correctIndex: 0,
+      explanation: "ה-value property של input/textarea מחזיר את מה שהמשתמש הקליד (או מה שהוגדר בקוד).",
+      optionFeedback: [
+        "✅ נכון: .value הוא הדרך הנכונה לקרוא input content.",
+        "❌ .text לא קיים על input elements.",
+        "❌ innerHTML מחזיר HTML של ילדים, לא את ערך ה-input.",
+        "❌ .content לא קיים כ-property סטנדרטי של input.",
+      ],
+    },
+    {
+      id: "mc_l13_value_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::Value", level: 4,
+      question: "מה ההבדל בין value attribute ב-HTML לבין value property ב-JS?",
+      options: [
+        "attribute הוא הערך ההתחלתי; property הוא הערך הנוכחי שמשתנה בזמן אמת",
+        "אין הבדל",
+        "property לא ניתן לשינוי",
+        "attribute מתעדכן אוטומטית כשהמשתמש מקליד",
+      ],
+      correctIndex: 0,
+      explanation: "HTML attribute = initial value (מה שב-source). JS property = live value (מה שעכשיו בinput).",
+      optionFeedback: [
+        "✅ נכון: attribute = initial, property = current live value.",
+        "❌ יש הבדל חשוב — attribute לא מתעדכן.",
+        "❌ property כן ניתן לשינוי: input.value = 'new text'.",
+        "❌ attribute נשאר כפי שנכתב ב-HTML — לא מתעדכן אוטומטית.",
+      ],
+    },
+    {
+      id: "mc_l13_value_manual_003", topicId: "topic_dom", conceptKey: "lesson_13::Value", level: 5,
+      question: "מה יודפס?\n\nconst input = document.querySelector('#age');\ninput.value = '25';\nconsole.log(typeof input.value);",
+      options: [
+        "string",
+        "number",
+        "undefined",
+        "object",
+      ],
+      correctIndex: 0,
+      explanation: "input.value תמיד מחזיר string — גם אם ה-input הוא type='number'. צריך parseInt/Number להמרה.",
+      optionFeedback: [
+        "✅ נכון: .value הוא תמיד string, גם ב-number inputs.",
+        "❌ גם אם הוגדר '25' — זה עדיין string, לא number.",
+        "❌ value מוגדר (הצבנו '25'), אז לא undefined.",
+        "❌ string primitive, לא object.",
+      ],
+    },
+
     // Lesson 15 — Errors / Closure
     {
       id: "mc_throw_001", topicId: "topic_errors", conceptKey: "lesson_15::throw", level: 4,
@@ -5516,6 +6084,168 @@ var QUESTIONS_BANK = {
       answer: "stringify",
       hint: "מתודת JSON שהופכת אובייקט למחרוזת לפני שמירה.",
       explanation: "localStorage שומר מחרוזות בלבד. JSON.stringify ממיר אובייקט למחרוזת JSON לפני setItem.",
+    },
+
+    // ===== QMAN-001 Fill Batch — lesson_13 manual (2026-05-02) =====
+
+    // --- lesson_13::method ---
+    {
+      id: "fill_l13_method_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::method", level: 3,
+      code: "const robot = {\n  speak() { return 'Beep!'; }\n};\nconst sound = robot.____(); // 'Beep!'",
+      answer: "speak",
+      hint: "שם המתודה של האובייקט שמחזירה צליל.",
+      explanation: "method נקרא עם נקודה + שם + סוגריים: robot.speak() מפעיל את הפונקציה שמוגדרת באובייקט.",
+    },
+    {
+      id: "fill_l13_method_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::method", level: 4,
+      code: "const dog = {\n  name: 'Rex',\n  bark() { return `${____.name} says Woof!`; }\n};",
+      answer: "this",
+      hint: "מילת מפתח שמצביעה על האובייקט שעליו נקרא ה-method.",
+      explanation: "בתוך method, this מצביע על האובייקט שבו הוגדר — כך bark() יכולה לגשת ל-name.",
+    },
+
+    // --- lesson_13::new ---
+    {
+      id: "fill_l13_new_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::new", level: 3,
+      code: "class Cat { constructor(n) { this.name = n; } }\nconst c = ____ Cat('Mitzi');",
+      answer: "new",
+      hint: "מילת מפתח שיוצרת instance חדש מ-class.",
+      explanation: "new מפעילה את ה-constructor ויוצרת אובייקט חדש מהמחלקה.",
+    },
+    {
+      id: "fill_l13_new_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::new", level: 5,
+      code: "class Item {\n  constructor(title) { this.title = title; }\n}\nconst items = ['A','B'].map(t => ____ Item(t));",
+      answer: "new",
+      hint: "יצירת instance בתוך callback של map.",
+      explanation: "בכל איטרציה של map, נוצר instance חדש של Item — התוצאה היא מערך של אובייקטי Item.",
+    },
+
+    // --- lesson_13::querySelectorAll ---
+    {
+      id: "fill_l13_qsa_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::querySelectorAll", level: 3,
+      code: "const btns = document.____('.btn');\nbtns.forEach(btn => btn.disabled = true);",
+      answer: "querySelectorAll",
+      hint: "מתודה שמחזירה NodeList של כל ההתאמות ל-CSS selector.",
+      explanation: "querySelectorAll מחזירה את כל האלמנטים התואמים — כך אפשר ללולאות עליהם עם forEach.",
+    },
+    {
+      id: "fill_l13_qsa_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::querySelectorAll", level: 5,
+      code: "const items = document.querySelectorAll('li.active');\nconst arr = Array.____(items);",
+      answer: "from",
+      hint: "מתודה שממירה NodeList למערך אמיתי.",
+      explanation: "Array.from() ממיר iterable (כמו NodeList) למערך, ואז אפשר להשתמש ב-map/filter/reduce.",
+    },
+
+    // --- lesson_13::removeChild ---
+    {
+      id: "fill_l13_remove_child_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::removeChild", level: 3,
+      code: "const list = document.getElementById('tasks');\nconst first = list.children[0];\nlist.____(first);",
+      answer: "removeChild",
+      hint: "מתודה שמסירה ילד מאלמנט הורה.",
+      explanation: "removeChild מסיר אלמנט ספציפי מתוך ההורה שלו ומחזיר אותו.",
+    },
+    {
+      id: "fill_l13_remove_child_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::removeChild", level: 5,
+      code: "const ul = document.getElementById('list');\nconst toRemove = ul.children[2];\nul.____(toRemove);",
+      answer: "removeChild",
+      hint: "מתודה של הורה שמסירה ילד ספציפי מה-DOM.",
+      explanation: "removeChild מסיר את הילד שנמסר כארגומנט מתוך ההורה. כאן מסירים את הילד השלישי.",
+    },
+
+    // --- lesson_13::replaceChild ---
+    {
+      id: "fill_l13_replace_child_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::replaceChild", level: 4,
+      code: "const parent = document.getElementById('box');\nconst newEl = document.createElement('span');\nconst oldEl = parent.children[0];\nparent.____(newEl, oldEl);",
+      answer: "replaceChild",
+      hint: "מתודה שמחליפה ילד ישן בחדש.",
+      explanation: "replaceChild(new, old) מסיר את old מה-DOM ומכניס ��ת new באותו מקום.",
+    },
+    {
+      id: "fill_l13_replace_child_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::replaceChild", level: 5,
+      code: "const ul = document.querySelector('ul');\nconst newLi = document.createElement('li');\nnewLi.textContent = 'Updated';\nconst removed = ul.replaceChild(newLi, ul.____);\nconsole.log(removed.textContent);",
+      answer: "firstElementChild",
+      hint: "מאפיין שמחזיר את ��ילד הראשון שהוא element.",
+      explanation: "firstElementChild מחזיר אלמנט (לא text node). replaceChild מחזיר את האלמנט שהוסר.",
+    },
+
+    // --- lesson_13::setAttribute ---
+    {
+      id: "fill_l13_set_attr_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::setAttribute", level: 3,
+      code: "const link = document.createElement('a');\nlink.____('href', 'https://example.com');",
+      answer: "setAttribute",
+      hint: "מתודה שמגדירה attribute על אלמנט.",
+      explanation: "setAttribute מגדיר כל attribute — כאן היא מגדירה href כך שהלינק יצביע לכתובת.",
+    },
+    {
+      id: "fill_l13_set_attr_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::setAttribute", level: 5,
+      code: "const card = document.querySelector('.card');\ncard.setAttribute('____', 'product-42');",
+      answer: "data-id",
+      hint: "attribute מסוג data-* לאחסון מידע custom.",
+      explanation: "data-* attributes שומרים מידע custom על אלמנטים. נגישים גם דרך element.dataset.",
+    },
+
+    // --- lesson_13::setItem ---
+    {
+      id: "fill_l13_set_item_manual_001", topicId: "topic_storage", conceptKey: "lesson_13::setItem", level: 3,
+      code: "localStorage.____('username', 'Tal');",
+      answer: "setItem",
+      hint: "מתודה שכותבת ערך ל-localStorage.",
+      explanation: "setItem(key, value) שומרת מח��וזת ב-localStorage תחת key שניתן לשלוף אחר כך עם getItem.",
+    },
+    {
+      id: "fill_l13_set_item_manual_002", topicId: "topic_storage", conceptKey: "lesson_13::setItem", level: 5,
+      code: "const cart = [{ id: 1, qty: 2 }];\nlocalStorage.setItem('cart', ____(cart));",
+      answer: "JSON.stringify",
+      hint: "פונקציה שממירה אובייקט/מערך למחרוזת JSON.",
+      explanation: "localStorage מקבל רק strings. JSON.stringify ממיר את המבנה למחרוזת שמשמרת את הנתונים.",
+    },
+
+    // --- lesson_13::style ---
+    {
+      id: "fill_l13_style_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::style", level: 3,
+      code: "const box = document.getElementById('box');\nbox.____.backgroundColor = 'blue';",
+      answer: "style",
+      hint: "property שנותן גישה ל-inline styles של אלמנט.",
+      explanation: "element.style מאפ��ר לקרוא ול��נות inline CSS. שמות CSS ב-camelCase.",
+    },
+    {
+      id: "fill_l13_style_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::style", level: 4,
+      code: "const el = document.querySelector('.panel');\nel.style.____ = 'none';",
+      answer: "display",
+      hint: "property CSS שמסתיר אלמנט כשמוגדר ל-none.",
+      explanation: "style.display = 'none' מסתיר אלמנט מה-DOM flow. style.display = '' מחזיר לברירת מחדל.",
+    },
+
+    // --- lesson_13::super ---
+    {
+      id: "fill_l13_super_manual_001", topicId: "topic_objects", conceptKey: "lesson_13::super", level: 4,
+      code: "class Animal {\n  constructor(name) { this.name = name; }\n}\nclass Dog extends Animal {\n  constructor(name, breed) {\n    ____(name);\n    this.breed = breed;\n  }\n}",
+      answer: "super",
+      hint: "קריאה ל-constructor של מחלקת האב.",
+      explanation: "super(name) מעביר את name ל-Animal constructor. חובה לפני שימוש ב-this.",
+    },
+    {
+      id: "fill_l13_super_manual_002", topicId: "topic_objects", conceptKey: "lesson_13::super", level: 5,
+      code: "class Shape {\n  area() { return 0; }\n}\nclass Circle extends Shape {\n  area() { return ____.area() + Math.PI * this.r ** 2; }\n}",
+      answer: "super",
+      hint: "גישה למתודה של מחלקת האב מתוך override.",
+      explanation: "super.methodName() קורא למימוש של האב — שימושי כשעושים override ורוצים להרחיב במקום להחליף.",
+    },
+
+    // --- lesson_13::Value ---
+    {
+      id: "fill_l13_value_manual_001", topicId: "topic_dom", conceptKey: "lesson_13::Value", level: 3,
+      code: "const input = document.getElementById('email');\nconst email = input.____;",
+      answer: "value",
+      hint: "property שמחזיר את מה שהמשתמ�� הקליד ב-input.",
+      explanation: "input.value מחזיר את הטקסט הנוכחי בשדה. זה string תמיד.",
+    },
+    {
+      id: "fill_l13_value_manual_002", topicId: "topic_dom", conceptKey: "lesson_13::Value", level: 5,
+      code: "const ageInput = document.querySelector('#age');\nconst age = ____(ageInput.value);\nif (age >= 18) console.log('Adult');",
+      answer: "Number",
+      hint: "פונקציה שממירה string למספר.",
+      explanation: "input.value תמיד string. Number() או parseInt() ממירים למספר לפני השוואה מתמטית.",
     },
 
     // ===== Objects / OOP =====
