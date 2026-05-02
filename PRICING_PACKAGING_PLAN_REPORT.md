@@ -1,5 +1,11 @@
 # Pricing Packaging Plan Report — 2026-04-29
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-29
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 - Target: Post-exam pricing and packaging
 - Policy: Premium services can add mentoring, teacher operations and post-exam career practice, but cannot lock required exam learning.
 - Ready: Yes
@@ -12,4 +18,5 @@
 | Price points are not fabricated | pass | Pricing data must remain unknown/unavailable until real validation exists. |
 | Charging is gated by readiness and metrics | pass | Paid packaging must wait for exam readiness, tab matrix, command center and metrics gates. |
 | Pricing packaging gate is wired | pass | package.json must expose summary/write/strict pricing packaging commands. |
+
 

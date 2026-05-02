@@ -10,7 +10,7 @@ const svcollegeReadiness = require("./report_svcollege_readiness.js");
 const ROOT = path.resolve(__dirname, "..");
 const JSON_PATH = path.join(ROOT, "MANUAL_QUESTION_BLOCKER_MAP.json");
 const MD_PATH = path.join(ROOT, "MANUAL_QUESTION_BLOCKER_MAP.md");
-const REPORT_DATE = "2026-04-30";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 const TARGET_MC_PER_CONCEPT = 3;
 const TARGET_FILL_PER_CODE_CONCEPT = 2;

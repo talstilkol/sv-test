@@ -8,7 +8,7 @@ const distractorAudit = require("./audit_distractors.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
-const REPORT_DATE = "2026-04-28";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_REPORT_PATH = path.join(ROOT, "FEATURE_COVERAGE_REPORT.json");
 const MD_REPORT_PATH = path.join(ROOT, "FEATURE_COVERAGE_REPORT.md");
 
@@ -372,7 +372,7 @@ function formatCoverage(value) {
 
 function buildMarkdown(report) {
   const lines = [
-    "# Feature Coverage Report — 2026-04-28",
+    `# Feature Coverage Report — ${report.date}`,
     "",
     "Generated from repository data files. The report is deterministic and does not use sampling or native randomness.",
     "",

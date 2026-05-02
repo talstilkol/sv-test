@@ -9,7 +9,7 @@ const { stableHash } = require("./audit_distractors.js");
 const ROOT = path.resolve(__dirname, "..");
 const JSON_PATH = path.join(ROOT, "QUESTION_REMEDIATION_QUEUE.json");
 const MD_PATH = path.join(ROOT, "QUESTION_REMEDIATION_QUEUE.md");
-const REPORT_DATE = "2026-04-28";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const BATCH_SIZE = 25;
 
 const ACTIONS_BY_CODE = {
@@ -123,7 +123,7 @@ function formatCounts(counts) {
 
 function buildMarkdown(plan) {
   const lines = [
-    "# Question Remediation Queue — 2026-04-28",
+    `# Question Remediation Queue — ${plan.date || "2026-04-30"}`,
     "",
     "Deterministic rewrite pipeline for flagged MC/Fill items. The script does not invent replacement content; every row must be fixed from verified course material and then manually reviewed.",
     "",

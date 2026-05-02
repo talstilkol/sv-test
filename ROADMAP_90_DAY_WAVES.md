@@ -1,5 +1,11 @@
 # 90-Day Roadmap Waves — 2026-04-29
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-29
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 - Target: Phase 5 90-day roadmap waves
 - Policy: A roadmap wave is closed only when repository evidence exists. Missing learner/pilot outcomes remain unknown/unavailable and are not backfilled.
 - Ready: Yes
@@ -51,3 +57,4 @@ Missing evidence remains `unknown/unavailable`; no feature is promoted from road
 | Teacher Lite core modules exist | pass | Teacher Lite needs real class/student/heatmap/risk modules, not local fake rosters. | `src/core/teacher-classes.js`<br>`src/core/teacher-students.js`<br>`src/core/teacher-heatmap.js`<br>`src/core/teacher-risk-alerts.js`<br>`src/core/teacher-assignments.js` |
 | Teacher Supabase schema is present | pass | Teacher Lite scale path requires real tables and RLS migrations. | `supabase/migrations/002_classes.sql`<br>`supabase/migrations/003_class_students.sql`<br>`supabase/migrations/004_class_concept_mastery.sql`<br>`supabase/migrations/005_class_assignments.sql` |
 | Teacher Lite tests cover class progress and heatmap | pass | Teacher Lite must be locked by module and UI tests. | `tests/teacher-classes.test.js`<br>`tests/teacher-students.test.js`<br>`tests/teacher-heatmap.test.js`<br>`tests/teacher-risk-alerts.test.js`<br>`tests/teacher-lite-ui.test.js` |
+

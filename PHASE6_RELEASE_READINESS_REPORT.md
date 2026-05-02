@@ -1,5 +1,11 @@
 # Phase 6 Release Readiness Report — 2026-04-29
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-29
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 - Ready: No
 - Checks: 5/6
 
@@ -11,4 +17,5 @@
 | release-checklist | fail | Release checklist must cover smoke tests, rollback, cache bump, QA evidence and documentation. |
 | pilot-readiness | pass | Pilot readiness gate must stay green before release. |
 | package-gate | pass | Phase 6 release readiness scripts must be wired. |
+
 

@@ -1,6 +1,6 @@
 {
   "reportVersion": "feature-coverage-v2",
-  "date": "2026-04-28",
+  "date": "2026-05-02",
   "source": "repo",
   "summary": {
     "modules": 24,
@@ -64,7 +64,7 @@
     {
       "id": "codeTrace",
       "label": "Code Trace",
-      "implemented": 89,
+      "implemented": 90,
       "target": 85,
       "unit": "traces",
       "coverage": 100,
@@ -80,8 +80,8 @@
     {
       "id": "optionFeedback",
       "label": "Per-Distractor Feedback",
-      "implemented": 316,
-      "target": 316,
+      "implemented": 644,
+      "target": 644,
       "unit": "MC questions",
       "coverage": 100,
       "status": "Done",
@@ -93,7 +93,7 @@
       "enforceStrict": false,
       "enforceEvidenceGate": true,
       "details": {
-        "optionExplanations": 1732
+        "optionExplanations": 3044
       }
     },
     {

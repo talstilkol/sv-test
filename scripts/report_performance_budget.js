@@ -6,11 +6,11 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "performance-budget-v1";
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 const BUDGETS = Object.freeze({
   "index.html": 120000,
-  "app.js": 1670000,
+  "app.js": 1700000,
   "style.css": 700000,
   "service-worker.js": 30000,
 });

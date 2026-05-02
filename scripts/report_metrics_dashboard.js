@@ -7,7 +7,7 @@ const questionQuality = require("./report_question_quality.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "metrics-dashboard-v1";
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_PATH = path.join(ROOT, "METRICS_DASHBOARD_REPORT.json");
 const MD_PATH = path.join(ROOT, "METRICS_DASHBOARD_REPORT.md");
 

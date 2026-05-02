@@ -1,5 +1,11 @@
 # Exam Edition Release Freeze — 2026-04-29
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-29
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 - Release tag: `svcollege-exam-edition-2026-04-29`
 - Commit: `901cc13`
 - Target: SVCollege AI & Full Stack Exam Edition
@@ -26,4 +32,5 @@
 | level100:release-gate:strict | pass | `npm run level100:release-gate:strict` | Gate passed. |
 | npm test -- --run | pass | `npm test -- --run` | Gate passed. |
 | npm run build | pass | `npm run build` | Gate passed. |
+
 

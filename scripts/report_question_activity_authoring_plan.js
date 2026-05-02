@@ -8,7 +8,7 @@ const coverage = require("./report_question_activity_coverage.js");
 const ROOT = path.resolve(__dirname, "..");
 const JSON_PATH = path.join(ROOT, "QUESTION_ACTIVITY_AUTHORING_PLAN.json");
 const MD_PATH = path.join(ROOT, "QUESTION_ACTIVITY_AUTHORING_PLAN.md");
-const REPORT_DATE = "2026-04-30";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 const SVCollegeLessonPriority = Object.freeze([
   "lesson_11",

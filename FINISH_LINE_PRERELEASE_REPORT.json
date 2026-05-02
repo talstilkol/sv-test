@@ -57,7 +57,7 @@
       "passed": true,
       "exitCode": 0,
       "detail": "passed",
-      "stdout": "> lumen-portal@2.1.0 validate:strict\n> node scripts/validate_bank.js --strict\n\n📦 Loading data files...\n🔒 STRICT mode — warnings, boilerplate, and missing-difficulty are errors.\n   29 lessons · Curated bank: 316 MC + 243 Fill + 335 Trace + 33 Bug + 43 Build · Generated/seeded archives not loaded · 22 guide topics.\n\n🔍 Validating curated bank...\n✅ No errors.\n\n✅ No boilerplate content detected.\n\n📊 Coverage (manual curated only):\n   Total concepts: 568\n   Total manual bank: 316 MC + 243 Fill = 559\n   Generated/seeded archives are not loaded by this validator\n   Concepts still needing more questions: 486/568\n      50 - חזרה וסיכום JavaScript\n      38 - שיעור 17 - HTTP, Express, REST API\n      30 - Database, MongoDB, Mongoose\n      30 - שיעור 26 — TypeScript + React+TS\n      27 - שיעור 16 - Node.js, npm, Modules, File System\n      23 - שיעור 21 — React בסיסי\n      21 - שיעור 23 — Router, Context API\n      20 - שיעור 27 — שיעורי בית TS + Budget Manager\n      19 - AI Engineering - OpenAI, Vercel AI SDK, RAG ו-Agents\n      19 - Auth & Security - אימות, הרשאות וגבולות אבטחה\n      18 - שיעור 15 - Errors, Closure, Async, Promise, Fetch\n      18 - שיעור 22 — useState, Immutable State\n      18 - Next.js Full-Stack - Routing, SSR, API ו-SEO\n      17 - DevOps Foundations - Vercel, Docker, CI/CD ו-Testing\n      17 - SQL/PostgreSQL/ORM - בסיסי נתונים רלציוניים\n      16 - שיעור 24 — useEffect, useMemo, useRef\n      16 - Nest.js Bridge - Modules, Controllers, Providers ו-DI\n      15 - שיעור 13 - Objects, DOM, Classes & Storage\n      12 - שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון\n      12 - Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives",
+      "stdout": "> lumen-portal@2.1.0 validate:strict\n> node scripts/validate_bank.js --strict\n\n📦 Loading data files...\n🔒 STRICT mode — warnings, boilerplate, and missing-difficulty are errors.\n   29 lessons · Curated bank: 357 MC + 271 Fill + 335 Trace + 33 Bug + 43 Build · Generated/seeded archives not loaded · 22 guide topics.\n\n🔍 Validating curated bank...\n✅ No errors.\n\n✅ No boilerplate content detected.\n\n📊 Coverage (manual curated only):\n   Total concepts: 568\n   Total manual bank: 357 MC + 271 Fill = 628\n   Generated/seeded archives are not loaded by this validator\n   Concepts still needing more questions: 471/568\n      50 - חזרה וסיכום JavaScript\n      38 - שיעור 17 - HTTP, Express, REST API\n      30 - Database, MongoDB, Mongoose\n      30 - שיעור 26 — TypeScript + React+TS\n      27 - שיעור 16 - Node.js, npm, Modules, File System\n      23 - שיעור 21 — React בסיסי\n      21 - שיעור 23 — Router, Context API\n      20 - שיעור 27 — שיעורי בית TS + Budget Manager\n      19 - AI Engineering - OpenAI, Vercel AI SDK, RAG ו-Agents\n      19 - Auth & Security - אימות, הרשאות וגבולות אבטחה\n      18 - שיעור 15 - Errors, Closure, Async, Promise, Fetch\n      18 - שיעור 22 — useState, Immutable State\n      18 - Next.js Full-Stack - Routing, SSR, API ו-SEO\n      17 - DevOps Foundations - Vercel, Docker, CI/CD ו-Testing\n      17 - SQL/PostgreSQL/ORM - בסיסי נתונים רלציוניים\n      16 - שיעור 24 — useEffect, useMemo, useRef\n      16 - Nest.js Bridge - Modules, Controllers, Providers ו-DI\n      12 - שיעור 18 - שיעורי בית Node/Express: טפסים, ולידציה ואחסון\n      12 - Design Systems - Tailwind, shadcn/UI ו-Accessible Primitives\n      12 - חוברת תרגול JavaScript — Task Manager",
       "stderr": ""
     },
     {
@@ -73,7 +73,7 @@
       "passed": true,
       "exitCode": 0,
       "detail": "passed",
-      "stdout": "> lumen-portal@2.1.0 qa:questions:strict\n> node scripts/build_question_qa_checklist.js --strict --summary\n\n{\n  \"reportVersion\": \"question-qa-checklist-v2\",\n  \"date\": \"2026-04-30\",\n  \"policy\": {\n    \"deterministic\": true,\n    \"sampleRatio\": 0.1,\n    \"manualReviewRequired\": true,\n    \"noFakeData\": true,\n    \"svcollegePrerequisiteGate\": true\n  },\n  \"summary\": {\n    \"totalQuestions\": 559,\n    \"sampleRatio\": 0.1,\n    \"sampleSize\": 56,\n    \"mc\": 31,\n    \"fill\": 25,\n    \"manual\": 56\n  },\n  \"gates\": {\n    \"svcollegePrerequisites\": {\n      \"totalQuestions\": 259,\n      \"hardQuestions\": 240,\n      \"complexConceptQuestions\": 256,\n      \"questionsRequiringAid\": 257,\n      \"questionsWithIssues\": 0,\n      \"totalIssues\": 0,\n      \"issueCounts\": {\n        \"missingPrerequisites\": 0,\n        \"missingGlossaryTerms\": 0,\n        \"hardQuestionWithoutAid\": 0,\n        \"repeatedLowSignalExplanation\": 0\n      },\n      \"ready\": true\n    }\n  }\n}",
+      "stdout": "> lumen-portal@2.1.0 qa:questions:strict\n> node scripts/build_question_qa_checklist.js --strict --summary\n\n{\n  \"reportVersion\": \"question-qa-checklist-v2\",\n  \"date\": \"2026-04-30\",\n  \"policy\": {\n    \"deterministic\": true,\n    \"sampleRatio\": 0.1,\n    \"manualReviewRequired\": true,\n    \"noFakeData\": true,\n    \"svcollegePrerequisiteGate\": true\n  },\n  \"summary\": {\n    \"totalQuestions\": 628,\n    \"sampleRatio\": 0.1,\n    \"sampleSize\": 63,\n    \"mc\": 35,\n    \"fill\": 28,\n    \"manual\": 63\n  },\n  \"gates\": {\n    \"svcollegePrerequisites\": {\n      \"totalQuestions\": 259,\n      \"hardQuestions\": 240,\n      \"complexConceptQuestions\": 256,\n      \"questionsRequiringAid\": 257,\n      \"questionsWithIssues\": 0,\n      \"totalIssues\": 0,\n      \"issueCounts\": {\n        \"missingPrerequisites\": 0,\n        \"missingGlossaryTerms\": 0,\n        \"hardQuestionWithoutAid\": 0,\n        \"repeatedLowSignalExplanation\": 0\n      },\n      \"ready\": true\n    }\n  }\n}",
       "stderr": ""
     },
     {
@@ -89,7 +89,7 @@
       "passed": true,
       "exitCode": 0,
       "detail": "passed",
-      "stdout": "> lumen-portal@2.1.0 quality:questions:strict\n> node scripts/report_question_quality.js --strict\n\n# Question Quality Report — 2026-04-30\n\nFull-bank deterministic QA for MC and Fill questions. This report creates a `questionQuality` object for every question id and a remediation queue for warnings and notes.\n\n## Summary\n\n- Total questions: 559\n- Mix: 316 MC, 243 Fill\n- Source mix: 559 manual\n- Clean: 543\n- Notes only: 16\n- Warning questions: 0\n- Blocker questions: 0\n- Issue counts: 0 blockers, 0 warnings, 17 notes\n- Question Quality Index: 100% warning-free\n\n## Gates Covered\n\n- MC: duplicate options, near-duplicate distractors, length-cue risk, generic wording, missing explanation, missing conceptKey.\n- Fill: blank count, missing answer/code/explanation/hint, visible answer leakage, one-character ambiguity, missing conceptKey.\n\n## Remediation Queue\n\nShowing first 17 of 17 queued issues.\n\n| # | Severity | Code | ID | Kind | Source | Concept | Message |\n|---:|---|---|---|---|---|---|---|\n| 1 | note | generic-wording | `mc_l12_index_manual_003` | mc | manual | `lesson_12::index` | Option 4 uses broad wording that can cue test-taking instead of knowledge. |\n| 2 | note | generic-wording | `mc_l12_array_manual_001` | mc | manual | `lesson_12::array` | Option 2 uses broad wording that can cue test-taking instead of knowledge. |\n| 3 | note | generic-wording | `mc_l12_index_values_he_manual_003` | mc | manual | `lesson_12::עבודה עם ערכים לפי אינדקס` | Option 2 uses broad wording that can cue test-taking instead of knowledge. |\n| 4 | note | generic-wording | `mc_l12_lowercase_manual_002` | mc | manual | `lesson_12::lowercase` | Option 3 uses broad wording that can cue test-taking instead of knowledge. |\n| 5 | note | generic-wording | `mc_l12_new_array_he_manual_003` | mc | manual | `lesson_12::יצירת מערך חדש (new array)` | Option 3 uses broad wording that can cue test-taking instead of knowledge. |\n| 6 | note | generic-wording | `mc_l12_condition_filter_he_manual_003` | mc | manual | `lesson_12::סינון לפי תנאי` | Option 4 uses broad wording that can cue test-taking instead of knowledge. |\n| 7 | note | generic-wording | `mc_l12_condition_filter_he_manual_001` | mc | manual | `lesson_12::סינון לפי תנאי` | Option 2 uses broad wording that can cue test-taking instead of knowledge. |\n| 8 | note | one-character-answer | `fill_l12_index_manual_002` | fill | manual | `lesson_12::index` | One-character fill answer can be ambiguous without a strong hint. |\n| 9 | note | one-character-answer | `fill_l12_index_manual_001` | fill | manual | `lesson_12::index` | One-character fill answer can be ambiguous without a strong hint. |\n| 10 | note | one-character-answer | `fill_l12_condition_filter_he_manual_002` | fill | manual | `lesson_12::סינון לפי תנאי` | One-character fill answer can be ambiguous without a strong hint. |\n| 11 | note | length-cue | `mc_l12_foreach_manual_002` | mc | manual | `lesson_12::forEach` | Option length spread is high (1..29); check that the correct answer is not visually cued. |\n| 12 | note | generic-wording | `mc_l12_filter_manual_001` | mc | manual | `lesson_12::filter` | Option 2 uses broad wording that can cue test-taking instead of knowledge. |\n| 13 | note | generic-wording | `mc_l12_map_manual_003` | mc | manual | `lesson_12::map` | Option 2 uses broad wording that can cue test-taking instead of knowledge. |\n| 14 | note | generic-wording | `mc_l12_create_from_existing_he_manual_003` | mc | manual | `lesson_12::יצירת מערך חדש מתוך קיים` | Option 2 uses broad wording that can cue test-taking instead of knowledge. |\n| 15 | note | generic-wording | `mc_l12_spread_manual_003` | mc | manual | `lesson_12::spread` | Option 2 uses broad wording that can cue test-taking instead of knowledge. |\n| 16 | note | one-character-answer | `fill_l12_array_manual_002` | fill | manual | `lesson_12::array` | One-character fill answer can be ambiguous without a strong hint. |\n| 17 | note | generic-wording | `mc_l12_index_manual_003` | mc | manual | `lesson_12::index` | Option 2 uses broad wording that can cue test-taking instead of knowledge. |\n\n## Strict Policy\n\n- `--strict` fails only on blocker-level issues.\n- Warnings and notes are review/remediation work; they are intentionally visible but non-blocking until promoted by policy.",
+      "stdout": "> lumen-portal@2.1.0 quality:questions:strict\n> node scripts/report_question_quality.js --strict\n\n# Question Quality Report — 2026-04-30\n\nFull-bank deterministic QA for MC and Fill questions. This report creates a `questionQuality` object for every question id and a remediation queue for warnings and notes.\n\n## Summary\n\n- Total questions: 628\n- Mix: 357 MC, 271 Fill\n- Source mix: 628 manual\n- Clean: 628\n- Notes only: 0\n- Warning questions: 0\n- Blocker questions: 0\n- Issue counts: 0 blockers, 0 warnings, 0 notes\n- Question Quality Index: 100% warning-free\n\n## Gates Covered\n\n- MC: duplicate options, near-duplicate distractors, length-cue risk, generic wording, missing explanation, missing conceptKey.\n- Fill: blank count, missing answer/code/explanation/hint, visible answer leakage, one-character ambiguity, missing conceptKey.\n\n## Remediation Queue\n\nShowing first 0 of 0 queued issues.\n\n| # | Severity | Code | ID | Kind | Source | Concept | Message |\n|---:|---|---|---|---|---|---|---|\n\n## Strict Policy\n\n- `--strict` fails only on blocker-level issues.\n- Warnings and notes are review/remediation work; they are intentionally visible but non-blocking until promoted by policy.",
       "stderr": ""
     },
     {
@@ -120,8 +120,8 @@
       "status": "fail",
       "passed": false,
       "exitCode": 1,
-      "detail": "  \"handCuratedMcPromotionBacklog\": 486, |   \"handCuratedFillPromotionBacklog\": 481 | }",
-      "stdout": "> lumen-portal@2.1.0 questions:coverage-targets:strict\n> node scripts/report_question_coverage_targets.js --strict --summary\n\n{\n  \"ready\": false,\n  \"totalConcepts\": 568,\n  \"mcGapCount\": 486,\n  \"fillGapCount\": 481,\n  \"handCuratedMcPromotionBacklog\": 486,\n  \"handCuratedFillPromotionBacklog\": 481\n}",
+      "detail": "  \"handCuratedMcPromotionBacklog\": 471, |   \"handCuratedFillPromotionBacklog\": 466 | }",
+      "stdout": "> lumen-portal@2.1.0 questions:coverage-targets:strict\n> node scripts/report_question_coverage_targets.js --strict --summary\n\n{\n  \"ready\": false,\n  \"totalConcepts\": 568,\n  \"mcGapCount\": 471,\n  \"fillGapCount\": 466,\n  \"handCuratedMcPromotionBacklog\": 471,\n  \"handCuratedFillPromotionBacklog\": 466\n}",
       "stderr": ""
     },
     {
@@ -137,7 +137,7 @@
       "passed": true,
       "exitCode": 0,
       "detail": "passed",
-      "stdout": "> lumen-portal@2.1.0 questions:reuse-audit:strict\n> node scripts/report_question_reuse_audit.js --strict --summary\n\n{\n  \"questions\": 1215,\n  \"conceptTags\": 384,\n  \"missingConceptKey\": 0,\n  \"duplicateIdentityIssues\": 0,\n  \"profileContractChecks\": 9,\n  \"failedProfileContractChecks\": 0,\n  \"profileExports\": 0,\n  \"failedProfileExports\": 0,\n  \"legacyGeneratedFiltered\": 0,\n  \"ready\": true\n}",
+      "stdout": "> lumen-portal@2.1.0 questions:reuse-audit:strict\n> node scripts/report_question_reuse_audit.js --strict --summary\n\n{\n  \"questions\": 1284,\n  \"conceptTags\": 384,\n  \"missingConceptKey\": 0,\n  \"duplicateIdentityIssues\": 0,\n  \"profileContractChecks\": 9,\n  \"failedProfileContractChecks\": 0,\n  \"profileExports\": 0,\n  \"failedProfileExports\": 0,\n  \"legacyGeneratedFiltered\": 0,\n  \"ready\": true\n}",
       "stderr": ""
     },
     {
@@ -217,7 +217,7 @@
       "passed": true,
       "exitCode": 0,
       "detail": "passed",
-      "stdout": "> lumen-portal@2.1.0 svcollege:student-export:strict\n> node scripts/export_svcollege_student_summary.js --strict --summary\n\n{\n  \"readyForExamPractice\": true,\n  \"blockers\": 0,\n  \"readinessAverage\": 100,\n  \"coveredModules\": 15,\n  \"totalModules\": 15,\n  \"tabCoverage\": 100,\n  \"tabCells\": \"225/225\",\n  \"weakestCriticalCounters\": {\n    \"totalConcepts\": 498,\n    \"withoutQuestions\": 121,\n    \"withoutHardQuestion\": 140,\n    \"withoutDefinition\": 0,\n    \"withoutPrerequisiteEntry\": 0,\n    \"codeConceptsWithoutProof\": 132\n  },\n  \"mockVariants\": 3,\n  \"flowSimulationPassed\": true\n}",
+      "stdout": "> lumen-portal@2.1.0 svcollege:student-export:strict\n> node scripts/export_svcollege_student_summary.js --strict --summary\n\n{\n  \"readyForExamPractice\": true,\n  \"blockers\": 0,\n  \"readinessAverage\": 100,\n  \"coveredModules\": 15,\n  \"totalModules\": 15,\n  \"tabCoverage\": 100,\n  \"tabCells\": \"225/225\",\n  \"weakestCriticalCounters\": {\n    \"totalConcepts\": 498,\n    \"withoutQuestions\": 121,\n    \"withoutHardQuestion\": 136,\n    \"withoutDefinition\": 0,\n    \"withoutPrerequisiteEntry\": 0,\n    \"codeConceptsWithoutProof\": 132\n  },\n  \"mockVariants\": 3,\n  \"flowSimulationPassed\": true\n}",
       "stderr": ""
     },
     {
@@ -282,7 +282,7 @@
       "passed": true,
       "exitCode": 0,
       "detail": "passed",
-      "stdout": "> lumen-portal@2.1.0 test\n> vitest run --run\n\n\n RUN  v4.1.5 /Users/tal/.codex/worktrees/bd35/חומרים לשיעור\n\n\n Test Files  152 passed (152)\n      Tests  622 passed (622)\n   Start at  15:35:56\n   Duration  3.60s (transform 1.83s, setup 0ms, import 3.40s, tests 7.94s, environment 21.85s)",
+      "stdout": "> lumen-portal@2.1.0 test\n> vitest run --run\n\n\n RUN  v4.1.5 /Users/tal/Desktop/חומרים לשיעור\n\n\n Test Files  152 passed (152)\n      Tests  622 passed (622)\n   Start at  21:18:38\n   Duration  3.98s (transform 1.35s, setup 0ms, import 2.57s, tests 8.27s, environment 27.50s)",
       "stderr": ""
     },
     {
@@ -298,7 +298,7 @@
       "passed": true,
       "exitCode": 0,
       "detail": "passed",
-      "stdout": "> lumen-portal@2.1.0 build\n> vite build\n\nvite v8.0.10 building client environment for production...\n\u001b[2K\rtransforming...✓ 36 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/assets/manifest-CB5kUCM5.json          1.12 kB │ gzip:  0.57 kB\ndist/index.html                           102.10 kB │ gzip: 20.47 kB\ndist/assets/index-DDEpfRTZ.css            465.34 kB │ gzip: 75.95 kB\ndist/assets/rolldown-runtime-lhHHWwHU.js    0.15 kB │ gzip:  0.15 kB\ndist/assets/utils-DA3C9xv-.js               0.16 kB │ gzip:  0.14 kB\ndist/assets/views-DypBxYrn.js               1.15 kB │ gzip:  0.62 kB\ndist/assets/ui-C1wGTzuN.js                  1.54 kB │ gzip:  0.58 kB\ndist/assets/index-DO9ZacsW.js               1.78 kB │ gzip:  0.96 kB\ndist/assets/core-hrllUkwp.js              141.36 kB │ gzip: 42.50 kB\n\n✓ built in 72ms",
+      "stdout": "> lumen-portal@2.1.0 build\n> vite build\n\nvite v8.0.10 building client environment for production...\n\u001b[2K\rtransforming...✓ 36 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/assets/manifest-CB5kUCM5.json          1.12 kB │ gzip:  0.57 kB\ndist/index.html                           102.10 kB │ gzip: 20.47 kB\ndist/assets/index-DDEpfRTZ.css            465.34 kB │ gzip: 75.95 kB\ndist/assets/rolldown-runtime-lhHHWwHU.js    0.15 kB │ gzip:  0.15 kB\ndist/assets/utils-DA3C9xv-.js               0.16 kB │ gzip:  0.14 kB\ndist/assets/views-DypBxYrn.js               1.15 kB │ gzip:  0.62 kB\ndist/assets/ui-C1wGTzuN.js                  1.54 kB │ gzip:  0.58 kB\ndist/assets/index-DO9ZacsW.js               1.78 kB │ gzip:  0.96 kB\ndist/assets/core-hrllUkwp.js              141.36 kB │ gzip: 42.50 kB\n\n✓ built in 69ms",
       "stderr": ""
     }
   ],
@@ -307,7 +307,15 @@
       "id": "questions-coverage-targets-strict",
       "label": "Manual question coverage target strict",
       "command": "npm run questions:coverage-targets:strict",
-      "detail": "  \"handCuratedMcPromotionBacklog\": 486, |   \"handCuratedFillPromotionBacklog\": 481 | }"
+      "detail": "  \"handCuratedMcPromotionBacklog\": 471, |   \"handCuratedFillPromotionBacklog\": 466 | }"
     }
-  ]
+  ],
+  "sourceOfTruth": {
+    "status": "historical",
+    "reportVersion": "report-source-of-truth-v1",
+    "evaluatedAt": "2026-05-02",
+    "sourceDate": "2026-04-30",
+    "source": "report-archive",
+    "reason": "date-mismatch-with-source-of-truth"
+  }
 }

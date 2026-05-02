@@ -127,6 +127,11 @@
         <span aria-hidden="true">🌗</span>
       </button>
 
+      <button class="pwa-install-btn" id="pwa-install-btn" type="button" aria-label="התקן את האפליקציה" title="התקנת האפליקציה (PWA)" hidden>
+        <span class="emoji" aria-hidden="true">⬇️</span>
+        <span class="lbl">התקן</span>
+      </button>
+
       <!-- Global Print-to-PDF (works in every view) -->
       <button class="global-print-btn" id="global-print-btn" aria-label="שמור את הדף כ-PDF" title="שמור את הדף הנוכחי כ-PDF צבעוני (Ctrl+P) — כל יחידת תוכן בעמוד נפרד">
         <span class="emoji" aria-hidden="true">📄</span><span class="lbl">PDF</span>
@@ -1435,7 +1440,7 @@
             <h3>📝 רפלקציה יומית</h3>
             <div id="reflection-date" class="refl-date"></div>
           </div>
-          <button id="reflection-close" class="refl-close" aria-label="סגור">✕</button>
+          <button id="reflection-close-w12" class="refl-close" aria-label="סגור">✕</button>
         </div>
         <p class="refl-prompt">מה למדת היום? מה היה קשה? מה רצית לחזק?</p>
         <textarea id="reflection-text" class="refl-textarea" rows="4" placeholder="כתוב כאן את המחשבות שלך..."></textarea>

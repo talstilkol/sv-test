@@ -1,5 +1,11 @@
 # Video Asset Tracker Report — 2026-04-29
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-29
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 - Data source: `data/concept_videos.js`
 - Script source: `NOTEBOOKLM_CONCEPT_CLIPS.md`
 - Ready: Yes
@@ -22,4 +28,5 @@ Replacement dates remain `unknown/unavailable` until an original NotebookLM expo
 | `lesson_23::Router` | documented | pending-original-notebooklm-export | temporary-fallback-linked | ready-for-production-review | unknown/unavailable | `lesson_23__Router__notebooklm_v1.mp4` |
 | `lesson_24::dependency array` | documented | pending-original-notebooklm-export | temporary-fallback-linked | ready-for-production-review | unknown/unavailable | `lesson_24__dependency_array__notebooklm_v1.mp4` |
 | `lesson_24::useEffect` | documented | pending-original-notebooklm-export | temporary-fallback-linked | ready-for-production-review | unknown/unavailable | `lesson_24__useEffect__notebooklm_v1.mp4` |
+
 

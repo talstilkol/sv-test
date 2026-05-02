@@ -7,7 +7,7 @@ const { spawnSync } = require("child_process");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "exam-edition-release-freeze-v1";
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const RELEASE_TAG = "svcollege-exam-edition-2026-04-29";
 const JSON_PATH = path.join(ROOT, "EXAM_EDITION_RELEASE_FREEZE.json");
 const MD_PATH = path.join(ROOT, "EXAM_EDITION_RELEASE_FREEZE.md");

@@ -6,6 +6,7 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "svcollege-pwa-offline-smoke-v1";
+const REPORT_DATE = new Date().toISOString().slice(0, 10);
 
 function read(file) {
   return fs.readFileSync(path.join(ROOT, file), "utf8");
@@ -161,7 +162,7 @@ function buildReport() {
   const failedStrategies = strategyChecks.filter((check) => !check.passed);
   return {
     reportVersion: REPORT_VERSION,
-    date: "2026-04-29",
+    date: REPORT_DATE,
     target: "SVCollege core offline/PWA flow",
     summary: {
       assets: assetResults.length,

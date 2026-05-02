@@ -7,7 +7,7 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_MD = "BRUTAL_MASTER_PLAN_AUDIT.md";
 const REPORT_JSON = "BRUTAL_MASTER_PLAN_AUDIT.json";
-const REPORT_DATE = "2026-04-30";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 function read(file) {
   return fs.readFileSync(path.join(ROOT, file), "utf8");

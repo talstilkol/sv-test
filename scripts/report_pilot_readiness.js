@@ -7,7 +7,7 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 const JSON_PATH = path.join(ROOT, "PILOT_READINESS_REPORT.json");
 const MD_PATH = path.join(ROOT, "PILOT_READINESS_REPORT.md");
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 function read(relativePath) {
   return fs.readFileSync(path.join(ROOT, relativePath), "utf8");

@@ -6,6 +6,7 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "svcollege-accessibility-smoke-v1";
+const REPORT_DATE = new Date().toISOString().slice(0, 10);
 
 function read(file) {
   return fs.readFileSync(path.join(ROOT, file), "utf8");
@@ -62,7 +63,7 @@ const STATIC_CHECKS = Object.freeze([
     file: "app.js",
     snippets: Object.freeze([
       'document.addEventListener("keydown"',
-      'if (e.key === "Escape"',
+      'event.key === "Escape"',
       'if (event.key === "Enter" || event.key === " ")',
       'aria-expanded',
       'aria-pressed',
@@ -147,7 +148,7 @@ function buildReport() {
   const failed = checks.filter((check) => !check.passed);
   return {
     reportVersion: REPORT_VERSION,
-    date: "2026-04-29",
+    date: REPORT_DATE,
     target: "SVCollege accessibility smoke: focus, modals, keyboard, contrast",
     summary: {
       checks: checks.length,

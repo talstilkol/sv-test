@@ -7,7 +7,8 @@ const vm = require("vm");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
-const REPORT_PATH = path.join(ROOT, "AUDIT_DISTRACTORS_2026-04-30.md");
+const REPORT_DATE = new Date().toISOString().slice(0,10);
+const REPORT_PATH = path.join(ROOT, `AUDIT_DISTRACTORS_${REPORT_DATE}.md`);
 const SAMPLE_SIZE = 50;
 
 function stableHash(input) {
@@ -198,7 +199,7 @@ function formatIssueList(issues) {
 function buildReport(audits) {
   const summary = summarize(audits);
   const lines = [
-    "# Distractor Objectivity Audit — 2026-04-30",
+    `# Distractor Objectivity Audit — ${REPORT_DATE}`,
     "",
     "דגימה דטרמיניסטית של 50 שאלות MC מתוך המאגר הידני. לא נעשה שימוש באקראיות; הבחירה נעשית לפי hash יציב של `id + conceptKey + question`, כדי שהדוח יהיה ניתן לשחזור.",
     "",

@@ -7,6 +7,7 @@ const tabMatrix = require("./report_svcollege_tab_matrix.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "svcollege-critical-flows-v1";
+const REPORT_DATE = new Date().toISOString().slice(0, 10);
 
 function read(file) {
   return fs.readFileSync(path.join(ROOT, file), "utf8");
@@ -111,7 +112,7 @@ function buildReport() {
   const passed = flows.filter((flow) => flow.passed).length;
   return {
     reportVersion: REPORT_VERSION,
-    date: "2026-04-29",
+    date: REPORT_DATE,
     target: "SVCollege AI & Full Stack critical practice flows",
     summary: {
       flows: flows.length,

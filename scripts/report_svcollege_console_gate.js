@@ -7,6 +7,7 @@ const criticalFlows = require("./report_svcollege_critical_flows.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "svcollege-console-gate-v1";
+const REPORT_DATE = new Date().toISOString().slice(0, 10);
 
 function read(file) {
   return fs.readFileSync(path.join(ROOT, file), "utf8");
@@ -54,7 +55,7 @@ function buildReport() {
   const failed = checks.filter((check) => !check.passed);
   return {
     reportVersion: REPORT_VERSION,
-    date: "2026-04-29",
+    date: REPORT_DATE,
     target: "SVCollege runtime console error release gate",
     summary: {
       checks: checks.length,

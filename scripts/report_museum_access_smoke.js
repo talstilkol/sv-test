@@ -10,7 +10,7 @@ const fullPortalSmoke = require("./report_svcollege_full_portal_smoke.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "museum-access-smoke-v1";
-const REPORT_DATE = "2026-04-30";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 function read(file) {
   return fs.readFileSync(path.join(ROOT, file), "utf8");

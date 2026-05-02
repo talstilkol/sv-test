@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const quizResults = document.getElementById("quiz-results");
   const quizScore = document.getElementById("quiz-score");
   const quizFeedback = document.getElementById("quiz-feedback");
+  const pwaInstallBtn = document.getElementById("pwa-install-btn");
   const mobileToggle = document.getElementById("mobile-toggle");
   const focusModeToggle = document.getElementById("focus-mode-toggle");
   const focusSideToggle = document.getElementById("focus-side-toggle");
@@ -7209,6 +7210,60 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // =========== P1.3 — PWA install prompt ===========
+  const isPwaStandaloneMode = () => {
+    if (typeof window.matchMedia === "function") {
+      const standaloneQuery = window.matchMedia("(display-mode: standalone)");
+      if (standaloneQuery.matches) return true;
+    }
+    return Boolean(window.navigator.standalone);
+  };
+
+  let pendingPwaPrompt = null;
+  const setPwaInstallButtonVisibility = (visible) => {
+    if (!pwaInstallBtn) return;
+    pwaInstallBtn.hidden = !visible;
+    pwaInstallBtn.disabled = !visible;
+  };
+
+  setPwaInstallButtonVisibility(false);
+  if (isPwaStandaloneMode()) setPwaInstallButtonVisibility(false);
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    if (isPwaStandaloneMode()) return;
+    event.preventDefault();
+    pendingPwaPrompt = event;
+    setPwaInstallButtonVisibility(true);
+  });
+
+  window.addEventListener("appinstalled", () => {
+    pendingPwaPrompt = null;
+    setPwaInstallButtonVisibility(false);
+  });
+
+  pwaInstallBtn?.addEventListener("click", async () => {
+    if (!pendingPwaPrompt) return;
+    const promptEvent = pendingPwaPrompt;
+    pendingPwaPrompt = null;
+
+    pwaInstallBtn.disabled = true;
+    setPwaInstallButtonVisibility(true);
+    try {
+      await promptEvent.prompt();
+      const result = await promptEvent.userChoice;
+      if (result?.outcome === "accepted") {
+        setPwaInstallButtonVisibility(false);
+      }
+    } catch (error) {
+      console.warn("[LumenPortal] PWA install flow failed:", error);
+    } finally {
+      if (pwaInstallBtn) {
+        pwaInstallBtn.disabled = false;
+      }
+      if (pendingPwaPrompt) setPwaInstallButtonVisibility(true);
+    }
+  });
+
   // =========== MOBILE MENU ===========
   if (mobileToggle) {
     mobileToggle.addEventListener("click", () => {
@@ -7508,8 +7563,7 @@ document.addEventListener("DOMContentLoaded", () => {
               const el = document.querySelector(`.concept-card[data-concept="${cssEscape(conceptName)}"]`);
               el?.scrollIntoView({ behavior: "smooth", block: "start" });
             }, 300);
-            panel.setAttribute("hidden", "");
-            fab.setAttribute("aria-expanded", "false");
+            closePocketPanel();
           });
         });
       }
@@ -7520,32 +7574,29 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    fab.addEventListener("click", () => {
-      const open = panel.hasAttribute("hidden");
-      if (open) {
+    const pocketPanelController = createManagedModalController({
+      modal: panel,
+      trapRoot: panel,
+      focusTarget: closeBtn,
+      open: () => {
         panel.removeAttribute("hidden");
         fab.setAttribute("aria-expanded", "true");
         refresh();
-      } else {
+      },
+      close: () => {
         panel.setAttribute("hidden", "");
         fab.setAttribute("aria-expanded", "false");
-      }
+      },
     });
-    closeBtn?.addEventListener("click", () => {
-      panel.setAttribute("hidden", "");
-      fab.setAttribute("aria-expanded", "false");
+    const openPocketPanel = () => pocketPanelController.open();
+    const closePocketPanel = () => pocketPanelController.close();
+
+    // FAB toggle
+    fab.addEventListener("click", () => {
+      if (panel.hasAttribute("hidden")) openPocketPanel();
+      else closePocketPanel();
     });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !panel.hasAttribute("hidden")) {
-        const modal = panel.querySelector(".modal-overlay:not([hidden])");
-        if (modal) {
-          modal.setAttribute("hidden", "");
-          return;
-        }
-        panel.setAttribute("hidden", "");
-        fab.setAttribute("aria-expanded", "false");
-      }
-    });
+    closeBtn?.addEventListener("click", closePocketPanel);
 
     // Expose API for action handler
     window.pocketToggle = function (key) {
@@ -7652,28 +7703,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // FAB toggle
-    fab.addEventListener("click", () => {
-      const open = panel.hasAttribute("hidden");
-      if (open) {
+    const viewModePanelController = createManagedModalController({
+      modal: panel,
+      trapRoot: panel,
+      focusTarget: closeBtn,
+      open: () => {
         panel.removeAttribute("hidden");
         fab.setAttribute("aria-expanded", "true");
         rebuildJumper();
-      } else {
+      },
+      close: () => {
         panel.setAttribute("hidden", "");
         fab.setAttribute("aria-expanded", "false");
-      }
+      },
     });
-    closeBtn?.addEventListener("click", () => {
-      panel.setAttribute("hidden", "");
-      fab.setAttribute("aria-expanded", "false");
+    const openViewModePanel = () => viewModePanelController.open();
+    const closeViewModePanel = () => viewModePanelController.close();
+
+    fab.addEventListener("click", () => {
+      if (panel.hasAttribute("hidden")) openViewModePanel();
+      else closeViewModePanel();
     });
-    // Close on Escape
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !panel.hasAttribute("hidden")) {
-        panel.setAttribute("hidden", "");
-        fab.setAttribute("aria-expanded", "false");
-      }
-    });
+    closeBtn?.addEventListener("click", closeViewModePanel);
 
     // Concept jumper — populated from currently visible concept cards
     function rebuildJumper() {
@@ -7750,18 +7801,181 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     };
 
+    const modalManager = window.__lumenModalManager || (() => {
+      const stack = [];
+      let keyboardBound = false;
+      const focusableSelector = [
+        "a[href]",
+        "area[href]",
+        "button:not([disabled])",
+        "input:not([disabled]):not([type='hidden'])",
+        "select:not([disabled])",
+        "textarea:not([disabled])",
+        "details summary",
+        "[contenteditable='true']",
+        "[tabindex]:not([tabindex='-1'])",
+      ].join(", ");
+
+      const resolveNode = (target, root) => {
+        if (!target) return null;
+        if (typeof target === "function") return target();
+        if (typeof target === "string" && root) return root.querySelector(target);
+        return target instanceof HTMLElement ? target : null;
+      };
+
+      const focusNode = (node) => {
+        if (!(node instanceof HTMLElement)) return;
+        try {
+          node.focus({ preventScroll: true });
+        } catch (_) {
+          try { node.focus(); } catch (_) {}
+        }
+      };
+
+      const getTabbableElements = (container) => {
+        if (!container || typeof container.querySelectorAll !== "function") return [];
+        return Array.from(container.querySelectorAll(focusableSelector)).filter((node) => {
+          if (!(node instanceof HTMLElement)) return false;
+          if (node.hidden) return false;
+          const style = getComputedStyle(node);
+          return style.display !== "none" && style.visibility !== "hidden";
+        });
+      };
+
+      const handleTab = (event, entry) => {
+        const container = entry.trapRoot || entry.modal;
+        const tabbables = getTabbableElements(container);
+        if (!tabbables.length) {
+          event.preventDefault();
+          if (entry.modal instanceof HTMLElement) focusNode(entry.modal);
+          return;
+        }
+
+        const first = tabbables[0];
+        const last = tabbables[tabbables.length - 1];
+        const active = document.activeElement;
+        const within = active && container && container.contains(active);
+
+        if (event.shiftKey) {
+          if (!within || active === first) {
+            event.preventDefault();
+            focusNode(last);
+          }
+          return;
+        }
+
+        if (!within || active === last) {
+          event.preventDefault();
+          focusNode(first);
+        }
+      };
+
+      const keydownHandler = (event) => {
+        const entry = stack[stack.length - 1];
+        if (!entry) return;
+
+        if (event.key === "Escape") {
+          event.preventDefault();
+          closeModal(entry.modal);
+          return;
+        }
+
+        if (event.key === "Tab") {
+          handleTab(event, entry);
+        }
+      };
+
+      const bindKeyboard = (on) => {
+        if (on && !keyboardBound) {
+          document.addEventListener("keydown", keydownHandler);
+          keyboardBound = true;
+        }
+        if (!on && keyboardBound) {
+          document.removeEventListener("keydown", keydownHandler);
+          keyboardBound = false;
+        }
+      };
+
+      const open = (entry, ...args) => {
+        if (!entry || !entry.modal || typeof entry.open !== "function" || typeof entry.close !== "function") return;
+
+        const existing = stack.findIndex((item) => item.modal === entry.modal);
+        if (existing >= 0) stack.splice(existing, 1);
+
+        const modalEntry = {
+          modal: entry.modal,
+          close: entry.close,
+          trapRoot: entry.trapRoot || entry.modal,
+          focusTarget: entry.focusTarget,
+          restoreFocus: entry.restoreFocus !== false,
+          returnFocus: entry.restoreFocus !== false && document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null,
+          closeInFlight: false,
+        };
+
+        entry.open(...args);
+        stack.push(modalEntry);
+        bindKeyboard(true);
+
+        const container = modalEntry.trapRoot || modalEntry.modal;
+        const target = resolveNode(modalEntry.focusTarget, container);
+        if (target) focusNode(target);
+        else {
+          const [first] = getTabbableElements(container);
+          if (first) focusNode(first);
+        }
+      };
+
+      const closeModal = (modal) => {
+        const index = stack.findIndex((item) => item.modal === modal);
+        if (index < 0) return;
+        const entry = stack[index];
+        if (entry.closeInFlight) return;
+        entry.closeInFlight = true;
+        stack.splice(index, 1);
+
+        try {
+          entry.close();
+        } finally {
+          if (entry.restoreFocus && entry.returnFocus && entry.returnFocus.isConnected) {
+            focusNode(entry.returnFocus);
+          }
+          if (stack.length === 0) bindKeyboard(false);
+        }
+      };
+
+      const createController = (entry) => ({
+        open: (...args) => open(entry, ...args),
+        close: () => closeModal(entry.modal),
+      });
+
+      return { open, close: closeModal, create: createController };
+    })();
+
+    window.__lumenModalManager = modalManager;
+    const createManagedModalController = typeof modalManager.create === "function"
+      ? (entry) => modalManager.create(entry)
+      : (entry) => ({ open: entry.open, close: entry.close });
+
     // ----- Glossary modal -----
     const glossaryModal = document.getElementById("glossary-modal");
     const glossaryList = document.getElementById("glossary-list");
     const glossarySearchEl = document.getElementById("glossary-search");
-    function openGlossary() {
-      if (!glossaryModal) return;
-      glossaryModal.removeAttribute("hidden");
-      panel.setAttribute("hidden", "");
-      fab.setAttribute("aria-expanded", "false");
-      renderGlossary("");
-      glossarySearchEl?.focus();
-    }
+    const openGlossaryModal = createManagedModalController({
+      modal: glossaryModal,
+      trapRoot: glossaryModal,
+      focusTarget: glossarySearchEl,
+      open: () => {
+        if (!glossaryModal) return;
+        glossaryModal.removeAttribute("hidden");
+        panel.setAttribute("hidden", "");
+        fab.setAttribute("aria-expanded", "false");
+        renderGlossary("");
+      },
+      close: () => glossaryModal?.setAttribute("hidden", ""),
+    });
+    function openGlossary() { openGlossaryModal.open(); }
     function renderGlossary(q) {
       if (!glossaryList) return;
       const G = window.GLOSSARY || {};
@@ -7796,8 +8010,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("");
     }
     glossarySearchEl?.addEventListener("input", (e) => renderGlossary(e.target.value));
-    document.getElementById("glossary-close")?.addEventListener("click", () => glossaryModal?.setAttribute("hidden", ""));
-    glossaryModal?.addEventListener("click", (e) => { if (e.target === glossaryModal) glossaryModal.setAttribute("hidden", ""); });
+    document.getElementById("glossary-close")?.addEventListener("click", () => openGlossaryModal.close());
+    glossaryModal?.addEventListener("click", (e) => { if (e.target === glossaryModal) openGlossaryModal.close(); });
     document.getElementById("vm-open-glossary")?.addEventListener("click", openGlossary);
 
     // ----- Daily Reflection -----
@@ -7845,8 +8059,21 @@ document.addEventListener("DOMContentLoaded", () => {
       renderReflectionHistory();
       alert("✅ נשמר!");
     });
-    document.getElementById("reflection-close")?.addEventListener("click", () => reflectModal?.setAttribute("hidden", ""));
-    reflectModal?.addEventListener("click", (e) => { if (e.target === reflectModal) reflectModal.setAttribute("hidden", ""); });
+    const openReflectionModal = createManagedModalController({
+      modal: reflectModal,
+      trapRoot: reflectModal,
+      focusTarget: reflectConfRange,
+      open: () => {
+        if (!reflectModal) return;
+        reflectModal.removeAttribute("hidden");
+        panel.setAttribute("hidden", "");
+        fab.setAttribute("aria-expanded", "false");
+        renderReflectionHistory();
+      },
+      close: () => reflectModal?.setAttribute("hidden", ""),
+    });
+    document.getElementById("reflection-close")?.addEventListener("click", () => openReflectionModal.close());
+    reflectModal?.addEventListener("click", (e) => { if (e.target === reflectModal) openReflectionModal.close(); });
     document.getElementById("vm-open-reflection")?.addEventListener("click", openReflection);
 
     // ----- 🔀 Reverse Q&A — given definition, pick concept name -----
@@ -7924,11 +8151,19 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
     document.getElementById("vm-open-reverse")?.addEventListener("click", () => {
-      reverseModal?.removeAttribute("hidden");
-      renderReverseQuestion();
+      openReverseQuestionModal.open();
     });
-    document.getElementById("reverse-close")?.addEventListener("click", () => reverseModal?.setAttribute("hidden", ""));
-    reverseModal?.addEventListener("click", (e) => { if (e.target === reverseModal) reverseModal.setAttribute("hidden", ""); });
+    const openReverseQuestionModal = createManagedModalController({
+      modal: reverseModal,
+      trapRoot: reverseModal,
+      open: () => {
+        reverseModal?.removeAttribute("hidden");
+        renderReverseQuestion();
+      },
+      close: () => reverseModal?.setAttribute("hidden", ""),
+    });
+    document.getElementById("reverse-close")?.addEventListener("click", () => openReverseQuestionModal.close());
+    reverseModal?.addEventListener("click", (e) => { if (e.target === reverseModal) openReverseQuestionModal.close(); });
 
     // ----- "⏰ מכונת זמן" — review timeline from real local progress -----
     const timeMachineModal = document.getElementById("time-machine-modal");
@@ -8061,9 +8296,9 @@ document.addEventListener("DOMContentLoaded", () => {
         : `<div class="tm-empty">אין עדיין אירועים לציר הזמן. התחל בכרטיסיות, מבחן מדומה או רפלקציה כדי לבנות היסטוריה אמיתית.</div>`;
 
       timeMachineBody.innerHTML = `
-        <div class="tm-summary">
-          <div><span>${exams.length}</span><small>מבחנים</small></div>
-          <div><span>${bestExam == null ? "—" : bestExam + "%"}</span><small>ציון שיא</small></div>
+          <div class="tm-summary">
+            <div><span>${exams.length}</span><small>מבחנים</small></div>
+            <div><span>${bestExam == null ? "—" : bestExam + "%"}</span><small>ציון שיא</small></div>
           <div><span>${reflections.length}</span><small>רפלקציות</small></div>
           <div><span>${wrapUps.length}</span><small>סיכומי שיעור</small></div>
           <div><span>${mastered}</span><small>מאסטר</small></div>
@@ -8081,7 +8316,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", () => {
           const ref = findConceptByKey(btn.dataset.tmConcept);
           if (!ref) return;
-          timeMachineModal?.setAttribute("hidden", "");
+          timeMachineModalController.close();
           panel.setAttribute("hidden", "");
           fab.setAttribute("aria-expanded", "false");
           openLesson(ref.lesson.id);
@@ -8093,31 +8328,41 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
       document.getElementById("tm-open-flashcards")?.addEventListener("click", () => {
-        timeMachineModal?.setAttribute("hidden", "");
+        timeMachineModalController.close();
         panel.setAttribute("hidden", "");
         fab.setAttribute("aria-expanded", "false");
         openFlashcards();
       });
       document.getElementById("tm-open-map")?.addEventListener("click", () => {
-        timeMachineModal?.setAttribute("hidden", "");
+        timeMachineModalController.close();
         panel.setAttribute("hidden", "");
         fab.setAttribute("aria-expanded", "false");
         openKnowledgeMap();
       });
       document.getElementById("tm-open-exam")?.addEventListener("click", () => {
-        timeMachineModal?.setAttribute("hidden", "");
+        timeMachineModalController.close();
         panel.setAttribute("hidden", "");
         fab.setAttribute("aria-expanded", "false");
         openMockExam();
       });
     }
 
-    document.getElementById("vm-open-history")?.addEventListener("click", () => {
-      timeMachineModal?.removeAttribute("hidden");
-      renderTimeMachine();
+    const timeMachineModalController = createManagedModalController({
+      modal: timeMachineModal,
+      trapRoot: timeMachineModal,
+      focusTarget: "#time-machine-close",
+      open: () => {
+        timeMachineModal?.removeAttribute("hidden");
+        renderTimeMachine();
+      },
+      close: () => timeMachineModal?.setAttribute("hidden", ""),
     });
-    document.getElementById("time-machine-close")?.addEventListener("click", () => timeMachineModal?.setAttribute("hidden", ""));
-    timeMachineModal?.addEventListener("click", (e) => { if (e.target === timeMachineModal) timeMachineModal.setAttribute("hidden", ""); });
+
+    document.getElementById("vm-open-history")?.addEventListener("click", () => {
+      timeMachineModalController.open();
+    });
+    document.getElementById("time-machine-close")?.addEventListener("click", () => timeMachineModalController.close());
+    timeMachineModal?.addEventListener("click", (e) => { if (e.target === timeMachineModal) timeMachineModalController.close(); });
 
     // Expose for outside callers (when lesson changes, refresh jumper)
     window.viewModeRefreshJumper = rebuildJumper;
@@ -13441,6 +13686,44 @@ document.addEventListener("DOMContentLoaded", () => {
     trainerRecentOutcomes = trainerRecentOutcomes.slice(-12);
   }
 
+  function bindEnterToSubmitButton(btn) {
+    if (!btn || btn.dataset.enterSubmitBound === "1") return;
+    btn.dataset.enterSubmitBound = "1";
+    btn.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
+      btn.click();
+    });
+  }
+
+  function bindArrowKeyNavigation(buttons) {
+    const optionButtons = Array.from(buttons || []);
+    if (optionButtons.length === 0) return;
+    optionButtons.forEach((btn) => {
+      if (btn.dataset.arrowNavBound === "1") return;
+      btn.dataset.arrowNavBound = "1";
+      btn.addEventListener("keydown", (event) => {
+        const delta = event.key === "ArrowRight" || event.key === "ArrowDown"
+          ? 1
+          : event.key === "ArrowLeft" || event.key === "ArrowUp"
+            ? -1
+            : 0;
+        if (!delta) return;
+        event.preventDefault();
+        const navigable = optionButtons.filter((option) => !option.disabled);
+        if (navigable.length === 0) return;
+        const active = document.activeElement;
+        let current = navigable.indexOf(active instanceof Element ? active : null);
+        if (current < 0) {
+          current = navigable.indexOf(event.currentTarget);
+          if (current < 0) return;
+        }
+        const next = (current + delta + navigable.length) % navigable.length;
+        navigable[next]?.focus();
+      });
+    });
+  }
+
   function trainerFatigueGuardStatus() {
     if (trainerRecentOutcomes.length < 6) return null;
     const previous = trainerRecentOutcomes.slice(-6, -3);
@@ -13603,7 +13886,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .getElementById("tq-skip-fill")
         ?.addEventListener("click", () => nextQuestion());
     } else {
-      card.querySelectorAll(".tq-option").forEach((btn) => {
+      const optionButtons = card.querySelectorAll(".tq-option");
+      bindArrowKeyNavigation(optionButtons);
+      optionButtons.forEach((btn) => {
+        bindEnterToSubmitButton(btn);
         btn.addEventListener("click", () =>
           onAnswer(parseInt(btn.dataset.i, 10)),
         );
@@ -16660,27 +16946,44 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!modal || !body || !title || !subtitle || !card) return;
 
     const entryById = new Map(entries.map((entry) => [entry.id, entry]));
+    const createManagedModalController = typeof window.__lumenModalManager?.create === "function"
+      ? (entry) => window.__lumenModalManager.create(entry)
+      : (entry) => ({ open: entry.open, close: entry.close });
     let returnFocus = null;
+    let activeEntry = null;
+    const museumVideoModalController = createManagedModalController({
+      modal,
+      trapRoot: card,
+      focusTarget: ".museum-video-modal-card",
+      open: () => {
+        if (!activeEntry || !modal || !title || !subtitle || !body || !card) return;
+        title.textContent = activeEntry.title;
+        subtitle.textContent = `${activeEntry.area} · ${activeEntry.group}`;
+        body.innerHTML = renderMuseumVideoDocument(activeEntry);
+        modal.hidden = false;
+        document.body.classList.add("museum-video-modal-open");
+        card.focus({ preventScroll: true });
+      },
+      close: () => {
+        modal.hidden = true;
+        document.body.classList.remove("museum-video-modal-open");
+        if (returnFocus && typeof returnFocus.focus === "function") {
+          try { returnFocus.focus({ preventScroll: true }); } catch (_) {}
+        }
+        returnFocus = null;
+      },
+    });
 
     const closeModal = () => {
-      modal.hidden = true;
-      document.body.classList.remove("museum-video-modal-open");
-      if (returnFocus && typeof returnFocus.focus === "function") {
-        try { returnFocus.focus({ preventScroll: true }); } catch (_) {}
-      }
-      returnFocus = null;
+      museumVideoModalController.close();
     };
 
     const openModal = (videoId) => {
       const entry = entryById.get(videoId);
       if (!entry) return;
-      returnFocus = document.activeElement;
-      title.textContent = entry.title;
-      subtitle.textContent = `${entry.area} · ${entry.group}`;
-      body.innerHTML = renderMuseumVideoDocument(entry);
-      modal.hidden = false;
-      document.body.classList.add("museum-video-modal-open");
-      card.focus({ preventScroll: true });
+      activeEntry = entry;
+      returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      museumVideoModalController.open();
     };
 
     container.querySelectorAll("[data-museum-video]").forEach((btn) => {
@@ -16689,10 +16992,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     modal.addEventListener("click", (event) => {
       if (event.target === modal || event.target.closest("[data-museum-video-close]")) closeModal();
-    });
-
-    modal.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeModal();
     });
   }
 
@@ -25343,14 +25642,17 @@ document.addEventListener("DOMContentLoaded", () => {
       topicEl.querySelectorAll(".guide-q-card[data-kind='mc']").forEach((card) => {
         const correct = parseInt(card.dataset.correct, 10);
         const conceptKeyStr = card.dataset.concept;
-        card.querySelectorAll(".guide-q-option").forEach((btn) => {
+        const optionButtons = card.querySelectorAll(".guide-q-option");
+        bindArrowKeyNavigation(optionButtons);
+        optionButtons.forEach((btn) => {
+          bindEnterToSubmitButton(btn);
           btn.addEventListener("click", () => {
             if (card.classList.contains("answered")) return;
             const sel = parseInt(btn.dataset.i, 10);
             const isCorrect = sel === correct;
             card.classList.add("answered");
             card.classList.add(isCorrect ? "correct" : "wrong");
-            card.querySelectorAll(".guide-q-option").forEach((o) => {
+        card.querySelectorAll(".guide-q-option").forEach((o) => {
               o.classList.add("disabled");
               const i = parseInt(o.dataset.i, 10);
               if (i === correct) o.classList.add("correct");
@@ -26036,7 +26338,27 @@ document.addEventListener("DOMContentLoaded", () => {
       : null;
   }
 
+  const createManagedModalController = typeof window.__lumenModalManager?.create === "function"
+    ? (entry) => window.__lumenModalManager.create(entry)
+    : (entry) => ({ open: entry.open, close: entry.close });
+
   let supportScreenshotPayload = null;
+  const supportReportModal = document.getElementById("support-report-modal");
+  const supportReportModalController = createManagedModalController({
+    modal: supportReportModal,
+    trapRoot: supportReportModal,
+    focusTarget: "#support-report-btn",
+    open: () => {
+      if (!supportReportModal) return;
+      renderSupportContextPreview();
+      supportReportModal.hidden = false;
+      supportReportModal.querySelector(".support-report-card")?.focus({ preventScroll: true });
+    },
+    close: () => {
+      if (!supportReportModal) return;
+      supportReportModal.hidden = true;
+    },
+  });
 
   function currentSupportContext() {
     const lesson = currentLessonId
@@ -26075,17 +26397,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function openSupportReportModal() {
-    const modal = document.getElementById("support-report-modal");
-    const card = modal?.querySelector(".support-report-card");
-    if (!modal) return;
-    renderSupportContextPreview();
-    modal.hidden = false;
-    card?.focus();
+    supportReportModalController.open();
   }
 
   function closeSupportReportModal() {
-    const modal = document.getElementById("support-report-modal");
-    if (modal) modal.hidden = true;
+    supportReportModalController.close();
   }
 
   function generateSupportReportPayload() {
@@ -27488,12 +27804,23 @@ document.addEventListener("DOMContentLoaded", () => {
   let bqCurrentQuest = null;
   let bqBugIdx = 0;
   let bqAnswered = false;
+  const bugQuestOverlay = document.getElementById("bug-quest-overlay");
+  const bugQuestController = createManagedModalController({
+    modal: bugQuestOverlay,
+    trapRoot: bugQuestOverlay,
+    focusTarget: "#bq-close",
+    open: () => {
+      if (!bugQuestOverlay) return;
+      bugQuestOverlay.style.display = "";
+      renderBugQuestList();
+    },
+    close: () => {
+      if (bugQuestOverlay) bugQuestOverlay.style.display = "none";
+    },
+  });
 
   function openBugQuests() {
-    const overlay = document.getElementById("bug-quest-overlay");
-    if (!overlay) return;
-    overlay.style.display = "";
-    renderBugQuestList();
+    bugQuestController.open();
   }
 
   function renderBugQuestList() {
@@ -27568,8 +27895,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("t-open-bug-quests")?.addEventListener("click", openBugQuests);
   document.getElementById("bq-close")?.addEventListener("click", () => {
-    const overlay = document.getElementById("bug-quest-overlay");
-    if (overlay) overlay.style.display = "none";
+    bugQuestController.close();
+  });
+  bugQuestOverlay?.addEventListener("click", (event) => {
+    if (event.target === bugQuestOverlay) bugQuestController.close();
   });
   document.getElementById("bq-body")?.addEventListener("click", (e) => {
     const startBtn = e.target.closest(".bq-start-btn");
@@ -28550,7 +28879,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const correct = parseInt(card.dataset.correct, 10);
         const qId = card.dataset.qid;
         const question = block.questions.find((q) => q.id === qId);
-        card.querySelectorAll(".guide-q-option").forEach((btn) => {
+        const optionButtons = card.querySelectorAll(".guide-q-option");
+        bindArrowKeyNavigation(optionButtons);
+        optionButtons.forEach((btn) => {
+          bindEnterToSubmitButton(btn);
           btn.addEventListener("click", () => {
             if (card.classList.contains("answered")) return;
             const sel = parseInt(btn.dataset.i, 10);
@@ -28784,7 +29116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (key === "Escape") {
       // Close help modal or clear search
       if (document.getElementById("cb-keys-modal")?.classList.contains("open")) {
-        toggleCbKeysHelp(false);
+        closeCbKeysHelp();
         return;
       }
       const search = document.getElementById("cb-search");
@@ -28797,6 +29129,42 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Move open-state to next/prev block in the currently filtered list
+  let cbKeysHelpController = null;
+
+  function ensureCbKeysHelpController(modal) {
+    if (cbKeysHelpController) return cbKeysHelpController;
+    const createManagedModalController = typeof window.__lumenModalManager?.create === "function"
+      ? (entry) => window.__lumenModalManager.create(entry)
+      : (entry) => ({ open: entry.open, close: entry.close });
+    cbKeysHelpController = createManagedModalController({
+      modal,
+      trapRoot: modal.querySelector(".cb-keys-card"),
+      focusTarget: ".cb-keys-close",
+      open: () => {
+        modal.classList.add("open");
+      },
+      close: () => {
+        modal.classList.remove("open");
+      },
+    });
+    return cbKeysHelpController;
+  }
+
+  function openCbKeysHelp() {
+    const modal = document.getElementById("cb-keys-modal");
+    if (!modal) return;
+    ensureCbKeysHelpController(modal).open();
+  }
+
+  function closeCbKeysHelp() {
+    if (cbKeysHelpController) {
+      cbKeysHelpController.close();
+      return;
+    }
+    const modal = document.getElementById("cb-keys-modal");
+    if (modal) modal.classList.remove("open");
+  }
+
   function cbJumpRelative(delta) {
     const renderedIds = Array.from(
       document.querySelectorAll(".cb-block"),
@@ -28829,10 +29197,10 @@ document.addEventListener("DOMContentLoaded", () => {
       modal.id = "cb-keys-modal";
       modal.className = "cb-keys-modal";
       modal.innerHTML = `
-        <div class="cb-keys-card">
+        <div class="cb-keys-card" role="dialog" aria-modal="true" aria-labelledby="cb-keys-title">
           <div class="cb-keys-head">
-            <h3>⌨️ קיצורי מקלדת — בלוקי קוד</h3>
-            <button class="cb-keys-close" aria-label="סגור">✕</button>
+            <h3 id="cb-keys-title">⌨️ קיצורי מקלדת — בלוקי קוד</h3>
+            <button class="cb-keys-close" type="button" aria-label="סגור">✕</button>
           </div>
           <table class="cb-keys-table">
             <tr><td><kbd>J</kbd> / <kbd>↓</kbd></td><td>בלוק הבא</td></tr>
@@ -28849,12 +29217,17 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.appendChild(modal);
       modal.addEventListener("click", (e) => {
         if (e.target === modal || e.target.classList.contains("cb-keys-close")) {
-          toggleCbKeysHelp(false);
+          closeCbKeysHelp();
         }
       });
     }
     const shouldOpen = force === undefined ? !modal.classList.contains("open") : force;
-    modal.classList.toggle("open", shouldOpen);
+    const controller = ensureCbKeysHelpController(modal);
+    if (shouldOpen) {
+      controller.open();
+    } else {
+      controller.close();
+    }
   }
 
   document.getElementById("cb-keys-help")?.addEventListener("click", () =>
@@ -29413,6 +29786,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function wireLessonQuestionBankPanel(lesson, concept) {
+    const bindMcOptionKeyboard = (container) => {
+      if (!container) return;
+      const optionButtons = container.querySelectorAll(".lesson-qbank-option");
+      bindArrowKeyNavigation(optionButtons);
+      optionButtons.forEach((btn) => bindEnterToSubmitButton(btn));
+    };
+
     lessonBody.querySelectorAll("[data-lesson-qbank-start]").forEach((btn) => {
       btn.addEventListener("click", () => {
         resetLessonQuestionBankState(lesson, concept);
@@ -29420,6 +29800,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
     lessonBody.querySelectorAll("[data-lesson-qbank-answer]").forEach((btn) => {
+      bindEnterToSubmitButton(btn);
       btn.addEventListener("click", () => {
         const state = getLessonQuestionBankState(lesson, concept);
         const item = lessonQuestionBankItems(lesson, concept)[state.index];
@@ -29432,6 +29813,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderContent();
       });
     });
+    bindMcOptionKeyboard(lessonBody);
     lessonBody.querySelectorAll("[data-lesson-qbank-fill]").forEach((form) => {
       form.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -30118,7 +30500,10 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="ciq-feedback"></div>`;
         wireQuestionPrerequisiteNavigation(body);
-        body.querySelectorAll(".ciq-option").forEach((btn) => {
+        const optionButtons = body.querySelectorAll(".ciq-option");
+        bindArrowKeyNavigation(optionButtons);
+        optionButtons.forEach((btn) => {
+          bindEnterToSubmitButton(btn);
           btn.addEventListener("click", () => {
             const sel = parseInt(btn.dataset.i, 10);
             const correct = sel === q.correctIndex;
@@ -31894,7 +32279,10 @@ document.addEventListener("DOMContentLoaded", () => {
         </details>`;
       wireQuestionPrerequisiteNavigation(slot);
 
-      slot.querySelectorAll(".ciq-option").forEach((btn) => {
+      const optionButtons = slot.querySelectorAll(".ciq-option");
+      bindArrowKeyNavigation(optionButtons);
+      optionButtons.forEach((btn) => {
+        bindEnterToSubmitButton(btn);
         btn.addEventListener("click", () => {
           const sel = parseInt(btn.dataset.i, 10);
           const correct = sel === q.correctIndex;
@@ -32446,21 +32834,35 @@ document.addEventListener("DOMContentLoaded", () => {
     out.textContent = `${label}: ביטחון ${confidencePct}% מול ציון ${lessonWrapPayload.pct}%.`;
   }
 
+  const lessonWrapOverlay = document.getElementById("lesson-wrap-overlay");
+  const lessonWrapPanel = lessonWrapOverlay?.querySelector(".lesson-wrap-modal");
+  const lessonWrapUpPanelController = createManagedModalController({
+    modal: lessonWrapOverlay,
+    trapRoot: lessonWrapPanel || lessonWrapOverlay,
+    focusTarget: "#lesson-wrap-close",
+    open: () => {
+      if (!lessonWrapOverlay) return;
+      lessonWrapOverlay.style.display = "";
+      lessonWrapPanel?.querySelector("#lesson-wrap-close")?.focus({ preventScroll: true });
+    },
+    close: () => {
+      if (lessonWrapOverlay) lessonWrapOverlay.style.display = "none";
+      if (lessonWrapTimerId) {
+        window.clearInterval(lessonWrapTimerId);
+        lessonWrapTimerId = null;
+      }
+      lessonWrapPayload = null;
+      lessonWrapStartedAt = 0;
+      lessonWrapConfidence = null;
+    },
+  });
+
   function closeLessonWrapUp() {
-    const overlay = document.getElementById("lesson-wrap-overlay");
-    if (overlay) overlay.style.display = "none";
-    if (lessonWrapTimerId) {
-      window.clearInterval(lessonWrapTimerId);
-      lessonWrapTimerId = null;
-    }
-    lessonWrapPayload = null;
-    lessonWrapStartedAt = 0;
-    lessonWrapConfidence = null;
+    lessonWrapUpPanelController.close();
   }
 
   function openLessonWrapUp(payload) {
-    const overlay = document.getElementById("lesson-wrap-overlay");
-    if (!overlay || !payload?.lesson) return;
+    if (!lessonWrapOverlay || !payload?.lesson) return;
     lessonWrapPayload = payload;
     lessonWrapStartedAt = Date.now();
     lessonWrapConfidence = null;
@@ -32475,7 +32877,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateLessonWrapTimer();
     if (lessonWrapTimerId) window.clearInterval(lessonWrapTimerId);
     lessonWrapTimerId = window.setInterval(updateLessonWrapTimer, 1000);
-    overlay.style.display = "";
+    lessonWrapUpPanelController.open();
   }
 
   function saveCurrentLessonWrapUp(nextAction = "") {
@@ -32545,12 +32947,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("lesson-wrap-close")?.addEventListener("click", closeLessonWrapUp);
   document.getElementById("lesson-wrap-overlay")?.addEventListener("click", (e) => {
     if (e.target?.id === "lesson-wrap-overlay") closeLessonWrapUp();
-  });
-  document.addEventListener("keydown", (e) => {
-    const overlay = document.getElementById("lesson-wrap-overlay");
-    if (e.key === "Escape" && overlay && overlay.style.display !== "none") {
-      closeLessonWrapUp();
-    }
   });
   document.querySelectorAll(".lw-confidence-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -33277,9 +33673,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function openXPDetailPanel() {
-    renderXPDetailPanel();
-    const overlay = document.getElementById("xp-detail-overlay");
-    if (overlay) overlay.style.display = "";
+    xpDetailPanelController.open();
   }
 
   const STORE_CATEGORIES = [
@@ -33839,30 +34233,56 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => { toast.classList.remove("visible"); setTimeout(() => toast.remove(), 400); }, 3500);
   }
 
+  const achievementsOverlay = document.getElementById("achievements-overlay");
+  const achievementsPanelController = createManagedModalController({
+    modal: achievementsOverlay,
+    trapRoot: achievementsOverlay,
+    focusTarget: "#ach-close",
+    open: () => {
+      if (!achievementsOverlay) return;
+      const unlocked = new Set(getUnlockedAchievements());
+      const body = document.getElementById("achievements-body");
+      if (body) {
+        body.innerHTML = ACHIEVEMENTS.map((ach) => {
+          const done = unlocked.has(ach.id);
+          return `<div class="ach-card ${done ? 'ach-unlocked' : 'ach-locked'}">
+            <div class="ach-icon">${done ? ach.title.split(" ")[0] : "🔒"}</div>
+            <div class="ach-info">
+              <div class="ach-name">${done ? ach.title : "???"}</div>
+              <div class="ach-desc">${done ? esc(ach.desc) : "הישג לא נחשף"}</div>
+            </div>
+          </div>`;
+        }).join("");
+      }
+      achievementsOverlay.style.display = "";
+    },
+    close: () => {
+      if (achievementsOverlay) achievementsOverlay.style.display = "none";
+    },
+  });
+
   function openAchievementsPanel() {
-    const overlay = document.getElementById("achievements-overlay");
-    if (!overlay) return;
-    const unlocked = new Set(getUnlockedAchievements());
-    const body = document.getElementById("achievements-body");
-    if (body) {
-      body.innerHTML = ACHIEVEMENTS.map((ach) => {
-        const done = unlocked.has(ach.id);
-        return `<div class="ach-card ${done ? 'ach-unlocked' : 'ach-locked'}">
-          <div class="ach-icon">${done ? ach.title.split(" ")[0] : "🔒"}</div>
-          <div class="ach-info">
-            <div class="ach-name">${done ? ach.title : "???"}</div>
-            <div class="ach-desc">${done ? esc(ach.desc) : "הישג לא נחשף"}</div>
-          </div>
-        </div>`;
-      }).join("");
-    }
-    overlay.style.display = "";
+    achievementsPanelController.open();
   }
+
+  const xpDetailOverlay = document.getElementById("xp-detail-overlay");
+  const xpDetailPanelController = createManagedModalController({
+    modal: xpDetailOverlay,
+    trapRoot: xpDetailOverlay,
+    focusTarget: "#xp-detail-close",
+    open: () => {
+      if (!xpDetailOverlay) return;
+      renderXPDetailPanel();
+      xpDetailOverlay.style.display = "";
+    },
+    close: () => {
+      if (xpDetailOverlay) xpDetailOverlay.style.display = "none";
+    },
+  });
 
   document.getElementById("open-achievements")?.addEventListener("click", openAchievementsPanel);
   document.getElementById("ach-close")?.addEventListener("click", () => {
-    const el = document.getElementById("achievements-overlay");
-    if (el) el.style.display = "none";
+    achievementsPanelController.close();
   });
   document.getElementById("xp-widget")?.addEventListener("click", openXPDetailPanel);
   document.getElementById("xp-widget")?.addEventListener("keydown", (event) => {
@@ -33872,11 +34292,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   document.getElementById("xp-detail-close")?.addEventListener("click", () => {
-    const el = document.getElementById("xp-detail-overlay");
-    if (el) el.style.display = "none";
+    xpDetailPanelController.close();
   });
   document.getElementById("xp-detail-overlay")?.addEventListener("click", (event) => {
-    if (event.target?.id === "xp-detail-overlay") event.target.style.display = "none";
+    if (event.target?.id === "xp-detail-overlay") xpDetailPanelController.close();
   });
 
   // --- Daily Reflection Modal ---
@@ -33891,26 +34310,40 @@ document.addEventListener("DOMContentLoaded", () => {
     return record;
   }
 
+  const reflectionOverlay = document.getElementById("reflection-overlay");
+  const reflectionPanel = reflectionOverlay?.querySelector(".reflection-modal");
+  const reflectionPanelController = createManagedModalController({
+    modal: reflectionOverlay,
+    trapRoot: reflectionPanel || reflectionOverlay,
+    focusTarget: "#reflection-close-w12",
+    open: () => {
+      if (!reflectionOverlay) return;
+      const today = new Date().toLocaleDateString("he-IL", { weekday: "long", day: "numeric", month: "long" });
+      const titleEl = document.getElementById("reflection-date");
+      if (titleEl) titleEl.textContent = today;
+      const histEl = document.getElementById("reflection-history");
+      if (histEl) {
+        const arr = getReflections().slice(0, 5);
+        histEl.innerHTML = arr.length
+          ? arr.map((r) => `<div class="refl-hist-item"><span class="refl-hist-date">${new Date(r.date).toLocaleDateString("he-IL")}</span> ${"⭐".repeat(r.rating || 0)} <span class="refl-hist-text">${esc(r.text)}</span></div>`).join("")
+          : "<p class='refl-empty'>אין רשומות קודמות עדיין.</p>";
+      }
+      const history = document.getElementById("reflection-text");
+      if (history) history.focus({ preventScroll: true });
+      reflectionOverlay.style.display = "";
+    },
+    close: () => {
+      if (reflectionOverlay) reflectionOverlay.style.display = "none";
+    },
+  });
+
   function openReflectionModal() {
-    const overlay = document.getElementById("reflection-overlay");
-    if (!overlay) return;
-    const today = new Date().toLocaleDateString("he-IL", { weekday: "long", day: "numeric", month: "long" });
-    const titleEl = document.getElementById("reflection-date");
-    if (titleEl) titleEl.textContent = today;
-    const histEl = document.getElementById("reflection-history");
-    if (histEl) {
-      const arr = getReflections().slice(0, 5);
-      histEl.innerHTML = arr.length
-        ? arr.map((r) => `<div class="refl-hist-item"><span class="refl-hist-date">${new Date(r.date).toLocaleDateString("he-IL")}</span> ${"⭐".repeat(r.rating || 0)} <span class="refl-hist-text">${esc(r.text)}</span></div>`).join("")
-        : "<p class='refl-empty'>אין רשומות קודמות עדיין.</p>";
-    }
-    overlay.style.display = "";
+    reflectionPanelController.open();
   }
 
   document.getElementById("btn-open-reflection")?.addEventListener("click", openReflectionModal);
-  document.getElementById("reflection-close")?.addEventListener("click", () => {
-    const el = document.getElementById("reflection-overlay");
-    if (el) el.style.display = "none";
+  document.getElementById("reflection-close-w12")?.addEventListener("click", () => {
+    reflectionPanelController.close();
   });
   document.getElementById("reflection-save")?.addEventListener("click", () => {
     const text = document.getElementById("reflection-text")?.value?.trim();
@@ -33923,10 +34356,13 @@ document.addEventListener("DOMContentLoaded", () => {
       source: "reflection",
       questionId: `reflection:${record.date.slice(0, 10)}`,
     });
-    document.getElementById("reflection-overlay").style.display = "none";
+    reflectionPanelController.close();
     document.getElementById("reflection-text").value = "";
     document.querySelectorAll(".refl-star").forEach((s) => s.classList.remove("active"));
     showAchievementToast({ title: "📝 רפלקציה!", desc: "+15 XP על כתיבת רפלקציה" });
+  });
+  document.getElementById("reflection-overlay")?.addEventListener("click", (e) => {
+    if (e.target?.id === "reflection-overlay") reflectionPanelController.close();
   });
   document.getElementById("reflection-overlay")?.addEventListener("click", (e) => {
     const star = e.target.closest(".refl-star");
@@ -33946,6 +34382,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const AI_USAGE_KEY = "lumenportal:ai_usage:v1";
   const AI_DAILY_LIMIT = 20;
   let aiCurrentMode = "coach";
+  const aiTutorModal = document.getElementById("ai-tutor-modal");
+  const aiTutorPanel = aiTutorModal?.querySelector(".ai-tutor-modal-inner");
+  const aiTutorModalController = createManagedModalController({
+    modal: aiTutorModal,
+    trapRoot: aiTutorPanel || aiTutorModal,
+    focusTarget: "#ai-input",
+    open: (prefillMsg = "") => {
+      if (!aiTutorModal) return;
+      aiTutorModal.classList.remove("hidden");
+      updateAIUsageDisplay();
+      const concName = (() => {
+        const card = document.querySelector(".concept-card.adaptive");
+        return card?.dataset.concept || "";
+      })();
+      const ctxBar = document.getElementById("ai-context-bar");
+      if (ctxBar) ctxBar.textContent = concName ? `📌 הקשר: ${concName}` : "";
+      if (prefillMsg) {
+        const inp = document.getElementById("ai-input");
+        if (inp) inp.value = prefillMsg;
+      }
+      const input = document.getElementById("ai-input");
+      input?.focus();
+    },
+    close: () => {
+      if (aiTutorModal) aiTutorModal.classList.add("hidden");
+    },
+  });
 
   function getAIUsage() {
     try {
@@ -33963,21 +34426,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function openAITutor(prefillMsg) {
-    const modal = document.getElementById("ai-tutor-modal");
-    if (!modal) return;
-    modal.classList.remove("hidden");
-    updateAIUsageDisplay();
-    const concName = (() => {
-      const card = document.querySelector(".concept-card.adaptive");
-      return card?.dataset.concept || "";
-    })();
-    const ctxBar = document.getElementById("ai-context-bar");
-    if (ctxBar) ctxBar.textContent = concName ? `📌 הקשר: ${concName}` : "";
-    if (prefillMsg) {
-      const inp = document.getElementById("ai-input");
-      if (inp) inp.value = prefillMsg;
-    }
-    document.getElementById("ai-input")?.focus();
+    aiTutorModalController.open(prefillMsg);
   }
 
   function updateAIUsageDisplay() {
@@ -34093,7 +34542,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("ai-tutor-fab")?.addEventListener("click", () => openAITutor());
   document.getElementById("ai-tutor-close")?.addEventListener("click", () => {
-    document.getElementById("ai-tutor-modal")?.classList.add("hidden");
+    aiTutorModalController.close();
+  });
+  document.getElementById("ai-tutor-modal")?.addEventListener("click", (e) => {
+    if (e.target?.id === "ai-tutor-modal") aiTutorModalController.close();
   });
   document.getElementById("ai-send")?.addEventListener("click", sendAIMessage);
   document.getElementById("ai-input")?.addEventListener("keydown", (e) => {
@@ -34123,6 +34575,108 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (_) {
       return fallback;
     }
+  }
+
+  const PROGRESS_SIGNING_SECRET_KEY = "lumenportal:progress-signature:secret:v1";
+  const PROGRESS_SIGNATURE_CONFIG = {
+    version: "1",
+    algorithm: "HMAC-SHA-256",
+  };
+
+  function bytesToHex(bytes) {
+    return Array.from(new Uint8Array(bytes))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+  }
+
+  function normalizeSigningPayload(value) {
+    if (value === null || typeof value !== "object") return value;
+    if (Array.isArray(value)) return value.map(normalizeSigningPayload);
+    const keys = Object.keys(value).sort();
+    const sorted = {};
+    keys.forEach((key) => {
+      sorted[key] = normalizeSigningPayload(value[key]);
+    });
+    return sorted;
+  }
+
+  function buildIntegrityInput(payload) {
+    if (!payload || typeof payload !== "object") return "{}";
+    const { integrity, ...snapshot } = payload;
+    return JSON.stringify(normalizeSigningPayload(snapshot));
+  }
+
+  function progressSigningSecret(profileId) {
+    const override = localStorage.getItem(PROGRESS_SIGNING_SECRET_KEY);
+    const scope = `profile:${String(profileId || "unknown").trim() || "unknown"}`;
+    return `${override || "lumenportal-progress-signature"}|${String(window.location?.host || "local")}|${scope}`;
+  }
+
+  async function buildProgressIntegrity(payload) {
+    if (!window.crypto || !window.crypto.subtle) return null;
+    try {
+      const text = buildIntegrityInput(payload);
+      const secret = progressSigningSecret(payload?.profile?.id);
+      const key = await window.crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(secret),
+        { name: "HMAC", hash: "SHA-256" },
+        false,
+        ["sign", "verify"],
+      );
+      const signatureBytes = await window.crypto.subtle.sign(
+        "HMAC",
+        key,
+        new TextEncoder().encode(text),
+      );
+      return {
+        version: PROGRESS_SIGNATURE_CONFIG.version,
+        algorithm: PROGRESS_SIGNATURE_CONFIG.algorithm,
+        keyScope: payload?.profile?.id ? "profile-bound" : "global",
+        signedAt: new Date().toISOString(),
+        signature: bytesToHex(signatureBytes),
+      };
+    } catch (_) {
+      return null;
+    }
+  }
+
+  async function verifyProgressIntegrity(payload) {
+    const integrity = payload && payload.integrity;
+    if (!integrity) {
+      return {
+        ok: false,
+        severity: "warning",
+        reason: "קובץ הייצוא הזה לא כולל חתימת תקינות.",
+      };
+    }
+    if (typeof integrity !== "object" || !integrity.signature || !integrity.version) {
+      return {
+        ok: false,
+        severity: "warning",
+        reason: "מבנה חתימת הייצוא לא תקין. ייבוא יבוצע כקובץ ללא חתימה.",
+      };
+    }
+    const expected = await buildProgressIntegrity(payload);
+    if (!expected) {
+      return {
+        ok: false,
+        severity: "warning",
+        reason: "הדפדפן לא תומך ב-HMAC; נדרש אישור ידני לייבוא.",
+      };
+    }
+    if (expected.signature !== integrity.signature) {
+      return {
+        ok: false,
+        severity: "error",
+        reason: "הקובץ שונה מאז החתימה המקורית (זוהתה פגיעה בתוכן).",
+      };
+    }
+    return {
+      ok: true,
+      severity: "ok",
+      reason: "קובץ הייצוא חתום והתקינות אומתה.",
+    };
   }
 
   function collectProfileScopedEntries(prefixes = []) {
@@ -34224,14 +34778,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function exportProgress() {
-    const data = buildProgressSnapshot();
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `lumenportal-progress-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    const base = buildProgressSnapshot();
+    return Promise.resolve()
+      .then(async () => {
+        const integrity = await buildProgressIntegrity(base);
+        const payload = { ...base, ...(integrity ? { integrity } : {}) };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `lumenportal-progress-${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+      })
+      .catch(() => {
+        const blob = new Blob([JSON.stringify(base, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `lumenportal-progress-${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
   }
 
   function applyProgressData(data, { requireConfirmation = true } = {}) {
@@ -34260,9 +34828,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function importProgress(file) {
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
         const data = JSON.parse(e.target.result);
+        const integrity = await verifyProgressIntegrity(data);
+        if (!integrity.ok) {
+          if (integrity.severity === "error") {
+            alert(integrity.reason);
+            return;
+          }
+          const continueLegacy = confirm(`${integrity.reason}\n\nלהמשיך בייבוא בכל זאת?`);
+          if (!continueLegacy) return;
+        }
         if (!applyProgressData(data, { requireConfirmation: true })) return;
         alert("הייבוא הצליח! רענן את הדף כדי לראות את הנתונים.");
       } catch (err) {

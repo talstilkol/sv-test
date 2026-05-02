@@ -1,5 +1,11 @@
 # SVCollege Student Readiness Export — 2026-04-29
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-29
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 - Target: SVCollege AI & Full Stack
 - Ready for exam practice: Yes
 - Blockers: 0
@@ -55,4 +61,5 @@
 - `npm run qa:questions:strict`
 - `npm run exam:mock-variants:strict`
 - `npm run exam:flows:strict`
+
 

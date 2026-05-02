@@ -63,6 +63,11 @@ html.cosmetic-accessible-outline {
   font-family: "Heebo", sans-serif;
 }
 
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -151,6 +156,7 @@ html.standalone-museum-boot .w12-top-bar,
 html.standalone-museum-boot .mobile-menu-toggle,
 html.standalone-museum-boot .theme-toggle-btn,
 html.standalone-museum-boot .global-print-btn,
+html.standalone-museum-boot .pwa-install-btn,
 html.standalone-museum-boot .pocket-fab,
 html.standalone-museum-boot .pocket-panel,
 html.standalone-museum-boot .view-mode-fab,
@@ -167,6 +173,7 @@ body.standalone-museum-mode .w12-top-bar,
 body.standalone-museum-mode .mobile-menu-toggle,
 body.standalone-museum-mode .theme-toggle-btn,
 body.standalone-museum-mode .global-print-btn,
+body.standalone-museum-mode .pwa-install-btn,
 body.standalone-museum-mode .pocket-fab,
 body.standalone-museum-mode .pocket-panel,
 body.standalone-museum-mode .view-mode-fab,
@@ -2051,16 +2058,19 @@ body.top-chrome-collapsed .focus-mode-toggle,
 body.top-chrome-collapsed .view-mode-fab,
 body.top-chrome-collapsed .pocket-fab,
 body.top-chrome-collapsed .global-print-btn,
+body.top-chrome-collapsed .pwa-install-btn,
 body.right-sidebar-collapsed .theme-toggle-btn,
 body.right-sidebar-collapsed .focus-mode-toggle,
 body.right-sidebar-collapsed .view-mode-fab,
 body.right-sidebar-collapsed .pocket-fab,
 body.right-sidebar-collapsed .global-print-btn,
+body.right-sidebar-collapsed .pwa-install-btn,
 body.learning-focus-mode .theme-toggle-btn,
 body.learning-focus-mode .focus-mode-toggle,
 body.learning-focus-mode .view-mode-fab,
 body.learning-focus-mode .pocket-fab,
-body.learning-focus-mode .global-print-btn {
+body.learning-focus-mode .global-print-btn,
+body.learning-focus-mode .pwa-install-btn {
   position: fixed;
 }
 
@@ -12116,7 +12126,15 @@ body.museum-video-modal-open {
 .museum-video-modal-close:focus-visible {
   border-color: rgba(248, 113, 113, 0.62);
   background: rgba(127, 29, 29, 0.36);
-  outline: none;
+}
+
+.museum-video-modal-close:hover {
+  outline: 2px solid transparent;
+}
+
+.museum-video-modal-close:focus-visible {
+  outline: 2px solid #fca5a5;
+  outline-offset: 2px;
 }
 
 .museum-video-modal-body {
@@ -17987,6 +18005,10 @@ button.grandma-crumb:hover {
   transition: var(--transition);
 }
 .cb-keys-close:hover { background: rgba(255,255,255,0.08); color: var(--text-bright); }
+.cb-keys-close:focus-visible {
+  outline: 2px solid #8ab4ff;
+  outline-offset: 2px;
+}
 
 .cb-keys-table {
   width: 100%;
@@ -21515,9 +21537,39 @@ button.grandma-crumb:hover {
 }
 .global-print-btn .emoji { font-size: 1.05rem; }
 .global-print-btn .lbl { font-size: 0.88rem; letter-spacing: 0.3px; }
+
+.pwa-install-btn {
+  position: fixed;
+  bottom: 4.9rem;
+  left: 1.2rem;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #22d3ee 0%, #6366f1 100%);
+  color: #fff;
+  border: none;
+  padding: 0.7rem 0.95rem;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(34,211,238,0.45), 0 0 0 1px rgba(255,255,255,0.08) inset;
+  transition: var(--transition);
+}
+.pwa-install-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(34,211,238,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset;
+}
+.pwa-install-btn .emoji { font-size: 1.05rem; }
+.pwa-install-btn .lbl { font-size: 0.88rem; letter-spacing: 0.3px; }
+
 @media (max-width: 480px) {
   .global-print-btn .lbl { display: none; }
   .global-print-btn { padding: 0.7rem 0.9rem; }
+  .pwa-install-btn .lbl { display: none; }
+  .pwa-install-btn { padding: 0.7rem 0.9rem; }
 }
 
 /* === Print rules: 1:1 with the live site (dark theme + neon) === */
@@ -21545,6 +21597,7 @@ button.grandma-crumb:hover {
   .top-nav,
   .mobile-menu-toggle,
   .global-print-btn,
+  .pwa-install-btn,
   .lesson-banner,
   .quiz-actions,
   .km-toolbar,
@@ -22237,6 +22290,10 @@ textarea:focus-visible,
   border-radius: 6px;
 }
 .pocket-close:hover { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+.pocket-close:focus-visible {
+  outline: 2px solid #fca5a5;
+  outline-offset: 2px;
+}
 .pocket-empty { color: var(--text-muted); font-size: 0.88rem; font-style: italic; }
 .pocket-list { display: flex; flex-direction: column; gap: 0.5rem; }
 .pocket-card {
@@ -22437,6 +22494,10 @@ textarea:focus-visible,
   border-radius: 6px;
 }
 .vm-close:hover { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+.vm-close:focus-visible {
+  outline: 2px solid #fca5a5;
+  outline-offset: 2px;
+}
 .vm-section {
   margin-bottom: 0.8rem;
 }
@@ -22601,7 +22662,13 @@ html { scroll-behavior: smooth; }
   padding: 4px 8px;
   border-radius: 6px;
 }
-.modal-close:hover { background: rgba(239, 68, 68, 0.18); color: #fca5a5; }
+.modal-close:hover,
+.modal-close:focus-visible {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fca5a5;
+  outline: 2px solid #fca5a5;
+  outline-offset: 2px;
+}
 .modal-search {
   margin: 0.7rem 1rem;
   background: rgba(255, 255, 255, 0.06);
@@ -23914,6 +23981,14 @@ body.a11y-large-text pre {
 .bq-header h3 { margin: 0 0 0.2rem; }
 .bq-progress { font-size: 0.82rem; color: var(--text-secondary); }
 .bq-close { background: rgba(255,255,255,0.07); border: 1px solid var(--border-subtle); color: var(--text-secondary); border-radius: 6px; padding: 0.25rem 0.6rem; cursor: pointer; flex-shrink: 0; }
+.bq-close:focus-visible,
+.bq-start-btn:focus-visible,
+.bq-opt:focus-visible,
+.bq-next-btn:focus-visible,
+.bq-back-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
 .bq-quest-list { display: flex; flex-direction: column; gap: 0.75rem; }
 .bq-quest-card { background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem; }
 .bq-quest-card.bq-completed { border-color: rgba(52,211,153,0.3); }
@@ -25405,6 +25480,13 @@ body.learning-focus-mode.learning-focus-top-collapsed .content-wrapper {
 .ach-modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
 .ach-modal-head h3 { margin: 0; }
 .ach-close-btn { background: rgba(255,255,255,0.07); border: 1px solid var(--border-subtle); color: var(--text-secondary); border-radius: 6px; padding: 0.25rem 0.6rem; cursor: pointer; }
+.ach-close-btn:focus-visible,
+.refl-close:focus-visible,
+.lw-close:focus-visible,
+.ai-close:focus-visible {
+  outline: 2px solid #fca5a5;
+  outline-offset: 2px;
+}
 .achievements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; }
 .ach-card { display: flex; align-items: center; gap: 0.75rem; background: rgba(255,255,255,0.04); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.75rem; }
 .ach-card.ach-unlocked { border-color: rgba(99,102,241,0.35); background: rgba(99,102,241,0.07); }

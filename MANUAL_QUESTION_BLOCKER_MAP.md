@@ -1,5 +1,11 @@
 # Manual Question Blocker Map
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-30
+> Source-of-truth refresh date: 2026-05-02
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 Date: 2026-04-30
 
 ## Summary
@@ -49,3 +55,4 @@ Date: 2026-04-30
 | `ai_development::Windsurf` | 3/3 | 2/2 | yes | 0 | 0 |
 | `ai_development::Prompt Engineering` | 3/3 | 2/2 | yes | 0 | 0 |
 | `ai_development::AI Code Review` | 3/3 | 2/2 | yes | 0 | 0 |
+

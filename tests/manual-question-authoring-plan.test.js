@@ -3,6 +3,7 @@ const path = require("path");
 
 const authoringPlan = require("../scripts/report_manual_question_authoring_plan.js");
 const coverageTargets = require("../scripts/report_question_coverage_targets.js");
+const activityCoverage = require("../scripts/report_question_activity_coverage.js");
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -18,7 +19,9 @@ describe("manual question authoring plan", () => {
     expect(report.summary.readyForAuthoring).toBe(true);
     expect(report.summary.mcGapCount).toBe(coverage.summary.mcGapCount);
     expect(report.summary.fillGapCount).toBe(coverage.summary.fillGapCount);
+    expect(report.summary.activityGapCount).toBe(activityCoverage.buildReport().summary.activityGapCount);
     expect(report.summary.batches).toBeGreaterThan(0);
+    expect(report.summary.strictActivityDeficit).toBe(report.summary.activityGapCount);
   });
 
   it("keeps owner and reviewer unknown until real assignment exists", () => {

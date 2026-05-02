@@ -6,11 +6,12 @@ const path = require("path");
 const performanceBudget = require("./report_performance_budget.js");
 const accessibilityAudit = require("./report_exam_accessibility_audit.js");
 const pilotReadiness = require("./report_pilot_readiness.js");
+const curriculumCoverage = require("./report_curriculum_coverage.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const JSON_PATH = path.join(ROOT, "PHASE6_RELEASE_READINESS_REPORT.json");
 const MD_PATH = path.join(ROOT, "PHASE6_RELEASE_READINESS_REPORT.md");
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 function read(relativePath) {
   return fs.readFileSync(path.join(ROOT, relativePath), "utf8");
@@ -28,6 +29,7 @@ function buildReport() {
   const performance = performanceBudget.buildReport();
   const accessibility = accessibilityAudit.buildReport();
   const pilot = pilotReadiness.buildReport();
+  const curriculum = curriculumCoverage.buildReport({ batchSize: 40 });
   const checks = [
     check(
       "privacy-retention-policy",
@@ -58,6 +60,11 @@ function buildReport() {
         release.includes("QA evidence") &&
         releaseLower.includes("documentation"),
       "Release checklist must cover smoke tests, rollback, cache bump, QA evidence and documentation.",
+    ),
+    check(
+      "curriculum-question-coverage",
+      curriculum.summary.ready,
+      `Curriculum question readiness must be green for all concepts: ready ${curriculum.summary.conceptReadyCount}/${curriculum.summary.totalConcepts}, MC gaps ${curriculum.summary.mcGapCount}, Fill gaps ${curriculum.summary.fillGapCount}, Activity gaps ${curriculum.summary.activityGapCount}.`,
     ),
     check(
       "pilot-readiness",

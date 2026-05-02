@@ -1,5 +1,11 @@
 # Sync Alpha Report — 2026-04-29
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-29
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 - Target: Sync Alpha
 - Policy: Cloud sync remains optional, credential-gated, privacy-noted, and deterministic last-write-wins.
 - Ready: Yes
@@ -13,4 +19,5 @@
 | Access token is session-only in UI | pass | Access token must not be saved to persistent localStorage. |
 | Sync privacy notice is visible | pass | The UI must tell the learner what sync stores and how conflicts are resolved. |
 | Sync Alpha policy exists | pass | SYNC_ALPHA_POLICY.md must keep the privacy and conflict contract explicit. |
+
 

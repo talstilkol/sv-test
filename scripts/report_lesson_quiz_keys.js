@@ -9,7 +9,7 @@ const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
 const JSON_PATH = path.join(ROOT, "LESSON_QUIZ_KEYS_REPORT.json");
 const MD_PATH = path.join(ROOT, "LESSON_QUIZ_KEYS_REPORT.md");
-const REPORT_DATE = "2026-04-28";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 const LESSON_FILES = [
   ["lesson11.js", "LESSON_11"],
@@ -131,7 +131,7 @@ function preview(text, maxLength = 80) {
 
 function buildMarkdown(report) {
   const lines = [
-    "# Lesson Quiz Concept Keys Report — 2026-04-28",
+    `# Lesson Quiz Concept Keys Report — ${report.date}`,
     "",
     "Validates that every lesson-level quiz item has explicit concept routing and that every mapped concept key exists in the same lesson.",
     "",

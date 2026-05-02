@@ -1,5 +1,11 @@
 # Lesson Quiz Concept Keys Report — 2026-04-28
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-28
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 Validates that every lesson-level quiz item has explicit concept routing and that every mapped concept key exists in the same lesson.
 
 ## Summary
@@ -170,4 +176,5 @@ Validates that every lesson-level quiz item has explicit concept routing and tha
 | `react_blueprint` | 3 | ok | `react_blueprint::Error Boundaries` | מה אסור ב-Error Boundary לתפוס? |
 | `react_blueprint` | 4 | ok | `react_blueprint::Performance Optimization` | מה הצעד הראשון באופטימיזציה של ביצועים? |
 | `react_blueprint` | 5 | ok | `react_blueprint::Code Splitting`<br>`react_blueprint::Performance Optimization` | מה ההבדל בין Code Splitting ל-Tree Shaking? |
+
 

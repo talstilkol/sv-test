@@ -13,7 +13,7 @@ const consoleGate = require("./report_svcollege_console_gate.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "level-100-release-gate-v1";
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_PATH = path.join(ROOT, "LEVEL100_RELEASE_GATE.json");
 const MD_PATH = path.join(ROOT, "LEVEL100_RELEASE_GATE.md");
 const DATA_PATH = path.join(ROOT, "data", "level100_release_gates.js");

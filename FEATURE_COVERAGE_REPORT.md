@@ -1,4 +1,4 @@
-# Feature Coverage Report — 2026-04-28
+# Feature Coverage Report — 2026-05-02
 
 Generated from repository data files. The report is deterministic and does not use sampling or native randomness.
 
@@ -19,8 +19,8 @@ Generated from repository data files. The report is deterministic and does not u
 | Anti-Pattern Gallery | 22 patterns | 22 patterns | 100% | Done | Misconception repair coverage for hard concepts | data/anti_patterns.js |
 | War Stories Library | 31 incidents | 30 incidents | 100% | Done | Real-world transfer coverage through production incident stories | data/war_stories.js |
 | Mini Build | 23 builds | 21 builds | 100% | Done | Hands-on build-practice coverage for code-writing workflows | data/questions_build.js |
-| Code Trace | 89 traces | 85 traces | 100% | Done | Execution-prediction practice coverage | data/questions_trace.js |
-| Per-Distractor Feedback | 316 MC questions | 316 MC questions | 100% | Done | Option-specific remediation coverage across the full MC bank | data/option_feedback.js<br>data/questions_bank.js |
+| Code Trace | 90 traces | 85 traces | 100% | Done | Execution-prediction practice coverage | data/questions_trace.js |
+| Per-Distractor Feedback | 644 MC questions | 644 MC questions | 100% | Done | Option-specific remediation coverage across the full MC bank | data/option_feedback.js<br>data/questions_bank.js |
 | Concept Metaphors | 250 metaphors | 250 metaphors | 100% | Done | Explanation-fit coverage through multiple metaphors per core concept | data/metaphors.js |
 | 3 Learning Pathways | 30 complete concepts | 30 complete concepts | 100% | Done | Persona-based explanation coverage for grandma/parent/technical paths | data/pathways.js |
 | Pair-Match | 14 games | 5 games | 100% | Done | Associative retrieval practice coverage | data/pair_match.js |

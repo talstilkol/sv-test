@@ -26,5 +26,13 @@
     "add-explanation": "Add a concise explanation tied to the correct answer and the most likely misconception.",
     "add-fill-hint": "Add a hint that narrows the answer without revealing it."
   },
-  "queue": []
+  "queue": [],
+  "sourceOfTruth": {
+    "status": "historical",
+    "reportVersion": "report-source-of-truth-v1",
+    "evaluatedAt": "2026-05-02",
+    "sourceDate": "2026-04-28",
+    "source": "report-archive",
+    "reason": "date-mismatch-with-source-of-truth"
+  }
 }
