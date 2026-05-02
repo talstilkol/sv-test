@@ -48,6 +48,8 @@ const SHELL_ASSETS = [
   "/src/core/confusion-blockers.js",
   "/src/core/concept-tags.js",
   "/src/views/context-tree.js",
+  "/src/views/theme-toggle/theme-toggle.js",
+  "/src/state/store.js",
   "/src/ui/legacy-script-registry.js",
   "/src/views/legacy-views.js",
   "/src/utils/dom-ready.js",

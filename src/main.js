@@ -26,6 +26,7 @@ import * as confidenceCalibration from "./core/confidence-calibration.js";
 import * as confusionBlockers from "./core/confusion-blockers.js";
 import * as conceptTags from "./core/concept-tags.js";
 import * as contextTree from "./views/context-tree.js";
+import * as themeToggle from "./views/theme-toggle/theme-toggle.js";
 import { legacyScriptCount } from "./ui/legacy-script-registry.js";
 import { findMountedLegacyViews } from "./views/legacy-views.js";
 import { afterDomReady } from "./utils/dom-ready.js";
@@ -64,6 +65,7 @@ window.LUMEN_CORE = Object.freeze({
 });
 window.LUMEN_VIEWS = Object.freeze({
   contextTree,
+  themeToggle,
 });
 
 afterDomReady(() => {
