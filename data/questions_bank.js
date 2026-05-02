@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.17";
+var QUESTIONS_BANK_VERSION = "2.1.18";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-05-02";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -130,6 +130,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-05-02",
     changes:
       "Manual QMAN-002 Lesson 15 batch: anonymous function, catch, Error, Error Object, Exception, reject, resolve, Scope, Synchronous — 23 MC + 14 Fill with full optionFeedback.",
+  },
+  {
+    v: "2.1.18",
+    date: "2026-05-02",
+    changes:
+      "Manual QMAN-005 Lesson 17 HTTP/Express/REST batch: HTTP, REST API, GET, POST, Express, Server, Request, Response, Status Codes, 1xx-2xx-3xx, 4xx-5xx, CRUD — 20 MC + 10 Fill with full optionFeedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -3007,6 +3013,388 @@ var QUESTIONS_BANK = {
       ],
       correctIndex: 1,
       explanation: "404 Not Found — הבקשה תקינה אך המשאב המבוקש לא קיים.",
+    },
+
+    // ===== QMAN-005 Batch — lesson_17 HTTP/Express/REST (2026-05-02) =====
+
+    // --- lesson_17::HTTP ---
+    {
+      id: "mc_l17_http_manual_001", topicId: "topic_express", conceptKey: "lesson_17::HTTP", level: 3,
+      question: "מה זה HTTP?",
+      options: [
+        "פרוטוקול תקשורת בין דפדפן ושרת מעל TCP",
+        "שפת תכנות לעיצוב",
+        "מסד נתונים",
+        "קובץ קונפיגורציה",
+      ],
+      correctIndex: 0,
+      explanation: "HTTP (HyperText Transfer Protocol) הוא הפרוטוקול הסטנדרטי לתקשורת web — בקשה (request) ותגובה (response) בין דפדפן/לקוח לשרת.",
+      optionFeedback: [
+        "✅ נכון: HTTP הוא פרוטוקול אפליקציה שרץ מעל TCP/IP.",
+        "❌ עיצוב נעשה ב-CSS, לא HTTP.",
+        "❌ HTTP הוא פרוטוקול תקשורת, לא DB.",
+        "❌ HTTP אינו קובץ — הוא פרוטוקול.",
+      ],
+    },
+    {
+      id: "mc_l17_http_manual_002", topicId: "topic_express", conceptKey: "lesson_17::HTTP", level: 4,
+      question: "מה ההבדל בין HTTP ל-HTTPS?",
+      options: [
+        "HTTPS הוא HTTP מוצפן ב-TLS — נתונים מוצפנים בדרך",
+        "HTTPS מהיר יותר",
+        "HTTP עובד רק ב-Node.js",
+        "אין הבדל",
+      ],
+      correctIndex: 0,
+      explanation: "HTTPS = HTTP over TLS. ההצפנה מונעת eavesdropping ו-tampering. מומלץ תמיד ב-production.",
+      optionFeedback: [
+        "✅ נכון: HTTPS = HTTP + TLS encryption.",
+        "❌ הצפנה מוסיפה overhead — HTTPS לא מהיר יותר אינהרנטית.",
+        "❌ HTTP זמין בכל שפה.",
+        "❌ ההבדל המרכזי הוא הצפנה ואותנטיות.",
+      ],
+    },
+    {
+      id: "mc_l17_http_manual_003", topicId: "topic_express", conceptKey: "lesson_17::HTTP", level: 5,
+      question: "מה הזרימה של בקשת HTTP טיפוסית?",
+      options: [
+        "Client שולח request → Server מטפל → Server מחזיר response עם status + headers + body",
+        "Server שולח קודם → Client מאשר",
+        "שניהם שולחים בו זמנית",
+        "Client קורא ישירות מ-DB",
+      ],
+      correctIndex: 0,
+      explanation: "HTTP הוא request-response: הלקוח יוזם, השרת מגיב. תגובה כוללת status code, headers ו-body.",
+      optionFeedback: [
+        "✅ נכון: client-initiated, single request → single response.",
+        "❌ לקוח תמיד מתחיל ב-HTTP.",
+        "❌ זה לא מודל push/duplex.",
+        "❌ DB access בדרך כלל עובר דרך השרת.",
+      ],
+    },
+
+    // --- lesson_17::REST API ---
+    {
+      id: "mc_l17_rest_manual_001", topicId: "topic_express", conceptKey: "lesson_17::REST API", level: 3,
+      question: "מה זה REST API?",
+      options: [
+        "סגנון ארכיטקטורה ל-API שמשתמש ב-HTTP methods על משאבים מזוהים ע״י URLs",
+        "ספרייה של React",
+        "פרוטוקול נפרד מ-HTTP",
+        "מסד נתונים",
+      ],
+      correctIndex: 0,
+      explanation: "REST = Representational State Transfer. עקרונות: stateless, resources עם URLs, HTTP methods (GET/POST/PUT/DELETE), responses ב-JSON.",
+      optionFeedback: [
+        "✅ נכון: REST הוא architectural style מעל HTTP.",
+        "❌ React הוא ספרייה נפרדת.",
+        "❌ REST בנוי מעל HTTP.",
+        "❌ REST מתקשר עם DB דרך השרת.",
+      ],
+    },
+    {
+      id: "mc_l17_rest_manual_002", topicId: "topic_express", conceptKey: "lesson_17::REST API", level: 4,
+      question: "איזה URL הכי מתאים ב-REST לקבלת משתמש בודד?",
+      options: [
+        "GET /users/42",
+        "GET /getUser?id=42",
+        "POST /users/get/42",
+        "GET /api/v1/get_user_by_id_42",
+      ],
+      correctIndex: 0,
+      explanation: "REST: משאבים כ-nouns (/users), פעולות כ-HTTP methods (GET). אינדקס דרך path param: /users/42.",
+      optionFeedback: [
+        "✅ נכון: resource-oriented URL עם path param.",
+        "❌ verbs ב-URL (getUser) לא מומלץ ב-REST.",
+        "❌ POST לא לקריאת מידע.",
+        "❌ snake_case + verb בURL לא REST.",
+      ],
+    },
+    {
+      id: "mc_l17_rest_manual_003", topicId: "topic_express", conceptKey: "lesson_17::REST API", level: 5,
+      question: "מה משמעות 'stateless' ב-REST?",
+      options: [
+        "כל בקשה מכילה את כל המידע הנדרש — השרת לא שומר session state בין בקשות",
+        "אין נתונים בכלל",
+        "הלקוח לא שומר נתונים",
+        "REST לא תומך ב-cookies",
+      ],
+      correctIndex: 0,
+      explanation: "stateless = אין session על השרת. הלקוח שולח auth token בכל request. מקל על scaling אופקי.",
+      optionFeedback: [
+        "✅ נכון: כל request עומד בפני עצמו (auth כלול בו).",
+        "❌ יש נתונים — אין רק session state בשרת.",
+        "❌ הלקוח שומר state (tokens, etc).",
+        "❌ REST תומך ב-cookies (אם כי tokens עדיפים).",
+      ],
+    },
+
+    // --- lesson_17::GET ---
+    {
+      id: "mc_l17_get_manual_001", topicId: "topic_express", conceptKey: "lesson_17::GET", level: 3,
+      question: "מתי משתמשים ב-GET?",
+      options: [
+        "לקריאת מידע (read) בלי לשנות state בשרת",
+        "ליצירת משאב חדש",
+        "למחיקת משאב",
+        "לעדכון משאב",
+      ],
+      correctIndex: 0,
+      explanation: "GET = read. צריך להיות safe (ללא side effects) ו-idempotent. מתאים לקריאה בלבד.",
+      optionFeedback: [
+        "✅ נכון: GET הוא לקריאה בלבד.",
+        "❌ יצירה = POST.",
+        "❌ מחיקה = DELETE.",
+        "❌ עדכון = PUT/PATCH.",
+      ],
+    },
+    {
+      id: "mc_l17_get_manual_002", topicId: "topic_express", conceptKey: "lesson_17::GET", level: 4,
+      question: "איך מעבירים פרמטרים ב-GET request?",
+      options: [
+        "ב-query string (?key=value) או ב-path params (/users/:id)",
+        "ב-body של הבקשה",
+        "אין דרך — GET לא מקבלת פרמטרים",
+        "רק ב-headers",
+      ],
+      correctIndex: 0,
+      explanation: "GET לא צריך body. פרמטרים: query string (?q=search) או path (/users/42). headers ל-meta (auth, accept).",
+      optionFeedback: [
+        "✅ נכון: query string + path params הם הסטנדרט.",
+        "❌ GET לא צריך body (חלק מהשרתים מתעלמים).",
+        "❌ אפשר להעביר — query/path.",
+        "❌ headers ל-meta, לא לפרמטרי content.",
+      ],
+    },
+
+    // --- lesson_17::POST ---
+    {
+      id: "mc_l17_post_manual_001", topicId: "topic_express", conceptKey: "lesson_17::POST", level: 4,
+      question: "איך מעבירים נתוני JSON ב-POST?",
+      options: [
+        "ב-request body עם Content-Type: application/json",
+        "ב-query string",
+        "ב-URL path",
+        "ב-cookie",
+      ],
+      correctIndex: 0,
+      explanation: "POST: נתונים ב-body. הצהרת סוג: Content-Type: application/json. השרת צריך middleware לפענוח (express.json()).",
+      optionFeedback: [
+        "✅ נכון: body + Content-Type header.",
+        "❌ query string ל-GET.",
+        "❌ URL path ל-resource identification.",
+        "❌ cookies ל-session/auth.",
+      ],
+    },
+
+    // --- lesson_17::Express ---
+    {
+      id: "mc_l17_express_manual_001", topicId: "topic_express", conceptKey: "lesson_17::Express", level: 3,
+      question: "מה זה Express?",
+      options: [
+        "framework מינימליסטי ל-Node.js לבניית web servers ו-APIs",
+        "מסד נתונים",
+        "ספריית UI",
+        "כלי build",
+      ],
+      correctIndex: 0,
+      explanation: "Express הוא ה-framework הפופולרי ביותר ל-HTTP servers ב-Node.js. מספק routing, middleware, request/response abstractions.",
+      optionFeedback: [
+        "✅ נכון: Express = HTTP framework ל-Node.",
+        "❌ DB דרך MongoDB/Postgres.",
+        "❌ UI דרך React.",
+        "❌ Build דרך Vite/Webpack.",
+      ],
+    },
+    {
+      id: "mc_l17_express_manual_002", topicId: "topic_express", conceptKey: "lesson_17::Express", level: 4,
+      question: "מה הקוד המינימלי ליצירת שרת Express?",
+      options: [
+        "const express = require('express'); const app = express(); app.listen(3000);",
+        "const server = new HttpServer(); server.start();",
+        "import { server } from 'express'; server.run();",
+        "npm start",
+      ],
+      correctIndex: 0,
+      explanation: "express() מחזיר app instance. app.listen(port) מתחיל את השרת. מספיק עבור hello world.",
+      optionFeedback: [
+        "✅ נכון: require + express() + listen.",
+        "❌ אין HttpServer ב-Express API.",
+        "❌ אין named import כזה.",
+        "❌ זו פקודת CLI, לא קוד.",
+      ],
+    },
+
+    // --- lesson_17::Server ---
+    {
+      id: "mc_l17_server_manual_001", topicId: "topic_express", conceptKey: "lesson_17::Server", level: 3,
+      question: "מה תפקיד Server ב-web?",
+      options: [
+        "מקבל בקשות מ-clients ומחזיר תגובות (HTML/JSON/files)",
+        "מציג את הדף בדפדפן",
+        "מאחסן רק קבצי וידאו",
+        "מפעיל את ה-OS",
+      ],
+      correctIndex: 0,
+      explanation: "Server = תהליך שמאזין לבקשות (לרוב HTTP) ומחזיר תגובות. אחראי על business logic, DB access, אבטחה.",
+      optionFeedback: [
+        "✅ נכון: Server מטפל ב-requests ומחזיר responses.",
+        "❌ ה-client (browser) מציג.",
+        "❌ Server מטפל בכל סוג content.",
+        "❌ Server הוא תהליך, לא OS.",
+      ],
+    },
+
+    // --- lesson_17::Request ---
+    {
+      id: "mc_l17_request_manual_001", topicId: "topic_express", conceptKey: "lesson_17::Request", level: 4,
+      question: "ב-Express, איזה property של req מכיל פרמטרים מ-URL כמו /users/:id?",
+      options: [
+        "req.params",
+        "req.body",
+        "req.query",
+        "req.headers",
+      ],
+      correctIndex: 0,
+      explanation: "req.params — path parameters. req.query — query string. req.body — POST/PUT body. req.headers — HTTP headers.",
+      optionFeedback: [
+        "✅ נכון: params מהsegment הדינמי ב-route.",
+        "❌ body ל-POST/PUT data.",
+        "❌ query מ-?key=value.",
+        "❌ headers הם meta-info.",
+      ],
+    },
+    {
+      id: "mc_l17_request_manual_002", topicId: "topic_express", conceptKey: "lesson_17::Request", level: 5,
+      question: "איך לקרוא את גוף הJSON של POST ב-Express?",
+      options: [
+        "צריך לרשום app.use(express.json()) ואז req.body מכיל את האובייקט",
+        "req.json() אוטומטית",
+        "JSON.parse(req)",
+        "req.payload",
+      ],
+      correctIndex: 0,
+      explanation: "Express מגיע ללא body parser. express.json() middleware מפענח Content-Type: application/json ל-req.body.",
+      optionFeedback: [
+        "✅ נכון: middleware express.json() נדרש.",
+        "❌ אין req.json() אוטומטי.",
+        "❌ req אינו string — צריך middleware.",
+        "❌ אין req.payload ב-Express.",
+      ],
+    },
+
+    // --- lesson_17::Response ---
+    {
+      id: "mc_l17_response_manual_001", topicId: "topic_express", conceptKey: "lesson_17::Response", level: 4,
+      question: "ב-Express, איך מחזירים JSON ללקוח?",
+      options: [
+        "res.json({ data: ... })",
+        "return { data: ... }",
+        "res.send.json({...})",
+        "JSON.stringify({...})",
+      ],
+      correctIndex: 0,
+      explanation: "res.json(obj) קובע Content-Type: application/json ושולח את האובייקט serialized. res.status(200).json(...) לסטטוס מותאם.",
+      optionFeedback: [
+        "✅ נכון: res.json() הוא ה-API הנכון.",
+        "❌ return בפונקציה לא שולח response.",
+        "❌ אין res.send.json — זה מבנה שגוי.",
+        "❌ זה רק serialization, לא שליחה.",
+      ],
+    },
+
+    // --- lesson_17::Status Codes ---
+    {
+      id: "mc_l17_status_manual_001", topicId: "topic_express", conceptKey: "lesson_17::Status Codes", level: 3,
+      question: "מה משמעות status 200?",
+      options: [
+        "OK — הבקשה הצליחה",
+        "המשאב לא נמצא",
+        "שגיאת שרת",
+        "redirect",
+      ],
+      correctIndex: 0,
+      explanation: "200 OK הוא הסטטוס הסטנדרטי להצלחה. 201 Created ליצירה, 204 No Content למחיקה מוצלחת.",
+      optionFeedback: [
+        "✅ נכון: 200 = success.",
+        "❌ זה 404.",
+        "❌ זה 5xx.",
+        "❌ זה 3xx.",
+      ],
+    },
+    {
+      id: "mc_l17_status_manual_002", topicId: "topic_express", conceptKey: "lesson_17::1xx-2xx-3xx", level: 4,
+      question: "מה משמעות הקבוצות 1xx, 2xx, 3xx?",
+      options: [
+        "1xx informational, 2xx success, 3xx redirect",
+        "1xx success, 2xx error, 3xx info",
+        "כולם success",
+        "כולם errors",
+      ],
+      correctIndex: 0,
+      explanation: "Status code groups: 1xx = informational, 2xx = success (200, 201, 204), 3xx = redirect (301, 304).",
+      optionFeedback: [
+        "✅ נכון: זו החלוקה הסטנדרטית של HTTP.",
+        "❌ הסדר שגוי.",
+        "❌ יש קבוצות שונות.",
+        "❌ יש גם success (2xx).",
+      ],
+    },
+    {
+      id: "mc_l17_status_manual_003", topicId: "topic_express", conceptKey: "lesson_17::4xx-5xx", level: 4,
+      question: "מה ההבדל בין 4xx ל-5xx?",
+      options: [
+        "4xx = client error (בקשה לא תקינה), 5xx = server error (תקלה בשרת)",
+        "4xx = success, 5xx = error",
+        "אין הבדל",
+        "5xx = client error",
+      ],
+      correctIndex: 0,
+      explanation: "4xx — הלקוח טעה (400 Bad Request, 401 Unauthorized, 404 Not Found). 5xx — השרת נכשל (500 Internal Server Error).",
+      optionFeedback: [
+        "✅ נכון: 4xx = client fault, 5xx = server fault.",
+        "❌ שניהם errors.",
+        "❌ יש הבדל ברור.",
+        "❌ הסדר הפוך.",
+      ],
+    },
+
+    // --- lesson_17::CRUD ---
+    {
+      id: "mc_l17_crud_manual_001", topicId: "topic_express", conceptKey: "lesson_17::CRUD", level: 3,
+      question: "מה הקיצור CRUD מייצג?",
+      options: [
+        "Create, Read, Update, Delete",
+        "Create, Run, Update, Deploy",
+        "Cache, Render, Update, Drop",
+        "Crash, Restore, Undo, Debug",
+      ],
+      correctIndex: 0,
+      explanation: "CRUD = ארבע הפעולות הבסיסיות על משאב: Create (POST), Read (GET), Update (PUT/PATCH), Delete (DELETE).",
+      optionFeedback: [
+        "✅ נכון: Create, Read, Update, Delete.",
+        "❌ Run/Deploy לא חלק מ-CRUD.",
+        "❌ Cache/Drop לא קשור.",
+        "❌ Crash/Restore לא חלק מהקיצור.",
+      ],
+    },
+    {
+      id: "mc_l17_crud_manual_002", topicId: "topic_express", conceptKey: "lesson_17::CRUD", level: 4,
+      question: "איזה HTTP method מתאים ל-Update ב-CRUD?",
+      options: [
+        "PUT (החלפה מלאה) או PATCH (עדכון חלקי)",
+        "GET",
+        "POST",
+        "DELETE",
+      ],
+      correctIndex: 0,
+      explanation: "PUT מחליף את כל המשאב. PATCH מעדכן שדות ספציפיים. שניהם idempotent (אופציונלית).",
+      optionFeedback: [
+        "✅ נכון: PUT/PATCH לעדכונים.",
+        "❌ GET לקריאה בלבד.",
+        "❌ POST ליצירה.",
+        "❌ DELETE למחיקה.",
+      ],
     },
 
     // ===== Topic 13 — MongoDB =====
@@ -6522,6 +6910,90 @@ var QUESTIONS_BANK = {
       answer: "stringify",
       hint: "מתודת JSON שהופכת אובייקט למחרוזת לפני שמירה.",
       explanation: "localStorage שומר מחרוזות בלבד. JSON.stringify ממיר אובייקט למחרוזת JSON לפני setItem.",
+    },
+
+    // ===== QMAN-005 Fill Batch — lesson_17 HTTP/Express/REST (2026-05-02) =====
+
+    // --- lesson_17::HTTP ---
+    {
+      id: "fill_l17_http_manual_001", topicId: "topic_express", conceptKey: "lesson_17::HTTP", level: 3,
+      code: "// Standard port for plain web traffic\nconst webPort = ____;\n// e.g. http://example.com (no port shown = default)",
+      answer: "80",
+      hint: "מספר port התקני של HTTP (ללא הצפנה).",
+      explanation: "Port 80 הוא ברירת המחדל של HTTP. דפדפנים לא מציגים אותו ב-URL כי הוא משתמע. HTTPS = 443.",
+    },
+    {
+      id: "fill_l17_http_manual_002", topicId: "topic_express", conceptKey: "lesson_17::HTTP", level: 4,
+      code: "// HTTPS encryption layer\nconst protocol = 'HTTP over ____';\n// adds confidentiality + integrity",
+      answer: "TLS",
+      hint: "פרוטוקול ההצפנה של HTTPS (יורש SSL).",
+      explanation: "TLS (Transport Layer Security) מצפין את התעבורה בין client לserver. SSL הוא הקודם של TLS.",
+    },
+
+    // --- lesson_17::REST API ---
+    {
+      id: "fill_l17_rest_manual_001", topicId: "topic_express", conceptKey: "lesson_17::REST API", level: 3,
+      code: "// RESTful URL for fetching a specific user\napp.get('/users/:____', handler);",
+      answer: "id",
+      hint: "path parameter שמזהה משאב יחיד.",
+      explanation: "REST: /users/:id — ':id' הוא path parameter שמזהה משתמש ספציפי.",
+    },
+    {
+      id: "fill_l17_rest_manual_002", topicId: "topic_express", conceptKey: "lesson_17::REST API", level: 4,
+      code: "// REST: resource paths use plural nouns\n// Status code returned when resource doesn't exist\nres.status(____).json({ error: 'not found' });",
+      answer: "404",
+      hint: "status code סטנדרטי ל-resource שלא קיים.",
+      explanation: "404 Not Found — הסטטוס הסטנדרטי של REST ל-resource מבוקש שלא קיים בשרת.",
+    },
+
+    // --- lesson_17::Express ---
+    {
+      id: "fill_l17_express_manual_001", topicId: "topic_express", conceptKey: "lesson_17::Express", level: 3,
+      code: "// CommonJS import for Express\nconst express = ____('express');\nconst app = express();",
+      answer: "require",
+      hint: "פונקציית CommonJS לטעינת מודולים ב-Node.js.",
+      explanation: "ב-Node.js (CommonJS) משתמשים ב-require() לטעינת מודולים. ב-ES modules היה import.",
+    },
+    {
+      id: "fill_l17_express_manual_002", topicId: "topic_express", conceptKey: "lesson_17::Express", level: 4,
+      code: "// Bind the app to port 3000\nconst app = express();\napp.____(3000);",
+      answer: "listen",
+      hint: "method שמתחיל לקבל בקשות על port נתון.",
+      explanation: "app.listen(port, callback) מתחיל את ה-HTTP server ומחזיר instance. callback רץ כשה-server מוכן.",
+    },
+
+    // --- lesson_17::Server ---
+    {
+      id: "fill_l17_server_manual_001", topicId: "topic_express", conceptKey: "lesson_17::Server", level: 4,
+      code: "// Default port for development server\nconst port = ____;\napp.listen(port, () => console.log('ready'));",
+      answer: "3000",
+      hint: "port שכיח לפיתוח Node/Express (לא מצריך הרשאות root).",
+      explanation: "Port 3000 הוא קונבנציה פופולרית לפיתוח Node. ports מתחת ל-1024 דורשים הרשאות root.",
+    },
+
+    // --- lesson_17::Status Codes ---
+    {
+      id: "fill_l17_status_manual_001", topicId: "topic_express", conceptKey: "lesson_17::Status Codes", level: 3,
+      code: "// Status code for 'created successfully'\nres.status(____).json({ id: newUser.id });",
+      answer: "201",
+      hint: "status code שמסמן 'נוצר חדש' (Created).",
+      explanation: "201 Created הוא הסטטוס הסטנדרטי כשיוצרים משאב חדש (POST שהצליח).",
+    },
+    {
+      id: "fill_l17_status_manual_002", topicId: "topic_express", conceptKey: "lesson_17::4xx-5xx", level: 4,
+      code: "// Status code for 'unauthorized'\nif (!user) return res.status(____).json({ error: 'auth required' });",
+      answer: "401",
+      hint: "status code שמסמן 'נדרשת התחברות'.",
+      explanation: "401 Unauthorized — אין credentials או הם לא תקפים. 403 Forbidden — יש credentials אבל אין הרשאה.",
+    },
+
+    // --- lesson_17::CRUD ---
+    {
+      id: "fill_l17_crud_manual_001", topicId: "topic_express", conceptKey: "lesson_17::CRUD", level: 4,
+      code: "// CRUD: Create operation\napp.____('/users', (req, res) => {\n  const user = createUser(req.body);\n  res.status(201).json(user);\n});",
+      answer: "post",
+      hint: "Express method ל-HTTP POST (יצירה).",
+      explanation: "POST הוא ה-HTTP method ליצירת משאב חדש ב-CRUD. app.post רושם handler לבקשות POST.",
     },
 
     // ===== QMAN-002 Fill Batch — lesson_15 manual (2026-05-02) =====
