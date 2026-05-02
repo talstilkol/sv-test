@@ -1,9 +1,10 @@
-# System Bug Audit Report — 2026-04-30
+# System Bug Audit Report — 2026-05-02
 
 ## Scope
 
 Audit target: LumenPortal / SVCollege AI & Full Stack portal.
-Last refreshed: 2026-04-30 after live strict gates, static scans, full tests, and production build.
+Last refreshed: 2026-05-02 after live strict gates, static scans, full tests, and production build.
+Update: +30 MC +20 Fill questions (v2.1.16), innerHTML security audit completed, keyboard a11y tests added (645 total tests passing).
 
 This report uses only repo evidence and live command output. It does not invent learner metrics, pilot outcomes, telemetry, production usage, or generated questions. Manual-only question policy remains active.
 
@@ -15,7 +16,7 @@ This report uses only repo evidence and live command output. It does not invent 
 | `npm run questions:coverage-targets:strict` | Failed: `mcGapCount: 486`, `fillGapCount: 481`, `ready:false`. |
 | `npm run questions:manual-authoring-plan:strict` | Passed as plan readiness: `1,388` MC and `893` Fill still required; `25` batches. |
 | `npm run questions:activity-authoring-plan:strict` | Failed as expected: `222` total activity gaps; `svcollegePriorityGaps: 0`; `ready:false`. |
-| `npm run validate:strict` | Passed: `316` MC + `243` Fill = `559` manual curated questions. |
+| `npm run validate:strict` | Passed: `346` MC + `263` Fill = `609` manual curated questions. |
 | `npm run qa:questions:strict` | Passed: `559` total questions, `56` deterministic sample, 0 prerequisite issues. |
 | `npm run quality:questions:strict` | Passed: 0 blockers, 0 warnings, `17` notes. |
 | `npm run quality:remediation:strict` | Passed, but queue still contains `17` note-level remediation items: 12 generic wording, 4 fill ambiguity, 1 option-length balance. |
