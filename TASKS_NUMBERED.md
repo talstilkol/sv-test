@@ -106,8 +106,10 @@
 |---|-------|---------------|------|-------|
 | 29 | Trace/Build/Bug priority | 8 (lesson_19 traces) | 42 | 2-3 שעות |
 | 30 | Trace/Build/Bug שאר | 21 (8 bugs + 9 builds + 4 lesson_17 deferred) | 151 | 6-10 שעות |
-| 31-44 | MC ידניות | 40 (cumulative: +20 ב-2026-05-02 batch) | ~1,348 | 40-60 שעות |
-| 45-50 | Fill ידניות | 49 (cumulative: +20 ב-2026-05-02 batch) | ~844 | 25-35 שעות |
+| 31-44 | MC ידניות | 65 (cumulative: +45 ב-2026-05-02 שני batches) | ~1,323 | 40-60 שעות |
+| 45-50 | Fill ידניות | 74 (cumulative: +45 ב-2026-05-02 שני batches) | ~819 | 25-35 שעות |
+| 70 | Confidence calibration UI | 0 (כבר רשום ב-applyAnswer דרך recordConceptConfidenceCalibration) | UI לחזות עוד לא נבנתה | 2 שעות |
+| **חדש** | **Auto-pocket-on-failure** | **✅ הושלם 2026-05-02** | — | — |
 | 70 | Confidence calibration UI | 0 | 1 פיצ'ר | 2 שעות |
 | 91-100 | E2E + Lighthouse | 0 | ~10 משימות | 5-8 שעות |
 | 6 רמות לכל 568 המושגים | 118/568 | 450 | 30-40 שעות |
@@ -127,14 +129,15 @@
 
 ## 📊 סטטוס נוכחי (אמת מאומתת)
 
-- **בדיקות:** 772/774 עוברות (160 test files; 2 pre-existing failures: exam-cram-sheet, manual-blocker-question-authoring — לא הוכנסו בסשן זה)
+- **בדיקות:** 779/781 עוברות (161 test files; 2 pre-existing failures: exam-cram-sheet, manual-blocker-question-authoring — לא הוכנסו בסשן זה; +7 unit tests מ-pocket-auto-sync)
 - **Quality Index:** validate (non-strict) ירוק; strict — 9 warnings פרי-existing מ-AI/Next/Nest concepts
-- **שאלות במאגר:** 956 MC + 534 Fill = **1,490 שאלות ידניות** (גידול +40 בסשן 2026-05-02)
+- **שאלות במאגר:** 981 MC + 559 Fill = **1,540 שאלות ידניות** (גידול +90 בסשן 2026-05-02 — שני batches: +20+25 MC, +20+25 Fill)
 - **Activity bank:** 348 Trace + 41 Bug + 52 Build = 441 (גידול +29 בסשן 2026-05-02)
 - **6 רמות מלאות:** 125/568 מושגים (118 SVCollege + 7 lesson_19: let/var/const/function/closure/promise/fetch)
 - **6 רמות חלקיות (simpleExplanation):** שאר 443 המושגים
-- **Per-distractor feedback:** 956/956 MC ✓ (כולל 20 חדשות מ-batch זה)
-- **Cache version:** `top-bar-perf-v97` / `lumen-v2.4.132-autosave`
+- **Per-distractor feedback:** 981/981 MC ✓ (כולל 45 חדשות מ-2 batches בסשן זה)
+- **פיצ'ר חדש 2026-05-02:** Auto-pocket-on-failure — מושג שנכשלו בו מתווסף אוטומטית לכיס; שתי תשובות נכונות ברצף מסירות. respect ל-manual override (dismiss list).
+- **Cache version:** `top-bar-perf-v98` / `lumen-v2.4.133-autosave`
 
 ---
 
@@ -152,4 +155,4 @@
 
 ---
 
-**עודכן:** 2026-05-02 (top-gap manual batch: +20 MC + +20 Fill + +29 trace/bug/build + 7 lesson_19 rich levels)
+**עודכן:** 2026-05-02 (שני batches: +45 MC + +45 Fill + +29 trace/bug/build + 7 lesson_19 rich levels + Auto-pocket-on-failure feature + content-loader fix לsvcollege fill schema)
