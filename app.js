@@ -7895,15 +7895,91 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     closeBtn?.addEventListener("click", closePocketPanel);
 
+    // ----- Auto-pocket-on-failure (2026-05-02) -----
+    // Failed concept → auto-added to pocket. Stays until proved understood
+    // (2 consecutive correct answers on questions of that concept).
+    // Manual removal marks the concept as "dismissed" so we don't re-add.
+    const POCKET_AUTO_KEY = "lumenportal:pocket:autoAdded:v1";
+    const POCKET_DISMISSED_KEY = "lumenportal:pocket:dismissed:v1";
+    const POCKET_STREAK_KEY = "lumenportal:pocket:correctStreak:v1";
+    const POCKET_PROOF_THRESHOLD = 2;
+    function loadStringSet(key) {
+      try { return new Set(JSON.parse(localStorage.getItem(key) || "[]")); } catch (_) { return new Set(); }
+    }
+    function saveStringSet(key, set) {
+      try { localStorage.setItem(key, JSON.stringify(Array.from(set))); } catch (_) {}
+    }
+    function loadStreaks() {
+      try { return JSON.parse(localStorage.getItem(POCKET_STREAK_KEY) || "{}"); } catch (_) { return {}; }
+    }
+    function saveStreaks(map) {
+      try { localStorage.setItem(POCKET_STREAK_KEY, JSON.stringify(map)); } catch (_) {}
+    }
+
     // Expose API for action handler
     window.pocketToggle = function (key) {
       const items = load();
       const idx = items.indexOf(key);
-      if (idx === -1) items.push(key);
-      else items.splice(idx, 1);
+      const auto = loadStringSet(POCKET_AUTO_KEY);
+      const dismissed = loadStringSet(POCKET_DISMISSED_KEY);
+      if (idx === -1) {
+        items.push(key);
+        // Manual add → no longer dismissed
+        dismissed.delete(key);
+      } else {
+        items.splice(idx, 1);
+        // Manual remove → user dismissed; remember so we don't re-add automatically.
+        dismissed.add(key);
+        auto.delete(key);
+      }
       save(items);
+      saveStringSet(POCKET_AUTO_KEY, auto);
+      saveStringSet(POCKET_DISMISSED_KEY, dismissed);
       refresh();
     };
+
+    // Called by applyAnswer. Adds failed concepts to pocket; on enough
+    // correct streak in a row, removes auto-added concepts.
+    window.pocketAutoSync = function (key, correct) {
+      if (!key || typeof key !== "string") return;
+      const items = load();
+      const auto = loadStringSet(POCKET_AUTO_KEY);
+      const dismissed = loadStringSet(POCKET_DISMISSED_KEY);
+      const streaks = loadStreaks();
+      let changed = false;
+
+      if (!correct) {
+        // Reset streak — student failed.
+        if (streaks[key]) { delete streaks[key]; }
+        // Auto-add to pocket if not already there and user hasn't dismissed it.
+        if (!items.includes(key) && !dismissed.has(key)) {
+          items.push(key);
+          auto.add(key);
+          changed = true;
+        } else if (items.includes(key) && !auto.has(key) && !dismissed.has(key)) {
+          // Already manually pocketed — leave alone but don't track in auto.
+        }
+      } else {
+        // Correct answer — only track streak if concept is auto-pocketed.
+        if (auto.has(key) && items.includes(key)) {
+          streaks[key] = (streaks[key] || 0) + 1;
+          if (streaks[key] >= POCKET_PROOF_THRESHOLD) {
+            const i = items.indexOf(key);
+            if (i !== -1) items.splice(i, 1);
+            auto.delete(key);
+            delete streaks[key];
+            changed = true;
+          }
+        }
+      }
+
+      save(items);
+      saveStringSet(POCKET_AUTO_KEY, auto);
+      saveStringSet(POCKET_DISMISSED_KEY, dismissed);
+      saveStreaks(streaks);
+      if (changed) refresh();
+    };
+
     window.pocketIsHidden = function (hidden) {
       // Allow Mock Exam to hide the FAB during exam
       fab.style.display = hidden ? "none" : "";
@@ -12516,6 +12592,13 @@ document.addEventListener("DOMContentLoaded", () => {
       mode: meta.mode || "question",
       concept,
     });
+    // Auto-pocket: failure adds the concept to the student's pocket; correct
+    // streak (2 in a row) removes it. Lets the student "prove" they understand.
+    try {
+      if (typeof window.pocketAutoSync === "function") {
+        window.pocketAutoSync(conceptKey(lessonId, conceptName), !!correct);
+      }
+    } catch (_) {}
     let mistakeRecord = null;
     let tagSignals = { allKeys: [conceptKey(lessonId, conceptName)], relatedKeys: [] };
     if (correct) {
