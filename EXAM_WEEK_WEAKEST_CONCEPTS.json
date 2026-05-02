@@ -19524,5 +19524,13 @@
       },
       "nextAction": "לבדוק ידנית בסימולציית תלמיד נקייה."
     }
-  ]
+  ],
+  "sourceOfTruth": {
+    "status": "historical",
+    "reportVersion": "report-source-of-truth-v1",
+    "evaluatedAt": "2026-05-02",
+    "sourceDate": "2026-04-29",
+    "source": "report-archive",
+    "reason": "date-mismatch-with-source-of-truth"
+  }
 }

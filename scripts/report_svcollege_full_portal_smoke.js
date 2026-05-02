@@ -9,6 +9,7 @@ const criticalFlows = require("./report_svcollege_critical_flows.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "svcollege-full-portal-smoke-v1";
+const REPORT_DATE = new Date().toISOString().slice(0, 10);
 const BROWSER_SMOKE_PATH = "SVCOLLEGE_BROWSER_SMOKE.md";
 
 function read(file) {
@@ -142,7 +143,7 @@ function buildReport() {
   const failed = checks.filter((check) => !check.passed);
   return {
     reportVersion: REPORT_VERSION,
-    date: "2026-04-29",
+    date: REPORT_DATE,
     target: "SVCollege full portal desktop/mobile smoke gate",
     evidence: {
       browserSmoke: BROWSER_SMOKE_PATH,

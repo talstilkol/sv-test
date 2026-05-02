@@ -1,5 +1,11 @@
 # Question Reuse Audit
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-29
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 - Date: 2026-04-29
 - Target: SVCollege question reuse by learner profile contract and concept tag
 - Questions audited: 1215
@@ -48,4 +54,5 @@
 | `lesson_11::number` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
 | `lesson_11::object` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
 | `lesson_11::Pointer` | 6 | mc:3, fill:2, trace:1 | curated:6 | 6 |
+
 

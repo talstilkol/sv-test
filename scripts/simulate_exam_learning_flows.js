@@ -9,7 +9,7 @@ const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
 const JSON_PATH = path.join(ROOT, "EXAM_FLOW_SIMULATION_REPORT.json");
 const MD_PATH = path.join(ROOT, "EXAM_FLOW_SIMULATION_REPORT.md");
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const REPORT_VERSION = "exam-flow-simulation-v1";
 
 function loadQuestionBanks() {

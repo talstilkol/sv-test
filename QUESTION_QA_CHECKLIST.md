@@ -1,5 +1,11 @@
 # Question QA Checklist — Deterministic Sample + SVCollege Prerequisite Gate
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-30
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 Manual QA checklist for the fixed 10% question sample plus a deterministic SVCollege prerequisite gate. The sample is selected by stable hash over question identity and content, so reviewers get the same rows on every run.
 
 ## Summary
@@ -82,4 +88,5 @@ Manual QA checklist for the fixed 10% question sample plus a deterministic SVCol
 ## Review Outcome
 
 Copy failed rows into the PR evidence with the fix commit. A sampled question is accepted only when every required check is marked complete.
+
 

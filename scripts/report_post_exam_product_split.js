@@ -15,7 +15,7 @@ const questionReuseAudit = require("./report_question_reuse_audit.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "post-exam-product-split-v1";
-const REPORT_DATE = "2026-04-30";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_PATH = path.join(ROOT, "POST_EXAM_PRODUCT_SPLIT_REPORT.json");
 const MD_PATH = path.join(ROOT, "POST_EXAM_PRODUCT_SPLIT_REPORT.md");
 

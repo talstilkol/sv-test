@@ -9,7 +9,7 @@ const ROOT = path.resolve(__dirname, "..");
 const JSON_PATH = path.join(ROOT, "FINISH_LINE_PRERELEASE_REPORT.json");
 const MD_PATH = path.join(ROOT, "FINISH_LINE_PRERELEASE_REPORT.md");
 const REPORT_VERSION = "finish-line-prerelease-v1";
-const REPORT_DATE = "2026-04-30";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 const SOURCE_ENTRIES = Object.freeze(["app.js", "src", "scripts", "tests", "data"]);
 const IGNORED_DIRS = Object.freeze(new Set(["node_modules", "output", ".git"]));

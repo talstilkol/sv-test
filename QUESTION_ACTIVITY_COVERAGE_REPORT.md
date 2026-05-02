@@ -1,5 +1,11 @@
 # Question Activity Coverage
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-30
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 Date: 2026-04-30
 
 ## Summary
@@ -76,3 +82,4 @@ Date: 2026-04-30
 - `lesson_19::sessionStorage` — Trace 0, Build 0, Bug 0
 - `lesson_19::cookies` — Trace 0, Build 0, Bug 0
 - `lesson_19::closure` — Trace 0, Build 0, Bug 0
+

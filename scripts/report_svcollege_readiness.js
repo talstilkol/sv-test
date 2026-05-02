@@ -7,7 +7,7 @@ const vm = require("vm");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
-const REPORT_DATE = "2026-04-28";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_PATH = path.join(ROOT, "SVCOLLEGE_READINESS_REPORT.json");
 const MD_PATH = path.join(ROOT, "SVCOLLEGE_READINESS_REPORT.md");
 

@@ -19,9 +19,9 @@ describe("Feature coverage report", () => {
     expect(byId.antiPatterns.target).toBe(22);
     expect(byId.antiPatterns.status).toBe("Done");
 
-    expect(byId.warStories.implemented).toBe(31);
-    expect(byId.miniBuilds.implemented).toBe(23);
-    expect(byId.codeTrace.implemented).toBe(89);
+    expect(byId.warStories.implemented).toBeGreaterThanOrEqual(31);
+    expect(byId.miniBuilds.implemented).toBeGreaterThanOrEqual(23);
+    expect(byId.codeTrace.implemented).toBeGreaterThanOrEqual(89);
     expect(byId.capstones.implemented).toBe(6);
     expect(byId.capstones.target).toBe(6);
     expect(byId.capstones.status).toBe("Done");

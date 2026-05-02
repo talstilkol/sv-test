@@ -8,7 +8,7 @@ const featureCoverage = require("./report_feature_coverage.js");
 const tabMatrix = require("./report_svcollege_tab_matrix.js");
 
 const ROOT = path.resolve(__dirname, "..");
-const REPORT_DATE = "2026-04-28";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_PATH = path.join(ROOT, "SVCOLLEGE_COMMAND_CENTER.json");
 const MD_PATH = path.join(ROOT, "SVCOLLEGE_COMMAND_CENTER.md");
 const LESSONS_MANIFEST_PATH = path.join(ROOT, "lessons", "manifest.json");

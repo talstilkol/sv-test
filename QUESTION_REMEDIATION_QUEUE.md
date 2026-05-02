@@ -1,5 +1,11 @@
 # Question Remediation Queue — 2026-04-28
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-28
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 Deterministic rewrite pipeline for flagged MC/Fill items. The script does not invent replacement content; every row must be fixed from verified course material and then manually reviewed.
 
 ## Summary
@@ -30,4 +36,5 @@ Deterministic rewrite pipeline for flagged MC/Fill items. The script does not in
 
 | # | Batch | Severity | Action | ID | Kind | Source | Concept | Code | Guidance |
 |---:|---:|---|---|---|---|---|---|---|---|
+
 

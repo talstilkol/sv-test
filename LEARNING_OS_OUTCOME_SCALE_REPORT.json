@@ -1,14 +1,14 @@
 {
   "reportVersion": "learning-os-outcome-scale-v1",
-  "date": "2026-04-30",
+  "date": "2026-05-02",
   "target": "Phase 7 Learning OS + Outcome Scale",
   "policy": "Learning OS uses real lesson, question, learner, capstone, teacher and audit evidence only. Missing inputs stay unknown/unavailable.",
   "summary": {
     "checks": 7,
-    "passed": 7,
-    "failed": 0,
-    "ready": true,
-    "closedTasks": 48
+    "passed": 6,
+    "failed": 1,
+    "ready": false,
+    "closedTasks": 40
   },
   "checks": [
     {
@@ -99,8 +99,8 @@
     {
       "id": "accessibility-mobile-trust",
       "label": "Accessibility/mobile/trust covers WCAG, keyboard journey, reduced-load modes, mobile touch, offline conflict, performance, privacy and trust",
-      "passed": true,
-      "status": "pass",
+      "passed": false,
+      "status": "fail",
       "detail": "Trust surfaces are contracts and gates; missing evidence stays unknown/unavailable.",
       "closes": [
         "P7.6.1",
@@ -122,5 +122,23 @@
       "closes": []
     }
   ],
-  "failures": []
+  "failures": [
+    {
+      "id": "accessibility-mobile-trust",
+      "label": "Accessibility/mobile/trust covers WCAG, keyboard journey, reduced-load modes, mobile touch, offline conflict, performance, privacy and trust",
+      "passed": false,
+      "status": "fail",
+      "detail": "Trust surfaces are contracts and gates; missing evidence stays unknown/unavailable.",
+      "closes": [
+        "P7.6.1",
+        "P7.6.2",
+        "P7.6.3",
+        "P7.6.4",
+        "P7.6.5",
+        "P7.6.6",
+        "P7.6.7",
+        "P7.6.8"
+      ]
+    }
+  ]
 }

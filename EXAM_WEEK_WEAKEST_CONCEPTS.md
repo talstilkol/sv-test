@@ -1,5 +1,11 @@
 # Exam Week Weakest Concepts
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-29
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 > Generated: 2026-04-29
 > Target: SVCollege AI & Full Stack
 > Policy: P-0.3.1
@@ -35,4 +41,5 @@ Run this every morning during exam week:
 ```bash
 npm run exam:weakest:write
 ```
+
 

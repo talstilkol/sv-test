@@ -6,7 +6,7 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "museum-evidence-fields-v1";
-const REPORT_DATE = "2026-04-30";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_PATH = path.join(ROOT, "MUSEUM_EVIDENCE_FIELDS_REPORT.json");
 const MD_PATH = path.join(ROOT, "MUSEUM_EVIDENCE_FIELDS_REPORT.md");
 

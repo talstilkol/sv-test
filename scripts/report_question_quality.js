@@ -8,7 +8,7 @@ const distractorAudit = require("./audit_distractors.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
-const REPORT_DATE = "2026-04-30";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_REPORT_PATH = path.join(ROOT, "QUESTION_QUALITY_REPORT.json");
 const MD_REPORT_PATH = path.join(ROOT, "QUESTION_QUALITY_REPORT.md");
 
@@ -237,7 +237,7 @@ function buildMarkdown(report, maxRows = 80) {
   const summary = report.summary;
   const queue = report.remediationQueue.slice(0, maxRows);
   const lines = [
-    "# Question Quality Report — 2026-04-30",
+    `# Question Quality Report — ${report.date}`,
     "",
     "Full-bank deterministic QA for MC and Fill questions. This report creates a `questionQuality` object for every question id and a remediation queue for warnings and notes.",
     "",

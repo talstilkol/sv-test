@@ -11,7 +11,7 @@ const {
 } = require("../src/core/content-schema-contract.js");
 
 const ROOT = path.resolve(__dirname, "..");
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_PATH = path.join(ROOT, "CONTENT_SCHEMA_CONTRACT_REPORT.json");
 const MD_PATH = path.join(ROOT, "CONTENT_SCHEMA_CONTRACT_REPORT.md");
 

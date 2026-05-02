@@ -6,7 +6,7 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "pricing-packaging-plan-v1";
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_PATH = path.join(ROOT, "PRICING_PACKAGING_PLAN_REPORT.json");
 const MD_PATH = path.join(ROOT, "PRICING_PACKAGING_PLAN_REPORT.md");
 

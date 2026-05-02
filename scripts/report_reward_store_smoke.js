@@ -6,7 +6,7 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "reward-store-smoke-v1";
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 function read(file) {
   return fs.readFileSync(path.join(ROOT, file), "utf8");

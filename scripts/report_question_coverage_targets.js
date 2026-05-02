@@ -9,7 +9,7 @@ const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
 const JSON_PATH = path.join(ROOT, "QUESTION_COVERAGE_TARGETS.json");
 const MD_PATH = path.join(ROOT, "QUESTION_COVERAGE_TARGETS.md");
-const REPORT_DATE = "2026-04-30";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const TARGET_MC_PER_CONCEPT = 3;
 const TARGET_FILL_PER_CODE_CONCEPT = 2;
 

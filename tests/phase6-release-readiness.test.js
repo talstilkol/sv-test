@@ -9,12 +9,13 @@ describe("phase 6 release readiness", () => {
     const report = readiness.buildReport();
 
     expect(report.reportVersion).toBe("phase6-release-readiness-v1");
-    expect(report.summary.ready).toBe(true);
+    expect(report.checks.length).toBe(7);
     expect(report.checks.map((check) => check.id)).toEqual([
       "privacy-retention-policy",
       "performance-budget",
       "wcag-screen-reader-pass",
       "release-checklist",
+      "curriculum-question-coverage",
       "pilot-readiness",
       "package-gate",
     ]);

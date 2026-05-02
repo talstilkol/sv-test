@@ -12,7 +12,7 @@ const flows = require("./simulate_exam_learning_flows.js");
 const ROOT = path.resolve(__dirname, "..");
 const JSON_PATH = path.join(ROOT, "SVCOLLEGE_STUDENT_READINESS_EXPORT.json");
 const MD_PATH = path.join(ROOT, "SVCOLLEGE_STUDENT_READINESS_EXPORT.md");
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const REPORT_VERSION = "svcollege-student-readiness-export-v1";
 const LEARNER_OUTCOME_LOOP = Object.freeze({
   protocol: Object.freeze({

@@ -6,7 +6,7 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "portal-boundary-v1";
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_PATH = path.join(ROOT, "PORTAL_BOUNDARY_REPORT.json");
 const MD_PATH = path.join(ROOT, "PORTAL_BOUNDARY_REPORT.md");
 

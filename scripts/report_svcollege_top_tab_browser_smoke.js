@@ -6,6 +6,7 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "svcollege-top-tab-browser-smoke-gate-v1";
+const REPORT_DATE = new Date().toISOString().slice(0, 10);
 const EVIDENCE_PATH = "output/playwright/svcollege-critical-flows/top-tab-browser-smoke.json";
 
 function read(file) {
@@ -59,7 +60,7 @@ function buildReport() {
   if (evidence && evidence.consoleErrors !== 0) failures.push(`console errors: ${evidence.consoleErrors}`);
   return {
     reportVersion: REPORT_VERSION,
-    date: "2026-04-29",
+    date: REPORT_DATE,
     target: "SVCollege top-tab browser smoke evidence",
     evidencePath: EVIDENCE_PATH,
     summary: {

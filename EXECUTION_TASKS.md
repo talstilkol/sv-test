@@ -1,7 +1,7 @@
 # LumenPortal — לוח משימות ביצוע פעיל
 
 > מקור אמת תפעולי. פירוט ההיסטוריה והמשימות שהושלמו הועבר ל-[docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
-> עודכן: 2026-04-30
+> עודכן: 2026-05-02
 
 ## כללי ברזל
 
@@ -37,6 +37,96 @@
 | התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה + תתי-batch Lesson 11 + שלושה תתי-batch Lesson 12 + ארבעה תתי-batch Lesson 13 הושלמו ככיסוי authored: `184` MC ו-`114` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
 | `QUESTION_ACTIVITY_AUTHORING_PLAN` | `222` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
 | `BRUTAL_MASTER_PLAN_AUDIT` | `243` פריטים: `DONE 17`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 219` |
+
+## תוכנית "World #1 Portal" — שולבה 2026-05-02
+
+תוכנית 6 שלבים להפיכת LumenPortal לפורטל לימוד Full-Stack #1 בעולם. מבוססת על vanilla JS (ללא React) לטעינה מיידית. מסמך מלא: [/Users/tal/.claude/plans/breezy-conjuring-pinwheel.md].
+
+### 🌟 World#1 — Phase A: STABILIZE (שבועות 1-2)
+
+- [V] WORLD1-A1 — innerHTML security audit מלא: 155 DOM sinks ממופים ל-[INNERHTML_SECURITY_AUDIT.md](INNERHTML_SECURITY_AUDIT.md). 7 medium-risk זוהו בקהילה/peer/mentor.
+- [V] WORLD1-A2 — 30 MC + 20 Fill ל-lesson_13 (method, new, querySelectorAll, removeChild, replaceChild, setAttribute, setItem, style, super, Value). PR #22.
+- [V] WORLD1-A3 — Keyboard accessibility tests (23 tests): Escape/Enter/Arrow/focus/ARIA. tests/keyboard-accessibility.test.js.
+- [~] WORLD1-A4 — QMAN-002 lesson_15: 23 MC + 14 Fill (anonymous function, catch, Error, Exception, reject, resolve, Scope, Synchronous) — בעבודה.
+- [ ] WORLD1-A5 — Pilot של 10 תלמידים אמיתיים: D1/D7 retention metrics לפני release.
+- [ ] WORLD1-A6 — Stale reports auto-refresh: כל דוח עם timestamp drift לסקריפט refresh או banner historical.
+- [ ] WORLD1-A7 — DOMPurify enforcement על 7 medium-risk sinks (community, peer review, mentor, code runner output).
+- [ ] WORLD1-A8 — `esc()` שיפור: הוספת escaping ל-single quote `'`.
+
+### 🏗️ World#1 — Phase B: MODULARIZE (שבועות 3-6)
+
+- [ ] WORLD1-B1 — State extraction: store.js עם Proxy-based reactive store (~50 LOC), החלפת 400+ window globals.
+- [ ] WORLD1-B2 — Views extraction: knowledge-map, study-mode, trainer, mock-exam, concept-sprint, flashcards, reward-store, settings — כל אחד למודול ES נפרד.
+- [ ] WORLD1-B3 — Services extraction: supabase-client, storage, auth, sync לקבצי service נפרדים.
+- [ ] WORLD1-B4 — Components extraction: question-card, concept-card, progress-bar, modal, sidebar.
+- [ ] WORLD1-B5 — CSS modules: פיצול style.css (27,057 שורות) לקבצי CSS per-view + variables.
+- [ ] WORLD1-B6 — הסרת Vite legacy script protection plugins (אחרי שכל הקוד מודולרי).
+- [ ] WORLD1-B7 — CI coverage thresholds: lib/ ≥80%, views/ ≥60%, fail PR אם יורד.
+- [ ] WORLD1-B8 — npm audit upgrade: `--audit-level=high` (מ-moderate).
+
+### ✨ World#1 — Phase C: MODERNIZE (שבועות 7-10) — Vanilla, NO React
+
+- [ ] WORLD1-C1 — Web Components: Custom Elements לקומפוננטות מרכזיות (modal, tabs, card, toast).
+- [ ] WORLD1-C2 — TypeScript: type-check על כל src/core + src/views (compile to JS).
+- [ ] WORLD1-C3 — Design System: CSS Custom Properties עם light/dark/auto themes; utility classes ללא Tailwind.
+- [ ] WORLD1-C4 — Mobile-first responsive redesign של כל ה-views.
+- [ ] WORLD1-C5 — Web Animations API + CSS transitions במקום Framer Motion (0 deps).
+- [ ] WORLD1-C6 — WCAG 2.1 AAA upgrade: contrast, focus-visible, screen reader announcements.
+- [ ] WORLD1-C7 — Service Worker v2: cache strategies מותאמות, background sync, push notifications API.
+
+### 🤖 World#1 — Phase D: INTELLIGENCE — דחוי (החלטת משתמש 2026-05-02)
+
+החליטו לוותר על AI Tutor כרגע. במקום זאת, להתמקד ב-deterministic personalization מבוסס נתונים שכבר קיימים (SRS state, mistakes, mastery levels). אם נחזור לזה — נתחיל עם cost-controlled MVP.
+
+- [DEFERRED] WORLD1-D1 — Claude API integration (AI Tutor)
+- [DEFERRED] WORLD1-D5 — AI Code Review
+- [DEFERRED] WORLD1-D6 — Natural language Q&A
+
+תחליפים deterministic שעדיין יוצרים אישיות:
+- [ ] WORLD1-D2 — Adaptive difficulty: bandit-style selection ע״ב SRS gaps (no ML, רק היוריסטיקה).
+- [ ] WORLD1-D3 — Knowledge gap detector: weakest concepts אוטומטי מ-mastery state.
+- [ ] WORLD1-D4 — Personalized study plan: schedule מ-SRS due dates + time available.
+- [ ] WORLD1-D7 — Predictive analytics: at-risk warning מ-SRS lapses + activity drop.
+
+### 🌐 World#1 — Phase E: SCALE (שבועות 15-18) — Backend מלא + Community
+
+- [ ] WORLD1-E1 — Full Supabase Auth: email/password + OAuth (Google/GitHub) + magic links.
+- [ ] WORLD1-E2 — RLS hardening: policies רטרוספקטיבית לכל 11 הטבלאות.
+- [ ] WORLD1-E3 — Real-time subscriptions: progress, notifications, community updates.
+- [ ] WORLD1-E4 — Teacher Dashboard v2: analytics, grading, curriculum builder, bulk import.
+- [ ] WORLD1-E5 — Community platform: forum, peer review, code sharing, reputation.
+- [ ] WORLD1-E6 — Real-time collaboration: pair programming sessions עם cursor sync.
+- [ ] WORLD1-E7 — Leaderboards: weekly challenges, hackathons, monthly tournaments.
+- [ ] WORLD1-E8 — Content CMS: teacher-authored lessons via UI (no code edit needed).
+- [ ] WORLD1-E9 — Multi-tenancy: schools/bootcamps כתחומים נפרדים.
+
+### 🚀 World#1 — Phase F: EXCELLENCE (שבועות 19-22) — מה שהופך ל-#1
+
+- [ ] WORLD1-F1 — Interactive Code Playground: Monaco Editor + browser execution + debugging.
+- [ ] WORLD1-F2 — Project-Based Learning: build real apps step-by-step עם guided tasks.
+- [ ] WORLD1-F3 — Live Mentoring marketplace: connect students עם industry mentors.
+- [ ] WORLD1-F4 — Job-Ready Portfolio: auto-generate from learning + GitHub integration.
+- [ ] WORLD1-F5 — Industry Certifications: verified skill assessments (employer-recognized).
+- [ ] WORLD1-F6 — SRS 2.0: context-aware (time of day, mood signal), mood-adaptive.
+- [ ] WORLD1-F7 — Learning Analytics dashboard for students: self-insight + recommendations.
+- [ ] WORLD1-F8 — Offline-first excellence: 100% functionality without internet.
+- [ ] WORLD1-F9 — Multilingual: English, Arabic, Russian tracks (Hebrew = primary).
+- [ ] WORLD1-F10 — Mobile native (Capacitor): iOS/Android app עם push, widgets, offline.
+
+### 📊 World#1 — Success Metrics (6 months)
+
+| מדד | יעד |
+|---|---|
+| Daily Active Users | 500+ |
+| D7 Retention | >60% |
+| Lighthouse Performance | 95+ |
+| Lighthouse Accessibility | 100 |
+| Test Coverage (lib/) | 90%+ |
+| Test Coverage (views/) | 70%+ |
+| Time to First Meaningful Paint | <1s |
+| NPS Score | >70 |
+
+---
 
 ## משימות שנותרו לבצע — ראשונות
 

@@ -9,7 +9,7 @@ const weakest = require("./report_exam_weakest_concepts.js");
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
 const OUTPUT_PATH = path.join(ROOT, "EXAM_FINAL_CRAM_SHEET.md");
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 function loadDataGlobal(file, globalName) {
   const sandbox = { window: {}, console };

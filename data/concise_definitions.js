@@ -1214,6 +1214,18 @@
       what: "המנגנון שמריץ משימות אסינכרוניות אחרי שהקוד הסינכרוני נגמר.",
       need: "Promises רצים לפני setTimeout בגלל microtasks.",
     },
+    "Node.js": {
+      what: "סביבת ריצה ל-JavaScript מחוץ לדפדפן, מבוססת על מנוע V8.",
+      need: "מריצים קוד JS בשרת/CLI; יש גישה ל-fs, http, ו-process.",
+    },
+    "username": {
+      what: "שדה זיהוי המשתמש בטופס/בקשה (שם משתמש).",
+      need: "צריך validation: אורך מינימלי, ייחודיות, וסניטיזציה לפני שמירה.",
+    },
+    "email": {
+      what: "שדה דואר אלקטרוני, משמש לזיהוי וקשר עם המשתמש.",
+      need: "validation מובנית עם type='email' ו-regex/בדיקת domain.",
+    },
   };
 
   global.CONCISE_CONCEPT_DEFINITIONS = Object.freeze(defs);

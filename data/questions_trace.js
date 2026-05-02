@@ -2390,6 +2390,29 @@ var QUESTIONS_TRACE = [
     explanation:
       "package.json scripts נותנים שמות קבועים לפקודות. זה מאפשר לצוות ול-CI להריץ אותה פעולה בלי לזכור פקודות ארוכות.",
   },
+  {
+    id: "trace_ai_dev_ai_001",
+    conceptKey: "ai_development::AI",
+    level: 4,
+    title: "קריאת פרטי בקשת ה-AI",
+    code: "const reply = await client.chat.completions.create({\n  model: 'gpt-4o-mini',\n  messages: [\n    { role: 'system', content: 'You are a concise senior dev.' },\n    { role: 'user', content: 'הסבר במשפט אחד מה זה closure.' },\n  ],\n  temperature: 0.3,\n});",
+    steps: [
+      {
+        line: 1,
+        prompt: "כמה message entries נמסרו ל-completion הזה?",
+        answer: "2",
+        hint: "יש שני אובייקטים במערך messages: system ו-user.",
+      },
+      {
+        line: 2,
+        prompt: "איזה מודל שימש ליצירת התשובה?",
+        answer: "gpt-4o-mini",
+        hint: "השדה model מציין במפורש את שם המודל.",
+      },
+    ],
+    explanation:
+      "בקשת chat כוללת שני סוגי הודעות (system/user), מודל מוגדר במפורש, ופרמטר temperature משפיע על יציבות הפלט.",
+  },
 ];
 
 // Browser bridge: expose under QUESTIONS_BANK.trace so the trainer's

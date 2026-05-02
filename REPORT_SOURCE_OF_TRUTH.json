@@ -1,0 +1,420 @@
+{
+  "reportVersion": "report-source-of-truth-v1",
+  "date": "2026-05-02",
+  "source": "scripts/report_source_of_truth.js",
+  "scope": "generated report freshness + contradiction reconciliation",
+  "artifactSummary": {
+    "total": 38,
+    "historical": 36,
+    "active": 2
+  },
+  "policy": "Reconciliation uses live rebuilds of feature and question coverage reports. Any report older than today's source-of-truth date is marked historical/superseded. Live decisions must be driven by active reports in this file.",
+  "signals": [
+    {
+      "id": "FEATURE_COVERAGE",
+      "status": "green",
+      "detail": "strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2",
+      "date": "2026-05-02"
+    },
+    {
+      "id": "QUESTION_COVERAGE_TARGETS",
+      "status": "red",
+      "detail": "ready=false, mcGap=401, fillGap=393, version=question-coverage-targets-v1",
+      "date": "2026-05-02",
+      "source": "questionCoverage"
+    },
+    {
+      "id": "QUESTION_QUALITY",
+      "status": "yellow",
+      "detail": "questionQualityIndex=99.9%, total=1109",
+      "date": "2026-05-02"
+    },
+    {
+      "id": "FINISH_LINE_PRE_RELEASE",
+      "status": "red",
+      "detail": "ready=false, passed=1/18",
+      "date": "2026-05-02"
+    }
+  ],
+  "findings": [
+    {
+      "id": "recon-001",
+      "severity": "P1",
+      "finding": "Feature coverage is clean while question coverage remains red. Do not claim both as current production truth.",
+      "evidence": {
+        "feature": "strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2",
+        "questions": "ready=false, mcGap=401, fillGap=393, version=question-coverage-targets-v1"
+      }
+    },
+    {
+      "id": "recon-003",
+      "severity": "P1",
+      "finding": "36 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical.",
+      "evidence": {
+        "sourceOfTruthDate": "2026-05-02",
+        "staleArtifacts": 36
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "AI_TUTOR_ALPHA_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "ai-tutor-alpha-gate-v1",
+      "type": "markdown+json",
+      "title": "AI_TUTOR_ALPHA_REPORT"
+    },
+    {
+      "id": "BRUTAL_MASTER_PLAN_AUDIT",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "2026-04-30",
+      "reportVersion": "brutal-master-plan-audit-v1",
+      "type": "markdown+json",
+      "title": "BRUTAL_MASTER_PLAN_AUDIT"
+    },
+    {
+      "id": "CONTENT_FACTORY_PIPELINE_REPORT",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "2026-04-30",
+      "reportVersion": "content-factory-pipeline-v1",
+      "type": "markdown+json",
+      "title": "CONTENT_FACTORY_PIPELINE_REPORT"
+    },
+    {
+      "id": "CONTENT_SCHEMA_CONTRACT_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "content-schema-contract-report-v1",
+      "type": "markdown+json",
+      "title": "CONTENT_SCHEMA_CONTRACT_REPORT"
+    },
+    {
+      "id": "EXAM_EDITION_RELEASE_FREEZE",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "exam-edition-release-freeze-v1",
+      "type": "markdown+json",
+      "title": "EXAM_EDITION_RELEASE_FREEZE"
+    },
+    {
+      "id": "EXAM_FLOW_SIMULATION_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "exam-flow-simulation-v1",
+      "type": "markdown+json",
+      "title": "EXAM_FLOW_SIMULATION_REPORT"
+    },
+    {
+      "id": "EXAM_WEEK_WEAKEST_CONCEPTS",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "unknown",
+      "reportVersion": "exam-week-weakest-v1",
+      "type": "markdown+json",
+      "title": "course_blueprints + lesson concepts + question banks + QA gates"
+    },
+    {
+      "id": "FEATURE_COVERAGE_REPORT",
+      "state": "historical",
+      "date": "2026-04-28",
+      "mdDate": "2026-04-28",
+      "reportVersion": "feature-coverage-v2",
+      "type": "markdown+json",
+      "title": "repo"
+    },
+    {
+      "id": "FINISH_LINE_PRERELEASE_REPORT",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "2026-04-30",
+      "reportVersion": "finish-line-prerelease-v1",
+      "type": "markdown+json",
+      "title": "FINISH_LINE_PRERELEASE_REPORT"
+    },
+    {
+      "id": "LEARNING_OS_OUTCOME_SCALE_REPORT",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "2026-04-30",
+      "reportVersion": "learning-os-outcome-scale-v1",
+      "type": "markdown+json",
+      "title": "LEARNING_OS_OUTCOME_SCALE_REPORT"
+    },
+    {
+      "id": "LESSON_QUIZ_KEYS_REPORT",
+      "state": "historical",
+      "date": "2026-04-28",
+      "mdDate": "2026-04-28",
+      "reportVersion": "lesson-quiz-keys-v1",
+      "type": "markdown+json",
+      "title": "data/lesson_quiz_keys.js"
+    },
+    {
+      "id": "LEVEL100_RELEASE_GATE",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "level-100-release-gate-v1",
+      "type": "markdown+json",
+      "title": "LEVEL100_RELEASE_GATE"
+    },
+    {
+      "id": "MANUAL_QUESTION_AUTHORING_PLAN",
+      "state": "active",
+      "date": "2026-05-02",
+      "mdDate": "2026-05-02",
+      "reportVersion": "manual-question-authoring-plan-v1",
+      "type": "markdown+json",
+      "title": "MANUAL_QUESTION_AUTHORING_PLAN"
+    },
+    {
+      "id": "MANUAL_QUESTION_BLOCKER_MAP",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "2026-04-30",
+      "reportVersion": "manual-question-blocker-map-v1",
+      "type": "markdown+json",
+      "title": "MANUAL_QUESTION_BLOCKER_MAP"
+    },
+    {
+      "id": "METRICS_DASHBOARD_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "metrics-dashboard-v1",
+      "type": "markdown+json",
+      "title": "METRICS_DASHBOARD_REPORT"
+    },
+    {
+      "id": "MOCK_EXAM_VARIANTS_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "mock-exam-variants-v1",
+      "type": "markdown+json",
+      "title": "MOCK_EXAM_VARIANTS_REPORT"
+    },
+    {
+      "id": "MUSEUM_EVIDENCE_FIELDS_REPORT",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "2026-04-30",
+      "reportVersion": "museum-evidence-fields-v1",
+      "type": "markdown+json",
+      "title": "MUSEUM_EVIDENCE_FIELDS_REPORT"
+    },
+    {
+      "id": "PHASE6_RELEASE_READINESS_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "phase6-release-readiness-v1",
+      "type": "markdown+json",
+      "title": "PHASE6_RELEASE_READINESS_REPORT"
+    },
+    {
+      "id": "PILOT_READINESS_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "pilot-readiness-v1",
+      "type": "markdown+json",
+      "title": "PILOT_READINESS_REPORT"
+    },
+    {
+      "id": "PORTAL_BOUNDARY_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "portal-boundary-v1",
+      "type": "markdown+json",
+      "title": "PORTAL_BOUNDARY_REPORT"
+    },
+    {
+      "id": "POST_EXAM_PRODUCT_SPLIT_REPORT",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "2026-04-30",
+      "reportVersion": "post-exam-product-split-v1",
+      "type": "markdown+json",
+      "title": "POST_EXAM_PRODUCT_SPLIT_REPORT"
+    },
+    {
+      "id": "PRICING_PACKAGING_PLAN_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "pricing-packaging-plan-v1",
+      "type": "markdown+json",
+      "title": "PRICING_PACKAGING_PLAN_REPORT"
+    },
+    {
+      "id": "QUESTION_ACTIVITY_AUTHORING_PLAN",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "2026-04-30",
+      "reportVersion": "question-activity-authoring-plan-v1",
+      "type": "markdown+json",
+      "title": "QUESTION_ACTIVITY_AUTHORING_PLAN"
+    },
+    {
+      "id": "QUESTION_ACTIVITY_COVERAGE_REPORT",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "2026-04-30",
+      "reportVersion": "question-activity-coverage-v1",
+      "type": "markdown+json",
+      "title": "QUESTION_ACTIVITY_COVERAGE_REPORT"
+    },
+    {
+      "id": "QUESTION_COVERAGE_TARGETS",
+      "state": "historical",
+      "date": "2026-05-01",
+      "mdDate": "2026-05-01",
+      "reportVersion": "question-coverage-targets-v1",
+      "type": "markdown+json",
+      "title": "QUESTION_COVERAGE_TARGETS"
+    },
+    {
+      "id": "QUESTION_CURRICULUM_COVERAGE_REPORT",
+      "state": "active",
+      "date": "2026-05-02",
+      "mdDate": "2026-05-02",
+      "reportVersion": "curriculum-coverage-v1",
+      "type": "markdown+json",
+      "title": {
+        "mc": {
+          "curatedMC": 635,
+          "ignoredGeneratedMC": 0,
+          "curatedFill": 469,
+          "ignoredGeneratedFill": 0
+        },
+        "activity": {
+          "trace": 335,
+          "build": 43,
+          "bug": 33
+        },
+        "generatedAt": "2026-05-02",
+        "activityReportDate": "2026-05-02"
+      }
+    },
+    {
+      "id": "QUESTION_QA_CHECKLIST",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "unknown",
+      "reportVersion": "question-qa-checklist-v2",
+      "type": "markdown+json",
+      "title": "QUESTION_QA_CHECKLIST"
+    },
+    {
+      "id": "QUESTION_QUALITY_REPORT",
+      "state": "historical",
+      "date": "2026-04-30",
+      "mdDate": "2026-04-30",
+      "reportVersion": "question-quality-v1",
+      "type": "markdown+json",
+      "title": "repo"
+    },
+    {
+      "id": "QUESTION_REMEDIATION_QUEUE",
+      "state": "historical",
+      "date": "2026-04-28",
+      "mdDate": "2026-04-28",
+      "reportVersion": "question-remediation-v1",
+      "type": "markdown+json",
+      "title": "QUESTION_QUALITY_REPORT"
+    },
+    {
+      "id": "QUESTION_REUSE_AUDIT_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "unknown",
+      "reportVersion": "question-reuse-audit-v1",
+      "type": "markdown+json",
+      "title": "QUESTION_REUSE_AUDIT_REPORT"
+    },
+    {
+      "id": "REPORT_SOURCE_OF_TRUTH",
+      "state": "historical",
+      "date": "2026-05-01",
+      "mdDate": "2026-05-01",
+      "reportVersion": "report-source-of-truth-v1",
+      "type": "markdown+json",
+      "title": "scripts/report_source_of_truth.js"
+    },
+    {
+      "id": "ROADMAP_90_DAY_WAVES",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "roadmap-90-day-waves-v1",
+      "type": "markdown+json",
+      "title": "ROADMAP_90_DAY_WAVES"
+    },
+    {
+      "id": "SVCOLLEGE_COMMAND_CENTER",
+      "state": "historical",
+      "date": "2026-04-28",
+      "mdDate": "unknown",
+      "reportVersion": "svcollege-command-center-v1",
+      "type": "markdown+json",
+      "title": "SVCOLLEGE_COMMAND_CENTER"
+    },
+    {
+      "id": "SVCOLLEGE_READINESS_REPORT",
+      "state": "historical",
+      "date": "2026-04-28",
+      "mdDate": "unknown",
+      "reportVersion": "svcollege-readiness-v1",
+      "type": "markdown+json",
+      "title": "data/course_blueprints.js#svcollege_fullstack_ai"
+    },
+    {
+      "id": "SVCOLLEGE_STUDENT_READINESS_EXPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "svcollege-student-readiness-export-v1",
+      "type": "markdown+json",
+      "title": "SVCOLLEGE_STUDENT_READINESS_EXPORT"
+    },
+    {
+      "id": "SVCOLLEGE_TAB_MATRIX",
+      "state": "historical",
+      "date": "2026-04-28",
+      "mdDate": "unknown",
+      "reportVersion": "svcollege-tab-matrix-v1",
+      "type": "markdown+json",
+      "title": "SVCOLLEGE_TAB_MATRIX"
+    },
+    {
+      "id": "SYNC_ALPHA_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "sync-alpha-gate-v1",
+      "type": "markdown+json",
+      "title": "SYNC_ALPHA_REPORT"
+    },
+    {
+      "id": "VIDEO_ASSET_TRACKER_REPORT",
+      "state": "historical",
+      "date": "2026-04-29",
+      "mdDate": "2026-04-29",
+      "reportVersion": "video-asset-tracker-v1",
+      "type": "markdown+json",
+      "title": {
+        "data": "data/concept_videos.js",
+        "scriptDoc": "NOTEBOOKLM_CONCEPT_CLIPS.md"
+      }
+    }
+  ]
+}

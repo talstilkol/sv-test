@@ -1,5 +1,11 @@
 # Finish Line 1 Pre-Release Report
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-30
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 Date: 2026-04-30
 Version: finish-line-prerelease-v1
 
@@ -27,7 +33,7 @@ Version: finish-line-prerelease-v1
 | Question QA strict | pass | `npm run qa:questions:strict` | passed |
 | Question quality strict | pass | `npm run quality:questions:strict` | passed |
 | Manual blocker map strict | pass | `npm run questions:blocker-map:strict` | passed |
-| Manual question coverage target strict | fail | `npm run questions:coverage-targets:strict` |   "handCuratedMcPromotionBacklog": 486, /   "handCuratedFillPromotionBacklog": 481 / } |
+| Manual question coverage target strict | fail | `npm run questions:coverage-targets:strict` |   "handCuratedMcPromotionBacklog": 471, /   "handCuratedFillPromotionBacklog": 466 / } |
 | Question reuse audit strict | pass | `npm run questions:reuse-audit:strict` | passed |
 | SVCollege release readiness | pass | `npm run svcollege:readiness:release` | passed |
 | SVCollege tab matrix strict | pass | `npm run svcollege:tab-matrix:strict` | passed |
@@ -42,4 +48,5 @@ Version: finish-line-prerelease-v1
 
 ## Blockers
 
-- questions-coverage-targets-strict:   "handCuratedMcPromotionBacklog": 486, |   "handCuratedFillPromotionBacklog": 481 | }
+- questions-coverage-targets-strict:   "handCuratedMcPromotionBacklog": 471, |   "handCuratedFillPromotionBacklog": 466 | }
+

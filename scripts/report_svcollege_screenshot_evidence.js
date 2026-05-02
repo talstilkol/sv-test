@@ -6,6 +6,7 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "svcollege-screenshot-evidence-v1";
+const REPORT_DATE = new Date().toISOString().slice(0, 10);
 const SCREENSHOT_DIR = "output/playwright/svcollege-critical-flows";
 
 const EXPECTED_SCREENSHOTS = Object.freeze([
@@ -67,7 +68,7 @@ function buildReport() {
   const mobile = screenshots.filter((item) => item.viewport === "mobile");
   return {
     reportVersion: REPORT_VERSION,
-    date: "2026-04-29",
+    date: REPORT_DATE,
     target: "SVCollege critical flow desktop + mobile viewport screenshots",
     summary: {
       screenshots: screenshots.length,

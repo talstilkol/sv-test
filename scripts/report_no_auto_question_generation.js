@@ -6,7 +6,7 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "no-auto-question-generation-v1";
-const REPORT_DATE = "2026-04-30";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 const DELETED_TOOL_FILES = Object.freeze([
   "scripts/seed_questions.js",

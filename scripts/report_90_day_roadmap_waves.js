@@ -10,7 +10,7 @@ const aiTutorAlpha = require("./report_ai_tutor_alpha.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "roadmap-90-day-waves-v1";
-const REPORT_DATE = "2026-04-29";
+const REPORT_DATE = new Date().toISOString().slice(0,10);
 const JSON_PATH = path.join(ROOT, "ROADMAP_90_DAY_WAVES.json");
 const MD_PATH = path.join(ROOT, "ROADMAP_90_DAY_WAVES.md");
 

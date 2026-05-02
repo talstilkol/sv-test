@@ -1,5 +1,11 @@
 # Post-Exam Product Split Report — 2026-04-30
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-04-30
+> Source-of-truth refresh date: 2026-05-01
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 - Target: Phase 10 W49 Post-Exam Product Split
 - Policy: Post-exam expansion is gated by repository evidence. Missing pricing, usage, learner or review evidence remains unknown/unavailable.
 - Ready: Yes
@@ -96,4 +102,5 @@
 |---|---|---|---|
 | Question reuse audit is ready | pass | 863 questions audited; 0 duplicate identities. | `QUESTION_REUSE_AUDIT_REPORT.json` |
 | Legacy promotion requires explicit human review evidence | pass | Legacy generated questions cannot become hand-curated by coverage pressure alone. | `SEEDED_QUESTION_PROMOTION_POLICY.md` |
+
 
