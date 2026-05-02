@@ -423,6 +423,17 @@ const CLUSTERS = [
   { id: "git_workflow", title: "Git Workflow", members: ["repository", "branch", "commit", "pull request", "Git", "GitHub workflow"], primaryLessons: ["lesson_tooling_git"], weightedDifficulty: 4, unifiedDocSection: "§126" },
   { id: "express_form_events", title: "Express Form Events", members: ["body-parser", "event.preventDefault"], primaryLessons: ["lesson_17"], weightedDifficulty: 4, unifiedDocSection: "§127" },
   { id: "scope_chain_cluster", title: "Scope Chain", members: ["scope chain"], primaryLessons: ["lesson_closures"], weightedDifficulty: 5, unifiedDocSection: "§128" },
+  { id: "dom_remove_node", title: "DOM Node Removal", members: ["removeChild", "remove", "removeNode"], primaryLessons: ["lesson_13"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "error_objects", title: "Error Objects", members: ["Error Object", "Exception", "event object"], primaryLessons: ["lesson_15", "lesson_19"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "if_else_cluster", title: "if/else", members: ["if/else"], primaryLessons: ["lesson_19"], weightedDifficulty: 4, unifiedDocSection: null },
+  { id: "vite_creation", title: "Vite Project Creation", members: ["npm create vite@latest"], primaryLessons: ["lesson_21"], weightedDifficulty: 2, unifiedDocSection: null },
+  { id: "react_hook_basics", title: "React Hook fundamentals", members: ["Hook", "mutable", "immutable"], primaryLessons: ["lesson_22"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "ts_advanced_types", title: "TS Advanced", members: ["tuple", "type annotation", "Type Safety", "TypeScript", "Typing State", "void"], primaryLessons: ["lesson_26"], weightedDifficulty: 6, unifiedDocSection: null },
+  { id: "ts_app_models", title: "TS App Models", members: ["User", "BaseUser", "RegisteredUser", "GuestUser", "Book", "Genre", "Category", "Amount", "Expense", "Income", "Budget Summary", "Category Breakdown", "extends interface"], primaryLessons: ["lesson_27"], weightedDifficulty: 4, unifiedDocSection: null },
+  { id: "ai_engineering_full", title: "AI Engineering", members: ["chunking", "embeddings", "evaluation", "guardrails", "hallucination check", "LangChain", "model selection", "OpenAI API", "prompt messages", "retrieval ranking", "streaming response", "structured output", "token budget", "vector store", "Vercel AI SDK"], primaryLessons: ["lesson_ai_engineering"], weightedDifficulty: 6, unifiedDocSection: null },
+  { id: "auth_attacks", title: "Auth Attacks", members: ["bcrypt", "CORS", "CSRF"], primaryLessons: ["lesson_auth_security"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "workbook_basics", title: "Task Manager Workbook", members: ["Task Manager", "variables", "conditions", "arrays", "functions", "events", "objects", "try/catch", "async/await", "tasks", "todo", "task list"], primaryLessons: ["workbook_taskmanager"], weightedDifficulty: 4, unifiedDocSection: null },
+  { id: "ai_dev_tools", title: "AI Dev Tools", members: ["AI", "Cursor", "Windsurf", "Claude Code", "ChatGPT", "Copilot", "Codex", "Continue"], primaryLessons: ["ai_development"], weightedDifficulty: 4, unifiedDocSection: null },
 ];
 
 function memberSet() {
@@ -569,6 +580,18 @@ const CLUSTER_CONTENT_STATUS = {
   git_workflow:               { table: true, overview: true, perMember: false, codeBlocks: true },
   express_form_events:        { table: true, overview: true, perMember: false, codeBlocks: true },
   scope_chain_cluster:        { table: true, overview: true, perMember: false, codeBlocks: true },
+  // ─── final orphan absorbers (round 2) ───
+  dom_remove_node:            { table: false, overview: false, perMember: false, codeBlocks: false },
+  error_objects:              { table: false, overview: false, perMember: false, codeBlocks: false },
+  if_else_cluster:            { table: false, overview: false, perMember: false, codeBlocks: false },
+  vite_creation:              { table: false, overview: false, perMember: false, codeBlocks: false },
+  react_hook_basics:          { table: false, overview: false, perMember: false, codeBlocks: false },
+  ts_advanced_types:          { table: false, overview: false, perMember: false, codeBlocks: false },
+  ts_app_models:              { table: false, overview: false, perMember: false, codeBlocks: false },
+  ai_engineering_full:        { table: false, overview: false, perMember: false, codeBlocks: false },
+  auth_attacks:               { table: false, overview: false, perMember: false, codeBlocks: false },
+  workbook_basics:            { table: false, overview: false, perMember: false, codeBlocks: false },
+  ai_dev_tools:               { table: false, overview: false, perMember: false, codeBlocks: false },
 };
 
 function clusterCompletionScore(clusterId) {

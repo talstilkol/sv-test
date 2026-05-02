@@ -12828,7 +12828,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Trainer state
-  let trainerMode = "adaptive"; // "adaptive" | "weak" | "mixed"
+  let trainerMode = "adaptive"; // "adaptive" | "weak" | "mixed" | "cluster"
+  let trainerClusterFilter = null; // Set to cluster.id when in "cluster" mode
   let trainerCurrent = null; // { lesson, concept, question }
   let trainerStats = { asked: 0, correct: 0, wrong: 0 };
   let trainerLastAnswered = false;
@@ -13696,6 +13697,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return sc.level <= 3; // grandma/child/soldier — still considered weak
       });
       if (filtered.length === 0) filtered = pool;
+    } else if (trainerMode === "cluster" && trainerClusterFilter) {
+      // PHASE-K: Cluster mode — only quiz on members of the active cluster
+      const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
+      const cluster = clusterApi ? clusterApi.getById(trainerClusterFilter) : null;
+      if (cluster) {
+        const memberSet = new Set(cluster.members.map((m) => m.toLowerCase()));
+        filtered = pool.filter(({ concept }) => memberSet.has(String(concept.conceptName || "").toLowerCase()));
+        if (filtered.length === 0) filtered = pool; // safety fallback
+      }
     }
 
     const weights = filtered.map(({ lesson, concept }) =>
@@ -14938,6 +14948,8 @@ document.addEventListener("DOMContentLoaded", () => {
     hideAllViews();
     setPortalDecisionAid("trainer");
     currentLessonId = null;
+    // PHASE-K: clear cluster filter unless we're in cluster mode
+    if (trainerMode !== "cluster") trainerClusterFilter = null;
     currentLessonTitle.textContent = "🧠 מאמן הידע";
     currentLessonDesc.textContent =
       "המערכת מציגה שאלות אדפטיביות. כל תשובה מעדכנת את הציון של המושג ואת רמת השליטה הכללית.";
@@ -30679,6 +30691,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let targetLesson = lesson;
         if (status && status.weakMember) {
           const cluster = status.cluster;
+          // PHASE-K: enable cluster mode in trainer
+          trainerMode = "cluster";
+          trainerClusterFilter = cluster.id;
           for (const lessonRef of (cluster.lessons || [lesson.id])) {
             const candidate = (window.LESSONS_DATA || []).find((l) => l.id === lessonRef);
             const found = candidate && (candidate.concepts || []).find((c) => c.conceptName.toLowerCase() === status.weakMember.toLowerCase());
@@ -30690,8 +30705,8 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
         const concept = (targetLesson.concepts || []).find((c) => c.conceptName === targetConcept);
-        if (typeof openTrainer === "function") openTrainer();
-        if (concept && typeof nextQuestionForConcept === "function") {
+        openTrainer();
+        if (concept) {
           requestAnimationFrame(() => nextQuestionForConcept(targetLesson, concept));
         }
       });

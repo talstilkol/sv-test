@@ -109,7 +109,7 @@
 **יחידת המדידה החדשה:** קלסטר = מושג. **כל קלסטר מקבל רמת קושי 1-10 משלו** והוא נמדד, נבחן, ומסומן V כיחידה אחת — בדיוק כמו מושג בודד.
 **מדיניות לפי קושי הקלסטר:** ≤ 6 → V מותר (אנטי-רמאות במאמן). ≥ 7 → חובה למלא כל הbלוק המאוחד.
 
-**סה״כ קלסטרים:** 129
+**סה״כ קלסטרים:** 140
 
 | # | Cluster (= מושג-על) | קושי | מדיניות | חברים | שיעור-מקור | תוכן מאוחד? | רכיבים 4/4 |
 |---:|---|---:|---|---|---|:---:|:---|
@@ -242,21 +242,32 @@
 | 127 | **Git Workflow** | 4/10 | 🟢 V בלבד | repository · branch · commit · pull request · Git · GitHub workflow | lesson_tooling_git | ✅ §126 | 3/4 T✓ O✓ M✗ C✓ |
 | 128 | **Express Form Events** | 4/10 | 🟢 V בלבד | body-parser · event.preventDefault | lesson_17 | ✅ §127 | 3/4 T✓ O✓ M✗ C✓ |
 | 129 | **Scope Chain** | 5/10 | 🟢 V בלבד | scope chain | lesson_closures | ✅ §128 | 3/4 T✓ O✓ M✗ C✓ |
+| 130 | **DOM Node Removal** | 5/10 | 🟢 V בלבד | removeChild | lesson_13 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 131 | **Error Objects** | 5/10 | 🟢 V בלבד | Error Object · Exception · event object | lesson_15, lesson_19 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 132 | **if/else** | 4/10 | 🟢 V בלבד | if/else | lesson_19 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 133 | **Vite Project Creation** | 2/10 | 🟢 V בלבד | npm create vite@latest | lesson_21 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 134 | **React Hook fundamentals** | 5/10 | 🟢 V בלבד | Hook · mutable · immutable | lesson_22 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 135 | **TS Advanced** | 6/10 | 🟡 גבולי + V | tuple · type annotation · Type Safety · TypeScript · Typing State · void | lesson_26 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 136 | **TS App Models** | 4/10 | 🟢 V בלבד | User · BaseUser · RegisteredUser · GuestUser · Book · Genre · Category · Amount · Expense · Income · Budget Summary · Category Breakdown · extends interface | lesson_27 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 137 | **AI Engineering** | 6/10 | 🟡 גבולי + V | chunking · embeddings · evaluation · guardrails · hallucination check · LangChain · model selection · OpenAI API · prompt messages · retrieval ranking · streaming response · structured output · token budget · vector store · Vercel AI SDK | lesson_ai_engineering | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 138 | **Auth Attacks** | 5/10 | 🟢 V בלבד | bcrypt · CORS · CSRF | lesson_auth_security | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 139 | **Task Manager Workbook** | 4/10 | 🟢 V בלבד |  | workbook_taskmanager | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 140 | **AI Dev Tools** | 4/10 | 🟢 V בלבד | Continue | ai_development | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
 
 > **מקרא רכיבי מילוי (4 לכל קלסטר):** T = Table · O = Overview 6-levels · M = Per-Member 6-levels · C = Code blocks 6-levels
 
-**סטטוס כולל:** 360 / 516 רכיבים מולאו (70%) · 34 קלסטרים מלאים 4/4 מתוך 129
+**סטטוס כולל:** 360 / 560 רכיבים מולאו (64%) · 34 קלסטרים מלאים 4/4 מתוך 140
 
 ### 📊 סיכום קלסטרים לפי קושי (כל אחד נחשב כמושג-על אחד)
 
 | תחום קושי | מספר קלסטרים | מדיניות | חוב פדגוגי |
 |---|---:|---|---:|
 | 🔴 קושי 7+ (קלסטר-מושג קשה) | 36 | חובה בלוק-לימוד מאוחד | 14 חסרים |
-| 🟡 קושי 6 (קלסטר-מושג גבולי) | 27 | מומלץ בלוק + V מותר | 13 חסרים |
-| 🟢 קושי ≤ 5 (קלסטר-מושג קל) | 66 | V בלבד | 30 חסרים |
+| 🟡 קושי 6 (קלסטר-מושג גבולי) | 29 | מומלץ בלוק + V מותר | 15 חסרים |
+| 🟢 קושי ≤ 5 (קלסטר-מושג קל) | 75 | V בלבד | 39 חסרים |
 
-**יש להם בלוק לימוד מאוחד:** 72 / 129
-**חסר בלוק לימוד מאוחד:** 57 / 129
+**יש להם בלוק לימוד מאוחד:** 72 / 140
+**חסר בלוק לימוד מאוחד:** 68 / 140
 
 ### 🔴 קלסטרים שצריכים בלוק-לימוד-מאוחד (סדר כתיבה לפי קושי יורד):
 
@@ -289,36 +300,47 @@
 | 25 | **Function ↔ Class component ↔ HOC** | function component · class component · HOC · higher-order component | lesson_21 | 6 |
 | 26 | **enum ↔ as const ↔ literal union** | enum · as const · literal type | lesson_26 | 6 |
 | 27 | **Docker: container / image / volume / network** | container · image · volume · Dockerfile | lesson_devops_deploy | 6 |
-| 28 | **אחסון בדפדפן** | localStorage · sessionStorage · IndexedDB | lesson_13 | 5 |
-| 29 | **HTTP methods וREST** | GET · POST · PUT · DELETE · PATCH · REST | lesson_17 | 5 |
-| 30 | **מודולים וייבוא קוד** | import · export default · require · module.exports · ES Module · CommonJS | lesson_16, lesson_21 | 5 |
-| 31 | **TypeScript — טיפוסים בסיסיים** | string · number · boolean · array type · type · interface · .ts · tsc | lesson_26 | 5 |
-| 32 | **מתודות שינוי-במקום של מערך (push/pop/shift/unshift/splice)** | push · pop · shift · unshift · splice | lesson_11 | 5 |
-| 33 | **בחירת אלמנטים ב-DOM (getElementBy* / querySelector)** | getElementById · getElementsByClassName · getElementsByTagName · getElementsByName · querySelector · querySelectorAll · DOM element | lesson_13, lesson_24 | 5 |
-| 34 | **JSON.parse ↔ JSON.stringify** | JSON.parse · JSON.stringify · JSON | lesson_15, lesson_16 | 5 |
-| 35 | **מתודות מחרוזת (split/slice/substring/replace/includes/indexOf)** | split · slice · substring · substr · replace · includes · indexOf · trim · concat · uppercase · lowercase · toUpperCase · toLowerCase | lesson_11, lesson_12 | 5 |
-| 36 | **Object.keys / values / entries / assign** | Object.keys · Object.values · Object.entries · Object.assign · Object.freeze · Object.create | lesson_13, lesson_19 | 5 |
-| 37 | **appendChild / append / insertBefore / replaceChild** | appendChild · append · insertBefore · replaceChild · remove | lesson_13 | 5 |
-| 38 | **createElement / createTextNode / cloneNode** | createElement · createTextNode · cloneNode | lesson_13 | 5 |
-| 39 | **setAttribute / getAttribute / dataset / property** | setAttribute · getAttribute · removeAttribute · dataset · data-* | lesson_13 | 5 |
-| 40 | **create / insertOne / save / bulkWrite** | create · insertOne · insertMany · save · bulkWrite | lesson_20 | 5 |
-| 41 | **public / private / protected / readonly** | public · private · protected · readonly | lesson_26 | 5 |
-| 42 | **git add / commit / push / pull — 4 פקודות הליבה** | git add · git commit · git push · git pull · staging area · working tree | lesson_tooling_git | 5 |
-| 43 | **npm ↔ yarn ↔ pnpm** | yarn · pnpm | lesson_16 | 5 |
-| 44 | **ESLint ↔ Prettier ↔ TypeScript** | ESLint · Prettier | lesson_tooling_git, lesson_26 | 5 |
-| 45 | **Vercel ↔ Netlify ↔ Cloudflare Pages** | Vercel deploy · Netlify | lesson_devops_deploy, lesson_nextjs | 5 |
-| 46 | **CI ↔ CD — Continuous Integration vs Delivery** | CI · CD · GitHub workflow | lesson_devops_deploy, lesson_tooling_git | 5 |
-| 47 | **טיפוסים פרימיטיביים ב-JavaScript** | string · number · boolean · undefined · null · symbol · bigint · NaN | lesson_11 | 4 |
-| 48 | **פקודות npm (install / run / scripts / init / publish)** | npm · npm install · npm run dev · npm scripts · npm init · npm publish · package.json | lesson_16, lesson_21 | 4 |
-| 49 | **המרה למספר: parseInt / parseFloat / Number()** | parseInt · parseFloat · Number | lesson_11 | 4 |
-| 50 | **Math: floor / ceil / round / random / max / min** | Math.floor · Math.ceil · Math.round · Math.random · Math.max · Math.min · Math.abs · Math.pow · Math.sqrt · Math | lesson_11 | 4 |
-| 51 | **Template literals ↔ string concatenation** | template literal · template string · backtick · concatenation | lesson_11 | 4 |
-| 52 | **Date.now() ↔ new Date() ↔ Date.parse()** | Date.now · new Date · Date.parse · Date | lesson_15 | 4 |
-| 53 | **classList: add / remove / toggle / contains** | classList · classList.add · classList.remove · classList.toggle · classList.contains | lesson_13 | 4 |
-| 54 | **res.send / res.json / res.render / res.redirect** | res.send · res.json · res.render · res.redirect · res.status · res.end | lesson_17 | 4 |
-| 55 | **Fragment ↔ <></> ↔ <div>** | Fragment · React.Fragment · <> | lesson_21 | 4 |
-| 56 | **dependencies / devDependencies / peerDependencies** | dependencies · devDependencies · peerDependencies | lesson_16 | 4 |
-| 57 | **ternary ↔ if-else ↔ switch** | ternary · if-else · switch · if statement | lesson_11 | 4 |
+| 28 | **TS Advanced** | tuple · type annotation · Type Safety · TypeScript · Typing State · void | lesson_26 | 6 |
+| 29 | **AI Engineering** | chunking · embeddings · evaluation · guardrails · hallucination check · LangChain · model selection · OpenAI API · prompt messages · retrieval ranking · streaming response · structured output · token budget · vector store · Vercel AI SDK | lesson_ai_engineering | 6 |
+| 30 | **אחסון בדפדפן** | localStorage · sessionStorage · IndexedDB | lesson_13 | 5 |
+| 31 | **HTTP methods וREST** | GET · POST · PUT · DELETE · PATCH · REST | lesson_17 | 5 |
+| 32 | **מודולים וייבוא קוד** | import · export default · require · module.exports · ES Module · CommonJS | lesson_16, lesson_21 | 5 |
+| 33 | **TypeScript — טיפוסים בסיסיים** | string · number · boolean · array type · type · interface · .ts · tsc | lesson_26 | 5 |
+| 34 | **מתודות שינוי-במקום של מערך (push/pop/shift/unshift/splice)** | push · pop · shift · unshift · splice | lesson_11 | 5 |
+| 35 | **בחירת אלמנטים ב-DOM (getElementBy* / querySelector)** | getElementById · getElementsByClassName · getElementsByTagName · getElementsByName · querySelector · querySelectorAll · DOM element | lesson_13, lesson_24 | 5 |
+| 36 | **JSON.parse ↔ JSON.stringify** | JSON.parse · JSON.stringify · JSON | lesson_15, lesson_16 | 5 |
+| 37 | **מתודות מחרוזת (split/slice/substring/replace/includes/indexOf)** | split · slice · substring · substr · replace · includes · indexOf · trim · concat · uppercase · lowercase · toUpperCase · toLowerCase | lesson_11, lesson_12 | 5 |
+| 38 | **Object.keys / values / entries / assign** | Object.keys · Object.values · Object.entries · Object.assign · Object.freeze · Object.create | lesson_13, lesson_19 | 5 |
+| 39 | **appendChild / append / insertBefore / replaceChild** | appendChild · append · insertBefore · replaceChild · remove | lesson_13 | 5 |
+| 40 | **createElement / createTextNode / cloneNode** | createElement · createTextNode · cloneNode | lesson_13 | 5 |
+| 41 | **setAttribute / getAttribute / dataset / property** | setAttribute · getAttribute · removeAttribute · dataset · data-* | lesson_13 | 5 |
+| 42 | **create / insertOne / save / bulkWrite** | create · insertOne · insertMany · save · bulkWrite | lesson_20 | 5 |
+| 43 | **public / private / protected / readonly** | public · private · protected · readonly | lesson_26 | 5 |
+| 44 | **git add / commit / push / pull — 4 פקודות הליבה** | git add · git commit · git push · git pull · staging area · working tree | lesson_tooling_git | 5 |
+| 45 | **npm ↔ yarn ↔ pnpm** | yarn · pnpm | lesson_16 | 5 |
+| 46 | **ESLint ↔ Prettier ↔ TypeScript** | ESLint · Prettier | lesson_tooling_git, lesson_26 | 5 |
+| 47 | **Vercel ↔ Netlify ↔ Cloudflare Pages** | Vercel deploy · Netlify | lesson_devops_deploy, lesson_nextjs | 5 |
+| 48 | **CI ↔ CD — Continuous Integration vs Delivery** | CI · CD · GitHub workflow | lesson_devops_deploy, lesson_tooling_git | 5 |
+| 49 | **DOM Node Removal** | removeChild · remove · removeNode | lesson_13 | 5 |
+| 50 | **Error Objects** | Error Object · Exception · event object | lesson_15, lesson_19 | 5 |
+| 51 | **React Hook fundamentals** | Hook · mutable · immutable | lesson_22 | 5 |
+| 52 | **Auth Attacks** | bcrypt · CORS · CSRF | lesson_auth_security | 5 |
+| 53 | **טיפוסים פרימיטיביים ב-JavaScript** | string · number · boolean · undefined · null · symbol · bigint · NaN | lesson_11 | 4 |
+| 54 | **פקודות npm (install / run / scripts / init / publish)** | npm · npm install · npm run dev · npm scripts · npm init · npm publish · package.json | lesson_16, lesson_21 | 4 |
+| 55 | **המרה למספר: parseInt / parseFloat / Number()** | parseInt · parseFloat · Number | lesson_11 | 4 |
+| 56 | **Math: floor / ceil / round / random / max / min** | Math.floor · Math.ceil · Math.round · Math.random · Math.max · Math.min · Math.abs · Math.pow · Math.sqrt · Math | lesson_11 | 4 |
+| 57 | **Template literals ↔ string concatenation** | template literal · template string · backtick · concatenation | lesson_11 | 4 |
+| 58 | **Date.now() ↔ new Date() ↔ Date.parse()** | Date.now · new Date · Date.parse · Date | lesson_15 | 4 |
+| 59 | **classList: add / remove / toggle / contains** | classList · classList.add · classList.remove · classList.toggle · classList.contains | lesson_13 | 4 |
+| 60 | **res.send / res.json / res.render / res.redirect** | res.send · res.json · res.render · res.redirect · res.status · res.end | lesson_17 | 4 |
+| 61 | **Fragment ↔ <></> ↔ <div>** | Fragment · React.Fragment · <> | lesson_21 | 4 |
+| 62 | **dependencies / devDependencies / peerDependencies** | dependencies · devDependencies · peerDependencies | lesson_16 | 4 |
+| 63 | **ternary ↔ if-else ↔ switch** | ternary · if-else · switch · if statement | lesson_11 | 4 |
+| 64 | **if/else** | if/else | lesson_19 | 4 |
+| 65 | **TS App Models** | User · BaseUser · RegisteredUser · GuestUser · Book · Genre · Category · Amount · Expense · Income · Budget Summary · Category Breakdown · extends interface | lesson_27 | 4 |
+| 66 | **Task Manager Workbook** | Task Manager · variables · conditions · arrays · functions · events · objects · try/catch · async/await · tasks · todo · task list | workbook_taskmanager | 4 |
+| 67 | **AI Dev Tools** | AI · Cursor · Windsurf · Claude Code · ChatGPT · Copilot · Codex · Continue | ai_development | 4 |
+| 68 | **Vite Project Creation** | npm create vite@latest | lesson_21 | 2 |
 
 ---
 
@@ -1046,7 +1068,7 @@
 | 14 | style | 5 (קלסטר; פרטני 5) | 🧩 DOM Basics ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 15 | createElement | 5 (קלסטר; פרטני 5) | 🧩 createElement / createTextNode / cloneNode ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 16 | appendChild | 5 (קלסטר; פרטני 5) | 🧩 appendChild / append / insertBefore / replaceChild ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
-| 17 | removeChild | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
+| 17 | removeChild | 5 (קלסטר; פרטני 5) | 🧩 DOM Node Removal ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 18 | replaceChild | 5 (קלסטר; פרטני 5) | 🧩 appendChild / append / insertBefore / replaceChild ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 19 | class | 6 (קלסטר; פרטני 6) | 🧩 OOP & Classes Basics ✓ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 20 | constructor | 6 (קלסטר; פרטני 5) | 🧩 OOP & Classes Basics ✓ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
@@ -1084,11 +1106,11 @@
 | # | מושג | קושי | קלסטר | מצב | L1 סבתא | L2 ילד | L3 חייל | L4 סטודנט | L5 ג׳וניור | L6 פרופ׳ | 💻 קוד | 📝 הערות | 🖼️ תרשים | 🌍 דימוי | 🌊 Deep Dive | 📚 הרחבה | 🎁 Extras | 🧠 מנמוניקה | 🔁 דפוסי-נגד | 🐛 ציד באגים | 📖 סיפורי שטח | ⚖️ השוואות | 🎞️ קומיקס | 🎥 קליפ | 🏛️ ארמון | 🧩 בעיה | 🧯 שבור-תקן | 🔮 What-If | MC | Fill | מלא |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | Error | 7 (קלסטר; פרטני 6) | 🧩 טיפול בשגיאות (try / catch / finally / throw / Error) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
-| 2 | Exception | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
+| 2 | Exception | 5 (קלסטר; פרטני 6) | 🧩 Error Objects ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 3 | try | 7 (קלסטר; פרטני 7) | 🧩 טיפול בשגיאות (try / catch / finally / throw / Error) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 4 | catch | 7 (קלסטר; פרטני 7) | 🧩 טיפול בשגיאות (try / catch / finally / throw / Error) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 5 | throw | 7 (קלסטר; פרטני 6) | 🧩 טיפול בשגיאות (try / catch / finally / throw / Error) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
-| 6 | Error Object | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
+| 6 | Error Object | 5 (קלסטר; פרטני 5) | 🧩 Error Objects ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 7 | Closure | 8 (קלסטר; פרטני 8) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 8 | Scope | 8 (קלסטר; פרטני 5) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 9 | Synchronous | 8 (קלסטר; פרטני 7) | 🧩 Callback ↔ Promise.then ↔ async/await — 3 דורות + סנכרוני/אסינכרוני ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
@@ -1271,7 +1293,7 @@
 | 7 | var | 7 (קלסטר; פרטני 3) | 🧩 זיכרון, משתנים ומצביעים ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 8 | const | 7 (קלסטר; פרטני 3) | 🧩 זיכרון, משתנים ומצביעים ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
 | 9 | camelCase | 4 (קלסטר; פרטני 4) | 🧩 JS Fundamentals ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
-| 10 | if/else | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
+| 10 | if/else | 4 (קלסטר; פרטני 4) | 🧩 if/else ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
 | 11 | switch | 4 (קלסטר; פרטני 4) | 🧩 ternary ↔ if-else ↔ switch ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
 | 12 | debugger | 4 (קלסטר; פרטני 4) | 🧩 Browser Dev Tools ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
 | 13 | network | 4 (קלסטר; פרטני 4) | 🧩 Browser Dev Tools ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
@@ -1309,7 +1331,7 @@
 | 45 | fetch | 8 (קלסטר; פרטני 6) | 🧩 אסינכרוניות וזרימת זמן ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 46 | scope | 8 (קלסטר; פרטני 5) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 47 | event | 6 (קלסטר; פרטני 5) | 🧩 אירועי DOM (click / keydown / submit / change / load) ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 48 | event object | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 48 | event object | 5 (קלסטר; פרטני 5) | 🧩 Error Objects ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 49 | hoisting | 4 (קלסטר; פרטני 4) | 🧩 JS Fundamentals ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 50 | event loop | 9 (קלסטר; פרטני 8) | 🧩 Microtask ↔ Macrotask — Event Loop ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 
@@ -1388,7 +1410,7 @@
 | 2 | Client Side | 4 (קלסטר; פרטני 4) | 🧩 React Ecosystem ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 3 | React Native | 4 (קלסטר; פרטני 3) | 🧩 React Ecosystem ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 4 | Vite | 4 (קלסטר; פרטני 3) | 🧩 React Ecosystem ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
-| 5 | npm create vite@latest | 2 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 5 | npm create vite@latest | 2 (קלסטר; פרטני 2) | 🧩 Vite Project Creation ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 6 | npm install | 4 (קלסטר; פרטני 2) | 🧩 פקודות npm (install / run / scripts / init / publish) ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 7 | npm run dev | 4 (קלסטר; פרטני 2) | 🧩 פקודות npm (install / run / scripts / init / publish) ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 8 | index.html | 4 (קלסטר; פרטני 4) | 🧩 React Project Files ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
@@ -1428,13 +1450,13 @@
 
 | # | מושג | קושי | קלסטר | מצב | L1 סבתא | L2 ילד | L3 חייל | L4 סטודנט | L5 ג׳וניור | L6 פרופ׳ | 💻 קוד | 📝 הערות | 🖼️ תרשים | 🌍 דימוי | 🌊 Deep Dive | 📚 הרחבה | 🎁 Extras | 🧠 מנמוניקה | 🔁 דפוסי-נגד | 🐛 ציד באגים | 📖 סיפורי שטח | ⚖️ השוואות | 🎞️ קומיקס | 🎥 קליפ | 🏛️ ארמון | 🧩 בעיה | 🧯 שבור-תקן | 🔮 What-If | MC | Fill | מלא |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | Hook | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
+| 1 | Hook | 5 (קלסטר; פרטני 6) | 🧩 React Hook fundamentals ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 2 | useState | 8 (קלסטר; פרטני 5) | 🧩 useState ↔ useReducer ↔ useRef ↔ Class.setState — כל וריאציות ה-state ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 3 | 9/24 |
 | 3 | state | 7 (קלסטר; פרטני 4) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 4 | setState | 8 (קלסטר; פרטני 7) | 🧩 useState ↔ useReducer ↔ useRef ↔ Class.setState — כל וריאציות ה-state ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 0 | 10/24 |
 | 5 | re-render | 7 (קלסטר; פרטני 8) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
-| 6 | mutable | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
-| 7 | immutable | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
+| 6 | mutable | 5 (קלסטר; פרטני 5) | 🧩 React Hook fundamentals ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
+| 7 | immutable | 5 (קלסטר; פרטני 6) | 🧩 React Hook fundamentals ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 8 | reference | 7 (קלסטר; פרטני 7) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 | 9 | array reference | 9 (קלסטר; פרטני 9) | 🧩 Array Reference — כל ההפניות, ההעתקות, וה-mutation של מערכים ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 10 | object reference | 9 (קלסטר; פרטני 9) | 🧩 Array Reference — כל ההפניות, ההעתקות, וה-mutation של מערכים ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
@@ -1581,28 +1603,28 @@
 
 | # | מושג | קושי | קלסטר | מצב | L1 סבתא | L2 ילד | L3 חייל | L4 סטודנט | L5 ג׳וניור | L6 פרופ׳ | 💻 קוד | 📝 הערות | 🖼️ תרשים | 🌍 דימוי | 🌊 Deep Dive | 📚 הרחבה | 🎁 Extras | 🧠 מנמוניקה | 🔁 דפוסי-נגד | 🐛 ציד באגים | 📖 סיפורי שטח | ⚖️ השוואות | 🎞️ קומיקס | 🎥 קליפ | 🏛️ ארמון | 🧩 בעיה | 🧯 שבור-תקן | 🔮 What-If | MC | Fill | מלא |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | TypeScript | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
+| 1 | TypeScript | 6 (קלסטר; פרטני 5) | 🧩 TS Advanced ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 2 | Strongly Typed | 4 (קלסטר; פרטני 5) | 🧩 TypeScript Setup ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 3 | Compiler | 4 (קלסטר; פרטני 4) | 🧩 TypeScript Setup ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
 | 4 | tsc | 5 (קלסטר; פרטני 3) | 🧩 TypeScript — טיפוסים בסיסיים ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 5 | .ts | 5 (קלסטר; פרטני 3) | 🧩 TypeScript — טיפוסים בסיסיים ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 6 | .js | 4 (קלסטר; פרטני 2) | 🧩 TypeScript Setup ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 7 | tsconfig.json | 4 (קלסטר; פרטני 4) | 🧩 TypeScript Setup ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
-| 8 | type annotation | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 8 | type annotation | 6 (קלסטר; פרטני 5) | 🧩 TS Advanced ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 9 | string | 5 (קלסטר; פרטני 2) | 🧩 TypeScript — טיפוסים בסיסיים ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 9/24 |
 | 10 | number | 5 (קלסטר; פרטני 2) | 🧩 TypeScript — טיפוסים בסיסיים ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 9/24 |
 | 11 | boolean | 5 (קלסטר; פרטני 2) | 🧩 TypeScript — טיפוסים בסיסיים ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 9/24 |
 | 12 | array type | 5 (קלסטר; פרטני 4) | 🧩 TypeScript — טיפוסים בסיסיים ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
-| 13 | tuple | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
+| 13 | tuple | 6 (קלסטר; פרטני 6) | 🧩 TS Advanced ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 14 | enum | 6 (קלסטר; פרטני 6) | 🧩 enum ↔ as const ↔ literal union ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
-| 15 | void | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 15 | void | 6 (קלסטר; פרטני 5) | 🧩 TS Advanced ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 16 | readonly | 7 (קלסטר; פרטני 5) | 🧩 Partial / Required / Omit / Pick ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 17 | optional field | 4 (קלסטר; פרטני 5) | 🧩 TypeScript Setup ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
 | 18 | type alias | 6 (קלסטר; פרטני 6) | 🧩 type ↔ interface ✓ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 3 | 10/24 |
 | 19 | React + TypeScript | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
-| 20 | Type Safety | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
+| 20 | Type Safety | 6 (קלסטר; פרטני 6) | 🧩 TS Advanced ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 21 | Typing Props | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
-| 22 | Typing State | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 22 | Typing State | 6 (קלסטר; פרטני 6) | 🧩 TS Advanced ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 | 23 | Function Prop Type | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 | 24 | models folder | 4 (קלסטר; פרטני 3) | 🧩 TypeScript Setup ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 25 | Todo.ts | 4 (קלסטר; פרטני 3) | 🧩 TypeScript Setup ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
@@ -1635,23 +1657,23 @@
 | 1 | type | 5 (קלסטר; פרטני 5) | 🧩 TypeScript — טיפוסים בסיסיים ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 2 | enum | 6 (קלסטר; פרטני 6) | 🧩 enum ↔ as const ↔ literal union ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
 | 3 | interface | 6 (קלסטר; פרטני 7) | 🧩 type ↔ interface ✓ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
-| 4 | extends interface | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
+| 4 | extends interface | 4 (קלסטר; פרטני 6) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
 | 5 | Union Type | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
 | 6 | Type Narrowing | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
-| 7 | Book | 3 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
-| 8 | Genre | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
-| 9 | BaseUser | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
-| 10 | GuestUser | 3 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
-| 11 | RegisteredUser | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
-| 12 | User | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
+| 7 | Book | 4 (קלסטר; פרטני 3) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 8 | Genre | 4 (קלסטר; פרטני 4) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 9 | BaseUser | 4 (קלסטר; פרטני 4) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
+| 10 | GuestUser | 4 (קלסטר; פרטני 3) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 11 | RegisteredUser | 4 (קלסטר; פרטני 4) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 12 | User | 4 (קלסטר; פרטני 5) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
 | 13 | Transaction | 4 (קלסטר; פרטני 6) | 🧩 SQL Concepts ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
-| 14 | Income | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
-| 15 | Expense | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
-| 16 | Category | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
-| 17 | Amount | 3 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 14 | Income | 4 (קלסטר; פרטני 5) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 15 | Expense | 4 (קלסטר; פרטני 5) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 16 | Category | 4 (קלסטר; פרטני 4) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
+| 17 | Amount | 4 (קלסטר; פרטני 3) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 18 | CRUD | 4 (קלסטר; פרטני 6) | 🧩 SQL Concepts ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
-| 19 | Budget Summary | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
-| 20 | Category Breakdown | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
+| 19 | Budget Summary | 4 (קלסטר; פרטני 5) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
+| 20 | Category Breakdown | 4 (קלסטר; פרטני 5) | 🧩 TS App Models ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 
 **אחוזי 6 רמות בשיעור:**
 - grandma: 20/20 = 100%
@@ -1673,24 +1695,24 @@
 
 | # | מושג | קושי | קלסטר | מצב | L1 סבתא | L2 ילד | L3 חייל | L4 סטודנט | L5 ג׳וניור | L6 פרופ׳ | 💻 קוד | 📝 הערות | 🖼️ תרשים | 🌍 דימוי | 🌊 Deep Dive | 📚 הרחבה | 🎁 Extras | 🧠 מנמוניקה | 🔁 דפוסי-נגד | 🐛 ציד באגים | 📖 סיפורי שטח | ⚖️ השוואות | 🎞️ קומיקס | 🎥 קליפ | 🏛️ ארמון | 🧩 בעיה | 🧯 שבור-תקן | 🔮 What-If | MC | Fill | מלא |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | OpenAI API | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 8/24 |
-| 2 | Vercel AI SDK | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 8/24 |
-| 3 | LangChain | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
-| 4 | model selection | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
-| 5 | prompt messages | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
-| 6 | structured output | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 7 | streaming response | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 8/24 |
-| 8 | token budget | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 9 | embeddings | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 8/24 |
-| 10 | vector store | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
+| 1 | OpenAI API | 6 (קלסטר; פרטני 5) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 8/24 |
+| 2 | Vercel AI SDK | 6 (קלסטר; פרטני 5) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 8/24 |
+| 3 | LangChain | 6 (קלסטר; פרטני 6) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
+| 4 | model selection | 6 (קלסטר; פרטני 5) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
+| 5 | prompt messages | 6 (קלסטר; פרטני 4) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
+| 6 | structured output | 6 (קלסטר; פרטני 6) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 7 | streaming response | 6 (קלסטר; פרטני 5) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 8/24 |
+| 8 | token budget | 6 (קלסטר; פרטני 5) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 9 | embeddings | 6 (קלסטר; פרטני 6) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 8/24 |
+| 10 | vector store | 6 (קלסטר; פרטני 6) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
 | 11 | RAG | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 12 | chunking | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 8/24 |
-| 13 | retrieval ranking | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 12 | chunking | 6 (קלסטר; פרטני 6) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 8/24 |
+| 13 | retrieval ranking | 6 (קלסטר; פרטני 6) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 14 | tool calling | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 15 | agent loop | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 16 | guardrails | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 17 | hallucination check | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 18 | evaluation | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 8/24 |
+| 16 | guardrails | 6 (קלסטר; פרטני 6) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 17 | hallucination check | 6 (קלסטר; פרטני 6) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 18 | evaluation | 6 (קלסטר; פרטני 6) | 🧩 AI Engineering ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 8/24 |
 | 19 | fine-tuning boundary | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
 
 **אחוזי 6 רמות בשיעור:**
@@ -1724,10 +1746,10 @@
 | 9 | OAuth | 7 (קלסטר; פרטני 5) | 🧩 אימות וזהות ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 8/24 |
 | 10 | provider auth | 5 (קלסטר; פרטני 4) | 🧩 Auth Providers ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
 | 11 | password hashing | 5 (קלסטר; פרטני 5) | 🧩 Auth Providers ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
-| 12 | bcrypt | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
-| 13 | CSRF | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 12 | bcrypt | 5 (קלסטר; פרטני 5) | 🧩 Auth Attacks ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
+| 13 | CSRF | 5 (קלסטר; פרטני 5) | 🧩 Auth Attacks ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 14 | XSS boundary | 5 (קלסטר; פרטני 5) | 🧩 Auth Providers ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 15 | CORS | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 8/24 |
+| 15 | CORS | 5 (קלסטר; פרטני 4) | 🧩 Auth Attacks ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 8/24 |
 | 16 | middleware guard | 5 (קלסטר; פרטני 4) | 🧩 Auth Providers ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
 | 17 | Supabase Auth | 5 (קלסטר; פרטני 4) | 🧩 Auth Providers ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
 | 18 | Firebase Auth | 5 (קלסטר; פרטני 4) | 🧩 Auth Providers ✓ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |

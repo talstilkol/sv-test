@@ -141,6 +141,19 @@
     { id: "git_workflow", title: "Git Workflow — repository / branch / commit / pull request", members: ["repository", "branch", "commit", "pull request", "Git", "GitHub workflow"], lessons: ["lesson_tooling_git"], difficulty: 4, docSection: null },
     { id: "express_form_events", title: "Express Form Handler — body-parser / event.preventDefault / form events", members: ["body-parser", "event.preventDefault"], lessons: ["lesson_17"], difficulty: 4, docSection: null },
     { id: "scope_chain_cluster", title: "Scope Chain — scope / lexical / closure", members: ["scope chain"], lessons: ["lesson_closures"], difficulty: 5, docSection: null },
+    // ─── final orphan absorbers (round 2, evening) ───
+    { id: "dom_remove_node", title: "DOM Node Removal — removeChild / remove", members: ["removeChild", "remove", "removeNode"], lessons: ["lesson_13"], difficulty: 5, docSection: null },
+    { id: "error_objects", title: "Error Objects — Error / TypeError / Exception / event object", members: ["Error Object", "Exception", "event object"], lessons: ["lesson_15", "lesson_19"], difficulty: 5, docSection: null },
+    { id: "if_else_cluster", title: "if/else — sub-cluster of code_decisions", members: ["if/else"], lessons: ["lesson_19"], difficulty: 4, docSection: null },
+    { id: "vite_creation", title: "Vite Project Creation — npm create vite@latest", members: ["npm create vite@latest"], lessons: ["lesson_21"], difficulty: 2, docSection: null },
+    { id: "react_hook_basics", title: "React Hook fundamentals — Hook / mutable / immutable", members: ["Hook", "mutable", "immutable"], lessons: ["lesson_22"], difficulty: 5, docSection: null },
+    { id: "ts_advanced_types", title: "TS Advanced — tuple / Typing State / void / TypeScript", members: ["tuple", "type annotation", "Type Safety", "TypeScript", "Typing State", "void"], lessons: ["lesson_26"], difficulty: 6, docSection: null },
+    { id: "ts_app_models", title: "TypeScript App Models — User/Book/Genre/Category/Expense/Income", members: ["User", "BaseUser", "RegisteredUser", "GuestUser", "Book", "Genre", "Category", "Amount", "Expense", "Income", "Budget Summary", "Category Breakdown", "extends interface"], lessons: ["lesson_27"], difficulty: 4, docSection: null },
+    { id: "ai_engineering_full", title: "AI Engineering — embeddings / chunking / evaluation / guardrails", members: ["chunking", "embeddings", "evaluation", "guardrails", "hallucination check", "LangChain", "model selection", "OpenAI API", "prompt messages", "retrieval ranking", "streaming response", "structured output", "token budget", "vector store", "Vercel AI SDK"], lessons: ["lesson_ai_engineering"], difficulty: 6, docSection: null },
+    { id: "auth_attacks", title: "Auth Attacks & Mitigations — bcrypt / CORS / CSRF", members: ["bcrypt", "CORS", "CSRF"], lessons: ["lesson_auth_security"], difficulty: 5, docSection: null },
+    // ─── workbook + AI dev clusters ───
+    { id: "workbook_basics", title: "Task Manager Workbook — basics", members: ["Task Manager", "variables", "conditions", "arrays", "functions", "events", "objects", "try/catch", "async/await", "tasks", "todo", "task list"], lessons: ["workbook_taskmanager"], difficulty: 4, docSection: null },
+    { id: "ai_dev_tools", title: "AI Dev Tools — Cursor / Windsurf / Claude Code / ChatGPT / Copilot", members: ["AI", "Cursor", "Windsurf", "Claude Code", "ChatGPT", "Copilot", "Codex", "Continue"], lessons: ["ai_development"], difficulty: 4, docSection: null },
   ];
 
   function findByConcept(lessonId, conceptName) {
