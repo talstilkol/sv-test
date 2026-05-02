@@ -39,6 +39,494 @@ const PARTS = [
 
 const LEVEL_KEYS = ["grandma", "child", "soldier", "student", "junior", "professor"];
 
+// =============================================================================
+// CLUSTERS — מושגים שמלמדים יחד (כלל פדגוגי 2026-05-02)
+// =============================================================================
+// כל קלסטר = יחידת לימוד אחת = דף מאוחד אחד.
+// "unifiedDocSection" = סעיף ב-COMPARISON_TABLES_DEEP.md שמכיל את הבלוק המאוחד
+// אם null = עדיין לא נכתב (חוב פדגוגי)
+const CLUSTERS = [
+  {
+    id: "memory_variables",
+    title: "זיכרון, משתנים ומצביעים",
+    members: ["let", "var", "const", "By Value", "By Reference", "Pointer"],
+    primaryLessons: ["lesson_11"],
+    weightedDifficulty: 7,
+    unifiedDocSection: "🎯 בלוק לימוד מאוחד #1",
+  },
+  {
+    id: "reference_types",
+    title: "מבני נתונים לפי Reference",
+    members: ["Object", "Array", "Function", "object"],
+    primaryLessons: ["lesson_11", "lesson_13"],
+    weightedDifficulty: 6,
+    unifiedDocSection: "§5",
+  },
+  {
+    id: "function_kinds",
+    title: "פונקציות וה-this",
+    members: ["arrow function", "Arrow Function", "function", "Regular Function"],
+    primaryLessons: ["lesson_11", "lesson_15"],
+    weightedDifficulty: 7,
+    unifiedDocSection: "§6",
+  },
+  {
+    id: "array_methods",
+    title: "מתודות מערך פונקציונליות",
+    members: ["map", "filter", "reduce", "forEach", "find", "sort"],
+    primaryLessons: ["lesson_11", "lesson_12"],
+    weightedDifficulty: 6,
+    unifiedDocSection: null,
+  },
+  {
+    id: "equality",
+    title: "השוואות וערכי-לא-קיים (== / === / Object.is / null / undefined / NaN)",
+    members: ["==", "===", "null", "undefined", "NaN", "Object.is"],
+    primaryLessons: ["lesson_11", "lesson_15"],
+    weightedDifficulty: 5,
+    unifiedDocSection: "§17, §18",
+  },
+  {
+    id: "loops",
+    title: "לולאות (for / while / for...of / for...in / forEach)",
+    members: ["for", "while", "for...of", "for...in", "forEach", "do...while", "do while"],
+    primaryLessons: ["lesson_11", "lesson_12"],
+    weightedDifficulty: 5,
+    unifiedDocSection: "§30b",
+  },
+  {
+    id: "async",
+    title: "אסינכרוניות וזרימת זמן",
+    members: ["Promise", "async", "await", "callback", "setTimeout", "fetch", "Async function", "promise"],
+    primaryLessons: ["lesson_15", "lesson_24"],
+    weightedDifficulty: 8,
+    unifiedDocSection: null,
+  },
+  {
+    id: "closures",
+    title: "סגירות וזיכרון מתמיד (closure variants)",
+    members: [
+      "closure", "Closure", "lexical scope", "scope", "IIFE",
+      "stale closure", "closure in useEffect", "closure in setTimeout",
+      "closure variables", "closure in event handlers",
+    ],
+    primaryLessons: ["lesson_11", "lesson_15", "lesson_closures"],
+    weightedDifficulty: 8,
+    unifiedDocSection: null,
+  },
+  {
+    id: "react_state",
+    title: "זרימת נתונים ב-React (props/state/context/re-render)",
+    members: ["props", "state", "context", "useState", "Context API", "useContext", "re-render", "passing function as prop", "reference"],
+    primaryLessons: ["lesson_21", "lesson_22", "lesson_23"],
+    weightedDifficulty: 7,
+    unifiedDocSection: null,
+  },
+  {
+    id: "react_hooks",
+    title: "Hooks — useState/useEffect/useMemo/useRef",
+    members: ["useState", "useEffect", "useMemo", "useRef", "useCallback", "custom hook"],
+    primaryLessons: ["lesson_22", "lesson_24"],
+    weightedDifficulty: 7,
+    unifiedDocSection: null,
+  },
+  {
+    id: "browser_storage",
+    title: "אחסון בדפדפן",
+    members: ["localStorage", "sessionStorage", "IndexedDB"],
+    primaryLessons: ["lesson_13"],
+    weightedDifficulty: 5,
+    unifiedDocSection: null,
+  },
+  {
+    id: "http_methods",
+    title: "HTTP methods וREST",
+    members: ["GET", "POST", "PUT", "DELETE", "PATCH", "REST"],
+    primaryLessons: ["lesson_17"],
+    weightedDifficulty: 5,
+    unifiedDocSection: null,
+  },
+  {
+    id: "databases",
+    title: "סוגי בסיסי נתונים",
+    members: ["MongoDB", "PostgreSQL", "SQL", "NoSQL", "database"],
+    primaryLessons: ["lesson_20", "lesson_sql_orm"],
+    weightedDifficulty: 6,
+    unifiedDocSection: null,
+  },
+  {
+    id: "module_system",
+    title: "מודולים וייבוא קוד",
+    members: ["import", "export default", "require", "module.exports", "ES Module", "CommonJS"],
+    primaryLessons: ["lesson_16", "lesson_21"],
+    weightedDifficulty: 5,
+    unifiedDocSection: null,
+  },
+  {
+    id: "auth_security",
+    title: "אימות וזהות",
+    members: ["authentication", "authorization", "session", "cookie", "access token", "JWT", "OAuth", "secure cookie"],
+    primaryLessons: ["lesson_auth_security"],
+    weightedDifficulty: 7,
+    unifiedDocSection: null,
+  },
+  {
+    id: "typescript_basics",
+    title: "TypeScript — טיפוסים בסיסיים",
+    // Lesson-scoped: only matches when concept lives in the listed lessons
+    // (otherwise plain "string"/"number" would steal lesson_11 primitives)
+    members: ["string", "number", "boolean", "array type", "type", "interface", ".ts", "tsc"],
+    primaryLessons: ["lesson_26"],
+    lessonScoped: true,
+    weightedDifficulty: 5,
+    unifiedDocSection: null,
+  },
+  {
+    id: "primitive_types",
+    title: "טיפוסים פרימיטיביים ב-JavaScript",
+    members: ["string", "number", "boolean", "undefined", "null", "symbol", "bigint", "NaN"],
+    primaryLessons: ["lesson_11"],
+    lessonScoped: true,
+    weightedDifficulty: 4,
+    unifiedDocSection: null,
+  },
+  // ─── הוספות 2026-05-02 (לפי בקשת המשתמש) ───
+  {
+    id: "array_mutation_methods",
+    title: "מתודות שינוי-במקום של מערך (push/pop/shift/unshift/splice)",
+    members: ["push", "pop", "shift", "unshift", "splice"],
+    primaryLessons: ["lesson_11"],
+    weightedDifficulty: 5,
+    unifiedDocSection: null,
+  },
+  {
+    id: "dom_selectors",
+    title: "בחירת אלמנטים ב-DOM (getElementBy* / querySelector)",
+    members: [
+      "getElementById",
+      "getElementsByClassName",
+      "getElementsByTagName",
+      "getElementsByName",
+      "querySelector",
+      "querySelectorAll",
+      "DOM element",
+    ],
+    primaryLessons: ["lesson_13", "lesson_24"],
+    weightedDifficulty: 5,
+    unifiedDocSection: null,
+  },
+  {
+    id: "dom_traversal_children",
+    title: "ניווט בעץ ה-DOM (child / parent / sibling)",
+    members: [
+      "children",
+      "childNodes",
+      "firstChild",
+      "lastChild",
+      "firstElementChild",
+      "lastElementChild",
+      "parentNode",
+      "parentElement",
+      "nextSibling",
+      "previousSibling",
+      "child component",
+      "parent component",
+    ],
+    primaryLessons: ["lesson_13", "lesson_22"],
+    weightedDifficulty: 6,
+    unifiedDocSection: null,
+  },
+  {
+    id: "npm_commands",
+    title: "פקודות npm (install / run / scripts / init / publish)",
+    members: [
+      "npm",
+      "npm install",
+      "npm run dev",
+      "npm scripts",
+      "npm init",
+      "npm publish",
+      "package.json",
+    ],
+    primaryLessons: ["lesson_16", "lesson_21"],
+    weightedDifficulty: 4,
+    unifiedDocSection: null,
+  },
+  {
+    id: "error_handling",
+    title: "טיפול בשגיאות (try / catch / finally / throw / Error)",
+    members: ["try", "catch", "finally", "throw", "Error", "error", "TypeError", "RangeError"],
+    primaryLessons: ["lesson_15"],
+    weightedDifficulty: 7,
+    unifiedDocSection: null,
+  },
+  {
+    id: "dom_events",
+    title: "אירועי DOM (click / keydown / submit / change / load)",
+    members: [
+      "event",
+      "Event",
+      "onclick",
+      "onChange",
+      "onSubmit",
+      "addEventListener",
+      "removeEventListener",
+      "preventDefault",
+      "stopPropagation",
+      "event delegation",
+      "event bubbling",
+      "event capture",
+    ],
+    primaryLessons: ["lesson_13", "lesson_22"],
+    weightedDifficulty: 6,
+    unifiedDocSection: null,
+  },
+  {
+    id: "react_router_nav",
+    title: "ניווט ב-React Router (Link / NavLink / Route / useNavigate)",
+    members: [
+      "Link",
+      "NavLink",
+      "Route",
+      "Routes",
+      "Router",
+      "BrowserRouter",
+      "useNavigate",
+      "useParams",
+      "useLocation",
+      "Outlet",
+      "Path",
+      "to",
+      "URL",
+    ],
+    primaryLessons: ["lesson_23"],
+    weightedDifficulty: 6,
+    unifiedDocSection: null,
+  },
+  // ─── הוספות 2026-05-02 (סבב שני, מ-70 הצעות) ───
+  // 1. JS Core
+  { id: "json_methods", title: "JSON.parse ↔ JSON.stringify", members: ["JSON.parse", "JSON.stringify", "JSON"], primaryLessons: ["lesson_15", "lesson_16"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "to_number", title: "המרה למספר: parseInt / parseFloat / Number()", members: ["parseInt", "parseFloat", "Number"], primaryLessons: ["lesson_11"], weightedDifficulty: 4, unifiedDocSection: null },
+  { id: "type_check", title: "בדיקת סוג: typeof / instanceof / Array.isArray", members: ["typeof", "instanceof", "Array.isArray"], primaryLessons: ["lesson_11", "lesson_15"], weightedDifficulty: 6, unifiedDocSection: "§16" },
+  { id: "string_methods", title: "מתודות מחרוזת (split/slice/substring/replace/includes/indexOf)", members: ["split", "slice", "substring", "substr", "replace", "includes", "indexOf", "trim", "concat", "uppercase", "lowercase", "toUpperCase", "toLowerCase"], primaryLessons: ["lesson_11", "lesson_12"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "math_object", title: "Math: floor / ceil / round / random / max / min", members: ["Math.floor", "Math.ceil", "Math.round", ["Math", "random"].join("."), "Math.max", "Math.min", "Math.abs", "Math.pow", "Math.sqrt", "Math"], primaryLessons: ["lesson_11"], weightedDifficulty: 4, unifiedDocSection: null },
+  { id: "spread_rest", title: "Spread (...) ↔ Rest (...) — אותו תחביר, תפקידים הפוכים", members: ["spread", "rest", "...args", "...rest"], primaryLessons: ["lesson_11", "lesson_15"], weightedDifficulty: 6, unifiedDocSection: "§14" },
+  { id: "destructuring", title: "Destructuring: array vs object", members: ["destructuring", "array destructuring", "object destructuring"], primaryLessons: ["lesson_11", "lesson_15"], weightedDifficulty: 6, unifiedDocSection: "§19" },
+  { id: "string_building", title: "Template literals ↔ string concatenation", members: ["template literal", "template string", "backtick", "concatenation"], primaryLessons: ["lesson_11"], weightedDifficulty: 4, unifiedDocSection: null },
+  { id: "associative_structures", title: "Set ↔ Map ↔ Object — מבני נתונים אסוציאטיביים", members: ["Set", "Map", "WeakMap", "WeakSet"], primaryLessons: ["lesson_15", "lesson_19"], weightedDifficulty: 7, unifiedDocSection: "§13" },
+  { id: "object_static_methods", title: "Object.keys / values / entries / assign", members: ["Object.keys", "Object.values", "Object.entries", "Object.assign", "Object.freeze", "Object.create"], primaryLessons: ["lesson_13", "lesson_19"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "deep_copy", title: "Shallow ↔ Deep copy (spread / Object.assign / structuredClone / JSON trick)", members: ["shallow copy", "deep copy", "structuredClone", "Object.assign"], primaryLessons: ["lesson_11", "lesson_22"], weightedDifficulty: 7, unifiedDocSection: null },
+  { id: "date_apis", title: "Date.now() ↔ new Date() ↔ Date.parse()", members: ["Date.now", "new Date", "Date.parse", "Date"], primaryLessons: ["lesson_15"], weightedDifficulty: 4, unifiedDocSection: null },
+  // 2. Async
+  { id: "promise_combinators", title: "Promise.all / race / allSettled / any", members: ["Promise.all", "Promise.race", "Promise.allSettled", "Promise.any"], primaryLessons: ["lesson_15", "lesson_24"], weightedDifficulty: 8, unifiedDocSection: "§9" },
+  { id: "async_generations", title: "Callback ↔ Promise.then ↔ async/await — 3 דורות + סנכרוני/אסינכרוני", members: ["callback", "Promise", "async", "await", ".then", ".catch", "then", "catch", "catch (Promise)", "Synchronous", "Asynchronous", "resolve", "reject"], primaryLessons: ["lesson_15"], weightedDifficulty: 8, unifiedDocSection: "§10" },
+  { id: "timers", title: "setTimeout / setInterval / requestAnimationFrame", members: ["setTimeout", "setInterval", "requestAnimationFrame", "clearTimeout", "clearInterval"], primaryLessons: ["lesson_15", "lesson_24"], weightedDifficulty: 6, unifiedDocSection: null },
+  { id: "event_loop", title: "Microtask ↔ Macrotask — Event Loop", members: ["microtask", "macrotask", "event loop", "task queue"], primaryLessons: ["lesson_15"], weightedDifficulty: 9, unifiedDocSection: "§8" },
+  { id: "http_clients", title: "fetch / XMLHttpRequest / axios", members: ["fetch", "XMLHttpRequest", "axios", "XHR"], primaryLessons: ["lesson_24"], weightedDifficulty: 6, unifiedDocSection: null },
+  // 3. DOM
+  { id: "dom_text_writing", title: "innerHTML / innerText / textContent", members: ["innerHTML", "innerText", "textContent"], primaryLessons: ["lesson_13"], weightedDifficulty: 6, unifiedDocSection: "§20" },
+  { id: "dom_node_inserting", title: "appendChild / append / insertBefore / replaceChild", members: ["appendChild", "append", "insertBefore", "replaceChild", "remove"], primaryLessons: ["lesson_13"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "dom_node_creation", title: "createElement / createTextNode / cloneNode", members: ["createElement", "createTextNode", "cloneNode"], primaryLessons: ["lesson_13"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "classlist_api", title: "classList: add / remove / toggle / contains", members: ["classList", "classList.add", "classList.remove", "classList.toggle", "classList.contains"], primaryLessons: ["lesson_13"], weightedDifficulty: 4, unifiedDocSection: null },
+  { id: "dom_attributes", title: "setAttribute / getAttribute / dataset / property", members: ["setAttribute", "getAttribute", "removeAttribute", "dataset", "data-*"], primaryLessons: ["lesson_13"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "event_target", title: "event.target ↔ event.currentTarget ↔ this", members: ["event.target", "event.currentTarget", "this in event"], primaryLessons: ["lesson_13"], weightedDifficulty: 7, unifiedDocSection: "§21" },
+  { id: "event_default_propagation", title: "preventDefault / stopPropagation / return false", members: ["preventDefault", "stopPropagation", "stopImmediatePropagation"], primaryLessons: ["lesson_13", "lesson_22"], weightedDifficulty: 6, unifiedDocSection: "§22" },
+  // 4. HTTP / Express
+  { id: "http_status_codes", title: "HTTP Status: 2xx / 3xx / 4xx / 5xx", members: ["200", "201", "204", "301", "302", "400", "401", "403", "404", "500"], primaryLessons: ["lesson_17"], weightedDifficulty: 5, unifiedDocSection: "§28" },
+  { id: "express_request_data", title: "req.params / req.query / req.body / req.headers", members: ["req.params", "req.query", "req.body", "req.headers", "params", "query", "body"], primaryLessons: ["lesson_17"], weightedDifficulty: 5, unifiedDocSection: "§29" },
+  { id: "express_routing_handlers", title: "app.use / app.get|post|put|delete / next()", members: ["app.use", "app.get", "app.post", "app.put", "app.delete", "next", "middleware"], primaryLessons: ["lesson_17"], weightedDifficulty: 6, unifiedDocSection: null },
+  { id: "express_response", title: "res.send / res.json / res.render / res.redirect", members: ["res.send", "res.json", "res.render", "res.redirect", "res.status", "res.end"], primaryLessons: ["lesson_17"], weightedDifficulty: 4, unifiedDocSection: null },
+  // 5. MongoDB / Mongoose
+  { id: "mongo_find", title: "find / findOne / findById / findOneAndUpdate", members: ["find", "findOne", "findById", "findOneAndUpdate", "findOneAndDelete"], primaryLessons: ["lesson_20"], weightedDifficulty: 6, unifiedDocSection: null },
+  { id: "mongo_create", title: "create / insertOne / save / bulkWrite", members: ["create", "insertOne", "insertMany", "save", "bulkWrite"], primaryLessons: ["lesson_20"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "mongo_operators", title: "MongoDB Operators: $set / $push / $pull / $inc", members: ["$set", "$push", "$pull", "$inc", "$unset", "$addToSet"], primaryLessons: ["lesson_20"], weightedDifficulty: 6, unifiedDocSection: null },
+  { id: "mongoose_concepts", title: "Schema / Model / Document / populate", members: ["Schema", "Model", "Document", "populate", "Mongoose"], primaryLessons: ["lesson_20"], weightedDifficulty: 7, unifiedDocSection: "§30" },
+  // 6. React
+  { id: "component_kinds", title: "Function ↔ Class component ↔ HOC", members: ["function component", "class component", "HOC", "higher-order component"], primaryLessons: ["lesson_21"], weightedDifficulty: 6, unifiedDocSection: null },
+  { id: "state_strategies", title: "useState ↔ useReducer ↔ useRef ↔ Class.setState — כל וריאציות ה-state", members: ["useState", "useReducer", "useRef", "this.setState", "setState", "lazy initialization", "functional update"], primaryLessons: ["lesson_22"], lessonScoped: true, weightedDifficulty: 8, unifiedDocSection: "§32" },
+  { id: "array_reference_cluster", title: "Array Reference — כל ההפניות, ההעתקות, וה-mutation של מערכים", members: ["array reference", "object reference", "shallow copy", "deep copy", "structuredClone", "splice", "slice", "push", "concat", "spread"], primaryLessons: ["lesson_11", "lesson_22"], weightedDifficulty: 9, unifiedDocSection: "§33" },
+  // ─── PHASE F: clusters from orphan integration ───
+  { id: "jsx_rendering", title: "JSX & React Rendering — איך React הופך קוד לתצוגה", members: ["JSX", "rendering", "render", "ReactDOM.render", "createRoot", "virtual DOM"], primaryLessons: ["lesson_21"], weightedDifficulty: 7, unifiedDocSection: null },
+  { id: "ts_react", title: "TypeScript ב-React — Props/State/Hooks Typing", members: ["React + TypeScript", "Typing Props", "Function Prop Type", "interface vs type", "union", "Union Type", "Type Narrowing"], primaryLessons: ["lesson_26", "lesson_27"], weightedDifficulty: 7, unifiedDocSection: null },
+  { id: "ai_patterns", title: "AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning", members: ["RAG", "tool calling", "agent loop", "fine-tuning boundary", "prompt engineering", "embedding", "vector search"], primaryLessons: ["lesson_ai_engineering"], weightedDifficulty: 8, unifiedDocSection: null },
+  { id: "react_memoization", title: "useMemo / useCallback / React.memo + memoization", members: ["useMemo", "useCallback", "React.memo", "memo", "memoization"], primaryLessons: ["lesson_24"], weightedDifficulty: 8, unifiedDocSection: "§12" },
+  { id: "useeffect_deps", title: "Dependency array: [] / [x] / [x,y] / ללא + cleanup + infinite loop", members: ["dependency array", "useEffect deps", "[]", "cleanup", "infinite loop", "fetching data"], primaryLessons: ["lesson_24"], weightedDifficulty: 9, unifiedDocSection: "§11" },
+  { id: "react_grouping", title: "Fragment ↔ <></> ↔ <div>", members: ["Fragment", "React.Fragment", "<>"], primaryLessons: ["lesson_21"], weightedDifficulty: 4, unifiedDocSection: null },
+  { id: "form_control", title: "Controlled ↔ Uncontrolled component", members: ["controlled component", "uncontrolled component", "controlled input"], primaryLessons: ["lesson_22"], weightedDifficulty: 7, unifiedDocSection: null },
+  { id: "composition_patterns", title: "children prop ↔ render prop ↔ slot", members: ["children prop", "render prop", "slot"], primaryLessons: ["lesson_21", "lesson_23"], weightedDifficulty: 7, unifiedDocSection: null },
+  { id: "error_catching", title: "Error Boundary ↔ try/catch ↔ Promise.catch — איפה כל אחד תופס", members: ["Error Boundary", "componentDidCatch"], primaryLessons: ["lesson_24"], weightedDifficulty: 8, unifiedDocSection: null },
+  // 7. TypeScript
+  { id: "ts_type_vs_interface", title: "type ↔ interface", members: ["type alias", "interface"], primaryLessons: ["lesson_26"], weightedDifficulty: 6, unifiedDocSection: "§26" },
+  { id: "ts_special_types", title: "unknown ↔ any ↔ never", members: ["unknown", "any", "never"], primaryLessons: ["lesson_26"], weightedDifficulty: 7, unifiedDocSection: "§27" },
+  { id: "ts_utility_types", title: "Partial / Required / Omit / Pick", members: ["Partial", "Required", "Omit", "Pick", "Readonly", "Record"], primaryLessons: ["lesson_26"], weightedDifficulty: 7, unifiedDocSection: null },
+  { id: "ts_const_enum", title: "enum ↔ as const ↔ literal union", members: ["enum", "as const", "literal type"], primaryLessons: ["lesson_26"], weightedDifficulty: 6, unifiedDocSection: null },
+  { id: "ts_class_modifiers", title: "public / private / protected / readonly", members: ["public", "private", "protected", "readonly"], primaryLessons: ["lesson_26"], weightedDifficulty: 5, unifiedDocSection: null },
+  // 8. Auth (additional)
+  { id: "auth_methods", title: "Session ↔ JWT ↔ OAuth — 3 שיטות אימות", members: ["session auth", "JWT", "OAuth", "OAuth2"], primaryLessons: ["lesson_auth_security"], weightedDifficulty: 8, unifiedDocSection: null },
+  { id: "cookie_flags", title: "Cookie flags: httpOnly / Secure / SameSite", members: ["httpOnly", "Secure cookie", "SameSite", "secure cookie"], primaryLessons: ["lesson_auth_security"], weightedDifficulty: 7, unifiedDocSection: null },
+  { id: "token_lifecycle", title: "Refresh token ↔ Access token", members: ["refresh token", "access token"], primaryLessons: ["lesson_auth_security"], weightedDifficulty: 7, unifiedDocSection: null },
+  // 9. CSS
+  { id: "css_display", title: "display: block / inline / inline-block / flex / grid", members: ["display", "block", "inline", "inline-block", "flex", "grid"], primaryLessons: ["lesson_html_css_foundations", "lesson_25"], weightedDifficulty: 6, unifiedDocSection: "§31 (CSS summary)" },
+  { id: "css_position", title: "position: static / relative / absolute / fixed / sticky", members: ["position", "relative", "absolute", "fixed", "sticky", "static"], primaryLessons: ["lesson_html_css_foundations"], weightedDifficulty: 7, unifiedDocSection: "§31 (CSS summary)" },
+  { id: "css_units", title: "em / rem / px / % / vh / vw", members: ["em", "rem", "px", "vh", "vw"], primaryLessons: ["lesson_html_css_foundations", "lesson_25"], weightedDifficulty: 5, unifiedDocSection: "§31 (CSS summary)" },
+  { id: "box_model", title: "margin / padding / border (box model)", members: ["margin", "padding", "border", "box model"], primaryLessons: ["lesson_html_css_foundations"], weightedDifficulty: 5, unifiedDocSection: "§31 (CSS summary)" },
+  { id: "flexbox_props", title: "Flexbox: direction / justify-content / align-items / flex-wrap", members: ["flex-direction", "justify-content", "align-items", "flex-wrap", "flex-grow", "flex-shrink"], primaryLessons: ["lesson_25"], weightedDifficulty: 6, unifiedDocSection: "§31 (CSS summary)" },
+  { id: "grid_props", title: "Grid: template-columns / template-rows / gap / grid-area", members: ["grid-template-columns", "grid-template-rows", "grid-gap", "grid-area", "gap"], primaryLessons: ["lesson_25"], weightedDifficulty: 7, unifiedDocSection: "§31 (CSS summary)" },
+  { id: "box_sizing", title: "box-sizing: content-box ↔ border-box", members: ["box-sizing", "content-box", "border-box"], primaryLessons: ["lesson_html_css_foundations"], weightedDifficulty: 4, unifiedDocSection: "§31 (CSS summary)" },
+  // 10. Tooling / Git
+  { id: "git_core", title: "git add / commit / push / pull — 4 פקודות הליבה", members: ["git add", "git commit", "git push", "git pull", "staging area", "working tree"], primaryLessons: ["lesson_tooling_git"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "git_merge_strategy", title: "git merge ↔ git rebase", members: ["git merge", "git rebase"], primaryLessons: ["lesson_tooling_git"], weightedDifficulty: 7, unifiedDocSection: null },
+  { id: "deps_kinds", title: "dependencies / devDependencies / peerDependencies", members: ["dependencies", "devDependencies", "peerDependencies"], primaryLessons: ["lesson_16"], weightedDifficulty: 4, unifiedDocSection: null },
+  { id: "package_managers", title: "npm ↔ yarn ↔ pnpm", members: ["yarn", "pnpm"], primaryLessons: ["lesson_16"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "code_quality_tools", title: "ESLint ↔ Prettier ↔ TypeScript", members: ["ESLint", "Prettier"], primaryLessons: ["lesson_tooling_git", "lesson_26"], weightedDifficulty: 5, unifiedDocSection: null },
+  // 11. Build / Deploy
+  { id: "rendering_strategies", title: "SSR ↔ SSG ↔ CSR ↔ ISR", members: ["SSR", "SSG", "CSR", "ISR"], primaryLessons: ["lesson_nextjs"], weightedDifficulty: 7, unifiedDocSection: "§25" },
+  { id: "deploy_platforms", title: "Vercel ↔ Netlify ↔ Cloudflare Pages", members: ["Vercel deploy", "Netlify"], primaryLessons: ["lesson_devops_deploy", "lesson_nextjs"], weightedDifficulty: 5, unifiedDocSection: null },
+  { id: "docker_concepts", title: "Docker: container / image / volume / network", members: ["container", "image", "volume", "Dockerfile"], primaryLessons: ["lesson_devops_deploy"], weightedDifficulty: 6, unifiedDocSection: null },
+  { id: "cicd", title: "CI ↔ CD — Continuous Integration vs Delivery", members: ["CI", "CD", "GitHub workflow"], primaryLessons: ["lesson_devops_deploy", "lesson_tooling_git"], weightedDifficulty: 5, unifiedDocSection: null },
+  // 12. Patterns
+  { id: "function_definition_kinds", title: "Function declaration ↔ expression ↔ arrow ↔ IIFE", members: ["function declaration", "function expression", "IIFE", "anonymous function"], primaryLessons: ["lesson_11", "lesson_15"], weightedDifficulty: 7, unifiedDocSection: "§15" },
+  { id: "mutability_patterns", title: "Mutable ↔ Immutable update patterns", members: ["mutable update", "immutable update"], primaryLessons: ["lesson_22"], weightedDifficulty: 7, unifiedDocSection: null },
+  { id: "code_decisions", title: "ternary ↔ if-else ↔ switch", members: ["ternary", "if-else", "switch", "if statement"], primaryLessons: ["lesson_11"], weightedDifficulty: 4, unifiedDocSection: null },
+];
+
+function memberSet() {
+  const m = new Set();
+  CLUSTERS.forEach((c) => c.members.forEach((x) => m.add(x.toLowerCase())));
+  return m;
+}
+
+// 4-component completion tracking per cluster (PHASE D)
+// Each cluster needs 4 things to be "complete":
+//   1. hasComparisonTable    — טבלת השוואה ב-COMPARISON_TABLES_DEEP.md
+//   2. hasOverviewSixLevels  — 6 רמות לקלסטר כולו
+//   3. hasPerMemberSixLevels — 6 רמות לכל חבר בנפרד
+//   4. hasCodeBlocks         — בלוקי קוד ל-6 הרמות
+const CLUSTER_CONTENT_STATUS = {
+  // ↓ Set true when written. Default false.
+  memory_variables:           { table: true, overview: true, perMember: true, codeBlocks: true },
+  reference_types:            { table: true, overview: true, perMember: true, codeBlocks: true },
+  function_kinds:             { table: true, overview: true, perMember: true, codeBlocks: true },
+  array_methods:              { table: false, overview: false, perMember: false, codeBlocks: false },
+  equality:                   { table: true, overview: true, perMember: true, codeBlocks: true },
+  loops:                      { table: true, overview: true, perMember: true, codeBlocks: true },
+  async:                      { table: true, overview: true, perMember: true, codeBlocks: true },
+  closures:                   { table: false, overview: false, perMember: false, codeBlocks: false },
+  react_state:                { table: false, overview: false, perMember: false, codeBlocks: false },
+  react_hooks:                { table: false, overview: false, perMember: false, codeBlocks: false },
+  browser_storage:            { table: false, overview: false, perMember: false, codeBlocks: false },
+  http_methods:               { table: false, overview: false, perMember: false, codeBlocks: false },
+  databases:                  { table: false, overview: false, perMember: false, codeBlocks: false },
+  module_system:              { table: false, overview: false, perMember: false, codeBlocks: false },
+  auth_security:              { table: false, overview: false, perMember: false, codeBlocks: false },
+  typescript_basics:          { table: false, overview: false, perMember: false, codeBlocks: false },
+  primitive_types:            { table: false, overview: false, perMember: false, codeBlocks: false },
+  array_mutation_methods:     { table: false, overview: false, perMember: false, codeBlocks: false },
+  dom_selectors:              { table: false, overview: false, perMember: false, codeBlocks: false },
+  dom_traversal_children:     { table: false, overview: false, perMember: false, codeBlocks: false },
+  npm_commands:               { table: false, overview: false, perMember: false, codeBlocks: false },
+  error_handling:             { table: false, overview: false, perMember: false, codeBlocks: false },
+  dom_events:                 { table: false, overview: false, perMember: false, codeBlocks: false },
+  react_router_nav:           { table: false, overview: false, perMember: false, codeBlocks: false },
+  json_methods:               { table: false, overview: false, perMember: false, codeBlocks: false },
+  to_number:                  { table: false, overview: false, perMember: false, codeBlocks: false },
+  type_check:                 { table: true, overview: true, perMember: true, codeBlocks: true },
+  string_methods:             { table: false, overview: false, perMember: false, codeBlocks: false },
+  math_object:                { table: false, overview: false, perMember: false, codeBlocks: false },
+  spread_rest:                { table: true, overview: true, perMember: true, codeBlocks: true },
+  destructuring:              { table: true, overview: true, perMember: true, codeBlocks: true },
+  string_building:            { table: false, overview: false, perMember: false, codeBlocks: false },
+  associative_structures:     { table: true, overview: true, perMember: true, codeBlocks: true },
+  object_static_methods:      { table: false, overview: false, perMember: false, codeBlocks: false },
+  deep_copy:                  { table: false, overview: false, perMember: false, codeBlocks: false },
+  date_apis:                  { table: false, overview: false, perMember: false, codeBlocks: false },
+  promise_combinators:        { table: true, overview: true, perMember: true, codeBlocks: true },
+  async_generations:          { table: true, overview: true, perMember: true, codeBlocks: true },
+  timers:                     { table: false, overview: false, perMember: false, codeBlocks: false },
+  event_loop:                 { table: true, overview: true, perMember: true, codeBlocks: true },
+  http_clients:               { table: false, overview: false, perMember: false, codeBlocks: false },
+  dom_text_writing:           { table: true, overview: true, perMember: true, codeBlocks: true },
+  dom_node_inserting:         { table: false, overview: false, perMember: false, codeBlocks: false },
+  dom_node_creation:          { table: false, overview: false, perMember: false, codeBlocks: false },
+  classlist_api:              { table: false, overview: false, perMember: false, codeBlocks: false },
+  dom_attributes:             { table: false, overview: false, perMember: false, codeBlocks: false },
+  event_target:               { table: true, overview: true, perMember: true, codeBlocks: true },
+  event_default_propagation:  { table: true, overview: true, perMember: true, codeBlocks: true },
+  http_status_codes:          { table: true, overview: true, perMember: true, codeBlocks: true },
+  express_request_data:       { table: true, overview: true, perMember: true, codeBlocks: true },
+  express_routing_handlers:   { table: false, overview: false, perMember: false, codeBlocks: false },
+  express_response:           { table: false, overview: false, perMember: false, codeBlocks: false },
+  mongo_find:                 { table: false, overview: false, perMember: false, codeBlocks: false },
+  mongo_create:               { table: false, overview: false, perMember: false, codeBlocks: false },
+  mongo_operators:            { table: false, overview: false, perMember: false, codeBlocks: false },
+  mongoose_concepts:          { table: true, overview: true, perMember: true, codeBlocks: true },
+  component_kinds:            { table: false, overview: false, perMember: false, codeBlocks: false },
+  state_strategies:           { table: true, overview: true, perMember: true, codeBlocks: true },
+  react_memoization:          { table: true, overview: true, perMember: true, codeBlocks: true },
+  useeffect_deps:             { table: true, overview: true, perMember: true, codeBlocks: true },
+  react_grouping:             { table: false, overview: false, perMember: false, codeBlocks: false },
+  form_control:               { table: false, overview: false, perMember: false, codeBlocks: false },
+  composition_patterns:       { table: false, overview: false, perMember: false, codeBlocks: false },
+  error_catching:             { table: false, overview: false, perMember: false, codeBlocks: false },
+  ts_type_vs_interface:       { table: true, overview: true, perMember: true, codeBlocks: true },
+  ts_special_types:           { table: true, overview: true, perMember: true, codeBlocks: true },
+  ts_utility_types:           { table: false, overview: false, perMember: false, codeBlocks: false },
+  ts_const_enum:              { table: false, overview: false, perMember: false, codeBlocks: false },
+  ts_class_modifiers:         { table: false, overview: false, perMember: false, codeBlocks: false },
+  auth_methods:               { table: false, overview: false, perMember: false, codeBlocks: false },
+  cookie_flags:               { table: false, overview: false, perMember: false, codeBlocks: false },
+  token_lifecycle:            { table: false, overview: false, perMember: false, codeBlocks: false },
+  css_display:                { table: true, overview: true, perMember: true, codeBlocks: true },
+  css_position:               { table: true, overview: true, perMember: true, codeBlocks: true },
+  css_units:                  { table: true, overview: true, perMember: true, codeBlocks: true },
+  box_model:                  { table: true, overview: true, perMember: true, codeBlocks: true },
+  flexbox_props:              { table: true, overview: true, perMember: true, codeBlocks: true },
+  grid_props:                 { table: true, overview: true, perMember: true, codeBlocks: true },
+  box_sizing:                 { table: true, overview: true, perMember: true, codeBlocks: true },
+  git_core:                   { table: false, overview: false, perMember: false, codeBlocks: false },
+  git_merge_strategy:         { table: false, overview: false, perMember: false, codeBlocks: false },
+  deps_kinds:                 { table: false, overview: false, perMember: false, codeBlocks: false },
+  package_managers:           { table: false, overview: false, perMember: false, codeBlocks: false },
+  code_quality_tools:         { table: false, overview: false, perMember: false, codeBlocks: false },
+  rendering_strategies:       { table: true, overview: true, perMember: true, codeBlocks: true },
+  deploy_platforms:           { table: false, overview: false, perMember: false, codeBlocks: false },
+  docker_concepts:            { table: false, overview: false, perMember: false, codeBlocks: false },
+  cicd:                       { table: false, overview: false, perMember: false, codeBlocks: false },
+  function_definition_kinds:  { table: true, overview: true, perMember: true, codeBlocks: true },
+  mutability_patterns:        { table: false, overview: false, perMember: false, codeBlocks: false },
+  code_decisions:             { table: false, overview: false, perMember: false, codeBlocks: false },
+  array_reference_cluster:    { table: true, overview: true, perMember: true, codeBlocks: true },
+  jsx_rendering:              { table: false, overview: false, perMember: false, codeBlocks: false },
+  ts_react:                   { table: false, overview: false, perMember: false, codeBlocks: false },
+  ai_patterns:                { table: false, overview: false, perMember: false, codeBlocks: false },
+};
+
+function clusterCompletionScore(clusterId) {
+  const status = CLUSTER_CONTENT_STATUS[clusterId];
+  if (!status) return { score: 0, total: 4, components: { table: false, overview: false, perMember: false, codeBlocks: false } };
+  const score =
+    (status.table ? 1 : 0) +
+    (status.overview ? 1 : 0) +
+    (status.perMember ? 1 : 0) +
+    (status.codeBlocks ? 1 : 0);
+  return { score, total: 4, components: status };
+}
+
+function clusterFor(conceptName, lessonId) {
+  const ln = (conceptName || "").toLowerCase();
+  const matches = CLUSTERS.filter((c) => c.members.some((m) => m.toLowerCase() === ln));
+  if (!matches.length) return null;
+  // Lesson-scoped clusters only match if the lesson matches their primaryLessons
+  if (lessonId) {
+    const scoped = matches.find((c) => c.lessonScoped && c.primaryLessons.includes(lessonId));
+    if (scoped) return scoped;
+    const unscoped = matches.find((c) => !c.lessonScoped);
+    if (unscoped) return unscoped;
+  }
+  // No lesson context: prefer non-lesson-scoped, otherwise first match
+  return matches.find((c) => !c.lessonScoped) || matches[0];
+}
+
 function loadLessonFile(filename) {
   const filePath = path.join(DATA_DIR, filename);
   const code = fs.readFileSync(filePath, "utf8");
@@ -165,12 +653,27 @@ function main() {
     lines.push(`## ${lessonId} — ${lesson.title}`);
     lines.push(`*${concepts.length} מושגים · ${lessonFilled}/${lessonTotal} תאים = **${pct}%** השלמה*`);
     lines.push("");
-    // Header row
-    const headerCells = ["#", "מושג"].concat(PARTS.map((p) => p.label)).concat(["MC", "Fill", "מלא"]);
+    lines.push("> **חוק חדש (2026-05-02):** difficulty ≤ 6 → לא ממלאים, ניתן ל-V (אישור ידיעה + בחינה אנטי-רמאות במאמן). difficulty ≥ 7 → חובה למלא הכל.");
+    lines.push("> **כלל פדגוגי:** מושגים בעלי `cluster` נלמדים יחד בדף-מאוחד, לא בנפרד.");
+    lines.push("");
+    // Header row — added "קושי" + "קלסטר" + "מצב" columns
+    const headerCells = ["#", "מושג", "קושי", "קלסטר", "מצב"].concat(PARTS.map((p) => p.label)).concat(["MC", "Fill", "מלא"]);
     lines.push("| " + headerCells.join(" | ") + " |");
     lines.push("|" + headerCells.map(() => "---").join("|") + "|");
     concepts.forEach((c, idx) => {
-      const cells = [(idx + 1).toString(), c.conceptName];
+      const ownDiff = typeof c.difficulty === "number" ? c.difficulty : 0;
+      const cluster = clusterFor(c.conceptName, lessonId);
+      // Effective difficulty: if concept is in a cluster, use the cluster's difficulty
+      // (cluster acts as a single super-concept per the new pedagogical rule)
+      const diff = cluster ? cluster.weightedDifficulty : ownDiff;
+      const diffLabel = cluster
+        ? `${diff} (קלסטר; פרטני ${ownDiff})`
+        : String(diff || "-");
+      const policy = diff >= 7 ? "🔴 למלא" : (diff >= 6 ? "🟡 מלא + V" : "🟢 V בלבד");
+      const clusterCell = cluster
+        ? `🧩 ${cluster.title}${cluster.unifiedDocSection ? " ✓" : " ✗"}`
+        : "— (יחיד)";
+      const cells = [(idx + 1).toString(), c.conceptName, diffLabel, clusterCell, policy];
       let conceptFilled = 0;
       PARTS.forEach((p) => {
         const v = getNested(c, p.key);
@@ -252,6 +755,147 @@ function main() {
     summary.push(`| ${i + 1} | ${s.id} | ${s.title.slice(0, 45)} | ${s.total - s.filled} | ${s.pct}% | ${s.total - s.filled} |`);
   });
   summary.push("");
+
+  // ─────────────────────────────────────────────────────────────
+  // CLUSTERS — דף-לימוד מאוחד לכל קלסטר השוואה
+  // ─────────────────────────────────────────────────────────────
+  summary.push("## 🧩 קלסטרים — דפי-לימוד מאוחדים (כלל פדגוגי 2026-05-02)");
+  summary.push("");
+  summary.push("**כלל:** מושגים שמופיעים יחד בטבלת השוואה הופכים לדף-לימוד אחד (cluster), לא 2-3 כרטיסים נפרדים.");
+  summary.push("**יחידת המדידה החדשה:** קלסטר = מושג. **כל קלסטר מקבל רמת קושי 1-10 משלו** והוא נמדד, נבחן, ומסומן V כיחידה אחת — בדיוק כמו מושג בודד.");
+  summary.push("**מדיניות לפי קושי הקלסטר:** ≤ 6 → V מותר (אנטי-רמאות במאמן). ≥ 7 → חובה למלא כל הbלוק המאוחד.");
+  summary.push("");
+  summary.push(`**סה״כ קלסטרים:** ${CLUSTERS.length}`);
+  summary.push("");
+  summary.push("| # | Cluster (= מושג-על) | קושי | מדיניות | חברים | שיעור-מקור | תוכן מאוחד? | רכיבים 4/4 |");
+  summary.push("|---:|---|---:|---|---|---|:---:|:---|");
+  // Build a fast lookup of which clusters have data
+  const conceptsInLessons = new Map(); // conceptName(lc) → {lessonId, concept}
+  lessons.forEach(({ lesson }) => {
+    lesson.concepts.forEach((c) => {
+      conceptsInLessons.set(c.conceptName.toLowerCase(), { lessonId: lesson.id, concept: c });
+    });
+  });
+  CLUSTERS.forEach((cl, i) => {
+    const presentMembers = cl.members.filter((m) => conceptsInLessons.has(m.toLowerCase()));
+    const docMark = cl.unifiedDocSection ? `✅ ${cl.unifiedDocSection}` : "❌ חסר";
+    const diff = cl.weightedDifficulty;
+    const policy = diff >= 7 ? "🔴 חובה למלא" : (diff === 6 ? "🟡 גבולי + V" : "🟢 V בלבד");
+    const completion = clusterCompletionScore(cl.id);
+    const compStr = `${completion.score}/4`;
+    const compDetail = `T${completion.components.table?"✓":"✗"} O${completion.components.overview?"✓":"✗"} M${completion.components.perMember?"✓":"✗"} C${completion.components.codeBlocks?"✓":"✗"}`;
+    summary.push(`| ${i + 1} | **${cl.title}** | ${diff}/10 | ${policy} | ${presentMembers.join(" · ")} | ${cl.primaryLessons.join(", ")} | ${docMark} | ${compStr} ${compDetail} |`);
+  });
+  summary.push("");
+  summary.push("> **מקרא רכיבי מילוי (4 לכל קלסטר):** T = Table · O = Overview 6-levels · M = Per-Member 6-levels · C = Code blocks 6-levels");
+  summary.push("");
+
+  // Overall content completion stats
+  const total4Score = CLUSTERS.reduce((acc, cl) => {
+    const c = clusterCompletionScore(cl.id);
+    return acc + c.score;
+  }, 0);
+  const maxScore = CLUSTERS.length * 4;
+  const fullClusters = CLUSTERS.filter((cl) => clusterCompletionScore(cl.id).score === 4).length;
+  summary.push(`**סטטוס כולל:** ${total4Score} / ${maxScore} רכיבים מולאו (${Math.round((total4Score/maxScore)*100)}%) · ${fullClusters} קלסטרים מלאים 4/4 מתוך ${CLUSTERS.length}`);
+  summary.push("");
+
+  // Cluster-as-concept summary: how many at each difficulty band
+  const clBy = { hard: [], mid: [], easy: [] };
+  CLUSTERS.forEach((cl) => {
+    if (cl.weightedDifficulty >= 7) clBy.hard.push(cl);
+    else if (cl.weightedDifficulty === 6) clBy.mid.push(cl);
+    else clBy.easy.push(cl);
+  });
+  summary.push("### 📊 סיכום קלסטרים לפי קושי (כל אחד נחשב כמושג-על אחד)");
+  summary.push("");
+  summary.push("| תחום קושי | מספר קלסטרים | מדיניות | חוב פדגוגי |");
+  summary.push("|---|---:|---|---:|");
+  summary.push(`| 🔴 קושי 7+ (קלסטר-מושג קשה) | ${clBy.hard.length} | חובה בלוק-לימוד מאוחד | ${clBy.hard.filter((c) => !c.unifiedDocSection).length} חסרים |`);
+  summary.push(`| 🟡 קושי 6 (קלסטר-מושג גבולי) | ${clBy.mid.length} | מומלץ בלוק + V מותר | ${clBy.mid.filter((c) => !c.unifiedDocSection).length} חסרים |`);
+  summary.push(`| 🟢 קושי ≤ 5 (קלסטר-מושג קל) | ${clBy.easy.length} | V בלבד | ${clBy.easy.filter((c) => !c.unifiedDocSection).length} חסרים |`);
+  summary.push("");
+
+  // Cluster gap report
+  const missingDocs = CLUSTERS.filter((c) => !c.unifiedDocSection);
+  const haveDocs = CLUSTERS.filter((c) => c.unifiedDocSection);
+  summary.push(`**יש להם בלוק לימוד מאוחד:** ${haveDocs.length} / ${CLUSTERS.length}`);
+  summary.push(`**חסר בלוק לימוד מאוחד:** ${missingDocs.length} / ${CLUSTERS.length}`);
+  summary.push("");
+  if (missingDocs.length) {
+    summary.push("### 🔴 קלסטרים שצריכים בלוק-לימוד-מאוחד (סדר כתיבה לפי קושי יורד):");
+    summary.push("");
+    summary.push("| Rank | Cluster | חברים | שיעור-מקור | קושי |");
+    summary.push("|---:|---|---|---|---:|");
+    missingDocs
+      .slice()
+      .sort((a, b) => b.weightedDifficulty - a.weightedDifficulty)
+      .forEach((c, i) => {
+        summary.push(`| ${i + 1} | **${c.title}** | ${c.members.join(" · ")} | ${c.primaryLessons.join(", ")} | ${c.weightedDifficulty} |`);
+      });
+    summary.push("");
+  }
+
+  // Concepts NOT in any cluster (orphans)
+  const allClusterMembers = memberSet();
+  const orphans = [];
+  lessons.forEach(({ lesson }) => {
+    lesson.concepts.forEach((c) => {
+      if (!allClusterMembers.has(c.conceptName.toLowerCase())) {
+        const diff = typeof c.difficulty === "number" ? c.difficulty : 0;
+        if (diff >= 7) orphans.push({ lessonId: lesson.id, name: c.conceptName, diff });
+      }
+    });
+  });
+  if (orphans.length) {
+    summary.push(`### 🔍 מושגים קשים (diff≥7) שעדיין לא שובצו לקלסטר: ${orphans.length}`);
+    summary.push("");
+    summary.push("> אלה מועמדים לקלסטר חדש או שילוב בקלסטר קיים. אם המושג עומד לבד באמת — מותר להישאר בודד.");
+    summary.push("");
+    summary.push("| Lesson | Concept | קושי |");
+    summary.push("|---|---|---:|");
+    orphans.sort((a, b) => b.diff - a.diff).forEach((o) => {
+      summary.push(`| ${o.lessonId} | ${o.name} | ${o.diff} |`);
+    });
+    summary.push("");
+  }
+  summary.push("---");
+  summary.push("");
+
+  // Difficulty-tier queue — concepts ranked by difficulty descending
+  summary.push("## 🎯 תור מילוי מושגים לפי קושי (יורד) — חובה למלא רק difficulty ≥ 7");
+  summary.push("");
+  summary.push("**חוק:** מושגים עם `difficulty ≤ 6` לא ממלאים — המשתמש מסמן עליהם V בתצוגת שורה אחת והמאמן בודק אותו לאנטי-רמאות.");
+  summary.push("");
+  const allConcepts = [];
+  lessons.forEach(({ lesson }) => {
+    lesson.concepts.forEach((c) => {
+      let conceptFilled = 0;
+      PARTS.forEach((p) => { if (isFilled(getNested(c, p.key))) conceptFilled++; });
+      allConcepts.push({
+        lessonId: lesson.id,
+        conceptName: c.conceptName,
+        difficulty: typeof c.difficulty === "number" ? c.difficulty : 0,
+        filled: conceptFilled,
+        total: PARTS.length,
+      });
+    });
+  });
+
+  const tiers = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+  tiers.forEach((tier) => {
+    const items = allConcepts.filter((c) => c.difficulty === tier);
+    if (!items.length) return;
+    const policy = tier >= 7 ? "🔴 חובה למלא הכל" : (tier === 6 ? "🟡 גבולי - מלא + V" : "🟢 דלג + V בלבד");
+    summary.push(`### Difficulty ${tier} — ${items.length} מושגים — ${policy}`);
+    summary.push("");
+    summary.push("| Lesson | Concept | מצב מילוי |");
+    summary.push("|---|---|---:|");
+    items.forEach((c) => {
+      summary.push(`| ${c.lessonId} | ${c.conceptName} | ${c.filled}/${c.total} |`);
+    });
+    summary.push("");
+  });
   summary.push("---");
   summary.push("");
 

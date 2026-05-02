@@ -130,7 +130,7 @@ function buildReport() {
     "Current app/cache shell includes the latest museum access assets",
     html.includes("app.js?v=cleanup-shards-v105") &&
       html.includes("style.css?v=concept-sprint-v69") &&
-      read("service-worker.js").includes('const CACHE_VERSION = "lumen-v2.4.139-autosave"') &&
+      read("service-worker.js").includes('const CACHE_VERSION = "lumen-v2.4.140-clusters"') &&
       css.includes(".museum-access-gate") &&
       css.includes(".xp-access-panel"),
     "The offline shell must reference the current app/css versions and access-gate styles.",

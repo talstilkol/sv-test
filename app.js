@@ -11425,9 +11425,74 @@ document.addEventListener("DOMContentLoaded", () => {
     if (core && typeof core.canMarkV === "function") return core.canMarkV(sc, concept);
     if (sc.markedKnown) return false;
     if (isScoreMastered(sc)) return false; // already mastered, no need
+
+    // Cluster-aware anti-cheat (PHASE H):
+    // If concept belongs to a comparison cluster, require correct answers across
+    // multiple cluster members — not just THIS concept. This prevents students
+    // from drilling one easy member to V the whole cluster.
+    const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
+    const cluster = clusterApi ? clusterApi.findByConcept(lessonId, conceptName) : null;
+
+    if (cluster) {
+      const clusterDiff = Math.max(cluster.difficulty, getDifficulty(concept));
+      if (clusterDiff >= 7) return false; // hard cluster — must master via 7 levels
+      const perMemberNeed = Math.max(1, Math.ceil(correctNeededForV(clusterDiff) / 2));
+      // Count how many cluster members have at least perMemberNeed correct answers
+      let membersPassed = 0;
+      let membersExisting = 0;
+      cluster.members.forEach((memberName) => {
+        // Look across all lessons that contain this cluster
+        for (const lessonRef of (cluster.lessons || [lessonId])) {
+          const memberScore = scores[conceptKey(lessonRef, memberName)];
+          if (memberScore) {
+            membersExisting++;
+            if (Number(memberScore.correctRunCount || 0) >= perMemberNeed) membersPassed++;
+            break;
+          }
+        }
+      });
+      // Require at least half of cluster members verified (round up)
+      const requiredMembers = Math.max(1, Math.ceil(cluster.members.length / 2));
+      return membersPassed >= requiredMembers;
+    }
+
     const need = correctNeededForV(getDifficulty(concept));
     if (!isFinite(need)) return false; // hard concepts cannot be V'd
     return sc.correctRunCount >= need;
+  }
+
+  // Returns cluster verification status: how many members user has verified vs needed
+  function clusterVStatus(lessonId, conceptName) {
+    const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
+    const cluster = clusterApi ? clusterApi.findByConcept(lessonId, conceptName) : null;
+    if (!cluster) return null;
+    const clusterDiff = cluster.difficulty;
+    const perMemberNeed = Math.max(1, Math.ceil(correctNeededForV(clusterDiff) / 2));
+    let membersPassed = 0;
+    cluster.members.forEach((memberName) => {
+      for (const lessonRef of (cluster.lessons || [lessonId])) {
+        const memberScore = scores[conceptKey(lessonRef, memberName)];
+        if (memberScore && Number(memberScore.correctRunCount || 0) >= perMemberNeed) {
+          membersPassed++;
+          break;
+        }
+      }
+    });
+    const requiredMembers = Math.max(1, Math.ceil(cluster.members.length / 2));
+    return {
+      cluster,
+      membersPassed,
+      requiredMembers,
+      perMemberNeed,
+      verified: membersPassed >= requiredMembers,
+      weakMember: cluster.members.find((m) => {
+        for (const lessonRef of (cluster.lessons || [lessonId])) {
+          const sc = scores[conceptKey(lessonRef, m)];
+          if (!sc || Number(sc.correctRunCount || 0) < perMemberNeed) return true;
+        }
+        return false;
+      }),
+    };
   }
 
   function markAsKnown(lessonId, conceptName) {
@@ -11445,6 +11510,30 @@ document.addEventListener("DOMContentLoaded", () => {
       sc.masteryGate.reason = "manual-known-is-not-mastery";
       sc.masteryGate.message = "סימון ידוע עוזר למאמן, אבל ציון 100 דורש תשובה נכונה לשאלת אתגר.";
     }
+
+    // PHASE H: cluster propagation — if concept is in a cluster, mark all members
+    // (anti-cheat already verified cross-cluster knowledge in canMarkV)
+    const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
+    const cluster = clusterApi ? clusterApi.findByConcept(lessonId, conceptName) : null;
+    if (cluster) {
+      cluster.members.forEach((memberName) => {
+        if (memberName === conceptName) return;
+        for (const lessonRef of (cluster.lessons || [lessonId])) {
+          const memberRef = findConceptByKeyLoose(conceptKey(lessonRef, memberName));
+          if (memberRef) {
+            const ms = ensureScore(lessonRef, memberName);
+            if (!ms.markedKnown) {
+              ms.markedKnown = true;
+              ms.markedKnownAt = Date.now();
+              ms.level = Math.min(6, Math.max(Number(ms.level) || 1, 4));
+              ms.viaCluster = cluster.id;
+            }
+            break;
+          }
+        }
+      });
+    }
+
     saveScores();
   }
 
@@ -30384,28 +30473,56 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderLessonOneLineOverview(lesson, concepts) {
+    const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
     return `
       <section class="lesson-compact-panel" data-page-section="מושגי השיעור" aria-label="מבט שורה אחת על מושגי השיעור">
         <div class="lesson-compact-head">
           <h4>מושגי השיעור בשורה אחת</h4>
           <span>${concepts.length} מושגים</span>
         </div>
+        <div class="lesson-compact-help" style="margin:0.4rem 0 0.6rem; color:var(--text-muted); font-size:0.85rem;">
+          🔴 קשה (7+) חייב ללמוד · 🟡 גבולי (6) ניתן לסימון V · 🟢 קל (≤5) סמן V לאחר אימות במאמן · 🧩 = שייך לקלסטר השוואה.
+        </div>
         <div class="lesson-compact-list">
-          ${concepts.map((concept, index) => `
+          ${concepts.map((concept, index) => {
+            const ownDiff = getDifficulty(concept);
+            const cluster = clusterApi ? clusterApi.findByConcept(lesson.id, concept.conceptName) : null;
+            const diff = cluster ? Math.max(cluster.difficulty, ownDiff) : ownDiff;
+            const sc = getScore(lesson.id, concept.conceptName);
+            const isMastered = sc.markedKnown === true || Number(sc.level || 0) >= 7;
+            const allowV = diff <= 6 && !isMastered;
+            const need = correctNeededForV(diff);
+            const haveCount = Math.max(0, Number(sc.correctRunCount || 0));
+            const canV = allowV && isFinite(need) && haveCount >= need;
+            const diffClass = diff >= 7 ? "diff-hard" : (diff === 6 ? "diff-mid" : "diff-easy");
+            const diffLabel = diff >= 7 ? "🔴 קשה" : (diff === 6 ? "🟡 גבולי" : "🟢 קל");
+            const vBadge = isMastered
+              ? `<span class="lcr-v done" title="נסגר ✓" aria-label="המושג סומן כמוכר">✓ ידוע</span>`
+              : (allowV
+                ? (canV
+                  ? `<button type="button" class="lcr-v ready" data-mark-v-row="${esc(concept.conceptName)}" title="לחץ לסימון V" aria-label="סמן ${esc(concept.conceptName)} כמוכר">✓ סמן V</button>`
+                  : `<button type="button" class="lcr-v locked" data-trainer-vcheck="${esc(concept.conceptName)}" title="המאמן יבחן אותך — עוד ${Math.max(0, (isFinite(need)?need:0) - haveCount)} תשובות נכונות נדרשות" aria-label="פתח את המאמן לאימות ידיעה">🔒 ${haveCount}/${isFinite(need) ? need : '∞'} במאמן</button>`)
+                : `<span class="lcr-v hard" title="קושי ${diff} — חובה ללמוד עד מאסטר" aria-label="מושג קשה — אין סימון V">📖 חובה ללמוד</span>`);
+            const clusterBadge = cluster
+              ? `<span class="lcr-cluster ${cluster.docSection ? 'has-doc' : 'no-doc'}" title="קלסטר השוואה: ${esc(cluster.title)} — חברים: ${esc(cluster.members.join(', '))}${cluster.docSection ? '\nתוכן מאוחד: ' + esc(cluster.docSection) : ''}" data-cluster-id="${esc(cluster.id)}">🧩 ${esc(cluster.title)}${cluster.docSection ? ' ✓' : ''}</span>`
+              : "";
+            return `
             <article
               class="lesson-compact-row"
               data-page-section="${esc(concept.conceptName)}"
-              data-lesson-compact-open="${esc(concept.conceptName)}"
-              role="button"
-              tabindex="0"
-              aria-label="פתח כרטיס מלא: ${esc(concept.conceptName)}">
+              data-concept-difficulty="${diff}"
+              data-difficulty-tier="${diffClass}"
+              ${cluster ? `data-cluster-id="${esc(cluster.id)}"` : ''}
+              aria-label="${esc(concept.conceptName)} — קושי ${diff}/10${cluster ? ' — קלסטר ' + esc(cluster.title) : ''}">
               <span class="lesson-compact-index">${index + 1}</span>
-              <div>
-                <h5>${esc(concept.conceptName)}</h5>
+              <div class="lesson-compact-body" data-lesson-compact-open="${esc(concept.conceptName)}" role="button" tabindex="0">
+                <h5>${esc(concept.conceptName)} <span class="lcr-diff ${diffClass}" title="רמת קושי ${diff}/10">${diffLabel} ${diff}/10</span></h5>
                 <p>${esc(conceptSprintOneLine(concept) || "אין עדיין הגדרה קצרה למושג הזה.")}</p>
+                ${clusterBadge}
               </div>
-            </article>
-          `).join("")}
+              <div class="lesson-compact-actions">${vBadge}</div>
+            </article>`;
+          }).join("")}
         </div>
       </section>`;
   }
@@ -30500,6 +30617,60 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.key !== "Enter" && event.key !== " ") return;
         event.preventDefault();
         openConcept();
+      });
+    });
+
+    // PHASE G/H — V-mark buttons in single-line view
+    lessonBody.querySelectorAll("[data-mark-v-row]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const lesson = window.LESSONS_DATA.find((item) => item.id === currentLessonId);
+        const conceptName = btn.getAttribute("data-mark-v-row");
+        if (!lesson || !conceptName) return;
+        const status = (typeof clusterVStatus === "function") ? clusterVStatus(lesson.id, conceptName) : null;
+        const concept = (lesson.concepts || []).find((c) => c.conceptName === conceptName);
+        if (!canMarkV(lesson.id, conceptName, concept)) {
+          alert("אנטי-רמאות: עדיין לא וידאת ידיעה במאמן.");
+          return;
+        }
+        const clusterMsg = status && status.cluster
+          ? `\n(הפעולה תסמן V לכל ${status.cluster.members.length} חברי הקלסטר ״${status.cluster.title}״ — אימות אנטי-רמאות עבר)`
+          : "";
+        if (confirm(`לסמן את "${conceptName}" כמושג ידוע?${clusterMsg}`)) {
+          markAsKnown(lesson.id, conceptName);
+          // Refresh the lesson view
+          if (typeof renderLessonContent === "function") renderLessonContent();
+          else if (typeof showLesson === "function") showLesson(lesson.id);
+        }
+      });
+    });
+    lessonBody.querySelectorAll("[data-trainer-vcheck]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const lesson = window.LESSONS_DATA.find((item) => item.id === currentLessonId);
+        const conceptName = btn.getAttribute("data-trainer-vcheck");
+        if (!lesson || !conceptName) return;
+        const status = (typeof clusterVStatus === "function") ? clusterVStatus(lesson.id, conceptName) : null;
+        // Pick weakest cluster member if cluster exists, else this concept
+        let targetConcept = conceptName;
+        let targetLesson = lesson;
+        if (status && status.weakMember) {
+          const cluster = status.cluster;
+          for (const lessonRef of (cluster.lessons || [lesson.id])) {
+            const candidate = (window.LESSONS_DATA || []).find((l) => l.id === lessonRef);
+            const found = candidate && (candidate.concepts || []).find((c) => c.conceptName.toLowerCase() === status.weakMember.toLowerCase());
+            if (found) {
+              targetConcept = found.conceptName;
+              targetLesson = candidate;
+              break;
+            }
+          }
+        }
+        const concept = (targetLesson.concepts || []).find((c) => c.conceptName === targetConcept);
+        if (typeof openTrainer === "function") openTrainer();
+        if (concept && typeof nextQuestionForConcept === "function") {
+          requestAnimationFrame(() => nextQuestionForConcept(targetLesson, concept));
+        }
       });
     });
   }

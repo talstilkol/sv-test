@@ -144,7 +144,7 @@ function buildReport() {
     ["rtl hebrew manifest", manifest.lang === "he" && manifest.dir === "rtl"],
     ["maskable icons", (manifest.icons || []).some((icon) => String(icon.purpose || "").includes("maskable"))],
     ["service worker registration", html.includes("app.js?v=cleanup-shards-v105") && sw.includes('self.addEventListener("install"') && read("app.js").includes('.register("service-worker.js", { scope: "/" })')],
-    ["cache version", sw.includes('const CACHE_VERSION = "lumen-v2.4.139-autosave"')],
+    ["cache version", sw.includes('const CACHE_VERSION = "lumen-v2.4.140-clusters"')],
     ["install precache", sw.includes("cache.addAll(SHELL_ASSETS.map")],
     ["activate cleanup", sw.includes('self.addEventListener("activate"') && sw.includes("caches.delete(k)")],
     ["navigation fallback", sw.includes('caches.match("/index.html")')],

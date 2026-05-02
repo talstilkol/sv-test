@@ -12,7 +12,7 @@ describe("service worker cache freshness", () => {
   const html = read("index.html");
 
   it("uses a fresh cache version for concept sprint assets", () => {
-    expect(sw).toContain('const CACHE_VERSION = "lumen-v2.4.139-autosave"');
+    expect(sw).toContain('const CACHE_VERSION = "lumen-v2.4.140-clusters"');
     expect(html).toContain("style.css?v=concept-sprint-v69");
     expect(html).toContain("app.js?v=cleanup-shards-v105");
     expect(html).toContain("/src/main.js?v=core-bootstrap-v2");
