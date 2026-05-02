@@ -54,6 +54,7 @@ const SHELL_ASSETS = [
   "/src/ui/legacy-script-registry.js",
   "/src/views/legacy-views.js",
   "/src/utils/dom-ready.js",
+  "/src/utils/escape.js",
   "/lib/rng.js",
   "/lib/srs.js",
   "/lib/code-runner.js",
