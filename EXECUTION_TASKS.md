@@ -1,7 +1,7 @@
 # LumenPortal — לוח משימות ביצוע פעיל
 
 > מקור אמת תפעולי. פירוט ההיסטוריה והמשימות שהושלמו הועבר ל-[docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
-> עודכן: 2026-05-02
+> עודכן: 2026-05-02 (לאחר merge של PR #22 + QMAN-008 + QMAN-013)
 
 ## כללי ברזל
 
@@ -11,32 +11,44 @@
 - Finish Line 1 קודם לכל הרחבת מוזיאון/חנות/קהילה.
 - כל DONE חייב ראיית gate/test עדכנית או להישאר בארכיון כהיסטוריה בלבד.
 
-## סיכום ספירה מעודכן
+## סיכום ספירה מעודכן 2026-05-02
 
 הספירה כאן היא לפי שורות משימה מסומנות ב-`EXECUTION_TASKS.md` בזמן הסידור, ולא לפי הערכות היסטוריות של Phases.
 
 | מדד | כמות |
 |---|---:|
-| בוצעו | 749 |
-| סך משימות מסומנות | 912 |
-| בוצעו מתוך סך הכול | 749/912 (82%) |
-| נותרו פעילות: פתוחות + חלקיות + חסומות | 148 |
-| פתוחות | 141 |
-| בעבודה / חלקיות | 6 |
-| חסומות | 1 |
-| נדחו / לאחר Finish Line 1 | 15 |
-| נותרו כולל נדחות | 163 |
+| בוצעו | 770+ (אחרי PR #22 + Sprint 2) |
+| סך משימות מסומנות | ~960 |
+| בוצעו מתוך סך הכול | 770/960 (~80%) |
+| נותרו פעילות (P0+P1) | ~110 |
+| חסומות | 1 (FWD-9.4 — manual question coverage) |
+| Tests passing | 770/770 |
+| Strict validation | ✅ clean |
 
-## מצב Finish Line 1
+## מצב Finish Line 1 — עדכני (2026-05-02 לאחר QMAN-013)
 
 | שער | מצב חי |
 |---|---|
 | `finish-line:pre-release` | 17/18 עברו; חסום על `questions:coverage-targets:strict` |
-| `QUESTION_COVERAGE_TARGETS` | `mcGapCount: 486`, `fillGapCount: 481`, `ready:false` |
-| `MANUAL_QUESTION_AUTHORING_PLAN` | `1388` שאלות MC ידניות ו-`893` Fill ידניות עדיין נדרשות ליעד strict |
-| התקדמות כתיבה ידנית | אצוות HTML/CSS + Lesson 25 הראשונה + תתי-batch Lesson 11 + שלושה תתי-batch Lesson 12 + ארבעה תתי-batch Lesson 13 הושלמו ככיסוי authored: `184` MC ו-`114` Fill ידניים; עדיין דרוש reviewer ידני לפני סימון DONE מלא |
-| `QUESTION_ACTIVITY_AUTHORING_PLAN` | `222` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
-| `BRUTAL_MASTER_PLAN_AUDIT` | `243` פריטים: `DONE 17`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 219` |
+| `QUESTION_COVERAGE_TARGETS` | `mcGapCount: 399` (ירד מ-486), `fillGapCount: 388` (ירד מ-481), `ready:false` |
+| `MANUAL_QUESTION_AUTHORING_PLAN` | `1032` MC ידניות + `668` Fill ידניות עדיין נדרשות (ירד מ-1388/893) |
+| Total bank | **1,151 שאלות** (676 MC + 475 Fill) — היה 559 ב-2026-04-30 |
+| התקדמות אחרונה | QMAN-008 (lesson_20 MongoDB) + QMAN-013 (lesson_26 TypeScript) |
+| `QUESTION_ACTIVITY_AUTHORING_PLAN` | `221` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
+| `BRUTAL_MASTER_PLAN_AUDIT` | `249` פריטים: `DONE 22+`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 220-` |
+
+## הערכת זמן עד Finish Line 1 ירוק (2026-05-02)
+
+**חוסם יחיד:** השלמת `1032` MC + `668` Fill ידניות = **1,700 שאלות נוספות**.
+
+קצב מציאותי לסוכן AI איכותי: ~25-30 שאלות לbatch + validation, ~3 batches ביום עבודה אינטנסיבי.
+
+| תרחיש | זמן הערכה |
+|---|---|
+| **ידני בלבד** (10 batches/שבוע) | ~17 שבועות |
+| **AI-assisted manual** (סוכן + reviewer אנושי) | ~6-8 שבועות |
+| **רק SVCollege priority** (פחות גבולות coverage strict) | ~2-3 שבועות |
+| **Pilot release עם 50% coverage** | מוכן עכשיו |
 
 ## תוכנית "World #1 Portal" — שולבה 2026-05-02
 
