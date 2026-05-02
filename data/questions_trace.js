@@ -2413,6 +2413,108 @@ var QUESTIONS_TRACE = [
     explanation:
       "בקשת chat כוללת שני סוגי הודעות (system/user), מודל מוגדר במפורש, ופרמטר temperature משפיע על יציבות הפלט.",
   },
+
+  // ============================================================================
+  // Lesson 19 — JS fundamentals (top-gap manual batch 2026-05-02)
+  // ============================================================================
+  {
+    id: "trace_19_11",
+    conceptKey: "lesson_19::var",
+    level: 4,
+    title: "var hoisting — מה יודפס?",
+    code: "console.log(x);\nvar x = 5;\nconsole.log(x);",
+    steps: [
+      { line: 1, prompt: "מה ההדפסה הראשונה?", answer: "undefined", hint: "var hoisted אבל לא הערך — רק ההצהרה." },
+      { line: 3, prompt: "מה ההדפסה השנייה?", answer: "5", hint: "אחרי השמת הערך." },
+    ],
+    explanation: "var hoisted לראש ה-scope ומאותחל ל-undefined. הערך 5 מוקצה רק כשמגיעים לשורה 2.",
+  },
+  {
+    id: "trace_19_12",
+    conceptKey: "lesson_19::let",
+    level: 5,
+    title: "let TDZ — מה קורה?",
+    code: "console.log(y);\nlet y = 10;",
+    steps: [
+      { line: 1, prompt: "מה התוצאה של console.log(y)?", answer: "ReferenceError", hint: "let ב-TDZ עד ההצהרה.", acceptable: ["ReferenceError: y is not defined", "שגיאה"] },
+    ],
+    explanation: "let hoisted אבל לא ניתן לגישה לפני ההצהרה — Temporal Dead Zone זורק ReferenceError.",
+  },
+  {
+    id: "trace_19_13",
+    conceptKey: "lesson_19::closure",
+    level: 5,
+    title: "closure בלולאה — var vs let",
+    code: "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}",
+    steps: [
+      { line: 2, prompt: "מה יודפס שלוש פעמים?", answer: "3", hint: "var function-scoped, callback רץ אחרי שהלולאה הסתיימה." },
+    ],
+    explanation: "var = i יחיד לכל הלולאה. עד setTimeout רץ — i כבר 3. עם let → 0,1,2 כי let יוצר binding חדש בכל איטרציה.",
+  },
+  {
+    id: "trace_19_14",
+    conceptKey: "lesson_19::event loop",
+    level: 6,
+    title: "סדר ה-Event Loop",
+    code: "console.log('A');\nsetTimeout(() => console.log('B'), 0);\nPromise.resolve().then(() => console.log('C'));\nconsole.log('D');",
+    steps: [
+      { line: 1, prompt: "מה יודפס ראשון?", answer: "A", hint: "סנכרוני." },
+      { line: 4, prompt: "מה יודפס שני?", answer: "D", hint: "סנכרוני." },
+      { line: 3, prompt: "מה יודפס שלישי?", answer: "C", hint: "microtask." },
+      { line: 2, prompt: "מה יודפס רביעי?", answer: "B", hint: "macrotask." },
+    ],
+    explanation: "סדר: סינכרוני (A,D), אז microtasks (Promise→C), אז macrotasks (setTimeout→B). microtasks תמיד לפני macrotasks.",
+  },
+  {
+    id: "trace_19_15",
+    conceptKey: "lesson_19::spread",
+    level: 4,
+    title: "Object spread — last write wins",
+    code: "const obj = { a: 1, b: 2 };\nconst merged = { ...obj, b: 99 };\nconsole.log(merged.b);",
+    steps: [
+      { line: 3, prompt: "מה יודפס?", answer: "99", hint: "השמה אחרי spread דורסת." },
+    ],
+    explanation: "Object spread מעתיק properties משמאל לימין. b: 99 בא אחרי ה-spread של obj.b=2, אז הוא דורס.",
+  },
+  {
+    id: "trace_19_16",
+    conceptKey: "lesson_19::try",
+    level: 4,
+    title: "finally תמיד רץ",
+    code: "function f() {\n  try {\n    return 'try';\n  } finally {\n    console.log('finally');\n  }\n}\nconst result = f();\nconsole.log(result);",
+    steps: [
+      { line: 5, prompt: "מה יודפס מ-finally?", answer: "finally", hint: "finally רץ גם כשיש return." },
+      { line: 9, prompt: "מה הערך של result?", answer: "try", hint: "ה-return ב-try מנצח." },
+    ],
+    explanation: "finally רץ תמיד, גם אחרי return. אבל ה-return ב-try נשמר (אלא אם finally יש בו return משלו, שדורס).",
+  },
+  {
+    id: "trace_19_17",
+    conceptKey: "lesson_19::promise",
+    level: 5,
+    title: "Promise chain",
+    code: "Promise.resolve(1)\n  .then(v => v + 1)\n  .then(v => v * 2)\n  .then(v => console.log(v));",
+    steps: [
+      { line: 4, prompt: "מה יודפס?", answer: "4", hint: "1 → 2 → 4." },
+    ],
+    explanation: "כל .then מחזיר Promise חדש עם הערך המוחזר. 1+1=2, 2*2=4.",
+  },
+  {
+    id: "trace_19_18",
+    conceptKey: "lesson_19::scope",
+    level: 5,
+    title: "block scope",
+    code: "let x = 'outer';\n{\n  let x = 'inner';\n  console.log(x);\n}\nconsole.log(x);",
+    steps: [
+      { line: 4, prompt: "מה יודפס בתוך הblock?", answer: "inner", hint: "let ב-block יוצר binding חדש." },
+      { line: 6, prompt: "מה יודפס מחוץ?", answer: "outer", hint: "ה-x החיצוני לא הושפע." },
+    ],
+    explanation: "let block-scoped. ה-x הפנימי מאפיל על החיצוני רק בתוך ה-block. אחרי ה-{} — x החיצוני שוב נראה.",
+  },
+
+  // (lesson_17 traces removed from this batch — covered separately in
+  // svcollege_traces_lesson17_activity.js with a strict format the
+  // svcollege-lesson17-activity-traces test pins to.)
 ];
 
 // Browser bridge: expose under QUESTIONS_BANK.trace so the trainer's

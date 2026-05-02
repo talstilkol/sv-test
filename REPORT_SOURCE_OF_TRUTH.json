@@ -1,12 +1,12 @@
 {
   "reportVersion": "report-source-of-truth-v1",
-  "date": "2026-05-06",
+  "date": "2026-05-02",
   "source": "scripts/report_source_of_truth.js",
   "scope": "generated report freshness + contradiction reconciliation",
   "artifactSummary": {
     "total": 38,
-    "historical": 38,
-    "active": 0
+    "historical": 32,
+    "active": 6
   },
   "policy": "Reconciliation uses live rebuilds of feature and question coverage reports. Any report older than today's source-of-truth date is marked historical/superseded. Live decisions must be driven by active reports in this file.",
   "signals": [
@@ -14,26 +14,26 @@
       "id": "FEATURE_COVERAGE",
       "status": "green",
       "detail": "strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2",
-      "date": "2026-05-06"
+      "date": "2026-05-02"
     },
     {
       "id": "QUESTION_COVERAGE_TARGETS",
       "status": "red",
       "detail": "ready=false, mcGap=398, fillGap=393, version=question-coverage-targets-v1",
-      "date": "2026-05-06",
+      "date": "2026-05-02",
       "source": "questionCoverage"
     },
     {
       "id": "QUESTION_QUALITY",
       "status": "yellow",
-      "detail": "questionQualityIndex=100%, total=1430",
-      "date": "2026-05-06"
+      "detail": "questionQualityIndex=100%, total=1490",
+      "date": "2026-05-02"
     },
     {
       "id": "FINISH_LINE_PRE_RELEASE",
       "status": "red",
       "detail": "ready=false, passed=1/18",
-      "date": "2026-05-06"
+      "date": "2026-05-02"
     }
   ],
   "findings": [
@@ -49,10 +49,10 @@
     {
       "id": "recon-003",
       "severity": "P1",
-      "finding": "38 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical.",
+      "finding": "32 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical.",
       "evidence": {
-        "sourceOfTruthDate": "2026-05-06",
-        "staleArtifacts": 38
+        "sourceOfTruthDate": "2026-05-02",
+        "staleArtifacts": 32
       }
     }
   ],
@@ -122,7 +122,7 @@
     },
     {
       "id": "FEATURE_COVERAGE_REPORT",
-      "state": "historical",
+      "state": "active",
       "date": "2026-05-02",
       "mdDate": "2026-05-02",
       "reportVersion": "feature-coverage-v2",
@@ -140,7 +140,7 @@
     },
     {
       "id": "LEARNING_OS_OUTCOME_SCALE_REPORT",
-      "state": "historical",
+      "state": "active",
       "date": "2026-05-02",
       "mdDate": "2026-05-02",
       "reportVersion": "learning-os-outcome-scale-v1",
@@ -167,7 +167,7 @@
     },
     {
       "id": "MANUAL_QUESTION_AUTHORING_PLAN",
-      "state": "historical",
+      "state": "active",
       "date": "2026-05-02",
       "mdDate": "2026-05-02",
       "reportVersion": "manual-question-authoring-plan-v1",
@@ -257,7 +257,7 @@
     },
     {
       "id": "QUESTION_ACTIVITY_AUTHORING_PLAN",
-      "state": "historical",
+      "state": "active",
       "date": "2026-05-02",
       "mdDate": "2026-05-02",
       "reportVersion": "question-activity-authoring-plan-v1",
@@ -284,7 +284,7 @@
     },
     {
       "id": "QUESTION_CURRICULUM_COVERAGE_REPORT",
-      "state": "historical",
+      "state": "active",
       "date": "2026-05-02",
       "mdDate": "2026-05-02",
       "reportVersion": "curriculum-coverage-v1",
@@ -343,9 +343,9 @@
     },
     {
       "id": "REPORT_SOURCE_OF_TRUTH",
-      "state": "historical",
-      "date": "2026-05-02",
-      "mdDate": "2026-05-02",
+      "state": "active",
+      "date": "2026-05-06",
+      "mdDate": "2026-05-06",
       "reportVersion": "report-source-of-truth-v1",
       "type": "markdown+json",
       "title": "scripts/report_source_of_truth.js"

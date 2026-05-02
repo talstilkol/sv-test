@@ -78,43 +78,43 @@ var LESSON_19 = {
       "conceptName": "let",
       "difficulty": 3,
       "levels": {
-        "grandma": "\"let\" הוא רעיון שמופיע הרבה בפועל, כשאנחנו פוגשים אותו בפעם הראשונה זה נראה מסובך אבל בעצם זה תיאור פשוט של מה שקורה סביבנו.",
-        "child": "תאר/תארי \"let\" כמשהו שכולם עושים כבר יומיים בלי לחשוב על זה — רק כאן מתארים אותו בצורה מסודרת.",
-        "soldier": "בשטח הפיתוח, \"let\" הוא חלק מהפרוטוקול שלך כדי לשמור על עקביות ומבנה נכון בכל פעולה.",
-        "student": "מבחינה מקצועית, \"let\" מייצג קונספט שמופיע בסטנדרט פיתוח ושווה להבין אותו מעבר לזיכרון כדי לכתוב קוד יציב ונקי.",
-        "junior": "כשעובדים על פרויקט אמיתי, הבנה של \"let\" חוסכת הרבה זמן דיבוג ומקצרת הסברים לא נכונים בעת עבודה בצוות.",
-        "professor": "ניתוח המושג \"let\" כולל שימוש נכון, קצה מקרה, והקשר ארכיטקטוני: מתי נכון להפעיל אותו, ומה הסיכונים כשמניחים הבנה שטחית."
+        "grandma": "\"let\" זה כמו תווית על מגירה במטבח — שמת תפוח, אחר כך לקחת אותו והכנסת תפוז, ושמרת על אותה תווית. הערך משתנה, השם נשאר.",
+        "child": "let אומר ל-JavaScript: 'תיצור לי משבצת ששמה counter, ובתוכה תשמור עכשיו 0. אחר כך אני אבקש לעדכן את הערך'. השם נשאר, הערך מתחלף.",
+        "soldier": "let מצהיר משתנה block-scoped — חי רק בתוך ה-{} שהכי קרוב אליו. אפשר להחליף ערך ב-counter = 5; אבל אסור להגדיר את השם counter פעמיים באותו block.",
+        "student": "let הוצג ב-ES2015 כתחליף ל-var. שני הבדלים מרכזיים: (1) block scope במקום function scope, (2) Temporal Dead Zone — גישה ל-let לפני ההצהרה זורקת ReferenceError, לא מחזירה undefined.",
+        "junior": "ב-React/Next מודרני, רוב המשתנים שלך יהיו const. let בא לתפקיד רק כשבאמת צריך reassignment — counter בלולאה, accumulator, swap. דגל אדום בקוד-ריוויו: let שמוגדר ולעולם לא משתנה צריך להיות const.",
+        "professor": "let יוצר binding חדש בכל איטרציה של for loop — זה הבסיס לפתרון ה-classic closure-over-loop bug של var. ב-engine, let משתמש ב-LexicalEnvironment שונה לכל block, מה שמאפשר GC לשחרר משתנים מוקדם יותר."
       },
-      "codeExample": "let counter = 0;\ncounter += 1;",
-      "codeExplanation": "let משמש בתוך מבני קוד אמיתיים כדי להציג/לבצע פעולה ברורה, במקום לזכור רק הגדרה מילולית."
+      "codeExample": "let counter = 0;\ncounter += 1;\n// counter עכשיו 1",
+      "codeExplanation": "let מתאים בדיוק כשהערך משתנה לאורך זמן — counter בלולאה, accumulator, או משתנה שמוקצה בתוך if/else. אם הערך לעולם לא משתנה — תמיד const."
     },
     {
       "conceptName": "var",
       "difficulty": 3,
       "levels": {
-        "grandma": "\"var\" הוא רעיון שמופיע הרבה בפועל, כשאנחנו פוגשים אותו בפעם הראשונה זה נראה מסובך אבל בעצם זה תיאור פשוט של מה שקורה סביבנו.",
-        "child": "תאר/תארי \"var\" כמשהו שכולם עושים כבר יומיים בלי לחשוב על זה — רק כאן מתארים אותו בצורה מסודרת.",
-        "soldier": "בשטח הפיתוח, \"var\" הוא חלק מהפרוטוקול שלך כדי לשמור על עקביות ומבנה נכון בכל פעולה.",
-        "student": "מבחינה מקצועית, \"var\" מייצג קונספט שמופיע בסטנדרט פיתוח ושווה להבין אותו מעבר לזיכרון כדי לכתוב קוד יציב ונקי.",
-        "junior": "כשעובדים על פרויקט אמיתי, הבנה של \"var\" חוסכת הרבה זמן דיבוג ומקצרת הסברים לא נכונים בעת עבודה בצוות.",
-        "professor": "ניתוח המושג \"var\" כולל שימוש נכון, קצה מקרה, והקשר ארכיטקטוני: מתי נכון להפעיל אותו, ומה הסיכונים כשמניחים הבנה שטחית."
+        "grandma": "\"var\" זה הסבא של let — מילה ישנה ל-JavaScript שעדיין עובדת, אבל הצעירים כבר לא משתמשים בה. כמו רדיו טרנזיסטור: עובד, אבל יש דברים יותר טובים.",
+        "child": "var זה כמו let, רק שזה היה הראשון. הוא יותר 'גמיש' — לפעמים מאפשר דברים שיוצרים באגים שקטים, ולכן עברנו ל-let ול-const.",
+        "soldier": "var function-scoped: חי בכל הפונקציה שמכילה אותו, גם אם הוצהר בתוך if. יש לו גם hoisting — אפשר 'להשתמש' בו לפני שהוצהר ולקבל undefined במקום שגיאה.",
+        "student": "var קיים ב-JavaScript מלפני ES2015. הבעיות שלו: (1) function-scope — דולף החוצה מ-blocks, (2) hoisted as undefined — מסתיר טעויות, (3) ניתן להגדיר פעמיים באותו scope. ESLint עם no-var מסמן כל var כטעות.",
+        "junior": "ב-codebase של 2025 לא תכתוב var. אבל תפגוש אותו ב-legacy code, ב-pre-ES2015 examples, וב-package-ים ישנים. תדע לזהות את הבאגים שהוא יוצר: closures בלולאות, משתנים שדולפים, hoisting confusion.",
+        "professor": "var attaches ל-VariableEnvironment של הפונקציה (או ל-globalThis ב-top-level). hoisting הוא תוצר של 2-pass evaluation — הbindings נוצרים בכל ה-VariableEnvironment בpass הראשון, אז ה-execution pass מאתחל אותם. זה גם הסיבה ש-`var x` ב-global מייצר prop על globalThis אבל `let x` לא."
       },
-      "codeExample": "var oldMode = true;",
-      "codeExplanation": "var משמש בתוך מבני קוד אמיתיים כדי להציג/לבצע פעולה ברורה, במקום לזכור רק הגדרה מילולית."
+      "codeExample": "// legacy — אל תכתוב var בקוד חדש\nvar oldMode = true;",
+      "codeExplanation": "var נוצר לפני ES2015 ויש לו התנהגות שמובילה לבאגים: function-scope (דולף מ-blocks), hoisting כ-undefined, ו-redeclaration שקטה. השתמש ב-let/const במקום."
     },
     {
       "conceptName": "const",
       "difficulty": 3,
       "levels": {
-        "grandma": "\"const\" הוא רעיון שמופיע הרבה בפועל, כשאנחנו פוגשים אותו בפעם הראשונה זה נראה מסובך אבל בעצם זה תיאור פשוט של מה שקורה סביבנו.",
-        "child": "תאר/תארי \"const\" כמשהו שכולם עושים כבר יומיים בלי לחשוב על זה — רק כאן מתארים אותו בצורה מסודרת.",
-        "soldier": "בשטח הפיתוח, \"const\" הוא חלק מהפרוטוקול שלך כדי לשמור על עקביות ומבנה נכון בכל פעולה.",
-        "student": "מבחינה מקצועית, \"const\" מייצג קונספט שמופיע בסטנדרט פיתוח ושווה להבין אותו מעבר לזיכרון כדי לכתוב קוד יציב ונקי.",
-        "junior": "כשעובדים על פרויקט אמיתי, הבנה של \"const\" חוסכת הרבה זמן דיבוג ומקצרת הסברים לא נכונים בעת עבודה בצוות.",
-        "professor": "ניתוח המושג \"const\" כולל שימוש נכון, קצה מקרה, והקשר ארכיטקטוני: מתי נכון להפעיל אותו, ומה הסיכונים כשמניחים הבנה שטחית."
+        "grandma": "\"const\" זה כמו לכתוב את שם הילד שלך על תעודת הזהות — אחרי שכתבת, אי אפשר לשנות. אבל אם זה אובייקט (תיק עם דברים), אפשר עדיין להוציא ולהכניס פריטים בתוכו.",
+        "child": "const אומר ל-JavaScript: 'תיצור משבצת ששמה PI ובתוכה 3.14, ותסגור אותה — אסור לשים בה ערך אחר אחר כך'. אם תנסה const PI = 3; PI = 4; — תקבל TypeError.",
+        "soldier": "const block-scoped כמו let, אבל ה-binding immutable — אסור reassignment. אבל אם הערך הוא object/array, ה-properties בתוכו עדיין mutable: const arr = [1,2]; arr.push(3) עובד.",
+        "student": "const מצהיר על binding immutable, לא ערך immutable. const obj = {x:1}; obj.x=2 חוקי. const obj = {x:1}; obj = {} זורק. ל-immutability אמיתי משתמשים ב-Object.freeze או בספריות כמו Immer.",
+        "junior": "כלל אצבע: התחל כל משתנה כ-const. שדרג ל-let רק כשהקומפיילר/ה-IDE מתלונן שאתה מנסה reassignment. זה מקטין את הfootprint של המוטציות בקוד שלך, מקל על קריאות ועל debugging — אם משתנה const עם אותו שם, אתה יודע שהערך לא השתנה.",
+        "professor": "const יוצר binding ב-LexicalEnvironment עם immutable record flag. הניסיון לreassign נתפס בשלב syntactic לפעמים (assignment to const) או runtime ב-strict mode. ל-React: const גם רומז ל-React שהvalue לא יזוז ב-renders, ועל כן מתאים יותר ל-useMemo/useCallback dependencies."
       },
-      "codeExample": "const APP_NAME = 'LumenPortal';",
-      "codeExplanation": "const משמש בתוך מבני קוד אמיתיים כדי להציג/לבצע פעולה ברורה, במקום לזכור רק הגדרה מילולית."
+      "codeExample": "const APP_NAME = 'LumenPortal';\n// APP_NAME = 'X'; // TypeError: Assignment to constant\nconst settings = { theme: 'dark' };\nsettings.theme = 'light'; // OK — properties עדיין mutable",
+      "codeExplanation": "const אוסר reassignment של ה-binding, אבל לא מקפיא את הערך עצמו. אובייקטים/מערכים עדיין ניתנים לשינוי פנימי — זה הבדל קריטי שמבלבל מתחילים."
     },
     {
       "conceptName": "camelCase",
@@ -190,15 +190,15 @@ var LESSON_19 = {
       "conceptName": "function",
       "difficulty": 4,
       "levels": {
-        "grandma": "\"function\" הוא רעיון שמופיע הרבה בפועל, כשאנחנו פוגשים אותו בפעם הראשונה זה נראה מסובך אבל בעצם זה תיאור פשוט של מה שקורה סביבנו.",
-        "child": "תאר/תארי \"function\" כמשהו שכולם עושים כבר יומיים בלי לחשוב על זה — רק כאן מתארים אותו בצורה מסודרת.",
-        "soldier": "בשטח הפיתוח, \"function\" הוא חלק מהפרוטוקול שלך כדי לשמור על עקביות ומבנה נכון בכל פעולה.",
-        "student": "מבחינה מקצועית, \"function\" מייצג קונספט שמופיע בסטנדרט פיתוח ושווה להבין אותו מעבר לזיכרון כדי לכתוב קוד יציב ונקי.",
-        "junior": "כשעובדים על פרויקט אמיתי, הבנה של \"function\" חוסכת הרבה זמן דיבוג ומקצרת הסברים לא נכונים בעת עבודה בצוות.",
-        "professor": "ניתוח המושג \"function\" כולל שימוש נכון, קצה מקרה, והקשר ארכיטקטוני: מתי נכון להפעיל אותו, ומה הסיכונים כשמניחים הבנה שטחית."
+        "grandma": "\"function\" זה כמו מתכון בארון: כתוב פעם אחת איך מכינים עוגה, ועכשיו כל פעם שרוצים עוגה — ניגשים למתכון, נותנים מצרכים (קמח, סוכר), ומקבלים תוצאה. המתכון לא משתנה.",
+        "child": "function זה מכונה קטנה: היא מקבלת קלט, עושה משהו, ומחזירה תוצאה. function add(a, b) מקבלת שני מספרים ומחזירה את הסכום שלהם. אפשר להריץ את אותה מכונה מאות פעמים עם קלטים שונים.",
+        "soldier": "function היא יחידה של קוד שניתן לקרוא לה (call) שוב ושוב. function declaration: function foo() {}. function expression: const foo = function() {} או const foo = () => {}. ההבדל העיקרי: declarations hoisted לחלוטין; expressions לא.",
+        "student": "ב-JavaScript פונקציות הן first-class: ניתן להעביר אותן כארגומנטים, להחזיר מפונקציה, ולשמור במשתנים. זה הבסיס ל-callbacks, higher-order functions (map/filter/reduce), ו-functional programming patterns.",
+        "junior": "פונקציות טובות הן: שם פעולה ברור (createUser, getUserById), אחריות יחידה (Single Responsibility), input ידוע ו-output ידוע, ללא side effects אם אפשר. פונקציה ארוכה מ-30 שורות = ירוק לreFactor. פונקציה עם 5+ params = איתות לrefactor ל-options object.",
+        "professor": "כל function ב-JS היא Object של type 'function' עם prototype, length, name. בעת call, נוצר Execution Context חדש עם LexicalEnvironment חדש שיורש מ-outer environment — זה הבסיס ל-closures. arrow functions לא יוצרות this/arguments חדשים — הן יורשות מהouter, מה שעושה אותן בחירה טבעית בתוך methods שמשתמשים ב-callbacks (כי this נשאר נכון)."
       },
-      "codeExample": "function add(a, b) { return a + b; }",
-      "codeExplanation": "function משמש בתוך מבני קוד אמיתיים כדי להציג/לבצע פעולה ברורה, במקום לזכור רק הגדרה מילולית."
+      "codeExample": "function add(a, b) {\n  return a + b;\n}\nconsole.log(add(3, 4)); // 7\n\n// arrow equivalent\nconst addArrow = (a, b) => a + b;",
+      "codeExplanation": "function declaration וarrow function עושים אותו דבר כאן (מחבר שני מספרים), אבל יש הבדלים עדינים: declaration hoisted, יש this/arguments משלו, מתאים למתודות; arrow קצר, יורש this מהouter scope, מתאים לcallbacks."
     },
     {
       "conceptName": "parameter",
@@ -596,43 +596,43 @@ var LESSON_19 = {
       "conceptName": "closure",
       "difficulty": 8,
       "levels": {
-        "grandma": "\"closure\" הוא רעיון שמופיע הרבה בפועל, כשאנחנו פוגשים אותו בפעם הראשונה זה נראה מסובך אבל בעצם זה תיאור פשוט של מה שקורה סביבנו.",
-        "child": "תאר/תארי \"closure\" כמשהו שכולם עושים כבר יומיים בלי לחשוב על זה — רק כאן מתארים אותו בצורה מסודרת.",
-        "soldier": "בשטח הפיתוח, \"closure\" הוא חלק מהפרוטוקול שלך כדי לשמור על עקביות ומבנה נכון בכל פעולה.",
-        "student": "מבחינה מקצועית, \"closure\" מייצג קונספט שמופיע בסטנדרט פיתוח ושווה להבין אותו מעבר לזיכרון כדי לכתוב קוד יציב ונקי.",
-        "junior": "כשעובדים על פרויקט אמיתי, הבנה של \"closure\" חוסכת הרבה זמן דיבוג ומקצרת הסברים לא נכונים בעת עבודה בצוות.",
-        "professor": "ניתוח המושג \"closure\" כולל שימוש נכון, קצה מקרה, והקשר ארכיטקטוני: מתי נכון להפעיל אותו, ומה הסיכונים כשמניחים הבנה שטחית."
+        "grandma": "\"closure\" זה כמו ילד שיוצא מהבית עם תרמיל קטן: גם כשהוא רחוק, הוא נושא איתו את הכלים שאמא שמה. הפונקציה 'יוצאת' מהמקום שנוצרה, אבל ממשיכה לזכור מה היה שם.",
+        "child": "תיק שיוצרת פונקציה שזוכרת משתנים מבחוץ. דמיין שאתה כותב פתק עם המספר שלך, נותן לחבר. החבר רץ הביתה ושכח אותך — אבל הפתק עדיין יודע מה המספר. הפתק = closure, המספר = משתנה שהיה ב-scope.",
+        "soldier": "פונקציה שיש לה גישה למשתנים של ה-scope שבו היא נוצרה, גם אחרי שה-scope ההוא הסתיים. JavaScript לא משחרר את המשתנים של פונקציה אם יש פונקציה פנימית שעדיין משתמשת בהם.",
+        "student": "Closure = function + reference ל-LexicalEnvironment שלה. כל arrow function או function שמתייחסת למשתנה חיצוני יוצרת closure. שימושים נפוצים: counter פרטי, currying, partial application, factory functions, event handlers.",
+        "junior": "ב-React כל hook שיוצר callback (onClick, useEffect, useCallback) הוא closure. בעיה נפוצה: stale closure — useEffect שמתייחס ל-state ישן כי הוא נוצר ב-render קודם. הפתרון: הוספה של ה-state ל-dependencies array, או שימוש ב-functional updater (setState(prev => ...)).",
+        "professor": "Closure ב-spec הוא function object שמחזיק [[Environment]] internal slot שמצביע ל-LexicalEnvironment. ה-engine אופטימיזטור closures: רק משתנים שבאמת בשימוש ב-inner function נשמרים (escape analysis). יש closure leaks: event listener שלא הוסר, או cache שגדל ללא הגבלה — שני הclosures שומרים על משתנים בזיכרון."
       },
-      "codeExample": "const makeCounter = () => { let c = 0; return () => ++c; };",
-      "codeExplanation": "closure משמש בתוך מבני קוד אמיתיים כדי להציג/לבצע פעולה ברורה, במקום לזכור רק הגדרה מילולית."
+      "codeExample": "function makeCounter() {\n  let count = 0;\n  return () => ++count;\n}\nconst counter = makeCounter();\ncounter(); // 1\ncounter(); // 2\n// count לא נגיש מבחוץ — encapsulation דרך closure",
+      "codeExplanation": "ה-arrow function ש-makeCounter מחזיר זוכר את count גם אחרי ש-makeCounter הסתיימה. כל קריאה לcounter() עובדת על אותו count. זה pattern של private state עם closure במקום class."
     },
     {
       "conceptName": "promise",
       "difficulty": 7,
       "levels": {
-        "grandma": "\"promise\" הוא רעיון שמופיע הרבה בפועל, כשאנחנו פוגשים אותו בפעם הראשונה זה נראה מסובך אבל בעצם זה תיאור פשוט של מה שקורה סביבנו.",
-        "child": "תאר/תארי \"promise\" כמשהו שכולם עושים כבר יומיים בלי לחשוב על זה — רק כאן מתארים אותו בצורה מסודרת.",
-        "soldier": "בשטח הפיתוח, \"promise\" הוא חלק מהפרוטוקול שלך כדי לשמור על עקביות ומבנה נכון בכל פעולה.",
-        "student": "מבחינה מקצועית, \"promise\" מייצג קונספט שמופיע בסטנדרט פיתוח ושווה להבין אותו מעבר לזיכרון כדי לכתוב קוד יציב ונקי.",
-        "junior": "כשעובדים על פרויקט אמיתי, הבנה של \"promise\" חוסכת הרבה זמן דיבוג ומקצרת הסברים לא נכונים בעת עבודה בצוות.",
-        "professor": "ניתוח המושג \"promise\" כולל שימוש נכון, קצה מקרה, והקשר ארכיטקטוני: מתי נכון להפעיל אותו, ומה הסיכונים כשמניחים הבנה שטחית."
+        "grandma": "\"promise\" זה כמו טופס שאתה מקבל בדואר במקום החבילה עצמה: 'החבילה תגיע. אם הכל בסדר, היא תופיע בדלת. אם משהו השתבש, נשלח לך הודעה'. זו הבטחה לערך שעוד לא קיים.",
+        "child": "Promise אומר: 'אני עובד על משהו שיקח זמן. כשאסיים — אקרא לך עם התוצאה (.then). אם אכשל — אקרא לך עם השגיאה (.catch)'. עד אז, אתה לא תקוע מחכה — אתה ממשיך לעבוד.",
+        "soldier": "Promise מצב יחיד מתוך שלושה: pending (ממתין), fulfilled (הצליח עם value), rejected (נכשל עם reason). אחרי שעבר ל-fulfilled או rejected — לא משנה יותר. .then רץ ב-fulfilled, .catch ב-rejected, .finally בשניהם.",
+        "student": "Promises פותרים callback hell ב-async code. resolve(value) ו-reject(reason) במקום callback(err, val). שרשור עם .then מאפשר composition לינארית. async/await הוא syntactic sugar מעל Promises — async function תמיד מחזירה Promise.",
+        "junior": "טעויות נפוצות: לא להחזיר Promise מתוך .then (שובר את ה-chain), לשכוח .catch (unhandled rejection → לוגים זוועה), Promise.all שמכשיל הכל אם אחד נופל (השתמש ב-allSettled אם רוצים partial success). תמיד או .catch או try/await/catch — לא מערבבים.",
+        "professor": "Promise A+ spec מגדיר את המעבר ב-microtask queue. resolve(otherPromise) יוצר 'thenable assimilation' — ממתין ל-otherPromise. await של non-Promise עוטף אוטומטית עם Promise.resolve. ב-V8, allocation של Promise קורית ב-young generation, ועם זמן עוברים ל-old. Excessive Promise creation בלולאות חמות = pressure על GC."
       },
-      "codeExample": "const p = Promise.resolve(1).then((v) => v + 1);",
-      "codeExplanation": "promise משמש בתוך מבני קוד אמיתיים כדי להציג/לבצע פעולה ברורה, במקום לזכור רק הגדרה מילולית."
+      "codeExample": "const fetchUser = (id) => {\n  return new Promise((resolve, reject) => {\n    setTimeout(() => {\n      if (id > 0) resolve({ id, name: 'Tal' });\n      else reject(new Error('invalid id'));\n    }, 500);\n  });\n};\nfetchUser(1).then(u => console.log(u)).catch(e => console.error(e));",
+      "codeExplanation": "Promise mediates async operation. resolve מסמן הצלחה (.then רץ), reject מסמן כשלון (.catch רץ). פונקציה מחוץ ממתינה במקביל לעבודה המתבצעת בתוך — לא חוסם את ה-thread."
     },
     {
       "conceptName": "fetch",
       "difficulty": 6,
       "levels": {
-        "grandma": "\"fetch\" הוא רעיון שמופיע הרבה בפועל, כשאנחנו פוגשים אותו בפעם הראשונה זה נראה מסובך אבל בעצם זה תיאור פשוט של מה שקורה סביבנו.",
-        "child": "תאר/תארי \"fetch\" כמשהו שכולם עושים כבר יומיים בלי לחשוב על זה — רק כאן מתארים אותו בצורה מסודרת.",
-        "soldier": "בשטח הפיתוח, \"fetch\" הוא חלק מהפרוטוקול שלך כדי לשמור על עקביות ומבנה נכון בכל פעולה.",
-        "student": "מבחינה מקצועית, \"fetch\" מייצג קונספט שמופיע בסטנדרט פיתוח ושווה להבין אותו מעבר לזיכרון כדי לכתוב קוד יציב ונקי.",
-        "junior": "כשעובדים על פרויקט אמיתי, הבנה של \"fetch\" חוסכת הרבה זמן דיבוג ומקצרת הסברים לא נכונים בעת עבודה בצוות.",
-        "professor": "ניתוח המושג \"fetch\" כולל שימוש נכון, קצה מקרה, והקשר ארכיטקטוני: מתי נכון להפעיל אותו, ומה הסיכונים כשמניחים הבנה שטחית."
+        "grandma": "\"fetch\" זה כמו לשלוח מכתב לחבר ולחכות לתשובה. אתה כותב 'תוכל לשלוח לי את המתכון לעוגה?', ומחכה — אולי הוא יענה היום, אולי מחר. בינתיים אתה ממשיך לבשל. כשהמכתב מגיע — אתה קורא.",
+        "child": "fetch אומר לדפדפן: 'לך לשרת הזה ותביא לי משהו'. הדפדפן יוצא, מחכה לתשובה, וחוזר עם הPromise. אתה לא נשאר תקוע — הקוד ממשיך לרוץ. כשהתשובה מגיעה — fetch מסיים את ה-Promise.",
+        "soldier": "fetch(url) שולח HTTP request, מחזיר Promise<Response>. await fetch מקבל את ה-Response — זה רק ה-headers, לא ה-body. await res.json() קורא את ה-body כ-JSON. fetch לא דוחה על 4xx/5xx — חייב לבדוק res.ok ידנית.",
+        "student": "fetch הוא ה-API הסטנדרטי החליף את XMLHttpRequest. אופציות נפוצות: { method, headers, body, credentials, signal }. credentials: 'include' שולח cookies cross-origin. AbortController + signal מאפשר ביטול. body יכול להיות string, FormData, Blob, ReadableStream.",
+        "junior": "ב-production תעטוף fetch בwrapper פנימי: timeout, retries with exponential backoff, error mapping, JSON parsing, types. ספריות כמו axios או ky עושות את זה כברירת מחדל. ב-React, השתמש ב-React Query / SWR במקום fetch ישיר — מטפל ב-caching, dedup, refetch automatically.",
+        "professor": "fetch מבוסס על ה-Fetch standard של WHATWG. ה-Response object מבוסס על streams — ניתן לקרוא chunk-by-chunk עם res.body.getReader() במקום לחכות לכל הbody. CORS preflight מתבצע ב-browser רק לrequests שאינם 'simple' (custom headers, methods שאינם GET/POST/HEAD, או content-type שאינו form-data/text). ב-server-side (Node 18+) fetch זמין מובנה."
       },
-      "codeExample": "fetch('/api/users').then((res) => res.json());",
-      "codeExplanation": "fetch משמש בתוך מבני קוד אמיתיים כדי להציג/לבצע פעולה ברורה, במקום לזכור רק הגדרה מילולית."
+      "codeExample": "async function loadUser(id) {\n  const res = await fetch(`/api/users/${id}`, {\n    headers: { 'Accept': 'application/json' },\n    signal: AbortSignal.timeout(5000)\n  });\n  if (!res.ok) throw new Error(`HTTP ${res.status}`);\n  return res.json();\n}",
+      "codeExplanation": "fetch קורא ל-API, AbortSignal.timeout מבטיח שלא ניתקע יותר מ-5 שניות. בדיקת res.ok חיונית כי fetch לא דוחה על HTTP errors. await res.json() ממיר את ה-body מ-stream ל-object."
     },
     {
       "conceptName": "scope",
