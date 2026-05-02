@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.25";
+var QUESTIONS_BANK_VERSION = "2.1.26";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-05-01";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -178,6 +178,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-05-01",
     changes:
       "Manual QMAN-002 react_blueprint sub-batch: State Management, Data Flow, Composition vs Inheritance, Container vs Presentational, Lifting State Up, Code Splitting, Performance Optimization, Error Boundaries, Testing Strategies MC/Fill coverage.",
+  },
+  {
+    v: "2.1.26",
+    date: "2026-05-02",
+    changes:
+      "Manual QMAN-008 lesson_20 MongoDB CRUD batch: insertOne, insertMany, find, findOne, update ($set), deleteOne, deleteMany, Schema, Mongoose, $gt, $lt, $lte, Connection String, MongoDB Atlas — 16 MC + 10 Fill with full optionFeedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -4260,6 +4266,336 @@ var QUESTIONS_BANK = {
       ],
       correctIndex: 1,
       explanation: "Mongoose מאפשר להגדיר schema לטיפוסי הנתונים ולקבל מודלים נוחים עם ולידציה.",
+    },
+
+    // ===== QMAN-008 Batch — lesson_20 MongoDB CRUD + Query Operators (2026-05-02) =====
+
+    // --- lesson_20::insertOne ---
+    {
+      id: "mc_l20_insert_one_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::insertOne", level: 3,
+      question: "מה עושה Collection.insertOne()?",
+      options: [
+        "מוסיף document בודד ל-collection ומחזיר Promise עם insertedId",
+        "מוחק document",
+        "מעדכן document קיים",
+        "מחפש document",
+      ],
+      correctIndex: 0,
+      explanation: "insertOne(doc) מוסיף מסמך אחד. מחזיר { acknowledged, insertedId }. אם _id לא הוגדר, MongoDB מייצר ObjectId אוטומטית.",
+      optionFeedback: [
+        "✅ נכון: insertOne = הוספת מסמך + insertedId.",
+        "❌ delete הוא deleteOne/deleteMany.",
+        "❌ עדכון הוא updateOne/updateMany.",
+        "❌ חיפוש הוא find/findOne.",
+      ],
+    },
+    {
+      id: "mc_l20_insert_one_manual_002", topicId: "topic_mongo", conceptKey: "lesson_20::insertOne", level: 4,
+      question: "מה יקרה אם נריץ insertOne בלי שדה _id?",
+      options: [
+        "MongoDB מייצר ObjectId אוטומטית בעבור המסמך",
+        "המסמך נדחה",
+        "_id מקבל undefined",
+        "Mongoose קורס",
+      ],
+      correctIndex: 0,
+      explanation: "_id חובה לכל מסמך אבל MongoDB מייצר ObjectId אוטומטית אם לא סופק. ObjectId הוא 12-byte string ייחודי גלובלית.",
+      optionFeedback: [
+        "✅ נכון: ObjectId אוטומטי כשחסר _id.",
+        "❌ אינו נדחה — _id מובטח.",
+        "❌ undefined יחזור עם שגיאה.",
+        "❌ Mongoose מטפל בזה ללא בעיה.",
+      ],
+    },
+
+    // --- lesson_20::insertMany ---
+    {
+      id: "mc_l20_insert_many_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::insertMany", level: 4,
+      question: "ההבדל העיקרי בין insertOne ל-insertMany?",
+      options: [
+        "insertMany מקבל מערך של documents ומבצע bulk insert יעיל יותר",
+        "insertMany עובד רק במצב embedded",
+        "insertMany לא מחזיר IDs",
+        "אין הבדל",
+      ],
+      correctIndex: 0,
+      explanation: "insertMany([doc1, doc2, ...]) מבצע insert של מספר documents בקריאה אחת. יעיל יותר מקריאות multiple ל-insertOne.",
+      optionFeedback: [
+        "✅ נכון: bulk insert עם מערך.",
+        "❌ insertMany עובד בכל מצב.",
+        "❌ מחזיר insertedIds (מערך).",
+        "❌ יש הבדל ביעילות.",
+      ],
+    },
+
+    // --- lesson_20::find ---
+    {
+      id: "mc_l20_find_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::find", level: 3,
+      question: "מה מחזיר Collection.find({})?",
+      options: [
+        "Cursor של כל ה-documents ב-collection",
+        "document בודד",
+        "מספר ה-documents",
+        "true/false",
+      ],
+      correctIndex: 0,
+      explanation: "find() עם filter ריק מחזיר Cursor שצריך לקרוא ל-toArray() כדי לקבל את כל המסמכים. Cursor lazy-loaded ויעיל גם לאוספים גדולים.",
+      optionFeedback: [
+        "✅ נכון: Cursor של documents תואמים.",
+        "❌ findOne מחזיר document בודד.",
+        "❌ countDocuments מחזיר מספר.",
+        "❌ אין שיטת exists ב-MongoDB API.",
+      ],
+    },
+    {
+      id: "mc_l20_find_manual_002", topicId: "topic_mongo", conceptKey: "lesson_20::find", level: 5,
+      question: "מה ההבדל בין .find().toArray() ל-.find().forEach()?",
+      options: [
+        "toArray טוען את הכל לזיכרון; forEach מעבד document אחד בכל פעם (יעיל יותר לעיבוד גדול)",
+        "אין הבדל",
+        "forEach לא קיים על cursor",
+        "toArray מהיר תמיד",
+      ],
+      correctIndex: 0,
+      explanation: "Cursor הוא lazy. forEach מאפשר עיבוד streaming — לא טוענים הכל לזיכרון. שימושי לאוספים בגודל GB.",
+      optionFeedback: [
+        "✅ נכון: streaming vs full load.",
+        "❌ יש הבדל מהותי בזיכרון.",
+        "❌ forEach קיים על cursor.",
+        "❌ toArray צורך זיכרון לאוספים גדולים.",
+      ],
+    },
+
+    // --- lesson_20::findOne ---
+    {
+      id: "mc_l20_find_one_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::findOne", level: 3,
+      question: "מה מחזיר findOne כשאין התאמה?",
+      options: [
+        "null",
+        "undefined",
+        "מערך ריק []",
+        "שגיאה",
+      ],
+      correctIndex: 0,
+      explanation: "findOne מחזיר null אם אין document תואם. שונה מ-find שמחזיר cursor (שיכול להיות ריק).",
+      optionFeedback: [
+        "✅ נכון: null = no match.",
+        "❌ זה JavaScript native, לא MongoDB.",
+        "❌ זה התנהגות find (cursor), לא findOne.",
+        "❌ אין שגיאה — null הוא success path.",
+      ],
+    },
+    {
+      id: "mc_l20_find_one_manual_002", topicId: "topic_mongo", conceptKey: "lesson_20::findOne", level: 4,
+      question: "איך לחפש משתמש לפי email?",
+      options: [
+        "User.findOne({ email: 'tal@example.com' })",
+        "User.find('tal@example.com')",
+        "User.search({ email: 'tal@example.com' })",
+        "User.where('email', 'tal@example.com')",
+      ],
+      correctIndex: 0,
+      explanation: "findOne מקבל filter object. Mongoose: User.findOne({ email }). אם מצא — מחזיר document; אחרת null.",
+      optionFeedback: [
+        "✅ נכון: filter object, key=value.",
+        "❌ find מקבל filter object, לא string.",
+        "❌ אין search method ב-Mongoose API הסטנדרטי.",
+        "❌ where קיים אבל בתחביר שונה.",
+      ],
+    },
+
+    // --- lesson_20::updateOne ---
+    {
+      id: "mc_l20_update_one_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::update", level: 4,
+      question: "איך לעדכן שדה name של משתמש לפי id?",
+      options: [
+        "User.updateOne({ _id: id }, { $set: { name: 'New Name' } })",
+        "User.updateOne(id, { name: 'New Name' })",
+        "User.update(id).set('name', 'New Name')",
+        "User[id].name = 'New Name'",
+      ],
+      correctIndex: 0,
+      explanation: "updateOne(filter, update). השימוש ב-$set חיוני — בלי זה, MongoDB יחליף את כל המסמך לאובייקט החדש (ימחק שדות אחרים).",
+      optionFeedback: [
+        "✅ נכון: filter + $set update operator.",
+        "❌ הארגומנט הראשון חייב להיות filter object.",
+        "❌ אין set method כזה ב-Mongoose API.",
+        "❌ זה לא pattern של MongoDB — אובייקטים לא ב-memory.",
+      ],
+    },
+    {
+      id: "mc_l20_update_many_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::updateMany", level: 5,
+      question: "מתי להשתמש ב-updateMany?",
+      options: [
+        "כשרוצים לעדכן את כל ה-documents שתואמים filter (לא רק הראשון)",
+        "כשיש רק document אחד",
+        "כדי לעדכן field יחיד",
+        "אין מצב כזה",
+      ],
+      correctIndex: 0,
+      explanation: "updateOne מעדכן רק את הראשון התואם. updateMany מעדכן את כולם. Bulk update חיוני לbulk fixes.",
+      optionFeedback: [
+        "✅ נכון: כל ה-matches.",
+        "❌ updateOne מספיק עבור document בודד.",
+        "❌ זה לא קשור לכמות שדות.",
+        "❌ updateMany נחוץ ל-bulk operations.",
+      ],
+    },
+
+    // --- lesson_20::deleteOne / deleteMany ---
+    {
+      id: "mc_l20_delete_one_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::deleteOne", level: 4,
+      question: "מה מחזיר deleteOne אחרי הצלחה?",
+      options: [
+        "{ acknowledged: true, deletedCount: 1 }",
+        "המסמך שנמחק",
+        "true / false",
+        "ID של מסמך",
+      ],
+      correctIndex: 0,
+      explanation: "deleteOne מחזיר { acknowledged, deletedCount }. אם לא מצא — deletedCount: 0 (לא שגיאה).",
+      optionFeedback: [
+        "✅ נכון: result object עם count.",
+        "❌ אין החזרת המסמך — נמחק.",
+        "❌ MongoDB מחזיר result object, לא boolean.",
+        "❌ ID לא נכלל ב-result.",
+      ],
+    },
+    {
+      id: "mc_l20_delete_many_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::deleteMany", level: 5,
+      question: "סכנה ב-deleteMany({}) (filter ריק)?",
+      options: [
+        "מוחק את כל ה-documents ב-collection — לא הפיך בלי backup",
+        "Mongoose ימנע אוטומטית",
+        "ידחה את הקריאה",
+        "עובד רק עם flag --force",
+      ],
+      correctIndex: 0,
+      explanation: "deleteMany({}) = wipe collection. אין safety net אוטומטי. תמיד לבדוק filter לפני production.",
+      optionFeedback: [
+        "✅ נכון: deleteMany({}) = drop all.",
+        "❌ Mongoose לא מונע — מבצע מה שביקשת.",
+        "❌ נכון 100% — זו סכנה אמיתית.",
+        "❌ אין flag כזה.",
+      ],
+    },
+
+    // --- lesson_20::Schema ---
+    {
+      id: "mc_l20_schema_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::Schema", level: 4,
+      question: "למה צריך Schema ב-Mongoose?",
+      options: [
+        "להגדיר מבנה, טיפוסים, וולידציה ל-documents במודל",
+        "MongoDB דורש את זה",
+        "לאופטימיזציה אוטומטית",
+        "ל-CSS styling",
+      ],
+      correctIndex: 0,
+      explanation: "MongoDB schemaless — Mongoose מוסיף שכבת ולידציה. const userSchema = new Schema({ name: String, age: Number, email: { type: String, required: true } }).",
+      optionFeedback: [
+        "✅ נכון: structure + types + validation.",
+        "❌ MongoDB עצמו לא דורש schema.",
+        "❌ schema אינו עוסק ב-performance.",
+        "❌ schema קשור לdata, לא visual.",
+      ],
+    },
+
+    // --- lesson_20::Model ---
+    {
+      id: "mc_l20_model_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::Model", level: 4,
+      question: "מה זה Model ב-Mongoose?",
+      options: [
+        "Class שיוצר עוטף סביב Schema, מספק API לעבודה עם collection (find/save/etc.)",
+        "תבנית UI",
+        "fileformat",
+        "סוג של Database",
+      ],
+      correctIndex: 0,
+      explanation: "const User = mongoose.model('User', userSchema). Model מקשר schema לcollection ('users') ומספק CRUD API.",
+      optionFeedback: [
+        "✅ נכון: class wrapper סביב schema + collection.",
+        "❌ UI templates שייכים ל-React/template engines.",
+        "❌ Model הוא JS construct, לא file.",
+        "❌ Model הוא wrapper, לא DB.",
+      ],
+    },
+
+    // --- lesson_20::$gt / $lt / $eq comparison operators ---
+    {
+      id: "mc_l20_dollar_gt_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::$gt", level: 4,
+      question: "איזה filter מחזיר משתמשים מעל גיל 18?",
+      options: [
+        "{ age: { $gt: 18 } }",
+        "{ age: 18 }",
+        "User.find().filter(u => u.age > 18)",
+        "{ where: 'age > 18' }",
+      ],
+      correctIndex: 0,
+      explanation: "MongoDB query operators מתחילים ב-$. $gt = greater than. שימוש: { field: { $gt: value } }.",
+      optionFeedback: [
+        "✅ נכון: $gt operator עם value.",
+        "❌ זה מחזיר רק equal-to-18, לא above.",
+        "❌ filtering בלקוח אחרי fetch — לא יעיל מול ה-DB.",
+        "❌ אין where clause כזה ב-MongoDB.",
+      ],
+    },
+    {
+      id: "mc_l20_dollar_lt_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::$lt", level: 5,
+      question: "מה ההבדל בין $lt ל-$lte?",
+      options: [
+        "$lt = strictly less than. $lte = less than or equal",
+        "אין הבדל",
+        "$lt לoבtypes רק, $lte למספרים",
+        "$lt עובד רק על strings",
+      ],
+      correctIndex: 0,
+      explanation: "$lt: strict <. $lte: <= (כולל). זהה ל-$gt vs $gte. גם $eq (=), $ne (≠), $in (in array), $nin (not in).",
+      optionFeedback: [
+        "✅ נכון: strict vs inclusive.",
+        "❌ יש הבדל קריטי.",
+        "❌ שניהם עובדים על comparable types.",
+        "❌ שניהם עובדים על מספרים, dates ו-strings.",
+      ],
+    },
+
+    // --- lesson_20::Connection String ---
+    {
+      id: "mc_l20_connection_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::Connection String", level: 3,
+      question: "מה Connection String של MongoDB?",
+      options: [
+        "URL בפורמט mongodb://[username:password@]host[:port]/database עם credentials וכתובת",
+        "string רגיל של מילים",
+        "id של database",
+        "JSON של נתונים",
+      ],
+      correctIndex: 0,
+      explanation: "Connection string דוגמה: mongodb://user:pass@cluster.mongodb.net/mydb. תמיד לשמור ב-environment variable, לא ב-source.",
+      optionFeedback: [
+        "✅ נכון: URL format עם credentials.",
+        "❌ זה לא string חופשי.",
+        "❌ DB ID הוא שם פשוט.",
+        "❌ זה לא תוכן, אלא locator.",
+      ],
+    },
+
+    // --- lesson_20::MongoDB Atlas ---
+    {
+      id: "mc_l20_atlas_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::MongoDB Atlas", level: 3,
+      question: "מה MongoDB Atlas?",
+      options: [
+        "שירות cloud מנוהל של MongoDB — Database-as-a-Service",
+        "כלי CLI",
+        "ספרייה ל-Node",
+        "אקסטנשן ל-VS Code",
+      ],
+      correctIndex: 0,
+      explanation: "Atlas = managed cloud MongoDB. אינך צריך להתקין/לתחזק שרת. יש free tier (M0). זמין ב-AWS/GCP/Azure.",
+      optionFeedback: [
+        "✅ נכון: managed cloud DB.",
+        "❌ MongoDB Shell הוא CLI.",
+        "❌ Mongoose או mongodb הם libraries.",
+        "❌ MongoDB extension ל-VS Code קיים אבל זה דבר אחר.",
+      ],
     },
 
     // ===== Topic 14 — React Basics =====
@@ -8891,6 +9227,96 @@ var QUESTIONS_BANK = {
   ],
 
   fill: [
+    // ===== QMAN-008 Fill Batch — lesson_20 MongoDB CRUD (2026-05-02) =====
+
+    // --- lesson_20::insertOne ---
+    {
+      id: "fill_l20_insert_one_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::insertOne", level: 4,
+      code: "const result = await collection.____({ name: 'Tal', age: 30 });\nconsole.log(result.insertedId);",
+      answer: "insertOne",
+      hint: "method של Collection להוספת מסמך בודד.",
+      explanation: "insertOne(doc) מחזיר Promise עם { acknowledged, insertedId }. ה-_id נוצר אוטומטית אם לא סופק.",
+    },
+
+    // --- lesson_20::insertMany ---
+    {
+      id: "fill_l20_insert_many_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::insertMany", level: 5,
+      code: "const docs = [{ a: 1 }, { a: 2 }, { a: 3 }];\nconst result = await collection.____(docs);\nconsole.log(result.insertedCount); // 3",
+      answer: "insertMany",
+      hint: "method ל-bulk insert של מערך מסמכים.",
+      explanation: "insertMany ממיר מערך ל-bulk write יחיד — יעיל יותר ממספר insertOne.",
+    },
+
+    // --- lesson_20::find ---
+    {
+      id: "fill_l20_find_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::find", level: 4,
+      code: "const adults = await User.____({ age: { $gte: 18 } }).toArray();",
+      answer: "find",
+      hint: "method שמחזיר Cursor של מסמכים תואמים.",
+      explanation: "find(filter) מחזיר Cursor. toArray() ממיר אותו למערך JS.",
+    },
+
+    // --- lesson_20::findOne ---
+    {
+      id: "fill_l20_find_one_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::findOne", level: 4,
+      code: "const user = await User.____({ email: 'tal@example.com' });\nif (!user) throw new Error('not found');",
+      answer: "findOne",
+      hint: "method שמחזיר את ה-document הראשון התואם, או null.",
+      explanation: "findOne מחזיר document בודד — נוח כשמחפשים לפי field ייחודי כמו email.",
+    },
+
+    // --- lesson_20::updateOne ---
+    {
+      id: "fill_l20_update_one_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::update", level: 5,
+      code: "await User.updateOne(\n  { _id: id },\n  { ____: { name: 'New Name' } }\n);",
+      answer: "$set",
+      hint: "operator של MongoDB שקובע ערך לשדה ספציפי.",
+      explanation: "$set מעדכן רק את השדה שהוגדר. בלי $set — MongoDB יחליף את כל ה-document.",
+    },
+
+    // --- lesson_20::deleteOne ---
+    {
+      id: "fill_l20_delete_one_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::deleteOne", level: 4,
+      code: "const result = await collection.____({ _id: docId });\nconsole.log('deleted:', result.deletedCount);",
+      answer: "deleteOne",
+      hint: "method למחיקת מסמך בודד תואם.",
+      explanation: "deleteOne מוחק את המסמך הראשון התואם ל-filter. מחזיר { acknowledged, deletedCount }.",
+    },
+
+    // --- lesson_20::Schema ---
+    {
+      id: "fill_l20_schema_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::Schema", level: 4,
+      code: "const def = new mongoose.____({\n  name: String,\n  email: { type: String, required: true }\n});",
+      answer: "Schema",
+      hint: "constructor של Mongoose להגדרת מבנה document.",
+      explanation: "new mongoose.Schema(definition) יוצר schema. אחרי זה משתמשים ב-mongoose.model() להפיכתו ל-Model.",
+    },
+
+    // --- lesson_20::Mongoose ---
+    {
+      id: "fill_l20_mongoose_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::Mongoose", level: 4,
+      code: "const odm = require('mongoose');\nawait odm.____('mongodb://localhost/myapp');",
+      answer: "connect",
+      hint: "method של Mongoose שמתחבר ל-MongoDB instance.",
+      explanation: "mongoose.connect(uri) מחזיר Promise. ה-app בדרך כלל ממתין ל-connection לפני שמתחיל לטפל ב-requests.",
+    },
+
+    // --- lesson_20::$gt comparison ---
+    {
+      id: "fill_l20_dollar_gt_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::$gt", level: 4,
+      code: "// users older than 18\nconst adults = await User.find({ age: { ____: 18 } });",
+      answer: "$gt",
+      hint: "operator MongoDB ל-greater than.",
+      explanation: "$gt = strictly greater. $gte = >=. נמצאים בתוך תת-אובייקט של ה-field.",
+    },
+    {
+      id: "fill_l20_dollar_lte_manual_001", topicId: "topic_mongo", conceptKey: "lesson_20::$lte", level: 5,
+      code: "// price up to 100 (inclusive)\nconst affordable = await Product.find({ price: { ____: 100 } });",
+      answer: "$lte",
+      hint: "operator MongoDB ל-less than or equal.",
+      explanation: "$lte = ≤. ניתן לשרשור: { age: { $gte: 18, $lte: 65 } } — adults עד 65.",
+    },
+
     // ===== Arrays =====
     {
       id: "fill_arr_001", topicId: "topic_arrays", conceptKey: "lesson_11::map", level: 3,
