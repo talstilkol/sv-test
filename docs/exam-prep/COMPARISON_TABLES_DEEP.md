@@ -9467,4 +9467,388 @@ claude
 
 ---
 
-**עודכן:** 2026-05-02 23:42 · ידני · §95-§139 (45 orphan-absorber clusters) · 6-level translations · trainer cluster-mode · 0 orphans
+## 🔬 PHASE C2 — per-member 6-level breakdowns (round 2)
+
+> 30+ קלסטרים נוספים שעוברים מ-3/4 ל-4/4 ע"י הוספת פירוק לחבר.
+
+---
+
+### ts_utility_types (§46)
+
+**`Partial<T>`** — 🧓 כל השדות אופציונליים. 👶 כל property מקבל `?`. 💂 `{ [P in keyof T]?: T[P] }`. 🎓 לPATCH endpoints. 👨‍💻 deep partial via mapped types. 🎩 distributes over unions.
+**`Required<T>`** — 🧓 הופך הכל לחובה. 👶 ההפך מ-Partial. 💂 strips `?`. 🎓 לפיכך validators. 👨‍💻 useful after assertion. 🎩 strips optional even from index signatures.
+**`Pick<T,K>`** — 🧓 בוחר רק שדות מסוימים. 👶 לבחור שמות ספציפיים. 💂 `{ [P in K]: T[P] }`. 🎓 לDTOs. 👨‍💻 type-safe field selection. 🎩 K must extend keyof T.
+**`Omit<T,K>`** — 🧓 מסיר שדות. 👶 ההפך מPick. 💂 `Pick<T, Exclude<keyof T, K>>`. 🎓 להסתיר password. 👨‍💻 prefer over Pick when fewer to omit. 🎩 distributes over unions awkwardly.
+**`Readonly<T>`** — 🧓 כל השדות readonly. 👶 לא ניתן לשינוי. 💂 freezes at compile-time. 🎓 דומה ל-Object.freeze. 👨‍💻 great for config. 🎩 deep readonly via recursion.
+**`Record<K,V>`** — 🧓 מילון עם keys מסוימים. 👶 dict typed. 💂 `Record<"a"|"b", number>` → `{a: number; b: number}`. 🎓 lookups. 👨‍💻 enums → record. 🎩 K extends string|number|symbol.
+
+---
+
+### form_control (§44)
+
+**`controlled component`** — 🧓 React שולט בערך. 👶 setState על כל keystroke. 💂 value+onChange both. 🎓 single source of truth. 👨‍💻 enables instant validation. 🎩 every render touches all controls.
+**`uncontrolled component`** — 🧓 ה-DOM שולט. 👶 useRef + read on submit. 💂 defaultValue + ref. 🎓 better for big forms. 👨‍💻 react-hook-form uses uncontrolled internally. 🎩 native form data lazy-read.
+
+---
+
+### composition_patterns (§45)
+
+**`children prop`** — 🧓 ילדים פתוחים בקומפוננטה. 👶 `<Card>...</Card>`. 💂 ReactNode type. 🎓 simplest pattern. 👨‍💻 default for layouts. 🎩 only one slot.
+**`render prop`** — 🧓 פונקציה שמייצרת תוכן. 👶 `<X render={(state) => ...}/>`. 💂 enables state-passing. 🎓 verbose but flexible. 👨‍💻 mostly replaced by hooks. 🎩 inversion of control.
+**`slot`** — 🧓 named children. 👶 כל "מגרה" עם שם. 💂 explicit named props for sections. 🎓 multi-area layouts. 👨‍💻 `<Layout header={...} body={...}/>`. 🎩 React doesn't have native slots — convention only.
+
+---
+
+### error_catching (§39)
+
+**`Error Boundary`** — 🧓 שומר קומפוננטה מקריסה. 👶 React class with componentDidCatch. 💂 catches errors in child render only. 🎓 not for events/async. 👨‍💻 use react-error-boundary lib. 🎩 getDerivedStateFromError for state.
+**`try/catch`** — 🧓 תפיסת שגיאה רגילה. 👶 sync + await. 💂 not for Promise without await. 🎓 finally for cleanup. 👨‍💻 always re-throw unknown. 🎩 stack-aware engines.
+**`Promise.catch`** — 🧓 תפיסת promise rejection. 👶 chain method. 💂 also `.catch()` after `.then()`. 🎓 unhandled → unhandledrejection event. 👨‍💻 prefer try/catch with await. 🎩 microtask boundary.
+
+---
+
+### auth_methods (§40)
+
+**`session auth`** — 🧓 שרת זוכר אותך עם cookie. 👶 login → server stores session ID. 💂 stateful, easy revoke. 🎓 needs sticky session in cluster. 👨‍💻 Redis store for scale. 🎩 vulnerable to CSRF without protection.
+**`JWT`** — 🧓 דרכון חתום. 👶 token = base64(header).base64(payload).signature. 💂 stateless. 🎓 short access + long refresh. 👨‍💻 httpOnly cookie storage. 🎩 RS256 vs HS256 trade-offs.
+**`OAuth`** — 🧓 התחברות עם google/github. 👶 צד שלישי מאשר. 💂 authorization framework. 🎓 OAuth2 + OIDC. 👨‍💻 PKCE for SPAs. 🎩 grant types matrix.
+
+---
+
+### error_handling (§42)
+
+**`try`** — 🧓 ניסיון. 👶 כותב קוד שעלול ליפול. 💂 begins protected block. 🎓 must pair with catch or finally. 👨‍💻 keep small. 🎩 V8 zero-cost when no exception.
+**`catch`** — 🧓 תפיסה. 👶 `catch (e)` תופס. 💂 typed `catch (e: unknown)` in TS. 🎓 narrow with instanceof. 👨‍💻 always log + classify. 🎩 ECMAScript optional binding `catch {}`.
+**`finally`** — 🧓 תמיד רץ. 👶 לסדר אחרי. 💂 cleanup regardless of success. 🎓 also runs on return. 👨‍💻 close connections, clear timers. 🎩 finally with return shadows try return.
+**`throw`** — 🧓 זריקת שגיאה. 👶 הפסקה מאוחזרת. 💂 throw new Error("..."). 🎓 always throw Error instances. 👨‍💻 custom error classes. 🎩 V8 Stack capture cost.
+**`Error`** — 🧓 הסוג הבסיסי. 👶 כל שגיאה היא Error. 💂 .message, .stack, .cause. 🎓 extend for custom. 👨‍💻 readability via name. 🎩 [[ErrorData]] internal slot.
+
+---
+
+### deep_copy (§43)
+
+**`shallow copy`** — 🧓 עותק רמה 1. 👶 nested משותפים. 💂 spread/Object.assign. 🎓 fast O(n). 👨‍💻 sufficient for flat data. 🎩 invokes Symbol.iterator.
+**`deep copy`** — 🧓 עותק מלא. 👶 nested עצמאיים. 💂 structuredClone modern. 🎓 handles cycles. 👨‍💻 falls back to lodash cloneDeep. 🎩 HTML structured clone algorithm.
+**`structuredClone`** — 🧓 ה-deep clone הרשמי. 👶 built-in modern API. 💂 supports Date/Map/Set/RegExp. 🎓 NOT functions/symbols/getters. 👨‍💻 default for state cloning. 🎩 browser+Node 17+.
+**`Object.assign`** — 🧓 מיזוג shallow. 👶 ל-target את properties של source. 💂 same as `{...a, ...b}` in 99% cases. 🎓 mutates target! `assign({}, a, b)` for new. 👨‍💻 prefer spread. 🎩 invokes setters on target.
+
+---
+
+### cookie_flags (§47)
+
+**`httpOnly`** — 🧓 JS לא יכול לקרוא. 👶 הגנה מ-XSS cookie theft. 💂 set-cookie HttpOnly. 🎓 critical for session/JWT cookies. 👨‍💻 always with secure tokens. 🎩 not visible in document.cookie.
+**`Secure`** — 🧓 רק על HTTPS. 👶 לא נשלח על HTTP. 💂 prevents MITM sniff. 🎓 mandatory in production. 👨‍💻 dev override only on localhost. 🎩 set-cookie Secure attribute.
+**`SameSite`** — 🧓 עוצר cross-site. 👶 הגנה מ-CSRF. 💂 Strict|Lax|None. 🎓 Lax default in modern browsers. 👨‍💻 None requires Secure. 🎩 third-party blocking.
+
+---
+
+### token_lifecycle (§48)
+
+**`access token`** — 🧓 מפתח קצר-טווח. 👶 ל-API requests. 💂 15min typical. 🎓 in Authorization: Bearer. 👨‍💻 memory only or httpOnly. 🎩 JWT signed claims.
+**`refresh token`** — 🧓 מפתח לחידוש. 👶 חודש שלם. 💂 httpOnly cookie. 🎓 rotate on use. 👨‍💻 reuse detection = compromise alert. 🎩 OAuth2 RFC 6749.
+
+---
+
+### git_merge_strategy (§49)
+
+**`git merge`** — 🧓 איחוד עם תיעוד. 👶 יוצר merge commit. 💂 non-linear history. 🎓 preserves all commits. 👨‍💻 default for shared branches. 🎩 fast-forward when possible.
+**`git rebase`** — 🧓 העברת עבודה לראש. 👶 קוד נראה כאילו נכתב על main. 💂 linear history. 🎓 rewrites commits. 👨‍💻 never on shared branches. 🎩 interactive for editing.
+
+---
+
+### mutability_patterns (§50)
+
+**`mutable update`** — 🧓 שינוי במקום. 👶 arr.push(x). 💂 fast O(1). 🎓 unsafe in React/Redux. 👨‍💻 only for local non-state. 🎩 V8 Element Kind transitions.
+**`immutable update`** — 🧓 יוצר חדש. 👶 [...arr, x]. 💂 React-safe. 🎓 enables shallow comparison. 👨‍💻 immer for ergonomics. 🎩 structural sharing libs.
+
+---
+
+### jsx_rendering (§51)
+
+**`JSX`** — 🧓 HTML בתוך JS. 👶 תחביר נוח. 💂 babel/swc → React.createElement. 🎓 must close tags, camelCase props. 👨‍💻 fragments for multi-root. 🎩 transform: jsx-runtime.
+**`rendering`** — 🧓 הפיכה ל-DOM. 👶 React מצייר את זה. 💂 reconciliation. 🎓 commit phase. 👨‍💻 minimize re-renders. 🎩 fiber work-loop.
+**`Virtual DOM`** — 🧓 ייצוג in-memory. 👶 העתק קל של ה-DOM הצפוי. 💂 diff vs DOM. 🎓 minimal real ops. 👨‍💻 React handles it. 🎩 reconciler O(n) heuristic.
+**`createRoot`** — 🧓 React 18 entry. 👶 root.render(<App/>). 💂 enables concurrent. 🎓 vs old ReactDOM.render. 👨‍💻 hydrateRoot for SSR. 🎩 selective hydration.
+
+---
+
+### array_methods (§52)
+
+**`map`** — 🧓 הופך כל איבר. 👶 [1,2,3].map(n => n*2). 💂 returns new array same length. 🎓 always pure callback. 👨‍💻 chain with filter. 🎩 V8 PACKED fast path.
+**`filter`** — 🧓 שומר חלק. 👶 [1,2,3].filter(n => n>1). 💂 boolean predicate. 🎓 may shorten array. 👨‍💻 chain before reduce. 🎩 never null returned.
+**`reduce`** — 🧓 מסכם. 👶 acc + cur → final. 💂 (acc, cur) => acc. 🎓 always initial value. 👨‍💻 most general. 🎩 left-fold semantics.
+**`forEach`** — 🧓 פעולה על כל. 👶 callback per item. 💂 no return. 🎓 no break. 👨‍💻 don't use with async. 🎩 always sync iteration.
+**`find`** — 🧓 ראשון שמתאים. 👶 boolean predicate. 💂 first or undefined. 🎓 short-circuits. 👨‍💻 prefer over filter()[0]. 🎩 .findIndex returns position.
+**`sort`** — 🧓 מיון. 👶 mutates! 💂 [...arr].sort() לbatching. 🎓 (a,b) => -1/0/+1. 👨‍💻 Intl.Collator for strings. 🎩 V8 TimSort.
+
+---
+
+### databases (§53)
+
+**`PostgreSQL`** — 🧓 SQL מלא. 👶 ACID, relations, JOINs. 💂 strict schema. 🎓 JSONB for hybrid. 👨‍💻 default 95% cases. 🎩 MVCC, WAL.
+**`MongoDB`** — 🧓 NoSQL document. 👶 JSON-like documents. 💂 flexible schema. 🎓 horizontal sharding. 👨‍💻 nested data without joins. 🎩 WiredTiger.
+**`SQL`** — 🧓 שפה סטנדרטית לDB טבלאי. 👶 SELECT/INSERT/UPDATE/DELETE. 💂 declarative. 🎓 ACID. 👨‍💻 EXPLAIN queries. 🎩 query planner.
+**`NoSQL`** — 🧓 Not Only SQL. 👶 כל מה שלא SQL. 💂 KV/document/column/graph. 🎓 BASE not ACID. 👨‍💻 trade consistency for scale. 🎩 CAP theorem.
+
+---
+
+### dom_traversal_children (§54)
+
+**`children`** — 🧓 ילדים elements. 👶 HTMLCollection. 💂 live. 🎓 includes element children only. 👨‍💻 array via Array.from. 🎩 dynamic on add/remove.
+**`childNodes`** — 🧓 כל הnodes כולל text. 👶 NodeList. 💂 includes whitespace! 🎓 use for full traversal. 👨‍💻 filter by nodeType. 🎩 also live.
+**`firstElementChild`** — 🧓 ילד element ראשון. 👶 skip whitespace. 💂 modern API. 🎓 null if no element. 👨‍💻 prefer over firstChild. 🎩 reads from internal cache.
+**`parentElement`** — 🧓 הורה element. 👶 לא כולל document. 💂 null at root. 🎓 vs parentNode (includes Document). 👨‍💻 closest() for selectors. 🎩 ShadowRoot opaque.
+
+---
+
+### dom_events (§55)
+
+**`event`** — 🧓 אירוע משתמש. 👶 click/keydown/etc. 💂 Event object passed to handler. 🎓 inheritance: Event → MouseEvent → ... 👨‍💻 SyntheticEvent in React. 🎩 dispatch phases capture/target/bubble.
+**`addEventListener`** — 🧓 רישום מאזין. 👶 fn.addEventListener("click", handler). 💂 supports options object. 🎓 once, passive, signal. 👨‍💻 always cleanup with removeEventListener. 🎩 AbortController integration.
+**`event bubbling`** — 🧓 אירוע עולה להורים. 👶 click on span → li → ul. 💂 default phase. 🎓 stopPropagation halts. 👨‍💻 enables delegation pattern. 🎩 composedPath crosses shadow.
+**`event delegation`** — 🧓 listener על הורה במקום ילדים. 👶 חוסך listeners. 💂 e.target.matches(selector). 🎓 dynamic children supported. 👨‍💻 single listener per list. 🎩 root-level click handler in React.
+
+---
+
+### react_router_nav (§56)
+
+**`Link`** — 🧓 ניווט בלי reload. 👶 anchor + SPA navigation. 💂 to="/path". 🎓 enables client routing. 👨‍💻 prefetch on hover. 🎩 startTransition for non-blocking.
+**`NavLink`** — 🧓 Link + active state. 👶 כיתת active אוטומטי. 💂 className/style as function. 🎓 end prop for exact. 👨‍💻 perfect for nav menus. 🎩 React Router internal logic.
+**`Route`** — 🧓 הגדרת מסלול. 👶 path → component. 💂 inside <Routes>. 🎓 nested via children. 👨‍💻 loader for data. 🎩 v6 ranking algorithm.
+**`useNavigate`** — 🧓 ניווט מקוד. 👶 nav("/home"). 💂 returns navigate fn. 🎓 supports state, replace. 👨‍💻 use after submit. 🎩 history API integration.
+
+---
+
+### timers (§57)
+
+**`setTimeout`** — 🧓 פעם 1 אחרי N ms. 👶 חד-פעמי. 💂 returns id for clearTimeout. 🎓 0ms still queues. 👨‍💻 recursive vs setInterval. 🎩 macrotask queue.
+**`setInterval`** — 🧓 כל N ms. 👶 חוזר. 💂 may drift over time. 🎓 always pair with clearInterval. 👨‍💻 prefer setTimeout-recursive. 🎩 may overlap if work>interval.
+**`requestAnimationFrame`** — 🧓 לפני paint הבא. 👶 לאנימציות. 💂 ~60fps. 🎓 paused on hidden tab. 👨‍💻 ideal for smooth UI. 🎩 phase before render.
+
+---
+
+### http_clients (§58)
+
+**`fetch`** — 🧓 מודרני. 👶 Promise-based. 💂 doesn't reject on 4xx/5xx. 🎓 response.ok check. 👨‍💻 AbortController for cancel. 🎩 streaming via reader.
+**`XMLHttpRequest`** — 🧓 ישן. 👶 callback-based. 💂 progress events native. 🎓 still useful for upload progress. 👨‍💻 wrapped libs use it. 🎩 readyState lifecycle.
+**`axios`** — 🧓 ספרייה. 👶 nicer API. 💂 interceptors built-in. 🎓 timeout, transformers. 👨‍💻 standard in React projects. 🎩 cancel via CancelToken/Signal.
+
+---
+
+### express_routing_handlers (§59)
+
+**`app.use`** — 🧓 middleware. 👶 רץ לכל route או path-prefixed. 💂 (req, res, next). 🎓 order matters. 👨‍💻 helmet, cors, json first. 🎩 Layer in router stack.
+**`app.get`** — 🧓 GET route. 👶 path + handler. 💂 method-specific. 🎓 with params: /:id. 👨‍💻 always validate. 🎩 path-to-regexp matching.
+**`next()`** — 🧓 העבר לhandler הבא. 👶 next(err) לerror handler. 💂 in middleware. 🎓 next("route") skips remaining in route. 👨‍💻 always call or send response. 🎩 hangs request if neither.
+**`middleware`** — 🧓 תוכנת ביניים. 👶 שרשרת פונקציות. 💂 (req, res, next) signature. 🎓 cross-cutting concerns. 👨‍💻 order: helmet→cors→json→auth→routes→error. 🎩 Express Layer composition.
+
+---
+
+### mongo_find (§60)
+
+**`find`** — 🧓 חיפוש מרובה. 👶 cursor למסמכים. 💂 doesn't execute until iterated. 🎓 .toArray() for sync result. 👨‍💻 lean() for plain objects. 🎩 server-side cursor with batchSize.
+**`findOne`** — 🧓 אחד. 👶 first match או null. 💂 awaitable. 🎓 limit:1 underneath. 👨‍💻 prefer over find()[0]. 🎩 indexed lookup if possible.
+**`findById`** — 🧓 לפי _id. 👶 קיצור ל-findOne({_id}). 💂 ObjectId casting. 🎓 perfect indexed. 👨‍💻 most common GET. 🎩 _id index always exists.
+**`findOneAndUpdate`** — 🧓 atomic update + return. 👶 מתאים, עורך, מחזיר. 💂 race-safe. 🎓 new:true to return updated. 👨‍💻 upsert option. 🎩 Mongo command.
+
+---
+
+### mongo_operators (§61)
+
+**`$set`** — 🧓 קביעת ערך. 👶 update field to value. 💂 atomic. 🎓 nested via dot. 👨‍💻 most common. 🎩 doesn't skip undefined.
+**`$push`** — 🧓 הוסף למערך. 👶 append. 💂 with $each for bulk. 🎓 with $position. 👨‍💻 append to log. 🎩 doesn't dedupe.
+**`$pull`** — 🧓 הסר ממערך. 👶 by predicate. 💂 atomic. 🎓 supports complex match. 👨‍💻 remove tag. 🎩 vs $pop (by position).
+**`$inc`** — 🧓 הוסף למספר. 👶 atomic counter. 💂 negative for decrement. 🎓 race-safe. 👨‍💻 likes/views counter. 🎩 enables 1-statement increment.
+**`$unset`** — 🧓 מחק שדה. 👶 remove key. 💂 vs $set: null. 🎓 affects schema. 👨‍💻 GDPR delete. 🎩 doesn't trigger validation.
+
+---
+
+### component_kinds (§62)
+
+**`function component`** — 🧓 פונקציה שמחזירה JSX. 👶 modern default. 💂 hooks-friendly. 🎓 simpler. 👨‍💻 95% of new code. 🎩 inline closure per render.
+**`class component`** — 🧓 ES6 class extends Component. 👶 legacy. 💂 lifecycle methods. 🎓 still in error boundaries. 👨‍💻 migrate to function. 🎩 instance per mount.
+**`HOC`** — 🧓 Higher-Order Component. 👶 fn(Component) → Component. 💂 enhancement pattern. 🎓 mostly replaced by hooks. 👨‍💻 still useful for cross-cutting. 🎩 prop forwarding.
+
+---
+
+### ts_const_enum (§63)
+
+**`enum`** — 🧓 קבוע עם שם. 👶 numeric or string. 💂 runtime object. 🎓 reverse mapping for numeric. 👨‍💻 legacy — prefer literal union. 🎩 const enum erases.
+**`as const`** — 🧓 type narrowing למבני נתונים. 👶 immutable + literal. 💂 turns object readonly + literals. 🎓 enables typeof X[number]. 👨‍💻 modern preference. 🎩 deep readonly.
+**`literal type`** — 🧓 ערך ספציפי כtype. 👶 "active" | "done". 💂 union of literals. 🎓 finite states. 👨‍💻 great for tagged unions. 🎩 enables exhaustive switch.
+
+---
+
+### docker_concepts (§64)
+
+**`container`** — 🧓 מופע רץ של image. 👶 isolated process. 💂 short-lived. 🎓 ephemeral by default. 👨‍💻 stateless ideal. 🎩 cgroups + namespaces.
+**`image`** — 🧓 snapshot של app. 👶 immutable layers. 💂 built from Dockerfile. 🎓 layered FS. 👨‍💻 multi-stage builds. 🎩 OCI spec.
+**`volume`** — 🧓 אחסון מתמשך. 👶 שורד restart. 💂 mount into container. 🎓 named or bind. 👨‍💻 for DB data. 🎩 driver plugins.
+**`Dockerfile`** — 🧓 מתכון לבנייה. 👶 FROM, RUN, COPY, CMD. 💂 deterministic builds. 🎓 multi-stage for size. 👨‍💻 .dockerignore mandatory. 🎩 layer cache strategy.
+
+---
+
+### http_methods (§66)
+
+**`GET`** — 🧓 קח. 👶 read-only. 💂 idempotent + safe. 🎓 cacheable. 👨‍💻 no body in request. 🎩 RFC 9110 §9.3.1.
+**`POST`** — 🧓 צור. 👶 with body. 💂 not idempotent. 🎓 returns 201 + Location. 👨‍💻 most flexible. 🎩 also "general action".
+**`PUT`** — 🧓 החלף. 👶 full replacement. 💂 idempotent. 🎓 entire resource. 👨‍💻 less common than PATCH. 🎩 may create.
+**`DELETE`** — 🧓 מחק. 👶 remove. 💂 idempotent. 🎓 204 No Content typical. 👨‍💻 soft delete pattern. 🎩 may return 200 with body.
+**`PATCH`** — 🧓 עדכון חלקי. 👶 some fields. 💂 not idempotent. 🎓 JSON Patch (RFC 6902). 👨‍💻 most common modify. 🎩 vs PUT semantic.
+
+---
+
+### module_system (§67)
+
+**`import`** — 🧓 ESM משיכה. 👶 import x from "p". 💂 static, hoisted. 🎓 tree-shake-able. 👨‍💻 default + named. 🎩 live bindings.
+**`export default`** — 🧓 ייצוא ראשי. 👶 module's main thing. 💂 single per module. 🎓 anonymous works. 👨‍💻 prefer named for refactoring. 🎩 mapped to "default" key.
+**`require`** — 🧓 CJS משיכה. 👶 const x = require("p"). 💂 dynamic. 🎓 cached after first call. 👨‍💻 legacy Node. 🎩 ResolveModule + cache.
+**`module.exports`** — 🧓 CJS ייצוא. 👶 module.exports = x. 💂 vs exports.x. 🎓 single object. 👨‍💻 phase out for ESM. 🎩 wrapped function exports.
+
+---
+
+### typescript_basics (§68)
+
+**`string`** — 🧓 type טקסט. 👶 "hi". 💂 immutable. 🎓 vs literal "hi". 👨‍💻 narrow with `as const`. 🎩 V8 cons-strings.
+**`number`** — 🧓 type מספר. 👶 5, 3.14. 💂 IEEE 754. 🎓 NaN inhabits. 👨‍💻 use bigint for >2^53. 🎩 SMI optimized.
+**`boolean`** — 🧓 true/false. 👶 שני ערכים. 💂 type true | false. 🎓 unicode value. 👨‍💻 avoid auto-cast bugs. 🎩 single byte engine.
+**`array type`** — 🧓 רשימה. 👶 T[]. 💂 same as Array<T>. 🎓 readonly T[]. 👨‍💻 readonly for params. 🎩 covariant in Type Variance.
+**`type`** — 🧓 alias. 👶 type Name = string. 💂 supports unions. 🎓 vs interface. 👨‍💻 unions/tuples → type. 🎩 immutable symbol.
+**`interface`** — 🧓 חוזה. 👶 shape of object. 💂 extends, merges. 🎓 vs type. 👨‍💻 public APIs. 🎩 declaration merging.
+
+---
+
+### array_mutation_methods (§69)
+
+**`push`** — 🧓 בסוף. 👶 add at end. 💂 returns new length. 🎓 O(1) amortized. 👨‍💻 mutates! 🎩 V8 fast path PACKED.
+**`pop`** — 🧓 הוצא מסוף. 👶 remove last. 💂 returns removed. 🎓 O(1). 👨‍💻 stack pattern. 🎩 .length-- internally.
+**`shift`** — 🧓 הוצא מהתחלה. 👶 first removed. 💂 O(n) re-index. 🎓 slow on large. 👨‍💻 queue dequeue. 🎩 LinkedList may be better.
+**`unshift`** — 🧓 הוסף בהתחלה. 👶 prepend. 💂 O(n). 🎓 returns new length. 👨‍💻 use sparingly. 🎩 element kind transitions.
+**`splice`** — 🧓 חתוך/הוסף באמצע. 👶 (start, count, ...items). 💂 returns removed. 🎓 powerful but mutates. 👨‍💻 careful. 🎩 most flexible.
+
+---
+
+### dom_selectors (§70)
+
+**`getElementById`** — 🧓 לפי id. 👶 fastest. 💂 returns Element|null. 🎓 unique by spec. 👨‍💻 hot path use. 🎩 internal cache.
+**`getElementsByClassName`** — 🧓 לפי class. 👶 HTMLCollection live. 💂 updates on DOM change. 🎓 live trap in loops. 👨‍💻 prefer querySelectorAll. 🎩 DOMTokenList.
+**`querySelector`** — 🧓 CSS selector. 👶 modern flexible. 💂 first match. 🎓 supports any selector. 👨‍💻 default tool. 🎩 traversal cost.
+**`querySelectorAll`** — 🧓 כל ההתאמות. 👶 NodeList static. 💂 doesn't update. 🎓 .forEach available. 👨‍💻 always for collections. 🎩 same selector engine.
+
+---
+
+### json_methods (§71)
+
+**`JSON.parse`** — 🧓 הופך טקסט לאובייקט. 👶 JSON.parse(str). 💂 throws on invalid. 🎓 reviver function. 👨‍💻 wrap in try/catch. 🎩 yyjson speed.
+**`JSON.stringify`** — 🧓 הופך אובייקט לטקסט. 👶 obj → string. 💂 omits undefined, functions. 🎓 replacer + indent. 👨‍💻 toJSON method customizes. 🎩 throws on cycles.
+
+---
+
+### string_methods (§72)
+
+**`split`** — 🧓 לחתוך לחלקים. 👶 by separator. 💂 regex or string. 🎓 limit param. 👨‍💻 CSV parsing. 🎩 returns array.
+**`slice`** — 🧓 חתיכה. 👶 (start, end). 💂 negative indices. 🎓 immutable. 👨‍💻 most common. 🎩 vs substring (different on negatives).
+**`replace`** — 🧓 החלף. 👶 first occurrence. 💂 needle or regex. 🎓 $1, $2 capture refs. 👨‍💻 replaceAll for all. 🎩 callback replacement.
+**`includes`** — 🧓 בודק אם מכיל. 👶 boolean. 💂 from index. 🎓 modern. 👨‍💻 prefer over indexOf > -1. 🎩 SameValueZero comparison.
+
+---
+
+### object_static_methods (§73)
+
+**`Object.keys`** — 🧓 שמות שדות. 👶 own enumerable string keys. 💂 returns array. 🎓 own (not inherited). 👨‍💻 most common iteration. 🎩 insertion order ES2015+.
+**`Object.values`** — 🧓 ערכים. 👶 array of values. 💂 same order as keys. 🎓 with map for transform. 👨‍💻 sum: values.reduce. 🎩 own enumerable.
+**`Object.entries`** — 🧓 זוגות. 👶 [[k,v]...]. 💂 enables map/filter. 🎓 fromEntries inverse. 👨‍💻 destructuring iteration. 🎩 own enumerable.
+**`Object.assign`** — 🧓 מיזוג. 👶 (target, ...sources). 💂 mutates target. 🎓 spread modern equivalent. 👨‍💻 prefer spread. 🎩 invokes setters.
+
+---
+
+### dom_node_inserting (§74)
+
+**`appendChild`** — 🧓 מוסיף ילד. 👶 single child. 💂 returns the child. 🎓 moves if existing. 👨‍💻 modern: .append. 🎩 returns moved node.
+**`append`** — 🧓 מוסיף multiple. 👶 also strings! 💂 modern alternative. 🎓 doesn't return. 👨‍💻 prepend exists too. 🎩 ParentNode mixin.
+**`insertBefore`** — 🧓 לפני אח. 👶 (newNode, ref). 💂 ref can be null = end. 🎓 specific position. 👨‍💻 sortable lists. 🎩 returns inserted.
+**`replaceChild`** — 🧓 מחליף. 👶 (newNode, oldNode). 💂 returns old. 🎓 modern: oldNode.replaceWith(newNode). 👨‍💻 uncommon. 🎩 atomic swap.
+
+---
+
+### dom_node_creation (§75)
+
+**`createElement`** — 🧓 אלמנט חדש. 👶 by tag name. 💂 returns Element. 🎓 detached until appended. 👨‍💻 most common. 🎩 namespace variant exists.
+**`createTextNode`** — 🧓 text node. 👶 plain text. 💂 escape-safe. 🎓 vs textContent assignment. 👨‍💻 rare in modern. 🎩 separate Node type.
+**`cloneNode`** — 🧓 שכפול. 👶 (deep?). 💂 deep includes children. 🎓 doesn't copy event listeners. 👨‍💻 templates. 🎩 _id copied (caution).
+
+---
+
+### dom_attributes (§76)
+
+**`setAttribute`** — 🧓 קבע מאפיין. 👶 (name, value). 💂 string-only. 🎓 vs property direct. 👨‍💻 for data-* and aria-*. 🎩 mutationobserver attributes.
+**`getAttribute`** — 🧓 קרא מאפיין. 👶 returns string|null. 💂 initial value usually. 🎓 vs property current. 👨‍💻 reading data-*. 🎩 observed attributes.
+**`dataset`** — 🧓 data-* בקיצור. 👶 dataset.foo ↔ data-foo. 💂 camelCase ↔ dash. 🎓 type DOMStringMap. 👨‍💻 typed via TS. 🎩 read/write all.
+
+---
+
+### mongo_create (§77)
+
+**`create`** — 🧓 שורה חדשה. 👶 Mongoose. 💂 runs middleware. 🎓 returns Document. 👨‍💻 most common. 🎩 awaitable.
+**`insertOne`** — 🧓 הכנס אחד. 👶 native driver. 💂 fast. 🎓 no validators. 👨‍💻 admin scripts. 🎩 returns insertedId.
+**`insertMany`** — 🧓 רבים. 👶 bulk. 💂 ordered:false for parallel. 🎓 partial success possible. 👨‍💻 batch loads. 🎩 acks majority.
+**`save`** — 🧓 שמור instance. 👶 doc.save(). 💂 hooks fire. 🎓 dirty fields tracked. 👨‍💻 after modifications. 🎩 versionKey.
+**`bulkWrite`** — 🧓 פעולות מעורבות. 👶 [insertOne, updateOne, deleteOne]. 💂 atomic per op. 🎓 ordered or not. 👨‍💻 sync operations. 🎩 single round-trip.
+
+---
+
+### ts_class_modifiers (§78)
+
+**`public`** — 🧓 כולם רואים. 👶 default. 💂 explicit when needed. 🎓 in TS class. 👨‍💻 omit usually. 🎩 access modifier.
+**`private`** — 🧓 רק הclass. 👶 hidden. 💂 TS compile-time only. 🎓 vs # which is runtime. 👨‍💻 prefer # for true privacy. 🎩 TS type system.
+**`protected`** — 🧓 + יורשים. 👶 derived classes too. 💂 not external. 🎓 inheritance pattern. 👨‍💻 limited use. 🎩 access check.
+**`readonly`** — 🧓 לא ניתן לשינוי. 👶 immutable field. 💂 compile-time. 🎓 vs Object.freeze. 👨‍💻 config props. 🎩 modifier on type.
+
+---
+
+### git_core (§79)
+
+**`git add`** — 🧓 stage. 👶 prepare for commit. 💂 -p for partial. 🎓 -A all changes. 👨‍💻 specific files preferred. 🎩 index update.
+**`git commit`** — 🧓 snapshot. 👶 save point. 💂 -m for message. 🎓 conventional commits. 👨‍💻 small frequent. 🎩 SHA-1 hash.
+**`git push`** — 🧓 העלה לremote. 👶 share with team. 💂 origin main. 🎓 -u sets upstream. 👨‍💻 --force-with-lease safer. 🎩 packfile upload.
+**`git pull`** — 🧓 הורד מremote. 👶 fetch + merge. 💂 default merge. 🎓 --rebase cleaner. 👨‍💻 set pull.rebase=true. 🎩 ref-update + merge.
+**`staging area`** — 🧓 אזור הכנה. 👶 בין working ל-commit. 💂 .git/index. 🎓 selective commits. 👨‍💻 review before commit. 🎩 tree object.
+**`working tree`** — 🧓 הקבצים שאתה עורך. 👶 filesystem. 💂 dirty until staged. 🎓 .gitignore relevant. 👨‍💻 git status. 🎩 vs HEAD.
+
+---
+
+### package_managers (§80)
+
+**`yarn`** — 🧓 חלופה לnpm. 👶 ע"י Facebook. 💂 yarn.lock. 🎓 PnP zero-installs. 👨‍💻 berry v4 modern. 🎩 plug'n'play.
+**`pnpm`** — 🧓 הכי מהיר. 👶 hard-linked symlinks. 💂 pnpm-lock.yaml. 🎓 disk-efficient. 👨‍💻 monorepo workspace native. 🎩 content-addressable store.
+
+---
+
+### code_quality_tools (§81)
+
+**`ESLint`** — 🧓 linter. 👶 בדיקת קוד. 💂 logic + bugs. 🎓 flat config v9+. 👨‍💻 plugin ecosystem. 🎩 AST visitors.
+**`Prettier`** — 🧓 formatter. 👶 סדר אוטומטי. 💂 opinionated. 🎓 .prettierrc. 👨‍💻 pre-commit hook. 🎩 deterministic output.
+
+---
+
+### deps_kinds (§93)
+
+**`dependencies`** — 🧓 חיוני לproduction. 👶 ships to user. 💂 npm install --save. 🎓 in package.json. 👨‍💻 minimal here. 🎩 included in lock.
+**`devDependencies`** — 🧓 רק לפיתוח. 👶 build/test tools. 💂 npm install -D. 🎓 typescript, vitest. 👨‍💻 most deps go here. 🎩 not installed in prod.
+**`peerDependencies`** — 🧓 user מספק. 👶 לlibrary authors. 💂 react peer for lib. 🎓 npm 7+ auto-installs. 👨‍💻 carat allows version range. 🎩 version constraint.
+
+---
+
+### code_decisions (§94)
+
+**`ternary`** — 🧓 c ? a : b. 👶 קצר. 💂 expression-level. 🎓 1-line decisions. 👨‍💻 don't nest. 🎩 right-associative.
+**`if-else`** — 🧓 הסתעפות. 👶 multi-line. 💂 statement. 🎓 chained if/else if. 👨‍💻 early return preferred. 🎩 V8 branch prediction.
+**`switch`** — 🧓 רב-מקרים. 👶 many cases. 💂 break required. 🎓 exhaustive in TS. 👨‍💻 prefer object lookup. 🎩 jump table optimization.
+
+---
+
+✅ **30+ קלסטרים נוספים עם per-member breakdown** — סה״כ לפחות 75 קלסטרים truly 4/4.
+
+---
+
+**עודכן:** 2026-05-03 · ידני · §95-§139 (45 orphan-absorber clusters) · 6-level translations · trainer cluster-mode · 0 orphans · PHASE C2 per-member round 2

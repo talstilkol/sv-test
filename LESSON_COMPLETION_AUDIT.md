@@ -116,7 +116,7 @@
 | 1 | **זיכרון, משתנים ומצביעים** | 7/10 | 🔴 חובה למלא | let · var · const · By Value · By Reference · Pointer | lesson_11 | ✅ 🎯 בלוק לימוד מאוחד #1 | 4/4 T✓ O✓ M✓ C✓ |
 | 2 | **מבני נתונים לפי Reference** | 6/10 | 🟡 גבולי + V | Object · Array · Function · object | lesson_11, lesson_13 | ✅ §5 | 4/4 T✓ O✓ M✓ C✓ |
 | 3 | **פונקציות וה-this** | 7/10 | 🔴 חובה למלא | arrow function · Arrow Function · function | lesson_11, lesson_15 | ✅ §6 | 4/4 T✓ O✓ M✓ C✓ |
-| 4 | **מתודות מערך פונקציונליות** | 6/10 | 🟡 גבולי + V | map · filter · reduce · forEach · find · sort | lesson_11, lesson_12 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 4 | **מתודות מערך פונקציונליות** | 6/10 | 🟡 גבולי + V | map · filter · reduce · forEach · find · sort | lesson_11, lesson_12 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 5 | **השוואות וערכי-לא-קיים (== / === / Object.is / null / undefined / NaN)** | 5/10 | 🟢 V בלבד | undefined | lesson_11, lesson_15 | ✅ §17, §18 | 4/4 T✓ O✓ M✓ C✓ |
 | 6 | **לולאות (for / while / for...of / for...in / forEach)** | 5/10 | 🟢 V בלבד | for · while · forEach · do while | lesson_11, lesson_12 | ✅ §30b | 4/4 T✓ O✓ M✓ C✓ |
 | 7 | **אסינכרוניות וזרימת זמן** | 8/10 | 🔴 חובה למלא | Promise · setTimeout · fetch · promise | lesson_15, lesson_24 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
@@ -124,71 +124,71 @@
 | 9 | **זרימת נתונים ב-React (props/state/context/re-render)** | 7/10 | 🔴 חובה למלא | props · state · useState · Context API · useContext · re-render · passing function as prop · reference | lesson_21, lesson_22, lesson_23 | ✅ §35 | 4/4 T✓ O✓ M✓ C✓ |
 | 10 | **Hooks — useState/useEffect/useMemo/useRef** | 7/10 | 🔴 חובה למלא | useState · useEffect · useMemo · useRef | lesson_22, lesson_24 | ✅ §36 | 4/4 T✓ O✓ M✓ C✓ |
 | 11 | **אחסון בדפדפן** | 5/10 | 🟢 V בלבד | localStorage · sessionStorage | lesson_13 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 12 | **HTTP methods וREST** | 5/10 | 🟢 V בלבד | GET · POST · DELETE | lesson_17 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 13 | **סוגי בסיסי נתונים** | 6/10 | 🟡 גבולי + V | MongoDB · PostgreSQL · SQL · NoSQL · database | lesson_20, lesson_sql_orm | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 14 | **מודולים וייבוא קוד** | 5/10 | 🟢 V בלבד | import · export default · require · module.exports | lesson_16, lesson_21 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 12 | **HTTP methods וREST** | 5/10 | 🟢 V בלבד | GET · POST · DELETE | lesson_17 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 13 | **סוגי בסיסי נתונים** | 6/10 | 🟡 גבולי + V | MongoDB · PostgreSQL · SQL · NoSQL · database | lesson_20, lesson_sql_orm | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 14 | **מודולים וייבוא קוד** | 5/10 | 🟢 V בלבד | import · export default · require · module.exports | lesson_16, lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 15 | **אימות וזהות** | 7/10 | 🔴 חובה למלא | authentication · authorization · session · cookie · access token · JWT · OAuth · secure cookie | lesson_auth_security | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 16 | **TypeScript — טיפוסים בסיסיים** | 5/10 | 🟢 V בלבד | string · number · boolean · array type · type · interface · .ts · tsc | lesson_26 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 16 | **TypeScript — טיפוסים בסיסיים** | 5/10 | 🟢 V בלבד | string · number · boolean · array type · type · interface · .ts · tsc | lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 17 | **טיפוסים פרימיטיביים ב-JavaScript** | 4/10 | 🟢 V בלבד | string · number · boolean · undefined | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 18 | **מתודות שינוי-במקום של מערך (push/pop/shift/unshift/splice)** | 5/10 | 🟢 V בלבד | push · pop · shift · unshift · splice | lesson_11 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 19 | **בחירת אלמנטים ב-DOM (getElementBy* / querySelector)** | 5/10 | 🟢 V בלבד | getElementById · getElementsByClassName · getElementsByTagName · querySelector · querySelectorAll · DOM element | lesson_13, lesson_24 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 20 | **ניווט בעץ ה-DOM (child / parent / sibling)** | 6/10 | 🟡 גבולי + V | child component · parent component | lesson_13, lesson_22 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 18 | **מתודות שינוי-במקום של מערך (push/pop/shift/unshift/splice)** | 5/10 | 🟢 V בלבד | push · pop · shift · unshift · splice | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 19 | **בחירת אלמנטים ב-DOM (getElementBy* / querySelector)** | 5/10 | 🟢 V בלבד | getElementById · getElementsByClassName · getElementsByTagName · querySelector · querySelectorAll · DOM element | lesson_13, lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 20 | **ניווט בעץ ה-DOM (child / parent / sibling)** | 6/10 | 🟡 גבולי + V | child component · parent component | lesson_13, lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 21 | **פקודות npm (install / run / scripts / init / publish)** | 4/10 | 🟢 V בלבד | npm · npm install · npm run dev · npm scripts · npm init · package.json | lesson_16, lesson_21 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 22 | **טיפול בשגיאות (try / catch / finally / throw / Error)** | 7/10 | 🔴 חובה למלא | try · catch · throw · Error · error | lesson_15 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 23 | **אירועי DOM (click / keydown / submit / change / load)** | 6/10 | 🟡 גבולי + V | event · Event · onChange | lesson_13, lesson_22 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 24 | **ניווט ב-React Router (Link / NavLink / Route / useNavigate)** | 6/10 | 🟡 גבולי + V | Link · Route · Routes · Router · BrowserRouter · useNavigate · useParams · Path · to · URL | lesson_23 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 25 | **JSON.parse ↔ JSON.stringify** | 5/10 | 🟢 V בלבד | JSON | lesson_15, lesson_16 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 22 | **טיפול בשגיאות (try / catch / finally / throw / Error)** | 7/10 | 🔴 חובה למלא | try · catch · throw · Error · error | lesson_15 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 23 | **אירועי DOM (click / keydown / submit / change / load)** | 6/10 | 🟡 גבולי + V | event · Event · onChange | lesson_13, lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 24 | **ניווט ב-React Router (Link / NavLink / Route / useNavigate)** | 6/10 | 🟡 גבולי + V | Link · Route · Routes · Router · BrowserRouter · useNavigate · useParams · Path · to · URL | lesson_23 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 25 | **JSON.parse ↔ JSON.stringify** | 5/10 | 🟢 V בלבד | JSON | lesson_15, lesson_16 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 26 | **המרה למספר: parseInt / parseFloat / Number()** | 4/10 | 🟢 V בלבד | Number | lesson_11 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
 | 27 | **בדיקת סוג: typeof / instanceof / Array.isArray** | 6/10 | 🟡 גבולי + V |  | lesson_11, lesson_15 | ✅ §16 | 4/4 T✓ O✓ M✓ C✓ |
-| 28 | **מתודות מחרוזת (split/slice/substring/replace/includes/indexOf)** | 5/10 | 🟢 V בלבד | uppercase · lowercase | lesson_11, lesson_12 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 28 | **מתודות מחרוזת (split/slice/substring/replace/includes/indexOf)** | 5/10 | 🟢 V בלבד | uppercase · lowercase | lesson_11, lesson_12 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 29 | **Math: floor / ceil / round / random / max / min** | 4/10 | 🟢 V בלבד |  | lesson_11 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
 | 30 | **Spread (...) ↔ Rest (...) — אותו תחביר, תפקידים הפוכים** | 6/10 | 🟡 גבולי + V | spread | lesson_11, lesson_15 | ✅ §14 | 4/4 T✓ O✓ M✓ C✓ |
 | 31 | **Destructuring: array vs object** | 6/10 | 🟡 גבולי + V | destructuring | lesson_11, lesson_15 | ✅ §19 | 4/4 T✓ O✓ M✓ C✓ |
 | 32 | **Template literals ↔ string concatenation** | 4/10 | 🟢 V בלבד |  | lesson_11 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
 | 33 | **Set ↔ Map ↔ Object — מבני נתונים אסוציאטיביים** | 7/10 | 🔴 חובה למלא | Map | lesson_15, lesson_19 | ✅ §13 | 4/4 T✓ O✓ M✓ C✓ |
-| 34 | **Object.keys / values / entries / assign** | 5/10 | 🟢 V בלבד |  | lesson_13, lesson_19 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 35 | **Shallow ↔ Deep copy (spread / Object.assign / structuredClone / JSON trick)** | 7/10 | 🔴 חובה למלא |  | lesson_11, lesson_22 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 34 | **Object.keys / values / entries / assign** | 5/10 | 🟢 V בלבד |  | lesson_13, lesson_19 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 35 | **Shallow ↔ Deep copy (spread / Object.assign / structuredClone / JSON trick)** | 7/10 | 🔴 חובה למלא |  | lesson_11, lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 36 | **Date.now() ↔ new Date() ↔ Date.parse()** | 4/10 | 🟢 V בלבד |  | lesson_15 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
 | 37 | **Promise.all / race / allSettled / any** | 8/10 | 🔴 חובה למלא |  | lesson_15, lesson_24 | ✅ §9 | 4/4 T✓ O✓ M✓ C✓ |
 | 38 | **Callback ↔ Promise.then ↔ async/await — 3 דורות + סנכרוני/אסינכרוני** | 8/10 | 🔴 חובה למלא | Promise · then · catch · catch (Promise) · Synchronous · Asynchronous · resolve · reject | lesson_15 | ✅ §10 | 4/4 T✓ O✓ M✓ C✓ |
-| 39 | **setTimeout / setInterval / requestAnimationFrame** | 6/10 | 🟡 גבולי + V | setTimeout | lesson_15, lesson_24 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 39 | **setTimeout / setInterval / requestAnimationFrame** | 6/10 | 🟡 גבולי + V | setTimeout | lesson_15, lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 40 | **Microtask ↔ Macrotask — Event Loop** | 9/10 | 🔴 חובה למלא | event loop | lesson_15 | ✅ §8 | 4/4 T✓ O✓ M✓ C✓ |
-| 41 | **fetch / XMLHttpRequest / axios** | 6/10 | 🟡 גבולי + V | fetch | lesson_24 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 41 | **fetch / XMLHttpRequest / axios** | 6/10 | 🟡 גבולי + V | fetch | lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 42 | **innerHTML / innerText / textContent** | 6/10 | 🟡 גבולי + V | innerHTML | lesson_13 | ✅ §20 | 4/4 T✓ O✓ M✓ C✓ |
-| 43 | **appendChild / append / insertBefore / replaceChild** | 5/10 | 🟢 V בלבד | appendChild · replaceChild | lesson_13 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 44 | **createElement / createTextNode / cloneNode** | 5/10 | 🟢 V בלבד | createElement | lesson_13 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 43 | **appendChild / append / insertBefore / replaceChild** | 5/10 | 🟢 V בלבד | appendChild · replaceChild | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 44 | **createElement / createTextNode / cloneNode** | 5/10 | 🟢 V בלבד | createElement | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 45 | **classList: add / remove / toggle / contains** | 4/10 | 🟢 V בלבד |  | lesson_13 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 46 | **setAttribute / getAttribute / dataset / property** | 5/10 | 🟢 V בלבד | setAttribute | lesson_13 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 46 | **setAttribute / getAttribute / dataset / property** | 5/10 | 🟢 V בלבד | setAttribute | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 47 | **event.target ↔ event.currentTarget ↔ this** | 7/10 | 🔴 חובה למלא |  | lesson_13 | ✅ §21 | 4/4 T✓ O✓ M✓ C✓ |
 | 48 | **preventDefault / stopPropagation / return false** | 6/10 | 🟡 גבולי + V |  | lesson_13, lesson_22 | ✅ §22 | 4/4 T✓ O✓ M✓ C✓ |
 | 49 | **HTTP Status: 2xx / 3xx / 4xx / 5xx** | 5/10 | 🟢 V בלבד |  | lesson_17 | ✅ §28 | 4/4 T✓ O✓ M✓ C✓ |
 | 50 | **req.params / req.query / req.body / req.headers** | 5/10 | 🟢 V בלבד | body | lesson_17 | ✅ §29 | 4/4 T✓ O✓ M✓ C✓ |
-| 51 | **app.use / app.get|post|put|delete / next()** | 6/10 | 🟡 גבולי + V | app.use · app.get · app.post · middleware | lesson_17 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 51 | **app.use / app.get|post|put|delete / next()** | 6/10 | 🟡 גבולי + V | app.use · app.get · app.post · middleware | lesson_17 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 52 | **res.send / res.json / res.render / res.redirect** | 4/10 | 🟢 V בלבד |  | lesson_17 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 53 | **find / findOne / findById / findOneAndUpdate** | 6/10 | 🟡 גבולי + V | find · findOne · findOneAndUpdate | lesson_20 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 54 | **create / insertOne / save / bulkWrite** | 5/10 | 🟢 V בלבד | create · insertOne · insertMany | lesson_20 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 55 | **MongoDB Operators: $set / $push / $pull / $inc** | 6/10 | 🟡 גבולי + V |  | lesson_20 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 53 | **find / findOne / findById / findOneAndUpdate** | 6/10 | 🟡 גבולי + V | find · findOne · findOneAndUpdate | lesson_20 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 54 | **create / insertOne / save / bulkWrite** | 5/10 | 🟢 V בלבד | create · insertOne · insertMany | lesson_20 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 55 | **MongoDB Operators: $set / $push / $pull / $inc** | 6/10 | 🟡 גבולי + V |  | lesson_20 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 56 | **Schema / Model / Document / populate** | 7/10 | 🔴 חובה למלא | Schema · Model · Document · Mongoose | lesson_20 | ✅ §30 | 4/4 T✓ O✓ M✓ C✓ |
-| 57 | **Function ↔ Class component ↔ HOC** | 6/10 | 🟡 גבולי + V |  | lesson_21 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 57 | **Function ↔ Class component ↔ HOC** | 6/10 | 🟡 גבולי + V |  | lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 58 | **useState ↔ useReducer ↔ useRef ↔ Class.setState — כל וריאציות ה-state** | 8/10 | 🔴 חובה למלא | useState · useRef · setState | lesson_22 | ✅ §32 | 4/4 T✓ O✓ M✓ C✓ |
 | 59 | **Array Reference — כל ההפניות, ההעתקות, וה-mutation של מערכים** | 9/10 | 🔴 חובה למלא | array reference · object reference · splice · push · spread | lesson_11, lesson_22 | ✅ §33 | 4/4 T✓ O✓ M✓ C✓ |
-| 60 | **JSX & React Rendering — איך React הופך קוד לתצוגה** | 7/10 | 🔴 חובה למלא | JSX · rendering | lesson_21 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 60 | **JSX & React Rendering — איך React הופך קוד לתצוגה** | 7/10 | 🔴 חובה למלא | JSX · rendering | lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 61 | **TypeScript ב-React — Props/State/Hooks Typing** | 7/10 | 🔴 חובה למלא | React + TypeScript · Typing Props · Function Prop Type · interface vs type · union · Union Type · Type Narrowing | lesson_26, lesson_27 | ✅ §37 | 4/4 T✓ O✓ M✓ C✓ |
 | 62 | **AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning** | 8/10 | 🔴 חובה למלא | RAG · tool calling · agent loop · fine-tuning boundary | lesson_ai_engineering | ✅ §38 | 4/4 T✓ O✓ M✓ C✓ |
 | 63 | **useMemo / useCallback / React.memo + memoization** | 8/10 | 🔴 חובה למלא | useMemo · memoization | lesson_24 | ✅ §12 | 4/4 T✓ O✓ M✓ C✓ |
 | 64 | **Dependency array: [] / [x] / [x,y] / ללא + cleanup + infinite loop** | 9/10 | 🔴 חובה למלא | dependency array · cleanup · infinite loop · fetching data | lesson_24 | ✅ §11 | 4/4 T✓ O✓ M✓ C✓ |
 | 65 | **Fragment ↔ <></> ↔ <div>** | 4/10 | 🟢 V בלבד |  | lesson_21 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 66 | **Controlled ↔ Uncontrolled component** | 7/10 | 🔴 חובה למלא | controlled input | lesson_22 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 67 | **children prop ↔ render prop ↔ slot** | 7/10 | 🔴 חובה למלא |  | lesson_21, lesson_23 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 68 | **Error Boundary ↔ try/catch ↔ Promise.catch — איפה כל אחד תופס** | 8/10 | 🔴 חובה למלא |  | lesson_24 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 66 | **Controlled ↔ Uncontrolled component** | 7/10 | 🔴 חובה למלא | controlled input | lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 67 | **children prop ↔ render prop ↔ slot** | 7/10 | 🔴 חובה למלא |  | lesson_21, lesson_23 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 68 | **Error Boundary ↔ try/catch ↔ Promise.catch — איפה כל אחד תופס** | 8/10 | 🔴 חובה למלא |  | lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 69 | **type ↔ interface** | 6/10 | 🟡 גבולי + V | type alias · interface | lesson_26 | ✅ §26 | 4/4 T✓ O✓ M✓ C✓ |
 | 70 | **unknown ↔ any ↔ never** | 7/10 | 🔴 חובה למלא | any · never | lesson_26 | ✅ §27 | 4/4 T✓ O✓ M✓ C✓ |
-| 71 | **Partial / Required / Omit / Pick** | 7/10 | 🔴 חובה למלא | Readonly | lesson_26 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 72 | **enum ↔ as const ↔ literal union** | 6/10 | 🟡 גבולי + V | enum | lesson_26 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 73 | **public / private / protected / readonly** | 5/10 | 🟢 V בלבד | readonly | lesson_26 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 74 | **Session ↔ JWT ↔ OAuth — 3 שיטות אימות** | 8/10 | 🔴 חובה למלא | JWT · OAuth | lesson_auth_security | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 75 | **Cookie flags: httpOnly / Secure / SameSite** | 7/10 | 🔴 חובה למלא | Secure cookie · secure cookie | lesson_auth_security | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 76 | **Refresh token ↔ Access token** | 7/10 | 🔴 חובה למלא | refresh token · access token | lesson_auth_security | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 71 | **Partial / Required / Omit / Pick** | 7/10 | 🔴 חובה למלא | Readonly | lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 72 | **enum ↔ as const ↔ literal union** | 6/10 | 🟡 גבולי + V | enum | lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 73 | **public / private / protected / readonly** | 5/10 | 🟢 V בלבד | readonly | lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 74 | **Session ↔ JWT ↔ OAuth — 3 שיטות אימות** | 8/10 | 🔴 חובה למלא | JWT · OAuth | lesson_auth_security | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 75 | **Cookie flags: httpOnly / Secure / SameSite** | 7/10 | 🔴 חובה למלא | Secure cookie · secure cookie | lesson_auth_security | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 76 | **Refresh token ↔ Access token** | 7/10 | 🔴 חובה למלא | refresh token · access token | lesson_auth_security | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 77 | **display: block / inline / inline-block / flex / grid** | 6/10 | 🟡 גבולי + V | flex · grid | lesson_html_css_foundations, lesson_25 | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
 | 78 | **position: static / relative / absolute / fixed / sticky** | 7/10 | 🔴 חובה למלא |  | lesson_html_css_foundations | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
 | 79 | **em / rem / px / % / vh / vw** | 5/10 | 🟢 V בלבד |  | lesson_html_css_foundations, lesson_25 | ✅ §31 (CSS summary) | 2/4 T✓ O✓ M✗ C✗ |
@@ -196,18 +196,18 @@
 | 81 | **Flexbox: direction / justify-content / align-items / flex-wrap** | 6/10 | 🟡 גבולי + V |  | lesson_25 | ✅ §31 (CSS summary) | 2/4 T✓ O✓ M✗ C✗ |
 | 82 | **Grid: template-columns / template-rows / gap / grid-area** | 7/10 | 🔴 חובה למלא |  | lesson_25 | ✅ §31 (CSS summary) | 2/4 T✓ O✓ M✗ C✗ |
 | 83 | **box-sizing: content-box ↔ border-box** | 4/10 | 🟢 V בלבד |  | lesson_html_css_foundations | ✅ §31 (CSS summary) | 2/4 T✓ O✓ M✗ C✗ |
-| 84 | **git add / commit / push / pull — 4 פקודות הליבה** | 5/10 | 🟢 V בלבד | staging area · working tree | lesson_tooling_git | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 85 | **git merge ↔ git rebase** | 7/10 | 🔴 חובה למלא |  | lesson_tooling_git | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 86 | **dependencies / devDependencies / peerDependencies** | 4/10 | 🟢 V בלבד | dependencies | lesson_16 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 87 | **npm ↔ yarn ↔ pnpm** | 5/10 | 🟢 V בלבד |  | lesson_16 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 88 | **ESLint ↔ Prettier ↔ TypeScript** | 5/10 | 🟢 V בלבד | ESLint · Prettier | lesson_tooling_git, lesson_26 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 84 | **git add / commit / push / pull — 4 פקודות הליבה** | 5/10 | 🟢 V בלבד | staging area · working tree | lesson_tooling_git | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 85 | **git merge ↔ git rebase** | 7/10 | 🔴 חובה למלא |  | lesson_tooling_git | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 86 | **dependencies / devDependencies / peerDependencies** | 4/10 | 🟢 V בלבד | dependencies | lesson_16 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 87 | **npm ↔ yarn ↔ pnpm** | 5/10 | 🟢 V בלבד |  | lesson_16 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 88 | **ESLint ↔ Prettier ↔ TypeScript** | 5/10 | 🟢 V בלבד | ESLint · Prettier | lesson_tooling_git, lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 89 | **SSR ↔ SSG ↔ CSR ↔ ISR** | 7/10 | 🔴 חובה למלא | SSR · SSG · ISR | lesson_nextjs | ✅ §25 | 4/4 T✓ O✓ M✓ C✓ |
 | 90 | **Vercel ↔ Netlify ↔ Cloudflare Pages** | 5/10 | 🟢 V בלבד | Vercel deploy | lesson_devops_deploy, lesson_nextjs | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 91 | **Docker: container / image / volume / network** | 6/10 | 🟡 גבולי + V | container · image · volume · Dockerfile | lesson_devops_deploy | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 91 | **Docker: container / image / volume / network** | 6/10 | 🟡 גבולי + V | container · image · volume · Dockerfile | lesson_devops_deploy | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 92 | **CI ↔ CD — Continuous Integration vs Delivery** | 5/10 | 🟢 V בלבד | CI · CD · GitHub workflow | lesson_devops_deploy, lesson_tooling_git | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
 | 93 | **Function declaration ↔ expression ↔ arrow ↔ IIFE** | 7/10 | 🔴 חובה למלא | anonymous function | lesson_11, lesson_15 | ✅ §15 | 4/4 T✓ O✓ M✓ C✓ |
-| 94 | **Mutable ↔ Immutable update patterns** | 7/10 | 🔴 חובה למלא |  | lesson_22 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
-| 95 | **ternary ↔ if-else ↔ switch** | 4/10 | 🟢 V בלבד | switch | lesson_11 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 94 | **Mutable ↔ Immutable update patterns** | 7/10 | 🔴 חובה למלא |  | lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 95 | **ternary ↔ if-else ↔ switch** | 4/10 | 🟢 V בלבד | switch | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 96 | **OOP & Classes Basics** | 6/10 | 🟡 גבולי + V | class · extends · super · constructor · instance · method · Method · new · Property · inheritance | lesson_13, lesson_19 | ✅ §95 | 3/4 T✓ O✓ M✗ C✓ |
 | 97 | **DOM Basics** | 5/10 | 🟢 V בלבד | DOM · Document Object Model · style · attribute · Value | lesson_13, lesson_19 | ✅ §96 | 3/4 T✓ O✓ M✗ C✓ |
 | 98 | **Browser Storage Full** | 5/10 | 🟢 V בלבד | setItem · getItem · cookies | lesson_13, lesson_19 | ✅ §97 | 3/4 T✓ O✓ M✗ C✓ |
@@ -256,7 +256,7 @@
 
 > **מקרא רכיבי מילוי (4 לכל קלסטר):** T = Table · O = Overview 6-levels · M = Per-Member 6-levels · C = Code blocks 6-levels
 
-**סטטוס כולל:** 393 / 560 רכיבים מולאו (70%) · 34 קלסטרים מלאים 4/4 מתוך 140
+**סטטוס כולל:** 479 / 560 רכיבים מולאו (86%) · 77 קלסטרים מלאים 4/4 מתוך 140
 
 ### 📊 סיכום קלסטרים לפי קושי (כל אחד נחשב כמושג-על אחד)
 
