@@ -650,6 +650,75 @@ var QUESTIONS_BANK = {
     // lesson_sql_orm: Prisma
     {id:"mc_lsql_prisma_002",topicId:"topic_sql",conceptKey:"lesson_sql_orm::Prisma",level:5,question:"מה היתרון של prisma.course.create({ data: { ... } }) על-פני raw SQL INSERT?",options:["type-safe: TypeScript יודע מה fields תקינים; auto-generate types מ-schema; validates at compile time","faster","simpler string","auto SQL"],correctIndex:0,explanation:"Prisma Client = type-safe query builder. schema.prisma → generate → prisma.course.create מוגדר typings.",optionFeedback:["✅ נכון. type-safety + DX.","❌ raw SQL יכול להיות מהיר יותר לcomplex queries.","❌ strings = less safe.","❌ query builder, לא just auto SQL."]},
 
+    // ----- SESSION A: lesson_19 + lesson_17 batch 2026-05-02 -----
+    // lesson_19::DOM (mc=1→3, fill=0→1)
+    {id:"mc_l19_dom_002",topicId:"topic_dom",conceptKey:"lesson_19::DOM",level:3,question:"מה ההבדל בין getElementById לבין querySelector?",options:["getElementById מחפש רק לפי id; querySelector מקבל כל CSS selector (class, tag, attribute)","getElementById מהיר יותר תמיד","querySelector מחזיר מערך","אין הבדל"],correctIndex:0,explanation:"querySelector('#id') = אותה תוצאה כמו getElementById אבל גמיש יותר. querySelectorAll מחזיר NodeList.",optionFeedback:["✅ נכון. querySelector = כל CSS selector.","❌ ביצועים דומים במנועים מודרניים.","❌ querySelector מחזיר element בודד; querySelectorAll מחזיר NodeList.","❌ ההבדל בסוג ה-selector."]},
+    {id:"mc_l19_dom_003",topicId:"topic_dom",conceptKey:"lesson_19::DOM",level:4,question:"מה ההבדל בין textContent לבין innerHTML?",options:["textContent מציב טקסט גולמי (בטוח מ-XSS); innerHTML מפרש HTML — מסוכן עם user input","textContent מהיר יותר","innerHTML תמיד בטוח","אין הבדל"],correctIndex:0,explanation:"innerHTML עם user input = XSS. תמיד השתמש ב-textContent לtekst שמגיע מהמשתמש. innerHTML טוב לtemplates שאתה שולט בהם.",optionFeedback:["✅ נכון. textContent = safe, innerHTML = risky.","❌ ביצועים לא הנקודה העיקרית.","❌ innerHTML + user data = XSS risk.","❌ ההבדל ביצירת HTML vs text."]},
+    // lesson_19::let (mc=1→3, fill=0→1)
+    {id:"mc_l19_let_002",topicId:"topic_variables",conceptKey:"lesson_19::let",level:4,question:"מה TDZ (Temporal Dead Zone)?",options:["האזור בין תחילת ה-block לשורת ה-let/const — גישה למשתנה שם זורקת ReferenceError","זמן בו var undefined","let vs const הבדל","hoisting של function"],correctIndex:0,explanation:"let/const hoisted אבל לא מאותחלים. גישה לפני ההצהרה = ReferenceError: Cannot access 'x' before initialization.",optionFeedback:["✅ נכון. TDZ = pre-initialization zone.","❌ var מאותחל ל-undefined בhoisting — לא TDZ.","❌ TDZ חל על גם let וגם const.","❌ TDZ לא קשור לfunctions."]},
+    {id:"mc_l19_let_003",topicId:"topic_variables",conceptKey:"lesson_19::let",level:5,question:"למה let עדיף על var בתוך לולאה?",options:["let יוצר binding חדש לכל iteration — closures בתוך הלולאה תופסות ערך נכון; var = binding אחד משותף","let מהיר יותר","let = const","var לא עובד בלולאות"],correctIndex:0,explanation:"for (let i=0; i<3; i++) { setTimeout(()=>console.log(i)) } — מדפיס 0,1,2. עם var — מדפיס 3,3,3.",optionFeedback:["✅ נכון. per-iteration binding.","❌ ביצועים זהים.","❌ let ניתן לreassign; const לא.","❌ var עובד, אבל עם closure gotcha."]},
+    // lesson_19::const (mc=1→3, fill=0→1)
+    {id:"mc_l19_const_002",topicId:"topic_variables",conceptKey:"lesson_19::const",level:3,question:"מה מותר לעשות עם const object?",options:["לשנות properties שלו (obj.x = 1) — const מונע reassign של הbinding, לא mutation של ה-value","כלום — const = frozen","לhoist לפני ההגדרה","לשנות את הreference"],correctIndex:0,explanation:"const arr = []; arr.push(1) ✅. const obj = {}; obj.x = 5 ✅. arr = [] ❌ — זה reassignment.",optionFeedback:["✅ נכון. const = no reassign, mutation OK.","❌ Object.freeze() מקפיא; const לא.","❌ const בTDZ כמו let.","❌ reassignment = error."]},
+    {id:"mc_l19_const_003",topicId:"topic_variables",conceptKey:"lesson_19::const",level:4,question:"למה עדיף const כברירת מחדל?",options:["מסמן שה-binding לא ישתנה — הקוד ברור יותר; אם צריך לשנות, ה-lint יאמר להחליף ל-let","const מהיר יותר","const = immutable לחלוטין","אין סיבה"],correctIndex:0,explanation:"best practice: const first, let רק כשצריך reassignment. מונע accidental reassignment ומשפר readability.",optionFeedback:["✅ נכון. intent signaling.","❌ V8 מאפשר optimization לשניהם.","❌ object שב-const ניתן ל-mutation.","❌ ESLint prefer-const rule קיים מסיבה."]},
+    // lesson_19::arrow function (mc=1→3, fill=0→1)
+    {id:"mc_l19_arrow_002",topicId:"topic_functions",conceptKey:"lesson_19::arrow function",level:4,question:"מה implicit return ב-arrow function?",options:["ביטול {} מחזיר את ה-expression אוטומטית: const double = x => x * 2 — אין צורך ב-return","משתנה גלובלי","this","arrow בלי parameters"],correctIndex:0,explanation:"x => x*2 = implicit return. x => { return x*2; } = explicit return. object literal: x => ({ key: x }) — צריך ().",optionFeedback:["✅ נכון. concise body = implicit return.","❌ אין קשר לגלובל.","❌ arrow function לא מגדירה this.","❌ parameters אפשריים גם ב-implicit return."]},
+    {id:"mc_l19_arrow_003",topicId:"topic_functions",conceptKey:"lesson_19::arrow function",level:5,question:"למה arrow function לא מתאימה כmethod ב-object?",options:["arrow אינה מגדירה this משלה — this = context של ה-caller, לא ה-object; this.name = undefined","arrow יותר איטית","syntax שונה","אין הבדל"],correctIndex:0,explanation:"const obj = { name:'Tal', greet: () => this.name }; obj.greet() = undefined. כתוב greet() { return this.name; } במקום.",optionFeedback:["✅ נכון. arrow inherits this from enclosing scope.","❌ ביצועים זהים.","❌ syntax עובד אבל this לא.","❌ ההבדל ב-this binding משמעותי."]},
+    // lesson_19::switch (mc=1→3, fill=0→1)
+    {id:"mc_l19_switch_002",topicId:"topic_conditionals",conceptKey:"lesson_19::switch",level:3,question:"מה קורה כש-case ב-switch אין לו break?",options:["fall-through: ממשיך לריץ את ה-case הבא גם אם לא התאים — לרוב באג","error","הופך undefined","נעצר אוטומטית"],correctIndex:0,explanation:"switch('b') { case 'a': doA(); case 'b': doB(); case 'c': doC(); } — מריץ doB() + doC() בגלל fall-through.",optionFeedback:["✅ נכון. fall-through = common bug.","❌ JS לא זורק error.","❌ case ממשיך לרוץ.","❌ רק break עוצר."]},
+    {id:"mc_l19_switch_003",topicId:"topic_conditionals",conceptKey:"lesson_19::switch",level:4,question:"מתי switch עדיף על if/else if?",options:["כשבודקים ערך אחד מול מספר אפשרויות ידועות — קריאה יותר ברורה מ-10 if/else if רצופים","תמיד","בלולאות","כשיש boolean"],correctIndex:0,explanation:"switch לstring/number enum מרובה = readable. if/else עדיף לranges (age > 18), boolean conditions.",optionFeedback:["✅ נכון. switch = multi-value equality check.","❌ if/else גמיש יותר לconditions מורכבות.","❌ לולאות = while/for.","❌ boolean condition = if מתאים יותר."]},
+    // lesson_19::if/else (mc=1→3, fill=0→1)
+    {id:"mc_l19_ifelse_002",topicId:"topic_conditionals",conceptKey:"lesson_19::if/else",level:3,question:"מה ternary operator?",options:["קיצור של if/else: condition ? valueIfTrue : valueIfFalse — מחזיר ערך","לולאה","function","בדיקת type"],correctIndex:0,explanation:"const label = age >= 18 ? 'בוגר' : 'קטין'; — שורה אחת במקום 4. מתאים לexpressions, לא לstatements.",optionFeedback:["✅ נכון. ternary = inline if/else expression.","❌ לולאות = for/while.","❌ function = הגדרת פונקציה.","❌ typeof = type check."]},
+    {id:"mc_l19_ifelse_003",topicId:"topic_conditionals",conceptKey:"lesson_19::if/else",level:4,question:"מה הבדל בין == לבין ===?",options:["=== בודק value + type (strict); == ממיר type לפני השוואה — עלול לגרום תקלות","== מהיר יותר","=== רק מספרים","אין הבדל בJS מודרני"],correctIndex:0,explanation:"'5' == 5 = true; '5' === 5 = false. תמיד === ב-JS. == עם null: null == undefined = true — gotcha.",optionFeedback:["✅ נכון. === = strict equality.","❌ === לא יותר איטי.","❌ === עובד על כל types.","❌ ההבדל קיים ומסוכן."]},
+    // lesson_17::POST (mc=1→3, fill=0→1)
+    {id:"mc_l17_POST_002",topicId:"topic_express",conceptKey:"lesson_17::POST",level:3,question:"מה מבדיל POST מ-GET מבחינת HTTP?",options:["POST שולח data ב-body (לא ב-URL) — מתאים ליצירת resource; GET שולח ב-URL params","POST מהיר יותר","POST = JSON בלבד","GET לא מוגבל"],correctIndex:0,explanation:"GET = idempotent, URL-visible, cached. POST = side effects (create), body payload, לא cached.",optionFeedback:["✅ נכון. body vs URL.","❌ ביצועים לא קשורים לmethod.","❌ POST יכול לשלוח כל content-type.","❌ GET מוגבל ב-URL length."]},
+    {id:"mc_l17_POST_003",topicId:"topic_express",conceptKey:"lesson_17::POST",level:4,question:"מה status code מתאים לתגובת POST מוצלחת?",options:["201 Created — מציין שresource חדש נוצר; 200 OK לעדכון/query","200","204","302"],correctIndex:0,explanation:"POST → 201 Created + body עם ה-resource החדש. לפעמים 200 OK כשלא נוצר resource. 204 = No Content (DELETE/PUT).",optionFeedback:["✅ נכון. 201 = resource created.","❌ 200 = OK לקריאות/עדכונים.","❌ 204 = success without body (DELETE).","❌ 302 = redirect."]},
+    // lesson_17::1xx-2xx-3xx (mc=1→3, fill=0→1)
+    {id:"mc_l17_1xx_002",topicId:"topic_express",conceptKey:"lesson_17::1xx-2xx-3xx",level:4,question:"מה 304 Not Modified?",options:["הבקשה נשלחה עם If-None-Match/If-Modified-Since — שרת מחזיר 304 כשה-cache תקף; הbrowser טוען מ-cache","דף לא נמצא","שגיאת שרת","redirect"],correctIndex:0,explanation:"304 = conditional GET. שרת לא שולח body — הbrowser משתמש בcopy שיש לו. חוסך bandwidth.",optionFeedback:["✅ נכון. cache revalidation.","❌ 404 = Not Found.","❌ 5xx = server errors.","❌ 301/302 = redirect."]},
+    {id:"mc_l17_1xx_003",topicId:"topic_express",conceptKey:"lesson_17::1xx-2xx-3xx",level:4,question:"מה ה-status code הנכון לבקשת DELETE מוצלחת בלי body?",options:["204 No Content — הפעולה הצליחה אבל אין body להחזיר","200","201","202"],correctIndex:0,explanation:"DELETE → 204 No Content = success, no body. 200 גם תקין אם מחזירים ה-deleted resource.",optionFeedback:["✅ נכון. 204 = success, no body.","❌ 200 = כשיש body.","❌ 201 = created (POST).","❌ 202 = accepted (async)."]},
+    // lesson_17::JSON (mc=1→3, fill=0→1)
+    {id:"mc_l17_json_002",topicId:"topic_express",conceptKey:"lesson_17::JSON",level:3,question:"מה JSON.parse עושה?",options:["ממיר JSON string ל-JS object: JSON.parse('{\"name\":\"Tal\"}') = { name: 'Tal' }","ממיר object לstring","שולח HTTP request","validates JSON"],correctIndex:0,explanation:"JSON.parse = deserialize. JSON.stringify = serialize. parse זורק SyntaxError על JSON לא-תקין.",optionFeedback:["✅ נכון. JSON.parse = string→object.","❌ JSON.stringify = object→string.","❌ JSON לא קשור לHTTP ישירות.","❌ JSON.parse זורק error על invalid JSON."]},
+    {id:"mc_l17_json_003",topicId:"topic_express",conceptKey:"lesson_17::JSON",level:4,question:"מה ה-Content-Type הנכון לתגובת JSON?",options:["application/json — מציין לbrowser ול-client שה-body הוא JSON; res.json() מגדיר אותו אוטומטית","text/plain","text/html","application/xml"],correctIndex:0,explanation:"res.json(data) = res.setHeader('Content-Type','application/json') + JSON.stringify(data) + res.send().",optionFeedback:["✅ נכון. application/json.","❌ text/plain = טקסט רגיל.","❌ text/html = HTML דפים.","❌ application/xml = XML format."]},
+    // lesson_17::app.use (mc=1→3, fill=0→1)
+    {id:"mc_l17_appuse_002",topicId:"topic_express",conceptKey:"lesson_17::app.use",level:4,question:"מה הסדר הנכון של app.use() ב-Express?",options:["middleware מוגדר לפני ה-routes שצריכים אותו — סדר הגדרה = סדר הרצה","לא משנה הסדר","אחרי כל routes","בסוף בלבד"],correctIndex:0,explanation:"app.use(express.json()) חייב לפני app.post. app.use(errorHandler) חייב אחרי כל routes. סדר = pipeline.",optionFeedback:["✅ נכון. order matters.","❌ Express pipeline תלוי-סדר.","❌ middleware לפני routes שמשתמשות בו.","❌ error handler בסוף, שאר middleware לפני."]},
+    {id:"mc_l17_appuse_003",topicId:"topic_express",conceptKey:"lesson_17::app.use",level:5,question:"מה path prefix ב-app.use('/api', router)?",options:["כל requests שמתחילים ב-/api מנותבים ל-router הזה — הrouter רואה path מקוצר (ללא /api)","routes מוכפלות","/api נחסם","רק GET /api"],correctIndex:0,explanation:"app.use('/api', userRouter) + router.get('/users') = app שלם מקשיב ל-GET /api/users.",optionFeedback:["✅ נכון. prefix mounting.","❌ router מקבל stripped path.","❌ /api לא חסום — מנותב.","❌ כל methods (GET/POST/DELETE...)."]},
+    // lesson_17::body (mc=1→3, fill=0→1)
+    {id:"mc_l17_body_002",topicId:"topic_express",conceptKey:"lesson_17::body",level:3,question:"מה req.body ב-Express?",options:["תוכן ה-HTTP request body לאחר parsing על-ידי middleware — זמין רק כשיש express.json()","URL params","headers","query string"],correctIndex:0,explanation:"req.body = undefined ללא middleware. אחרי app.use(express.json()): req.body = parsed JSON object.",optionFeedback:["✅ נכון. parsed body from middleware.","❌ req.params = URL path params.","❌ req.headers = HTTP headers.","❌ req.query = ?key=value."]},
+    {id:"mc_l17_body_003",topicId:"topic_express",conceptKey:"lesson_17::body",level:4,question:"מה הבדל בין req.body לבין req.params?",options:["req.body = HTTP body (JSON ב-POST/PUT); req.params = URL path variables (:id)","body = query","params = headers","אין הבדל"],correctIndex:0,explanation:"POST /api/users + body {name:'Tal'} → req.body.name. GET /api/users/:id → req.params.id.",optionFeedback:["✅ נכון. body=payload, params=path vars.","❌ req.query = ?key=value.","❌ params לא headers.","❌ הבדל מהותי."]},
+    // lesson_17::Express (mc=1→3, fill=0→1)
+    {id:"mc_l17_express_003",topicId:"topic_express",conceptKey:"lesson_17::Express",level:3,question:"מה express.Router()?",options:["mini-application שמאפשר לחלק routes לקבצים נפרדים ולאחר מכן לeMount על app הראשי","שרת נפרד","database connection","middleware בלבד"],correctIndex:0,explanation:"const router = express.Router(); router.get('/users', handler); app.use('/api', router). מודולריות.",optionFeedback:["✅ נכון. Router = route grouping.","❌ router לא שרת עצמאי.","❌ router לא קשור ל-DB.","❌ router יכול להכיל routes + middleware."]},
+    // lesson_19::script (mc=2→3, fill=0→1)
+    {id:"mc_l19_script_003",topicId:"topic_dom",conceptKey:"lesson_19::script",level:4,question:"מה ההבדל בין defer לבין async ב-<script>?",options:["defer: מוריד ברקע, מריץ לפי סדר HTML אחרי parse; async: מוריד ברקע, מריץ מיד כשמוכן (לא מסודר)","defer מהיר יותר","async = defer","async חוסם"],correctIndex:0,explanation:"defer = scripts תלויות-סדר (DOM ready). async = scripts עצמאיות (analytics). שניהם לא חוסמים HTML parse.",optionFeedback:["✅ נכון. defer=ordered, async=unordered.","❌ async מהיר יותר לscripts עצמאיות.","❌ שניהם שונים בסדר הרצה.","❌ async לא חוסם — להיפך."]},
+    // lesson_19::alert (mc=2→3, fill=0→1)
+    {id:"mc_l19_alert_003",topicId:"topic_dom",conceptKey:"lesson_19::alert",level:3,question:"מה חסרון של alert() בפיתוח מקצועי?",options:["חוסם את ה-event loop — המשתמש חייב ללחוץ OK לפני שהקוד ממשיך; עיצוב לא-ניתן לcustomize","מהיר מדי","לא עובד ב-Node.js","מחזיר undefined"],correctIndex:0,explanation:"alert() = modal blocking. מונע scroll/click. UX גרוע. השתמש ב-toast notification / console.log לdebug.",optionFeedback:["✅ נכון. blocking + not customizable.","❌ alert איטי יחסית — חוסם thread.","❌ נכון, alert browser-only — לא חסרון אלא עובדה.","❌ alert מחזיר undefined — נכון אבל לא החסרון העיקרי."]},
+    // lesson_19::camelCase (mc=2→3, fill=0→1)
+    {id:"mc_l19_camel_003",topicId:"topic_variables",conceptKey:"lesson_19::camelCase",level:3,question:"מה naming convention נכון לqfunkciat handler לאירוע click?",options:["handleClick — camelCase; מתאר פעולה + אירוע","handle_click (snake_case)","HandleClick (PascalCase)","handle-click (kebab-case)"],correctIndex:0,explanation:"JS convention: camelCase לmethods/functions. PascalCase לClasses/React Components. kebab-case = CSS classes.",optionFeedback:["✅ נכון. handleClick = camelCase.","❌ snake_case = Python/SQL convention.","❌ PascalCase = classes/React components.","❌ kebab-case = CSS, לא JS identifiers."]},
+    // lesson_19::debugger (mc=2→3, fill=0→1)
+    {id:"mc_l19_debugger_003",topicId:"topic_dom",conceptKey:"lesson_19::debugger",level:4,question:"מה קורה כש-DevTools סגור ו-debugger statement מגיע?",options:["לא קורה כלום — debugger פעיל רק כש-DevTools פתוח; לא משפיע על users בפרודקשן","נעצר תמיד","error","crash"],correctIndex:0,explanation:"debugger נתעלם ב-production ללא DevTools. בכל זאת, הסר debugger statements לפני commit — eslint no-debugger.",optionFeedback:["✅ נכון. DevTools required.","❌ נעצר רק עם DevTools פתוח.","❌ לא error, נתעלם.","❌ לא crash."]},
+    // lesson_19::parameter (mc=2→3, fill=0→1)
+    {id:"mc_l19_param_003",topicId:"topic_functions",conceptKey:"lesson_19::parameter",level:4,question:"מה default parameter ב-JavaScript?",options:["function greet(name = 'World') { } — אם name לא הועבר (undefined), ישתמש ב-'World'","הglobal value","optional chaining","null fallback"],correctIndex:0,explanation:"default parameters החל מ-ES6. עובד גם: const fn = (x = 10) => x. null != undefined — null לא מפעיל default.",optionFeedback:["✅ נכון. ES6 default params.","❌ default אינו global.","❌ optional chaining (?.) = property access.","❌ null לא מפעיל default — רק undefined."]},
+    // lesson_19::do while (mc=2→3, fill=0→1)
+    {id:"mc_l19_dowhile_003",topicId:"topic_loops",conceptKey:"lesson_19::do while",level:4,question:"מתי do/while מתאים יותר מ-while?",options:["כשרוצים שהלולאה תרוץ לפחות פעם אחת — למשל prompt עד שמשתמש מזין ערך תקין","תמיד","בלולאות עם index","כשיש break"],correctInput:0,correctIndex:0,explanation:"do { input = prompt('...'); } while (!valid(input)); — תמיד מציג prompt לפחות פעם אחת.",optionFeedback:["✅ נכון. guaranteed first run.","❌ while מתאים כשאפשר 0 iterations.","❌ for = index-based iterations.","❌ break קיים בכל לולאה."]},
+    // lesson_19::find (mc=1→3, fill=1→2)
+    {id:"mc_l19_find_002",topicId:"topic_arrays",conceptKey:"lesson_19::find",level:3,question:"מה find() מחזיר אם לא נמצא match?",options:["undefined — בשונה מfindIndex שמחזיר -1 כשלא נמצא","null","false","[]"],correctIndex:0,explanation:"users.find(u => u.id === 99) = undefined אם אין user עם id 99. תמיד בדוק if (result) לפני שמשתמשים בו.",optionFeedback:["✅ נכון. find → undefined if no match.","❌ null = explicit null value, לא default.","❌ false = boolean, לא default.","❌ [] = ריק array — זה filter."]},
+    {id:"mc_l19_find_003",topicId:"topic_arrays",conceptKey:"lesson_19::find",level:4,question:"מה ההבדל בין find() לבין filter()?",options:["find() מחזיר element בודד (הראשון שמתאים); filter() מחזיר array של כל שמתאים","find = מהיר יותר","filter = ראשון בלבד","אין הבדל"],correctIndex:0,explanation:"find = ראשון או undefined. filter = כל matches (array, גם ריק). בחר find כש-ID unique, filter כשרוצה רשימה.",optionFeedback:["✅ נכון. find=first/undefined, filter=array.","❌ find נעצר אחרי match ראשון — כן מהיר.","❌ filter = כל matches.","❌ ההבדל ב-return type."]},
+    // lesson_19::reduce (mc=1→3, fill=1→2)
+    {id:"mc_l19_reduce_002",topicId:"topic_arrays",conceptKey:"lesson_19::reduce",level:4,question:"מה תפקיד ה-accumulator ב-reduce()?",options:["ה-running result שעובר מiteration לiteration — מאוחסן ומוחזר בסוף","ה-current element","ה-index","ה-array המקורי"],correctIndex:0,explanation:"reduce((acc, cur) => acc + cur, 0) — acc מתחיל ב-0, מקבל תוצאת כל iteration, מוחזר בסוף.",optionFeedback:["✅ נכון. acc = running result.","❌ cur = current element.","❌ index = 3rd param.","❌ array = 4th param."]},
+    {id:"mc_l19_reduce_003",topicId:"topic_arrays",conceptKey:"lesson_19::reduce",level:5,question:"איך reduce() יוצר object מarray?",options:["reduce((acc, item) => ({ ...acc, [item.id]: item }), {}) — initial value = {} (ריק)","לא אפשרי","map + object","forEach"],correctIndex:0,explanation:"reduce יכול לבנות כל דבר: sum, object map, flatten. initial value קריטי — {} לobject, [] לarray, 0 לsum.",optionFeedback:["✅ נכון. reduce → object with computed keys.","❌ reduce גמיש מאוד.","❌ map → array; reduce → כל דבר.","❌ forEach לא מחזיר ערך."]},
+    // lesson_19::object (mc=1→3, fill=1→2)
+    {id:"mc_l19_object_002",topicId:"topic_objects",conceptKey:"lesson_19::object",level:3,question:"מה bracket notation ב-object?",options:["obj['key'] — מאפשר גישה לproperty עם שם דינמי או שם עם רווחים/מקפים; dot notation לא יעבוד","syntax חלופי בלבד","ביצועים טובים יותר","רק מחרוזות"],correctIndex:0,explanation:"const key = 'name'; obj[key] — dot notation לא יעבוד. גם obj['first-name'] = תקין; obj.first-name = SyntaxError.",optionFeedback:["✅ נכון. dynamic key access.","❌ יש הבדל: bracket מאפשר dynamic.","❌ ביצועים זהים.","❌ bracket עם number: arr[0], עם variable."]},
+    {id:"mc_l19_object_003",topicId:"topic_objects",conceptKey:"lesson_19::object",level:4,question:"מה shorthand property ב-ES6 object?",options:["כשה-variable שם זהה ל-key: { name, age } במקום { name: name, age: age }","auto-complete","template","none"],correctIndex:0,explanation:"const name = 'Tal'; const user = { name, age: 30 }; — name: name מקוצר ל-name. Destructuring הפוך.",optionFeedback:["✅ נכון. shorthand property syntax.","❌ IDE feature, לא JS syntax.","❌ template literals = backtick strings.","❌ shorthand קיים ונפוץ."]},
+    // lesson_17::body-parser (mc=1→3, fill=1→2)
+    {id:"mc_l17_bodyparser_002",topicId:"topic_express",conceptKey:"lesson_17::body-parser",level:4,question:"למה express.json() מחליף את body-parser?",options:["Express 4.16+ כולל express.json() ו-express.urlencoded() מובנים — אין צורך בpackage נפרד","express.json() מהיר יותר","body-parser deprecated","הם אינם זהים"],correctIndex:0,explanation:"קודם: const bodyParser = require('body-parser'); app.use(bodyParser.json()). היום: app.use(express.json()). תוצאה זהה.",optionFeedback:["✅ נכון. built-in in Express 4.16+.","❌ ביצועים זהים.","❌ body-parser לא deprecated, פשוט מיותר.","❌ פונקציונליות זהה."]},
+    {id:"mc_l17_bodyparser_003",topicId:"topic_express",conceptKey:"lesson_17::body-parser",level:4,question:"מה express.urlencoded() מפרסר?",options:["form data שנשלח עם Content-Type: application/x-www-form-urlencoded (HTML forms רגילות)","JSON","binary","multipart"],correctIndex:0,explanation:"<form method='POST'> שולח urlencoded. express.urlencoded({ extended: true }) = מפרסר form data ל-req.body.",optionFeedback:["✅ נכון. urlencoded = HTML form POST.","❌ JSON = express.json().","❌ binary/multipart = multer.","❌ urlencoded ≠ JSON."]},
+    // lesson_17::app.post (mc=1→3, fill=1→2)
+    {id:"mc_l17_apppost_002",topicId:"topic_express",conceptKey:"lesson_17::app.post",level:4,question:"מה הפרמטרים של route handler ב-app.post?",options:["(req, res, next) — req=request, res=response, next=להמשך ל-middleware הבא","(req, res) בלבד","(res, req)","(data, callback)"],correctIndex:0,explanation:"app.post('/path', (req, res) => { }). next() להעברה ל-middleware הבא (שימושי לerror handling).",optionFeedback:["✅ נכון. (req, res, next).","❌ next אופציונלי אבל קיים.","❌ סדר חשוב: req לפני res.","❌ Express convention ≠ Node callbacks."]},
+    {id:"mc_l17_apppost_003",topicId:"topic_express",conceptKey:"lesson_17::app.post",level:5,question:"מה best practice לטיפול ב-async/await ב-route handler?",options:["try/catch בתוך ה-handler: async (req, res) => { try { ... } catch(e) { res.status(500).json({ error: e.message }); } }","לא להשתמש ב-async","await ישירות","Promise.then בלבד"],correctIndex:0,explanation:"בלי try/catch — unhandled rejection. Express 5 מטפל אוטומטית. Express 4: try/catch חובה.",optionFeedback:["✅ נכון. try/catch in async handler.","❌ async/await = קוד ברור יותר.","❌ await ללא try/catch = unhandled rejection.","❌ .then/.catch מסורבל ב-Express handlers."]},
+    // lesson_17::4xx-5xx (mc=1→3, fill=1→2)
+    {id:"mc_l17_4xx_002",topicId:"topic_express",conceptKey:"lesson_17::4xx-5xx",level:3,question:"מה הbdifference בין 401 לבין 403?",options:["401 Unauthorized = לא מזוהה (token חסר/שגוי); 403 Forbidden = מזוהה אבל אין הרשאה לresource","401 = server error","403 = redirect","זהים"],correctIndex:0,explanation:"401 → יש לlogout ולlogin מחדש. 403 → logged in אבל אין permission (admin-only resource).",optionFeedback:["✅ נכון. 401=authn, 403=authz.","❌ 5xx = server errors.","❌ 3xx = redirects.","❌ הבדל משמעותי ב-auth flows."]},
+    {id:"mc_l17_4xx_003",topicId:"topic_express",conceptKey:"lesson_17::4xx-5xx",level:4,question:"מתי שולחים 422 Unprocessable Entity?",options:["כשה-body תקין מבחינת syntax (JSON) אבל הdata לא עובר validation (חסר שדה required, email לא תקין)","crash","404","202"],correctIndex:0,explanation:"400 Bad Request = syntax error. 422 = semantics error (valid JSON, invalid data). validation errors.",optionFeedback:["✅ נכון. 422 = semantic validation failure.","❌ 5xx = server crash.","❌ 404 = not found.","❌ 202 = accepted for async processing."]},
+    // lesson_17::REST API (mc=2→3, fill=0→1)
+    {id:"mc_l17_rest_003",topicId:"topic_express",conceptKey:"lesson_17::REST API",level:5,question:"מה stateless ב-REST?",options:["כל request מכיל את כל המידע הדרוש — השרת לא שומר session state בין requests; auth token בכל request","server שומר state","HTTP/2 only","JSON only"],correctIndex:0,explanation:"stateless = scalable. כל request self-contained. auth: JWT token בכל request. session state = anti-REST.",optionFeedback:["✅ נכון. stateless = self-contained requests.","❌ stateful sessions = anti-REST pattern.","❌ REST לא תלוי ב-HTTP version.","❌ REST לא מחייב JSON."]},
+
     // ----- workbook_taskmanager — 12 missing -----
     {id:"mc_wb_taskmgr_001",topicId:"topic_workbook",conceptKey:"workbook_taskmanager::Task Manager",level:3,question:"מה features בסיסיים ב-Task Manager?",options:["add, list, complete, delete, persist (localStorage)","ML","AI","API"],correctIndex:0,explanation:"קומפוננטות בסיסיות לתרגול state, events, DOM, storage."},
     {id:"mc_wb_vars_001",topicId:"topic_workbook",conceptKey:"workbook_taskmanager::variables",level:2,question:"איך שומרים רשימת tasks?",options:["let tasks = []; (array of objects)","DB","API","string"],correctIndex:0,explanation:"In-memory array; persistent ב-localStorage."},
@@ -14461,6 +14530,257 @@ var QUESTIONS_BANK = {
       answer: "cleanup",
       hint: "פונקציה שמנקה משאבים כשהקומפוננטה unmount.",
       explanation: "Cleanup function = מה שמוחזר מ-useEffect. נקראת כשהקומפוננטה unmount. מנקה subscriptions, timers.",
+    },
+
+    // ----- SESSION A FILLS: lesson_19 + lesson_17 batch 2026-05-02 -----
+    // lesson_19::DOM
+    {
+      id: "fill_l19_dom_001", topicId: "topic_dom", conceptKey: "lesson_19::DOM",
+      level: 3,
+      code: "const el = document.____('#title');\nel.textContent = 'שלום!';",
+      answer: "querySelector",
+      hint: "מתודה שמקבלת CSS selector ומחזירה את ה-element הראשון שמתאים.",
+      explanation: "querySelector = flexible selector. getElementById = id בלבד. querySelectorAll = כל matches (NodeList).",
+    },
+    {
+      id: "fill_l19_dom_002", topicId: "topic_dom", conceptKey: "lesson_19::DOM",
+      level: 4,
+      code: "const btn = document.querySelector('#submit');\nbtn.addEventListener('____', () => {\n  console.log('נלחץ!');\n});",
+      answer: "click",
+      hint: "שם האירוע להאזנה ללחיצה על כפתור.",
+      explanation: "addEventListener('click', handler) = מאזין לcClick. גם: 'input', 'submit', 'keydown', 'mouseover'.",
+    },
+    // lesson_19::let
+    {
+      id: "fill_l19_let_001", topicId: "topic_variables", conceptKey: "lesson_19::let",
+      level: 3,
+      code: "// block-scoped — קיים רק בתוך ה-{}\n{\n  ____ x = 10;\n  console.log(x); // 10\n}\n// console.log(x); // ReferenceError",
+      answer: "let",
+      hint: "מילת מפתח לmutable, block-scoped variable.",
+      explanation: "let = block-scoped + TDZ. בשונה מvar שfunction-scoped. ניתן לreassign, בשונה מconst.",
+    },
+    {
+      id: "fill_l19_let_002", topicId: "topic_variables", conceptKey: "lesson_19::let",
+      level: 5,
+      code: "for (____ i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 100);\n}\n// מדפיס: 0, 1, 2 (לא 3,3,3)",
+      answer: "let",
+      hint: "מילת המפתח שיוצרת per-iteration binding בלולאה.",
+      explanation: "let בfor = binding חדש לכל iteration. closures תופסות ערך שונה. var = binding אחד משותף → 3,3,3.",
+    },
+    // lesson_19::const
+    {
+      id: "fill_l19_const_001", topicId: "topic_variables", conceptKey: "lesson_19::const",
+      level: 3,
+      code: "____ MAX_RETRIES = 3;\n// MAX_RETRIES = 5; // ← TypeError: Assignment to constant variable",
+      answer: "const",
+      hint: "מילת מפתח לmutable binding שלא ניתן לreassign.",
+      explanation: "const = no reassign. naming: UPPER_CASE לconstants primitive. const arr = []; arr.push(1) ✅ (mutation, לא reassign).",
+    },
+    // lesson_19::arrow function
+    {
+      id: "fill_l19_arrow_001", topicId: "topic_functions", conceptKey: "lesson_19::arrow function",
+      level: 3,
+      code: "const double = ____ => n * 2;\nconsole.log(double(5)); // 10",
+      answer: "n",
+      hint: "שם הפרמטר של ה-arrow function החד-שורתית.",
+      explanation: "n => n * 2 = implicit return. פרמטר בודד = ללא (). מספר פרמטרים = (a, b) => a + b.",
+    },
+    {
+      id: "fill_l19_arrow_002", topicId: "topic_functions", conceptKey: "lesson_19::arrow function",
+      level: 4,
+      code: "const users = [{ name: 'Tal' }, { name: 'Dana' }];\nconst names = users.map(____ => u.name);\nconsole.log(names); // ['Tal', 'Dana']",
+      answer: "u",
+      hint: "שם הפרמטר ב-arrow function שמועברת ל-map.",
+      explanation: "arrow function concise עם implicit return. map מעביר (element, index, array) — לרוב משתמשים רק ב-element.",
+    },
+    // lesson_19::switch
+    {
+      id: "fill_l19_switch_001", topicId: "topic_conditionals", conceptKey: "lesson_19::switch",
+      level: 3,
+      code: "switch (day) {\n  ____ 'Sunday':\n    return 'ראשון';\n  default:\n    return 'יום אחר';\n}",
+      answer: "case",
+      hint: "מילת מפתח שמגדירה בדיקת ערך בתוך switch.",
+      explanation: "case 'Sunday': = בודק אם day === 'Sunday'. ללא break → fall-through לcase הבא.",
+    },
+    // lesson_19::if/else
+    {
+      id: "fill_l19_ifelse_001", topicId: "topic_conditionals", conceptKey: "lesson_19::if/else",
+      level: 3,
+      code: "if (score >= 60) {\n  console.log('עבר');\n} ____ {\n  console.log('נכשל');\n}",
+      answer: "else",
+      hint: "מילת מפתח שמגדירה מה קורה כשה-condition שקרי.",
+      explanation: "else ללא condition. else if להוספת conditions נוספות. ternary: score>=60 ? 'עבר' : 'נכשל'.",
+    },
+    // lesson_17::POST
+    {
+      id: "fill_l17_POST_001", topicId: "topic_express", conceptKey: "lesson_17::POST",
+      level: 4,
+      code: "await fetch('/api/users', {\n  method: '____',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ name: 'Tal' })\n});",
+      answer: "POST",
+      hint: "HTTP method ליצירת resource חדש.",
+      explanation: "POST = יצירת resource. method חייב uppercase. headers + body נדרשים לJSON POST.",
+    },
+    // lesson_17::1xx-2xx-3xx
+    {
+      id: "fill_l17_1xx_001", topicId: "topic_express", conceptKey: "lesson_17::1xx-2xx-3xx",
+      level: 4,
+      code: "app.post('/api/users', (req, res) => {\n  const newUser = { id: users.length + 1, ...req.body };\n  users.push(newUser);\n  res.status(____).json(newUser);\n});",
+      answer: "201",
+      hint: "HTTP status code שמציין שresource חדש נוצר בהצלחה.",
+      explanation: "201 Created = הbest practice ל-POST מוצלח. מגיע עם ה-resource החדש ב-body.",
+    },
+    // lesson_17::JSON
+    {
+      id: "fill_l17_json_001", topicId: "topic_express", conceptKey: "lesson_17::JSON",
+      level: 3,
+      code: "const obj = { name: 'Tal', age: 30 };\nconst text = JSON.____(obj);\nconsole.log(typeof text); // 'string'",
+      answer: "stringify",
+      hint: "מתודה שממירה JS object ל-JSON string.",
+      explanation: "JSON.stringify = serialize. JSON.parse = deserialize. stringify שולח; parse קולט. typeof result = 'string'.",
+    },
+    // lesson_17::app.use
+    {
+      id: "fill_l17_appuse_001", topicId: "topic_express", conceptKey: "lesson_17::app.use",
+      level: 3,
+      code: "const app = express();\n// registers body parsing middleware globally\napp.____(express.json());",
+      answer: "use",
+      hint: "מתודה ב-Express לרישום middleware גלובלי.",
+      explanation: "app.use() מוסיף middleware לpipeline. express.json() = body parser. express.static() = serve files.",
+    },
+    // lesson_17::body
+    {
+      id: "fill_l17_body_001", topicId: "topic_express", conceptKey: "lesson_17::body",
+      level: 3,
+      code: "app.post('/api/users', (req, res) => {\n  const { name, email } = req.____;\n  // name = 'Tal', email = 'tal@example.com'\n});",
+      answer: "body",
+      hint: "property של request object שמכיל את ה-parsed JSON body.",
+      explanation: "req.body = parsed request body. זמין רק אחרי app.use(express.json()). ללא middleware = undefined.",
+    },
+    // lesson_17::Express
+    {
+      id: "fill_l17_express_001", topicId: "topic_express", conceptKey: "lesson_17::Express",
+      level: 3,
+      code: "const ____ = require('express');\nconst app = express();\napp.listen(3000);",
+      answer: "express",
+      hint: "שם ה-package שמיובא ב-require.",
+      explanation: "require('express') = טוען את חבילת Express. app = instance. listen = מתחיל לקשיב ל-port.",
+    },
+    // lesson_19::script
+    {
+      id: "fill_l19_script_001", topicId: "topic_dom", conceptKey: "lesson_19::script",
+      level: 3,
+      code: "<!-- סוף ה-body, לפני </body> -->\n<____ src=\"app.js\"></script>",
+      answer: "script",
+      hint: "HTML tag לטעינת JavaScript.",
+      explanation: "<script src='app.js'> בסוף body = HTML נטען לפני JS. defer/async = גם בhead אבל לא חוסמים.",
+    },
+    // lesson_19::alert
+    {
+      id: "fill_l19_alert_001", topicId: "topic_dom", conceptKey: "lesson_19::alert",
+      level: 2,
+      code: "// הצגת הודעת שגיאה למשתמש\n____('שגיאה: הזן שם תקין');",
+      answer: "alert",
+      hint: "פונקציית browser שמציגה dialog עם הודעה.",
+      explanation: "alert() = blocking modal. בפיתוח מקצועי: השתמש ב-console.log לdebug, toast/notification לUX.",
+    },
+    // lesson_19::camelCase
+    {
+      id: "fill_l19_camel_001", topicId: "topic_variables", conceptKey: "lesson_19::camelCase",
+      level: 2,
+      code: "// camelCase: first word lowercase, each next word starts uppercase\nconst ____ = 'dana@example.com'; // user email",
+      answer: "userEmail",
+      hint: "שם משתנה ב-camelCase ל'user email'.",
+      explanation: "camelCase: userEmail, firstName, totalPrice. לא: user_email (snake_case) ולא UserEmail (PascalCase לclasses).",
+    },
+    // lesson_19::debugger
+    {
+      id: "fill_l19_debugger_001", topicId: "topic_dom", conceptKey: "lesson_19::debugger",
+      level: 3,
+      code: "function calcTax(price) {\n  ____; // ← breakpoint פרוגרמטי\n  const tax = price * 0.17;\n  return price + tax;\n}",
+      answer: "debugger",
+      hint: "מילת מפתח שגורמת ל-DevTools לעצור כאן.",
+      explanation: "debugger = breakpoint בקוד. DevTools חייב פתוח. בלי DevTools — נתעלם. הסר לפני commit.",
+    },
+    // lesson_19::parameter
+    {
+      id: "fill_l19_param_001", topicId: "topic_functions", conceptKey: "lesson_19::parameter",
+      level: 3,
+      code: "function greet(____ = 'World') {\n  return 'Hello ' + name;\n}\ngreet(); // 'Hello World'\ngreet('Tal'); // 'Hello Tal'",
+      answer: "name",
+      hint: "שם הפרמטר עם default value.",
+      explanation: "default parameter: name = 'World'. אם לא הועבר → 'World'. null לא מפעיל default — רק undefined.",
+    },
+    // lesson_19::do while
+    {
+      id: "fill_l19_dowhile_001", topicId: "topic_loops", conceptKey: "lesson_19::do while",
+      level: 3,
+      code: "let attempts = 0;\ndo {\n  attempts++;\n} ____ (attempts < 3);\nconsole.log(attempts); // 3",
+      answer: "while",
+      hint: "מילת המפתח שמגיעה אחרי ה-block ב-do/while.",
+      explanation: "do { } while (condition) = תמיד רץ פעם אחת לפחות. while בסוף — הבדיל בין do/while לwhile.",
+    },
+    // lesson_19::find (2nd fill)
+    {
+      id: "fill_l19_find_002", topicId: "topic_arrays", conceptKey: "lesson_19::find",
+      level: 4,
+      code: "const users = [{ id: 1, name: 'Tal' }, { id: 2, name: 'Dana' }];\nconst found = users.____(u => u.name === 'Dana');\nconsole.log(found); // { id: 2, name: 'Dana' }",
+      answer: "find",
+      hint: "מתודת array שמחזירה את ה-element הראשון שעובר את ה-predicate.",
+      explanation: "find = הראשון שmatch. לא נמצא → undefined. findIndex → index (או -1). filter → כל ה-matches.",
+    },
+    // lesson_19::reduce (2nd fill)
+    {
+      id: "fill_l19_reduce_002", topicId: "topic_arrays", conceptKey: "lesson_19::reduce",
+      level: 5,
+      code: "const prices = [10, 20, 30];\nconst total = prices.reduce((acc, cur) => acc + ____, 0);\nconsole.log(total); // 60",
+      answer: "cur",
+      hint: "ה-current element שמתווסף ל-accumulator בכל iteration.",
+      explanation: "reduce((acc, cur) => acc + cur, 0): acc = running total, cur = current price. 0 = initial acc.",
+    },
+    // lesson_19::object (2nd fill)
+    {
+      id: "fill_l19_object_002", topicId: "topic_objects", conceptKey: "lesson_19::object",
+      level: 4,
+      code: "const city = { population: 50000, country: 'Israel' };\nconsole.log(city.____); // 50000",
+      answer: "population",
+      hint: "גישה לproperty בשם 'population' מה-object.",
+      explanation: "dot notation: obj.property. bracket notation: obj['property']. שניהם מחזירים אותו ערך.",
+    },
+    // lesson_17::body-parser (2nd fill)
+    {
+      id: "fill_l17_bodyparser_002", topicId: "topic_express", conceptKey: "lesson_17::body-parser",
+      level: 4,
+      code: "// Express 4.16+ — ללא package נוסף\napp.use(express.____());\n// עכשיו req.body זמין ב-POST/PUT handlers",
+      answer: "json",
+      hint: "שם המתודה של express שמחזירה JSON middleware.",
+      explanation: "express.json() = built-in body parser. מחליף את body-parser package. מגדיר req.body מ-JSON body.",
+    },
+    // lesson_17::app.post (2nd fill)
+    {
+      id: "fill_l17_apppost_002", topicId: "topic_express", conceptKey: "lesson_17::app.post",
+      level: 4,
+      code: "app.post('/api/todos', async (req, ____) => {\n  try {\n    const todo = await Todo.create(req.body);\n    res.status(201).json(todo);\n  } catch (e) {\n    res.status(500).json({ error: e.message });\n  }\n});",
+      answer: "res",
+      hint: "שם ה-response object בroute handler.",
+      explanation: "res = response object. res.status().json() = שולח JSON response. res.send() = שולח string.",
+    },
+    // lesson_17::4xx-5xx (2nd fill)
+    {
+      id: "fill_l17_4xx_002", topicId: "topic_express", conceptKey: "lesson_17::4xx-5xx",
+      level: 3,
+      code: "app.get('/api/users/:id', (req, res) => {\n  const user = users.find(u => u.id === +req.params.id);\n  if (!user) return res.status(____).json({ error: 'Not found' });\n  res.json(user);\n});",
+      answer: "404",
+      hint: "HTTP status code שמציין שה-resource לא נמצא.",
+      explanation: "404 Not Found = resource לא קיים. 400 = bad request. 422 = valid syntax, invalid data. 500 = server error.",
+    },
+    // lesson_17::REST API
+    {
+      id: "fill_l17_rest_001", topicId: "topic_express", conceptKey: "lesson_17::REST API",
+      level: 4,
+      code: "// RESTful routes pattern\napp.get('/api/users', getAll);\napp.get('/api/users/:id', getOne);\napp.____(  '/api/users', create);\napp.put('/api/users/:id', update);\napp.delete('/api/users/:id', remove);",
+      answer: "post",
+      hint: "HTTP method ליצירת resource חדש (Create ב-CRUD).",
+      explanation: "app.post = Create. GET=Read, PUT/PATCH=Update, DELETE=Delete. URL + method = הגדרת resource action.",
     },
   ],
 };
