@@ -29745,19 +29745,24 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateAchievementsRail() {
     try {
       const lessons = window.LESSONS_DATA || [];
-      let total = 0, passed = 0, mastered = 0;
+      let total = 0, passed = 0, mastered = 0, levelSum = 0;
       lessons.forEach((lesson) => {
         (lesson.concepts || []).forEach((concept) => {
           total += 1;
           const sc = (typeof getScore === "function") ? getScore(lesson.id, concept.conceptName) : { level: 0 };
           const lvl = Number(sc.level || 0);
+          levelSum += Math.min(7, lvl);
           if (lvl >= 5) passed += 1;
           if (lvl >= 7) mastered += 1;
         });
       });
+      const performancePct = total > 0 ? Math.round((levelSum / (total * 7)) * 100) : 0;
       const passedEl = document.getElementById("ach-passed-value");
       const masteredEl = document.getElementById("ach-mastered-value");
       const pocketEl = document.getElementById("ach-pocket-value");
+      const xpEl = document.getElementById("ach-xp-value");
+      const nameEl = document.getElementById("ach-student-name");
+      const perfEl = document.getElementById("ach-perf-value");
       if (passedEl) passedEl.textContent = `${passed}/${total}`;
       if (masteredEl) masteredEl.textContent = `${mastered}/${total}`;
       if (pocketEl) {
@@ -29768,6 +29773,33 @@ document.addEventListener("DOMContentLoaded", () => {
           pocketEl.textContent = "0";
         }
       }
+      // Student name from active profile
+      if (nameEl) {
+        try {
+          const profilesRaw = localStorage.getItem("lumenportal:profiles:v1");
+          const activeId = localStorage.getItem("lumenportal:activeProfile:v1");
+          if (profilesRaw && activeId) {
+            const profiles = JSON.parse(profilesRaw);
+            const me = Array.isArray(profiles) ? profiles.find((p) => p && p.id === activeId) : null;
+            if (me && me.name) nameEl.textContent = String(me.name).slice(0, 20);
+          }
+        } catch (_) {}
+      }
+      // XP from getXP if available
+      if (xpEl && typeof window.__lumenGetXP === "function") {
+        try { xpEl.textContent = String(window.__lumenGetXP()); } catch (_) {}
+      } else if (xpEl) {
+        try {
+          const profilePrefix = (function() {
+            const id = localStorage.getItem("lumenportal:activeProfile:v1");
+            return id ? `lumenportal:profile:${id}:` : "";
+          })();
+          const xpKey = profilePrefix + "lumenportal:xp:v1";
+          const raw = localStorage.getItem(xpKey) || localStorage.getItem("lumenportal:xp:v1") || "0";
+          xpEl.textContent = String(parseInt(raw, 10) || 0);
+        } catch (_) {}
+      }
+      if (perfEl) perfEl.textContent = `${performancePct}%`;
     } catch (_) {}
   }
   if (typeof window !== "undefined") {

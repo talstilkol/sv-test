@@ -47,6 +47,22 @@
             <span class="ach-nav-label">בית</span>
           </button>
           <span class="ach-rail-divider" aria-hidden="true"></span>
+          <!-- UX 2026-05-02: Student name + XP + performance summary -->
+          <span class="ach-rail-item ach-student" title="הפרופיל הפעיל">
+            <span class="ach-icon">👤</span>
+            <span class="ach-value" id="ach-student-name">תלמיד</span>
+          </span>
+          <span class="ach-rail-item ach-xp" title="נקודות ניסיון שצברת">
+            <span class="ach-icon">⚡</span>
+            <span class="ach-label">XP</span>
+            <span class="ach-value" id="ach-xp-value">0</span>
+          </span>
+          <span class="ach-rail-item ach-perf" title="ביצועים כלליים — ממוצע רמת מושגים">
+            <span class="ach-icon">📈</span>
+            <span class="ach-label">ביצועים</span>
+            <span class="ach-value" id="ach-perf-value">0%</span>
+          </span>
+          <span class="ach-rail-divider" aria-hidden="true"></span>
           <span class="ach-rail-item ach-passed" title="כמה מושגים עברת (רמה 5+) מתוך כל המושגים">
             <span class="ach-icon">✅</span>
             <span class="ach-label">עברתי</span>
@@ -1443,7 +1459,7 @@
     <!-- P4.6.4 — HTML sanitization must patch legacy rendering before app.js -->
     <script src="lib/vendor/dompurify.min.js"></script>
     <script src="src/core/sanitize-early.js"></script>
-    <script src="app.js?v=l19-fills-v95"></script>
+    <script src="app.js?v=top-bar-perf-v96"></script>
     <script type="module" src="/src/main.js?v=core-bootstrap-v2"></script>
 
     <!-- W12 — Achievements overlay -->

@@ -13,7 +13,7 @@ const SHELL_ASSETS = [
   "/style.css",
   "/style.css?v=concept-sprint-v69",
   "/app.js",
-  "/app.js?v=l19-fills-v95",
+  "/app.js?v=top-bar-perf-v96",
   "/content-loader.js",
   "/content-loader.js?v=content-validation-v1",
   "/src/main.js",

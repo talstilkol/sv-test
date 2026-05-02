@@ -29,7 +29,7 @@ describe("SVCollege PWA offline smoke", () => {
 
     expect(assets).toEqual(expect.arrayContaining([
       "/style.css?v=concept-sprint-v69",
-      "/app.js?v=l19-fills-v95",
+      "/app.js?v=top-bar-perf-v96",
       "/src/main.js?v=core-bootstrap-v2",
       "/src/core/question-prerequisites.js?v=question-prereq-v2",
       "/src/core/outcome-loop.js",

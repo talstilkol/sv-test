@@ -128,7 +128,7 @@ function buildReport() {
     checks,
     "offline-shell-updated",
     "Current app/cache shell includes the latest museum access assets",
-    html.includes("app.js?v=l19-fills-v95") &&
+    html.includes("app.js?v=top-bar-perf-v96") &&
       html.includes("style.css?v=concept-sprint-v69") &&
       read("service-worker.js").includes('const CACHE_VERSION = "lumen-v2.4.131-autosave"') &&
       css.includes(".museum-access-gate") &&
