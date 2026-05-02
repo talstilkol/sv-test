@@ -581,17 +581,17 @@ const CLUSTER_CONTENT_STATUS = {
   express_form_events:        { table: true, overview: true, perMember: false, codeBlocks: true },
   scope_chain_cluster:        { table: true, overview: true, perMember: false, codeBlocks: true },
   // ─── final orphan absorbers (round 2) ───
-  dom_remove_node:            { table: false, overview: false, perMember: false, codeBlocks: false },
-  error_objects:              { table: false, overview: false, perMember: false, codeBlocks: false },
-  if_else_cluster:            { table: false, overview: false, perMember: false, codeBlocks: false },
-  vite_creation:              { table: false, overview: false, perMember: false, codeBlocks: false },
-  react_hook_basics:          { table: false, overview: false, perMember: false, codeBlocks: false },
-  ts_advanced_types:          { table: false, overview: false, perMember: false, codeBlocks: false },
-  ts_app_models:              { table: false, overview: false, perMember: false, codeBlocks: false },
-  ai_engineering_full:        { table: false, overview: false, perMember: false, codeBlocks: false },
-  auth_attacks:               { table: false, overview: false, perMember: false, codeBlocks: false },
-  workbook_basics:            { table: false, overview: false, perMember: false, codeBlocks: false },
-  ai_dev_tools:               { table: false, overview: false, perMember: false, codeBlocks: false },
+  dom_remove_node:            { table: true, overview: true, perMember: false, codeBlocks: true },
+  error_objects:              { table: true, overview: true, perMember: false, codeBlocks: true },
+  if_else_cluster:            { table: true, overview: true, perMember: false, codeBlocks: true },
+  vite_creation:              { table: true, overview: true, perMember: false, codeBlocks: true },
+  react_hook_basics:          { table: true, overview: true, perMember: false, codeBlocks: true },
+  ts_advanced_types:          { table: true, overview: true, perMember: false, codeBlocks: true },
+  ts_app_models:              { table: true, overview: true, perMember: false, codeBlocks: true },
+  ai_engineering_full:        { table: true, overview: true, perMember: false, codeBlocks: true },
+  auth_attacks:               { table: true, overview: true, perMember: false, codeBlocks: true },
+  workbook_basics:            { table: true, overview: true, perMember: false, codeBlocks: true },
+  ai_dev_tools:               { table: true, overview: true, perMember: false, codeBlocks: true },
 };
 
 function clusterCompletionScore(clusterId) {

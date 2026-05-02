@@ -11471,6 +11471,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Returns cluster verification status: how many members user has verified vs needed
   function clusterVStatus(lessonId, conceptName) {
+    // Sprint 4: delegated to src/core/cluster-engine.js for testability
+    if (typeof window !== "undefined" && window.ClusterEngine) {
+      return window.ClusterEngine.computeClusterVStatus(
+        scores, conceptKey, correctNeededForV, lessonId, conceptName,
+      );
+    }
+    // Fallback (engine not loaded — shouldn't happen in production)
     const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
     const cluster = clusterApi ? clusterApi.findByConcept(lessonId, conceptName) : null;
     if (!cluster) return null;

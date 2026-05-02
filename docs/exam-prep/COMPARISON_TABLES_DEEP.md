@@ -8904,4 +8904,567 @@ fn();  // 2  — count persists in closure
 
 ---
 
-**עודכן:** 2026-05-02 23:35 · ידני · §95-§128 (30 orphan-absorber clusters) · §5/6/7 + 6-level translations · §32 useState · §33 array reference · 🔬 ניתוח מושגים בנפרד · 📦 בלוקי קוד ל-6 רמות (PHASE A)
+## 95-B. PHASE J round 2 — 11 final clusters
+
+> Last batch — covers the final orphans + workbook + AI dev tools.
+
+---
+
+### §129. DOM Node Removal — removeChild / remove
+
+🧓 דרכים למחוק אלמנט מ-DOM.
+👶 הסרת ילד או הסרה עצמית.
+💂 removeChild(child) legacy. element.remove() modern.
+🎓 returns removed node, can re-attach.
+👨‍💻 always check parent exists before removeChild.
+🎩 disconnectedCallback fires on custom elements.
+
+```js
+// 🧓 סבתא — legacy
+parent.removeChild(child);
+
+// 👶 ילד — modern
+child.remove();
+
+// 💂 חייל — multi-remove
+document.querySelectorAll(".old").forEach(el => el.remove());
+
+// 🎓 סטודנט — re-attach
+const removed = parent.removeChild(child);
+otherParent.appendChild(removed);
+
+// 👨‍💻 ג'וניור — defensive
+if (el && el.parentNode) el.parentNode.removeChild(el);
+
+// 🎩 פרופ׳ — MutationObserver detects
+const obs = new MutationObserver(muts => {
+  muts.forEach(m => m.removedNodes.forEach(n => log("removed", n)));
+});
+```
+
+---
+
+### §130. Error Objects — Error / TypeError / Exception / event object
+
+| Type | constructor / use |
+|---|---|
+| Error | base, generic |
+| TypeError | wrong type |
+| RangeError | out of range |
+| SyntaxError | parse error |
+| Exception | term for any thrown |
+| event object | { type, target, ... } |
+
+🧓 שגיאות הן אובייקטים. Exception=שם נוסף לזריקה.
+👶 Error בסיסי. TypeError ספציפי.
+💂 Error.message, Error.stack, Error.cause (ES2022).
+🎓 instanceof for type-narrowing in catch.
+👨‍💻 always extend Error for custom types.
+🎩 V8 captures stack on `new Error()`.
+
+```js
+// 🧓 סבתא
+try { JSON.parse("oops"); }
+catch (e) { console.log(e.message); }   // "Unexpected token..."
+
+// 👶 ילד — types
+new Error("generic");
+new TypeError("wrong type");
+new RangeError("out of range");
+
+// 💂 חייל — instanceof
+try { ... }
+catch (e) {
+  if (e instanceof TypeError) handleTypeError(e);
+  else if (e instanceof SyntaxError) handleSyntax(e);
+  else throw e;
+}
+
+// 🎓 סטודנט — error chaining
+try { await db.query(); }
+catch (cause) { throw new Error("DB failed", { cause }); }
+
+// 👨‍💻 ג'וניור — custom Error
+class ValidationError extends Error {
+  constructor(msg, field) {
+    super(msg);
+    this.name = "ValidationError";
+    this.field = field;
+  }
+}
+
+// 🎩 פרופ׳ — event object structure
+btn.addEventListener("click", (e) => {
+  e.type;        // "click"
+  e.target;      // <button>
+  e.timeStamp;   // ms since page load
+  e.bubbles;     // boolean
+});
+```
+
+---
+
+### §131. Vite Project Creation — npm create vite@latest
+
+🧓 פקודה ליצירת פרויקט Vite חדש.
+👶 דרך מהירה לפתוח React app.
+💂 npm create vite@latest my-app -- --template react.
+🎓 templates: vanilla, react, react-ts, vue, svelte, etc.
+👨‍💻 auto-installs dependencies, sets up dev server.
+🎩 uses scaffolding from create-vite npm package.
+
+```bash
+# 🧓 סבתא
+npm create vite@latest
+
+# 👶 ילד — name + template
+npm create vite@latest my-app -- --template react
+
+# 💂 חייל — TypeScript template
+npm create vite@latest my-app -- --template react-ts
+
+# 🎓 סטודנט — full setup
+npm create vite@latest my-app -- --template react-ts
+cd my-app
+npm install
+npm run dev   # → http://localhost:5173
+
+# 👨‍💻 ג'וניור — pnpm/yarn alternatives
+pnpm create vite my-app --template react
+yarn create vite my-app --template react
+
+# 🎩 פרופ׳ — community templates
+npm create vite@latest -- --template community/...
+```
+
+---
+
+### §132. React Hook fundamentals — Hook / mutable / immutable
+
+| Term | meaning |
+|---|---|
+| Hook | special React function (use*) |
+| mutable | can be changed in place |
+| immutable | requires new copy on update |
+| Rules of Hooks | only top-level, only in function components |
+
+🧓 Hook=פונקציה עם use. immutable=חייב לייצר חדש.
+👶 כללים מיוחדים לפונקציות hook.
+💂 Hooks must be called same order every render.
+🎓 React state must be updated immutably.
+👨‍💻 eslint-plugin-react-hooks enforces rules.
+🎩 Fiber stores hook state in linked list — order-dependent.
+
+```jsx
+// 🧓 סבתא
+const [n, setN] = useState(0);   // Hook usage
+
+// 👶 ילד — immutable update
+// ❌ mutate
+state.list.push(item);
+// ✅ immutable
+setState({ ...state, list: [...state.list, item] });
+
+// 💂 חייל — Rules of Hooks
+function Comp() {
+  const [a, setA] = useState(0);
+  if (cond) {
+    // ❌ conditional Hook!
+    const [b, setB] = useState(0);
+  }
+  return ...;
+}
+
+// 🎓 סטודנט — custom hooks
+function useToggle(initial = false) {
+  const [val, setVal] = useState(initial);
+  const toggle = useCallback(() => setVal(v => !v), []);
+  return [val, toggle];
+}
+
+// 👨‍💻 ג'וניור — immer for ergonomics
+import produce from "immer";
+setState(produce(draft => { draft.list.push(item); }));
+
+// 🎩 פרופ׳ — fiber memoizedState
+// Each Hook adds to fiber.memoizedState linked list
+// Position-dependent — that's why no conditional Hooks
+```
+
+---
+
+### §133. TS Advanced Types — tuple / void / Type Safety / Typing State
+
+| Concept | meaning |
+|---|---|
+| tuple | fixed-length array of typed slots |
+| void | function returns nothing |
+| Type Safety | compile-time checking |
+| TypeScript | language with static types |
+| Typing State | typing useState etc |
+| type annotation | `: Type` syntax |
+
+🧓 TS adds explicit types to JS.
+👶 צריך לכתוב מה כל משתנה.
+💂 type vs interface, generics, narrowing.
+🎓 strict mode catches more bugs.
+👨‍💻 typed useState, typed reducers.
+🎩 erasable types proposal — drop runtime cost.
+
+```ts
+// 🧓 סבתא
+let count: number = 5;
+let name: string = "Tal";
+
+// 👶 ילד — function
+function greet(name: string): void { console.log(name); }
+
+// 💂 חייל — tuple
+let coord: [number, number] = [10, 20];
+let entry: [string, number, boolean] = ["age", 30, true];
+
+// 🎓 סטודנט — typed useState
+const [user, setUser] = useState<User | null>(null);
+const [items, setItems] = useState<Item[]>([]);
+
+// 👨‍💻 ג'וניור — typed reducer
+type State = { count: number };
+type Action = { type: "INC" } | { type: "SET"; value: number };
+const reducer: React.Reducer<State, Action> = (s, a) => {
+  switch (a.type) {
+    case "INC": return { count: s.count + 1 };
+    case "SET": return { count: a.value };
+  }
+};
+
+// 🎩 פרופ׳ — readonly tuple
+type Point = readonly [number, number];
+const p: Point = [1, 2];
+// p[0] = 5;  // ❌ readonly
+```
+
+---
+
+### §134. TypeScript App Models — User/Book/Genre/Category/Expense/Income
+
+🧓 דוגמה למבנה types של אפליקציה.
+👶 טיפוסים שמתארים את המידע באפליקציה.
+💂 interface User, type Book, etc.
+🎓 inheritance via extends. composition via & or generics.
+👨‍💻 keep models in src/models/.
+🎩 branded types for ID safety.
+
+```ts
+// 🧓 סבתא — base
+interface BaseUser { id: number; name: string; }
+
+// 👶 ילד — specific users
+interface RegisteredUser extends BaseUser { email: string; }
+interface GuestUser extends BaseUser { sessionId: string; }
+type User = RegisteredUser | GuestUser;
+
+// 💂 חייל — domain models
+interface Book { id: number; title: string; genre: Genre; }
+type Genre = "fiction" | "non-fiction" | "tech";
+
+// 🎓 סטודנט — Budget Manager domain
+interface Expense {
+  id: number;
+  amount: Amount;
+  category: Category;
+  date: Date;
+}
+type Amount = number;
+type Category = "food" | "rent" | "transport";
+
+interface Income {
+  id: number;
+  amount: Amount;
+  source: string;
+}
+
+// 👨‍💻 ג'וניור — computed types
+type BudgetSummary = {
+  totalIncome: Amount;
+  totalExpense: Amount;
+  byCategory: Record<Category, Amount>;
+};
+
+// 🎩 פרופ׳ — branded ID
+type UserId = number & { __brand: "UserId" };
+function getUser(id: UserId): User { /* ... */ }
+const id = 5 as UserId;
+getUser(id);
+// getUser(5);  // ❌ Type 'number' is not assignable to UserId
+```
+
+---
+
+### §135. AI Engineering Full — embeddings/chunking/evaluation/guardrails
+
+| Concept | meaning |
+|---|---|
+| embeddings | numeric vector representation |
+| chunking | split docs into ~500 token pieces |
+| evaluation | measure LLM output quality |
+| guardrails | safety+structure constraints |
+| hallucination check | detect made-up facts |
+| LangChain | popular AI framework |
+| token budget | max tokens per call |
+| vector store | DB of embeddings |
+| streaming response | progressive output |
+| Vercel AI SDK | TypeScript AI lib |
+
+🧓 כלים ל-RAG ול-AI applications.
+👶 פיצול, הטבעה, וידוא נכונות.
+💂 OpenAI/Anthropic SDK + chunking + retrieval.
+🎓 evaluation with LLM-as-judge or embeddings similarity.
+👨‍💻 guardrails: zod schema validation on output.
+🎩 vector DB: pgvector, Pinecone, Weaviate.
+
+```ts
+// 🧓 סבתא — basic call
+import { generateText } from "ai";
+const { text } = await generateText({ model: openai("gpt-4"), prompt: "Hi" });
+
+// 👶 ילד — streaming
+import { streamText } from "ai";
+const { textStream } = await streamText({ model, prompt });
+for await (const chunk of textStream) console.log(chunk);
+
+// 💂 חייל — chunking + embeddings
+const chunks = splitText(longDoc, { size: 500, overlap: 50 });
+const embeddings = await Promise.all(chunks.map(c => embed(c)));
+await vectorDB.insert(chunks.map((c, i) => ({ text: c, vector: embeddings[i] })));
+
+// 🎓 סטודנט — RAG retrieval
+const queryVec = await embed(userQuery);
+const relevant = await vectorDB.search(queryVec, { k: 5 });
+const answer = await generateText({
+  model,
+  messages: [
+    { role: "system", content: `Use this context: ${relevant.join("\n")}` },
+    { role: "user", content: userQuery }
+  ]
+});
+
+// 👨‍💻 ג'וניור — structured output with zod
+import { z } from "zod";
+const schema = z.object({ summary: z.string(), tags: z.array(z.string()) });
+const { object } = await generateObject({ model, schema, prompt });
+// object is typed: { summary: string; tags: string[] }
+
+// 🎩 פרופ׳ — eval pipeline
+const cases = [{ input: "What is X?", expected: "Y" }];
+for (const c of cases) {
+  const out = await generateText({ model, prompt: c.input });
+  const score = await llmJudge(out.text, c.expected);   // score 0-1
+  log({ input: c.input, score });
+}
+```
+
+---
+
+### §136. if/else (sub-cluster of code_decisions)
+
+🧓 הסתעפות על תנאי.
+👶 if=אם, else=אחרת.
+💂 prefer early-return over deep nesting.
+🎓 chained if/else if/else for multi-branch.
+👨‍💻 ternary for assignment, if/else for action.
+🎩 V8 branch prediction matters in hot paths.
+
+```js
+// 🧓 סבתא
+if (age >= 18) console.log("בוגר");
+else console.log("קטין");
+
+// 👶 ילד
+if (n > 0) {
+  console.log("חיובי");
+} else if (n < 0) {
+  console.log("שלילי");
+} else {
+  console.log("אפס");
+}
+
+// 💂 חייל — early return
+function process(x) {
+  if (!x) return null;          // guard 1
+  if (x.invalid) return null;   // guard 2
+  return doWork(x);              // main path
+}
+
+// 🎓 סטודנט — ternary
+const status = age >= 18 ? "adult" : "minor";
+
+// 👨‍💻 ג'וניור — boolean short-circuit
+const config = userConfig || defaultConfig;
+const value = obj?.x ?? "fallback";
+
+// 🎩 פרופ׳ — pattern matching (proposal)
+match (point) {
+  when { x: 0, y: 0 }: "origin",
+  when { x, y } if (x === y): "diagonal",
+  default: "?"
+}
+```
+
+---
+
+### §137. Auth Attacks & Mitigations — bcrypt / CORS / CSRF
+
+| Attack | Mitigation |
+|---|---|
+| password leak | bcrypt + salt |
+| CSRF | SameSite cookie + token |
+| CORS issues | proper Access-Control-* headers |
+| XSS | DOMPurify + CSP |
+| brute force | rate limit + captcha |
+
+🧓 איך לאבטח אימות ולהגן מהתקפות.
+👶 כלים להגנה על משתמשים.
+💂 bcrypt for password hashing. CSRF tokens.
+🎓 SameSite cookie. CORS setup. CSP headers.
+👨‍💻 helmet middleware bundles many fixes.
+🎩 OWASP Top 10. defense in depth.
+
+```js
+// 🧓 סבתא — bcrypt
+import bcrypt from "bcryptjs";
+const hash = await bcrypt.hash(password, 10);
+const valid = await bcrypt.compare(input, hash);
+
+// 👶 ילד — CORS
+import cors from "cors";
+app.use(cors({
+  origin: "https://myapp.com",
+  credentials: true
+}));
+
+// 💂 חייל — CSRF protection
+import csurf from "csurf";
+app.use(csurf({ cookie: true }));
+app.post("/transfer", (req, res) => {
+  // req.csrfToken() must match in form
+});
+
+// 🎓 סטודנט — helmet (bundle)
+import helmet from "helmet";
+app.use(helmet());   // sets many security headers
+
+// 👨‍💻 ג'וניור — rate limit
+import rateLimit from "express-rate-limit";
+app.use("/login", rateLimit({ windowMs: 15*60*1000, max: 5 }));
+
+// 🎩 פרופ׳ — Content Security Policy
+res.setHeader("Content-Security-Policy",
+  "default-src 'self'; script-src 'self' https://trusted.com");
+```
+
+---
+
+### §138. Task Manager Workbook (lesson workbook_taskmanager)
+
+🧓 פרויקט לימודי לתרגול JavaScript בסיסי.
+👶 בניית todo list.
+💂 variables, conditions, arrays, functions, events, objects.
+🎓 try/catch + async/await for full coverage.
+👨‍💻 enables hands-on building experience.
+🎩 progressive enhancement: vanilla → React → TS migration.
+
+```js
+// 🧓 סבתא — variables
+let tasks = [];
+const MAX_TASKS = 10;
+
+// 👶 ילד — conditions
+if (tasks.length < MAX_TASKS) tasks.push(newTask);
+
+// 💂 חייל — events + functions
+function addTask() {
+  const input = document.querySelector("#new-task").value;
+  if (!input) return;
+  tasks.push({ id: Date.now(), text: input, done: false });
+  render();
+}
+document.querySelector("#add").addEventListener("click", addTask);
+
+// 🎓 סטודנט — async fetch
+async function loadTasks() {
+  try {
+    const res = await fetch("/api/tasks");
+    tasks = await res.json();
+    render();
+  } catch (e) { console.error(e); }
+}
+
+// 👨‍💻 ג'וניור — full CRUD
+async function deleteTask(id) {
+  await fetch(`/api/tasks/${id}`, { method: "DELETE" });
+  tasks = tasks.filter(t => t.id !== id);
+  render();
+}
+
+// 🎩 פרופ׳ — workbook progression
+// Stage 1: vanilla JS (this lesson)
+// Stage 2: React refactor
+// Stage 3: TS types + Zustand state
+// Stage 4: Backend API integration
+```
+
+---
+
+### §139. AI Dev Tools — Cursor / Windsurf / Claude Code / ChatGPT / Copilot
+
+| Tool | strength |
+|---|---|
+| Cursor | full IDE fork, multi-file edits |
+| Windsurf | similar to Cursor, multi-tab |
+| Claude Code | terminal-based, agentic |
+| ChatGPT | chat for ideation |
+| Copilot | inline autocomplete |
+| Codex (OpenAI) | API for code |
+
+🧓 כלים שעוזרים לכתוב קוד עם AI.
+👶 כלי בינה מלאכותית למתכנתים.
+💂 Cursor=IDE. Copilot=autocomplete. Claude=agentic.
+🎓 each has different sweet spot. mix them.
+👨‍💻 use for boilerplate, tests, refactor, docs.
+🎩 prompt engineering matters. context window limits.
+
+```bash
+# 🧓 סבתא — Cursor
+# Open file → Cmd+K → "make this async"
+
+# 👶 ילד — Copilot
+# Type comment + start line → ghost autocomplete suggests
+
+# 💂 חייל — Claude Code (terminal)
+claude
+> /help
+> Read app.js, find the handleClick function, add error handling
+
+# 🎓 סטודנט — multi-tool workflow
+# 1. ChatGPT: brainstorm architecture
+# 2. Cursor: implement component
+# 3. Copilot: fill in repetitive code
+# 4. Claude Code: review + add tests
+
+# 👨‍💻 ג'וניור — productivity tips
+# - keep prompts specific
+# - reference exact file paths
+# - request tests with code
+
+# 🎩 פרופ׳ — workflow integration
+# Cursor for editor, Claude Code for batch tasks,
+# Copilot ambient. Each adds different leverage.
+```
+
+---
+
+✅ **11 קלסטרים נותרים נסגרו עם תוכן** — סה״כ 140 קלסטרים, 0 ללא תוכן.
+
+---
+
+**עודכן:** 2026-05-02 23:42 · ידני · §95-§139 (45 orphan-absorber clusters) · 6-level translations · trainer cluster-mode · 0 orphans

@@ -242,21 +242,21 @@
 | 127 | **Git Workflow** | 4/10 | 🟢 V בלבד | repository · branch · commit · pull request · Git · GitHub workflow | lesson_tooling_git | ✅ §126 | 3/4 T✓ O✓ M✗ C✓ |
 | 128 | **Express Form Events** | 4/10 | 🟢 V בלבד | body-parser · event.preventDefault | lesson_17 | ✅ §127 | 3/4 T✓ O✓ M✗ C✓ |
 | 129 | **Scope Chain** | 5/10 | 🟢 V בלבד | scope chain | lesson_closures | ✅ §128 | 3/4 T✓ O✓ M✗ C✓ |
-| 130 | **DOM Node Removal** | 5/10 | 🟢 V בלבד | removeChild | lesson_13 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 131 | **Error Objects** | 5/10 | 🟢 V בלבד | Error Object · Exception · event object | lesson_15, lesson_19 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 132 | **if/else** | 4/10 | 🟢 V בלבד | if/else | lesson_19 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 133 | **Vite Project Creation** | 2/10 | 🟢 V בלבד | npm create vite@latest | lesson_21 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 134 | **React Hook fundamentals** | 5/10 | 🟢 V בלבד | Hook · mutable · immutable | lesson_22 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 135 | **TS Advanced** | 6/10 | 🟡 גבולי + V | tuple · type annotation · Type Safety · TypeScript · Typing State · void | lesson_26 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 136 | **TS App Models** | 4/10 | 🟢 V בלבד | User · BaseUser · RegisteredUser · GuestUser · Book · Genre · Category · Amount · Expense · Income · Budget Summary · Category Breakdown · extends interface | lesson_27 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 137 | **AI Engineering** | 6/10 | 🟡 גבולי + V | chunking · embeddings · evaluation · guardrails · hallucination check · LangChain · model selection · OpenAI API · prompt messages · retrieval ranking · streaming response · structured output · token budget · vector store · Vercel AI SDK | lesson_ai_engineering | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 138 | **Auth Attacks** | 5/10 | 🟢 V בלבד | bcrypt · CORS · CSRF | lesson_auth_security | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 139 | **Task Manager Workbook** | 4/10 | 🟢 V בלבד |  | workbook_taskmanager | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 140 | **AI Dev Tools** | 4/10 | 🟢 V בלבד | Continue | ai_development | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 130 | **DOM Node Removal** | 5/10 | 🟢 V בלבד | removeChild | lesson_13 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 131 | **Error Objects** | 5/10 | 🟢 V בלבד | Error Object · Exception · event object | lesson_15, lesson_19 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 132 | **if/else** | 4/10 | 🟢 V בלבד | if/else | lesson_19 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 133 | **Vite Project Creation** | 2/10 | 🟢 V בלבד | npm create vite@latest | lesson_21 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 134 | **React Hook fundamentals** | 5/10 | 🟢 V בלבד | Hook · mutable · immutable | lesson_22 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 135 | **TS Advanced** | 6/10 | 🟡 גבולי + V | tuple · type annotation · Type Safety · TypeScript · Typing State · void | lesson_26 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 136 | **TS App Models** | 4/10 | 🟢 V בלבד | User · BaseUser · RegisteredUser · GuestUser · Book · Genre · Category · Amount · Expense · Income · Budget Summary · Category Breakdown · extends interface | lesson_27 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 137 | **AI Engineering** | 6/10 | 🟡 גבולי + V | chunking · embeddings · evaluation · guardrails · hallucination check · LangChain · model selection · OpenAI API · prompt messages · retrieval ranking · streaming response · structured output · token budget · vector store · Vercel AI SDK | lesson_ai_engineering | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 138 | **Auth Attacks** | 5/10 | 🟢 V בלבד | bcrypt · CORS · CSRF | lesson_auth_security | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 139 | **Task Manager Workbook** | 4/10 | 🟢 V בלבד |  | workbook_taskmanager | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 140 | **AI Dev Tools** | 4/10 | 🟢 V בלבד | Continue | ai_development | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
 
 > **מקרא רכיבי מילוי (4 לכל קלסטר):** T = Table · O = Overview 6-levels · M = Per-Member 6-levels · C = Code blocks 6-levels
 
-**סטטוס כולל:** 360 / 560 רכיבים מולאו (64%) · 34 קלסטרים מלאים 4/4 מתוך 140
+**סטטוס כולל:** 393 / 560 רכיבים מולאו (70%) · 34 קלסטרים מלאים 4/4 מתוך 140
 
 ### 📊 סיכום קלסטרים לפי קושי (כל אחד נחשב כמושג-על אחד)
 
