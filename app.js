@@ -36731,6 +36731,16 @@ document.addEventListener("DOMContentLoaded", () => {
         body: json,
         keepalive: true,
       });
+      // Log the successful save for debugging "did it save?" issues
+      try {
+        if (typeof window.__lumenAppendProgressLog === "function") {
+          window.__lumenAppendProgressLog("auto-save-flush", {
+            scoresCount: Object.keys(snapshot.scores || {}).length,
+            xp: (snapshot.economy && snapshot.economy.xp) || 0,
+            activeProfile: snapshot.activeProfileId || "(none)",
+          });
+        }
+      } catch (_) {}
     } catch (e) {
       // Silent — autosave is best-effort
     }
@@ -36781,6 +36791,55 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   window.addEventListener("pagehide", () => {
     try { localAutoSaveFlush(); } catch (_) {}
+  });
+
+  // PERIODIC AUTO-SAVE — every 3 minutes, regardless of user activity
+  // Fires even if user is just reading. Critical for not losing progress.
+  const PERIODIC_SAVE_INTERVAL_MS = 3 * 60 * 1000; // 3 minutes
+  let periodicSaveTimer = null;
+  function startPeriodicAutoSave() {
+    if (periodicSaveTimer) clearInterval(periodicSaveTimer);
+    periodicSaveTimer = setInterval(async () => {
+      try {
+        await localAutoSaveFlush();
+        appendProgressLog("periodic-save", { interval: "3min" });
+      } catch (e) {}
+    }, PERIODIC_SAVE_INTERVAL_MS);
+  }
+  // Start the periodic timer 30 seconds after boot (give boot a chance to settle)
+  setTimeout(startPeriodicAutoSave, 30000);
+
+  // LOCAL PROGRESS LOG — append-only history of save events + key milestones
+  // Keeps last 200 entries in localStorage for quick "did it actually save?" checks
+  const PROGRESS_LOG_KEY = "lumenportal:progress-log:v1";
+  const PROGRESS_LOG_MAX = 200;
+  function readProgressLog() {
+    try { return JSON.parse(localStorage.getItem(PROGRESS_LOG_KEY) || "[]"); }
+    catch (_) { return []; }
+  }
+  function appendProgressLog(eventType, payload = {}) {
+    try {
+      const log = readProgressLog();
+      log.push({
+        t: new Date().toISOString(),
+        e: eventType,
+        ...payload,
+      });
+      // Trim to max
+      while (log.length > PROGRESS_LOG_MAX) log.shift();
+      // Bypass autosave hook to avoid recursion
+      const origSet = Storage.prototype.setItem;
+      origSet.call(localStorage, PROGRESS_LOG_KEY, JSON.stringify(log));
+    } catch (_) {}
+  }
+  // Expose for debugging + cross-scope logging
+  window.__lumenProgressLog = readProgressLog;
+  window.__lumenAppendProgressLog = appendProgressLog;
+
+  // Log boot
+  appendProgressLog("boot", {
+    activeProfile: localStorage.getItem("lumenportal:activeProfile:v1") || "(none)",
+    cacheVersion: typeof CACHE_VERSION !== "undefined" ? CACHE_VERSION : "unknown",
   });
 
   // ===== end Local Auto-Save =====
