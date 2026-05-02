@@ -1268,6 +1268,31 @@ body.lesson-reading-mode .top-nav {
   font-weight: 950;
 }
 
+.exam-cockpit-resume {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.exam-cockpit-resume:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.5);
+}
+
+.exam-cockpit-resume:focus-visible {
+  outline: 2px solid #c7d2fe;
+  outline-offset: 2px;
+}
+
 .exam-cockpit h3 {
   margin: 0.15rem 0 0.35rem;
   color: var(--text-bright);

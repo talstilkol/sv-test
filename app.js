@@ -8635,6 +8635,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cockpitAction === "mock") openMockExam();
       if (cockpitAction === "weakest30") startWeakestThirtyMinuteFlow();
       if (cockpitAction === "cram") window.open("EXAM_FINAL_CRAM_SHEET.md", "_blank", "noopener");
+      if (cockpitAction === "resume") {
+        try {
+          const raw = localStorage.getItem("lumenportal:lastOpenedLesson:v1");
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && parsed.lessonId) openLesson(parsed.lessonId);
+          }
+        } catch (_) {}
+      }
       return;
     }
     const action = e.target?.dataset?.tourAction;
@@ -9375,12 +9384,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const finalWeakRows = summary.finalWeakList.rows.slice(0, 5).map((item) => `
       <b>${esc(item.conceptName)} · ${esc(item.moduleLabel)} · risk ${esc(item.riskScore)}</b>
     `).join("") || "<b>אין מושגים מאיימים לפי הנתונים הקיימים</b>";
+    // Read last-opened lesson for "Continue" CTA
+    let lastOpened = null;
+    try {
+      const raw = localStorage.getItem("lumenportal:lastOpenedLesson:v1");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && parsed.lessonId && parsed.lessonTitle) lastOpened = parsed;
+      }
+    } catch (_) {}
+    const resumeButton = lastOpened
+      ? `<button class="exam-cockpit-resume" data-exam-cockpit-action="resume">↩ המשך מ: ${esc(String(lastOpened.lessonTitle).slice(0, 40))}</button>`
+      : "";
+
     root.innerHTML = `
       <div class="exam-cockpit-head">
         <div>
           <span class="exam-cockpit-kicker">Exam Cockpit</span>
           <h3>תוכנית היום לציון 100</h3>
           <p>${esc(summary.todayPlan)}</p>
+          ${resumeButton}
         </div>
         <div class="exam-readiness-meter">
           <strong>${esc(summary.readiness)}%</strong>
@@ -9541,6 +9564,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hideAllViews();
     currentLessonId = lessonId;
+    // Track last opened lesson for "Continue where you left off" UX
+    try {
+      localStorage.setItem("lumenportal:lastOpenedLesson:v1", JSON.stringify({
+        lessonId,
+        lessonTitle: lesson.title,
+        timestamp: Date.now(),
+      }));
+    } catch (_) {}
     document.body.classList.add("lesson-reading-mode");
     syncContextTreeToggleVisibility();
     document
