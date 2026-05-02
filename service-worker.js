@@ -49,6 +49,7 @@ const SHELL_ASSETS = [
   "/src/core/concept-tags.js",
   "/src/views/context-tree.js",
   "/src/views/theme-toggle/theme-toggle.js",
+  "/src/views/pocket-concept-card/pocket-state.js",
   "/src/state/store.js",
   "/src/ui/legacy-script-registry.js",
   "/src/views/legacy-views.js",
