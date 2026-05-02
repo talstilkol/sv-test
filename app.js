@@ -7724,8 +7724,39 @@ document.addEventListener("DOMContentLoaded", () => {
     function save(arr) {
       try { localStorage.setItem(POCKET_KEY, JSON.stringify(arr)); } catch (_) {}
     }
+    // UX 2026-05-02: Pocket cards with 6-level explanations + level switcher.
+    const POCKET_LEVEL_KEY = "lumenportal:pocket:viewLevel:v1";
+    const LEVEL_LABELS = ["סבתא", "ילד", "חייל", "סטודנט", "ג'וניור", "פרופ׳"];
+    const LEVEL_KEYS = ["grandma", "child", "soldier", "student", "junior", "professor"];
+    function loadPocketLevels() {
+      try { return JSON.parse(localStorage.getItem(POCKET_LEVEL_KEY) || "{}"); } catch (_) { return {}; }
+    }
+    function savePocketLevels(map) {
+      try { localStorage.setItem(POCKET_LEVEL_KEY, JSON.stringify(map)); } catch (_) {}
+    }
+    function getPocketLevelExplanation(concept, levelIdx) {
+      // Try the rich levels object first (SVCollege concepts have this).
+      if (concept.levels && typeof concept.levels === "object" && !Array.isArray(concept.levels)) {
+        const key = LEVEL_KEYS[levelIdx];
+        const text = concept.levels[key];
+        if (text) {
+          // Take first sentence, max 180 chars.
+          const trimmed = String(text).split(/[.!?]\s/)[0];
+          return trimmed.length > 180 ? trimmed.slice(0, 178) + "…" : trimmed;
+        }
+      }
+      // Array form (legacy)
+      if (Array.isArray(concept.levels) && concept.levels[levelIdx]) {
+        return String(concept.levels[levelIdx]).slice(0, 180);
+      }
+      // Fallback to simpleExplanation
+      const fallback = concept.simpleExplanation || concept.explanation || "אין הסבר ברמה זו.";
+      return String(fallback).slice(0, 180);
+    }
+
     function refresh() {
       const items = load();
+      const pocketLevels = loadPocketLevels();
       countEl.textContent = items.length;
       countEl.style.display = items.length ? "flex" : "none";
       if (items.length === 0) {
@@ -7738,16 +7769,25 @@ document.addEventListener("DOMContentLoaded", () => {
           const lesson = (window.LESSONS_DATA || []).find((l) => l.id === lessonId);
           const concept = lesson?.concepts.find((c) => c.conceptName === conceptName);
           if (!concept) return "";
-          const explainer = (concept.levels?.[0] || concept.levels?.[1] || "").slice(0, 140);
+          const lvlIdx = Math.max(0, Math.min(5, Number(pocketLevels[entry] ?? 0)));
+          const explainer = getPocketLevelExplanation(concept, lvlIdx);
           return `
-            <div class="pocket-card">
+            <div class="pocket-card" data-pocket-entry="${esc(entry)}">
               <div class="pocket-card-head">
-                <span class="pocket-card-name">${esc(conceptName)}</span>
+                <button class="pocket-card-name pocket-jump" data-pocket-goto="${esc(entry)}" title="פתח את המושג בשיעור">${esc(conceptName)}</button>
                 <span class="pocket-card-lesson">${esc(lesson.title)}</span>
                 <button class="pocket-remove" data-pocket-remove="${esc(entry)}" aria-label="הסר מהכיס">✕</button>
               </div>
-              <div class="pocket-card-body">${esc(explainer)}${explainer.length === 140 ? "..." : ""}</div>
-              <button class="pocket-goto" data-pocket-goto="${esc(entry)}">🔍 פתח מושג</button>
+              <div class="pocket-level-row">
+                <button class="pocket-level-btn" data-pocket-level-down="${esc(entry)}" ${lvlIdx === 0 ? "disabled" : ""} aria-label="הורד רמה">−</button>
+                <span class="pocket-level-label">רמה ${lvlIdx + 1}: ${esc(LEVEL_LABELS[lvlIdx])}</span>
+                <button class="pocket-level-btn" data-pocket-level-up="${esc(entry)}" ${lvlIdx === 5 ? "disabled" : ""} aria-label="העלה רמה">+</button>
+              </div>
+              <div class="pocket-card-body">${esc(explainer)}</div>
+              <div class="pocket-card-actions">
+                <button class="pocket-goto" data-pocket-goto="${esc(entry)}">🔍 פתח מושג</button>
+                <button class="pocket-mastery" data-pocket-mastery="${esc(entry)}" title="הבנתי — לבחון אותי על רמה 7 כדי לסמן ✓">✅ הבנתי — בחן אותי</button>
+              </div>
             </div>`;
         }).join("");
         // Wire removal
@@ -7758,20 +7798,67 @@ document.addEventListener("DOMContentLoaded", () => {
             const next = load().filter((x) => x !== key);
             save(next);
             refresh();
-            // Update mark on any visible button
             document.querySelectorAll(`[data-pocket-key="${cssEscape(key)}"]`).forEach((bt) => bt.classList.remove("is-pocketed"));
+            if (typeof window.updateAchievementsRail === "function") window.updateAchievementsRail();
           });
         });
+        // Level up/down
+        list.querySelectorAll("[data-pocket-level-up]").forEach((b) => {
+          b.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const key = b.dataset.pocketLevelUp;
+            const map = loadPocketLevels();
+            map[key] = Math.min(5, Number(map[key] ?? 0) + 1);
+            savePocketLevels(map);
+            refresh();
+          });
+        });
+        list.querySelectorAll("[data-pocket-level-down]").forEach((b) => {
+          b.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const key = b.dataset.pocketLevelDown;
+            const map = loadPocketLevels();
+            map[key] = Math.max(0, Number(map[key] ?? 0) - 1);
+            savePocketLevels(map);
+            refresh();
+          });
+        });
+        // Jump to concept (click name or open button)
         list.querySelectorAll("[data-pocket-goto]").forEach((b) => {
           b.addEventListener("click", () => {
             const key = b.dataset.pocketGoto;
             const [lessonId, conceptName] = key.split("::");
             if (typeof openLesson === "function") openLesson(lessonId);
-            // Mark which concept to scroll to
             selectedConceptByLesson[lessonId] = conceptName;
             setTimeout(() => {
               const el = document.querySelector(`.concept-card[data-concept="${cssEscape(conceptName)}"]`);
               el?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 300);
+            closePocketPanel();
+          });
+        });
+        // Mastery — "I got it, test me on level 7"
+        list.querySelectorAll("[data-pocket-mastery]").forEach((b) => {
+          b.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const key = b.dataset.pocketMastery;
+            const [lessonId, conceptName] = key.split("::");
+            // Open the lesson + jump to concept + invoke a level-7 quiz hint
+            if (typeof openLesson === "function") openLesson(lessonId);
+            selectedConceptByLesson[lessonId] = conceptName;
+            // Mark a flag the lesson view will pick up — request hardest-level test.
+            try {
+              localStorage.setItem("lumenportal:pendingMasteryTest:v1", JSON.stringify({
+                lessonId, conceptName, requestedAt: Date.now(),
+              }));
+            } catch (_) {}
+            setTimeout(() => {
+              const el = document.querySelector(`.concept-card[data-concept="${cssEscape(conceptName)}"]`);
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "center" });
+                el.classList.add("level-questions-flash");
+                setTimeout(() => el.classList.remove("level-questions-flash"), 1600);
+              }
             }, 300);
             closePocketPanel();
           });
@@ -8597,7 +8684,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const btn = document.createElement("button");
       btn.className = "lesson-nav-btn";
       if (quizCompleted[lesson.id]) btn.classList.add("completed");
-      btn.innerHTML = `<span class="num">${index + 1}</span><span class="lesson-label">${lesson.title}</span>`;
+      // UX 2026-05-02: % completion per lesson (avg level/7 across concepts)
+      let pct = 0;
+      try {
+        const concepts = lesson.concepts || [];
+        if (concepts.length) {
+          const total = concepts.reduce((sum, c) => {
+            const sc = (typeof getScore === "function") ? getScore(lesson.id, c.conceptName) : { level: 0 };
+            const lvl = Number(sc.level || 0);
+            return sum + Math.min(7, lvl) / 7;
+          }, 0);
+          pct = Math.round((total / concepts.length) * 100);
+        }
+      } catch (_) {}
+      const pctClass = pct === 0 ? "zero" : (pct >= 100 ? "complete" : "");
+      btn.innerHTML = `<span class="num">${index + 1}</span><span class="lesson-label">${lesson.title}</span><span class="lesson-completion-pct ${pctClass}">${pct}%</span>`;
       btn.dataset.id = lesson.id;
       btn.dataset.searchText = (
         lesson.title +
@@ -30131,17 +30232,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button type="button" class="lesson-nav-step primary" data-lesson-step="1" ${selectedIndex >= concepts.length - 1 ? "disabled" : ""}>המושג הבא</button>
                 ${nextLesson ? `<button type="button" class="lesson-nav-next-lesson" data-lesson-next="${esc(nextLesson.id)}">השיעור הבא</button>` : ""}
               </span>
-              ${concepts.map((concept, index) => `
+              ${concepts.map((concept, index) => {
+                // UX 2026-05-02: status colors — green = mastered (V), red = failed/in-pocket
+                const cSc = (typeof getScore === "function") ? getScore(lesson.id, concept.conceptName) : { level: 0 };
+                const isMastered = cSc.markedKnown === true || Number(cSc.level || 0) >= 7;
+                const inPocket = (function(){ try { return JSON.parse(localStorage.getItem("lumenportal:pocket:v1") || "[]").includes(`${lesson.id}::${concept.conceptName}`); } catch(_) { return false; } })();
+                const hasWrong = Number(cSc.wrongCount || 0) > 0 || Number(cSc.lapses || 0) > 0;
+                const statusClass = isMastered ? "chip-mastered" : ((inPocket || hasWrong) ? "chip-needs-work" : "");
+                return `
                 <button
                   type="button"
                   role="listitem"
-                  class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""}"
+                  class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""} ${statusClass}"
                   data-lesson-concept-jump="${esc(concept.conceptName)}"
-                  title="פתח את ${esc(concept.conceptName)}">
+                  title="פתח את ${esc(concept.conceptName)}${isMastered ? " — ✅ עברת" : (inPocket ? " — 📌 בכיס" : (hasWrong ? " — צריך חיזוק" : ""))}">
                   <span>${esc(index + 1)}</span>
                   ${esc(concept.conceptName)}
                 </button>
-              `).join("")}
+              `}).join("")}
             </div>
           </div>
         ` : ""}
@@ -30303,17 +30411,23 @@ document.addEventListener("DOMContentLoaded", () => {
           ${nextLesson ? `<button type="button" class="lesson-nav-next-lesson" data-lesson-next="${esc(nextLesson.id)}">השיעור הבא</button>` : ""}
         </div>
         <div class="lesson-concept-chip-strip" role="list" aria-label="מושגי השיעור">
-          ${concepts.map((concept, index) => `
+          ${concepts.map((concept, index) => {
+            const cSc = (typeof getScore === "function") ? getScore(lesson.id, concept.conceptName) : { level: 0 };
+            const isMastered = cSc.markedKnown === true || Number(cSc.level || 0) >= 7;
+            const inPocket = (function(){ try { return JSON.parse(localStorage.getItem("lumenportal:pocket:v1") || "[]").includes(`${lesson.id}::${concept.conceptName}`); } catch(_) { return false; } })();
+            const hasWrong = Number(cSc.wrongCount || 0) > 0 || Number(cSc.lapses || 0) > 0;
+            const statusClass = isMastered ? "chip-mastered" : ((inPocket || hasWrong) ? "chip-needs-work" : "");
+            return `
             <button
               type="button"
               role="listitem"
-              class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""}"
+              class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""} ${statusClass}"
               data-lesson-concept-jump="${esc(concept.conceptName)}"
-              title="פתח את ${esc(concept.conceptName)}">
+              title="פתח את ${esc(concept.conceptName)}${isMastered ? " — ✅ עברת" : (inPocket ? " — 📌 בכיס" : (hasWrong ? " — צריך חיזוק" : ""))}">
               <span>${esc(index + 1)}</span>
               ${esc(concept.conceptName)}
             </button>
-          `).join("")}
+          `}).join("")}
         </div>
       </nav>`;
   }
@@ -31033,8 +31147,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     `;
 
+    // UX 2026-05-02: status flag for color coding the card
+    const cardInPocket = (function(){ try { return JSON.parse(localStorage.getItem("lumenportal:pocket:v1") || "[]").includes(`${lesson.id}::${concept.conceptName}`); } catch(_) { return false; } })();
+    const cardHasWrong = Number(sc.wrongCount || 0) > 0 || Number(sc.lapses || 0) > 0;
+    const cardStatus = (sc.markedKnown === true || actualLevel >= 7) ? "mastered" : ((cardInPocket || cardHasWrong) ? "needs-work" : "neutral");
+
     return `
-      <div class="concept-card adaptive" data-cid="${idx}" data-concept="${esc(concept.conceptName)}">
+      <div class="concept-card adaptive" data-cid="${idx}" data-concept="${esc(concept.conceptName)}" data-status="${cardStatus}">
         ${prereqWarning}
         <div class="concept-card-head">
           <h4>${esc(concept.conceptName)}</h4>
@@ -31045,8 +31164,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ${masteredBadge}
             ${vProgressBadge}
             ${overrideBadge}
-            <span class="tq-level-pill ${realLvlInfo.cssClass}" title="הרמה האישית שלך במושג">${realLvlInfo.icon} רמה ${actualLevel}/7</span>
-            <span class="tq-score-pill" title="ציונך — רמה ${actualLevel} מתוך 7 (${Math.round(actualLevel/7*100)}%)">📊 ${Math.round(actualLevel/7*100)}%</span>
+            <button class="tq-level-pill ${realLvlInfo.cssClass} tq-level-pill-clickable" data-action="open-level-questions" data-concept="${esc(concept.conceptName)}" title="לחץ כדי להתחיל לעלות ברמה — פתיחת השאלות" aria-label="התחל בחינה לעליה ברמה במושג ${esc(concept.conceptName)}">${realLvlInfo.icon} רמה ${actualLevel}/7</button>
             <button class="tq-pocket-quick" data-action="pocket-toggle" data-pocket-key="${esc(lesson.id + "::" + concept.conceptName)}" title="שמור לכיס" aria-label="שמור ${esc(concept.conceptName)} לכיס">📌</button>
           </div>
         </div>
@@ -32207,6 +32325,18 @@ document.addEventListener("DOMContentLoaded", () => {
               expEl.parentNode.insertBefore(overlay, expEl.nextSibling);
               btn.textContent = "✕ הסתר ELI5";
             }
+          } else if (action === "open-level-questions") {
+            // UX 2026-05-02: Click on level pill → scroll to questions section + flash highlight
+            const conceptName = btn.dataset.concept;
+            const card = btn.closest(".concept-card");
+            if (!card) return;
+            const questionsSection = card.querySelector('[data-concept-step="questions"]') || card.querySelector(".concept-quiz-slot");
+            if (questionsSection) {
+              questionsSection.scrollIntoView({ behavior: "smooth", block: "center" });
+              questionsSection.classList.add("level-questions-flash");
+              setTimeout(() => questionsSection.classList.remove("level-questions-flash"), 1600);
+            }
+            return;
           } else if (action === "pocket-toggle") {
             // Pocket Concept Card: toggle save
             const key = btn.dataset.pocketKey;

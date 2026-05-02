@@ -21794,17 +21794,23 @@ button.grandma-crumb:hover {
   }
 }
 
-/* UX 2026-05-02: Thin collapsible achievements rail at the very top of app. */
+/* UX 2026-05-02: Thin collapsible achievements rail at the very top of app.
+   Position fixed so it doesn't take a flex slot in the row-based app-container. */
 .achievements-rail-wrap {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 951; /* above chrome-control-menu */
   background: linear-gradient(135deg, rgba(34, 211, 238, 0.14) 0%, rgba(168, 85, 247, 0.14) 100%);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   font-size: 0.78rem;
-  width: 100%;
 }
+/* Compensate for the fixed rail height so other content doesn't slide under it. */
+.app-container { padding-top: 2.4rem; }
+.achievements-rail-wrap:not([open]) ~ * { /* tighter when collapsed */ }
+.achievements-rail-wrap:not([open]) { /* keep small footprint */ }
 .achievements-rail-wrap > summary {
   list-style: none;
   cursor: pointer;
@@ -21897,19 +21903,163 @@ button.grandma-crumb:hover {
 .tq-pocket-quick:hover { background: rgba(168, 85, 247, 0.18); color: #a855f7; transform: translateY(-1px); }
 .tq-pocket-quick.is-pocketed { background: rgba(168, 85, 247, 0.24); color: #c084fc; border-color: #a855f7; }
 
-/* Concept score pill */
-.tq-score-pill {
+/* Clickable level pill (UX 2026-05-02) — opens questions */
+.tq-level-pill-clickable {
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition);
+}
+.tq-level-pill-clickable:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.35);
+}
+
+/* Flash highlight when scrolling to questions section */
+@keyframes level-questions-flash {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+  30% { box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.6), 0 0 24px rgba(34, 211, 238, 0.4); }
+}
+.level-questions-flash {
+  animation: level-questions-flash 1.6s ease-out;
+  border-radius: 0.6rem;
+}
+
+/* UX 2026-05-02: Concept chip status colors */
+.lesson-concept-chip.chip-mastered {
+  background: rgba(34, 197, 94, 0.18) !important;
+  border-color: rgba(34, 197, 94, 0.55) !important;
+  color: #4ade80 !important;
+}
+.lesson-concept-chip.chip-mastered::before {
+  content: "✅";
+  margin-inline-end: 0.2rem;
+  font-size: 0.85rem;
+}
+.lesson-concept-chip.chip-needs-work {
+  background: rgba(239, 68, 68, 0.18) !important;
+  border-color: rgba(239, 68, 68, 0.55) !important;
+  color: #fca5a5 !important;
+}
+.lesson-concept-chip.chip-needs-work::before {
+  content: "⚠️";
+  margin-inline-end: 0.2rem;
+  font-size: 0.85rem;
+}
+
+/* Concept card border colors based on status */
+.concept-card[data-status="mastered"] {
+  border-color: rgba(34, 197, 94, 0.5) !important;
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.06) 0%, rgba(15, 23, 42, 0) 30%);
+}
+.concept-card[data-status="needs-work"] {
+  border-color: rgba(239, 68, 68, 0.45) !important;
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.06) 0%, rgba(15, 23, 42, 0) 30%);
+}
+
+/* Pocket card upgrades (UX 2026-05-02): level switcher + mastery + jump */
+.pocket-card { padding: 0.65rem 0.75rem; }
+.pocket-card-name.pocket-jump {
+  background: transparent;
+  border: none;
+  color: #22d3ee;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  text-align: right;
+}
+.pocket-card-name.pocket-jump:hover {
+  text-decoration: underline;
+  color: #67e8f9;
+}
+.pocket-level-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: center;
+  margin: 0.4rem 0;
+}
+.pocket-level-btn {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: rgba(168, 85, 247, 0.18);
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  color: #c084fc;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
-  background: rgba(34, 211, 238, 0.12);
-  border: 1px solid rgba(34, 211, 238, 0.28);
-  color: #22d3ee;
+  justify-content: center;
+  font-family: inherit;
+  transition: var(--transition);
+}
+.pocket-level-btn:hover:not(:disabled) {
+  background: rgba(168, 85, 247, 0.32);
+  transform: scale(1.05);
+}
+.pocket-level-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pocket-level-label {
+  flex: 1;
+  text-align: center;
+  font-size: 0.78rem;
   font-weight: 700;
-  font-size: 0.85rem;
+  color: rgba(255,255,255,0.85);
+}
+.pocket-card-actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.pocket-card-actions .pocket-goto,
+.pocket-card-actions .pocket-mastery {
+  flex: 1;
+  padding: 0.45rem 0.7rem;
+  border-radius: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.12);
+  font-family: inherit;
+}
+.pocket-card-actions .pocket-goto {
+  background: rgba(99, 102, 241, 0.22);
+  color: #c7d2fe;
+}
+.pocket-card-actions .pocket-mastery {
+  background: rgba(34, 197, 94, 0.22);
+  color: #86efac;
+  border-color: rgba(34, 197, 94, 0.45);
+}
+.pocket-card-actions .pocket-goto:hover,
+.pocket-card-actions .pocket-mastery:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+/* Lesson completion badge in sidebar (UX 2026-05-02) */
+.lesson-nav-btn .lesson-completion-pct {
+  display: inline-block;
+  margin-inline-start: 0.4rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.16);
+  border: 1px solid rgba(34, 211, 238, 0.32);
+  color: #22d3ee;
+  font-size: 0.7rem;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
+}
+.lesson-nav-btn .lesson-completion-pct.complete {
+  background: rgba(34, 197, 94, 0.18);
+  border-color: rgba(34, 197, 94, 0.4);
+  color: #4ade80;
+}
+.lesson-nav-btn .lesson-completion-pct.zero {
+  opacity: 0.55;
 }
 
 .global-print-btn {
