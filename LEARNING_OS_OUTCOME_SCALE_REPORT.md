@@ -1,5 +1,11 @@
 # Learning OS Outcome Scale Report — 2026-05-02
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-05-02
+> Source-of-truth refresh date: 2026-05-06
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 - Target: Phase 7 Learning OS + Outcome Scale
 - Policy: Learning OS uses real lesson, question, learner, capstone, teacher and audit evidence only. Missing inputs stay unknown/unavailable.
 - Ready: No
@@ -15,4 +21,5 @@
 | AI Tutor production guardrails cover proxy, rate limits, coach mode, context, misconceptions, logs, eval and fallback | pass | P7.5.1, P7.5.2, P7.5.3, P7.5.4, P7.5.5, P7.5.6, P7.5.7, P7.5.8 | AI Tutor remains credential-gated and does not leak direct answers. |
 | Accessibility/mobile/trust covers WCAG, keyboard journey, reduced-load modes, mobile touch, offline conflict, performance, privacy and trust | fail | P7.6.1, P7.6.2, P7.6.3, P7.6.4, P7.6.5, P7.6.6, P7.6.7, P7.6.8 | Trust surfaces are contracts and gates; missing evidence stays unknown/unavailable. |
 | Learning OS report scripts are wired | pass |  | package.json must expose summary/write/strict scripts. |
+
 

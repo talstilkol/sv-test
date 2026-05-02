@@ -414,11 +414,11 @@
     }
   ],
   "sourceOfTruth": {
-    "status": "active",
+    "status": "historical",
     "reportVersion": "report-source-of-truth-v1",
-    "evaluatedAt": "2026-05-02",
+    "evaluatedAt": "2026-05-06",
     "sourceDate": "2026-05-02",
-    "source": "report-active",
-    "reason": "fresh-to-source-of-truth"
+    "source": "report-archive",
+    "reason": "date-mismatch-with-source-of-truth"
   }
 }

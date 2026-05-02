@@ -1,5 +1,11 @@
 # Curriculum Coverage Readiness
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-05-02
+> Source-of-truth refresh date: 2026-05-06
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 Date: 2026-05-02
 
 ## Summary
@@ -60,4 +66,5 @@ Date: 2026-05-02
 | 38 | `lesson_17::Path` | שיעור 17 - HTTP, Express, REST API | MC + Fill | MC: 0/3 (Author 1-3 MC questions for this concept based on existing lesson material.)<br>FILL: 0/2 (Author Fill questions with real code traces for this concept (no generated data).) |
 | 39 | `lesson_17::port` | שיעור 17 - HTTP, Express, REST API | MC + Fill | MC: 0/3 (Author 1-3 MC questions for this concept based on existing lesson material.)<br>FILL: 0/2 (Author Fill questions with real code traces for this concept (no generated data).) |
 | 40 | `lesson_17::POST` | שיעור 17 - HTTP, Express, REST API | MC + Fill | MC: 1/3 (Author 1-3 MC questions for this concept based on existing lesson material.)<br>FILL: 0/2 (Author Fill questions with real code traces for this concept (no generated data).) |
+
 

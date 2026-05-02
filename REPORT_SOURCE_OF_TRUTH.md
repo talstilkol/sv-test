@@ -37,7 +37,7 @@ Version: report-source-of-truth-v1
 | QUESTION_QUALITY_REPORT | historical | 2026-04-30 | question-quality-v1 | markdown+json | 2026-04-30 |
 | QUESTION_REMEDIATION_QUEUE | historical | 2026-04-28 | question-remediation-v1 | markdown+json | 2026-04-28 |
 | QUESTION_REUSE_AUDIT_REPORT | historical | 2026-04-29 | question-reuse-audit-v1 | markdown+json | md date missing |
-| REPORT_SOURCE_OF_TRUTH | active | 2026-05-06 | report-source-of-truth-v1 | markdown+json | 2026-05-06 |
+| REPORT_SOURCE_OF_TRUTH | active | 2026-05-02 | report-source-of-truth-v1 | markdown+json | 2026-05-02 |
 | ROADMAP_90_DAY_WAVES | historical | 2026-04-29 | roadmap-90-day-waves-v1 | markdown+json | 2026-04-29 |
 | SVCOLLEGE_COMMAND_CENTER | historical | 2026-04-28 | svcollege-command-center-v1 | markdown+json | md date missing |
 | SVCOLLEGE_READINESS_REPORT | historical | 2026-04-28 | svcollege-readiness-v1 | markdown+json | md date missing |
@@ -49,8 +49,8 @@ Version: report-source-of-truth-v1
 ## Live Signals
 
 - **FEATURE_COVERAGE**: green (strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2)
-- **QUESTION_COVERAGE_TARGETS**: red (ready=false, mcGap=398, fillGap=393, version=question-coverage-targets-v1)
-- **QUESTION_QUALITY**: yellow (questionQualityIndex=100%, total=1490)
+- **QUESTION_COVERAGE_TARGETS**: red (ready=false, mcGap=374, fillGap=384, version=question-coverage-targets-v1)
+- **QUESTION_QUALITY**: yellow (questionQualityIndex=99.2%, total=1810)
 - **FINISH_LINE_PRE_RELEASE**: red (ready=false, passed=1/18)
 
 ## Source-of-Truth Findings

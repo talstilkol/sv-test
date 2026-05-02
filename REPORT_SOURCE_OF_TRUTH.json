@@ -19,14 +19,14 @@
     {
       "id": "QUESTION_COVERAGE_TARGETS",
       "status": "red",
-      "detail": "ready=false, mcGap=398, fillGap=393, version=question-coverage-targets-v1",
+      "detail": "ready=false, mcGap=374, fillGap=384, version=question-coverage-targets-v1",
       "date": "2026-05-02",
       "source": "questionCoverage"
     },
     {
       "id": "QUESTION_QUALITY",
       "status": "yellow",
-      "detail": "questionQualityIndex=100%, total=1490",
+      "detail": "questionQualityIndex=99.2%, total=1810",
       "date": "2026-05-02"
     },
     {
@@ -43,7 +43,7 @@
       "finding": "Feature coverage is clean while question coverage remains red. Do not claim both as current production truth.",
       "evidence": {
         "feature": "strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2",
-        "questions": "ready=false, mcGap=398, fillGap=393, version=question-coverage-targets-v1"
+        "questions": "ready=false, mcGap=374, fillGap=384, version=question-coverage-targets-v1"
       }
     },
     {
@@ -344,8 +344,8 @@
     {
       "id": "REPORT_SOURCE_OF_TRUTH",
       "state": "active",
-      "date": "2026-05-06",
-      "mdDate": "2026-05-06",
+      "date": "2026-05-02",
+      "mdDate": "2026-05-02",
       "reportVersion": "report-source-of-truth-v1",
       "type": "markdown+json",
       "title": "scripts/report_source_of_truth.js"

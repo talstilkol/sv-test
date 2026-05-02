@@ -1226,6 +1226,78 @@
       what: "שדה דואר אלקטרוני, משמש לזיהוי וקשר עם המשתמש.",
       need: "validation מובנית עם type='email' ו-regex/בדיקת domain.",
     },
+    "Type Safety": {
+      what: "ב-TypeScript: בדיקת טיפוסים בזמן compile. שגיאות נתפסות לפני runtime.",
+      need: "תוסיף annotations ל-functions ו-state כדי שהcompiler יזהה ניסיונות העברת string ל-number.",
+    },
+    "{}": {
+      what: "סוגריים מסולסלים ב-JSX מאפשרים להזריק JS expression: <h1>{name}</h1>.",
+      need: "כל ביטוי JS מתאים: משתנה, חישוב, condition && <Item />, או arr.map(...).",
+    },
+    "Income": {
+      what: "interface ל-הכנסה ב-Budget Manager: { amount: number, source: string, date: Date }.",
+      need: "בדרך כלל בא עם type discriminator: 'income' | 'expense' לסיווג בעיבוד.",
+    },
+    "Expense": {
+      what: "interface להוצאה ב-Budget Manager: { amount: number, category: Category, date: Date }.",
+      need: "category לרוב string union או enum כדי שאפשר יהיה לסכם לפי קטגוריה.",
+    },
+    "Strongly Typed": {
+      what: "שפה שדורשת התאמת טיפוסים ולא עושה implicit conversion ב-runtime.",
+      need: "ב-TypeScript: 'foo' + 1 → compile error. ב-JS: '\"foo\" + 1' → 'foo1'.",
+    },
+    "Cluster": {
+      what: "ב-MongoDB Atlas: קבוצת replicas/shards שמספקים HA + scale.",
+      need: "Free tier (M0) מתאים לפיתוח. Production צריך תכנון shard keys.",
+    },
+    "Connection String": {
+      what: "URL שמכיל פרטי התחברות ל-DB: mongodb+srv://user:pass@host/dbname.",
+      need: "תמיד שמור ב-env var (.env), אף פעם לא הצמד לקוד.",
+    },
+    "Props": {
+      what: "ב-React: data שמועבר מ-parent ל-child component.",
+      need: "props read-only בילד. שינוי דורש callback מההורה (lifting state up).",
+    },
+    "Value": {
+      what: "ב-MongoDB document: הערך של field, נגיש דרך dot notation: doc.fieldName.",
+      need: "ב-Mongoose שווה גם doc.get('fieldName'). doc.toObject() להמרה ל-plain JS.",
+    },
+    "Book": {
+      what: "interface בדוגמת ספריה: { id: string, title: string, author: string, year: number }.",
+      need: "אפשר להוסיף genre, isbn, available — לפי הצרכים של ה-app.",
+    },
+    "Genre": {
+      what: "type union/enum לסיווג סוג ספר: 'fiction' | 'nonfiction' | 'sci-fi'.",
+      need: "string union נפוץ יותר מ-enum ב-TS modern.",
+    },
+    "GuestUser": {
+      what: "interface למשתמש אורח (ללא credentials): { id: string, sessionId: string }.",
+      need: "discriminated union: type User = GuestUser | RegisteredUser לפי tag.",
+    },
+    "RegisteredUser": {
+      what: "interface למשתמש רשום: { id, email, name, hashedPassword, createdAt }.",
+      need: "אסור לשמור password plain — תמיד hash + salt עם bcrypt/argon2.",
+    },
+    "Amount": {
+      what: "מספר המייצג סכום כספי בעסקה. number ב-TS, אבל שמור כ-cents (integer) למניעת floating point bugs.",
+      need: "lib כמו decimal.js או big.js לחישובים מדויקים.",
+    },
+    "Category Breakdown": {
+      what: "תצוגת חלוקת הוצאות לפי קטגוריה: { food: 1200, rent: 5000, ... }.",
+      need: "expenses.reduce((acc, e) => { acc[e.category] = (acc[e.category]||0) + e.amount; return acc; }, {}).",
+    },
+    "Method": {
+      what: "פונקציה שמוגדרת באובייקט/class. נקראת עם dot notation: obj.method().",
+      need: "method shorthand: { greet() { ... } }. בתוכה this מצביע על האובייקט.",
+    },
+    "Object": {
+      what: "מבנה נתונים של key-value pairs ב-JS: { name: 'Tal', age: 30 }.",
+      need: "Object.keys/values/entries לעבור על key/value. spread ל-immutability.",
+    },
+    "Property": {
+      what: "key-value pair בתוך object. obj.name או obj['name'].",
+      need: "computed property: { [key]: value }. delete obj.key למחיקה.",
+    },
   };
 
   global.CONCISE_CONCEPT_DEFINITIONS = Object.freeze(defs);
