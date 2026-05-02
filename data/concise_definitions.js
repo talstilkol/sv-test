@@ -1298,6 +1298,18 @@
       what: "key-value pair בתוך object. obj.name או obj['name'].",
       need: "computed property: { [key]: value }. delete obj.key למחיקה.",
     },
+    "Copilot": {
+      what: "כלי AI מבוסס LLM שמשלים קוד IDE לפי הקשר. נכתב על ידי GitHub.",
+      need: "מקבל context מהקובץ הפתוח + תגובה מהיר; מסכן privacy אם בלי policy ברור.",
+    },
+    "ChatGPT": {
+      what: "ממשק שיחה של OpenAI מעל מודלי GPT — נשאל ומקבל תשובה בטקסט.",
+      need: "טוב לסיעור מוחות, debug, תיעוד; לא מקור אמת, צריך verify.",
+    },
+    "memoization": {
+      what: "שמירה של תוצאת חישוב כדי לא לחשב שוב על אותו input.",
+      need: "useMemo ב-React לערך, useCallback לפונקציה — ל-deps יציבים.",
+    },
   };
 
   global.CONCISE_CONCEPT_DEFINITIONS = Object.freeze(defs);
