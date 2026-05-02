@@ -4387,7 +4387,3359 @@ arr.splice(1, 2);         // [2, 3] — וגם arr הופך ל-[1, 4, 5]!
 
 ---
 
-**עודכן:** 2026-05-02 · ידני · §5 Object/Array/Function · §6 Arrow vs Regular · §7 Pointer Internals · 6-level translations · §32 useState · §33 array reference · 🔬 ניתוח מושגים בנפרד · 📦 בלוקי קוד ל-6 רמות (PHASE A) · 🔬 PHASE C complete
+## 34. Closures — סגירות והכל-לידן (קושי 8)
+
+> חברי קלסטר: `closure` · `lexical scope` · `IIFE` · `stale closure` · `closure in setTimeout` · `closure in useEffect`
+
+### טבלה
+
+| תופעה | מה זה | למה זה קורה | תיקון |
+|---|---|---|---|
+| Closure | פונקציה זוכרת משתנים מהscope שבו נוצרה | function = code + environment | תכונה — לא בעיה |
+| Lexical Scope | scope נקבע ב**מיקום ההגדרה**, לא בקריאה | בניגוד ל-`this` שדינמי | זוהי הסיבה לclosures |
+| IIFE | פונקציה שמופעלת מיד | יוצר private scope לפני ES Modules | החלף ל-`{ ... }` block או module |
+| Stale Closure | callback רואה ערך ישן | nested function תפסה ערך ב-render קודם | functional update / dep array שלם |
+| Closure in setTimeout | setTimeout callback רואה ערך ישן | timer מחזיק את ה-closure | clearTimeout + functional |
+| Closure in useEffect | effect רואה state ישן | `[]` deps לא כולל state | הוסף ל-deps או functional update |
+
+### דוגמה אחת לכל
+
+```js
+// 1. Closure בסיסי
+function counter() {
+  let n = 0;
+  return () => ++n;
+}
+const inc = counter();
+inc(); inc(); inc();   // 3
+
+// 2. Lexical scope
+let x = "outer";
+function f() { console.log(x); }       // "outer"
+function g() { let x = "inner"; f(); } // עדיין "outer" — lexical, לא דינמי
+
+// 3. IIFE
+const total = (function() {
+  const fee = 10;
+  return 100 + fee;
+})();   // 110
+
+// 4. Stale closure ב-React
+function Counter() {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    setInterval(() => setN(n + 1), 1000);  // ❌ n קפוא ב-0
+  }, []);
+}
+
+// 5. Closure ב-setTimeout
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 0);   // 3, 3, 3 (var — function scope)
+}
+for (let j = 0; j < 3; j++) {
+  setTimeout(() => console.log(j), 0);   // 0, 1, 2 (let — block scope per iter)
+}
+
+// 6. Closure ב-useEffect
+useEffect(() => {
+  const handler = () => console.log(value);  // value קפוא ב-render-time
+  window.addEventListener("scroll", handler);
+  return () => window.removeEventListener("scroll", handler);
+}, [value]);  // ✅ deps כולל value
+```
+
+### 6 רמות
+
+**סבתא** 🧓 — פונקציה זוכרת את החדר שבו היא נולדה, גם אחרי שהוא נסגר.
+**ילד** 👶 — דמיין צוואת סבא — היא זוכרת על מי דיברה גם אחרי 100 שנה.
+**חייל** 💂 — function + environment chain. lexical (מהיכן הוגדרה).
+**סטודנט** 🎓 — מסיבת iterations: `var` משתפת, `let` מבדדת. functional update פותר stale.
+**ג'וניור** 👨‍💻 — react-hooks/exhaustive-deps תופס 90% מהבאגים. או `useEffectEvent` חדש.
+**פרופ׳** 🎩 — Function inherits LexicalEnvironment. Inner functions reference outer's EnvironmentRecord. GC keeps env alive while closure live.
+
+### בלוקי קוד ל-6 רמות
+
+```js
+// 🧓 סבתא — פונקציה זוכרת את הבית שלה
+function maker(name) { return () => `Hi ${name}`; }
+const greet = maker("Tal");
+greet();   // "Hi Tal" — זוכרת את "Tal"
+
+// 👶 ילד
+function bank(money) {
+  return { deposit: (n) => money += n, balance: () => money };
+}
+const wallet = bank(100);
+wallet.deposit(50); wallet.balance();   // 150 — money "חי" בthe closure
+
+// 💂 חייל — let vs var ב-loop
+for (var i=0; i<3; i++) setTimeout(()=>console.log(i), 0);  // 3 3 3
+for (let j=0; j<3; j++) setTimeout(()=>console.log(j), 0);  // 0 1 2
+
+// 🎓 סטודנט — stale closure pattern
+const [count, setCount] = useState(0);
+useEffect(() => {
+  const id = setInterval(() => setCount(c => c + 1), 1000);  // functional
+  return () => clearInterval(id);
+}, []);
+
+// 👨‍💻 ג'וניור — useEffectEvent (React 19+)
+const onTimer = useEffectEvent(() => log(value));  // tracks latest value
+useEffect(() => { setInterval(onTimer, 1000); }, []);
+
+// 🎩 פרופ׳ — bytecode
+// CreateFunction emits closure with [[Environment]] slot
+// Inner accesses via LdaContextSlot through chain
+```
+
+---
+
+## 35. React State Flow — props / state / context / re-render (קושי 7)
+
+> חברים: `props` · `state` · `context` · `useState` · `useContext` · `re-render` · `passing function as prop`
+
+### טבלה
+
+| ציר | props | state | context |
+|---|---|---|---|
+| מקור | אב → ילד | בתוך הקומפוננטה | global container |
+| Mutation | אסור (immutable) | רק דרך setter | רק דרך Provider value |
+| Re-render trigger | אב משתנה | setter נקרא | Provider value משתנה |
+| Drilling? | כן (3+ רמות = problem) | לא | מחליף את ה-drilling |
+| Performance cost | זול | זול | יקר אם value משתנה הרבה |
+
+### דוגמה
+```jsx
+// props
+function Greet({ name }) { return <h1>Hi {name}</h1>; }
+<Greet name="Tal" />
+
+// state
+function Counter() {
+  const [n, setN] = useState(0);
+  return <button onClick={() => setN(n+1)}>{n}</button>;
+}
+
+// context
+const ThemeCtx = createContext("light");
+function App() {
+  return <ThemeCtx.Provider value="dark"><Toolbar/></ThemeCtx.Provider>;
+}
+function Toolbar() {
+  const theme = useContext(ThemeCtx);
+  return <div>{theme}</div>;
+}
+```
+
+### 6 רמות
+**סבתא** 🧓 — props = מתנה מאמא. state = יומן פנימי. context = רדיו ציבורי.
+**ילד** 👶 — props מהורים, state פרטי, context לכל הכיתה.
+**חייל** 💂 — props one-way down. state local. context cross-cutting.
+**סטודנט** 🎓 — state lift to common parent. context for theme/auth/locale.
+**ג'וניור** 👨‍💻 — context value ב-useMemo, אחרת re-render לכל consumer.
+**פרופ׳** 🎩 — Reconciliation traverses fiber tree. Bailout if memoized + props ===.
+
+```jsx
+// 🧓 סבתא
+<Card title="Hello" />   // title is a prop
+
+// 👶 ילד
+const [open, setOpen] = useState(false);  // state פרטי
+
+// 💂 חייל — re-render trigger
+function Parent() {
+  const [n, setN] = useState(0);
+  return <Child value={n} />;   // re-renders Child when n changes
+}
+
+// 🎓 סטודנט — context provider
+const Auth = createContext(null);
+<Auth.Provider value={user}>{children}</Auth.Provider>
+
+// 👨‍💻 ג'וניור — memoized context
+const ctxVal = useMemo(() => ({ user, setUser }), [user]);
+<Auth.Provider value={ctxVal}>{children}</Auth.Provider>
+
+// 🎩 פרופ׳ — fiber bailout
+// React.memo + Object.is on props → bailout, no rerender
+```
+
+---
+
+## 36. React Hooks Cluster — useState / useEffect / useMemo / useRef (קושי 7)
+
+> חברים: `useState` · `useEffect` · `useMemo` · `useRef` · `useCallback` · `custom hook`
+
+### טבלה
+
+| Hook | מטרה | Triggers re-render? | Persists across renders? |
+|---|---|---|---|
+| `useState` | local state | ✅ | ✅ |
+| `useEffect` | side effects (subscribe/fetch/log) | ❌ | ✅ |
+| `useMemo` | cache expensive computation | ❌ | ✅ |
+| `useCallback` | cache function reference | ❌ | ✅ |
+| `useRef` | mutable storage / DOM ref | ❌ | ✅ |
+| custom hook | reusable hook logic | depends | depends |
+
+### 6 רמות
+**סבתא** 🧓 — useState=זיכרון, useEffect=פעולות-צד, useMemo=שמור-תוצאה, useRef=סוד.
+**ילד** 👶 — 4 כלים שונים בקופסה — כל אחד למשימה אחרת.
+**חייל** 💂 — useState triggers render. useEffect runs after commit. useMemo caches values. useRef mutable container.
+**סטודנט** 🎓 — Rules: 1) only at top level. 2) only in React functions. 3) name starts with "use".
+**ג'וניור** 👨‍💻 — eslint-plugin-react-hooks חובה. extract custom hooks ל-state-machines.
+**פרופ׳** 🎩 — fiber.memoizedState linked list. Order-dependent.
+
+```jsx
+// 🧓 סבתא
+const [count, setCount] = useState(0);
+
+// 👶 ילד
+useEffect(() => { console.log("רנדור"); });
+
+// 💂 חייל
+const total = useMemo(() => items.reduce((s,i)=>s+i.price, 0), [items]);
+
+// 🎓 סטודנט
+const handleClick = useCallback(() => fn(id), [id]);
+
+// 👨‍💻 ג'וניור — custom hook
+function useDebounce(value, delay) {
+  const [v, setV] = useState(value);
+  useEffect(() => {
+    const id = setTimeout(() => setV(value), delay);
+    return () => clearTimeout(id);
+  }, [value, delay]);
+  return v;
+}
+
+// 🎩 פרופ׳ — fiber slot order
+// State stored in fiber.memoizedState as linked list.
+// Hook order MUST be stable across renders.
+```
+
+---
+
+## 37. TypeScript ב-React — Typing Props / Hooks / Events (קושי 7)
+
+> חברים: `Typing Props` · `Function Prop Type` · `Type Narrowing` · `Union Type`
+
+### טבלה
+
+| תרחיש | תחביר | דוגמה |
+|---|---|---|
+| Component props | interface או type | `interface Props { name: string }` |
+| Children | `ReactNode` | `children: ReactNode` |
+| Function prop | `(args) => returnType` | `onClick: (e: MouseEvent) => void` |
+| useState typed | `<T>` | `useState<User \| null>(null)` |
+| Event handler | מתאים לאלמנט | `onChange: ChangeEventHandler<HTMLInputElement>` |
+| Generic component | `<T,>` | `function List<T>({items}: {items: T[]})` |
+
+### 6 רמות
+**סבתא** 🧓 — TypeScript מחייב לתאר מה כל prop מקבל.
+**ילד** 👶 — לפני שאני מקבל מתנה — אומרים לי איזה סוג.
+**חייל** 💂 — Props interface + ReactNode + EventHandler types.
+**סטודנט** 🎓 — Prefer interface for public API, type for unions.
+**ג'וניור** 👨‍💻 — `as` casting = code smell. Prefer type guards.
+**פרופ׳** 🎩 — Generics with `extends` for narrowed APIs. discriminated unions for state machines.
+
+```tsx
+// 🧓 סבתא
+function Greet({ name }: { name: string }) { return <h1>Hi {name}</h1>; }
+
+// 👶 ילד
+interface CardProps { title: string; children: React.ReactNode; }
+
+// 💂 חייל
+function Btn(props: { onClick: () => void }) { return <button onClick={props.onClick}/>; }
+
+// 🎓 סטודנט — useState generic
+const [user, setUser] = useState<User | null>(null);
+
+// 👨‍💻 ג'וניור — discriminated union
+type State = { status: "loading" } | { status: "ok"; data: User } | { status: "err"; msg: string };
+if (state.status === "ok") state.data.name; // narrowed!
+
+// 🎩 פרופ׳ — generic component
+function List<T,>({ items, render }: { items: T[]; render: (x: T) => ReactNode }) {
+  return <ul>{items.map(render)}</ul>;
+}
+```
+
+---
+
+## 38. AI Engineering Patterns — RAG / Tool Calling / Agents / Fine-tuning (קושי 8)
+
+> חברים: `RAG` · `tool calling` · `agent loop` · `fine-tuning boundary`
+
+### טבלה
+
+| Pattern | בעיה שפותר | עלות | מתי לבחור |
+|---|---|---|---|
+| RAG | מודל לא מכיר תוכן ספציפי שלי | embedding + vector search | knowledge base, docs Q&A |
+| Tool calling | מודל צריך לבצע פעולה (לא רק לדבר) | API call per tool | API agents, calculator |
+| Agent loop | מטרה רב-שלבית | tokens × iterations | research, multi-step planning |
+| Fine-tuning | format-specific output | training cost + maintenance | strict format, classification |
+
+### 6 רמות
+**סבתא** 🧓 — RAG=נותן ספרים. Tool=נותן כלים. Agent=נותן רגליים. Fine-tune=מאמן מחדש.
+**ילד** 👶 — RAG=ספרייה, Tool=ארגז כלים, Agent=שליח, Fine-tune=שיעורים פרטיים.
+**חייל** 💂 — RAG retrieves context. Tool = function call. Agent = LLM in a loop. Fine-tune = retrain weights.
+**סטודנט** 🎓 — Pick by need. RAG cheap. Tools moderate. Agents expensive. Fine-tune slow + brittle.
+**ג'וניור** 👨‍💻 — Start with RAG. Add tools when actions needed. Agents only for genuinely multi-step.
+**פרופ׳** 🎩 — Vector DB (pgvector / Pinecone). Tool schemas (JSON Schema). Agent frameworks (LangGraph). Fine-tune via PEFT/LoRA.
+
+```js
+// 🧓 סבתא — RAG
+const docs = await vectorDB.search(userQuery);
+const answer = await llm.complete(`Context: ${docs}\nQ: ${userQuery}`);
+
+// 👶 ילד — Tool
+const tools = [{ name: "get_weather", parameters: { city: "string" } }];
+const response = await llm.complete(prompt, { tools });
+if (response.tool_call) await callTool(response.tool_call);
+
+// 💂 חייל — Agent loop
+while (!done) {
+  const r = await llm.complete(history);
+  if (r.action) history.push(await execute(r.action));
+  else done = true;
+}
+
+// 🎓 סטודנט — RAG + retrieval
+const relevant = await embeddings.similar(query, k=5);
+const answer = await llm.chat([
+  { role: "system", content: `Use this context: ${relevant.join("\n")}` },
+  { role: "user", content: query }
+]);
+
+// 👨‍💻 ג'וניור — multi-step agent
+const agent = new AgentExecutor({ tools, llm, maxIters: 10 });
+const result = await agent.run(complexGoal);
+
+// 🎩 פרופ׳ — fine-tuning boundary
+// Use fine-tune when: format strict, latency critical, frequency >1k/day
+// Use prompting when: rapid iteration, varied tasks, low volume
+```
+
+---
+
+✅ **5 קלסטרים נוספים נוספו** (Closures · React State · React Hooks · TS-React · AI Patterns)
+
+---
+
+## 39. Error Catching Strategies — Error Boundary / try/catch / Promise.catch (קושי 8)
+
+### טבלה
+| Strategy | תופס | לא תופס | מתי |
+|---|---|---|---|
+| Error Boundary (React class) | render errors בילדים | event handlers, async, server, errors בעצמו | UI fallback |
+| try/catch | סינכרוני + await | callbacks-only, Promises ללא await | async/sync code |
+| Promise.catch / .catch | rejected Promises | סינכרוני | promise chains |
+| window.onerror | uncaught errors | handled errors | global logging |
+| process.on('uncaughtException') | Node uncaught | handled errors | server crash protection |
+
+### 6 רמות
+**🧓 סבתא:** כל אחד תופס סוג שגיאה אחר. boundary לרינדור, try/catch לקוד רגיל, .catch לpromises.
+**👶 ילד:** כמו רשתות בטיחות שונות לקרקסים שונים.
+**💂 חייל:** Boundary→render-tree errors. try/catch→sync+await. .catch→async chains.
+**🎓 סטודנט:** Combine all 3 in production app.
+**👨‍💻 ג'וניור:** error-boundary-fallback-prop pattern. log to Sentry.
+**🎩 פרופ׳:** Error Boundary uses componentDidCatch + getDerivedStateFromError.
+
+```jsx
+// 🧓 סבתא
+class Boundary extends Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() { return { hasError: true }; }
+  render() { return this.state.hasError ? <p>שגיאה</p> : this.props.children; }
+}
+
+// 👶 ילד
+try { JSON.parse(input); } catch (e) { console.error(e); }
+
+// 💂 חייל
+fetch("/api").then(r => r.json()).catch(err => log(err));
+
+// 🎓 סטודנט — async/await + try
+async function fetchUser() {
+  try { return await fetch("/u").then(r => r.json()); }
+  catch (e) { return null; }
+}
+
+// 👨‍💻 ג'וניור — Sentry integration
+window.addEventListener("error", (e) => Sentry.captureException(e.error));
+window.addEventListener("unhandledrejection", (e) => Sentry.captureException(e.reason));
+
+// 🎩 פרופ׳ — react-error-boundary lib
+import { ErrorBoundary } from "react-error-boundary";
+<ErrorBoundary FallbackComponent={Fallback} onError={logError}>
+  <App />
+</ErrorBoundary>
+```
+
+---
+
+## 40. Auth Methods — Session / JWT / OAuth (קושי 8)
+
+### טבלה
+| Method | מה זה | אחסון | יתרון | חיסרון |
+|---|---|---|---|---|
+| Session | server-side state + cookie ID | DB + httpOnly cookie | פשוט, revoke מיידי | server stateful |
+| JWT | signed token עם claims | localStorage / httpOnly | stateless, scalable | לא יכול לrevoke מיידי |
+| OAuth | delegated auth דרך 3rd party | provider-managed | "Login with Google" | מורכבות protocol |
+
+### 6 רמות
+**🧓 סבתא:** Session=מפתח לחדר. JWT=דרכון חתום. OAuth=ערב מהשכן.
+**👶 ילד:** Session=שמור אצלי. JWT=שלך לקחת. OAuth=מישהו אחר מאשר.
+**💂 חייל:** Session: server-side store+cookie. JWT: signed claims base64. OAuth: redirect flow.
+**🎓 סטודנט:** Session for traditional. JWT for SPAs+APIs. OAuth for "Login with X".
+**👨‍💻 ג'וניור:** httpOnly cookie tops localStorage for JWT (XSS protection).
+**🎩 פרופ׳:** OAuth2 = authorization. OIDC = authentication on top. PKCE for SPAs.
+
+```js
+// 🧓 סבתא — session
+app.post("/login", async (req, res) => {
+  const user = await db.users.find({ email });
+  req.session.userId = user.id;   // server stores
+  res.cookie("sid", req.sessionID, { httpOnly: true });
+});
+
+// 👶 ילד — JWT
+const token = jwt.sign({ userId: u.id }, SECRET, { expiresIn: "1h" });
+res.cookie("token", token, { httpOnly: true, secure: true });
+
+// 💂 חייל — JWT verify middleware
+function auth(req, res, next) {
+  try {
+    req.user = jwt.verify(req.cookies.token, SECRET);
+    next();
+  } catch { res.status(401).end(); }
+}
+
+// 🎓 סטודנט — OAuth2 redirect
+const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${ID}&redirect_uri=${URI}&scope=email&response_type=code`;
+res.redirect(url);
+
+// 👨‍💻 ג'וניור — refresh + access tokens
+const access = jwt.sign({ uid }, SECRET, { expiresIn: "15m" });
+const refresh = crypto.randomBytes(32).toString("hex");
+await db.refreshTokens.insert({ token: refresh, uid, expires: ... });
+
+// 🎩 פרופ׳ — PKCE for SPAs
+const verifier = base64url(crypto.randomBytes(32));
+const challenge = base64url(sha256(verifier));
+// /authorize?code_challenge=<challenge>&code_challenge_method=S256
+```
+
+---
+
+✅ Diff 8 נסגר (39+2=41/95)
+
+## 41. Auth Security — authentication / authorization / session / cookie / JWT (קושי 7)
+
+### טבלה
+| מושג | מה זה | בודק |
+|---|---|---|
+| authentication | מי אתה? (login) | זהות |
+| authorization | מה אתה רשאי? (RBAC) | הרשאות |
+| session | state שרת לactive user | מזהה דרך cookie |
+| cookie | מחרוזת ב-browser | נשלחת אוטומטית |
+| access token | JWT קצר-טווח | API requests |
+
+### 6 רמות
+**🧓 סבתא:** auth=מי. authz=מה מותר. session=זמן ההתחברות. cookie=מפתח. token=דרכון.
+**👶 ילד:** מי אתה (auth) → ומה מותר לך (authz)? cookie + session = זוכר אותך.
+**💂 חייל:** Login validates → server creates session OR issues JWT → client sends cookie/token per request.
+**🎓 סטודנט:** RBAC: roles + permissions. ABAC: attribute-based.
+**👨‍💻 ג'וניור:** middleware chain: cookieParse → session → authn → authz.
+**🎩 פרופ׳:** OWASP A01 broken access control. principle of least privilege.
+
+```js
+// 🧓 סבתא
+app.post("/login", auth.validate);  // authentication
+app.delete("/posts/:id", auth.canDelete);  // authorization
+
+// 👶 ילד — cookies
+res.cookie("sid", id, { httpOnly: true, secure: true, sameSite: "strict" });
+
+// 💂 חייל — session middleware
+app.use(session({ secret: SECRET, store: new RedisStore() }));
+
+// 🎓 סטודנט — RBAC
+const can = (action, resource) => (req, res, next) => {
+  if (req.user.permissions.includes(`${resource}:${action}`)) next();
+  else res.status(403).end();
+};
+app.delete("/posts/:id", can("delete", "post"), handler);
+
+// 👨‍💻 ג'וניור — JWT verify with rotation
+const decoded = jwt.verify(token, getSigningKey(decoded.kid));
+
+// 🎩 פרופ׳ — defense in depth
+// Layer 1: WAF blocks injection
+// Layer 2: rate-limit per IP+user
+// Layer 3: middleware authn+authz
+// Layer 4: row-level security ב-DB
+```
+
+---
+
+## 42. Error Handling JS — try/catch/finally/throw/Error (קושי 7)
+
+### טבלה
+| Construct | מה עושה | מתי |
+|---|---|---|
+| try | מקיף קוד שעלול לזרוק | תמיד יחד עם catch או finally |
+| catch | תופס שגיאה | אחרי try |
+| finally | רץ תמיד (גם אם זרוק) | cleanup |
+| throw | יוצר שגיאה | validation, unrecoverable |
+| Error | base class | extend לcustom errors |
+
+### 6 רמות
+**🧓 סבתא:** try=נסה. catch=תפוס. finally=נקה. throw=זרוק. Error=סוג שגיאה.
+**👶 ילד:** try לעבודה, catch אם נשבר, finally לסדר, throw אם בעיה גדולה.
+**💂 חייל:** try-catch-finally בלוקים. throw expression מעלה. Error class יורש Stack trace.
+**🎓 סטודנט:** Custom errors: `class ValidationError extends Error`. Always preserve stack.
+**👨‍💻 ג'וניור:** Don't swallow errors. Always re-throw or log. Use specific error types.
+**🎩 פרופ׳:** Error.captureStackTrace ב-V8. .cause property (ES2022) for error chaining.
+
+```js
+// 🧓 סבתא
+try { JSON.parse(s); } catch (e) { console.log("שגיאה"); }
+
+// 👶 ילד
+try {
+  return await fetch(url);
+} catch (err) {
+  return null;
+} finally {
+  setLoading(false);
+}
+
+// 💂 חייל — custom Error
+class ValidationError extends Error {
+  constructor(msg, field) {
+    super(msg);
+    this.name = "ValidationError";
+    this.field = field;
+  }
+}
+throw new ValidationError("Email invalid", "email");
+
+// 🎓 סטודנט — error chaining (ES2022)
+try {
+  await db.query();
+} catch (cause) {
+  throw new Error("Failed to load user", { cause });
+}
+
+// 👨‍💻 ג'וניור — exhaustive
+function handleAPI(err) {
+  if (err instanceof ValidationError) return showFieldError(err.field);
+  if (err.code === "NETWORK") return retry();
+  Sentry.captureException(err);
+  throw err;  // re-throw unknown
+}
+
+// 🎩 פרופ׳ — V8 stack
+Error.captureStackTrace(myErr, MyClass);  // strips internal frames
+```
+
+---
+
+## 43. Deep Copy — Shallow vs Deep (קושי 7)
+
+### טבלה
+| Method | רמת עומק | עוקב cycle? | תומך Date/Map/Set | Performance |
+|---|---|---|---|---|
+| `=` | reference | n/a | n/a | O(1) |
+| `[...]` / `{...}` | shallow (1 level) | n/a | n/a | O(n) |
+| `Object.assign({}, x)` | shallow | n/a | n/a | O(n) |
+| `JSON.parse(JSON.stringify(x))` | deep | ❌ throws | ❌ loses Date | O(n × depth) |
+| `structuredClone(x)` | deep | ✅ | ✅ | O(n × depth) |
+| `_.cloneDeep` (lodash) | deep | ✅ | ✅ | O(n × depth) |
+
+### 6 רמות
+**🧓 סבתא:** shallow=רמה אחת. deep=הכל פנימה.
+**👶 ילד:** קופסה חדשה אבל אותם צעצועים (shallow) או צעצועים חדשים (deep).
+**💂 חייל:** spread/Object.assign = level 1. structuredClone = full deep.
+**🎓 סטודנט:** structuredClone modern, supports Date/Map/Set/RegExp/Blob.
+**👨‍💻 ג'וניור:** JSON trick fails on Date, RegExp, undefined, functions, cycles. Use structuredClone.
+**🎩 פרופ׳:** HTML structured clone algorithm. handles Transferable objects.
+
+```js
+// 🧓 סבתא
+const a = { x: 1 };
+const b = a;             // ❌ same reference
+const c = { ...a };      // ✅ new object
+
+// 👶 ילד — shallow trap
+const orig = { items: [1,2,3] };
+const shallow = { ...orig };
+shallow.items.push(4);
+orig.items;              // [1,2,3,4] ⚠️ shared!
+
+// 💂 חייל — JSON trick
+const deep = JSON.parse(JSON.stringify(orig));
+deep.items.push(5);
+orig.items;              // [1,2,3,4] ✅ unchanged
+
+// 🎓 סטודנט — JSON loses
+const obj = { date: new Date(), regex: /x/, fn: () => {} };
+const ghost = JSON.parse(JSON.stringify(obj));
+ghost.date;              // string!  fn missing
+ghost.regex;             // {} empty!
+
+// 👨‍💻 ג'וניור — structuredClone
+const safe = structuredClone(obj);
+safe.date instanceof Date;  // ✅ true
+safe.regex instanceof RegExp; // ✅ true
+
+// 🎩 פרופ׳ — circular references
+const cyc = {}; cyc.self = cyc;
+JSON.stringify(cyc);     // ❌ TypeError
+structuredClone(cyc);    // ✅ works
+```
+
+---
+
+## 44. Form Control — Controlled / Uncontrolled (קושי 7)
+
+### טבלה
+| Aspect | Controlled | Uncontrolled |
+|---|---|---|
+| Source of truth | React state | DOM |
+| `value` prop | set explicitly | not set (or `defaultValue`) |
+| `onChange` | required | optional |
+| Re-render on input | every keystroke | none |
+| Reset programmatically | `setState("")` | `ref.current.value = ""` |
+| Validation | on each change | on submit |
+
+### 6 רמות
+**🧓 סבתא:** controlled=React שולט. uncontrolled=DOM שולט.
+**👶 ילד:** מי שומר את הערך — React (controlled) או הקופסה עצמה (uncontrolled).
+**💂 חייל:** controlled needs value+onChange. uncontrolled uses ref.
+**🎓 סטודנט:** Default to controlled. Uncontrolled for performance (huge forms) or DOM-only.
+**👨‍💻 ג'וניור:** Controlled = "single source of truth". Pattern: form library (react-hook-form).
+**🎩 פרופ׳:** React Synthetic Events. value coerced to string.
+
+```jsx
+// 🧓 סבתא — controlled
+function Form() {
+  const [name, setName] = useState("");
+  return <input value={name} onChange={e => setName(e.target.value)} />;
+}
+
+// 👶 ילד — uncontrolled
+function Form() {
+  const ref = useRef();
+  return <input ref={ref} defaultValue="initial" />;
+}
+
+// 💂 חייל — controlled with validation
+function Form() {
+  const [email, setEmail] = useState("");
+  const valid = /^.+@.+\..+$/.test(email);
+  return (
+    <>
+      <input value={email} onChange={e => setEmail(e.target.value)} />
+      {!valid && <span>אימייל לא תקין</span>}
+    </>
+  );
+}
+
+// 🎓 סטודנט — uncontrolled submit
+function Form() {
+  const ref = useRef();
+  return (
+    <form onSubmit={e => { e.preventDefault(); save(ref.current.value); }}>
+      <input ref={ref} />
+    </form>
+  );
+}
+
+// 👨‍💻 ג'וניור — react-hook-form (uncontrolled internally, easy DX)
+const { register, handleSubmit, formState: { errors } } = useForm();
+<input {...register("email", { required: true })} />
+
+// 🎩 פרופ׳ — performance for huge forms
+// Each controlled input → re-render of form. Use uncontrolled or split state.
+```
+
+---
+
+## 45. Composition Patterns — children / render prop / slot (קושי 7)
+
+### טבלה
+| Pattern | תחביר | יתרון | חיסרון |
+|---|---|---|---|
+| children prop | `<X>{stuff}</X>` | פשוט | רק 1 slot |
+| render prop | `<X render={() => ...} />` | מאפשר state passing | ferbose |
+| slots (named) | `<X header={...} body={...} />` | מולטי-slot ברור | TypeScript boilerplate |
+| compound components | `<Tabs><Tab/></Tabs>` | API טבעי | implicit context |
+
+### 6 רמות
+**🧓 סבתא:** children=ילדים פתוחים. render prop=פונקציה שמייצרת תוכן.
+**👶 ילד:** איך מכניסים ילדים לקופסה.
+**💂 חייל:** children=ReactNode. render prop= function returning JSX.
+**🎓 סטודנט:** Use children for simple. Render prop for state-injecting wrappers (Mouse, Form).
+**👨‍💻 ג'וניור:** Compound components > render props (better DX with React Context).
+**🎩 פרופ׳:** React.cloneElement, useContext for compound state sharing.
+
+```jsx
+// 🧓 סבתא — children
+<Card>
+  <h1>טל</h1>
+  <p>30</p>
+</Card>
+
+// 👶 ילד — named slots
+<Layout
+  header={<Logo />}
+  sidebar={<Nav />}
+  main={<Content />}
+/>
+
+// 💂 חייל — render prop
+<Mouse render={({ x, y }) => <p>{x}, {y}</p>} />
+
+// 🎓 סטודנט — compound components
+<Tabs>
+  <TabList>
+    <Tab>One</Tab>
+    <Tab>Two</Tab>
+  </TabList>
+  <TabPanel>First</TabPanel>
+  <TabPanel>Second</TabPanel>
+</Tabs>
+
+// 👨‍💻 ג'וניור — context-based compound
+const TabsContext = createContext();
+function Tabs({ children }) {
+  const [active, setActive] = useState(0);
+  return <TabsContext.Provider value={{active, setActive}}>{children}</TabsContext.Provider>;
+}
+function Tab({ index, children }) {
+  const { active, setActive } = useContext(TabsContext);
+  return <button onClick={() => setActive(index)} aria-selected={active===index}>{children}</button>;
+}
+
+// 🎩 פרופ׳ — slots in TypeScript
+type Slots = { header: ReactNode; main: ReactNode; footer?: ReactNode };
+function Layout(props: Slots) { ... }
+```
+
+---
+
+## 46. TS Utility Types — Partial/Required/Omit/Pick (קושי 7)
+
+### טבלה
+| Utility | מה עושה | דוגמה |
+|---|---|---|
+| `Partial<T>` | כל השדות אופציונליים | `Partial<User>` → `{name?, age?}` |
+| `Required<T>` | כל השדות חובה | `Required<{a?:n}>` → `{a:n}` |
+| `Pick<T,K>` | בוחר שדות | `Pick<User, "id"\|"name">` |
+| `Omit<T,K>` | מסיר שדות | `Omit<User, "password">` |
+| `Readonly<T>` | freeze | `Readonly<User>` |
+| `Record<K,V>` | מחרוזת מפתחות | `Record<string, number>` |
+
+### 6 רמות
+**🧓 סבתא:** Partial=הכל אופציה. Pick=בחר. Omit=הסר. Readonly=נעול.
+**👶 ילד:** כלים להפוך type אחד לאחר.
+**💂 חייל:** generic utility types, TS built-in, compose-able.
+**🎓 סטודנט:** Common: `Partial<User>` for PATCH update. `Omit<User, "password">` for public.
+**👨‍💻 ג'וניור:** combine: `Pick<Required<Partial<User>>, "id">`. עדיף לפצל לnames נקיים.
+**🎩 פרופ׳:** mapped types underlying these. `Partial<T> = { [P in keyof T]?: T[P] }`.
+
+```ts
+// 🧓 סבתא
+interface User { id: number; name: string; email: string; }
+type UpdateUser = Partial<User>;        // כל השדות ?
+
+// 👶 ילד
+type PublicUser = Omit<User, "email">;  // ללא email
+
+// 💂 חייל
+type UserSummary = Pick<User, "id" | "name">;
+
+// 🎓 סטודנט
+type RequiredUser = Required<UpdateUser>;  // הכל חובה שוב
+type FrozenUser = Readonly<User>;          // לא מאפשר שינוי
+
+// 👨‍💻 ג'וניור — Record
+type RolePermissions = Record<"admin" | "user" | "guest", string[]>;
+const perms: RolePermissions = {
+  admin: ["read", "write", "delete"],
+  user: ["read", "write"],
+  guest: ["read"],
+};
+
+// 🎩 פרופ׳ — mapped type internals
+type MyPartial<T> = { [P in keyof T]?: T[P] };
+type MyReadonly<T> = { readonly [P in keyof T]: T[P] };
+```
+
+---
+
+## 47. Cookie Flags — httpOnly / Secure / SameSite (קושי 7)
+
+### טבלה
+| Flag | מה עושה | חוסם |
+|---|---|---|
+| httpOnly | JS לא יכול לקרוא | XSS cookie theft |
+| Secure | רק על HTTPS | sniff על HTTP |
+| SameSite=Strict | רק אותו origin | CSRF (אגרסיבי) |
+| SameSite=Lax | top-level cross-site GET | CSRF (סביר) |
+| SameSite=None+Secure | cross-site מותר | nothing (open) |
+| Path / Domain | מגביל scope | הצטמצמות |
+
+### 6 רמות
+**🧓 סבתא:** httpOnly=סוד מהjs. Secure=רק https. SameSite=מגביל cross-site.
+**👶 ילד:** הגנות על cookies מפני גנבים.
+**💂 חייל:** XSS protection (httpOnly), MITM (Secure), CSRF (SameSite).
+**🎓 סטודנט:** Modern: httpOnly + Secure + SameSite=Lax (default 2020+).
+**👨‍💻 ג'וניור:** Domain only-if-needed. __Host- prefix for strictest.
+**🎩 פרופ׳:** Cookie prefixes (__Host-, __Secure-) bind to constraints. cookie partitioning.
+
+```js
+// 🧓 סבתא — חובה
+res.cookie("sid", id, { httpOnly: true, secure: true });
+
+// 👶 ילד — protection layers
+res.cookie("sid", id, {
+  httpOnly: true,    // XSS
+  secure: true,      // HTTPS only
+  sameSite: "lax"    // CSRF
+});
+
+// 💂 חייל — strict
+res.cookie("admin_token", t, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "strict",
+  path: "/admin"
+});
+
+// 🎓 סטודנט — SameSite=None for cross-site
+// (e.g., embedding payment widget)
+res.cookie("session", id, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none"   // ⚠️ requires Secure
+});
+
+// 👨‍💻 ג'וניור — __Host- prefix
+res.cookie("__Host-sid", id, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "strict"
+  // __Host- forces: Secure, Path=/, no Domain
+});
+
+// 🎩 פרופ׳ — CHIPS partitioning (2024+)
+res.cookie("third_party", v, {
+  partitioned: true   // partitioned per top-level site
+});
+```
+
+---
+
+## 48. Token Lifecycle — Refresh ↔ Access (קושי 7)
+
+### טבלה
+| Token | תוקף | אחסון | שימוש |
+|---|---|---|---|
+| Access | קצר (15min) | memory / httpOnly | API requests |
+| Refresh | ארוך (7-30d) | httpOnly cookie | להחליף access expired |
+
+### 6 רמות
+**🧓 סבתא:** access=מפתח-מהיר. refresh=מפתח-להחליף.
+**👶 ילד:** access נגמר מהר. refresh נשאר חודש כדי להוציא access חדש.
+**💂 חייל:** access ב-Authorization header. refresh ב-httpOnly cookie. POST /refresh.
+**🎓 סטודנט:** access expires → 401 → frontend POST /refresh → new access. seamless UX.
+**👨‍💻 ג'וניור:** rotate refresh on use (defense). Revoke list ב-DB.
+**🎩 פרופ׳:** sliding session. token reuse detection (compromise indicator).
+
+```js
+// 🧓 סבתא — login response
+res.json({ access: jwt.sign({uid}, S, {expiresIn: "15m"}) });
+res.cookie("refresh", randomToken, { httpOnly: true, maxAge: 7*24*60*60*1000 });
+
+// 👶 ילד — frontend retry
+async function api(path) {
+  let r = await fetch(path, { headers: { Authorization: `Bearer ${access}` } });
+  if (r.status === 401) {
+    access = await refresh();
+    r = await fetch(path, { headers: { Authorization: `Bearer ${access}` } });
+  }
+  return r.json();
+}
+
+// 💂 חייל — server refresh endpoint
+app.post("/refresh", async (req, res) => {
+  const t = req.cookies.refresh;
+  const stored = await db.refreshTokens.find({ token: t, revoked: false });
+  if (!stored) return res.status(401).end();
+  const access = jwt.sign({ uid: stored.uid }, SECRET, { expiresIn: "15m" });
+  res.json({ access });
+});
+
+// 🎓 סטודנט — rotate refresh
+app.post("/refresh", async (req, res) => {
+  const old = req.cookies.refresh;
+  await db.refreshTokens.update({ token: old }, { revoked: true });
+  const newToken = randomBytes(32);
+  await db.refreshTokens.insert({ token: newToken, uid });
+  res.cookie("refresh", newToken, { httpOnly: true });
+  res.json({ access });
+});
+
+// 👨‍💻 ג'וניור — reuse detection
+app.post("/refresh", async (req, res) => {
+  const stored = await db.find({ token: req.cookies.refresh });
+  if (stored.revoked) {
+    // STOLEN! revoke all of user's tokens
+    await db.updateMany({ uid: stored.uid }, { revoked: true });
+    return res.status(401).end();
+  }
+  ...
+});
+
+// 🎩 פרופ׳ — RFC 6749 OAuth2 Token Endpoint
+// grant_type=refresh_token, refresh_token=<value>
+// 200 → new access + (optionally) new refresh
+```
+
+---
+
+## 49. Git Merge ↔ Rebase (קושי 7)
+
+### טבלה
+| Operation | היסטוריה | conflicts | טוב ל... |
+|---|---|---|---|
+| merge | non-linear (merge commit) | 1 פעם | shared branches |
+| rebase | linear (re-applied) | פר commit | feature branch לפני merge |
+| squash merge | 1 commit על main | merge-time | PR cleanup |
+| rebase -i | לערוך commits | פר commit | ניקוי לפני push |
+
+### 6 רמות
+**🧓 סבתא:** merge=מאחד עם תיעוד. rebase=מעביר את העבודה למיקום חדש.
+**👶 ילד:** merge=שילוב עם אבן זיכרון. rebase=העתק-הדבק על קוד חדש.
+**💂 חייל:** merge creates merge commit. rebase rewrites history (don't push to shared).
+**🎓 סטודנט:** Pull request = merge. Local feature work = rebase before merge.
+**👨‍💻 ג'וניור:** Never rebase shared history. Use --force-with-lease (not --force).
+**🎩 פרופ׳:** rebase walks commits, applies cherry-pick-style. interactive: edit/squash/fixup.
+
+```bash
+# 🧓 סבתא — merge
+git checkout main
+git merge feature-branch    # יוצר merge commit
+
+# 👶 ילד — rebase
+git checkout feature
+git rebase main             # מעביר commits לראש main
+
+# 💂 חייל — squash on PR merge
+git checkout main
+git merge --squash feature
+git commit -m "feat: add X"  # 1 commit נקי
+
+# 🎓 סטודנט — interactive rebase
+git rebase -i HEAD~3
+# pick → squash/fixup/edit/drop
+
+# 👨‍💻 ג'וניור — safe force push after rebase
+git push --force-with-lease  # ✅ נכשל אם מישהו push בינתיים
+# git push --force            # ❌ דורס בלי בדיקה
+
+# 🎩 פרופ׳ — autosquash
+git commit --fixup=<hash>
+git rebase -i --autosquash HEAD~5  # מסדר fixup commits אוטומטית
+```
+
+---
+
+## 50. Mutability Patterns — Mutable / Immutable (קושי 7)
+
+### טבלה
+| Pattern | מה עושה | יתרון | חיסרון |
+|---|---|---|---|
+| direct mutation | `arr.push(x)` | מהיר | breaks React shallow |
+| spread + new | `[...arr, x]` | bezopásan | O(n) clone |
+| immer | `produce(arr, draft => draft.push(x))` | mutate-DX with immutability | dependency |
+| structural sharing | persistent data structures | מהיר + immutable | מורכבות |
+
+### 6 רמות
+**🧓 סבתא:** mutable=שינוי במקום. immutable=יוצר חדש.
+**👶 ילד:** או שאתה משנה את המערך, או יוצר חדש שדומה.
+**💂 חייל:** React/Redux דורש immutable. Map/filter/concat = immutable. push/splice/sort = mutable.
+**🎓 סטודנט:** immer = מאפשר mutable-style code, מייצר immutable מתחת.
+**👨‍💻 ג'וניור:** Object.freeze בdev for safety. structural sharing למבני-נתונים גדולים.
+**🎩 פרופ׳:** persistent data structures (immutable.js). Hash Array Mapped Tries.
+
+```js
+// 🧓 סבתא
+arr.push(x);                  // mutable
+const next = [...arr, x];     // immutable
+
+// 👶 ילד — React state
+// ❌ mutation
+setState(state => { state.arr.push(x); return state; });
+// ✅ immutable
+setState(state => ({ ...state, arr: [...state.arr, x] }));
+
+// 💂 חייל — nested update
+setState(state => ({
+  ...state,
+  user: { ...state.user, address: { ...state.user.address, city: "TLV" } }
+}));
+
+// 🎓 סטודנט — immer
+import produce from "immer";
+const next = produce(state, draft => {
+  draft.user.address.city = "TLV";   // mutates draft, returns immutable
+});
+
+// 👨‍💻 ג'וניור — Object.freeze ב-dev
+if (process.env.NODE_ENV === "development") {
+  Object.freeze(state);   // throws if mutated
+}
+
+// 🎩 פרופ׳ — persistent data structures
+import { Map } from "immutable";
+const m1 = Map({ a: 1, b: 2 });
+const m2 = m1.set("a", 99);   // m2 shares unchanged keys via tree
+```
+
+---
+
+## 51. JSX & React Rendering (קושי 7)
+
+### טבלה
+| Concept | מה זה |
+|---|---|
+| JSX | תחביר של HTML-בJS, מתורגם ל-`React.createElement` |
+| rendering | תהליך שבונה DOM מ-React tree |
+| Virtual DOM | ייצוג in-memory של ה-DOM הצפוי |
+| ReactDOM.render | API legacy (React <18) |
+| createRoot | API חדש (React 18+) — concurrent |
+| Reconciliation | אלגוריתם diff בין virtual trees |
+
+### 6 רמות
+**🧓 סבתא:** JSX=HTML בקוד. רינדור=הופך אותו לDOM אמיתי.
+**👶 ילד:** JSX זה איך כותבים מה תראה הכיתה. React מצייר את זה.
+**💂 חייל:** JSX → babel/swc → React.createElement(type, props, children).
+**🎓 סטודנט:** Virtual DOM diff → minimal real DOM ops. Reconciliation O(n).
+**👨‍💻 ג'וניור:** React 18 createRoot → concurrent rendering, automatic batching.
+**🎩 פרופ׳:** Fiber architecture. work-loop slices. Suspense boundary streaming.
+
+```jsx
+// 🧓 סבתא — JSX
+<div className="card">
+  <h1>טל</h1>
+</div>
+
+// 👶 ילד — JSX → createElement (under the hood)
+React.createElement("div", { className: "card" },
+  React.createElement("h1", null, "טל")
+);
+
+// 💂 חייל — entry point (React 18+)
+import { createRoot } from "react-dom/client";
+const root = createRoot(document.getElementById("app"));
+root.render(<App />);
+
+// 🎓 סטודנט — hydration (SSR)
+import { hydrateRoot } from "react-dom/client";
+hydrateRoot(document.getElementById("app"), <App />);
+
+// 👨‍💻 ג'וניור — concurrent features
+import { startTransition } from "react";
+startTransition(() => {
+  setSearchResults(heavyFilter(query));   // marked low-priority
+});
+
+// 🎩 פרופ׳ — Suspense streaming
+<Suspense fallback={<Spinner />}>
+  <SlowDataComponent />
+</Suspense>
+// React streams HTML chunks as <SlowDataComponent> resolves
+```
+
+---
+
+✅ Diff 7 הושלם (41+11=52/95)
+
+## 52. Array Methods — map / filter / reduce / forEach / find / sort (קושי 6)
+
+| Method | מחזיר | משנה original? | callback returns |
+|---|---|---|---|
+| `map` | array באותו אורך | ❌ | transformed value |
+| `filter` | array אולי קצר | ❌ | boolean (keep?) |
+| `reduce` | accumulator | ❌ | next acc |
+| `forEach` | undefined | ❌ | (ignored) |
+| `find` | first match או undefined | ❌ | boolean |
+| `sort` | אותו array (mutated!) | ✅ | -1/0/+1 |
+
+**🧓 סבתא:** map=הופך כל איבר. filter=שומר רק חלק. reduce=מסכם. forEach=פעולה. find=ראשון. sort=ממיין.
+**👶 ילד:** מתודות שעושות פעולות על מערך — חלק יוצרים חדש, חלק משנים.
+**💂 חייל:** map/filter/reduce שומרים על immutability. forEach לבעלי-side-effects. sort=mutates!
+**🎓 סטודנט:** chain: `.filter().map().reduce()`. בreact חובה immutable.
+**👨‍💻 ג'וניור:** `[...arr].sort()` תמיד — אחרת מוטציה. reduce כללי, map/filter פסבדו-קוד.
+**🎩 פרופ׳:** V8 has fast-paths for map/filter/forEach on PACKED arrays.
+
+```js
+// 🧓 סבתא
+[1,2,3].map(n => n*2);           // [2,4,6]
+[1,2,3].filter(n => n>1);        // [2,3]
+[1,2,3].reduce((s,n) => s+n, 0); // 6
+[1,2,3].forEach(n => console.log(n));
+[{id:1},{id:2}].find(x => x.id===2);  // {id:2}
+[3,1,2].sort();                  // [1,2,3] — also mutates!
+```
+
+---
+
+## 53. Databases — MongoDB / PostgreSQL / SQL / NoSQL (קושי 6)
+
+| DB | סוג | סכמה | join | scaling |
+|---|---|---|---|---|
+| PostgreSQL | SQL | קשיחה | native | vertical |
+| MongoDB | NoSQL document | גמישה | aggregate $lookup | horizontal sharding |
+| MySQL | SQL | קשיחה | native | vertical |
+| Redis | KV in-memory | ללא | ❌ | replication |
+| DynamoDB | NoSQL KV/document | חלקית | ❌ | horizontal |
+
+**🧓 סבתא:** SQL=טבלאות מסודרות. NoSQL=מסמכים גמישים.
+**👶 ילד:** SQL כמו אקסל מקושר. NoSQL כמו תיקיות עם דוקומנטים.
+**💂 חייל:** PG=relational, transactional. Mongo=document, scales horizontal.
+**🎓 סטודנט:** PG for ACID-critical. Mongo for nested docs + rapid iteration.
+**👨‍💻 ג'וניור:** PG default 95% מהמקרים. Mongo כשהschema באמת flexible.
+**🎩 פרופ׳:** OLTP vs OLAP. CAP theorem. eventual consistency.
+
+```js
+// 🧓 סבתא — Mongo
+await db.users.insertOne({ name: "Tal", tags: ["dev"] });
+
+// 👶 ילד — PG
+await db.query("INSERT INTO users (name) VALUES ($1)", ["Tal"]);
+
+// 💂 חייל — Mongo nested
+await db.users.findOne({ "address.city": "TLV" });
+
+// 🎓 סטודנט — PG join
+await db.query(`SELECT u.*, p.title FROM users u LEFT JOIN posts p ON p.user_id = u.id`);
+
+// 👨‍💻 ג'וניור — Mongo aggregate
+await db.posts.aggregate([
+  { $lookup: { from: "users", localField: "userId", foreignField: "_id", as: "user" } }
+]);
+
+// 🎩 פרופ׳ — JSONB ב-PG
+await db.query(`SELECT * FROM events WHERE data->>'type' = 'click'`);
+```
+
+---
+
+## 54. DOM Traversal — child / parent / sibling (קושי 6)
+
+| Property | מה מחזיר |
+|---|---|
+| `children` | HTMLCollection of elements |
+| `childNodes` | NodeList כולל text nodes |
+| `firstChild` / `lastChild` | כולל text nodes |
+| `firstElementChild` / `lastElementChild` | רק elements |
+| `parentNode` / `parentElement` | אב |
+| `nextSibling` / `previousSibling` | אח (כולל text) |
+| `nextElementSibling` / `previousElementSibling` | אח element בלבד |
+
+**🧓 סבתא:** דרכים לנווט בעץ DOM — למעלה, למטה, לצדדים.
+**👶 ילד:** ילדים, הורים, אחים — כמו עץ משפחה.
+**💂 חייל:** Element navigators (Element*) skip text nodes. Node navigators include them.
+**🎓 סטודנט:** ב-React לעולם לא צריך — DOM הוא רק מהrender.
+**👨‍💻 ג'וניור:** vanilla projects: prefer querySelector + closest over manual traversal.
+**🎩 פרופ׳:** Live HTMLCollection vs static NodeList. recompute concerns.
+
+```js
+// 🧓 סבתא
+elem.children;            // HTMLCollection (live!)
+elem.firstChild;          // אולי TEXT!
+elem.firstElementChild;   // תמיד element
+
+// 👶 ילד
+elem.parentElement;       // למעלה
+elem.nextElementSibling;  // אח הבא
+
+// 💂 חייל
+elem.closest("li");       // מעלה עד li קרוב
+
+// 🎓 סטודנט — React component children
+function Card({ children }) { return <div>{children}</div>; }
+
+// 👨‍💻 ג'וניור — DocumentFragment for batch
+const frag = document.createDocumentFragment();
+items.forEach(i => frag.appendChild(makeItem(i)));
+list.appendChild(frag);   // 1 reflow
+
+// 🎩 פרופ׳ — TreeWalker for traversal
+const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
+while (walker.nextNode()) { ... }
+```
+
+---
+
+## 55. DOM Events Cluster (קושי 6)
+
+| Phase | סדר | use |
+|---|---|---|
+| capture | top→target | rare |
+| target | על האלמנט | most listeners |
+| bubble | target→top | event delegation |
+
+**🧓 סבתא:** אירוע יורד ועולה דרך העץ.
+**👶 ילד:** click על כפתור עובר גם להורה ולסבא.
+**💂 חייל:** addEventListener(type, fn, useCapture=false). 3 phases.
+**🎓 סטודנט:** Delegation: 1 listener על parent + matches ב-target.
+**👨‍💻 ג'וניור:** preventDefault עובד ב-passive false בלבד. once: true למניעה.
+**🎩 פרופ׳:** Synthetic events ב-React (pre-18 pooled, 18+ no pooling).
+
+```js
+// 🧓 סבתא
+btn.addEventListener("click", () => alert("hi"));
+
+// 👶 ילד
+btn.addEventListener("click", e => {
+  e.stopPropagation();   // לא יעלה להורה
+});
+
+// 💂 חייל — delegation
+list.addEventListener("click", e => {
+  const li = e.target.closest("li");
+  if (li) selectItem(li.dataset.id);
+});
+
+// 🎓 סטודנט — React onClick
+<button onClick={(e) => { e.preventDefault(); save(); }}>שלח</button>
+
+// 👨‍💻 ג'וניור — once + passive
+btn.addEventListener("click", once, { once: true });
+window.addEventListener("scroll", h, { passive: true });
+
+// 🎩 פרופ׳ — AbortController
+const ctrl = new AbortController();
+btn.addEventListener("click", h, { signal: ctrl.signal });
+ctrl.abort();   // removes listener
+```
+
+---
+
+## 56. React Router — Link / NavLink / Route / useNavigate (קושי 6)
+
+| API | תפקיד |
+|---|---|
+| `<BrowserRouter>` | wrapper על ה-app |
+| `<Routes>` `<Route path>` | route definition |
+| `<Link to>` | navigation מבלי reload |
+| `<NavLink>` | Link + active class |
+| `useNavigate()` | programmatic navigation |
+| `useParams()` | קריאת `:id` |
+| `useLocation()` | URL info |
+| `<Outlet/>` | nested route placeholder |
+
+**🧓 סבתא:** ניווט בלי לטעון מחדש. Link במקום `<a>`.
+**👶 ילד:** /home, /about, /user/5 — דפים שונים בלי refresh.
+**💂 חייל:** SPA routing. URL → component mapping.
+**🎓 סטודנט:** nested routes + Outlet. layout patterns.
+**👨‍💻 ג'וניור:** loader/action (v6.4+) for data. lazy import per route.
+**🎩 פרופ׳:** History API pushState. Suspense boundaries per route.
+
+```jsx
+// 🧓 סבתא
+<BrowserRouter>
+  <Link to="/about">About</Link>
+  <Routes>
+    <Route path="/" element={<Home/>} />
+    <Route path="/about" element={<About/>} />
+  </Routes>
+</BrowserRouter>
+
+// 👶 ילד — useParams
+<Route path="/user/:id" element={<User/>} />
+function User() {
+  const { id } = useParams();
+  return <p>{id}</p>;
+}
+
+// 💂 חייל — useNavigate
+const nav = useNavigate();
+<button onClick={() => nav("/home")}>חזור</button>
+
+// 🎓 סטודנט — nested + Outlet
+<Route path="/dashboard" element={<DashboardLayout/>}>
+  <Route index element={<Overview/>} />
+  <Route path="settings" element={<Settings/>} />
+</Route>
+
+// 👨‍💻 ג'וניור — loader (v6.4+)
+const router = createBrowserRouter([{
+  path: "/users/:id",
+  loader: ({ params }) => fetchUser(params.id),
+  element: <User/>
+}]);
+
+// 🎩 פרופ׳ — lazy + Suspense
+<Route path="/admin" element={
+  <Suspense fallback={<Spinner/>}>
+    {React.lazy(() => import("./Admin"))()}
+  </Suspense>
+}/>
+```
+
+---
+
+## 57. Timers — setTimeout / setInterval / requestAnimationFrame (קושי 6)
+
+| Timer | timing | use |
+|---|---|---|
+| setTimeout | once after N ms | delayed action |
+| setInterval | every N ms | polling |
+| requestAnimationFrame | before next paint | smooth animations |
+| queueMicrotask | next microtask | high-priority |
+
+**🧓 סבתא:** setTimeout=פעם 1. setInterval=שוב ושוב. rAF=לאנימציות.
+**👶 ילד:** טיימר חד-פעמי, חוזר, או לאנימציה חלקה.
+**💂 חייל:** clearTimeout/clearInterval mandatory. rAF gives ~60fps.
+**🎓 סטודנט:** rAF runs before paint, optimal for animations.
+**👨‍💻 ג'וניור:** setInterval drift over time — prefer setTimeout recursive.
+**🎩 פרופ׳:** rAF skips when tab hidden. Performance budget per frame ~16ms.
+
+```js
+// 🧓 סבתא
+setTimeout(() => alert("hi"), 1000);
+
+// 👶 ילד
+const id = setInterval(tick, 1000);
+clearInterval(id);
+
+// 💂 חייל — recursive better than setInterval
+function poll() {
+  doWork();
+  setTimeout(poll, 1000);  // no drift
+}
+
+// 🎓 סטודנט — rAF animation
+function animate() {
+  if (running) {
+    update();
+    requestAnimationFrame(animate);
+  }
+}
+requestAnimationFrame(animate);
+
+// 👨‍💻 ג'וניור — debounce with setTimeout
+function debounce(fn, ms) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), ms);
+  };
+}
+
+// 🎩 פרופ׳ — high-priority via microtask
+queueMicrotask(() => urgent());
+// runs before next macrotask, after current sync
+```
+
+---
+
+## 58. HTTP Clients — fetch / XHR / axios (קושי 6)
+
+| Client | API | Promise | features |
+|---|---|---|---|
+| XMLHttpRequest | callback-based | ❌ | legacy, file upload progress |
+| fetch | Promise | ✅ | modern, no abort built-in |
+| axios | Promise | ✅ | interceptors, transformers |
+
+**🧓 סבתא:** fetch=בסיס. axios=נוחות. XHR=ישן.
+**👶 ילד:** דרכים לדבר עם השרת.
+**💂 חייל:** fetch ES2015. axios npm. XHR pre-2010.
+**🎓 סטודנט:** fetch לא תופס 4xx/5xx as error! check response.ok.
+**👨‍💻 ג'וניור:** AbortController + fetch ל-cancel.
+**🎩 פרופ׳:** fetch streams response. Service Worker intercepts.
+
+```js
+// 🧓 סבתא
+fetch("/api").then(r => r.json()).then(data => ...);
+
+// 👶 ילד — async/await
+const r = await fetch("/api");
+const data = await r.json();
+
+// 💂 חייל — error handling
+const r = await fetch("/api");
+if (!r.ok) throw new Error(`${r.status}`);
+const data = await r.json();
+
+// 🎓 סטודנט — POST + cancel
+const ctrl = new AbortController();
+fetch("/api", {
+  method: "POST",
+  body: JSON.stringify(data),
+  headers: { "Content-Type": "application/json" },
+  signal: ctrl.signal
+});
+ctrl.abort();   // cancels
+
+// 👨‍💻 ג'וניור — axios with interceptors
+axios.interceptors.request.use(c => {
+  c.headers.Authorization = `Bearer ${token}`;
+  return c;
+});
+
+// 🎩 פרופ׳ — streaming response
+const r = await fetch("/large.json");
+const reader = r.body.getReader();
+while (true) {
+  const { done, value } = await reader.read();
+  if (done) break;
+  processChunk(value);
+}
+```
+
+---
+
+## 59. Express Routing & Handlers (קושי 6)
+
+| API | מה |
+|---|---|
+| `app.use(mw)` | global middleware |
+| `app.get(path, h)` | GET route |
+| `app.post/put/delete/patch` | other methods |
+| `app.route(path).get().post()` | chain on path |
+| `next()` | pass to next middleware |
+| `next(err)` | pass error |
+| `app.use(errorHandler)` | error middleware (4 args) |
+
+**🧓 סבתא:** middleware רץ לפני handler.
+**👶 ילד:** שרשרת של פונקציות — כל אחת יכולה לעצור או להמשיך.
+**💂 חייל:** order matters. global → route → error.
+**🎓 סטודנט:** Router instance per resource. mount with app.use("/api", router).
+**👨‍💻 ג'וניור:** async handlers + try/catch. error handler 4 args.
+**🎩 פרופ׳:** middleware composition. async-error patterns. helmet/cors order.
+
+```js
+// 🧓 סבתא
+app.get("/users", (req, res) => res.json(users));
+
+// 👶 ילד — middleware
+app.use((req, res, next) => { console.log(req.url); next(); });
+
+// 💂 חייל — chain
+app.use(express.json());
+app.use(cors());
+app.get("/users", auth, getUsers);
+
+// 🎓 סטודנט — Router
+const router = express.Router();
+router.get("/", listUsers).post("/", createUser);
+app.use("/api/users", router);
+
+// 👨‍💻 ג'וניור — async wrapper
+const asyncHandler = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+app.get("/u", asyncHandler(async (req, res) => res.json(await db.users.find())));
+
+// 🎩 פרופ׳ — error middleware (4 args!)
+app.use((err, req, res, next) => {
+  if (err instanceof ValidationError) return res.status(400).json(err);
+  Sentry.captureException(err);
+  res.status(500).json({ error: "server" });
+});
+```
+
+---
+
+## 60. Mongo Find Queries (קושי 6)
+
+| Method | מחזיר |
+|---|---|
+| `find(filter)` | cursor (multiple) |
+| `findOne(filter)` | document או null |
+| `findById(id)` | by `_id` |
+| `findOneAndUpdate(filter, update, opts)` | atomic update + return |
+
+**🧓 סבתא:** find=הרבה. findOne=אחד. findById=לפי id.
+**👶 ילד:** דרכים לחפש במסד הנתונים.
+**💂 חייל:** find לא executes עד `.toArray()` או iteration.
+**🎓 סטודנט:** projection: `find({}, { name: 1, _id: 0 })`.
+**👨‍💻 ג'וניור:** findOneAndUpdate atomic — race-condition safe.
+**🎩 פרופ׳:** indexes critical for find perf. covered queries.
+
+```js
+// 🧓 סבתא
+const users = await User.find({ active: true });
+
+// 👶 ילד
+const u = await User.findOne({ email });
+const u2 = await User.findById(id);
+
+// 💂 חייל — projection
+const slim = await User.find({}, "name email");
+
+// 🎓 סטודנט — atomic
+const updated = await User.findOneAndUpdate(
+  { email },
+  { $inc: { loginCount: 1 } },
+  { new: true }   // return updated doc
+);
+
+// 👨‍💻 ג'וניור — pagination
+const page = await User.find().skip(20).limit(10).sort({ createdAt: -1 });
+
+// 🎩 פרופ׳ — explain
+const plan = await User.find({ email }).explain("executionStats");
+// inspect indexUsed, totalDocsExamined
+```
+
+---
+
+## 61. Mongo Operators — $set / $push / $pull / $inc (קושי 6)
+
+| Operator | פעולה |
+|---|---|
+| `$set` | קבע ערך |
+| `$unset` | מחק שדה |
+| `$inc` | הוסף למספר |
+| `$push` | הוסף למערך |
+| `$addToSet` | $push בלי כפילויות |
+| `$pull` | הסר ממערך |
+| `$pop` | הסר מסוף |
+
+**🧓 סבתא:** פעולות שינוי על שדות.
+**👶 ילד:** דרכים לשנות ערכים בDB.
+**💂 חייל:** atomic per-document. nested via dot notation.
+**🎓 סטודנט:** `$inc: -1` לreduce. `$push` עם `$each` ל-bulk.
+**👨‍💻 ג'וניור:** array filters: `{$set: {"items.$[i].x":1}}, {arrayFilters:[{"i.id":x}]}`.
+**🎩 פרופ׳:** atomic update operators thread-safe under WiredTiger.
+
+```js
+// 🧓 סבתא
+await User.updateOne({ email }, { $set: { active: true } });
+
+// 👶 ילד
+await User.updateOne({ _id }, { $inc: { points: 10 } });
+
+// 💂 חייל
+await Cart.updateOne({ uid }, { $push: { items: { id: 5 } } });
+
+// 🎓 סטודנט
+await Cart.updateOne({ uid }, { $pull: { items: { id: 5 } } });
+
+// 👨‍💻 ג'וניור — addToSet (no dups)
+await User.updateOne({ _id }, { $addToSet: { tags: "premium" } });
+
+// 🎩 פרופ׳ — array filters
+await Posts.updateOne(
+  { _id },
+  { $set: { "comments.$[c].flagged": true } },
+  { arrayFilters: [{ "c.userId": badUserId }] }
+);
+```
+
+---
+
+## 62. Component Kinds — Function / Class / HOC (קושי 6)
+
+| Kind | תחביר | hooks? | this? |
+|---|---|---|---|
+| Function | `function X() {return JSX}` | ✅ | ❌ |
+| Class | `class X extends Component {render() {}}` | ❌ | ✅ |
+| HOC | `withX(Component)` | depends | depends |
+
+**🧓 סבתא:** function=מודרני. class=ישן. HOC=עוטף.
+**👶 ילד:** דרכים שונות לכתוב קומפוננטה.
+**💂 חייל:** Function + hooks = standard 2026. Class only in legacy.
+**🎓 סטודנט:** HOC adds features. Render props more flexible.
+**👨‍💻 ג'וניור:** Migrate Class → Function. extract HOC logic to hooks.
+**🎩 פרופ׳:** Hooks rules of fiber. Class instances vs function-call closure.
+
+```jsx
+// 🧓 סבתא — function
+function Card({ title }) { return <h1>{title}</h1>; }
+
+// 👶 ילד — class (legacy)
+class Card extends React.Component {
+  render() { return <h1>{this.props.title}</h1>; }
+}
+
+// 💂 חייל — HOC
+function withAuth(Comp) {
+  return function(props) {
+    const user = useAuth();
+    return user ? <Comp {...props} user={user}/> : <Login/>;
+  };
+}
+const Protected = withAuth(Dashboard);
+
+// 🎓 סטודנט — class with state
+class Counter extends Component {
+  state = { n: 0 };
+  inc = () => this.setState(p => ({ n: p.n+1 }));
+  render() { return <button onClick={this.inc}>{this.state.n}</button>; }
+}
+
+// 👨‍💻 ג'וניור — convert HOC → custom hook
+function useAuthGuard() {
+  const user = useAuth();
+  if (!user) throw new Error("Not authenticated");
+  return user;
+}
+
+// 🎩 פרופ׳ — forwardRef + memo
+const Btn = React.memo(React.forwardRef((props, ref) => (
+  <button ref={ref} {...props}/>
+)));
+```
+
+---
+
+## 63. TS const / enum / literal (קושי 6)
+
+| Tool | תוצר | use |
+|---|---|---|
+| `enum` | type + runtime object | named constants |
+| `const enum` | inline (no runtime) | constants only |
+| `as const` | literal type narrowing | tuple/object literals |
+| literal union | `"a" \| "b"` type-only | finite values |
+
+**🧓 סבתא:** enum=שמות לקבועים. as const=טיפוס מדויק.
+**👶 ילד:** דרכים לתאר קבוצה סגורה של ערכים.
+**💂 חייל:** enum runtime cost. const enum compile-only.
+**🎓 סטודנט:** modern preference: literal unions + as const.
+**👨‍💻 ג'וניור:** enum legacy. const assertion preferred 2024+.
+**🎩 פרופ׳:** const enum performance. erasable types proposal.
+
+```ts
+// 🧓 סבתא — enum
+enum Status { Active, Inactive }
+const u = { status: Status.Active };
+
+// 👶 ילד — string enum
+enum Role { Admin = "admin", User = "user" }
+
+// 💂 חייל — literal union
+type Status = "active" | "inactive";
+
+// 🎓 סטודנט — as const
+const STATUSES = ["active", "inactive"] as const;
+type Status = typeof STATUSES[number];   // "active" | "inactive"
+
+// 👨‍💻 ג'וניור — const object
+const ROUTES = {
+  home: "/",
+  about: "/about"
+} as const;
+type Route = typeof ROUTES[keyof typeof ROUTES];   // "/" | "/about"
+
+// 🎩 פרופ׳ — const enum (compile-only)
+const enum Color { Red = "#f00", Green = "#0f0" }
+const c = Color.Red;   // compiles to: const c = "#f00"
+```
+
+---
+
+## 64. Docker — container / image / volume / network (קושי 6)
+
+| Concept | מה זה |
+|---|---|
+| image | snapshot של app + deps |
+| container | running instance של image |
+| volume | persistent storage |
+| network | תקשורת בין containers |
+| Dockerfile | מתכון לבנות image |
+
+**🧓 סבתא:** image=תוכנית. container=ביצוע.
+**👶 ילד:** image=DVD. container=ה-DVD רץ.
+**💂 חייל:** image immutable. container ephemeral. volume persists.
+**🎓 סטודנט:** docker-compose for multi-container. networks for isolation.
+**👨‍💻 ג'וניור:** multi-stage builds for smaller images. .dockerignore mandatory.
+**🎩 פרופ׳:** layer caching. BuildKit. distroless base.
+
+```dockerfile
+# 🧓 סבתא — Dockerfile
+FROM node:20
+WORKDIR /app
+COPY . .
+RUN npm install
+CMD ["npm", "start"]
+```
+```bash
+# 👶 ילד
+docker build -t myapp .
+docker run -p 3000:3000 myapp
+
+# 💂 חייל — volume
+docker run -v $(pwd)/data:/app/data myapp
+
+# 🎓 סטודנט — compose
+# docker-compose.yml:
+# services:
+#   web: build: .
+#   db: image: postgres
+docker compose up
+
+# 👨‍💻 ג'וניור — multi-stage
+FROM node:20 AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+CMD ["node", "dist/server.js"]
+
+# 🎩 פרופ׳ — distroless
+FROM gcr.io/distroless/nodejs20
+COPY --from=build /app /app
+CMD ["/app/server.js"]
+```
+
+---
+
+✅ Diff 6 הושלם (52+13=65/95)
+
+## 65. Browser Storage — localStorage / sessionStorage / IndexedDB (קושי 5)
+
+| Storage | persist | size | API | type |
+|---|---|---|---|---|
+| localStorage | until cleared | ~5-10MB | sync | string only |
+| sessionStorage | until tab closed | ~5-10MB | sync | string only |
+| IndexedDB | until cleared | hundreds MB | async | structured (objects) |
+| Cookies | configurable | ~4KB | sync | string |
+
+**🧓 סבתא:** local=נשאר. session=רק לטאב. IndexedDB=מסד גדול.
+**👶 ילד:** מקומות שונים לשמור מידע בדפדפן.
+**💂 חייל:** localStorage strings only — JSON.stringify objects.
+**🎓 סטודנט:** IndexedDB for >5MB or queries. localStorage for small flags/prefs.
+**👨‍💻 ג'וניור:** never store secrets (XSS exposure). use httpOnly cookie.
+**🎩 פרופ׳:** sync APIs block main thread. IndexedDB worker-friendly.
+
+```js
+// 🧓 סבתא
+localStorage.setItem("user", "Tal");
+localStorage.getItem("user");   // "Tal"
+
+// 👶 ילד — JSON dance
+localStorage.setItem("data", JSON.stringify({ x: 1 }));
+const data = JSON.parse(localStorage.getItem("data") || "{}");
+
+// 💂 חייל — sessionStorage
+sessionStorage.setItem("draft", text);
+// disappears when tab closes
+
+// 🎓 סטודנט — IndexedDB (idb wrapper)
+import { openDB } from "idb";
+const db = await openDB("myapp", 1, { upgrade(db) {
+  db.createObjectStore("items", { keyPath: "id" });
+}});
+await db.put("items", { id: 1, name: "Tal" });
+
+// 👨‍💻 ג'וניור — quota check
+const { quota, usage } = await navigator.storage.estimate();
+
+// 🎩 פרופ׳ — Cache API (Service Worker)
+const cache = await caches.open("v1");
+await cache.put(req, response.clone());
+```
+
+---
+
+## 66. HTTP Methods — GET / POST / PUT / DELETE / PATCH (קושי 5)
+
+| Method | semantic | idempotent? | safe? |
+|---|---|---|---|
+| GET | read | ✅ | ✅ |
+| HEAD | metadata | ✅ | ✅ |
+| POST | create / general | ❌ | ❌ |
+| PUT | replace | ✅ | ❌ |
+| PATCH | partial update | ❌ | ❌ |
+| DELETE | remove | ✅ | ❌ |
+
+**🧓 סבתא:** GET=קח. POST=צור. PUT=החלף. PATCH=עדכן חלק. DELETE=מחק.
+**👶 ילד:** פעולות שונות שאפשר לעשות עם משאב.
+**💂 חייל:** REST verbs. idempotent = same result on repeat.
+**🎓 סטודנט:** PUT replaces, PATCH merges. DELETE 204 No Content.
+**👨‍💻 ג'וניור:** GraphQL skips this entirely (POST always).
+**🎩 פרופ׳:** RFC 9110. caching by method. CORS preflight on non-simple methods.
+
+```js
+// 🧓 סבתא
+fetch("/users");                      // GET
+fetch("/users", { method: "POST", body });
+fetch("/users/5", { method: "DELETE" });
+
+// 👶 ילד — REST
+GET    /users        → list all
+GET    /users/5      → one
+POST   /users        → create
+PUT    /users/5      → replace whole
+PATCH  /users/5      → partial
+DELETE /users/5      → remove
+
+// 💂 חייל — Express
+app.get("/users", listAll);
+app.post("/users", create);
+app.patch("/users/:id", partialUpdate);
+app.delete("/users/:id", remove);
+
+// 🎓 סטודנט — PATCH semantics
+// JSON Patch (RFC 6902):
+[{ "op": "replace", "path": "/name", "value": "New" }]
+// Or merge patch (RFC 7396): just send fields to update.
+
+// 👨‍💻 ג'וניור — fetch wrapper
+const api = (path, opts={}) => fetch(path, {
+  headers: { "Content-Type": "application/json" },
+  ...opts,
+  body: opts.body ? JSON.stringify(opts.body) : undefined
+}).then(r => r.json());
+
+// 🎩 פרופ׳ — CORS preflight (OPTIONS)
+// non-simple method (DELETE/PUT/PATCH) → browser sends OPTIONS first
+// server must respond Access-Control-Allow-Methods
+```
+
+---
+
+## 67. Module System — import / export / require (קושי 5)
+
+| System | import | export | when |
+|---|---|---|---|
+| ES Modules | `import x from "p"` | `export default x` | modern JS, browsers, Node 14+ |
+| CommonJS | `const x = require("p")` | `module.exports = x` | legacy Node |
+| AMD | `define(["p"], (p)=>...)` | n/a | RequireJS legacy |
+| UMD | hybrid | hybrid | universal libs |
+
+**🧓 סבתא:** ESM=מודרני. CJS=ישן.
+**👶 ילד:** דרכים לחבר קבצים בקוד.
+**💂 חייל:** ESM static (analyzable, tree-shake). CJS dynamic.
+**🎓 סטודנט:** Top-level await ב-ESM. require() ב-CJS.
+**👨‍💻 ג'וניור:** package.json "type": "module" enables ESM in .js.
+**🎩 פרופ׳:** ESM live bindings vs CJS snapshot. circular dep behavior differs.
+
+```js
+// 🧓 סבתא — ESM
+import React from "react";
+export default function Card() {}
+export { Card };
+
+// 👶 ילד — CJS
+const React = require("react");
+module.exports = function Card() {};
+
+// 💂 חייל — named + default
+// utils.js
+export const PI = 3.14;
+export default function add(a,b) { return a+b; }
+// app.js
+import add, { PI } from "./utils.js";
+
+// 🎓 סטודנט — dynamic import
+const mod = await import("./heavy.js");
+mod.default();   // lazy-loaded
+
+// 👨‍💻 ג'וניור — re-export
+export { Foo } from "./Foo.js";
+export * from "./helpers.js";
+
+// 🎩 פרופ׳ — top-level await (ESM only)
+// data.mjs:
+const data = await fetch("/api").then(r => r.json());
+export default data;
+```
+
+---
+
+## 68. TypeScript Basics — string/number/boolean/array/type/interface (קושי 5)
+
+| Type | תחביר |
+|---|---|
+| primitives | `string`, `number`, `boolean`, `null`, `undefined` |
+| array | `T[]` או `Array<T>` |
+| tuple | `[string, number]` |
+| object | `{ name: string }` |
+| function | `(x: number) => string` |
+| union | `A \| B` |
+| intersection | `A & B` |
+
+**🧓 סבתא:** TS מוסיף בדיקות סוג ל-JS.
+**👶 ילד:** כותב מה הסוג ש-TypeScript מוודא.
+**💂 חייל:** primitives + composites. type aliases for naming.
+**🎓 סטודנט:** strict mode חובה. noImplicitAny.
+**👨‍💻 ג'וניור:** prefer interface for shapes, type for unions.
+**🎩 פרופ׳:** structural typing. nominal patterns via branded types.
+
+```ts
+// 🧓 סבתא
+let name: string = "Tal";
+let age: number = 30;
+let tags: string[] = ["dev", "ai"];
+
+// 👶 ילד
+function greet(name: string): string {
+  return `Hi ${name}`;
+}
+
+// 💂 חייל — interface
+interface User {
+  id: number;
+  name: string;
+  email?: string;   // optional
+}
+
+// 🎓 סטודנט — union + narrowing
+function format(value: string | number): string {
+  if (typeof value === "string") return value.toUpperCase();
+  return value.toFixed(2);
+}
+
+// 👨‍💻 ג'וניור — generics
+function first<T>(arr: T[]): T | undefined {
+  return arr[0];
+}
+
+// 🎩 פרופ׳ — branded types
+type UserId = string & { __brand: "UserId" };
+function asUserId(s: string): UserId { return s as UserId; }
+```
+
+---
+
+## 69. Array Mutation — push/pop/shift/unshift/splice (קושי 5)
+
+| Method | פעולה | מחזיר |
+|---|---|---|
+| push | הוסף בסוף | new length |
+| pop | הסר מסוף | the removed |
+| shift | הסר מהתחלה | the removed |
+| unshift | הוסף בהתחלה | new length |
+| splice(start, count, ...items) | הסר/הוסף באמצע | removed items |
+
+**🧓 סבתא:** push/pop בסוף. shift/unshift בהתחלה. splice באמצע.
+**👶 ילד:** דרכים לשנות מערך במקום.
+**💂 חייל:** all mutate! React state — immutable instead.
+**🎓 סטודנט:** stack=push+pop. queue=push+shift.
+**👨‍💻 ג'וניור:** never use these on React state. use [...] instead.
+**🎩 פרופ׳:** shift/unshift O(n) — re-indexes whole array. push/pop O(1) amortized.
+
+```js
+// 🧓 סבתא
+arr.push(4);       // [1,2,3,4]
+arr.pop();         // [1,2,3]
+arr.unshift(0);    // [0,1,2,3]
+arr.shift();       // [1,2,3]
+
+// 👶 ילד — splice
+arr.splice(1, 1);              // [1,3] — removed index 1
+arr.splice(1, 0, "X");         // [1,"X",3] — inserted at 1
+arr.splice(0, 0, "A", "B");    // ["A","B",1,"X",3]
+
+// 💂 חייל — stack vs queue
+const stack = [];
+stack.push(1); stack.push(2); stack.pop();  // 2 (LIFO)
+const queue = [];
+queue.push(1); queue.push(2); queue.shift(); // 1 (FIFO)
+
+// 🎓 סטודנט — immutable equivalents
+// push:  [...arr, x]
+// pop:   arr.slice(0, -1)
+// shift: arr.slice(1)
+// unshift: [x, ...arr]
+// splice (remove): arr.filter((_,i) => i !== idx)
+
+// 👨‍💻 ג'וניור — performance
+arr.unshift(x);   // O(n)
+arr.push(x);      // O(1) amortized — prefer
+
+// 🎩 פרופ׳ — SharedArrayBuffer + Atomics
+// for cross-worker mutations: Atomics.add, Atomics.store
+```
+
+---
+
+## 70. DOM Selectors — getElementBy* / querySelector (קושי 5)
+
+| Method | מחזיר | live? |
+|---|---|---|
+| getElementById | Element או null | n/a |
+| getElementsByClassName | HTMLCollection | ✅ live |
+| getElementsByTagName | HTMLCollection | ✅ live |
+| querySelector | Element או null | n/a |
+| querySelectorAll | NodeList | ❌ static |
+
+**🧓 סבתא:** querySelector=מודרני. getElementById=מהיר.
+**👶 ילד:** דרכים למצוא אלמנטים בDOM.
+**💂 חייל:** querySelector accepts CSS selectors. live vs static.
+**🎓 סטודנט:** live HTMLCollection updates as DOM changes (caveat in loops).
+**👨‍💻 ג'וניור:** querySelector ל-90%. getElementById ב-hot path.
+**🎩 פרופ׳:** querySelector בO(n) של DOM. live HTMLCollection invalidates cache.
+
+```js
+// 🧓 סבתא
+document.getElementById("submit");
+document.querySelector("#submit");
+
+// 👶 ילד
+document.querySelectorAll(".btn");           // NodeList
+document.getElementsByClassName("btn");      // HTMLCollection
+
+// 💂 חייל — CSS selector power
+document.querySelector("ul.todo > li:first-child");
+document.querySelector("[data-id='5']");
+
+// 🎓 סטודנט — live trap
+const items = document.getElementsByClassName("item");
+for (let i = 0; i < items.length; i++) {
+  items[i].classList.remove("item");   // length changes!
+}
+
+// 👨‍💻 ג'וניור — closest
+button.closest("form");   // walks up to nearest form
+
+// 🎩 פרופ׳ — :is, :where (CSS4)
+document.querySelector(":is(a, button).primary");
+```
+
+---
+
+## 71. JSON Methods — parse / stringify (קושי 5)
+
+| Method | direction |
+|---|---|
+| JSON.stringify(obj) | object → string |
+| JSON.parse(str) | string → object |
+| JSON.stringify with replacer | filter keys |
+| JSON.stringify with indent | pretty-print |
+
+**🧓 סבתא:** stringify=הופך לטקסט. parse=הופך חזרה.
+**👶 ילד:** מתרגם בין אובייקט לסרגל-תוויות.
+**💂 חייל:** circular refs throw. Date→string. undefined dropped.
+**🎓 סטודנט:** custom toJSON method. replacer/reviver functions.
+**👨‍💻 ג'וניור:** structured-clone fixes Date/Map/Set issues.
+**🎩 פרופ׳:** O(n) DFS. some engines support fast paths for plain objects.
+
+```js
+// 🧓 סבתא
+const s = JSON.stringify({ name: "Tal" });   // '{"name":"Tal"}'
+const o = JSON.parse(s);                       // { name: "Tal" }
+
+// 👶 ילד — pretty
+JSON.stringify(obj, null, 2);   // indented
+
+// 💂 חייל — Date loses
+JSON.stringify({ d: new Date() });   // '{"d":"2026-05-02T..."}' (string!)
+JSON.parse('"2026..."') instanceof Date;   // false
+
+// 🎓 סטודנט — replacer (filter)
+const safe = JSON.stringify(user, (key, value) => {
+  if (key === "password") return undefined;
+  return value;
+});
+
+// 👨‍💻 ג'וניור — reviver (parse)
+const obj = JSON.parse(s, (key, value) => {
+  if (key === "createdAt") return new Date(value);
+  return value;
+});
+
+// 🎩 פרופ׳ — toJSON method
+class User {
+  toJSON() { return { id: this.id }; }   // omit password
+}
+JSON.stringify(new User());   // '{"id":...}'
+```
+
+---
+
+## 72. String Methods — split/slice/substring/replace/includes/indexOf (קושי 5)
+
+| Method | פעולה | mutates? |
+|---|---|---|
+| split | string → array | ❌ |
+| slice(start, end) | חתיכה | ❌ |
+| substring(start, end) | דומה ל-slice | ❌ |
+| replace(needle, repl) | החלפה ראשונה | ❌ |
+| replaceAll | כל ההחלפות | ❌ |
+| includes | true/false | ❌ |
+| indexOf | מיקום או -1 | ❌ |
+| trim | הסרת רווחים | ❌ |
+
+**🧓 סבתא:** strings ב-JS immutable — תמיד מחזיר חדש.
+**👶 ילד:** פעולות על טקסט.
+**💂 חייל:** ES2021 replaceAll. trimStart/trimEnd modern.
+**🎓 סטודנט:** regex in replace for power. capture groups with $1.
+**👨‍💻 ג'וניור:** template literals for building strings.
+**🎩 פרופ׳:** strings are V8 cons-strings (concatenation)—non-flat by default.
+
+```js
+// 🧓 סבתא
+"a,b,c".split(",");           // ["a","b","c"]
+"hello".slice(1, 3);          // "el"
+"hello".replace("l", "L");    // "heLlo"
+
+// 👶 ילד
+"hello".includes("ll");       // true
+"hello".indexOf("l");         // 2
+"  spaces  ".trim();          // "spaces"
+
+// 💂 חייל — replaceAll
+"a-b-c".replaceAll("-", "_"); // "a_b_c"
+// pre-2021: "a-b-c".replace(/-/g, "_")
+
+// 🎓 סטודנט — regex + capture
+"2026-05-02".replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1");
+// "02/05/2026"
+
+// 👨‍💻 ג'וניור — template
+const name = "Tal";
+`Hi ${name}, today is ${new Date().toLocaleDateString()}`;
+
+// 🎩 פרופ׳ — String.raw
+String.raw`Path: C:\Users\${name}`;   // backslashes preserved
+```
+
+---
+
+## 73. Object Static Methods — keys/values/entries/assign (קושי 5)
+
+| Method | פעולה |
+|---|---|
+| Object.keys(o) | array of keys |
+| Object.values(o) | array of values |
+| Object.entries(o) | [[k,v], ...] |
+| Object.fromEntries | reverse of entries |
+| Object.assign(target, ...src) | merge |
+| Object.freeze(o) | shallow freeze |
+| Object.create(proto) | new with prototype |
+
+**🧓 סבתא:** דרכים לחקור אובייקט.
+**👶 ילד:** keys=שמות. values=ערכים. entries=זוגות.
+**💂 חייל:** entries enables map/filter on objects.
+**🎓 סטודנט:** fromEntries inverse — useful for rebuilding.
+**👨‍💻 ג'וניור:** Object.freeze ב-dev for catching mutation bugs.
+**🎩 פרופ׳:** keys order: integer-keys numeric, then strings insertion-order.
+
+```js
+// 🧓 סבתא
+Object.keys({a:1, b:2});      // ["a","b"]
+Object.values({a:1, b:2});    // [1, 2]
+Object.entries({a:1, b:2});   // [["a",1],["b",2]]
+
+// 👶 ילד
+Object.assign({}, a, b);   // merge a then b → new
+
+// 💂 חייל — entries map
+const doubled = Object.fromEntries(
+  Object.entries({a:1, b:2}).map(([k,v]) => [k, v*2])
+);
+// { a: 2, b: 4 }
+
+// 🎓 סטודנט — freeze
+const config = Object.freeze({ apiUrl: "/api" });
+config.apiUrl = "x";   // silent fail (or TypeError in strict)
+
+// 👨‍💻 ג'וניור — pick/omit
+function pick(obj, keys) {
+  return Object.fromEntries(keys.map(k => [k, obj[k]]));
+}
+pick({a:1, b:2, c:3}, ["a", "c"]);   // {a:1, c:3}
+
+// 🎩 פרופ׳ — Object.create with descriptors
+const obj = Object.create(proto, {
+  prop: { value: 5, writable: false, enumerable: true }
+});
+```
+
+---
+
+## 74. DOM Node Inserting — appendChild/insertBefore/replaceChild (קושי 5)
+
+| Method | פעולה |
+|---|---|
+| appendChild(child) | מוסיף לסוף |
+| append(...nodes) | מוסיף multiple, also strings! |
+| prepend(...nodes) | להתחלה |
+| insertBefore(new, ref) | לפני ref |
+| replaceChild(new, old) | מחליף |
+| remove() | מחיקה עצמית |
+
+**🧓 סבתא:** דרכים להוסיף/להסיר אלמנטים בDOM.
+**👶 ילד:** appendChild=הוסף ילד. remove=מחק.
+**💂 חייל:** append/prepend modern, accept strings. appendChild legacy.
+**🎓 סטודנט:** DocumentFragment for batch — single reflow.
+**👨‍💻 ג'וניור:** moveBefore (2024+) for in-place reordering without reset.
+**🎩 פרופ׳:** Range / DocumentFragment for surgical mutations.
+
+```js
+// 🧓 סבתא
+parent.appendChild(child);
+parent.removeChild(child);
+
+// 👶 ילד — modern
+parent.append(child1, child2, "טקסט");
+parent.prepend(item);
+child.remove();
+
+// 💂 חייל — replace
+parent.replaceChild(newEl, oldEl);
+oldEl.replaceWith(newEl);   // modern alternative
+
+// 🎓 סטודנט — DocumentFragment
+const frag = document.createDocumentFragment();
+items.forEach(i => frag.appendChild(makeItem(i)));
+list.append(frag);   // single reflow!
+
+// 👨‍💻 ג'וניור — insertAdjacentElement
+container.insertAdjacentElement("beforebegin", el);
+container.insertAdjacentElement("afterend", el);
+
+// 🎩 פרופ׳ — Range surgery
+const range = document.createRange();
+range.selectNode(el);
+const cloned = range.cloneContents();
+```
+
+---
+
+## 75. DOM Node Creation — createElement/cloneNode (קושי 5)
+
+| Method | פעולה |
+|---|---|
+| createElement(tag) | אלמנט חדש |
+| createTextNode(text) | text node חדש |
+| cloneNode(deep?) | shallow או deep clone |
+| createDocumentFragment | container vir. |
+
+**🧓 סבתא:** create=מייצר אלמנט. clone=משכפל.
+**👶 ילד:** דרכים להכין אלמנטים חדשים.
+**💂 חייל:** cloneNode(true) deep including children.
+**🎓 סטודנט:** for templates: `<template>` + cloneNode.
+**👨‍💻 ג'וניור:** prefer template literals + innerHTML in trusted contexts.
+**🎩 פרופ׳:** custom elements + Shadow DOM for encapsulation.
+
+```js
+// 🧓 סבתא
+const el = document.createElement("div");
+el.textContent = "Hello";
+document.body.append(el);
+
+// 👶 ילד — multiple props
+const btn = document.createElement("button");
+btn.className = "primary";
+btn.dataset.id = "5";
+btn.addEventListener("click", handler);
+
+// 💂 חייל — clone deep
+const orig = document.querySelector(".card");
+const copy = orig.cloneNode(true);   // includes children
+parent.append(copy);
+
+// 🎓 סטודנט — template element
+// <template id="row-tpl"><tr><td></td></tr></template>
+const tpl = document.getElementById("row-tpl");
+const row = tpl.content.firstElementChild.cloneNode(true);
+
+// 👨‍💻 ג'וניור — custom element
+class MyButton extends HTMLElement {
+  connectedCallback() { this.textContent = "Click"; }
+}
+customElements.define("my-button", MyButton);
+// <my-button></my-button>
+
+// 🎩 פרופ׳ — Shadow DOM
+const shadow = el.attachShadow({ mode: "open" });
+shadow.innerHTML = "<style>...</style><slot></slot>";
+```
+
+---
+
+## 76. DOM Attributes — setAttribute/getAttribute/dataset (קושי 5)
+
+| API | תפקיד |
+|---|---|
+| setAttribute(name, val) | קובע attr (string only) |
+| getAttribute(name) | מחזיר string או null |
+| removeAttribute(name) | מסיר |
+| dataset.* | gets/sets data-* attrs |
+| element[prop] | direct property |
+
+**🧓 סבתא:** attribute=מאפיין HTML. property=שדה JS.
+**👶 ילד:** דרכים לקרוא/לכתוב מאפיינים.
+**💂 חייל:** input.value (property) ≠ input.getAttribute("value") (initial!).
+**🎓 סטודנט:** dataset converts data-user-id ↔ dataset.userId.
+**👨‍💻 ג'וניור:** prefer property direct (`el.id = "x"`) over setAttribute.
+**🎩 פרופ׳:** custom attrs vs dataset vs WeakMap meta.
+
+```js
+// 🧓 סבתא
+el.setAttribute("data-id", "5");
+el.getAttribute("data-id");    // "5"
+
+// 👶 ילד — dataset
+el.dataset.userId = "5";       // ↔ data-user-id="5"
+el.dataset.userId;             // "5"
+
+// 💂 חייל — attribute vs property
+input.setAttribute("value", "default");
+input.value = "current";       // user typed
+input.getAttribute("value");   // "default" (initial!)
+input.value;                   // "current" (current)
+
+// 🎓 סטודנט — boolean attrs
+btn.disabled = true;            // property
+btn.setAttribute("disabled", ""); // attribute (any value works)
+
+// 👨‍💻 ג'וניור — aria
+btn.setAttribute("aria-pressed", "true");
+btn.ariaPressed = "true";       // newer property API
+
+// 🎩 פרופ׳ — observe attribute changes
+const obs = new MutationObserver(muts => {
+  muts.forEach(m => console.log(m.attributeName, m.oldValue));
+});
+obs.observe(el, { attributes: true, attributeOldValue: true });
+```
+
+---
+
+## 77. Mongo Create — create/insertOne/save (קושי 5)
+
+| Method | מה |
+|---|---|
+| Model.create(data) | new + save |
+| Model.insertOne(data) | direct insert |
+| Model.insertMany([...]) | bulk |
+| doc.save() | persist instance |
+| Model.bulkWrite([...]) | mixed ops |
+
+**🧓 סבתא:** create=יוצר ושומר. save=שומר instance.
+**👶 ילד:** דרכים להכניס נתונים למסד.
+**💂 חייל:** create runs middleware (pre-save hooks). insertOne doesn't.
+**🎓 סטודנט:** insertMany faster but no validation per-item by default.
+**👨‍💻 ג'וניור:** bulkWrite for mixed insert/update/delete in 1 round-trip.
+**🎩 פרופ׳:** writeConcern + ordered:false for parallel inserts.
+
+```js
+// 🧓 סבתא
+await User.create({ name: "Tal", email });
+
+// 👶 ילד
+const u = new User({ name: "Tal" });
+await u.save();
+
+// 💂 חייל — bulk
+await User.insertMany([
+  { name: "A" }, { name: "B" }, { name: "C" }
+]);
+
+// 🎓 סטודנט — bulkWrite
+await User.bulkWrite([
+  { insertOne: { document: { name: "A" } } },
+  { updateOne: { filter: { name: "B" }, update: { $set: { active: true } } } },
+  { deleteOne: { filter: { name: "C" } } }
+]);
+
+// 👨‍💻 ג'וניור — middleware respect
+userSchema.pre("save", function() {
+  this.password = bcrypt.hash(this.password);
+});
+// .create() and .save() trigger this; insertOne doesn't!
+
+// 🎩 פרופ׳ — writeConcern
+await User.create([{...}], { writeConcern: { w: "majority", j: true } });
+```
+
+---
+
+## 78. TS Class Modifiers — public/private/protected/readonly (קושי 5)
+
+| Modifier | scope |
+|---|---|
+| public (default) | everyone |
+| private | אותה class |
+| protected | class + subclasses |
+| readonly | אסור reassign |
+| #private (ES2022) | runtime private |
+
+**🧓 סבתא:** דרכים להגביל גישה לשדות.
+**👶 ילד:** מי יכול לראות/לשנות את השדה.
+**💂 חייל:** TS modifiers compile-time only. # is runtime.
+**🎓 סטודנט:** prefer # for true privacy. TS private just hides in autocomplete.
+**👨‍💻 ג'וניור:** private constructor for singleton. readonly props for immutability.
+**🎩 פרופ׳:** TS access modifiers in constructor params = parameter properties.
+
+```ts
+// 🧓 סבתא
+class Box {
+  private value: number;
+  constructor(v: number) { this.value = v; }
+}
+
+// 👶 ילד — protected
+class Animal {
+  protected name: string;
+  constructor(n: string) { this.name = n; }
+}
+class Dog extends Animal {
+  bark() { return `${this.name} woof`; }   // ✅ protected accessible
+}
+
+// 💂 חייל — readonly
+class Config {
+  readonly version = "1.0.0";
+}
+const c = new Config();
+// c.version = "2.0";   // ❌ TS error
+
+// 🎓 סטודנט — # truly private (ES2022)
+class Counter {
+  #count = 0;
+  inc() { this.#count++; }
+  get value() { return this.#count; }
+}
+const c = new Counter();
+// c.#count;   // ❌ SyntaxError — runtime!
+
+// 👨‍💻 ג'וניור — parameter properties
+class User {
+  constructor(
+    public id: number,
+    private password: string,
+    readonly email: string
+  ) {}
+  // implicit: this.id, this.password, this.email
+}
+
+// 🎩 פרופ׳ — singleton
+class DB {
+  private static instance: DB;
+  private constructor() {}
+  static get(): DB {
+    return DB.instance ??= new DB();
+  }
+}
+```
+
+---
+
+## 79. Git Core — add/commit/push/pull (קושי 5)
+
+| Command | מה |
+|---|---|
+| git add <files> | stage changes |
+| git commit -m | save snapshot |
+| git push | upload to remote |
+| git pull | fetch + merge |
+| git status | see state |
+| git diff | see changes |
+| git log | history |
+
+**🧓 סבתא:** add=להכניס לתיק. commit=לחתום. push=להעלות. pull=להוריד.
+**👶 ילד:** מסלול שמירת קוד מעט-לרבים.
+**💂 חייל:** working → staging → local → remote.
+**🎓 סטודנט:** atomic commits, conventional messages.
+**👨‍💻 ג'וניור:** never commit secrets. .gitignore + secret scanner.
+**🎩 פרופ׳:** content-addressable storage. SHA-1 (transitioning SHA-256).
+
+```bash
+# 🧓 סבתא
+git add file.txt
+git commit -m "Update file"
+git push
+
+# 👶 ילד — full flow
+git status                    # what's changed
+git add .                     # stage all
+git commit -m "feat: add login"
+git push origin main
+
+# 💂 חייל — partial staging
+git add -p                    # interactive hunk selection
+
+# 🎓 סטודנט — amend
+git commit --amend -m "fix typo"   # edit last commit (local only!)
+
+# 👨‍💻 ג'וניור — pull with rebase
+git pull --rebase             # cleaner history vs merge
+git config pull.rebase true   # default it
+
+# 🎩 פרופ׳ — interactive history rewrite
+git rebase -i HEAD~5
+# pick a3f2 first commit
+# squash f9d8 second commit
+# fixup 7b1c third commit
+```
+
+---
+
+## 80. Package Managers — npm / yarn / pnpm (קושי 5)
+
+| Manager | install style | lockfile | speed |
+|---|---|---|---|
+| npm | flat node_modules | package-lock.json | medium |
+| yarn (classic) | flat | yarn.lock | faster |
+| yarn berry (PnP) | zero-installs | .yarn/cache | fastest |
+| pnpm | hard-linked symlinks | pnpm-lock.yaml | fastest+disk-efficient |
+
+**🧓 סבתא:** דרכים להתקין חבילות.
+**👶 ילד:** npm=ברירת מחדל. אחרים=מהירים יותר.
+**💂 חייל:** lockfile critical. respect across team.
+**🎓 סטודנט:** pnpm best disk + speed. yarn berry zero-install gain.
+**👨‍💻 ג'וניור:** corepack manages versions. CI cache /home/.npm.
+**🎩 פרופ׳:** node_modules layout influences resolution. peerDeps strict.
+
+```bash
+# 🧓 סבתא — npm
+npm install
+npm install lodash
+npm run build
+
+# 👶 ילד — yarn
+yarn
+yarn add lodash
+yarn build
+
+# 💂 חייל — pnpm
+pnpm install
+pnpm add lodash
+pnpm build
+
+# 🎓 סטודנט — workspaces (pnpm)
+# pnpm-workspace.yaml:
+# packages:
+#   - 'apps/*'
+#   - 'packages/*'
+pnpm --filter app1 add lodash
+
+# 👨‍💻 ג'וניור — corepack
+corepack enable
+corepack prepare yarn@4.0.0 --activate
+# uses yarn 4 even if system has 1.x
+
+# 🎩 פרופ׳ — pnpm content-addressable
+# ~/.pnpm-store/v3/files/<sha>
+# project node_modules → symlinks to .pnpm/node_modules → hard-links to store
+# disk usage shared across all projects!
+```
+
+---
+
+## 81. Code Quality — ESLint / Prettier / TypeScript (קושי 5)
+
+| Tool | תפקיד |
+|---|---|
+| ESLint | code quality (logic, bugs) |
+| Prettier | code formatting (whitespace) |
+| TypeScript | type checking |
+| Stylelint | CSS quality |
+
+**🧓 סבתא:** ESLint=שגיאות לוגיות. Prettier=סדר. TS=טיפוסים.
+**👶 ילד:** 3 כלים שמשפרים קוד באופנים שונים.
+**💂 חייל:** Prettier formatting only. ESLint logic. Don't overlap.
+**🎓 סטודנט:** prettier-eslint-plugin to integrate. .editorconfig consistency.
+**👨‍💻 ג'וניור:** husky + lint-staged for pre-commit. CI also runs.
+**🎩 פרופ׳:** ESLint flat config (v9+). custom rules with AST.
+
+```js
+// 🧓 סבתא — eslint.config.js
+export default [{
+  rules: {
+    "no-unused-vars": "error",
+    "prefer-const": "error"
+  }
+}];
+```
+```json
+// 👶 ילד — .prettierrc
+{ "semi": true, "singleQuote": true, "tabWidth": 2 }
+```
+```json
+// 💂 חייל — tsconfig.json strict
+{ "compilerOptions": { "strict": true, "noUncheckedIndexedAccess": true } }
+```
+```json
+// 🎓 סטודנט — package.json scripts
+{ "scripts": {
+  "lint": "eslint .",
+  "format": "prettier --write .",
+  "typecheck": "tsc --noEmit"
+}}
+```
+```bash
+# 👨‍💻 ג'וניור — husky pre-commit
+# .husky/pre-commit:
+npx lint-staged
+
+# package.json:
+# "lint-staged": { "*.{ts,tsx}": ["eslint --fix", "prettier --write"] }
+```
+```js
+// 🎩 פרופ׳ — custom ESLint rule
+export default {
+  rules: {
+    "no-bad-pattern": {
+      meta: { type: "problem" },
+      create(ctx) {
+        return {
+          CallExpression(node) {
+            if (node.callee.name === "evil") ctx.report({ node, message: "evil()" });
+          }
+        };
+      }
+    }
+  }
+};
+```
+
+---
+
+## 82. Deploy Platforms — Vercel / Netlify / Cloudflare Pages (קושי 5)
+
+| Platform | strength |
+|---|---|
+| Vercel | Next.js native, edge fn, ISR |
+| Netlify | early SSG leader, forms |
+| Cloudflare Pages | edge-first, free tier huge |
+| Render | full-stack incl. DB |
+| Railway | full-stack apps |
+
+**🧓 סבתא:** מקומות להעלות אתר ל-internet.
+**👶 ילד:** דרך אוטומטית מ-git push לאתר חי.
+**💂 חייל:** preview deploys per PR. environment variables.
+**🎓 סטודנט:** Vercel for Next.js. CF for static + edge. Railway for APIs+DB.
+**👨‍💻 ג'וניור:** edge functions vs Lambdas. cold start vs warm.
+**🎩 פרופ׳:** Workers (CF) vs Lambda@Edge. ISR vs on-demand revalidation.
+
+```bash
+# 🧓 סבתא — Vercel CLI
+npm i -g vercel
+vercel    # deploys to preview URL
+
+# 👶 ילד — Netlify
+netlify deploy --prod
+
+# 💂 חייל — env vars (Vercel)
+vercel env add DATABASE_URL production
+
+# 🎓 סטודנט — vercel.json
+# {
+#   "buildCommand": "npm run build",
+#   "framework": "nextjs",
+#   "regions": ["iad1"]
+# }
+
+# 👨‍💻 ג'וניור — Cloudflare Pages config
+# wrangler.toml:
+# name = "my-app"
+# pages_build_output_dir = "dist"
+# [vars]
+# API_URL = "https://api.example.com"
+
+# 🎩 פרופ׳ — Vercel edge function
+# api/edge.ts:
+export const config = { runtime: "edge" };
+export default async function (req: Request) {
+  return new Response("Hello from edge");
+}
+```
+
+---
+
+## 83. CI / CD (קושי 5)
+
+| Concept | מה |
+|---|---|
+| CI | Continuous Integration — run tests on every push |
+| CD | Continuous Deployment — auto-deploy on merge |
+| pipeline | sequence of jobs |
+| stage | parallel jobs at same point |
+| artifact | output passed between stages |
+
+**🧓 סבתא:** CI=בדיקה אוטומטית. CD=פריסה אוטומטית.
+**👶 ילד:** push → robot בודק → אם בסדר, מעלה לאתר.
+**💂 חייל:** GH Actions yaml. matrix builds. caching.
+**🎓 סטודנט:** parallelize tests. cache deps. concurrency limits.
+**👨‍💻 ג'וניור:** secrets management. environment protection rules.
+**🎩 פרופ׳:** OIDC for cloud auth (no static keys). reusable workflows.
+
+```yaml
+# 🧓 סבתא — GH Actions
+name: CI
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm test
+```
+```yaml
+# 👶 ילד — matrix
+strategy:
+  matrix:
+    node: [18, 20, 22]
+    os: [ubuntu-latest, macos-latest]
+runs-on: ${{ matrix.os }}
+steps:
+  - uses: actions/setup-node@v4
+    with: { node-version: ${{ matrix.node }} }
+```
+```yaml
+# 💂 חייל — caching
+- uses: actions/cache@v4
+  with:
+    path: ~/.npm
+    key: npm-${{ hashFiles('package-lock.json') }}
+```
+```yaml
+# 🎓 סטודנט — deploy on main
+deploy:
+  needs: [test, lint]
+  if: github.ref == 'refs/heads/main'
+  runs-on: ubuntu-latest
+  environment: production
+  steps:
+    - run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+```
+```yaml
+# 👨‍💻 ג'וניור — concurrency
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+```
+```yaml
+# 🎩 פרופ׳ — OIDC to AWS
+- uses: aws-actions/configure-aws-credentials@v4
+  with:
+    role-to-assume: arn:aws:iam::123:role/gh-deploy
+    aws-region: us-east-1
+# no AWS_ACCESS_KEY_ID anywhere!
+```
+
+---
+
+✅ Diff 5 הושלם (65+19=84/95)
+
+## 84. Primitive Types — string/number/boolean/undefined/null/symbol/bigint (קושי 4)
+
+| Type | example | typeof |
+|---|---|---|
+| string | `"hi"` | "string" |
+| number | `42` / `3.14` | "number" |
+| boolean | `true` | "boolean" |
+| undefined | `undefined` | "undefined" |
+| null | `null` | "object" ⚠️ |
+| symbol | `Symbol("x")` | "symbol" |
+| bigint | `5n` | "bigint" |
+
+**🧓 סבתא:** 7 סוגים בסיסיים בJS.
+**👶 ילד:** מספרים, טקסט, true/false, ועוד.
+**💂 חייל:** primitives by-value. immutable.
+**🎓 סטודנט:** typeof null = "object" historical bug.
+**👨‍💻 ג'וניור:** bigint לnumbers > 2^53. symbol for unique keys.
+**🎩 פרופ׳:** SMI vs HeapNumber ב-V8. NaN unique self-inequality.
+
+```js
+// 🧓 סבתא
+let n = 5;          // number
+let s = "hi";       // string
+let b = true;       // boolean
+
+// 👶 ילד
+typeof 5;           // "number"
+typeof "hi";        // "string"
+typeof null;        // "object" ⚠️ באג
+
+// 💂 חייל — bigint
+const big = 9007199254740993n;   // beyond Number.MAX_SAFE_INTEGER
+
+// 🎓 סטודנט — symbol unique
+const id = Symbol("user-id");
+const obj = { [id]: 1 };
+
+// 👨‍💻 ג'וניור — Symbol.iterator
+class Range {
+  constructor(start, end) { Object.assign(this, {start, end}); }
+  *[Symbol.iterator]() {
+    for (let i = this.start; i <= this.end; i++) yield i;
+  }
+}
+[...new Range(1, 3)];   // [1, 2, 3]
+
+// 🎩 פרופ׳ — well-known symbols
+class X {
+  [Symbol.toPrimitive](hint) {
+    return hint === "number" ? 42 : "X";
+  }
+}
++(new X());   // 42
+```
+
+---
+
+## 85. NPM Commands — install / run / scripts / init / publish (קושי 4)
+
+| Command | מה |
+|---|---|
+| npm init | create package.json |
+| npm install | install all deps |
+| npm install <pkg> | add dep |
+| npm install -D <pkg> | add devDep |
+| npm run <script> | run script |
+| npm publish | upload to registry |
+| npm audit | security scan |
+
+**🧓 סבתא:** init=התחל. install=הורד. run=הפעל. publish=העלה.
+**👶 ילד:** פקודות לנהל חבילות.
+**💂 חייל:** scripts ב-package.json. npm run = node_modules/.bin in PATH.
+**🎓 סטודנט:** lock file critical. don't edit manually.
+**👨‍💻 ג'וניור:** npm ci faster than install in CI (uses lock exactly).
+**🎩 פרופ׳:** npm workspace, --workspaces flag. provenance attestations.
+
+```bash
+# 🧓 סבתא
+npm init -y                    # quick init
+npm install lodash             # add dep
+npm run dev                    # run "dev" script
+
+# 👶 ילד — package.json scripts
+# {
+#   "scripts": {
+#     "dev": "vite",
+#     "build": "vite build",
+#     "test": "vitest"
+#   }
+# }
+npm run build
+
+# 💂 חייל — versioning
+npm install lodash@^4.17.0    # caret = compatible
+npm install lodash@~4.17.0    # tilde = patch only
+npm install lodash@4.17.21    # exact
+
+# 🎓 סטודנט — CI install
+npm ci                         # respects lock exactly, fast
+
+# 👨‍💻 ג'וניור — workspaces
+# package.json:
+# "workspaces": ["apps/*", "packages/*"]
+npm install --workspace=app1
+
+# 🎩 פרופ׳ — publish with provenance
+npm publish --provenance --access public
+# generates SLSA attestation
+```
+
+---
+
+## 86. parseInt / parseFloat / Number() (קושי 4)
+
+| Method | parses |
+|---|---|
+| parseInt | integer prefix |
+| parseFloat | float prefix |
+| Number() | strict full conversion |
+| +x | strict (unary plus) |
+
+**🧓 סבתא:** parseInt=שלם. parseFloat=עשרוני. Number()=מחמיר.
+**👶 ילד:** דרכים להפוך טקסט למספר.
+**💂 חייל:** parseInt(s, 10) — תמיד radix! parseFloat ignores leading.
+**🎓 סטודנט:** Number("abc") → NaN. Number("") → 0. Surprises!
+**👨‍💻 ג'וניור:** Number.parseInt = parseInt (alias). prefer for explicit.
+**🎩 פרופ׳:** parseInt parses single chars, stops at non-digit. Number coerces fully.
+
+```js
+// 🧓 סבתא
+parseInt("42px");      // 42
+parseFloat("3.14ab");  // 3.14
+Number("42");          // 42
+
+// 👶 ילד — radix mandatory
+parseInt("0x1F", 16);  // 31
+parseInt("0x1F");      // 31 (auto-detected)
+parseInt("08", 10);    // 8 (always specify!)
+
+// 💂 חייל — Number strict
+Number("42.5abc");     // NaN!
+parseFloat("42.5abc"); // 42.5
+
+// 🎓 סטודנט — empty/whitespace
+Number("");            // 0 ⚠️
+Number(" ");           // 0 ⚠️
+parseInt("", 10);      // NaN
+Number(null);          // 0 ⚠️
+Number(undefined);     // NaN
+
+// 👨‍💻 ג'וניור — unary plus
++"42";                 // 42 (Number() equivalent)
++"abc";                // NaN
++true;                 // 1
+
+// 🎩 פרופ׳ — perf
+// parseInt > Number for large strings (early termination)
+// Number > parseInt for known clean numeric strings
+```
+
+---
+
+## 87. Math Methods — floor/ceil/round/random/max/min (קושי 4)
+
+| Method | פעולה |
+|---|---|
+| Math.floor(x) | round down |
+| Math.ceil(x) | round up |
+| Math.round(x) | banker's round |
+| Math.trunc(x) | drop fractional |
+| Math.random() | [0,1) random |
+| Math.max(a,b,...) | largest |
+| Math.min(a,b,...) | smallest |
+| Math.abs(x) | absolute value |
+| Math.pow(b,e) / b**e | exponent |
+| Math.sqrt(x) | square root |
+
+**🧓 סבתא:** Math = פעולות מתמטיות.
+**👶 ילד:** עיגול, מקסימום, מינימום, רנדומלי.
+**💂 חייל:** floor != trunc for negatives. round half-to-even.
+**🎓 סטודנט:** Math.random not crypto-secure. crypto.getRandomValues for security.
+**👨‍💻 ג'וניור:** ** operator > Math.pow.
+**🎩 פרופ׳:** IEEE 754 quirks. Math.fround for f32.
+
+```js
+// 🧓 סבתא
+Math.floor(3.9);       // 3
+Math.ceil(3.1);        // 4
+Math.round(3.5);       // 4
+
+// 👶 ילד
+Math.max(1, 5, 3);     // 5
+Math.min(1, 5, 3);     // 1
+Math.abs(-5);          // 5
+
+// 💂 חייל — random integer 0..N
+Math.floor(Math.random() * 10);   // 0..9
+
+// 🎓 סטודנט — floor vs trunc on negatives
+Math.floor(-3.5);      // -4 (toward -infinity)
+Math.trunc(-3.5);      // -3 (toward zero)
+
+// 👨‍💻 ג'וניור — secure random (cryptography)
+const arr = new Uint32Array(1);
+crypto.getRandomValues(arr);
+arr[0];   // cryptographically secure random
+
+// 🎩 פרופ׳ — IEEE 754 precision
+0.1 + 0.2;             // 0.30000000000000004
+Math.fround(0.1 + 0.2);// rounds to f32 precision
+```
+
+---
+
+## 88. Template Literals vs Concatenation (קושי 4)
+
+| Style | תחביר |
+|---|---|
+| template literal | `` `Hello ${name}` `` |
+| concatenation | `"Hello " + name` |
+| String() | `String(value)` |
+| toString() | `value.toString()` |
+| String.raw | `String.raw\`a\nb\`` (no escape) |
+
+**🧓 סבתא:** backticks > רגיל.
+**👶 ילד:** `${var}` בתוך backticks = קל.
+**💂 חייל:** template = readable + multiline + interpolation.
+**🎓 סטודנט:** tagged templates: `tag\`...\`` for HTML/SQL.
+**👨‍💻 ג'וניור:** all modern code = template literals. concatenation legacy.
+**🎩 פרופ׳:** TaggedTemplate gets raw + cooked strings.
+
+```js
+// 🧓 סבתא
+const name = "Tal";
+`Hi ${name}`;            // "Hi Tal"
+
+// 👶 ילד — multiline
+`line 1
+line 2`;
+// vs concatenation: "line 1\n" + "line 2"
+
+// 💂 חייל — expressions
+`Total: ${items.reduce((s, i) => s + i.price, 0)}`;
+
+// 🎓 סטודנט — tagged template
+function html(strings, ...values) {
+  return strings.reduce((acc, s, i) => acc + s + (values[i] ? sanitize(values[i]) : ""), "");
+}
+const safe = html`<div>${userInput}</div>`;
+
+// 👨‍💻 ג'וניור — styled-components
+const Btn = styled.button`
+  background: ${props => props.primary ? "blue" : "gray"};
+`;
+
+// 🎩 פרופ׳ — String.raw
+String.raw`C:\path\file`;   // "C:\path\file" (backslashes literal)
+```
+
+---
+
+## 89. Date APIs — Date.now / new Date / Date.parse (קושי 4)
+
+| API | מחזיר |
+|---|---|
+| Date.now() | timestamp ms |
+| new Date() | now Date object |
+| new Date(ms) | from timestamp |
+| new Date(str) | from string |
+| Date.parse(str) | timestamp from str |
+| date.toISOString() | "2026-05-02T..." |
+| date.getTime() | ms since epoch |
+
+**🧓 סבתא:** Date.now=מספר. new Date=אובייקט.
+**👶 ילד:** דרכים להציג זמן.
+**💂 חייל:** ms since 1970-01-01. ISO 8601 standard.
+**🎓 סטודנט:** Temporal API replacing this (stage 3, 2024).
+**👨‍💻 ג'וניור:** Date is mutable! prefer date-fns or Temporal.
+**🎩 פרופ׳:** timezone gotchas. UTC vs local. parsing "2026-01-01" varies by browser.
+
+```js
+// 🧓 סבתא
+const ts = Date.now();           // 1714665600000
+const d = new Date();            // Date object
+
+// 👶 ילד
+new Date(2026, 0, 15);           // Jan 15 (month 0-indexed!)
+new Date("2026-01-15");          // ISO string
+d.getFullYear();                 // 2026
+d.toISOString();                 // "2026-01-15T..."
+
+// 💂 חייל — duration
+const start = Date.now();
+await work();
+console.log(Date.now() - start, "ms");
+
+// 🎓 סטודנט — relative time
+const ago = Date.now() - timestamp;
+const days = Math.floor(ago / 86400000);
+
+// 👨‍💻 ג'וניור — date-fns
+import { format, addDays, differenceInDays } from "date-fns";
+format(new Date(), "yyyy-MM-dd");
+
+// 🎩 פרופ׳ — Temporal (proposal)
+Temporal.Now.plainDateISO();     // 2026-05-02
+Temporal.Now.zonedDateTimeISO("Asia/Jerusalem");
+```
+
+---
+
+## 90. classList API (קושי 4)
+
+| Method | פעולה |
+|---|---|
+| classList.add(c1, c2) | adds |
+| classList.remove(c) | removes |
+| classList.toggle(c) | flips |
+| classList.toggle(c, force) | conditional |
+| classList.contains(c) | bool |
+| classList.replace(old, new) | swap |
+
+**🧓 סבתא:** classList=DOMTokenList של classes.
+**👶 ילד:** דרכים לעבוד עם class בDOM.
+**💂 חייל:** modern alternative to className manipulation.
+**🎓 סטודנט:** toggle with second arg = conditional set.
+**👨‍💻 ג'וניור:** prefer setting on render, not toggling, in modern apps.
+**🎩 פרופ׳:** DOMTokenList is live, observable.
+
+```js
+// 🧓 סבתא
+el.classList.add("active");
+el.classList.remove("disabled");
+el.classList.toggle("open");
+
+// 👶 ילד
+if (el.classList.contains("active")) { ... }
+
+// 💂 חייל — multiple
+el.classList.add("a", "b", "c");
+
+// 🎓 סטודנט — conditional toggle
+el.classList.toggle("active", isActive);
+
+// 👨‍💻 ג'וניור — replace
+el.classList.replace("old-class", "new-class");
+
+// 🎩 פרופ׳ — observe changes
+const obs = new MutationObserver(muts => {
+  muts.forEach(m => {
+    if (m.attributeName === "class") console.log("classes changed");
+  });
+});
+obs.observe(el, { attributes: true, attributeFilter: ["class"] });
+```
+
+---
+
+## 91. Express Response — send/json/render/redirect (קושי 4)
+
+| Method | פעולה |
+|---|---|
+| res.send(body) | auto Content-Type |
+| res.json(obj) | application/json |
+| res.render("view") | template engine |
+| res.redirect(url) | 302 default |
+| res.status(N).x() | chain |
+| res.cookie(name, val) | set cookie |
+| res.end() | finish |
+
+**🧓 סבתא:** דרכים שונות להחזיר תשובה.
+**👶 ילד:** json לAPI. send לטקסט. redirect להפנות.
+**💂 חייל:** chainable. res.status().json() pattern.
+**🎓 סטודנט:** stream large via res.write + res.end.
+**👨‍💻 ג'וניור:** prefer res.json() over res.send(JSON.stringify()).
+**🎩 פרופ׳:** ETag, conditional response. compression middleware.
+
+```js
+// 🧓 סבתא
+app.get("/", (req, res) => res.send("Hello"));
+app.get("/api", (req, res) => res.json({ ok: true }));
+app.get("/old", (req, res) => res.redirect("/new"));
+
+// 👶 ילד — status chain
+res.status(404).json({ error: "Not found" });
+res.status(201).json(newUser);
+
+// 💂 חייל — set headers
+res.set("X-Custom", "value");
+res.type("application/xml");
+
+// 🎓 סטודנט — streaming
+res.writeHead(200, { "Content-Type": "text/event-stream" });
+res.write("data: hello\n\n");
+// ... later
+res.end();
+
+// 👨‍💻 ג'וניור — file download
+res.attachment("report.pdf");
+res.sendFile(path);
+
+// 🎩 פרופ׳ — conditional with ETag
+const etag = hash(content);
+if (req.headers["if-none-match"] === etag) {
+  return res.status(304).end();   // not modified
+}
+res.set("ETag", etag).send(content);
+```
+
+---
+
+## 92. React Grouping — Fragment / <></> / <div> (קושי 4)
+
+| Wrapper | output |
+|---|---|
+| `<div>` | div in DOM |
+| `<Fragment>` | nothing in DOM |
+| `<></>` | nothing in DOM (shorthand) |
+| `React.Fragment` | same as Fragment |
+
+**🧓 סבתא:** Fragment=עוטף בלי לייצר DOM element.
+**👶 ילד:** דרך לקבץ בלי `<div>` מיותר.
+**💂 חייל:** `<>` no key support; `<Fragment key=...>` does.
+**🎓 סטודנט:** prefer `<>` for cleanest output.
+**👨‍💻 ג'וניור:** when iterating with key, must use Fragment full form.
+**🎩 פרופ׳:** Fragment is React.Fragment internal symbol.
+
+```jsx
+// 🧓 סבתא
+return (
+  <>
+    <h1>Title</h1>
+    <p>Body</p>
+  </>
+);
+
+// 👶 ילד — explicit
+return (
+  <Fragment>
+    <h1>Title</h1>
+    <p>Body</p>
+  </Fragment>
+);
+
+// 💂 חייל — with key (needed in iterations)
+items.map(item => (
+  <Fragment key={item.id}>
+    <dt>{item.term}</dt>
+    <dd>{item.def}</dd>
+  </Fragment>
+));
+
+// 🎓 סטודנט — vs <div>
+// <div> creates extra wrapper element (sometimes breaks layouts)
+// <> doesn't add anything
+
+// 👨‍💻 ג'וניור — return multiple from component
+function ListItems() {
+  return (
+    <>
+      <li>A</li>
+      <li>B</li>
+    </>
+  );
+}
+
+// 🎩 פרופ׳ — JSX desugar
+// <></> → React.createElement(React.Fragment, null, ...)
+```
+
+---
+
+## 93. Dependency Kinds — dependencies/devDependencies/peerDependencies (קושי 4)
+
+| Kind | מתי |
+|---|---|
+| dependencies | runtime, ships to user |
+| devDependencies | dev/build only |
+| peerDependencies | "user must provide this" |
+| optionalDependencies | failsafe |
+| bundledDependencies | embedded |
+
+**🧓 סבתא:** prod=runtime. dev=dev. peer=consumer's.
+**👶 ילד:** סוגי תלויות שונים בpackage.json.
+**💂 חייל:** prod ships. dev not. peer for plugins (libs).
+**🎓 סטודנט:** peer with caret allows version range. npm 7+ auto-installs.
+**👨‍💻 ג'וניור:** check unused with depcheck. trim before publish.
+**🎩 פרופ׳:** peer warnings → resolutions field (yarn). overrides (npm).
+
+```json
+// 🧓 סבתא
+{
+  "dependencies": { "react": "^18.0.0" },
+  "devDependencies": { "vitest": "^1.0.0" }
+}
+```
+```json
+// 👶 ילד
+{
+  "dependencies": {
+    "lodash": "^4.17.0",
+    "axios": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "vite": "^5.0.0"
+  }
+}
+```
+```json
+// 💂 חייל — peer (for libs)
+{
+  "name": "my-react-lib",
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  }
+}
+```
+```bash
+# 🎓 סטודנט — installation
+npm install --save lodash         # → dependencies
+npm install --save-dev vitest     # → devDependencies
+npm install --save-peer react     # → peerDependencies
+```
+```json
+// 👨‍💻 ג'וניור — overrides
+{
+  "overrides": {
+    "vulnerable-lib": "^2.0.0"   // force version
+  }
+}
+```
+```json
+// 🎩 פרופ׳ — bundleDependencies
+{
+  "bundleDependencies": ["my-private-lib"],
+  // shipped inside .tgz
+}
+```
+
+---
+
+## 94. Code Decisions — ternary / if-else / switch (קושי 4)
+
+| Construct | when |
+|---|---|
+| ternary `c ? a : b` | simple binary, in expression |
+| if/else | multi-line, side effects |
+| switch | many cases on same value |
+| object literal lookup | many cases, no branches |
+
+**🧓 סבתא:** if=הסתעפות. ternary=קצרצר. switch=הרבה אופציות.
+**👶 ילד:** בחירות בקוד.
+**💂 חייל:** ternary nesting code-smell after 2 levels.
+**🎓 סטודנט:** switch with fall-through dangerous; always break.
+**👨‍💻 ג'וניור:** prefer object lookup over switch for >3 cases.
+**🎩 פרופ׳:** pattern matching proposal (TC39 stage 1).
+
+```js
+// 🧓 סבתא
+const msg = isLoggedIn ? "Welcome" : "Please login";
+
+// 👶 ילד — if/else
+if (age < 18) deny();
+else if (age < 65) approve();
+else senior();
+
+// 💂 חייל — switch
+switch (status) {
+  case "loading": return <Spinner/>;
+  case "ok":      return <Data/>;
+  case "error":   return <Err/>;
+  default:        return null;
+}
+
+// 🎓 סטודנט — object lookup (prefer over switch)
+const handlers = {
+  loading: () => <Spinner/>,
+  ok: () => <Data/>,
+  error: () => <Err/>
+};
+return (handlers[status] || (() => null))();
+
+// 👨‍💻 ג'וניור — early return
+function process(x) {
+  if (!x) return null;          // guard
+  if (x.invalid) throw new Error();
+  return doSomething(x);        // main path
+}
+
+// 🎩 פרופ׳ — pattern matching (proposal)
+match (point) {
+  when { x: 0, y: 0 }: "origin",
+  when { x, y } if (x === y): "diagonal",
+  when [x, y]: "tuple",
+  default: "?"
+}
+```
+
+---
+
+✅ **Diff 4 הושלם** (84+11=**95/95** קלסטרים מלאים 4/4!) 🎉
+
+---
+
+**עודכן:** 2026-05-02 · ידני · 6 רמות · 95 קלסטרים מלאים
 
 ---
 

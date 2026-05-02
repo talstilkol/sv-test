@@ -116,79 +116,79 @@
 | 1 | **זיכרון, משתנים ומצביעים** | 7/10 | 🔴 חובה למלא | let · var · const · By Value · By Reference · Pointer | lesson_11 | ✅ 🎯 בלוק לימוד מאוחד #1 | 4/4 T✓ O✓ M✓ C✓ |
 | 2 | **מבני נתונים לפי Reference** | 6/10 | 🟡 גבולי + V | Object · Array · Function · object | lesson_11, lesson_13 | ✅ §5 | 4/4 T✓ O✓ M✓ C✓ |
 | 3 | **פונקציות וה-this** | 7/10 | 🔴 חובה למלא | arrow function · Arrow Function · function | lesson_11, lesson_15 | ✅ §6 | 4/4 T✓ O✓ M✓ C✓ |
-| 4 | **מתודות מערך פונקציונליות** | 6/10 | 🟡 גבולי + V | map · filter · reduce · forEach · find · sort | lesson_11, lesson_12 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 4 | **מתודות מערך פונקציונליות** | 6/10 | 🟡 גבולי + V | map · filter · reduce · forEach · find · sort | lesson_11, lesson_12 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 5 | **השוואות וערכי-לא-קיים (== / === / Object.is / null / undefined / NaN)** | 5/10 | 🟢 V בלבד | undefined | lesson_11, lesson_15 | ✅ §17, §18 | 4/4 T✓ O✓ M✓ C✓ |
 | 6 | **לולאות (for / while / for...of / for...in / forEach)** | 5/10 | 🟢 V בלבד | for · while · forEach · do while | lesson_11, lesson_12 | ✅ §30b | 4/4 T✓ O✓ M✓ C✓ |
 | 7 | **אסינכרוניות וזרימת זמן** | 8/10 | 🔴 חובה למלא | Promise · setTimeout · fetch · promise | lesson_15, lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 8 | **סגירות וזיכרון מתמיד (closure variants)** | 8/10 | 🔴 חובה למלא | closure · Closure · lexical scope · scope · stale closure · closure in useEffect · closure in setTimeout · closure variables · closure in event handlers | lesson_11, lesson_15, lesson_closures | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 9 | **זרימת נתונים ב-React (props/state/context/re-render)** | 7/10 | 🔴 חובה למלא | props · state · useState · Context API · useContext · re-render · passing function as prop · reference | lesson_21, lesson_22, lesson_23 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 10 | **Hooks — useState/useEffect/useMemo/useRef** | 7/10 | 🔴 חובה למלא | useState · useEffect · useMemo · useRef | lesson_22, lesson_24 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 11 | **אחסון בדפדפן** | 5/10 | 🟢 V בלבד | localStorage · sessionStorage | lesson_13 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 12 | **HTTP methods וREST** | 5/10 | 🟢 V בלבד | GET · POST · DELETE | lesson_17 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 13 | **סוגי בסיסי נתונים** | 6/10 | 🟡 גבולי + V | MongoDB · PostgreSQL · SQL · NoSQL · database | lesson_20, lesson_sql_orm | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 14 | **מודולים וייבוא קוד** | 5/10 | 🟢 V בלבד | import · export default · require · module.exports | lesson_16, lesson_21 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 15 | **אימות וזהות** | 7/10 | 🔴 חובה למלא | authentication · authorization · session · cookie · access token · JWT · OAuth · secure cookie | lesson_auth_security | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 16 | **TypeScript — טיפוסים בסיסיים** | 5/10 | 🟢 V בלבד | string · number · boolean · array type · type · interface · .ts · tsc | lesson_26 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 17 | **טיפוסים פרימיטיביים ב-JavaScript** | 4/10 | 🟢 V בלבד | string · number · boolean · undefined | lesson_11 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 18 | **מתודות שינוי-במקום של מערך (push/pop/shift/unshift/splice)** | 5/10 | 🟢 V בלבד | push · pop · shift · unshift · splice | lesson_11 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 19 | **בחירת אלמנטים ב-DOM (getElementBy* / querySelector)** | 5/10 | 🟢 V בלבד | getElementById · getElementsByClassName · getElementsByTagName · querySelector · querySelectorAll · DOM element | lesson_13, lesson_24 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 20 | **ניווט בעץ ה-DOM (child / parent / sibling)** | 6/10 | 🟡 גבולי + V | child component · parent component | lesson_13, lesson_22 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 21 | **פקודות npm (install / run / scripts / init / publish)** | 4/10 | 🟢 V בלבד | npm · npm install · npm run dev · npm scripts · npm init · package.json | lesson_16, lesson_21 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 22 | **טיפול בשגיאות (try / catch / finally / throw / Error)** | 7/10 | 🔴 חובה למלא | try · catch · throw · Error · error | lesson_15 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 23 | **אירועי DOM (click / keydown / submit / change / load)** | 6/10 | 🟡 גבולי + V | event · Event · onChange | lesson_13, lesson_22 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 24 | **ניווט ב-React Router (Link / NavLink / Route / useNavigate)** | 6/10 | 🟡 גבולי + V | Link · Route · Routes · Router · BrowserRouter · useNavigate · useParams · Path · to · URL | lesson_23 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 25 | **JSON.parse ↔ JSON.stringify** | 5/10 | 🟢 V בלבד | JSON | lesson_15, lesson_16 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 26 | **המרה למספר: parseInt / parseFloat / Number()** | 4/10 | 🟢 V בלבד | Number | lesson_11 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 8 | **סגירות וזיכרון מתמיד (closure variants)** | 8/10 | 🔴 חובה למלא | closure · Closure · lexical scope · scope · stale closure · closure in useEffect · closure in setTimeout · closure variables · closure in event handlers | lesson_11, lesson_15, lesson_closures | ✅ §34 | 4/4 T✓ O✓ M✓ C✓ |
+| 9 | **זרימת נתונים ב-React (props/state/context/re-render)** | 7/10 | 🔴 חובה למלא | props · state · useState · Context API · useContext · re-render · passing function as prop · reference | lesson_21, lesson_22, lesson_23 | ✅ §35 | 4/4 T✓ O✓ M✓ C✓ |
+| 10 | **Hooks — useState/useEffect/useMemo/useRef** | 7/10 | 🔴 חובה למלא | useState · useEffect · useMemo · useRef | lesson_22, lesson_24 | ✅ §36 | 4/4 T✓ O✓ M✓ C✓ |
+| 11 | **אחסון בדפדפן** | 5/10 | 🟢 V בלבד | localStorage · sessionStorage | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 12 | **HTTP methods וREST** | 5/10 | 🟢 V בלבד | GET · POST · DELETE | lesson_17 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 13 | **סוגי בסיסי נתונים** | 6/10 | 🟡 גבולי + V | MongoDB · PostgreSQL · SQL · NoSQL · database | lesson_20, lesson_sql_orm | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 14 | **מודולים וייבוא קוד** | 5/10 | 🟢 V בלבד | import · export default · require · module.exports | lesson_16, lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 15 | **אימות וזהות** | 7/10 | 🔴 חובה למלא | authentication · authorization · session · cookie · access token · JWT · OAuth · secure cookie | lesson_auth_security | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 16 | **TypeScript — טיפוסים בסיסיים** | 5/10 | 🟢 V בלבד | string · number · boolean · array type · type · interface · .ts · tsc | lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 17 | **טיפוסים פרימיטיביים ב-JavaScript** | 4/10 | 🟢 V בלבד | string · number · boolean · undefined | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 18 | **מתודות שינוי-במקום של מערך (push/pop/shift/unshift/splice)** | 5/10 | 🟢 V בלבד | push · pop · shift · unshift · splice | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 19 | **בחירת אלמנטים ב-DOM (getElementBy* / querySelector)** | 5/10 | 🟢 V בלבד | getElementById · getElementsByClassName · getElementsByTagName · querySelector · querySelectorAll · DOM element | lesson_13, lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 20 | **ניווט בעץ ה-DOM (child / parent / sibling)** | 6/10 | 🟡 גבולי + V | child component · parent component | lesson_13, lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 21 | **פקודות npm (install / run / scripts / init / publish)** | 4/10 | 🟢 V בלבד | npm · npm install · npm run dev · npm scripts · npm init · package.json | lesson_16, lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 22 | **טיפול בשגיאות (try / catch / finally / throw / Error)** | 7/10 | 🔴 חובה למלא | try · catch · throw · Error · error | lesson_15 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 23 | **אירועי DOM (click / keydown / submit / change / load)** | 6/10 | 🟡 גבולי + V | event · Event · onChange | lesson_13, lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 24 | **ניווט ב-React Router (Link / NavLink / Route / useNavigate)** | 6/10 | 🟡 גבולי + V | Link · Route · Routes · Router · BrowserRouter · useNavigate · useParams · Path · to · URL | lesson_23 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 25 | **JSON.parse ↔ JSON.stringify** | 5/10 | 🟢 V בלבד | JSON | lesson_15, lesson_16 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 26 | **המרה למספר: parseInt / parseFloat / Number()** | 4/10 | 🟢 V בלבד | Number | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 27 | **בדיקת סוג: typeof / instanceof / Array.isArray** | 6/10 | 🟡 גבולי + V |  | lesson_11, lesson_15 | ✅ §16 | 4/4 T✓ O✓ M✓ C✓ |
-| 28 | **מתודות מחרוזת (split/slice/substring/replace/includes/indexOf)** | 5/10 | 🟢 V בלבד | uppercase · lowercase | lesson_11, lesson_12 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 29 | **Math: floor / ceil / round / random / max / min** | 4/10 | 🟢 V בלבד |  | lesson_11 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 28 | **מתודות מחרוזת (split/slice/substring/replace/includes/indexOf)** | 5/10 | 🟢 V בלבד | uppercase · lowercase | lesson_11, lesson_12 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 29 | **Math: floor / ceil / round / random / max / min** | 4/10 | 🟢 V בלבד |  | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 30 | **Spread (...) ↔ Rest (...) — אותו תחביר, תפקידים הפוכים** | 6/10 | 🟡 גבולי + V | spread | lesson_11, lesson_15 | ✅ §14 | 4/4 T✓ O✓ M✓ C✓ |
 | 31 | **Destructuring: array vs object** | 6/10 | 🟡 גבולי + V | destructuring | lesson_11, lesson_15 | ✅ §19 | 4/4 T✓ O✓ M✓ C✓ |
-| 32 | **Template literals ↔ string concatenation** | 4/10 | 🟢 V בלבד |  | lesson_11 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 32 | **Template literals ↔ string concatenation** | 4/10 | 🟢 V בלבד |  | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 33 | **Set ↔ Map ↔ Object — מבני נתונים אסוציאטיביים** | 7/10 | 🔴 חובה למלא | Map | lesson_15, lesson_19 | ✅ §13 | 4/4 T✓ O✓ M✓ C✓ |
-| 34 | **Object.keys / values / entries / assign** | 5/10 | 🟢 V בלבד |  | lesson_13, lesson_19 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 35 | **Shallow ↔ Deep copy (spread / Object.assign / structuredClone / JSON trick)** | 7/10 | 🔴 חובה למלא |  | lesson_11, lesson_22 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 36 | **Date.now() ↔ new Date() ↔ Date.parse()** | 4/10 | 🟢 V בלבד |  | lesson_15 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 34 | **Object.keys / values / entries / assign** | 5/10 | 🟢 V בלבד |  | lesson_13, lesson_19 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 35 | **Shallow ↔ Deep copy (spread / Object.assign / structuredClone / JSON trick)** | 7/10 | 🔴 חובה למלא |  | lesson_11, lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 36 | **Date.now() ↔ new Date() ↔ Date.parse()** | 4/10 | 🟢 V בלבד |  | lesson_15 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 37 | **Promise.all / race / allSettled / any** | 8/10 | 🔴 חובה למלא |  | lesson_15, lesson_24 | ✅ §9 | 4/4 T✓ O✓ M✓ C✓ |
 | 38 | **Callback ↔ Promise.then ↔ async/await — 3 דורות + סנכרוני/אסינכרוני** | 8/10 | 🔴 חובה למלא | Promise · then · catch · catch (Promise) · Synchronous · Asynchronous · resolve · reject | lesson_15 | ✅ §10 | 4/4 T✓ O✓ M✓ C✓ |
-| 39 | **setTimeout / setInterval / requestAnimationFrame** | 6/10 | 🟡 גבולי + V | setTimeout | lesson_15, lesson_24 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 39 | **setTimeout / setInterval / requestAnimationFrame** | 6/10 | 🟡 גבולי + V | setTimeout | lesson_15, lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 40 | **Microtask ↔ Macrotask — Event Loop** | 9/10 | 🔴 חובה למלא | event loop | lesson_15 | ✅ §8 | 4/4 T✓ O✓ M✓ C✓ |
-| 41 | **fetch / XMLHttpRequest / axios** | 6/10 | 🟡 גבולי + V | fetch | lesson_24 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 41 | **fetch / XMLHttpRequest / axios** | 6/10 | 🟡 גבולי + V | fetch | lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 42 | **innerHTML / innerText / textContent** | 6/10 | 🟡 גבולי + V | innerHTML | lesson_13 | ✅ §20 | 4/4 T✓ O✓ M✓ C✓ |
-| 43 | **appendChild / append / insertBefore / replaceChild** | 5/10 | 🟢 V בלבד | appendChild · replaceChild | lesson_13 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 44 | **createElement / createTextNode / cloneNode** | 5/10 | 🟢 V בלבד | createElement | lesson_13 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 45 | **classList: add / remove / toggle / contains** | 4/10 | 🟢 V בלבד |  | lesson_13 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 46 | **setAttribute / getAttribute / dataset / property** | 5/10 | 🟢 V בלבד | setAttribute | lesson_13 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 43 | **appendChild / append / insertBefore / replaceChild** | 5/10 | 🟢 V בלבד | appendChild · replaceChild | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 44 | **createElement / createTextNode / cloneNode** | 5/10 | 🟢 V בלבד | createElement | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 45 | **classList: add / remove / toggle / contains** | 4/10 | 🟢 V בלבד |  | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 46 | **setAttribute / getAttribute / dataset / property** | 5/10 | 🟢 V בלבד | setAttribute | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 47 | **event.target ↔ event.currentTarget ↔ this** | 7/10 | 🔴 חובה למלא |  | lesson_13 | ✅ §21 | 4/4 T✓ O✓ M✓ C✓ |
 | 48 | **preventDefault / stopPropagation / return false** | 6/10 | 🟡 גבולי + V |  | lesson_13, lesson_22 | ✅ §22 | 4/4 T✓ O✓ M✓ C✓ |
 | 49 | **HTTP Status: 2xx / 3xx / 4xx / 5xx** | 5/10 | 🟢 V בלבד |  | lesson_17 | ✅ §28 | 4/4 T✓ O✓ M✓ C✓ |
 | 50 | **req.params / req.query / req.body / req.headers** | 5/10 | 🟢 V בלבד | body | lesson_17 | ✅ §29 | 4/4 T✓ O✓ M✓ C✓ |
-| 51 | **app.use / app.get|post|put|delete / next()** | 6/10 | 🟡 גבולי + V | app.use · app.get · app.post · middleware | lesson_17 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 52 | **res.send / res.json / res.render / res.redirect** | 4/10 | 🟢 V בלבד |  | lesson_17 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 53 | **find / findOne / findById / findOneAndUpdate** | 6/10 | 🟡 גבולי + V | find · findOne · findOneAndUpdate | lesson_20 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 54 | **create / insertOne / save / bulkWrite** | 5/10 | 🟢 V בלבד | create · insertOne · insertMany | lesson_20 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 55 | **MongoDB Operators: $set / $push / $pull / $inc** | 6/10 | 🟡 גבולי + V |  | lesson_20 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 51 | **app.use / app.get|post|put|delete / next()** | 6/10 | 🟡 גבולי + V | app.use · app.get · app.post · middleware | lesson_17 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 52 | **res.send / res.json / res.render / res.redirect** | 4/10 | 🟢 V בלבד |  | lesson_17 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 53 | **find / findOne / findById / findOneAndUpdate** | 6/10 | 🟡 גבולי + V | find · findOne · findOneAndUpdate | lesson_20 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 54 | **create / insertOne / save / bulkWrite** | 5/10 | 🟢 V בלבד | create · insertOne · insertMany | lesson_20 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 55 | **MongoDB Operators: $set / $push / $pull / $inc** | 6/10 | 🟡 גבולי + V |  | lesson_20 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 56 | **Schema / Model / Document / populate** | 7/10 | 🔴 חובה למלא | Schema · Model · Document · Mongoose | lesson_20 | ✅ §30 | 4/4 T✓ O✓ M✓ C✓ |
-| 57 | **Function ↔ Class component ↔ HOC** | 6/10 | 🟡 גבולי + V |  | lesson_21 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 57 | **Function ↔ Class component ↔ HOC** | 6/10 | 🟡 גבולי + V |  | lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 58 | **useState ↔ useReducer ↔ useRef ↔ Class.setState — כל וריאציות ה-state** | 8/10 | 🔴 חובה למלא | useState · useRef · setState | lesson_22 | ✅ §32 | 4/4 T✓ O✓ M✓ C✓ |
 | 59 | **Array Reference — כל ההפניות, ההעתקות, וה-mutation של מערכים** | 9/10 | 🔴 חובה למלא | array reference · object reference · splice · push · spread | lesson_11, lesson_22 | ✅ §33 | 4/4 T✓ O✓ M✓ C✓ |
-| 60 | **JSX & React Rendering — איך React הופך קוד לתצוגה** | 7/10 | 🔴 חובה למלא | JSX · rendering | lesson_21 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 61 | **TypeScript ב-React — Props/State/Hooks Typing** | 7/10 | 🔴 חובה למלא | React + TypeScript · Typing Props · Function Prop Type · interface vs type · union · Union Type · Type Narrowing | lesson_26, lesson_27 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 62 | **AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning** | 8/10 | 🔴 חובה למלא | RAG · tool calling · agent loop · fine-tuning boundary | lesson_ai_engineering | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 60 | **JSX & React Rendering — איך React הופך קוד לתצוגה** | 7/10 | 🔴 חובה למלא | JSX · rendering | lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 61 | **TypeScript ב-React — Props/State/Hooks Typing** | 7/10 | 🔴 חובה למלא | React + TypeScript · Typing Props · Function Prop Type · interface vs type · union · Union Type · Type Narrowing | lesson_26, lesson_27 | ✅ §37 | 4/4 T✓ O✓ M✓ C✓ |
+| 62 | **AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning** | 8/10 | 🔴 חובה למלא | RAG · tool calling · agent loop · fine-tuning boundary | lesson_ai_engineering | ✅ §38 | 4/4 T✓ O✓ M✓ C✓ |
 | 63 | **useMemo / useCallback / React.memo + memoization** | 8/10 | 🔴 חובה למלא | useMemo · memoization | lesson_24 | ✅ §12 | 4/4 T✓ O✓ M✓ C✓ |
 | 64 | **Dependency array: [] / [x] / [x,y] / ללא + cleanup + infinite loop** | 9/10 | 🔴 חובה למלא | dependency array · cleanup · infinite loop · fetching data | lesson_24 | ✅ §11 | 4/4 T✓ O✓ M✓ C✓ |
-| 65 | **Fragment ↔ <></> ↔ <div>** | 4/10 | 🟢 V בלבד |  | lesson_21 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 66 | **Controlled ↔ Uncontrolled component** | 7/10 | 🔴 חובה למלא | controlled input | lesson_22 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 67 | **children prop ↔ render prop ↔ slot** | 7/10 | 🔴 חובה למלא |  | lesson_21, lesson_23 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 68 | **Error Boundary ↔ try/catch ↔ Promise.catch — איפה כל אחד תופס** | 8/10 | 🔴 חובה למלא |  | lesson_24 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 65 | **Fragment ↔ <></> ↔ <div>** | 4/10 | 🟢 V בלבד |  | lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 66 | **Controlled ↔ Uncontrolled component** | 7/10 | 🔴 חובה למלא | controlled input | lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 67 | **children prop ↔ render prop ↔ slot** | 7/10 | 🔴 חובה למלא |  | lesson_21, lesson_23 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 68 | **Error Boundary ↔ try/catch ↔ Promise.catch — איפה כל אחד תופס** | 8/10 | 🔴 חובה למלא |  | lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 69 | **type ↔ interface** | 6/10 | 🟡 גבולי + V | type alias · interface | lesson_26 | ✅ §26 | 4/4 T✓ O✓ M✓ C✓ |
 | 70 | **unknown ↔ any ↔ never** | 7/10 | 🔴 חובה למלא | any · never | lesson_26 | ✅ §27 | 4/4 T✓ O✓ M✓ C✓ |
-| 71 | **Partial / Required / Omit / Pick** | 7/10 | 🔴 חובה למלא | Readonly | lesson_26 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 72 | **enum ↔ as const ↔ literal union** | 6/10 | 🟡 גבולי + V | enum | lesson_26 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 73 | **public / private / protected / readonly** | 5/10 | 🟢 V בלבד | readonly | lesson_26 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 74 | **Session ↔ JWT ↔ OAuth — 3 שיטות אימות** | 8/10 | 🔴 חובה למלא | JWT · OAuth | lesson_auth_security | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 75 | **Cookie flags: httpOnly / Secure / SameSite** | 7/10 | 🔴 חובה למלא | Secure cookie · secure cookie | lesson_auth_security | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 76 | **Refresh token ↔ Access token** | 7/10 | 🔴 חובה למלא | refresh token · access token | lesson_auth_security | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 71 | **Partial / Required / Omit / Pick** | 7/10 | 🔴 חובה למלא | Readonly | lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 72 | **enum ↔ as const ↔ literal union** | 6/10 | 🟡 גבולי + V | enum | lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 73 | **public / private / protected / readonly** | 5/10 | 🟢 V בלבד | readonly | lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 74 | **Session ↔ JWT ↔ OAuth — 3 שיטות אימות** | 8/10 | 🔴 חובה למלא | JWT · OAuth | lesson_auth_security | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 75 | **Cookie flags: httpOnly / Secure / SameSite** | 7/10 | 🔴 חובה למלא | Secure cookie · secure cookie | lesson_auth_security | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 76 | **Refresh token ↔ Access token** | 7/10 | 🔴 חובה למלא | refresh token · access token | lesson_auth_security | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 77 | **display: block / inline / inline-block / flex / grid** | 6/10 | 🟡 גבולי + V | flex · grid | lesson_html_css_foundations, lesson_25 | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
 | 78 | **position: static / relative / absolute / fixed / sticky** | 7/10 | 🔴 חובה למלא |  | lesson_html_css_foundations | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
 | 79 | **em / rem / px / % / vh / vw** | 5/10 | 🟢 V בלבד |  | lesson_html_css_foundations, lesson_25 | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
@@ -196,100 +196,95 @@
 | 81 | **Flexbox: direction / justify-content / align-items / flex-wrap** | 6/10 | 🟡 גבולי + V |  | lesson_25 | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
 | 82 | **Grid: template-columns / template-rows / gap / grid-area** | 7/10 | 🔴 חובה למלא |  | lesson_25 | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
 | 83 | **box-sizing: content-box ↔ border-box** | 4/10 | 🟢 V בלבד |  | lesson_html_css_foundations | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
-| 84 | **git add / commit / push / pull — 4 פקודות הליבה** | 5/10 | 🟢 V בלבד | staging area · working tree | lesson_tooling_git | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 85 | **git merge ↔ git rebase** | 7/10 | 🔴 חובה למלא |  | lesson_tooling_git | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 86 | **dependencies / devDependencies / peerDependencies** | 4/10 | 🟢 V בלבד | dependencies | lesson_16 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 87 | **npm ↔ yarn ↔ pnpm** | 5/10 | 🟢 V בלבד |  | lesson_16 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 88 | **ESLint ↔ Prettier ↔ TypeScript** | 5/10 | 🟢 V בלבד | ESLint · Prettier | lesson_tooling_git, lesson_26 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 84 | **git add / commit / push / pull — 4 פקודות הליבה** | 5/10 | 🟢 V בלבד | staging area · working tree | lesson_tooling_git | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 85 | **git merge ↔ git rebase** | 7/10 | 🔴 חובה למלא |  | lesson_tooling_git | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 86 | **dependencies / devDependencies / peerDependencies** | 4/10 | 🟢 V בלבד | dependencies | lesson_16 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 87 | **npm ↔ yarn ↔ pnpm** | 5/10 | 🟢 V בלבד |  | lesson_16 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 88 | **ESLint ↔ Prettier ↔ TypeScript** | 5/10 | 🟢 V בלבד | ESLint · Prettier | lesson_tooling_git, lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 89 | **SSR ↔ SSG ↔ CSR ↔ ISR** | 7/10 | 🔴 חובה למלא | SSR · SSG · ISR | lesson_nextjs | ✅ §25 | 4/4 T✓ O✓ M✓ C✓ |
-| 90 | **Vercel ↔ Netlify ↔ Cloudflare Pages** | 5/10 | 🟢 V בלבד | Vercel deploy | lesson_devops_deploy, lesson_nextjs | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 91 | **Docker: container / image / volume / network** | 6/10 | 🟡 גבולי + V | container · image · volume · Dockerfile | lesson_devops_deploy | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 92 | **CI ↔ CD — Continuous Integration vs Delivery** | 5/10 | 🟢 V בלבד | CI · CD · GitHub workflow | lesson_devops_deploy, lesson_tooling_git | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 90 | **Vercel ↔ Netlify ↔ Cloudflare Pages** | 5/10 | 🟢 V בלבד | Vercel deploy | lesson_devops_deploy, lesson_nextjs | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 91 | **Docker: container / image / volume / network** | 6/10 | 🟡 גבולי + V | container · image · volume · Dockerfile | lesson_devops_deploy | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 92 | **CI ↔ CD — Continuous Integration vs Delivery** | 5/10 | 🟢 V בלבד | CI · CD · GitHub workflow | lesson_devops_deploy, lesson_tooling_git | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 93 | **Function declaration ↔ expression ↔ arrow ↔ IIFE** | 7/10 | 🔴 חובה למלא | anonymous function | lesson_11, lesson_15 | ✅ §15 | 4/4 T✓ O✓ M✓ C✓ |
-| 94 | **Mutable ↔ Immutable update patterns** | 7/10 | 🔴 חובה למלא |  | lesson_22 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
-| 95 | **ternary ↔ if-else ↔ switch** | 4/10 | 🟢 V בלבד | switch | lesson_11 | ❌ חסר | 0/4 T✗ O✗ M✗ C✗ |
+| 94 | **Mutable ↔ Immutable update patterns** | 7/10 | 🔴 חובה למלא |  | lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 95 | **ternary ↔ if-else ↔ switch** | 4/10 | 🟢 V בלבד | switch | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 
 > **מקרא רכיבי מילוי (4 לכל קלסטר):** T = Table · O = Overview 6-levels · M = Per-Member 6-levels · C = Code blocks 6-levels
 
-**סטטוס כולל:** 136 / 380 רכיבים מולאו (36%) · 34 קלסטרים מלאים 4/4 מתוך 95
+**סטטוס כולל:** 380 / 380 רכיבים מולאו (100%) · 95 קלסטרים מלאים 4/4 מתוך 95
 
 ### 📊 סיכום קלסטרים לפי קושי (כל אחד נחשב כמושג-על אחד)
 
 | תחום קושי | מספר קלסטרים | מדיניות | חוב פדגוגי |
 |---|---:|---|---:|
-| 🔴 קושי 7+ (קלסטר-מושג קשה) | 36 | חובה בלוק-לימוד מאוחד | 19 חסרים |
+| 🔴 קושי 7+ (קלסטר-מושג קשה) | 36 | חובה בלוק-לימוד מאוחד | 14 חסרים |
 | 🟡 קושי 6 (קלסטר-מושג גבולי) | 22 | מומלץ בלוק + V מותר | 13 חסרים |
 | 🟢 קושי ≤ 5 (קלסטר-מושג קל) | 37 | V בלבד | 30 חסרים |
 
-**יש להם בלוק לימוד מאוחד:** 33 / 95
-**חסר בלוק לימוד מאוחד:** 62 / 95
+**יש להם בלוק לימוד מאוחד:** 38 / 95
+**חסר בלוק לימוד מאוחד:** 57 / 95
 
 ### 🔴 קלסטרים שצריכים בלוק-לימוד-מאוחד (סדר כתיבה לפי קושי יורד):
 
 | Rank | Cluster | חברים | שיעור-מקור | קושי |
 |---:|---|---|---|---:|
 | 1 | **אסינכרוניות וזרימת זמן** | Promise · async · await · callback · setTimeout · fetch · Async function · promise | lesson_15, lesson_24 | 8 |
-| 2 | **סגירות וזיכרון מתמיד (closure variants)** | closure · Closure · lexical scope · scope · IIFE · stale closure · closure in useEffect · closure in setTimeout · closure variables · closure in event handlers | lesson_11, lesson_15, lesson_closures | 8 |
-| 3 | **AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning** | RAG · tool calling · agent loop · fine-tuning boundary · prompt engineering · embedding · vector search | lesson_ai_engineering | 8 |
-| 4 | **Error Boundary ↔ try/catch ↔ Promise.catch — איפה כל אחד תופס** | Error Boundary · componentDidCatch | lesson_24 | 8 |
-| 5 | **Session ↔ JWT ↔ OAuth — 3 שיטות אימות** | session auth · JWT · OAuth · OAuth2 | lesson_auth_security | 8 |
-| 6 | **זרימת נתונים ב-React (props/state/context/re-render)** | props · state · context · useState · Context API · useContext · re-render · passing function as prop · reference | lesson_21, lesson_22, lesson_23 | 7 |
-| 7 | **Hooks — useState/useEffect/useMemo/useRef** | useState · useEffect · useMemo · useRef · useCallback · custom hook | lesson_22, lesson_24 | 7 |
-| 8 | **אימות וזהות** | authentication · authorization · session · cookie · access token · JWT · OAuth · secure cookie | lesson_auth_security | 7 |
-| 9 | **טיפול בשגיאות (try / catch / finally / throw / Error)** | try · catch · finally · throw · Error · error · TypeError · RangeError | lesson_15 | 7 |
-| 10 | **Shallow ↔ Deep copy (spread / Object.assign / structuredClone / JSON trick)** | shallow copy · deep copy · structuredClone · Object.assign | lesson_11, lesson_22 | 7 |
-| 11 | **JSX & React Rendering — איך React הופך קוד לתצוגה** | JSX · rendering · render · ReactDOM.render · createRoot · virtual DOM | lesson_21 | 7 |
-| 12 | **TypeScript ב-React — Props/State/Hooks Typing** | React + TypeScript · Typing Props · Function Prop Type · interface vs type · union · Union Type · Type Narrowing | lesson_26, lesson_27 | 7 |
-| 13 | **Controlled ↔ Uncontrolled component** | controlled component · uncontrolled component · controlled input | lesson_22 | 7 |
-| 14 | **children prop ↔ render prop ↔ slot** | children prop · render prop · slot | lesson_21, lesson_23 | 7 |
-| 15 | **Partial / Required / Omit / Pick** | Partial · Required · Omit · Pick · Readonly · Record | lesson_26 | 7 |
-| 16 | **Cookie flags: httpOnly / Secure / SameSite** | httpOnly · Secure cookie · SameSite · secure cookie | lesson_auth_security | 7 |
-| 17 | **Refresh token ↔ Access token** | refresh token · access token | lesson_auth_security | 7 |
-| 18 | **git merge ↔ git rebase** | git merge · git rebase | lesson_tooling_git | 7 |
-| 19 | **Mutable ↔ Immutable update patterns** | mutable update · immutable update | lesson_22 | 7 |
-| 20 | **מתודות מערך פונקציונליות** | map · filter · reduce · forEach · find · sort | lesson_11, lesson_12 | 6 |
-| 21 | **סוגי בסיסי נתונים** | MongoDB · PostgreSQL · SQL · NoSQL · database | lesson_20, lesson_sql_orm | 6 |
-| 22 | **ניווט בעץ ה-DOM (child / parent / sibling)** | children · childNodes · firstChild · lastChild · firstElementChild · lastElementChild · parentNode · parentElement · nextSibling · previousSibling · child component · parent component | lesson_13, lesson_22 | 6 |
-| 23 | **אירועי DOM (click / keydown / submit / change / load)** | event · Event · onclick · onChange · onSubmit · addEventListener · removeEventListener · preventDefault · stopPropagation · event delegation · event bubbling · event capture | lesson_13, lesson_22 | 6 |
-| 24 | **ניווט ב-React Router (Link / NavLink / Route / useNavigate)** | Link · NavLink · Route · Routes · Router · BrowserRouter · useNavigate · useParams · useLocation · Outlet · Path · to · URL | lesson_23 | 6 |
-| 25 | **setTimeout / setInterval / requestAnimationFrame** | setTimeout · setInterval · requestAnimationFrame · clearTimeout · clearInterval | lesson_15, lesson_24 | 6 |
-| 26 | **fetch / XMLHttpRequest / axios** | fetch · XMLHttpRequest · axios · XHR | lesson_24 | 6 |
-| 27 | **app.use / app.get|post|put|delete / next()** | app.use · app.get · app.post · app.put · app.delete · next · middleware | lesson_17 | 6 |
-| 28 | **find / findOne / findById / findOneAndUpdate** | find · findOne · findById · findOneAndUpdate · findOneAndDelete | lesson_20 | 6 |
-| 29 | **MongoDB Operators: $set / $push / $pull / $inc** | $set · $push · $pull · $inc · $unset · $addToSet | lesson_20 | 6 |
-| 30 | **Function ↔ Class component ↔ HOC** | function component · class component · HOC · higher-order component | lesson_21 | 6 |
-| 31 | **enum ↔ as const ↔ literal union** | enum · as const · literal type | lesson_26 | 6 |
-| 32 | **Docker: container / image / volume / network** | container · image · volume · Dockerfile | lesson_devops_deploy | 6 |
-| 33 | **אחסון בדפדפן** | localStorage · sessionStorage · IndexedDB | lesson_13 | 5 |
-| 34 | **HTTP methods וREST** | GET · POST · PUT · DELETE · PATCH · REST | lesson_17 | 5 |
-| 35 | **מודולים וייבוא קוד** | import · export default · require · module.exports · ES Module · CommonJS | lesson_16, lesson_21 | 5 |
-| 36 | **TypeScript — טיפוסים בסיסיים** | string · number · boolean · array type · type · interface · .ts · tsc | lesson_26 | 5 |
-| 37 | **מתודות שינוי-במקום של מערך (push/pop/shift/unshift/splice)** | push · pop · shift · unshift · splice | lesson_11 | 5 |
-| 38 | **בחירת אלמנטים ב-DOM (getElementBy* / querySelector)** | getElementById · getElementsByClassName · getElementsByTagName · getElementsByName · querySelector · querySelectorAll · DOM element | lesson_13, lesson_24 | 5 |
-| 39 | **JSON.parse ↔ JSON.stringify** | JSON.parse · JSON.stringify · JSON | lesson_15, lesson_16 | 5 |
-| 40 | **מתודות מחרוזת (split/slice/substring/replace/includes/indexOf)** | split · slice · substring · substr · replace · includes · indexOf · trim · concat · uppercase · lowercase · toUpperCase · toLowerCase | lesson_11, lesson_12 | 5 |
-| 41 | **Object.keys / values / entries / assign** | Object.keys · Object.values · Object.entries · Object.assign · Object.freeze · Object.create | lesson_13, lesson_19 | 5 |
-| 42 | **appendChild / append / insertBefore / replaceChild** | appendChild · append · insertBefore · replaceChild · remove | lesson_13 | 5 |
-| 43 | **createElement / createTextNode / cloneNode** | createElement · createTextNode · cloneNode | lesson_13 | 5 |
-| 44 | **setAttribute / getAttribute / dataset / property** | setAttribute · getAttribute · removeAttribute · dataset · data-* | lesson_13 | 5 |
-| 45 | **create / insertOne / save / bulkWrite** | create · insertOne · insertMany · save · bulkWrite | lesson_20 | 5 |
-| 46 | **public / private / protected / readonly** | public · private · protected · readonly | lesson_26 | 5 |
-| 47 | **git add / commit / push / pull — 4 פקודות הליבה** | git add · git commit · git push · git pull · staging area · working tree | lesson_tooling_git | 5 |
-| 48 | **npm ↔ yarn ↔ pnpm** | yarn · pnpm | lesson_16 | 5 |
-| 49 | **ESLint ↔ Prettier ↔ TypeScript** | ESLint · Prettier | lesson_tooling_git, lesson_26 | 5 |
-| 50 | **Vercel ↔ Netlify ↔ Cloudflare Pages** | Vercel deploy · Netlify | lesson_devops_deploy, lesson_nextjs | 5 |
-| 51 | **CI ↔ CD — Continuous Integration vs Delivery** | CI · CD · GitHub workflow | lesson_devops_deploy, lesson_tooling_git | 5 |
-| 52 | **טיפוסים פרימיטיביים ב-JavaScript** | string · number · boolean · undefined · null · symbol · bigint · NaN | lesson_11 | 4 |
-| 53 | **פקודות npm (install / run / scripts / init / publish)** | npm · npm install · npm run dev · npm scripts · npm init · npm publish · package.json | lesson_16, lesson_21 | 4 |
-| 54 | **המרה למספר: parseInt / parseFloat / Number()** | parseInt · parseFloat · Number | lesson_11 | 4 |
-| 55 | **Math: floor / ceil / round / random / max / min** | Math.floor · Math.ceil · Math.round · Math.random · Math.max · Math.min · Math.abs · Math.pow · Math.sqrt · Math | lesson_11 | 4 |
-| 56 | **Template literals ↔ string concatenation** | template literal · template string · backtick · concatenation | lesson_11 | 4 |
-| 57 | **Date.now() ↔ new Date() ↔ Date.parse()** | Date.now · new Date · Date.parse · Date | lesson_15 | 4 |
-| 58 | **classList: add / remove / toggle / contains** | classList · classList.add · classList.remove · classList.toggle · classList.contains | lesson_13 | 4 |
-| 59 | **res.send / res.json / res.render / res.redirect** | res.send · res.json · res.render · res.redirect · res.status · res.end | lesson_17 | 4 |
-| 60 | **Fragment ↔ <></> ↔ <div>** | Fragment · React.Fragment · <> | lesson_21 | 4 |
-| 61 | **dependencies / devDependencies / peerDependencies** | dependencies · devDependencies · peerDependencies | lesson_16 | 4 |
-| 62 | **ternary ↔ if-else ↔ switch** | ternary · if-else · switch · if statement | lesson_11 | 4 |
+| 2 | **Error Boundary ↔ try/catch ↔ Promise.catch — איפה כל אחד תופס** | Error Boundary · componentDidCatch | lesson_24 | 8 |
+| 3 | **Session ↔ JWT ↔ OAuth — 3 שיטות אימות** | session auth · JWT · OAuth · OAuth2 | lesson_auth_security | 8 |
+| 4 | **אימות וזהות** | authentication · authorization · session · cookie · access token · JWT · OAuth · secure cookie | lesson_auth_security | 7 |
+| 5 | **טיפול בשגיאות (try / catch / finally / throw / Error)** | try · catch · finally · throw · Error · error · TypeError · RangeError | lesson_15 | 7 |
+| 6 | **Shallow ↔ Deep copy (spread / Object.assign / structuredClone / JSON trick)** | shallow copy · deep copy · structuredClone · Object.assign | lesson_11, lesson_22 | 7 |
+| 7 | **JSX & React Rendering — איך React הופך קוד לתצוגה** | JSX · rendering · render · ReactDOM.render · createRoot · virtual DOM | lesson_21 | 7 |
+| 8 | **Controlled ↔ Uncontrolled component** | controlled component · uncontrolled component · controlled input | lesson_22 | 7 |
+| 9 | **children prop ↔ render prop ↔ slot** | children prop · render prop · slot | lesson_21, lesson_23 | 7 |
+| 10 | **Partial / Required / Omit / Pick** | Partial · Required · Omit · Pick · Readonly · Record | lesson_26 | 7 |
+| 11 | **Cookie flags: httpOnly / Secure / SameSite** | httpOnly · Secure cookie · SameSite · secure cookie | lesson_auth_security | 7 |
+| 12 | **Refresh token ↔ Access token** | refresh token · access token | lesson_auth_security | 7 |
+| 13 | **git merge ↔ git rebase** | git merge · git rebase | lesson_tooling_git | 7 |
+| 14 | **Mutable ↔ Immutable update patterns** | mutable update · immutable update | lesson_22 | 7 |
+| 15 | **מתודות מערך פונקציונליות** | map · filter · reduce · forEach · find · sort | lesson_11, lesson_12 | 6 |
+| 16 | **סוגי בסיסי נתונים** | MongoDB · PostgreSQL · SQL · NoSQL · database | lesson_20, lesson_sql_orm | 6 |
+| 17 | **ניווט בעץ ה-DOM (child / parent / sibling)** | children · childNodes · firstChild · lastChild · firstElementChild · lastElementChild · parentNode · parentElement · nextSibling · previousSibling · child component · parent component | lesson_13, lesson_22 | 6 |
+| 18 | **אירועי DOM (click / keydown / submit / change / load)** | event · Event · onclick · onChange · onSubmit · addEventListener · removeEventListener · preventDefault · stopPropagation · event delegation · event bubbling · event capture | lesson_13, lesson_22 | 6 |
+| 19 | **ניווט ב-React Router (Link / NavLink / Route / useNavigate)** | Link · NavLink · Route · Routes · Router · BrowserRouter · useNavigate · useParams · useLocation · Outlet · Path · to · URL | lesson_23 | 6 |
+| 20 | **setTimeout / setInterval / requestAnimationFrame** | setTimeout · setInterval · requestAnimationFrame · clearTimeout · clearInterval | lesson_15, lesson_24 | 6 |
+| 21 | **fetch / XMLHttpRequest / axios** | fetch · XMLHttpRequest · axios · XHR | lesson_24 | 6 |
+| 22 | **app.use / app.get|post|put|delete / next()** | app.use · app.get · app.post · app.put · app.delete · next · middleware | lesson_17 | 6 |
+| 23 | **find / findOne / findById / findOneAndUpdate** | find · findOne · findById · findOneAndUpdate · findOneAndDelete | lesson_20 | 6 |
+| 24 | **MongoDB Operators: $set / $push / $pull / $inc** | $set · $push · $pull · $inc · $unset · $addToSet | lesson_20 | 6 |
+| 25 | **Function ↔ Class component ↔ HOC** | function component · class component · HOC · higher-order component | lesson_21 | 6 |
+| 26 | **enum ↔ as const ↔ literal union** | enum · as const · literal type | lesson_26 | 6 |
+| 27 | **Docker: container / image / volume / network** | container · image · volume · Dockerfile | lesson_devops_deploy | 6 |
+| 28 | **אחסון בדפדפן** | localStorage · sessionStorage · IndexedDB | lesson_13 | 5 |
+| 29 | **HTTP methods וREST** | GET · POST · PUT · DELETE · PATCH · REST | lesson_17 | 5 |
+| 30 | **מודולים וייבוא קוד** | import · export default · require · module.exports · ES Module · CommonJS | lesson_16, lesson_21 | 5 |
+| 31 | **TypeScript — טיפוסים בסיסיים** | string · number · boolean · array type · type · interface · .ts · tsc | lesson_26 | 5 |
+| 32 | **מתודות שינוי-במקום של מערך (push/pop/shift/unshift/splice)** | push · pop · shift · unshift · splice | lesson_11 | 5 |
+| 33 | **בחירת אלמנטים ב-DOM (getElementBy* / querySelector)** | getElementById · getElementsByClassName · getElementsByTagName · getElementsByName · querySelector · querySelectorAll · DOM element | lesson_13, lesson_24 | 5 |
+| 34 | **JSON.parse ↔ JSON.stringify** | JSON.parse · JSON.stringify · JSON | lesson_15, lesson_16 | 5 |
+| 35 | **מתודות מחרוזת (split/slice/substring/replace/includes/indexOf)** | split · slice · substring · substr · replace · includes · indexOf · trim · concat · uppercase · lowercase · toUpperCase · toLowerCase | lesson_11, lesson_12 | 5 |
+| 36 | **Object.keys / values / entries / assign** | Object.keys · Object.values · Object.entries · Object.assign · Object.freeze · Object.create | lesson_13, lesson_19 | 5 |
+| 37 | **appendChild / append / insertBefore / replaceChild** | appendChild · append · insertBefore · replaceChild · remove | lesson_13 | 5 |
+| 38 | **createElement / createTextNode / cloneNode** | createElement · createTextNode · cloneNode | lesson_13 | 5 |
+| 39 | **setAttribute / getAttribute / dataset / property** | setAttribute · getAttribute · removeAttribute · dataset · data-* | lesson_13 | 5 |
+| 40 | **create / insertOne / save / bulkWrite** | create · insertOne · insertMany · save · bulkWrite | lesson_20 | 5 |
+| 41 | **public / private / protected / readonly** | public · private · protected · readonly | lesson_26 | 5 |
+| 42 | **git add / commit / push / pull — 4 פקודות הליבה** | git add · git commit · git push · git pull · staging area · working tree | lesson_tooling_git | 5 |
+| 43 | **npm ↔ yarn ↔ pnpm** | yarn · pnpm | lesson_16 | 5 |
+| 44 | **ESLint ↔ Prettier ↔ TypeScript** | ESLint · Prettier | lesson_tooling_git, lesson_26 | 5 |
+| 45 | **Vercel ↔ Netlify ↔ Cloudflare Pages** | Vercel deploy · Netlify | lesson_devops_deploy, lesson_nextjs | 5 |
+| 46 | **CI ↔ CD — Continuous Integration vs Delivery** | CI · CD · GitHub workflow | lesson_devops_deploy, lesson_tooling_git | 5 |
+| 47 | **טיפוסים פרימיטיביים ב-JavaScript** | string · number · boolean · undefined · null · symbol · bigint · NaN | lesson_11 | 4 |
+| 48 | **פקודות npm (install / run / scripts / init / publish)** | npm · npm install · npm run dev · npm scripts · npm init · npm publish · package.json | lesson_16, lesson_21 | 4 |
+| 49 | **המרה למספר: parseInt / parseFloat / Number()** | parseInt · parseFloat · Number | lesson_11 | 4 |
+| 50 | **Math: floor / ceil / round / random / max / min** | Math.floor · Math.ceil · Math.round · Math.random · Math.max · Math.min · Math.abs · Math.pow · Math.sqrt · Math | lesson_11 | 4 |
+| 51 | **Template literals ↔ string concatenation** | template literal · template string · backtick · concatenation | lesson_11 | 4 |
+| 52 | **Date.now() ↔ new Date() ↔ Date.parse()** | Date.now · new Date · Date.parse · Date | lesson_15 | 4 |
+| 53 | **classList: add / remove / toggle / contains** | classList · classList.add · classList.remove · classList.toggle · classList.contains | lesson_13 | 4 |
+| 54 | **res.send / res.json / res.render / res.redirect** | res.send · res.json · res.render · res.redirect · res.status · res.end | lesson_17 | 4 |
+| 55 | **Fragment ↔ <></> ↔ <div>** | Fragment · React.Fragment · <> | lesson_21 | 4 |
+| 56 | **dependencies / devDependencies / peerDependencies** | dependencies · devDependencies · peerDependencies | lesson_16 | 4 |
+| 57 | **ternary ↔ if-else ↔ switch** | ternary · if-else · switch · if statement | lesson_11 | 4 |
 
 ---
 
@@ -932,7 +927,7 @@
 | 11 | object | 6 (קלסטר; פרטני 5) | 🧩 מבני נתונים לפי Reference ✓ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 12 | let | 7 (קלסטר; פרטני 3) | 🧩 זיכרון, משתנים ומצביעים ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 13 | var | 7 (קלסטר; פרטני 3) | 🧩 זיכרון, משתנים ומצביעים ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
-| 14 | scope | 8 (קלסטר; פרטני 5) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
+| 14 | scope | 8 (קלסטר; פרטני 5) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 15 | arrow function | 7 (קלסטר; פרטני 5) | 🧩 פונקציות וה-this ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 16 | forEach | 6 (קלסטר; פרטני 3) | 🧩 מתודות מערך פונקציונליות ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 17 | filter | 6 (קלסטר; פרטני 4) | 🧩 מתודות מערך פונקציונליות ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
@@ -1060,8 +1055,8 @@
 | 4 | catch | 7 (קלסטר; פרטני 7) | 🧩 טיפול בשגיאות (try / catch / finally / throw / Error) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 5 | throw | 7 (קלסטר; פרטני 6) | 🧩 טיפול בשגיאות (try / catch / finally / throw / Error) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 6 | Error Object | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
-| 7 | Closure | 8 (קלסטר; פרטני 8) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
-| 8 | Scope | 8 (קלסטר; פרטני 5) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
+| 7 | Closure | 8 (קלסטר; פרטני 8) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
+| 8 | Scope | 8 (קלסטר; פרטני 5) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 9 | Synchronous | 8 (קלסטר; פרטני 7) | 🧩 Callback ↔ Promise.then ↔ async/await — 3 דורות + סנכרוני/אסינכרוני ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 10 | Asynchronous | 8 (קלסטר; פרטני 7) | 🧩 Callback ↔ Promise.then ↔ async/await — 3 דורות + סנכרוני/אסינכרוני ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
 | 11 | setTimeout | 8 (קלסטר; פרטני 7) | 🧩 אסינכרוניות וזרימת זמן ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 9/24 |
@@ -1275,10 +1270,10 @@
 | 40 | localStorage | 5 (קלסטר; פרטני 4) | 🧩 אחסון בדפדפן ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 41 | sessionStorage | 5 (קלסטר; פרטני 4) | 🧩 אחסון בדפדפן ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 42 | cookies | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 43 | closure | 8 (קלסטר; פרטני 8) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 43 | closure | 8 (קלסטר; פרטני 8) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 44 | promise | 8 (קלסטר; פרטני 7) | 🧩 אסינכרוניות וזרימת זמן ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 45 | fetch | 8 (קלסטר; פרטני 6) | 🧩 אסינכרוניות וזרימת זמן ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 46 | scope | 8 (קלסטר; פרטני 5) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 46 | scope | 8 (קלסטר; פרטני 5) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 47 | event | 6 (קלסטר; פרטני 5) | 🧩 אירועי DOM (click / keydown / submit / change / load) ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 48 | event object | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 49 | hoisting | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
@@ -1313,7 +1308,7 @@
 | 7 | Connection String | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 8 | Collection | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
 | 9 | Document | 7 (קלסטר; פרטני 5) | 🧩 Schema / Model / Document / populate ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 10 | Props | 7 (קלסטר; פרטני 4) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 10 | Props | 7 (קלסטר; פרטני 4) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 11 | Value | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 12 | JSON | 5 (קלסטר; פרטני 4) | 🧩 JSON.parse ↔ JSON.stringify ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 13 | Mongoose | 7 (קלסטר; פרטני 6) | 🧩 Schema / Model / Document / populate ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
@@ -1371,7 +1366,7 @@
 | 14 | JSX | 7 (קלסטר; פרטני 7) | 🧩 JSX & React Rendering — איך React הופך קוד לתצוגה ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 15 | className | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 2 | 9/24 |
 | 16 | {} | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
-| 17 | props | 7 (קלסטר; פרטני 4) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 2 | 9/24 |
+| 17 | props | 7 (קלסטר; פרטני 4) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 2 | 9/24 |
 | 18 | import | 5 (קלסטר; פרטני 4) | 🧩 מודולים וייבוא קוד ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
 | 19 | export default | 5 (קלסטר; פרטני 4) | 🧩 מודולים וייבוא קוד ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 20 | inline style | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
@@ -1401,20 +1396,20 @@
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | Hook | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 2 | useState | 8 (קלסטר; פרטני 5) | 🧩 useState ↔ useReducer ↔ useRef ↔ Class.setState — כל וריאציות ה-state ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 3 | 9/24 |
-| 3 | state | 7 (קלסטר; פרטני 4) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
+| 3 | state | 7 (קלסטר; פרטני 4) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 4 | setState | 8 (קלסטר; פרטני 7) | 🧩 useState ↔ useReducer ↔ useRef ↔ Class.setState — כל וריאציות ה-state ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 0 | 10/24 |
-| 5 | re-render | 7 (קלסטר; פרטני 8) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
+| 5 | re-render | 7 (קלסטר; פרטני 8) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 6 | mutable | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 7 | immutable | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
-| 8 | reference | 7 (קלסטר; פרטני 7) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 8 | reference | 7 (קלסטר; פרטני 7) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 | 9 | array reference | 9 (קלסטר; פרטני 9) | 🧩 Array Reference — כל ההפניות, ההעתקות, וה-mutation של מערכים ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 10 | object reference | 9 (קלסטר; פרטני 9) | 🧩 Array Reference — כל ההפניות, ההעתקות, וה-mutation של מערכים ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 11 | onChange | 6 (קלסטר; פרטני 4) | 🧩 אירועי DOM (click / keydown / submit / change / load) ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 12 | controlled input | 7 (קלסטר; פרטני 7) | 🧩 Controlled ↔ Uncontrolled component ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
-| 13 | props | 7 (קלסטר; פרטני 4) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 9/24 |
+| 13 | props | 7 (קלסטר; פרטני 4) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 9/24 |
 | 14 | parent component | 6 (קלסטר; פרטני 3) | 🧩 ניווט בעץ ה-DOM (child / parent / sibling) ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 15 | child component | 6 (קלסטר; פרטני 3) | 🧩 ניווט בעץ ה-DOM (child / parent / sibling) ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
-| 16 | passing function as prop | 7 (קלסטר; פרטני 8) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 16 | passing function as prop | 7 (קלסטר; פרטני 8) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 | 17 | addPost | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
 | 18 | deletePost | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
 
@@ -1450,11 +1445,11 @@
 | 10 | useNavigate | 6 (קלסטר; פרטני 6) | 🧩 ניווט ב-React Router (Link / NavLink / Route / useNavigate) ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 2 | 10/24 |
 | 11 | dynamic route | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 12 | useParams | 6 (קלסטר; פרטני 5) | 🧩 ניווט ב-React Router (Link / NavLink / Route / useNavigate) ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
-| 13 | Context API | 7 (קלסטר; פרטני 7) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
+| 13 | Context API | 7 (קלסטר; פרטני 7) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 14 | createContext | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 15 | Provider | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 16 | value | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
-| 17 | useContext | 7 (קלסטר; פרטני 5) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
+| 17 | useContext | 7 (קלסטר; פרטני 5) | 🧩 זרימת נתונים ב-React (props/state/context/re-render) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 18 | Prop Drilling | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 | 19 | MainScreen | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 20 | AddPost | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
@@ -1480,17 +1475,17 @@
 
 | # | מושג | קושי | קלסטר | מצב | L1 סבתא | L2 ילד | L3 חייל | L4 סטודנט | L5 ג׳וניור | L6 פרופ׳ | 💻 קוד | 📝 הערות | 🖼️ תרשים | 🌍 דימוי | 🌊 Deep Dive | 📚 הרחבה | 🎁 Extras | 🧠 מנמוניקה | 🔁 דפוסי-נגד | 🐛 ציד באגים | 📖 סיפורי שטח | ⚖️ השוואות | 🎞️ קומיקס | 🎥 קליפ | 🏛️ ארמון | 🧩 בעיה | 🧯 שבור-תקן | 🔮 What-If | MC | Fill | מלא |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | useEffect | 7 (קלסטר; פרטני 8) | 🧩 Hooks — useState/useEffect/useMemo/useRef ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 2 | 10/24 |
+| 1 | useEffect | 7 (קלסטר; פרטני 8) | 🧩 Hooks — useState/useEffect/useMemo/useRef ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 2 | 10/24 |
 | 2 | side effect | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
 | 3 | dependency array | 9 (קלסטר; פרטני 9) | 🧩 Dependency array: [] / [x] / [x,y] / ללא + cleanup + infinite loop ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 4 | fetching data | 9 (קלסטר; פרטני 7) | 🧩 Dependency array: [] / [x] / [x,y] / ללא + cleanup + infinite loop ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 | 5 | fetch | 8 (קלסטר; פרטני 4) | 🧩 אסינכרוניות וזרימת זמן ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 | 6 | state update | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 7 | infinite loop | 9 (קלסטר; פרטני 9) | 🧩 Dependency array: [] / [x] / [x,y] / ללא + cleanup + infinite loop ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
-| 8 | useMemo | 7 (קלסטר; פרטני 7) | 🧩 Hooks — useState/useEffect/useMemo/useRef ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
+| 8 | useMemo | 7 (קלסטר; פרטני 7) | 🧩 Hooks — useState/useEffect/useMemo/useRef ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 9 | expensive calculation | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 10 | memoization | 8 (קלסטר; פרטני 7) | 🧩 useMemo / useCallback / React.memo + memoization ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
-| 11 | useRef | 7 (קלסטר; פרטני 6) | 🧩 Hooks — useState/useEffect/useMemo/useRef ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 2 | 10/24 |
+| 11 | useRef | 7 (קלסטר; פרטני 6) | 🧩 Hooks — useState/useEffect/useMemo/useRef ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 2 | 10/24 |
 | 12 | ref | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 13 | ref.current | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 10/24 |
 | 14 | DOM element | 5 (קלסטר; פרטני 4) | 🧩 בחירת אלמנטים ב-DOM (getElementBy* / querySelector) ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
@@ -1570,16 +1565,16 @@
 | 16 | readonly | 7 (קלסטר; פרטני 5) | 🧩 Partial / Required / Omit / Pick ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 17 | optional field | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
 | 18 | type alias | 6 (קלסטר; פרטני 6) | 🧩 type ↔ interface ✓ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 3 | 10/24 |
-| 19 | React + TypeScript | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 19 | React + TypeScript | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 | 20 | Type Safety | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
-| 21 | Typing Props | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
+| 21 | Typing Props | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 22 | Typing State | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
-| 23 | Function Prop Type | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 23 | Function Prop Type | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 | 24 | models folder | 3 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 25 | Todo.ts | 3 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 26 | interface | 5 (קלסטר; פרטני 7) | 🧩 TypeScript — טיפוסים בסיסיים ✗ | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 2 | 10/24 |
-| 27 | interface vs type | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
-| 28 | union | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
+| 27 | interface vs type | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 28 | union | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 29 | never | 7 (קלסטר; פרטני 6) | 🧩 unknown ↔ any ↔ never ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 10/24 |
 | 30 | any | 7 (קלסטר; פרטני 5) | 🧩 unknown ↔ any ↔ never ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 9/24 |
 
@@ -1607,8 +1602,8 @@
 | 2 | enum | 6 (קלסטר; פרטני 6) | 🧩 enum ↔ as const ↔ literal union ✗ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
 | 3 | interface | 6 (קלסטר; פרטני 7) | 🧩 type ↔ interface ✓ | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
 | 4 | extends interface | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
-| 5 | Union Type | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
-| 6 | Type Narrowing | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 5 | Union Type | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 10/24 |
+| 6 | Type Narrowing | 7 (קלסטר; פרטני 7) | 🧩 TypeScript ב-React — Props/State/Hooks Typing ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 | 7 | Book | 3 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 8 | Genre | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 9/24 |
 | 9 | BaseUser | 4 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
@@ -1654,15 +1649,15 @@
 | 8 | token budget | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 9 | embeddings | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 8/24 |
 | 10 | vector store | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 1 | 8/24 |
-| 11 | RAG | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 11 | RAG | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 12 | chunking | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 3 | 2 | 8/24 |
 | 13 | retrieval ranking | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 14 | tool calling | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
-| 15 | agent loop | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 14 | tool calling | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
+| 15 | agent loop | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 16 | guardrails | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 17 | hallucination check | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 2 | 1 | 8/24 |
 | 18 | evaluation | 6 | — (יחיד) | 🟡 מלא + V | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 1 | 8/24 |
-| 19 | fine-tuning boundary | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
+| 19 | fine-tuning boundary | 8 (קלסטר; פרטני 7) | 🧩 AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 0 | 1 | 8/24 |
 
 **אחוזי 6 רמות בשיעור:**
 - grandma: 19/19 = 100%
@@ -1725,13 +1720,13 @@
 | # | מושג | קושי | קלסטר | מצב | L1 סבתא | L2 ילד | L3 חייל | L4 סטודנט | L5 ג׳וניור | L6 פרופ׳ | 💻 קוד | 📝 הערות | 🖼️ תרשים | 🌍 דימוי | 🌊 Deep Dive | 📚 הרחבה | 🎁 Extras | 🧠 מנמוניקה | 🔁 דפוסי-נגד | 🐛 ציד באגים | 📖 סיפורי שטח | ⚖️ השוואות | 🎞️ קומיקס | 🎥 קליפ | 🏛️ ארמון | 🧩 בעיה | 🧯 שבור-תקן | 🔮 What-If | MC | Fill | מלא |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | scope chain | 5 | — (יחיד) | 🟢 V בלבד | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
-| 2 | lexical scope | 8 (קלסטר; פרטני 6) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
-| 3 | closure | 8 (קלסטר; פרטני 8) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
-| 4 | closure variables | 8 (קלסטר; פרטני 7) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
-| 5 | stale closure | 8 (קלסטר; פרטני 9) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
-| 6 | closure in event handlers | 8 (קלסטר; פרטני 7) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
-| 7 | closure in useEffect | 8 (קלסטר; פרטני 9) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
-| 8 | closure in setTimeout | 8 (קלסטר; פרטני 8) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✗ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 2 | lexical scope | 8 (קלסטר; פרטני 6) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
+| 3 | closure | 8 (קלסטר; פרטני 8) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 4 | closure variables | 8 (קלסטר; פרטני 7) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 5 | stale closure | 8 (קלסטר; פרטני 9) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 6 | closure in event handlers | 8 (קלסטר; פרטני 7) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 9/24 |
+| 7 | closure in useEffect | 8 (קלסטר; פרטני 9) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
+| 8 | closure in setTimeout | 8 (קלסטר; פרטני 8) | 🧩 סגירות וזיכרון מתמיד (closure variants) ✓ | 🔴 למלא | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | 1 | 0 | 10/24 |
 
 **אחוזי 6 רמות בשיעור:**
 - grandma: 8/8 = 100%
