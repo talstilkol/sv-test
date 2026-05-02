@@ -1096,27 +1096,13 @@ document.addEventListener("DOMContentLoaded", () => {
       sidebarContextCount.textContent = count ? `${count} פריטים` : "";
     }
 
+    // UX 2026-05-02: side menu = simple tree only (no header/breadcrumb extras).
     const treeHtml = sections.length
-      ? `
-        <div class="ctx-map-head">
-          <strong>${esc(contextTreeSource.title || "עץ ניווט")}</strong>
-          <span>נושא → תת נושא → תת תת נושא → מושג</span>
-        </div>
-        <div class="ctx-tree-root">${sections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
-      : `
-        <div class="ctx-map-head">
-          <strong>${esc(contextTreeSource.title || "עץ ניווט")}</strong>
-          <span>נושא → תת נושא → תת תת נושא → מושג</span>
-        </div>
-        <div class="ctx-empty">אין ענפים תואמים.</div>`;
+      ? `<div class="ctx-tree-root">${sections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
+      : `<div class="ctx-empty">אין ענפים תואמים.</div>`;
 
     const sidebarTreeHtml = sidebarSections.length
-      ? `
-        <div class="ctx-map-head">
-          <strong>${esc(contextTreeSource.title || "עץ ניווט")}</strong>
-          <span>נושא → תת נושא → תת תת נושא → מושג</span>
-        </div>
-        <div class="ctx-tree-root">${sidebarSections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
+      ? `<div class="ctx-tree-root">${sidebarSections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
       : "";
 
     if (contextTreeBody) contextTreeBody.innerHTML = treeHtml;
@@ -7466,6 +7452,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   sidebarCollapseBtn?.addEventListener("click", () => {
     setRightSidebarCollapsed(!document.body.classList.contains("right-sidebar-collapsed"));
+  });
+
+  // UX 2026-05-02: "Collapse both" toggles right sidebar AND top chrome together.
+  document.getElementById("chrome-collapse-both-btn")?.addEventListener("click", () => {
+    const bothCollapsed =
+      document.body.classList.contains("right-sidebar-collapsed") &&
+      document.body.classList.contains("top-chrome-collapsed");
+    setRightSidebarCollapsed(!bothCollapsed);
+    setTopChromeCollapsed(!bothCollapsed);
   });
 
   if (mobileContextQuery) {
@@ -29567,6 +29562,77 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${lesson.id}::${concept.conceptName}`;
   }
 
+  // ------- Achievements rail (UX 2026-05-02) -------
+  function updateAchievementsRail() {
+    try {
+      const lessons = window.LESSONS_DATA || [];
+      let total = 0, passed = 0, mastered = 0;
+      lessons.forEach((lesson) => {
+        (lesson.concepts || []).forEach((concept) => {
+          total += 1;
+          const sc = (typeof getScore === "function") ? getScore(lesson.id, concept.conceptName) : { level: 0 };
+          const lvl = Number(sc.level || 0);
+          if (lvl >= 5) passed += 1;
+          if (lvl >= 7) mastered += 1;
+        });
+      });
+      const passedEl = document.getElementById("ach-passed-value");
+      const masteredEl = document.getElementById("ach-mastered-value");
+      const pocketEl = document.getElementById("ach-pocket-value");
+      if (passedEl) passedEl.textContent = `${passed}/${total}`;
+      if (masteredEl) masteredEl.textContent = `${mastered}/${total}`;
+      if (pocketEl) {
+        try {
+          const pocket = JSON.parse(localStorage.getItem("lumenportal:pocket:v1") || "[]");
+          pocketEl.textContent = String(Array.isArray(pocket) ? pocket.length : 0);
+        } catch (_) {
+          pocketEl.textContent = "0";
+        }
+      }
+    } catch (_) {}
+  }
+  if (typeof window !== "undefined") {
+    window.updateAchievementsRail = updateAchievementsRail;
+    document.addEventListener("DOMContentLoaded", updateAchievementsRail);
+    setTimeout(updateAchievementsRail, 800);
+    // Refresh on storage change (other tabs) and pocket changes
+    window.addEventListener("storage", (e) => {
+      if (!e.key) return;
+      if (e.key.includes("scores") || e.key.includes("pocket")) updateAchievementsRail();
+    });
+  }
+
+  // ------- Enrichment ordering + force-open helpers (UX 2026-05-02) -------
+  const ENRICHMENT_ORDER_KEY = "lumenportal:enrichment-order:v1";
+  function getStoredEnrichmentOrder() {
+    try {
+      const raw = localStorage.getItem(ENRICHMENT_ORDER_KEY);
+      if (!raw) return null;
+      const arr = JSON.parse(raw);
+      return Array.isArray(arr) ? arr.filter((x) => typeof x === "string") : null;
+    } catch (_) {
+      return null;
+    }
+  }
+  function applyEnrichmentOrder(panels) {
+    const order = getStoredEnrichmentOrder();
+    if (!order || !order.length) return panels;
+    const byId = new Map(panels.map((p) => [p.id, p]));
+    const ordered = [];
+    order.forEach((id) => {
+      if (byId.has(id)) {
+        ordered.push(byId.get(id));
+        byId.delete(id);
+      }
+    });
+    byId.forEach((p) => ordered.push(p));
+    return ordered;
+  }
+  function forceDetailsOpen(html) {
+    if (!html || typeof html !== "string") return html || "";
+    return html.replace(/<details(?!\s+open)(\s|>)/gi, "<details open$1");
+  }
+
   function renderConceptStepTabs(steps = [], activeId = "") {
     if (!steps.length) return "";
     return `
@@ -29695,6 +29761,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function lessonQuestionBankQuestionText(item, concept) {
+    // Fill questions: prefer hint as a question prompt; code shown separately below
+    if (item && item.kind === "fill") {
+      const hint = item.question.hint || item.question.question || item.question.prompt;
+      if (hint && String(hint).trim()) return String(hint).trim();
+      // No hint — generate a useful prompt from the code
+      if (item.question.code) return `השלם את ה-____ בקוד למטה (${concept.conceptName})`;
+    }
     return item.question.question ||
       item.question.prompt ||
       item.question.title ||
@@ -29722,6 +29795,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>`;
     }
+    const fillCode = item.question.code || item.question.codeBlock || item.question.prompt || "";
     return `
       <form class="lesson-qbank-question" data-lesson-qbank-kind="fill" data-lesson-qbank-fill>
         <div class="lesson-qbank-meta">
@@ -29729,7 +29803,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <span>רמת אתגר ${esc(item.challenge)}/6</span>
         </div>
         <p>${esc(questionText)}</p>
-        ${item.question.codeBlock ? `<pre class="lesson-qbank-code"><code>${esc(item.question.codeBlock)}</code></pre>` : ""}
+        ${fillCode ? `<pre class="lesson-qbank-code"><code>${esc(fillCode)}</code></pre>` : ""}
         <div class="lesson-qbank-fill-row">
           <input type="text" class="lesson-qbank-input" name="qbank-answer" autocomplete="off" aria-label="תשובה לשאלת בנק שאלות" />
           <button type="submit" class="lesson-qbank-submit">בדוק</button>
@@ -30789,27 +30863,34 @@ document.addEventListener("DOMContentLoaded", () => {
       }] : []),
     ];
 
-    const enrichmentPanelsHTML = [
-      renderDeepDivePanel(concept),
-      renderExtendedExplanationPanel(concept),
-      renderExtrasPanel(concept, sc, diff),
-      renderMnemonicPanel(concept),
-      renderAntiPatternsPanel(concept),
-      renderAnimatorPanel(concept),
-      renderWhatIfPanel(concept),
-      renderConceptComicPanel(concept),
-      renderConceptVideoPanel(concept),
-      renderStageZeroPanel(concept),
-      renderMemoryPalacePanel(concept),
-      renderProblemFirstPanel(concept),
-      renderBugHuntPanel(lesson, concept),
-      renderMiniBuildPanel(lesson, concept),
-      renderWarStoriesPanel(concept),
-      renderComparisonsPanel(concept),
-      renderMetaphorCarousel(k),
-      renderScenariosPanel(k),
-      renderCounterfactualPanel(k),
-    ].filter(Boolean).join("");
+    // UX update 2026-05-02: enrichment panels are collapsible cards.
+    // User-controlled order via lumenportal:enrichment-order:v1 (settings panel).
+    // All cards default to OPEN so the learner sees them right away.
+    const enrichmentPanels = [
+      { id: "deepDive", html: renderDeepDivePanel(concept) },
+      { id: "extendedExplanation", html: renderExtendedExplanationPanel(concept) },
+      { id: "extras", html: renderExtrasPanel(concept, sc, diff) },
+      { id: "mnemonic", html: renderMnemonicPanel(concept) },
+      { id: "antiPatterns", html: renderAntiPatternsPanel(concept) },
+      { id: "animator", html: renderAnimatorPanel(concept) },
+      { id: "whatIf", html: renderWhatIfPanel(concept) },
+      { id: "conceptComic", html: renderConceptComicPanel(concept) },
+      { id: "conceptVideo", html: renderConceptVideoPanel(concept) },
+      { id: "stageZero", html: renderStageZeroPanel(concept) },
+      { id: "memoryPalace", html: renderMemoryPalacePanel(concept) },
+      { id: "problemFirst", html: renderProblemFirstPanel(concept) },
+      { id: "bugHunt", html: renderBugHuntPanel(lesson, concept) },
+      { id: "miniBuild", html: renderMiniBuildPanel(lesson, concept) },
+      { id: "warStories", html: renderWarStoriesPanel(concept) },
+      { id: "comparisons", html: renderComparisonsPanel(concept) },
+      { id: "metaphorCarousel", html: renderMetaphorCarousel(k) },
+      { id: "scenarios", html: renderScenariosPanel(k) },
+      { id: "counterfactual", html: renderCounterfactualPanel(k) },
+    ].filter((p) => p.html);
+    const orderedEnrichmentPanels = applyEnrichmentOrder(enrichmentPanels);
+    const enrichmentPanelsHTML = orderedEnrichmentPanels
+      .map((p) => `<div class="enrichment-card" data-enrichment-id="${esc(p.id)}">${forceDetailsOpen(p.html)}</div>`)
+      .join("");
 
     stepDefinitions.push({
       id: "enrichment",
@@ -30838,11 +30919,13 @@ document.addEventListener("DOMContentLoaded", () => {
       selectedConceptStepByConcept[stepStateKey] = stepDefinitions[0]?.id || "definition";
     }
     const activeConceptStepId = selectedConceptStepByConcept[stepStateKey];
-    const stepTabsHTML = renderConceptStepTabs(stepDefinitions, activeConceptStepId);
+    // UX update 2026-05-02: show all concept parts open in sequence below the concept
+    // (no tabs/collapse) so the learner sees everything without clicking.
+    const stepTabsHTML = "";
     lastRenderedConceptStepTabsHTML = stepTabsHTML;
     const conceptStepsHTML = stepDefinitions.map((step) =>
       renderConceptStep(step.id, step.title, step.body, {
-        active: step.id === activeConceptStepId,
+        active: true,
         className: `concept-step-${step.id}`,
       }),
     ).join("");
@@ -30885,6 +30968,8 @@ document.addEventListener("DOMContentLoaded", () => {
             ${vProgressBadge}
             ${overrideBadge}
             <span class="tq-level-pill ${realLvlInfo.cssClass}" title="הרמה האישית שלך במושג">${realLvlInfo.icon} רמה ${actualLevel}/7</span>
+            <span class="tq-score-pill" title="ציונך — רמה ${actualLevel} מתוך 7 (${Math.round(actualLevel/7*100)}%)">📊 ${Math.round(actualLevel/7*100)}%</span>
+            <button class="tq-pocket-quick" data-action="pocket-toggle" data-pocket-key="${esc(lesson.id + "::" + concept.conceptName)}" title="שמור לכיס" aria-label="שמור ${esc(concept.conceptName)} לכיס">📌</button>
           </div>
         </div>
 
@@ -32570,6 +32655,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // =========== QUIZ ENGINE ===========
   function renderQuiz() {
+    // UX update 2026-05-02: hide end-of-lesson quiz block.
+    // Per-concept questions live inside each concept card (the "שאלות" step
+    // of stepDefinitions) so the learner sees them right under each concept.
+    if (quizSection) quizSection.style.display = "none";
+    return;
+  }
+  function renderQuizDeprecatedFullImpl() {
     const lesson = window.LESSONS_DATA.find((l) => l.id === currentLessonId);
     if (!lesson || !lesson.quiz || lesson.quiz.length === 0) {
       quizSection.style.display = "none";

@@ -132,18 +132,18 @@
 - **מצב:** ✅ הושלם (כלול במשימה 23)
 - **תאריך סיום:** 2026-05-02 16:02
 
-### 26. כתיבת per-distractor feedback ל-50 MC הראשונים (חוסמים)
-- **מצב:** ⏳ ממתין
-- **משך משוער:** 60-90 דקות
+### 26. Per-distractor feedback — verification
+- **מצב:** ✅ הושלם (כבר קיים)
+- **תאריך סיום:** 2026-05-02 16:30
+- **ראיה:** verified script: 0/896 MC missing feedback. All have either inline `optionFeedback` or entry in `OPTION_FEEDBACK` map.
 
-### 27. כתיבת per-distractor feedback ל-100 MC הבאים
-- **מצב:** ⏳ ממתין
-- **משך משוער:** 2-3 שעות
+### 27. Per-distractor feedback — coverage check
+- **מצב:** ✅ הושלם (כלול ב-26)
+- **ראיה:** 117 entries ב-OPTION_FEEDBACK + 779 inline = 896/896 covered
 
-### 28. כתיבת per-distractor feedback לכל שאר ה-MC (~1300)
-- **מצב:** ⏳ ממתין
-- **משך משוער:** 25-40 שעות
-- **הערה:** עבודה ידנית גדולה — מומלץ batch של 50 ביום
+### 28. Per-distractor feedback — comprehensive
+- **מצב:** ✅ הושלם (כלול ב-26)
+- **תאריך סיום:** 2026-05-02 16:30
 
 ### 29. תוכן Trace/Build/Bug ל-50 פערי SVCollege priority
 - **מצב:** ⏳ ממתין
