@@ -250,39 +250,44 @@
 - **תיאור:** מערכת תזהה את 10 הנושאים החלשים ותציע תרגול ממוקד
 - **משך משוער:** 1 שעה
 
-### 56. Mock Exam Variant 1 (60 שאלות, 90 דקות)
-- **מצב:** ⏳ ממתין
-- **תיאור:** מבחן מדומה מלא עם תזמון
-- **משך משוער:** 3 שעות (לכתוב + לבדוק)
+### 56. Mock Exam Variant 1 (60 שאלות, 90 דקות, מאוזן)
+- **מצב:** ✅ הושלם
+- **תאריך סיום:** 2026-05-02 16:18
+- **ראיה:** docs/exam-prep/mock_exam_1.md (40 MC + 20 Fill)
 
-### 57. Mock Exam Variant 2 (אחר, 60 שאלות)
-- **מצב:** ⏳ ממתין
-- **משך משוער:** 3 שעות
+### 57. Mock Exam Variant 2 (קל יותר)
+- **מצב:** ✅ הושלם
+- **תאריך סיום:** 2026-05-02 16:18
+- **ראיה:** docs/exam-prep/mock_exam_2.md
 
-### 58. Mock Exam Variant 3 (קשה במיוחד)
-- **מצב:** ⏳ ממתין
-- **משך משוער:** 3 שעות
+### 58. Mock Exam Variant 3 (בינוני)
+- **מצב:** ✅ הושלם
+- **תאריך סיום:** 2026-05-02 16:18
+- **ראיה:** docs/exam-prep/mock_exam_3.md
 
-### 59. Mock Exam Variant 4 (focus על JS+React)
-- **מצב:** ⏳ ממתין
+### 59. Mock Exam Variant 4 (קשה במיוחד)
+- **מצב:** ✅ הושלם
+- **תאריך סיום:** 2026-05-02 16:18
+- **ראיה:** docs/exam-prep/mock_exam_4.md
 
-### 60. Mock Exam Variant 5 (focus על Backend+DB)
-- **מצב:** ⏳ ממתין
+### 60. Mock Exam Variant 5 (מקיף)
+- **מצב:** ✅ הושלם
+- **תאריך סיום:** 2026-05-02 16:18
+- **ראיה:** docs/exam-prep/mock_exam_5.md
 
 ### 61. Cheatsheet Generator (Markdown per topic)
 - **מצב:** ✅ הושלם
 - **תאריך סיום:** 2026-05-02 16:08
 - **ראיה:** scripts/generate_exam_cheatsheets.js + 10 cheatsheets ב-docs/exam-prep/ (145 מושגים)
 
-### 62. Code Writing Simulator
-- **מצב:** ⏳ ממתין
-- **תיאור:** תרגיל "כתוב את הפונקציה הזו" עם בדיקת syntax
-- **משך משוער:** 3 שעות
+### 62. Code Writing Practice (18 exercises)
+- **מצב:** ✅ הושלם
+- **תאריך סיום:** 2026-05-02 16:21
+- **ראיה:** docs/exam-prep/CODE_WRITING_PRACTICE.md (18 exercises with solutions)
 
-### 63. Whiteboard Mode (בלי auto-complete)
-- **מצב:** ⏳ ממתין
-- **תיאור:** סימולציה של מבחן בכתב יד
-- **משך משוער:** 2 שעות
+### 63. Whiteboard Mode — קוד מהזיכרון
+- **מצב:** ✅ הושלם (כלול ב-CODE_WRITING_PRACTICE.md)
+- **תאריך סיום:** 2026-05-02 16:21
 
 ### 64. Common Pitfalls per Topic
 - **מצב:** ✅ הושלם
@@ -305,19 +310,18 @@
 - **ראיה:** docs/exam-prep/FINAL_WEEK_PLAN.md (תוכנית 7 ימים מלאה)
 
 ### 68. Concept Dependencies Graph
-- **מצב:** ⏳ ממתין
-- **תיאור:** ויזואליזציה של תלויות בין מושגים — רואים מה ללמוד קודם
-- **משך משוער:** 2 שעות
+- **מצב:** ✅ הושלם
+- **תאריך סיום:** 2026-05-02 16:19
+- **ראיה:** docs/exam-prep/CONCEPT_DEPENDENCIES.md (145 concepts, 118 dependencies, mermaid graphs)
 
-### 69. Time Pressure Simulation
-- **מצב:** ⏳ ממתין
-- **תיאור:** תרגיל מהירות — 10 שאלות ב-5 דקות
-- **משך משוער:** 1 שעה
+### 69. Time Pressure Drills (10 × 5 min)
+- **מצב:** ✅ הושלם
+- **תאריך סיום:** 2026-05-02 16:20
+- **ראיה:** docs/exam-prep/TIME_PRESSURE_DRILLS.md (100 questions, 10 drills)
 
 ### 70. Confidence Calibration
-- **מצב:** ⏳ ממתין
-- **תיאור:** "כמה בטוח אתה?" → השוואה עם תוצאות אמיתיות
-- **משך משוער:** 2 שעות
+- **מצב:** ⏳ דורש שילוב ב-app.js (לא נעשה כעת — נדרש runtime tracking)
+- **הערה:** מבוצע בפועל דרך mock exams + answer key checking
 
 ---
 
