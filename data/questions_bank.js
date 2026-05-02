@@ -14,7 +14,7 @@
 // │ app.js reads these on load and prompts the user to refresh progress   │
 // │ when the version stored in localStorage no longer matches.            │
 // └────────────────────────────────────────────────────────────────────────┘
-var QUESTIONS_BANK_VERSION = "2.1.26";
+var QUESTIONS_BANK_VERSION = "2.1.27";
 var QUESTIONS_BANK_LAST_UPDATE = "2026-05-01";
 var QUESTIONS_BANK_CHANGELOG = [
   {
@@ -184,6 +184,12 @@ var QUESTIONS_BANK_CHANGELOG = [
     date: "2026-05-02",
     changes:
       "Manual QMAN-008 lesson_20 MongoDB CRUD batch: insertOne, insertMany, find, findOne, update ($set), deleteOne, deleteMany, Schema, Mongoose, $gt, $lt, $lte, Connection String, MongoDB Atlas — 16 MC + 10 Fill with full optionFeedback.",
+  },
+  {
+    v: "2.1.27",
+    date: "2026-05-02",
+    changes:
+      "Manual QMAN-013 lesson_26 TypeScript core types batch: Type Safety, Strongly Typed, tuple, enum, never, tsc, tsconfig.json, .ts vs .js, interface, optional field, any (deeper) — 16 MC with full optionFeedback.",
   },
 ];
 var QUESTIONS_BANK = {
@@ -4802,6 +4808,296 @@ var QUESTIONS_BANK = {
       ],
       correctIndex: 1,
       explanation: "שניהם מתארים מבנה אובייקט. interface תומך ב-merging, type גמיש יותר עם unions וגנריקה מורכבת.",
+    },
+
+    // ===== QMAN-013 Batch — lesson_26 TypeScript core types (2026-05-02) =====
+
+    // --- lesson_26::Type Safety ---
+    {
+      id: "mc_l26_type_safety_manual_001", topicId: "topic_typescript", conceptKey: "lesson_26::Type Safety", level: 3,
+      question: "מה זה Type Safety?",
+      options: [
+        "תכונה של שפה שתופסת שגיאות טיפוס בזמן compile (לפני run)",
+        "ספרייה לhash של passwords",
+        "הגנה מפני XSS",
+        "כלי לטיפול ב-errors",
+      ],
+      correctIndex: 0,
+      explanation: "Type Safety = compiler מוודא שטיפוסים מתאימים לפני שהקוד רץ. TypeScript מספק את זה ע״ב JavaScript.",
+      optionFeedback: [
+        "✅ נכון: compile-time type checking.",
+        "❌ זה bcrypt/scrypt — security, לא types.",
+        "❌ XSS מטופל ע״י sanitization, לא types.",
+        "❌ try/catch מטפל ב-errors בזמן ריצה.",
+      ],
+    },
+    {
+      id: "mc_l26_type_safety_manual_002", topicId: "topic_typescript", conceptKey: "lesson_26::Type Safety", level: 4,
+      question: "איזו שגיאה type safety תופס?\n\nfunction add(a: number, b: number) { return a + b; }\nadd(5, '10');",
+      options: [
+        "Argument of type 'string' is not assignable to parameter of type 'number'",
+        "אין שגיאה",
+        "Runtime error",
+        "TypeError",
+      ],
+      correctIndex: 0,
+      explanation: "TS תופס לפני compile שהפרמטר השני אינו number. בסיס Type Safety — תפיסת שגיאות לפני production.",
+      optionFeedback: [
+        "✅ נכון: compile-time error.",
+        "❌ דווקא יש שגיאה בtype check.",
+        "❌ זו שגיאת compile, לא runtime.",
+        "❌ בvanilla JS היה implicit conversion ל-'510'.",
+      ],
+    },
+    {
+      id: "mc_l26_type_safety_manual_003", topicId: "topic_typescript", conceptKey: "lesson_26::Strongly Typed", level: 5,
+      question: "מה זה strongly typed לעומת weakly typed?",
+      options: [
+        "Strongly typed — לא מבצע type coercion אוטומטית; weakly typed — כן (כמו JS '5' + 3 = '53')",
+        "Strongly typed = מהיר יותר",
+        "אין הבדל",
+        "Weakly typed עובד רק בdb",
+      ],
+      correctIndex: 0,
+      explanation: "JS היא weakly typed. TS מוסיפה type checking אבל בזמן ריצה היא JS — ההגנה היא compile-time בלבד.",
+      optionFeedback: [
+        "✅ נכון: implicit conversion = weak typing.",
+        "❌ אין קשר ישיר לביצועים.",
+        "❌ יש הבדל מהותי.",
+        "❌ זה עיקרון תכנותי כללי.",
+      ],
+    },
+
+    // --- lesson_26::tuple ---
+    {
+      id: "mc_l26_tuple_manual_001", topicId: "topic_typescript", conceptKey: "lesson_26::tuple", level: 4,
+      question: "מה ההבדל בין tuple ל-array ב-TypeScript?",
+      options: [
+        "tuple = מערך עם אורך וטיפוסים קבועים בכל מיקום (למשל [string, number])",
+        "tuple = read-only array",
+        "tuple = JSON object",
+        "אין הבדל",
+      ],
+      correctIndex: 0,
+      explanation: "tuple: const pair: [string, number] = ['age', 30]. בניגוד ל-array שכל אינדקס צריך להיות אותו טיפוס, tuple מוגדר ליחידות.",
+      optionFeedback: [
+        "✅ נכון: fixed-length, fixed-types.",
+        "❌ readonly הוא מודיפיקטור נפרד.",
+        "❌ tuple ≠ JSON.",
+        "❌ יש הבדל בolapse.",
+      ],
+    },
+    {
+      id: "mc_l26_tuple_manual_002", topicId: "topic_typescript", conceptKey: "lesson_26::tuple", level: 5,
+      question: "איפה tuples שימושיים במיוחד ב-React?",
+      options: [
+        "ב-useState — useState<number>() מחזיר tuple [value, setter]",
+        "ב-className",
+        "ב-JSX attributes",
+        "ב-Components בלבד",
+      ],
+      correctIndex: 0,
+      explanation: "useState מחזיר tuple [value, setter]. ב-TypeScript מתבטא כ-[T, Dispatch<SetStateAction<T>>].",
+      optionFeedback: [
+        "✅ נכון: useState החזרת tuple = שמטרת destructuring יציב.",
+        "❌ className הוא string.",
+        "❌ JSX attributes הם props רגילים.",
+        "❌ tuples שימושיים ב-hooks, לא רק components.",
+      ],
+    },
+
+    // --- lesson_26::enum ---
+    {
+      id: "mc_l26_enum_manual_001", topicId: "topic_typescript", conceptKey: "lesson_26::enum", level: 4,
+      question: "מתי להשתמש ב-enum?",
+      options: [
+        "כשיש קבוצת ערכים קבועים שמייצגים מצב/קטגוריה (status, role, color)",
+        "כשצריך משתנה גלובלי",
+        "במקום class",
+        "ל-async functions",
+      ],
+      correctIndex: 0,
+      explanation: "enum Status { Pending, Active, Deleted }. נותן שם לקבוצת מצבים. גם const enum ל-zero runtime cost.",
+      optionFeedback: [
+        "✅ נכון: enum = named constants set.",
+        "❌ globals מוגדרים אחרת.",
+        "❌ class הוא לבניית objects, enum למצבים.",
+        "❌ async הוא תחביר נפרד.",
+      ],
+    },
+    {
+      id: "mc_l26_enum_manual_002", topicId: "topic_typescript", conceptKey: "lesson_26::enum", level: 5,
+      question: "מה ההבדל בין enum רגיל ל-const enum?",
+      options: [
+        "const enum מוסר בזמן compile — ערכים inline-ים, אין runtime overhead",
+        "const enum נשמר תמיד",
+        "אין הבדל",
+        "const enum רק לnumbers",
+      ],
+      correctIndex: 0,
+      explanation: "const enum: TS מחליף קריאות בערכים בזמן compile. enum רגיל יוצר object שזמין ב-runtime (יותר זיכרון).",
+      optionFeedback: [
+        "✅ נכון: const enum = inline expansion.",
+        "❌ ההפך — מוסר ב-compile.",
+        "❌ יש הבדל ביצועי.",
+        "❌ enum תומך ב-strings ו-numbers.",
+      ],
+    },
+
+    // --- lesson_26::never ---
+    {
+      id: "mc_l26_never_manual_001", topicId: "topic_typescript", conceptKey: "lesson_26::never", level: 5,
+      question: "מתי TypeScript מחזיר את הטיפוס never?",
+      options: [
+        "פונקציה שלא מסתיימת (אינסוף לולאה) או תמיד זורקת error",
+        "פונקציה אסינכרונית",
+        "פונקציה ללא params",
+        "אין שימוש ל-never",
+      ],
+      correctIndex: 0,
+      explanation: "never: פונקציה שלעולם לא מחזירה. function fail(): never { throw new Error(); } או while(true) loop.",
+      optionFeedback: [
+        "✅ נכון: never = never returns normally.",
+        "❌ async מחזיר Promise<T>.",
+        "❌ פונקציה ללא params מחזירה רגיל.",
+        "❌ never שימושי ל-exhaustive checks ב-discriminated unions.",
+      ],
+    },
+    {
+      id: "mc_l26_never_manual_002", topicId: "topic_typescript", conceptKey: "lesson_26::never", level: 6,
+      question: "איך משתמשים ב-never ב-exhaustive switch?",
+      options: [
+        "ב-default case — assertNever(value: never) — מבטיח שכל המקרים טופלו",
+        "ב-loop infinite",
+        "ב-async function",
+        "אין שימוש כזה",
+      ],
+      correctIndex: 0,
+      explanation: "default: const _: never = value; — אם הוספת case חדש ולא טיפלת, TS יזרוק שגיאה כי value אינו never.",
+      optionFeedback: [
+        "✅ נכון: exhaustiveness check via never.",
+        "❌ זה pattern נפרד ולא קשור.",
+        "❌ async לא קשור.",
+        "❌ זה pattern עוצמתי וpopular.",
+      ],
+    },
+
+    // --- lesson_26::Compiler / tsc ---
+    {
+      id: "mc_l26_tsc_manual_001", topicId: "topic_typescript", conceptKey: "lesson_26::tsc", level: 4,
+      question: "מה עושה הפקודה tsc?",
+      options: [
+        "מקמפלת קבצי .ts ל-.js רגילים שיכולים לרוץ ב-browser/Node",
+        "מריצה את הקוד ישירות",
+        "מורידה תלויות",
+        "בודקת syntax בלבד",
+      ],
+      correctIndex: 0,
+      explanation: "tsc = TypeScript Compiler. מקלט קבצי .ts, בודק טיפוסים, ומפיק .js. tsc --watch מתחדש אוטומטית.",
+      optionFeedback: [
+        "✅ נכון: .ts → .js compilation.",
+        "❌ יש כלים שמריצים TS ישירות (ts-node, tsx) אבל tsc הוא compiler.",
+        "❌ זה npm install.",
+        "❌ tsc גם מקמפל, לא רק בודק.",
+      ],
+    },
+    {
+      id: "mc_l26_tsconfig_manual_001", topicId: "topic_typescript", conceptKey: "lesson_26::tsconfig.json", level: 4,
+      question: "מה תפקיד tsconfig.json?",
+      options: [
+        "מגדיר אפשרויות compilation: target, strict mode, lib, paths, output dir",
+        "מתעד תלויות (כמו package.json)",
+        "מפעיל את השרת",
+        "מגדיר tests",
+      ],
+      correctIndex: 0,
+      explanation: "tsconfig.json מציין: \"target\": \"ES2020\", \"strict\": true, \"outDir\": \"dist\". tsc קורא אותו אוטומטית.",
+      optionFeedback: [
+        "✅ נכון: TypeScript compiler config.",
+        "❌ package.json לdependencies.",
+        "❌ אין קשר לserver.",
+        "❌ tests מוגדרים בvitest.config / jest.config.",
+      ],
+    },
+
+    // --- lesson_26::.ts vs .js ---
+    {
+      id: "mc_l26_extensions_manual_001", topicId: "topic_typescript", conceptKey: "lesson_26::.ts", level: 3,
+      question: "מה ההבדל העיקרי בין קובץ .ts ל-.js?",
+      options: [
+        ".ts מאפשר type annotations וfeatures של TypeScript; אחרי tsc הופך ל-.js",
+        ".ts רץ ישירות בדפדפן",
+        ".js מודרני יותר",
+        "אין הבדל",
+      ],
+      correctIndex: 0,
+      explanation: ".ts הוא superset של .js. כל קוד JS תקף הוא TS תקף. הופך ל-.js בזמן build.",
+      optionFeedback: [
+        "✅ נכון: .ts = JS + types.",
+        "❌ דפדפנים לא מריצים .ts ישירות (חוץ מ-Deno).",
+        "❌ TypeScript מודרני יותר במובן של types.",
+        "❌ יש הבדל — תוספת שכבת types.",
+      ],
+    },
+
+    // --- lesson_26::interface ---
+    {
+      id: "mc_l26_interface_manual_001", topicId: "topic_typescript", conceptKey: "lesson_26::interface", level: 4,
+      question: "מה התחביר הנכון להגדרת interface?",
+      options: [
+        "interface User { name: string; age: number; }",
+        "type User = { name: string; age: number; }",
+        "class User { name: string; age: number; }",
+        "function User(name, age)",
+      ],
+      correctIndex: 0,
+      explanation: "interface בתחביר block-like ללא '='. type alias משתמש ב-=. class יוצר constructor. function היא הצהרת פונקציה.",
+      optionFeedback: [
+        "✅ נכון: interface { ... }.",
+        "❌ זה תחביר של type alias — חוקי אבל לא interface.",
+        "❌ class יוצר instance, לא רק טיפוס.",
+        "❌ function אינה describes structure של object.",
+      ],
+    },
+
+    // --- lesson_26::optional field ---
+    {
+      id: "mc_l26_optional_manual_001", topicId: "topic_typescript", conceptKey: "lesson_26::optional field", level: 4,
+      question: "איך מסמנים שדה אופציונלי ב-interface?",
+      options: [
+        "name?: string (סימן שאלה אחרי שם השדה)",
+        "name: string | null",
+        "name = string",
+        "optional name: string",
+      ],
+      correctIndex: 0,
+      explanation: "name?: string מצהיר שהשדה יכול להיות string או undefined. שונה מ-string | null שמחייב null מפורש.",
+      optionFeedback: [
+        "✅ נכון: ? = optional.",
+        "❌ זה מאפשר null אבל לא undefined/missing.",
+        "❌ אין כזה תחביר.",
+        "❌ אין keyword optional.",
+      ],
+    },
+
+    // --- lesson_26::any (already had some, adding deeper) ---
+    {
+      id: "mc_l26_any_manual_001", topicId: "topic_typescript", conceptKey: "lesson_26::any", level: 4,
+      question: "למה להימנע מ-any?",
+      options: [
+        "מבטל את ה-type safety של TS — האזור הופך כמו vanilla JS ללא type checking",
+        "any יקר ב-runtime",
+        "TS לא תומך ב-any",
+        "any שובר את ה-build",
+      ],
+      correctIndex: 0,
+      explanation: "any = escape hatch. עדיף unknown לערכים שלא ידועים מראש (דורש type guard לפני שימוש).",
+      optionFeedback: [
+        "✅ נכון: any מבטל type checking ל-variable.",
+        "❌ אין השפעה על runtime.",
+        "❌ any הוא built-in.",
+        "❌ הbuild עובר.",
+      ],
     },
 
     // ===== Topic 22 — React + TypeScript =====
