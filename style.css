@@ -21544,6 +21544,256 @@ button.grandma-crumb:hover {
   display: none !important;
 }
 
+/* UX 2026-05-02: Hide the entire top "שליטה" menu — replaced by left-action-bar. */
+#chrome-control-menu { display: none !important; }
+
+/* UX 2026-05-02: Clean home page (welcome-screen-clean). */
+.welcome-screen-clean {
+  max-width: 980px;
+  margin: 1rem auto 4rem;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+.welcome-screen-clean .welcome-hero {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  position: relative;
+}
+.welcome-screen-clean .welcome-hero h3 {
+  font-size: 1.6rem;
+  margin: 0;
+  font-weight: 800;
+}
+.welcome-screen-clean .welcome-subtitle {
+  color: rgba(255,255,255,0.72);
+  margin: 0;
+  font-size: 0.95rem;
+  max-width: 520px;
+}
+.welcome-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.6rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #22d3ee 0%, #a855f7 100%);
+  color: #fff;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 14px 36px rgba(168, 85, 247, 0.4);
+  transition: var(--transition);
+  margin-top: 0.4rem;
+}
+.welcome-resume-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 48px rgba(168, 85, 247, 0.55);
+}
+.welcome-resume-icon { font-size: 1.05rem; }
+.welcome-resume-target {
+  background: rgba(255,255,255,0.18);
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-inline-start: 0.2rem;
+}
+.welcome-stats {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.welcome-stats .stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.welcome-stats .stat-num {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #22d3ee;
+}
+.welcome-stats .stat-label {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.welcome-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+}
+.welcome-quick-actions .wqa-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.1rem 0.9rem;
+  border-radius: 0.9rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+  align-items: center;
+  transition: var(--transition);
+}
+.welcome-quick-actions .wqa-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 14px 32px rgba(168, 85, 247, 0.25);
+}
+.welcome-quick-actions .wqa-icon { font-size: 1.6rem; }
+.welcome-quick-actions .wqa-title { font-weight: 800; font-size: 1rem; }
+.welcome-quick-actions .wqa-desc { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+
+.welcome-cockpit-wrap {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 0.9rem;
+}
+.welcome-cockpit-summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.7rem 1rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  user-select: none;
+}
+.welcome-cockpit-summary::-webkit-details-marker { display: none; }
+.welcome-cockpit-wrap[open] .welcome-cockpit-summary {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.welcome-cockpit-wrap > .exam-cockpit { margin: 0; padding: 1rem; }
+
+/* UX 2026-05-02: Hide original buttons; their handlers are proxied from left-action-bar. */
+#pwa-install-btn,
+#global-print-btn,
+#theme-toggle {
+  position: fixed !important;
+  left: -9999px !important;
+  top: -9999px !important;
+}
+
+/* Left action bar — 3 vertical pill buttons on the left */
+.left-action-bar {
+  position: fixed;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.left-action-bar .lab-summary,
+.left-action-bar .lab-direct {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.92) 0%, rgba(168,85,247,0.92) 100%);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.18);
+  font-weight: 700;
+  font-size: 0.92rem;
+  box-shadow: 0 8px 24px rgba(99,102,241,0.4), 0 0 0 1px rgba(255,255,255,0.06) inset;
+  transition: var(--transition);
+  user-select: none;
+  white-space: nowrap;
+}
+.left-action-bar .lab-direct { font-family: inherit; }
+.left-action-bar .lab-summary::-webkit-details-marker { display: none; }
+.left-action-bar .lab-summary:hover,
+.left-action-bar .lab-direct:hover {
+  transform: translateX(2px);
+  box-shadow: 0 12px 32px rgba(99,102,241,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset;
+}
+.left-action-bar .lab-icon { font-size: 1.05rem; }
+.left-action-bar .lab-label { font-size: 0.9rem; letter-spacing: 0.2px; }
+
+#lab-settings .lab-summary {
+  background: linear-gradient(135deg, rgba(34,211,238,0.92) 0%, rgba(99,102,241,0.92) 100%);
+}
+#lab-view .lab-summary {
+  background: linear-gradient(135deg, rgba(168,85,247,0.92) 0%, rgba(236,72,153,0.92) 100%);
+}
+.left-action-bar .lab-direct {
+  background: linear-gradient(135deg, rgba(251,191,36,0.92) 0%, rgba(236,72,153,0.92) 100%);
+}
+
+.left-action-bar .lab-popup {
+  position: absolute;
+  left: 100%;
+  margin-left: 0.5rem;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.55rem;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0.8rem;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+  min-width: 12rem;
+}
+.left-action-bar .lab-action {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 0.55rem 0.85rem;
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+  text-align: right;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: var(--transition);
+}
+.left-action-bar .lab-action:hover {
+  background: rgba(168,85,247,0.18);
+  border-color: rgba(168,85,247,0.5);
+  transform: translateX(2px);
+}
+
+@media (max-width: 720px) {
+  .left-action-bar {
+    top: auto;
+    bottom: 1rem;
+    transform: none;
+    flex-direction: row;
+  }
+  .left-action-bar .lab-popup {
+    left: 0;
+    bottom: 100%;
+    top: auto;
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+  }
+  .left-action-bar .lab-label { display: none; }
+  .left-action-bar .lab-summary,
+  .left-action-bar .lab-direct {
+    padding: 0.7rem;
+  }
+}
+
 /* UX 2026-05-02: Thin collapsible achievements rail at the very top of app. */
 .achievements-rail-wrap {
   position: sticky;
@@ -21584,6 +21834,38 @@ button.grandma-crumb:hover {
   padding: 0.25rem 0.6rem 0.35rem;
   flex-wrap: wrap;
 }
+.achievements-rail .ach-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.7rem;
+  background: rgba(99, 102, 241, 0.18);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  color: #fff;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.achievements-rail .ach-nav-btn:hover {
+  background: rgba(99, 102, 241, 0.32);
+  transform: translateY(-1px);
+}
+.achievements-rail .ach-nav-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+.achievements-rail .ach-rail-divider {
+  display: inline-block;
+  width: 1px;
+  height: 1.2rem;
+  background: rgba(255,255,255,0.12);
+  margin: 0 0.2rem;
+}
+.achievements-rail .ach-nav-label { font-size: 0.78rem; }
 .achievements-rail .ach-rail-item {
   display: inline-flex;
   align-items: center;

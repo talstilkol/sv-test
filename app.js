@@ -7463,6 +7463,33 @@ document.addEventListener("DOMContentLoaded", () => {
     setTopChromeCollapsed(!bothCollapsed);
   });
 
+  // UX 2026-05-02: Left-action-bar proxies clicks to the original (now hidden) controls.
+  // After triggering, also close the parent <details> popup so the menu collapses.
+  document.querySelectorAll(".left-action-bar [data-lab-trigger]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const targetId = btn.dataset.labTrigger;
+      const target = document.getElementById(targetId);
+      if (target) {
+        // Force-show hidden buttons momentarily so the click handler runs.
+        const wasHidden = target.hidden;
+        if (wasHidden) target.hidden = false;
+        target.click();
+        if (wasHidden) target.hidden = true;
+      }
+      // Collapse the parent details (popup menu)
+      const parentDetails = btn.closest("details.lab-menu");
+      if (parentDetails) parentDetails.open = false;
+      // Don't propagate to the parent summary
+      e.stopPropagation();
+    });
+  });
+  // Close left-action-bar popups when clicking outside
+  document.addEventListener("click", (e) => {
+    document.querySelectorAll(".left-action-bar details.lab-menu[open]").forEach((d) => {
+      if (!d.contains(e.target)) d.open = false;
+    });
+  });
+
   if (mobileContextQuery) {
     const onMobileContextChange = () => {
       syncContextTreeToggleVisibility();
@@ -9524,15 +9551,42 @@ document.addEventListener("DOMContentLoaded", () => {
     hideAllViews();
     setPortalDecisionAid("home");
     currentLessonId = null;
-    currentLessonTitle.textContent = "ברוכים הבאים לפורטל המומחים";
+    currentLessonTitle.textContent = "ברוכים הבאים לפורטל";
     currentLessonDesc.textContent =
-      "בחרו שיעור מהתפריט כדי להתחיל ללמוד. כל מושג מוסבר ב-6 רמות שונות — מסבתא ועד פרופסור!";
+      "השמירה האוטומטית פועלת. תמיד תוכל להמשיך מהנקודה האחרונה שלך.";
     welcomeScreen.style.display = "flex";
     document.getElementById("open-home")?.classList.add("active");
     setHomeContextTree();
     scrollToTop();
     sidebar.classList.remove("open");
+    // UX 2026-05-02: refresh resume CTA on the welcome screen
+    if (typeof updateWelcomeResumeButton === "function") updateWelcomeResumeButton();
   });
+
+  // UX 2026-05-02: Welcome screen resume button — points to last opened lesson.
+  function updateWelcomeResumeButton() {
+    const btn = document.getElementById("welcome-resume-btn");
+    const targetEl = document.getElementById("welcome-resume-target");
+    if (!btn || !targetEl) return;
+    let last = null;
+    try {
+      const raw = localStorage.getItem("lumenportal:lastOpenedLesson:v1");
+      if (raw) last = JSON.parse(raw);
+    } catch (_) {}
+    if (last && last.lessonId && last.lessonTitle) {
+      targetEl.textContent = String(last.lessonTitle).slice(0, 50);
+      btn.hidden = false;
+      btn.onclick = () => {
+        if (typeof openLesson === "function") openLesson(last.lessonId);
+      };
+    } else {
+      btn.hidden = true;
+    }
+  }
+  // Expose so other handlers can call it after a lesson opens/saves.
+  window.updateWelcomeResumeButton = updateWelcomeResumeButton;
+  document.addEventListener("DOMContentLoaded", updateWelcomeResumeButton);
+  setTimeout(updateWelcomeResumeButton, 1000);
   document.getElementById("brand-home-btn")?.addEventListener("click", () => {
     document.getElementById("open-home")?.click();
   });
@@ -29560,6 +29614,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function conceptStepStateKey(lesson, concept) {
     return `${lesson.id}::${concept.conceptName}`;
+  }
+
+  // ------- Achievements rail navigation buttons (UX 2026-05-02) -------
+  // Back / Home buttons in the top thin rail.
+  if (typeof window !== "undefined") {
+    document.addEventListener("DOMContentLoaded", () => {
+      const backBtn = document.getElementById("ach-nav-back");
+      const homeBtn = document.getElementById("ach-nav-home");
+      if (backBtn) {
+        backBtn.addEventListener("click", () => {
+          // Use history.back if any history entries exist; otherwise go home.
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            document.getElementById("open-home")?.click();
+          }
+        });
+      }
+      if (homeBtn) {
+        homeBtn.addEventListener("click", () => {
+          document.getElementById("open-home")?.click();
+        });
+      }
+    });
   }
 
   // ------- Achievements rail (UX 2026-05-02) -------

@@ -37,6 +37,16 @@
           <span class="ach-rail-mini" id="ach-rail-mini" aria-hidden="true">📊</span>
         </summary>
         <div id="achievements-rail" class="achievements-rail" role="status" aria-live="polite" aria-label="סרגל הישגים">
+          <!-- UX 2026-05-02: Navigation buttons in the achievements rail -->
+          <button class="ach-nav-btn" id="ach-nav-back" type="button" aria-label="חזרה לעמוד הקודם" title="חזרה לעמוד הקודם">
+            <span aria-hidden="true">←</span>
+            <span class="ach-nav-label">חזרה</span>
+          </button>
+          <button class="ach-nav-btn" id="ach-nav-home" type="button" aria-label="חזרה לעמוד הבית" title="חזרה לעמוד הבית">
+            <span aria-hidden="true">🏠</span>
+            <span class="ach-nav-label">בית</span>
+          </button>
+          <span class="ach-rail-divider" aria-hidden="true"></span>
           <span class="ach-rail-item ach-passed" title="כמה מושגים עברת (רמה 5+) מתוך כל המושגים">
             <span class="ach-icon">✅</span>
             <span class="ach-label">עברתי</span>
@@ -54,7 +64,31 @@
           </span>
         </div>
       </details>
-      <details class="chrome-control-menu" id="chrome-control-menu">
+      <!-- UX 2026-05-02: Left-side action bar — 3 buttons (settings/view/pocket).
+           Replaces top control menu and scattered left-side buttons. -->
+      <div class="left-action-bar" id="left-action-bar" role="toolbar" aria-label="פעולות מהירות">
+        <details class="lab-menu" id="lab-settings">
+          <summary class="lab-summary" aria-label="הגדרות"><span class="lab-icon" aria-hidden="true">⚙️</span><span class="lab-label">הגדרות</span></summary>
+          <div class="lab-popup">
+            <button class="lab-action" data-lab-trigger="pwa-install-btn"><span aria-hidden="true">⬇️</span> התקן את האפליקציה</button>
+            <button class="lab-action" data-lab-trigger="theme-toggle"><span aria-hidden="true">🌗</span> החלף תצוגה (כהה/בהיר)</button>
+          </div>
+        </details>
+        <details class="lab-menu" id="lab-view">
+          <summary class="lab-summary" aria-label="תצוגה"><span class="lab-icon" aria-hidden="true">👁️</span><span class="lab-label">תצוגה</span></summary>
+          <div class="lab-popup">
+            <button class="lab-action" data-lab-trigger="global-print-btn"><span aria-hidden="true">📄</span> ייצוא ל-PDF</button>
+            <button class="lab-action" data-lab-trigger="sidebar-collapse-btn"><span aria-hidden="true">⇥</span> קפל תפריט ימני</button>
+            <button class="lab-action" data-lab-trigger="top-chrome-collapse-btn"><span aria-hidden="true">⇧</span> קפל אזור עליון</button>
+            <button class="lab-action" data-lab-trigger="chrome-collapse-both-btn"><span aria-hidden="true">⇲</span> קפל שניהם</button>
+          </div>
+        </details>
+        <button class="lab-direct" id="lab-pocket-btn" data-lab-trigger="pocket-fab" aria-label="פתח את הכיס שלי">
+          <span class="lab-icon" aria-hidden="true">📌</span>
+          <span class="lab-label">הכיס שלי</span>
+        </button>
+      </div>
+      <details class="chrome-control-menu" id="chrome-control-menu" hidden>
         <summary aria-label="פתח תפריט שליטה בתצוגה">שליטה</summary>
         <div class="chrome-control-panel" role="group" aria-label="שליטה בתצוגה ובתפריטים">
           <!-- UX 2026-05-02: 3 buttons only — collapse right, collapse top, collapse both -->
@@ -410,15 +444,19 @@
 
         <div class="content-wrapper" id="content-container">
           <!-- Welcome Screen -->
-          <div class="welcome-screen" id="welcome-screen">
-            <div class="welcome-card glass-panel">
-              <div class="welcome-icon">🚀</div>
-              <h3>ברוכים הבאים ל-LumenPortal</h3>
-              <p>
-                הפורטל מכיל את <strong>כל חומרי הקורס</strong> — שיעורים 11 עד 27 + חומרים רוחביים.
-                כל מושג מוסבר ב-7 רמות שונות: מסבתא 👵 ועד מאסטר 🏆.
-                המערכת לומדת אותך אדפטיבית — מתאימה הסברים ושאלות לרמה האישית שלך בכל מושג.
-              </p>
+          <div class="welcome-screen welcome-screen-clean" id="welcome-screen">
+            <!-- UX 2026-05-02: Clean focused home — resume CTA is the primary action -->
+            <div class="welcome-hero glass-panel">
+              <div class="welcome-icon">📚</div>
+              <h3>ברוך שובך</h3>
+              <p class="welcome-subtitle">המשך בדיוק מהמקום שעצרת. השמירה האוטומטית פועלת ברקע.</p>
+
+              <button class="welcome-resume-btn" id="welcome-resume-btn" type="button" hidden>
+                <span class="welcome-resume-icon" aria-hidden="true">▶</span>
+                <span class="welcome-resume-label">המשך מהשיעור האחרון</span>
+                <span class="welcome-resume-target" id="welcome-resume-target"></span>
+              </button>
+
               <div class="welcome-stats">
                 <div class="stat-item">
                   <span class="stat-num" id="stat-lessons">0</span>
@@ -433,55 +471,39 @@
                   <span class="stat-label">שאלות במאגר</span>
                 </div>
               </div>
+            </div>
+
+            <!-- Quick-action grid: 4 main entry points only -->
+            <div class="welcome-quick-actions">
+              <button class="wqa-card" data-tour-action="open-trainer">
+                <span class="wqa-icon" aria-hidden="true">🧠</span>
+                <span class="wqa-title">מאמן הידע</span>
+                <span class="wqa-desc">שאלות אדפטיביות לפי הרמה שלי</span>
+              </button>
+              <button class="wqa-card" data-tour-action="open-study">
+                <span class="wqa-icon" aria-hidden="true">🎯</span>
+                <span class="wqa-title">לימוד מותאם</span>
+                <span class="wqa-desc">תור מושגים חלשים — חיזוק ממוקד</span>
+              </button>
+              <button class="wqa-card" data-tour-action="open-map">
+                <span class="wqa-icon" aria-hidden="true">🗺️</span>
+                <span class="wqa-title">מפת ידע</span>
+                <span class="wqa-desc">כל המושגים בעין אחת</span>
+              </button>
+              <button class="wqa-card" data-tour-action="open-mock-exam">
+                <span class="wqa-icon" aria-hidden="true">📝</span>
+                <span class="wqa-title">מבחן מדומה</span>
+                <span class="wqa-desc">סימולציה עם טיימר</span>
+              </button>
+            </div>
+
+            <!-- Compact exam cockpit — collapsed by default -->
+            <details class="welcome-cockpit-wrap">
+              <summary class="welcome-cockpit-summary">📊 סטטוס מבחן — לחץ להרחבה</summary>
               <section class="exam-cockpit glass-panel" id="exam-cockpit" aria-label="Exam Cockpit">
                 <div class="exam-cockpit-empty">טוען תמונת מצב למבחן...</div>
               </section>
-              <div class="glow-orb"></div>
-              <div class="glow-orb glow-orb-2"></div>
-            </div>
-
-            <!-- Tour cards -->
-            <div class="onboarding-tour">
-              <h4 class="onboarding-title">🧭 איך עובדים בפורטל — הטאבים העליונים</h4>
-              <div class="onboarding-grid">
-                <div class="ob-card">
-                  <div class="ob-icon">📖</div>
-                  <h5>מדריך מקוצר</h5>
-                  <p>סיכום של 22 נושאים מרכזיים. שאלון משולב לכל נושא — תשובה נכונה מקדמת רמת מושג קשור.</p>
-                  <button class="ob-cta" data-tour-action="open-guide">פתח את המדריך</button>
-                </div>
-                <div class="ob-card">
-                  <div class="ob-icon">💻</div>
-                  <h5>בלוקי קוד</h5>
-                  <p>בלוקי קוד אמיתיים עם הסבר עברי לכל שורה + שאלות רב-ברירה לכל שורה. כל תשובה נכונה מעדכנת את ניקוד המושג הקשור.</p>
-                  <button class="ob-cta" data-tour-action="open-codeblocks">פתח בלוקי קוד</button>
-                </div>
-                <div class="ob-card highlight">
-                  <div class="ob-icon">🧠</div>
-                  <h5>מאמן הידע</h5>
-                  <p>שאלות אדפטיביות (אמריקני + השלמת קוד). כל תשובה מעדכנת רמה (1-7). דוח חי + רשימת חולשות.</p>
-                  <button class="ob-cta" data-tour-action="open-trainer">פתח את המאמן</button>
-                </div>
-                <div class="ob-card">
-                  <div class="ob-icon">🎯</div>
-                  <h5>לימוד מותאם</h5>
-                  <p>תור מושגים חלשים. עוברים אחד-אחד עד שכולם ברמה 4+. הקיצור הכי מהיר לחיזוק חולשות.</p>
-                  <button class="ob-cta" data-tour-action="open-study">פתח לימוד מותאם</button>
-                </div>
-                <div class="ob-card">
-                  <div class="ob-icon">🗺️</div>
-                  <h5>מפת ידע</h5>
-                  <p>תצוגה ויזואלית של כל המושגים, לפי שיעור ולפי רמה. סינון לפי "חלשים", "מאסטר", "לא נבחנו".</p>
-                  <button class="ob-cta" data-tour-action="open-map">פתח מפת ידע</button>
-                </div>
-                <div class="ob-card">
-                  <div class="ob-icon">🏠</div>
-                  <h5>שיעורים</h5>
-                  <p>הסרגל הצדדי: רשימת השיעורים. בכל שיעור — תפריט מושגים אופקי + הסבר ברמה האישית + 2 שאלות אוטומטיות.</p>
-                  <button class="ob-cta secondary" data-tour-action="dismiss-tour">הבנתי, נסגור את הסיור</button>
-                </div>
-              </div>
-            </div>
+            </details>
           </div>
 
           <!-- Settings View — default display, sync, export/import and advanced ops -->
@@ -1421,7 +1443,7 @@
     <!-- P4.6.4 — HTML sanitization must patch legacy rendering before app.js -->
     <script src="lib/vendor/dompurify.min.js"></script>
     <script src="src/core/sanitize-early.js"></script>
-    <script src="app.js?v=simple-tree-v86"></script>
+    <script src="app.js?v=nav-buttons-v89"></script>
     <script type="module" src="/src/main.js?v=core-bootstrap-v2"></script>
 
     <!-- W12 — Achievements overlay -->
