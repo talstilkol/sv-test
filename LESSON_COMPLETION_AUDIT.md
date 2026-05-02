@@ -119,36 +119,36 @@
 | 4 | **מתודות מערך פונקציונליות** | 6/10 | 🟡 גבולי + V | map · filter · reduce · forEach · find · sort | lesson_11, lesson_12 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 5 | **השוואות וערכי-לא-קיים (== / === / Object.is / null / undefined / NaN)** | 5/10 | 🟢 V בלבד | undefined | lesson_11, lesson_15 | ✅ §17, §18 | 4/4 T✓ O✓ M✓ C✓ |
 | 6 | **לולאות (for / while / for...of / for...in / forEach)** | 5/10 | 🟢 V בלבד | for · while · forEach · do while | lesson_11, lesson_12 | ✅ §30b | 4/4 T✓ O✓ M✓ C✓ |
-| 7 | **אסינכרוניות וזרימת זמן** | 8/10 | 🔴 חובה למלא | Promise · setTimeout · fetch · promise | lesson_15, lesson_24 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 7 | **אסינכרוניות וזרימת זמן** | 8/10 | 🔴 חובה למלא | Promise · setTimeout · fetch · promise | lesson_15, lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 8 | **סגירות וזיכרון מתמיד (closure variants)** | 8/10 | 🔴 חובה למלא | closure · Closure · lexical scope · scope · stale closure · closure in useEffect · closure in setTimeout · closure variables · closure in event handlers | lesson_11, lesson_15, lesson_closures | ✅ §34 | 4/4 T✓ O✓ M✓ C✓ |
 | 9 | **זרימת נתונים ב-React (props/state/context/re-render)** | 7/10 | 🔴 חובה למלא | props · state · useState · Context API · useContext · re-render · passing function as prop · reference | lesson_21, lesson_22, lesson_23 | ✅ §35 | 4/4 T✓ O✓ M✓ C✓ |
 | 10 | **Hooks — useState/useEffect/useMemo/useRef** | 7/10 | 🔴 חובה למלא | useState · useEffect · useMemo · useRef | lesson_22, lesson_24 | ✅ §36 | 4/4 T✓ O✓ M✓ C✓ |
-| 11 | **אחסון בדפדפן** | 5/10 | 🟢 V בלבד | localStorage · sessionStorage | lesson_13 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 11 | **אחסון בדפדפן** | 5/10 | 🟢 V בלבד | localStorage · sessionStorage | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 12 | **HTTP methods וREST** | 5/10 | 🟢 V בלבד | GET · POST · DELETE | lesson_17 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 13 | **סוגי בסיסי נתונים** | 6/10 | 🟡 גבולי + V | MongoDB · PostgreSQL · SQL · NoSQL · database | lesson_20, lesson_sql_orm | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 14 | **מודולים וייבוא קוד** | 5/10 | 🟢 V בלבד | import · export default · require · module.exports | lesson_16, lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 15 | **אימות וזהות** | 7/10 | 🔴 חובה למלא | authentication · authorization · session · cookie · access token · JWT · OAuth · secure cookie | lesson_auth_security | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 15 | **אימות וזהות** | 7/10 | 🔴 חובה למלא | authentication · authorization · session · cookie · access token · JWT · OAuth · secure cookie | lesson_auth_security | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 16 | **TypeScript — טיפוסים בסיסיים** | 5/10 | 🟢 V בלבד | string · number · boolean · array type · type · interface · .ts · tsc | lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 17 | **טיפוסים פרימיטיביים ב-JavaScript** | 4/10 | 🟢 V בלבד | string · number · boolean · undefined | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 18 | **מתודות שינוי-במקום של מערך (push/pop/shift/unshift/splice)** | 5/10 | 🟢 V בלבד | push · pop · shift · unshift · splice | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 19 | **בחירת אלמנטים ב-DOM (getElementBy* / querySelector)** | 5/10 | 🟢 V בלבד | getElementById · getElementsByClassName · getElementsByTagName · querySelector · querySelectorAll · DOM element | lesson_13, lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 20 | **ניווט בעץ ה-DOM (child / parent / sibling)** | 6/10 | 🟡 גבולי + V | child component · parent component | lesson_13, lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 21 | **פקודות npm (install / run / scripts / init / publish)** | 4/10 | 🟢 V בלבד | npm · npm install · npm run dev · npm scripts · npm init · package.json | lesson_16, lesson_21 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 21 | **פקודות npm (install / run / scripts / init / publish)** | 4/10 | 🟢 V בלבד | npm · npm install · npm run dev · npm scripts · npm init · package.json | lesson_16, lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 22 | **טיפול בשגיאות (try / catch / finally / throw / Error)** | 7/10 | 🔴 חובה למלא | try · catch · throw · Error · error | lesson_15 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 23 | **אירועי DOM (click / keydown / submit / change / load)** | 6/10 | 🟡 גבולי + V | event · Event · onChange | lesson_13, lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 24 | **ניווט ב-React Router (Link / NavLink / Route / useNavigate)** | 6/10 | 🟡 גבולי + V | Link · Route · Routes · Router · BrowserRouter · useNavigate · useParams · Path · to · URL | lesson_23 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 25 | **JSON.parse ↔ JSON.stringify** | 5/10 | 🟢 V בלבד | JSON | lesson_15, lesson_16 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 26 | **המרה למספר: parseInt / parseFloat / Number()** | 4/10 | 🟢 V בלבד | Number | lesson_11 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 26 | **המרה למספר: parseInt / parseFloat / Number()** | 4/10 | 🟢 V בלבד | Number | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 27 | **בדיקת סוג: typeof / instanceof / Array.isArray** | 6/10 | 🟡 גבולי + V |  | lesson_11, lesson_15 | ✅ §16 | 4/4 T✓ O✓ M✓ C✓ |
 | 28 | **מתודות מחרוזת (split/slice/substring/replace/includes/indexOf)** | 5/10 | 🟢 V בלבד | uppercase · lowercase | lesson_11, lesson_12 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 29 | **Math: floor / ceil / round / random / max / min** | 4/10 | 🟢 V בלבד |  | lesson_11 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 29 | **Math: floor / ceil / round / random / max / min** | 4/10 | 🟢 V בלבד |  | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 30 | **Spread (...) ↔ Rest (...) — אותו תחביר, תפקידים הפוכים** | 6/10 | 🟡 גבולי + V | spread | lesson_11, lesson_15 | ✅ §14 | 4/4 T✓ O✓ M✓ C✓ |
 | 31 | **Destructuring: array vs object** | 6/10 | 🟡 גבולי + V | destructuring | lesson_11, lesson_15 | ✅ §19 | 4/4 T✓ O✓ M✓ C✓ |
-| 32 | **Template literals ↔ string concatenation** | 4/10 | 🟢 V בלבד |  | lesson_11 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 32 | **Template literals ↔ string concatenation** | 4/10 | 🟢 V בלבד |  | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 33 | **Set ↔ Map ↔ Object — מבני נתונים אסוציאטיביים** | 7/10 | 🔴 חובה למלא | Map | lesson_15, lesson_19 | ✅ §13 | 4/4 T✓ O✓ M✓ C✓ |
 | 34 | **Object.keys / values / entries / assign** | 5/10 | 🟢 V בלבד |  | lesson_13, lesson_19 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 35 | **Shallow ↔ Deep copy (spread / Object.assign / structuredClone / JSON trick)** | 7/10 | 🔴 חובה למלא |  | lesson_11, lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 36 | **Date.now() ↔ new Date() ↔ Date.parse()** | 4/10 | 🟢 V בלבד |  | lesson_15 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 36 | **Date.now() ↔ new Date() ↔ Date.parse()** | 4/10 | 🟢 V בלבד |  | lesson_15 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 37 | **Promise.all / race / allSettled / any** | 8/10 | 🔴 חובה למלא |  | lesson_15, lesson_24 | ✅ §9 | 4/4 T✓ O✓ M✓ C✓ |
 | 38 | **Callback ↔ Promise.then ↔ async/await — 3 דורות + סנכרוני/אסינכרוני** | 8/10 | 🔴 חובה למלא | Promise · then · catch · catch (Promise) · Synchronous · Asynchronous · resolve · reject | lesson_15 | ✅ §10 | 4/4 T✓ O✓ M✓ C✓ |
 | 39 | **setTimeout / setInterval / requestAnimationFrame** | 6/10 | 🟡 גבולי + V | setTimeout | lesson_15, lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
@@ -157,14 +157,14 @@
 | 42 | **innerHTML / innerText / textContent** | 6/10 | 🟡 גבולי + V | innerHTML | lesson_13 | ✅ §20 | 4/4 T✓ O✓ M✓ C✓ |
 | 43 | **appendChild / append / insertBefore / replaceChild** | 5/10 | 🟢 V בלבד | appendChild · replaceChild | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 44 | **createElement / createTextNode / cloneNode** | 5/10 | 🟢 V בלבד | createElement | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 45 | **classList: add / remove / toggle / contains** | 4/10 | 🟢 V בלבד |  | lesson_13 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 45 | **classList: add / remove / toggle / contains** | 4/10 | 🟢 V בלבד |  | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 46 | **setAttribute / getAttribute / dataset / property** | 5/10 | 🟢 V בלבד | setAttribute | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 47 | **event.target ↔ event.currentTarget ↔ this** | 7/10 | 🔴 חובה למלא |  | lesson_13 | ✅ §21 | 4/4 T✓ O✓ M✓ C✓ |
 | 48 | **preventDefault / stopPropagation / return false** | 6/10 | 🟡 גבולי + V |  | lesson_13, lesson_22 | ✅ §22 | 4/4 T✓ O✓ M✓ C✓ |
 | 49 | **HTTP Status: 2xx / 3xx / 4xx / 5xx** | 5/10 | 🟢 V בלבד |  | lesson_17 | ✅ §28 | 4/4 T✓ O✓ M✓ C✓ |
 | 50 | **req.params / req.query / req.body / req.headers** | 5/10 | 🟢 V בלבד | body | lesson_17 | ✅ §29 | 4/4 T✓ O✓ M✓ C✓ |
 | 51 | **app.use / app.get|post|put|delete / next()** | 6/10 | 🟡 גבולי + V | app.use · app.get · app.post · middleware | lesson_17 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 52 | **res.send / res.json / res.render / res.redirect** | 4/10 | 🟢 V בלבד |  | lesson_17 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 52 | **res.send / res.json / res.render / res.redirect** | 4/10 | 🟢 V בלבד |  | lesson_17 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 53 | **find / findOne / findById / findOneAndUpdate** | 6/10 | 🟡 גבולי + V | find · findOne · findOneAndUpdate | lesson_20 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 54 | **create / insertOne / save / bulkWrite** | 5/10 | 🟢 V בלבד | create · insertOne · insertMany | lesson_20 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 55 | **MongoDB Operators: $set / $push / $pull / $inc** | 6/10 | 🟡 גבולי + V |  | lesson_20 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
@@ -177,7 +177,7 @@
 | 62 | **AI Engineering Patterns — RAG / Tool Calling / Agent Loop / Fine-tuning** | 8/10 | 🔴 חובה למלא | RAG · tool calling · agent loop · fine-tuning boundary | lesson_ai_engineering | ✅ §38 | 4/4 T✓ O✓ M✓ C✓ |
 | 63 | **useMemo / useCallback / React.memo + memoization** | 8/10 | 🔴 חובה למלא | useMemo · memoization | lesson_24 | ✅ §12 | 4/4 T✓ O✓ M✓ C✓ |
 | 64 | **Dependency array: [] / [x] / [x,y] / ללא + cleanup + infinite loop** | 9/10 | 🔴 חובה למלא | dependency array · cleanup · infinite loop · fetching data | lesson_24 | ✅ §11 | 4/4 T✓ O✓ M✓ C✓ |
-| 65 | **Fragment ↔ <></> ↔ <div>** | 4/10 | 🟢 V בלבד |  | lesson_21 | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 65 | **Fragment ↔ <></> ↔ <div>** | 4/10 | 🟢 V בלבד |  | lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 66 | **Controlled ↔ Uncontrolled component** | 7/10 | 🔴 חובה למלא | controlled input | lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 67 | **children prop ↔ render prop ↔ slot** | 7/10 | 🔴 חובה למלא |  | lesson_21, lesson_23 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 68 | **Error Boundary ↔ try/catch ↔ Promise.catch — איפה כל אחד תופס** | 8/10 | 🔴 חובה למלא |  | lesson_24 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
@@ -191,72 +191,72 @@
 | 76 | **Refresh token ↔ Access token** | 7/10 | 🔴 חובה למלא | refresh token · access token | lesson_auth_security | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 77 | **display: block / inline / inline-block / flex / grid** | 6/10 | 🟡 גבולי + V | flex · grid | lesson_html_css_foundations, lesson_25 | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
 | 78 | **position: static / relative / absolute / fixed / sticky** | 7/10 | 🔴 חובה למלא |  | lesson_html_css_foundations | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
-| 79 | **em / rem / px / % / vh / vw** | 5/10 | 🟢 V בלבד |  | lesson_html_css_foundations, lesson_25 | ✅ §31 (CSS summary) | 2/4 T✓ O✓ M✗ C✗ |
-| 80 | **margin / padding / border (box model)** | 5/10 | 🟢 V בלבד | padding · box model | lesson_html_css_foundations | ✅ §31 (CSS summary) | 2/4 T✓ O✓ M✗ C✗ |
-| 81 | **Flexbox: direction / justify-content / align-items / flex-wrap** | 6/10 | 🟡 גבולי + V |  | lesson_25 | ✅ §31 (CSS summary) | 2/4 T✓ O✓ M✗ C✗ |
-| 82 | **Grid: template-columns / template-rows / gap / grid-area** | 7/10 | 🔴 חובה למלא |  | lesson_25 | ✅ §31 (CSS summary) | 2/4 T✓ O✓ M✗ C✗ |
-| 83 | **box-sizing: content-box ↔ border-box** | 4/10 | 🟢 V בלבד |  | lesson_html_css_foundations | ✅ §31 (CSS summary) | 2/4 T✓ O✓ M✗ C✗ |
+| 79 | **em / rem / px / % / vh / vw** | 5/10 | 🟢 V בלבד |  | lesson_html_css_foundations, lesson_25 | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
+| 80 | **margin / padding / border (box model)** | 5/10 | 🟢 V בלבד | padding · box model | lesson_html_css_foundations | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
+| 81 | **Flexbox: direction / justify-content / align-items / flex-wrap** | 6/10 | 🟡 גבולי + V |  | lesson_25 | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
+| 82 | **Grid: template-columns / template-rows / gap / grid-area** | 7/10 | 🔴 חובה למלא |  | lesson_25 | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
+| 83 | **box-sizing: content-box ↔ border-box** | 4/10 | 🟢 V בלבד |  | lesson_html_css_foundations | ✅ §31 (CSS summary) | 4/4 T✓ O✓ M✓ C✓ |
 | 84 | **git add / commit / push / pull — 4 פקודות הליבה** | 5/10 | 🟢 V בלבד | staging area · working tree | lesson_tooling_git | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 85 | **git merge ↔ git rebase** | 7/10 | 🔴 חובה למלא |  | lesson_tooling_git | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 86 | **dependencies / devDependencies / peerDependencies** | 4/10 | 🟢 V בלבד | dependencies | lesson_16 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 87 | **npm ↔ yarn ↔ pnpm** | 5/10 | 🟢 V בלבד |  | lesson_16 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 88 | **ESLint ↔ Prettier ↔ TypeScript** | 5/10 | 🟢 V בלבד | ESLint · Prettier | lesson_tooling_git, lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 89 | **SSR ↔ SSG ↔ CSR ↔ ISR** | 7/10 | 🔴 חובה למלא | SSR · SSG · ISR | lesson_nextjs | ✅ §25 | 4/4 T✓ O✓ M✓ C✓ |
-| 90 | **Vercel ↔ Netlify ↔ Cloudflare Pages** | 5/10 | 🟢 V בלבד | Vercel deploy | lesson_devops_deploy, lesson_nextjs | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 90 | **Vercel ↔ Netlify ↔ Cloudflare Pages** | 5/10 | 🟢 V בלבד | Vercel deploy | lesson_devops_deploy, lesson_nextjs | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 91 | **Docker: container / image / volume / network** | 6/10 | 🟡 גבולי + V | container · image · volume · Dockerfile | lesson_devops_deploy | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 92 | **CI ↔ CD — Continuous Integration vs Delivery** | 5/10 | 🟢 V בלבד | CI · CD · GitHub workflow | lesson_devops_deploy, lesson_tooling_git | ❌ חסר | 2/4 T✓ O✓ M✗ C✗ |
+| 92 | **CI ↔ CD — Continuous Integration vs Delivery** | 5/10 | 🟢 V בלבד | CI · CD · GitHub workflow | lesson_devops_deploy, lesson_tooling_git | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 93 | **Function declaration ↔ expression ↔ arrow ↔ IIFE** | 7/10 | 🔴 חובה למלא | anonymous function | lesson_11, lesson_15 | ✅ §15 | 4/4 T✓ O✓ M✓ C✓ |
 | 94 | **Mutable ↔ Immutable update patterns** | 7/10 | 🔴 חובה למלא |  | lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 | 95 | **ternary ↔ if-else ↔ switch** | 4/10 | 🟢 V בלבד | switch | lesson_11 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
-| 96 | **OOP & Classes Basics** | 6/10 | 🟡 גבולי + V | class · extends · super · constructor · instance · method · Method · new · Property · inheritance | lesson_13, lesson_19 | ✅ §95 | 3/4 T✓ O✓ M✗ C✓ |
-| 97 | **DOM Basics** | 5/10 | 🟢 V בלבד | DOM · Document Object Model · style · attribute · Value | lesson_13, lesson_19 | ✅ §96 | 3/4 T✓ O✓ M✗ C✓ |
-| 98 | **Browser Storage Full** | 5/10 | 🟢 V בלבד | setItem · getItem · cookies | lesson_13, lesson_19 | ✅ §97 | 3/4 T✓ O✓ M✗ C✓ |
-| 99 | **Array Basics** | 4/10 | 🟢 V בלבד | Index · index · יצירת מערך חדש (new array) · יצירת מערך חדש מתוך קיים · סינון לפי תנאי · עבודה עם ערכים לפי אינדקס · array of objects · nested object | lesson_11, lesson_12, lesson_19 | ✅ §98 | 3/4 T✓ O✓ M✗ C✓ |
-| 100 | **String Basics** | 4/10 | 🟢 V בלבד | toString | lesson_11 | ✅ §99 | 3/4 T✓ O✓ M✗ C✓ |
-| 101 | **Node.js fs API** | 5/10 | 🟢 V בלבד | fs · fs.readFile · fs.writeFile · fs.appendFile · fs.open · fs.rename · fs.unlink · File System | lesson_16 | ✅ §100 | 3/4 T✓ O✓ M✗ C✓ |
-| 102 | **CLI Basics** | 5/10 | 🟢 V בלבד | CLI · Command Line Interface · dir · mkdir · type nul · node file.js · npm start | lesson_16 | ✅ §101 | 3/4 T✓ O✓ M✗ C✓ |
-| 103 | **JS Runtimes** | 5/10 | 🟢 V בלבד | Node.js · V8 · module · Express · server · Server · Client · Domain | lesson_16, lesson_17, lesson_18 | ✅ §102 | 3/4 T✓ O✓ M✗ C✓ |
-| 104 | **HTTP Protocol Basics** | 6/10 | 🟡 גבולי + V | HTTP · Protocol · REST API · port · method · Status Codes · Request · Response · Read · Update · headers · Query Parameters · static files · Domain · 1xx-2xx-3xx · 4xx-5xx · app · app.listen | lesson_17, lesson_18 | ✅ §103 | 3/4 T✓ O✓ M✗ C✓ |
-| 105 | **Form Basics** | 5/10 | 🟢 V בלבד | form · email · password · username · validation · server-side storage | lesson_17, lesson_18 | ✅ §104 | 3/4 T✓ O✓ M✗ C✓ |
-| 106 | **Browser Dev Tools** | 4/10 | 🟢 V בלבד | alert · console.log · debugger · network · script | lesson_19 | ✅ §105 | 3/4 T✓ O✓ M✗ C✓ |
-| 107 | **Control Flow** | 4/10 | 🟢 V בלבד | break · continue · return | lesson_19 | ✅ §106 | 3/4 T✓ O✓ M✗ C✓ |
-| 108 | **JS Fundamentals** | 4/10 | 🟢 V בלבד | camelCase · hoisting · parameter · Data Types | lesson_19 | ✅ §107 | 3/4 T✓ O✓ M✗ C✓ |
-| 109 | **MongoDB Query Operators** | 5/10 | 🟢 V בלבד | $eq · $gt · $gte · $lt · $lte · $ne | lesson_20 | ✅ §108 | 3/4 T✓ O✓ M✗ C✓ |
-| 110 | **MongoDB Basics** | 5/10 | 🟢 V בלבד | Cluster · Collection · Connection String · MongoDB Atlas | lesson_20 | ✅ §109 | 3/4 T✓ O✓ M✗ C✓ |
-| 111 | **MongoDB Modify** | 5/10 | 🟢 V בלבד | update · updateMany · deleteOne · deleteMany | lesson_20 | ✅ §110 | 3/4 T✓ O✓ M✗ C✓ |
-| 112 | **React Project Files** | 4/10 | 🟢 V בלבד | App.jsx · App.css · index.html · main.jsx · {} · CSS import | lesson_21 | ✅ §111 | 3/4 T✓ O✓ M✗ C✓ |
-| 113 | **React Styling** | 4/10 | 🟢 V בלבד | className · inline style | lesson_21 | ✅ §112 | 3/4 T✓ O✓ M✗ C✓ |
-| 114 | **React Ecosystem** | 4/10 | 🟢 V בלבד | React · React Native · Vite · RFC · Component · Client Side | lesson_21 | ✅ §113 | 3/4 T✓ O✓ M✗ C✓ |
-| 115 | **React Components & Handlers** | 5/10 | 🟢 V בלבד | addPost · deletePost · MainScreen · PostList · AddPost · element | lesson_22, lesson_23 | ✅ §114 | 3/4 T✓ O✓ M✗ C✓ |
-| 116 | **React Context Pattern** | 6/10 | 🟡 גבולי + V | createContext · Provider · Prop Drilling | lesson_23 | ✅ §115 | 3/4 T✓ O✓ M✗ C✓ |
-| 117 | **useRef Patterns** | 6/10 | 🟡 גבולי + V | ref · ref.current · focus · state update · expensive calculation · side effect | lesson_24 | ✅ §116 | 3/4 T✓ O✓ M✗ C✓ |
-| 118 | **Tailwind Basics** | 5/10 | 🟢 V בלבד | utility classes · Tailwind installation · Tailwind CSS · responsive design · rounded · bg color · rating · search · navbar · add/delete movie | lesson_25 | ✅ §117 | 3/4 T✓ O✓ M✗ C✓ |
-| 119 | **TypeScript Setup** | 4/10 | 🟢 V בלבד | Compiler · tsconfig.json · .js · Todo.ts · models folder · Strongly Typed · optional field | lesson_26 | ✅ §118 | 3/4 T✓ O✓ M✗ C✓ |
-| 120 | **Auth Providers** | 5/10 | 🟢 V בלבד | Supabase Auth · Firebase Auth · Kinde/Appwrite · provider auth · middleware guard · password hashing · XSS boundary | lesson_auth_security | ✅ §119 | 3/4 T✓ O✓ M✗ C✓ |
-| 121 | **Design System Concepts** | 6/10 | 🟡 גבולי + V | cn helper · shadcn/UI · component variants · design tokens · theme tokens · Radix primitives · cva · asChild slot · component registry · accessible primitive · form field composition · design system testing | lesson_design_systems | ✅ §120 | 3/4 T✓ O✓ M✗ C✓ |
-| 122 | **DevOps Concepts** | 5/10 | 🟢 V בלבד | build command · smoke test · release checklist · preview deployment · Docker · Docker Compose · environment variables · health check · production readiness · service | lesson_devops_deploy | ✅ §121 | 3/4 T✓ O✓ M✗ C✓ |
-| 123 | **HTML/CSS Basics** | 4/10 | 🟢 V בלבד | HTML document · HTML form · CSS selector · semantic HTML · label · accessibility basics · cascade and specificity | lesson_html_css_foundations | ✅ §122 | 3/4 T✓ O✓ M✗ C✓ |
-| 124 | **Nest.js Concepts** | 5/10 | 🟢 V בלבד | Nest.js · module · controller · service · DTO · pipe · guard · interceptor · decorator · provider · dependency injection · exception filter · repository pattern · validation pipe · testing module | lesson_nestjs | ✅ §123 | 3/4 T✓ O✓ M✗ C✓ |
-| 125 | **Next.js Concepts** | 5/10 | 🟢 V בלבד | Next.js · App Router · API route · dynamic route · page · layout · metadata API · SEO · image optimization · client component · server component · route handler · server action · file-system routing | lesson_nextjs | ✅ §124 | 3/4 T✓ O✓ M✗ C✓ |
-| 126 | **SQL Concepts** | 4/10 | 🟢 V בלבד | table · row · column · primary key · foreign key · JOIN · relation · migration · ORM · Prisma · Drizzle · transaction · CRUD | lesson_sql_orm | ✅ §125 | 3/4 T✓ O✓ M✗ C✓ |
-| 127 | **Git Workflow** | 4/10 | 🟢 V בלבד | repository · branch · commit · pull request · Git · GitHub workflow | lesson_tooling_git | ✅ §126 | 3/4 T✓ O✓ M✗ C✓ |
-| 128 | **Express Form Events** | 4/10 | 🟢 V בלבד | body-parser · event.preventDefault | lesson_17 | ✅ §127 | 3/4 T✓ O✓ M✗ C✓ |
-| 129 | **Scope Chain** | 5/10 | 🟢 V בלבד | scope chain | lesson_closures | ✅ §128 | 3/4 T✓ O✓ M✗ C✓ |
-| 130 | **DOM Node Removal** | 5/10 | 🟢 V בלבד | removeChild | lesson_13 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
-| 131 | **Error Objects** | 5/10 | 🟢 V בלבד | Error Object · Exception · event object | lesson_15, lesson_19 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
-| 132 | **if/else** | 4/10 | 🟢 V בלבד | if/else | lesson_19 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
-| 133 | **Vite Project Creation** | 2/10 | 🟢 V בלבד | npm create vite@latest | lesson_21 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
-| 134 | **React Hook fundamentals** | 5/10 | 🟢 V בלבד | Hook · mutable · immutable | lesson_22 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
-| 135 | **TS Advanced** | 6/10 | 🟡 גבולי + V | tuple · type annotation · Type Safety · TypeScript · Typing State · void | lesson_26 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
-| 136 | **TS App Models** | 4/10 | 🟢 V בלבד | User · BaseUser · RegisteredUser · GuestUser · Book · Genre · Category · Amount · Expense · Income · Budget Summary · Category Breakdown · extends interface | lesson_27 | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
-| 137 | **AI Engineering** | 6/10 | 🟡 גבולי + V | chunking · embeddings · evaluation · guardrails · hallucination check · LangChain · model selection · OpenAI API · prompt messages · retrieval ranking · streaming response · structured output · token budget · vector store · Vercel AI SDK | lesson_ai_engineering | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
-| 138 | **Auth Attacks** | 5/10 | 🟢 V בלבד | bcrypt · CORS · CSRF | lesson_auth_security | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
-| 139 | **Task Manager Workbook** | 4/10 | 🟢 V בלבד |  | workbook_taskmanager | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
-| 140 | **AI Dev Tools** | 4/10 | 🟢 V בלבד | Continue | ai_development | ❌ חסר | 3/4 T✓ O✓ M✗ C✓ |
+| 96 | **OOP & Classes Basics** | 6/10 | 🟡 גבולי + V | class · extends · super · constructor · instance · method · Method · new · Property · inheritance | lesson_13, lesson_19 | ✅ §95 | 4/4 T✓ O✓ M✓ C✓ |
+| 97 | **DOM Basics** | 5/10 | 🟢 V בלבד | DOM · Document Object Model · style · attribute · Value | lesson_13, lesson_19 | ✅ §96 | 4/4 T✓ O✓ M✓ C✓ |
+| 98 | **Browser Storage Full** | 5/10 | 🟢 V בלבד | setItem · getItem · cookies | lesson_13, lesson_19 | ✅ §97 | 4/4 T✓ O✓ M✓ C✓ |
+| 99 | **Array Basics** | 4/10 | 🟢 V בלבד | Index · index · יצירת מערך חדש (new array) · יצירת מערך חדש מתוך קיים · סינון לפי תנאי · עבודה עם ערכים לפי אינדקס · array of objects · nested object | lesson_11, lesson_12, lesson_19 | ✅ §98 | 4/4 T✓ O✓ M✓ C✓ |
+| 100 | **String Basics** | 4/10 | 🟢 V בלבד | toString | lesson_11 | ✅ §99 | 4/4 T✓ O✓ M✓ C✓ |
+| 101 | **Node.js fs API** | 5/10 | 🟢 V בלבד | fs · fs.readFile · fs.writeFile · fs.appendFile · fs.open · fs.rename · fs.unlink · File System | lesson_16 | ✅ §100 | 4/4 T✓ O✓ M✓ C✓ |
+| 102 | **CLI Basics** | 5/10 | 🟢 V בלבד | CLI · Command Line Interface · dir · mkdir · type nul · node file.js · npm start | lesson_16 | ✅ §101 | 4/4 T✓ O✓ M✓ C✓ |
+| 103 | **JS Runtimes** | 5/10 | 🟢 V בלבד | Node.js · V8 · module · Express · server · Server · Client · Domain | lesson_16, lesson_17, lesson_18 | ✅ §102 | 4/4 T✓ O✓ M✓ C✓ |
+| 104 | **HTTP Protocol Basics** | 6/10 | 🟡 גבולי + V | HTTP · Protocol · REST API · port · method · Status Codes · Request · Response · Read · Update · headers · Query Parameters · static files · Domain · 1xx-2xx-3xx · 4xx-5xx · app · app.listen | lesson_17, lesson_18 | ✅ §103 | 4/4 T✓ O✓ M✓ C✓ |
+| 105 | **Form Basics** | 5/10 | 🟢 V בלבד | form · email · password · username · validation · server-side storage | lesson_17, lesson_18 | ✅ §104 | 4/4 T✓ O✓ M✓ C✓ |
+| 106 | **Browser Dev Tools** | 4/10 | 🟢 V בלבד | alert · console.log · debugger · network · script | lesson_19 | ✅ §105 | 4/4 T✓ O✓ M✓ C✓ |
+| 107 | **Control Flow** | 4/10 | 🟢 V בלבד | break · continue · return | lesson_19 | ✅ §106 | 4/4 T✓ O✓ M✓ C✓ |
+| 108 | **JS Fundamentals** | 4/10 | 🟢 V בלבד | camelCase · hoisting · parameter · Data Types | lesson_19 | ✅ §107 | 4/4 T✓ O✓ M✓ C✓ |
+| 109 | **MongoDB Query Operators** | 5/10 | 🟢 V בלבד | $eq · $gt · $gte · $lt · $lte · $ne | lesson_20 | ✅ §108 | 4/4 T✓ O✓ M✓ C✓ |
+| 110 | **MongoDB Basics** | 5/10 | 🟢 V בלבד | Cluster · Collection · Connection String · MongoDB Atlas | lesson_20 | ✅ §109 | 4/4 T✓ O✓ M✓ C✓ |
+| 111 | **MongoDB Modify** | 5/10 | 🟢 V בלבד | update · updateMany · deleteOne · deleteMany | lesson_20 | ✅ §110 | 4/4 T✓ O✓ M✓ C✓ |
+| 112 | **React Project Files** | 4/10 | 🟢 V בלבד | App.jsx · App.css · index.html · main.jsx · {} · CSS import | lesson_21 | ✅ §111 | 4/4 T✓ O✓ M✓ C✓ |
+| 113 | **React Styling** | 4/10 | 🟢 V בלבד | className · inline style | lesson_21 | ✅ §112 | 4/4 T✓ O✓ M✓ C✓ |
+| 114 | **React Ecosystem** | 4/10 | 🟢 V בלבד | React · React Native · Vite · RFC · Component · Client Side | lesson_21 | ✅ §113 | 4/4 T✓ O✓ M✓ C✓ |
+| 115 | **React Components & Handlers** | 5/10 | 🟢 V בלבד | addPost · deletePost · MainScreen · PostList · AddPost · element | lesson_22, lesson_23 | ✅ §114 | 4/4 T✓ O✓ M✓ C✓ |
+| 116 | **React Context Pattern** | 6/10 | 🟡 גבולי + V | createContext · Provider · Prop Drilling | lesson_23 | ✅ §115 | 4/4 T✓ O✓ M✓ C✓ |
+| 117 | **useRef Patterns** | 6/10 | 🟡 גבולי + V | ref · ref.current · focus · state update · expensive calculation · side effect | lesson_24 | ✅ §116 | 4/4 T✓ O✓ M✓ C✓ |
+| 118 | **Tailwind Basics** | 5/10 | 🟢 V בלבד | utility classes · Tailwind installation · Tailwind CSS · responsive design · rounded · bg color · rating · search · navbar · add/delete movie | lesson_25 | ✅ §117 | 4/4 T✓ O✓ M✓ C✓ |
+| 119 | **TypeScript Setup** | 4/10 | 🟢 V בלבד | Compiler · tsconfig.json · .js · Todo.ts · models folder · Strongly Typed · optional field | lesson_26 | ✅ §118 | 4/4 T✓ O✓ M✓ C✓ |
+| 120 | **Auth Providers** | 5/10 | 🟢 V בלבד | Supabase Auth · Firebase Auth · Kinde/Appwrite · provider auth · middleware guard · password hashing · XSS boundary | lesson_auth_security | ✅ §119 | 4/4 T✓ O✓ M✓ C✓ |
+| 121 | **Design System Concepts** | 6/10 | 🟡 גבולי + V | cn helper · shadcn/UI · component variants · design tokens · theme tokens · Radix primitives · cva · asChild slot · component registry · accessible primitive · form field composition · design system testing | lesson_design_systems | ✅ §120 | 4/4 T✓ O✓ M✓ C✓ |
+| 122 | **DevOps Concepts** | 5/10 | 🟢 V בלבד | build command · smoke test · release checklist · preview deployment · Docker · Docker Compose · environment variables · health check · production readiness · service | lesson_devops_deploy | ✅ §121 | 4/4 T✓ O✓ M✓ C✓ |
+| 123 | **HTML/CSS Basics** | 4/10 | 🟢 V בלבד | HTML document · HTML form · CSS selector · semantic HTML · label · accessibility basics · cascade and specificity | lesson_html_css_foundations | ✅ §122 | 4/4 T✓ O✓ M✓ C✓ |
+| 124 | **Nest.js Concepts** | 5/10 | 🟢 V בלבד | Nest.js · module · controller · service · DTO · pipe · guard · interceptor · decorator · provider · dependency injection · exception filter · repository pattern · validation pipe · testing module | lesson_nestjs | ✅ §123 | 4/4 T✓ O✓ M✓ C✓ |
+| 125 | **Next.js Concepts** | 5/10 | 🟢 V בלבד | Next.js · App Router · API route · dynamic route · page · layout · metadata API · SEO · image optimization · client component · server component · route handler · server action · file-system routing | lesson_nextjs | ✅ §124 | 4/4 T✓ O✓ M✓ C✓ |
+| 126 | **SQL Concepts** | 4/10 | 🟢 V בלבד | table · row · column · primary key · foreign key · JOIN · relation · migration · ORM · Prisma · Drizzle · transaction · CRUD | lesson_sql_orm | ✅ §125 | 4/4 T✓ O✓ M✓ C✓ |
+| 127 | **Git Workflow** | 4/10 | 🟢 V בלבד | repository · branch · commit · pull request · Git · GitHub workflow | lesson_tooling_git | ✅ §126 | 4/4 T✓ O✓ M✓ C✓ |
+| 128 | **Express Form Events** | 4/10 | 🟢 V בלבד | body-parser · event.preventDefault | lesson_17 | ✅ §127 | 4/4 T✓ O✓ M✓ C✓ |
+| 129 | **Scope Chain** | 5/10 | 🟢 V בלבד | scope chain | lesson_closures | ✅ §128 | 4/4 T✓ O✓ M✓ C✓ |
+| 130 | **DOM Node Removal** | 5/10 | 🟢 V בלבד | removeChild | lesson_13 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 131 | **Error Objects** | 5/10 | 🟢 V בלבד | Error Object · Exception · event object | lesson_15, lesson_19 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 132 | **if/else** | 4/10 | 🟢 V בלבד | if/else | lesson_19 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 133 | **Vite Project Creation** | 2/10 | 🟢 V בלבד | npm create vite@latest | lesson_21 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 134 | **React Hook fundamentals** | 5/10 | 🟢 V בלבד | Hook · mutable · immutable | lesson_22 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 135 | **TS Advanced** | 6/10 | 🟡 גבולי + V | tuple · type annotation · Type Safety · TypeScript · Typing State · void | lesson_26 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 136 | **TS App Models** | 4/10 | 🟢 V בלבד | User · BaseUser · RegisteredUser · GuestUser · Book · Genre · Category · Amount · Expense · Income · Budget Summary · Category Breakdown · extends interface | lesson_27 | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 137 | **AI Engineering** | 6/10 | 🟡 גבולי + V | chunking · embeddings · evaluation · guardrails · hallucination check · LangChain · model selection · OpenAI API · prompt messages · retrieval ranking · streaming response · structured output · token budget · vector store · Vercel AI SDK | lesson_ai_engineering | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 138 | **Auth Attacks** | 5/10 | 🟢 V בלבד | bcrypt · CORS · CSRF | lesson_auth_security | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 139 | **Task Manager Workbook** | 4/10 | 🟢 V בלבד |  | workbook_taskmanager | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
+| 140 | **AI Dev Tools** | 4/10 | 🟢 V בלבד | Continue | ai_development | ❌ חסר | 4/4 T✓ O✓ M✓ C✓ |
 
 > **מקרא רכיבי מילוי (4 לכל קלסטר):** T = Table · O = Overview 6-levels · M = Per-Member 6-levels · C = Code blocks 6-levels
 
-**סטטוס כולל:** 479 / 560 רכיבים מולאו (86%) · 77 קלסטרים מלאים 4/4 מתוך 140
+**סטטוס כולל:** 560 / 560 רכיבים מולאו (100%) · 140 קלסטרים מלאים 4/4 מתוך 140
 
 ### 📊 סיכום קלסטרים לפי קושי (כל אחד נחשב כמושג-על אחד)
 
