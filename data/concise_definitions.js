@@ -1326,6 +1326,1212 @@
       what: "primitive טיפוס ל-true/false — שלוש דרכים לקבל: literal, השוואה, !!val.",
       need: "ב-TS להעדיף boolean אמיתי, לא 0/1 או null/undefined כ-truthy proxy.",
     },
+    "Data Types": {
+      what: "סוגי ערכים בJS: string, number, boolean, null, undefined, object, symbol, bigint.",
+      need: "typeof יכול לסווג; null נחשב 'object' (באג היסטורי).",
+    },
+    "camelCase": {
+      what: "כתיבת שם בלי רווחים — מילה ראשונה קטנה, מילים שאחריה גדולות. dog וpetName.",
+      need: "קונבנציה ל-JS variables ו-functions; PascalCase לClasses.",
+    },
+    "forEach": {
+      what: "מתודת מערך שמריצה callback לכל איבר, ללא ערך החזרה.",
+      need: "לא תומך ב-break/continue. אם צריך לעצור, switch ל-for-of.",
+    },
+    "localStorage": {
+      what: "אחסון key-value מתמשך בדפדפן (~5MB).",
+      need: "string בלבד; השתמש JSON.stringify/parse לאובייקטים.",
+    },
+    "sessionStorage": {
+      what: "כמו localStorage אבל נמחק בסוף הסשן (סגירת הטאב).",
+      need: "מתאים לdata זמני שלא צריך להחזיק בין ביקורים.",
+    },
+    "Protocol": {
+      what: "החלק הראשון ב-URL: http://, https://, ftp://.",
+      need: "https = מוצפן. ב-production תמיד https.",
+    },
+    "Domain": {
+      what: "השם של השרת ב-URL: example.com.",
+      need: "DNS ממפה ל-IP. subdomain.example.com הוא דומיין משני.",
+    },
+    "Path": {
+      what: "הנתיב אחרי הדומיין: /api/users/42.",
+      need: "Router תופס לפי path; query string (?x=1) הוא בנפרד.",
+    },
+    "Query Parameters": {
+      what: "פרמטרים אחרי ?: /search?q=js&page=2.",
+      need: "ב-Express: req.query.q. ב-React Router: useSearchParams.",
+    },
+    "form": {
+      what: "אלמנט HTML לשליחת קלט: <form action='/api' method='POST'>.",
+      need: "כל input חייב name. submit שולח לserver אם לא event.preventDefault().",
+    },
+    "event.preventDefault": {
+      what: "עוצר את ברירת המחדל של אירוע — submit לא ינווט, anchor לא יעקוב.",
+      need: "חיוני בtoplogy של SPA forms ו-link clicks.",
+    },
+    "GET": {
+      what: "HTTP method לקריאה — לא משנה state.",
+      need: "צריך להיות idempotent וללא body. params דרך query.",
+    },
+    "POST": {
+      what: "HTTP method ליצירה. שולח body.",
+      need: "לא idempotent. החזרה שיגרתית 201 + Location header.",
+    },
+    "Create": {
+      what: "C ב-CRUD: יצירת רשומה חדשה.",
+      need: "HTTP POST + INSERT ב-SQL / insertOne ב-Mongo.",
+    },
+    "Read": {
+      what: "R ב-CRUD: קריאת רשומה/רשומות.",
+      need: "HTTP GET + SELECT ב-SQL / find ב-Mongo.",
+    },
+    "Update": {
+      what: "U ב-CRUD: עדכון רשומה קיימת.",
+      need: "HTTP PUT (החלפה) או PATCH (חלקי) + UPDATE ב-SQL.",
+    },
+    "Delete": {
+      what: "D ב-CRUD: מחיקת רשומה.",
+      need: "HTTP DELETE + DELETE ב-SQL / deleteOne ב-Mongo.",
+    },
+    "CRUD": {
+      what: "Create, Read, Update, Delete — ארבע פעולות ה-DB הבסיסיות.",
+      need: "מתאים לרוב לישויות data; ניתן למיפוי ישיר ל-HTTP methods.",
+    },
+    "RFC": {
+      what: "Request For Comments — מסמכי תקן של האינטרנט (HTTP, JSON, OAuth).",
+      need: "מקור אמת לפרוטוקולים. דוגמה: RFC 7231 על HTTP.",
+    },
+    "Status Codes": {
+      what: "מספרי תוצאה ב-HTTP: 2xx success, 3xx redirect, 4xx client error, 5xx server error.",
+      need: "200 OK, 201 Created, 400 Bad Request, 401 Auth, 404 Not Found, 500 Server Error.",
+    },
+    "Client": {
+      what: "התוכנה שמבקשת מהשרת — דפדפן, אפליקציה, curl.",
+      need: "בdev — ה-React app בדפדפן הוא ה-Client.",
+    },
+    "Server": {
+      what: "התוכנה שמאזינה לבקשות ומחזירה תשובות.",
+      need: "ב-Node: Express app שעולה על port (e.g. 3000).",
+    },
+    "Request": {
+      what: "הבקשה מ-Client ל-Server: method + URL + headers + body.",
+      need: "ב-Express: req.method, req.url, req.headers, req.body.",
+    },
+    "Response": {
+      what: "התשובה מ-Server ל-Client: status + headers + body.",
+      need: "ב-Express: res.status(200).json(data).",
+    },
+    "URL": {
+      what: "כתובת אחידה למשאב ברשת: protocol://domain:port/path?query#hash.",
+      need: "URLSearchParams לקריאת query בJS.",
+    },
+    "HTTP": {
+      what: "פרוטוקול תקשורת לאתרים — request/response stateless.",
+      need: "https מוצפן. HTTP/2 ו-HTTP/3 מהירים יותר.",
+    },
+    "REST API": {
+      what: "API שמשתמש ב-HTTP methods ובURLs לתיאור resources.",
+      need: "GET /users, POST /users, GET /users/42, PUT /users/42, DELETE /users/42.",
+    },
+    "Express": {
+      what: "framework רזה ל-Node ל-HTTP servers.",
+      need: "app.get/post/put/delete + middleware + req/res + app.listen.",
+    },
+    "body-parser": {
+      what: "middleware שפרסר JSON/form body של request.",
+      need: "express.json() מובנה היום. ב-Express 4+ אין צורך ב-body-parser external.",
+    },
+    "JSON": {
+      what: "JavaScript Object Notation — פורמט data חליפי ל-XML.",
+      need: "JSON.stringify ו-JSON.parse. אובייקטים, arrays, primitives — לא functions/Date.",
+    },
+    "Route": {
+      what: "מיפוי path → component ב-React Router.",
+      need: "<Route path='/about' element={<About/>} />",
+    },
+    "Router": {
+      what: "ה-context של React Router — עוטף את כל ה-app.",
+      need: "<BrowserRouter> ב-main.tsx.",
+    },
+    "Routes": {
+      what: "מעטפת ל-Route — מציגה רק אחד שמתאים.",
+      need: "<Routes><Route path='/' element={<Home/>} /></Routes>",
+    },
+    "BrowserRouter": {
+      what: "Router שמשתמש ב-History API: /about (URL נקי).",
+      need: "דורש server שמחזיר index.html לכל path.",
+    },
+    "useNavigate": {
+      what: "hook להניווט פרוגרמטי: navigate('/about').",
+      need: "navigate(-1) חוזר אחורה.",
+    },
+    "useParams": {
+      what: "hook לקבלת dynamic params: useParams() returns { id }.",
+      need: "Route path='/user/:id' → useParams = { id }.",
+    },
+    "Link": {
+      what: "תחליף ל-<a> — לא טוען מחדש את הדף.",
+      need: "<Link to='/about'>About</Link>",
+    },
+    "to": {
+      what: "prop של Link — מציין יעד.",
+      need: "<Link to='/contact'>Contact</Link>",
+    },
+    "element": {
+      what: "prop של Route — JSX של הקומפוננטה.",
+      need: "<Route element={<About/>} />",
+    },
+    "insertOne": {
+      what: "Collection.insertOne(doc) — מוסיף document בודד.",
+      need: "מחזיר { acknowledged, insertedId }.",
+    },
+    "insertMany": {
+      what: "Collection.insertMany([docs]) — מוסיף מספר.",
+      need: "אם אחד נכשל, הכל מתבטל (אלא אם ordered: false).",
+    },
+    "findOneAndUpdate": {
+      what: "מוצא + מעדכן באטומיות. מחזיר את הdocument.",
+      need: "{ new: true } ל-return של הגרסה החדשה.",
+    },
+    "updateMany": {
+      what: "מעדכן את כל ה-documents שעונים על filter.",
+      need: "filter ריק = updateMany לכל הcollection — שמור.",
+    },
+    "deleteOne": {
+      what: "מוחק document בודד שעונה על filter.",
+      need: "filter ריק = מוחק ראשון. ב-production רק עם filter ספציפי.",
+    },
+    "deleteMany": {
+      what: "מוחק את כל ה-documents שעונים על filter.",
+      need: "filter={} = drop של ה-collection. CAUTION.",
+    },
+    "$ne": {
+      what: "Mongo operator: not equal. { age: { $ne: 18 } }.",
+      need: "מתאים לסינון 'הכל חוץ מ'.",
+    },
+    "$gte": {
+      what: "Mongo operator: greater than or equal. { age: { $gte: 18 } }.",
+      need: "$gt ל-greater מחמיר; $lt/$lte לקטן.",
+    },
+    "$lte": {
+      what: "Mongo operator: less than or equal.",
+      need: "מתאים לטווחים: { age: { $gte: 18, $lte: 65 } }.",
+    },
+    "Database": {
+      what: "מערכת לאחסון data מובנה.",
+      need: "SQL (Postgres) ו-NoSQL (Mongo) — שני הסגנונות הנפוצים.",
+    },
+    "NoSQL": {
+      what: "DB ללא schema קבוע — JSON-like documents.",
+      need: "Mongo, DynamoDB, Firestore. גמיש לשינויים תכופים.",
+    },
+    "MongoDB": {
+      what: "NoSQL document DB — JSON-like documents בcollections.",
+      need: "Atlas (cloud) או localhost. דרייבר Node: 'mongodb' או Mongoose.",
+    },
+    "MongoDB Atlas": {
+      what: "MongoDB cloud-managed (M0 free tier זמין).",
+      need: "connection string דרך .env, אף פעם לא ב-git.",
+    },
+    "Collection": {
+      what: "אנלוגי לטבלה ב-SQL — קבוצת documents.",
+      need: "ב-Mongo collection נוצרת אוטומטית בעת insertOne ראשון.",
+    },
+    "Document": {
+      what: "רשומה ב-Mongo — JSON object עם _id ייחודי.",
+      need: "_id נוצר אוטומטית כ-ObjectId אם לא סופק.",
+    },
+    "Mongoose": {
+      what: "ODM ל-Mongo: Schema → Model → Document.",
+      need: "מוסיף type checks, validation, hooks, populate.",
+    },
+    "Model": {
+      what: "ב-Mongoose: class שיוצא מ-Schema. User.create / User.find.",
+      need: "instances הם documents שאפשר .save().",
+    },
+    "Schema": {
+      what: "הגדרת shape של document ב-Mongoose.",
+      need: "{ name: { type: String, required: true } }. type, default, validate, ref.",
+    },
+    "findOne": {
+      what: "Mongo find שמחזיר document ראשון או null.",
+      need: "חיפוש לפי שדה ייחודי: User.findOne({ email }).",
+    },
+    "JWT": {
+      what: "JSON Web Token — token חתום עם payload + signature.",
+      need: "stateless auth. אחסון ב-httpOnly cookie. expiresIn קצר.",
+    },
+    "OAuth": {
+      what: "פרוטוקול ל-third-party auth (login with Google).",
+      need: "OAuth 2.0 flow: redirect → code → token. PKCE ל-SPAs.",
+    },
+    "CSRF": {
+      what: "Cross-Site Request Forgery — הסחה של דפדפן לשלוח request בשמך.",
+      need: "הגנה: CSRF token, SameSite cookie, ו-double-submit pattern.",
+    },
+    "XSS boundary": {
+      what: "הגבול בין user input ל-DOM — חייב escape.",
+      need: "DOMPurify לסניטיזציה; React escape אוטומטית ב-{value}.",
+    },
+    "CORS": {
+      what: "Cross-Origin Resource Sharing — מנגנון לשתף resources בין domains.",
+      need: "ב-Express: cors() middleware. allowed origins מוגדרים בשרת.",
+    },
+    "shadcn/UI": {
+      what: "ספריית primitives copy-paste (לא npm).",
+      need: "npx shadcn-ui add button. הקוד עובר אליך — תוכל לעדכן.",
+    },
+    "asChild slot": {
+      what: "Radix prop שמעביר behavior ל-child element במקום wrapper.",
+      need: "<Trigger asChild><Link>Open</Link></Trigger> — Link מקבל behavior של Trigger.",
+    },
+    "Radix primitives": {
+      what: "primitives נגישים unstyled (Dialog, Dropdown, Tabs).",
+      need: "מטפלים ב-focus management, ARIA, keyboard. אתה מוסיף סגנון.",
+    },
+    "Tailwind CSS": {
+      what: "framework של utility classes — px-4, bg-red-500.",
+      need: "tailwind.config ל-theme tokens. PurgeCSS מוציא רק utilities שבשימוש.",
+    },
+    "Tailwind installation": {
+      what: "Tailwind 4: npm i tailwindcss + @tailwindcss/vite.",
+      need: "הוסף 'tailwindcss' ל-vite plugins. ייבא style.css ב-main.",
+    },
+    "padding": {
+      what: "מרווח פנימי בין content ל-border.",
+      need: "p-4 = padding 1rem בכל הצדדים. px-2 horizontal, py-3 vertical.",
+    },
+    "bg color": {
+      what: "צבע רקע. bg-blue-500, bg-red-100.",
+      need: "Tailwind מספק palette של 50-950 לכל צבע.",
+    },
+    "rounded": {
+      what: "border-radius. rounded-md, rounded-lg, rounded-full.",
+      need: "rounded-full לעיגולים מלאים.",
+    },
+    "Dockerfile": {
+      what: "קובץ הוראות לבניית Docker image.",
+      need: "FROM, WORKDIR, COPY, RUN, CMD. multi-stage builds לproduction.",
+    },
+    "Docker": {
+      what: "container platform — תכניות מבודדות עם FS+deps שלהן.",
+      need: "אותה תוצאה בכל host. docker run, docker build, docker compose.",
+    },
+    "Docker Compose": {
+      what: "הרצת multi-container apps עם yaml.",
+      need: "services: web, db, redis. docker-compose up.",
+    },
+    "CI": {
+      what: "Continuous Integration — בנייה+טסטים אוטומטיים בכל push.",
+      need: "GitHub Actions, GitLab CI, CircleCI.",
+    },
+    "CD": {
+      what: "Continuous Delivery/Deployment — push → staging/prod אוטומטי.",
+      need: "Delivery: ready to deploy. Deployment: actually auto-deploys.",
+    },
+    "Vercel deploy": {
+      what: "Vercel CLI: vercel deploy [--prod].",
+      need: "preview ל-PR, prod ל-main. zero-config ל-Next.js.",
+    },
+    "Next.js": {
+      what: "React framework עם SSR/SSG/ISR + file-system routing.",
+      need: "App Router ב-13+. Server Components ברירת מחדל.",
+    },
+    "App Router": {
+      what: "Next.js 13+ router בתוך app/. layouts, server components.",
+      need: "page.tsx = route. layout.tsx עוטף. loading.tsx ל-Suspense.",
+    },
+    "dynamic route": {
+      what: "param בנתיב: app/user/[id]/page.tsx.",
+      need: "page מקבל { params: { id } }. generateStaticParams ל-SSG.",
+    },
+    "API route": {
+      what: "endpoint בתוך Next: app/api/users/route.ts.",
+      need: "export async function GET/POST. Response.json().",
+    },
+    "SSR": {
+      what: "Server-Side Rendering — HTML נבנה לכל request.",
+      need: "default ב-Server Components. SEO + first paint מהיר.",
+    },
+    "SSG": {
+      what: "Static Site Generation — HTML נבנה ב-build.",
+      need: "מהיר מאוד; לא מתאים לdata משתנה. generateStaticParams.",
+    },
+    "ISR": {
+      what: "Incremental Static Regeneration — SSG עם revalidate ב-background.",
+      need: "fetch(url, { next: { revalidate: 60 } }).",
+    },
+    "metadata API": {
+      what: "Next.js: export const metadata = { title, description }.",
+      need: "מייצר meta tags ב-<head>. תומך ב-dynamic via generateMetadata.",
+    },
+    "SEO": {
+      what: "Search Engine Optimization — להופיע גבוה בגוגל.",
+      need: "title, description, structured data, sitemap, fast paint.",
+    },
+    "Nest.js": {
+      what: "framework backend מבוסס TS עם DI ו-decorators.",
+      need: "@Module, @Controller, @Injectable. נראה כמו Angular בbackend.",
+    },
+    "module": {
+      what: "ב-Nest: יחידת קוד עם controllers + providers.",
+      need: "@Module({ controllers: [...], providers: [...] })",
+    },
+    "provider": {
+      what: "ב-Nest: class שניתן ל-inject (services, repositories).",
+      need: "@Injectable() + הוספה ל-providers של module.",
+    },
+    "DTO": {
+      what: "Data Transfer Object — shape של request body + validation.",
+      need: "class-validator decorators (@IsEmail, @MinLength) + ValidationPipe.",
+    },
+    "SQL": {
+      what: "Structured Query Language — שפת שאילתות לDB רלציונים.",
+      need: "SELECT, INSERT, UPDATE, DELETE + JOIN, WHERE, GROUP BY.",
+    },
+    "PostgreSQL": {
+      what: "DB רלציוני open-source חזק (JSON, full-text, GIS).",
+      need: "האלטרנטיבה המודרנית ל-MySQL בfull-stack apps.",
+    },
+    "JOIN": {
+      what: "שילוב טבלאות לפי key משותף.",
+      need: "INNER, LEFT, RIGHT, FULL. ON clause לתנאי.",
+    },
+    "ORM": {
+      what: "Object-Relational Mapper — ממפה objects ל-rows ב-SQL.",
+      need: "Prisma, Drizzle, TypeORM, Sequelize. type-safety + migrations.",
+    },
+    "Prisma": {
+      what: "ORM TS-first עם schema.prisma + auto-generated client.",
+      need: "prisma migrate, prisma.user.findUnique({ where: { email } }).",
+    },
+    "Drizzle": {
+      what: "ORM TS-native עם light runtime, SQL-near syntax.",
+      need: "schema as code, db.select().from(users).where(eq(users.id, 1)).",
+    },
+    "OpenAI API": {
+      what: "REST API לגישה ל-GPT, Whisper, DALL-E.",
+      need: "Bearer token, /chat/completions. SDK רשמי מומלץ.",
+    },
+    "Vercel AI SDK": {
+      what: "SDK ל-streaming + tool-calling ב-React/Next.",
+      need: "useChat hook, streamText, structured output, multi-provider.",
+    },
+    "RAG": {
+      what: "Retrieval-Augmented Generation — fetch context לפני LLM call.",
+      need: "embeddings + vector DB (Pinecone, Chroma) + top-K retrieval.",
+    },
+    "LangChain": {
+      what: "framework לchains + memory + tools + agents מעל LLMs.",
+      need: "LCEL syntax (prompt.pipe(model).pipe(parser)). React לAgents.",
+    },
+    "AI Code Review": {
+      what: "AI שעובר על code change ומציע שיפורים.",
+      need: "GitHub Copilot Reviews, Cursor, Sourcery. לא תחליף ל-human review.",
+    },
+    "Hallucinations": {
+      what: "LLM מייצר תוכן שנשמע נכון אבל לא קיים/שגוי.",
+      need: "verify מול docs, fact-check, RAG מצמצם.",
+    },
+    "Context Window": {
+      what: "כמות tokens שהמודל רואה בבת אחת.",
+      need: "Claude 4.7: 200K-1M. עובר → forgets ראשי השיחה.",
+    },
+    "Cursor": {
+      what: "IDE מבוסס VS Code עם AI עמוק (Composer, Cmd+K).",
+      need: "מצוין ל-multi-file edits. Cmd+L ל-chat, Cmd+I ל-Composer.",
+    },
+    "Windsurf": {
+      what: "IDE AI מבוסס VS Code עם Cascade agent.",
+      need: "Cascade עם memory לקבצים, מתאים לrefactors.",
+    },
+    "Prompt Engineering": {
+      what: "אומנות לכתוב prompts יעילים.",
+      need: "specific > general, examples (few-shot), role + format constraints.",
+    },
+    "AI": {
+      what: "Artificial Intelligence — system שמחקה אינטליגנציה אנושית.",
+      need: "LLMs (GPT, Claude) ל-text. Diffusion ל-images.",
+    },
+    "Claude Code": {
+      what: "CLI של Anthropic לסוכן AI שמתפעל קוד.",
+      need: "claude command, slash commands, sub-agents, tool use.",
+    },
+    "ChatGPT": {
+      what: "ממשק שיחה של OpenAI מעל GPT.",
+      need: "מהיר לbrainstorm, אבל verify code/facts לפני השימוש.",
+    },
+    "Copilot": {
+      what: "GitHub AI שמשלים קוד ב-IDE.",
+      need: "מבוסס context של הקובץ הפתוח. ברוב המקרים מציע סבירות גבוהה.",
+    },
+    "Vite": {
+      what: "build tool מהיר עם dev server + HMR + ESM.",
+      need: "npm create vite@latest. החליף את webpack לרוב פרויקטים חדשים.",
+    },
+    "npm create vite@latest": {
+      what: "פקודה ליצירת פרויקט Vite חדש.",
+      need: "בוחר template (react/vue/svelte) + JS/TS.",
+    },
+    "index.html": {
+      what: "ה-HTML root של Vite/SPA.",
+      need: "div#root + script src='/src/main.tsx'. Vite מטפל בtransform.",
+    },
+    "main.jsx": {
+      what: "entry point של React app.",
+      need: "ReactDOM.createRoot(root).render(<App/>)",
+    },
+    "App.jsx": {
+      what: "Root component של React app.",
+      need: "מכיל Router/Provider/App layout. בד\"כ סטייט בסיסי וRoutes.",
+    },
+    "App.css": {
+      what: "Stylesheet של App component.",
+      need: "ב-Vite מיובא עם import './App.css'.",
+    },
+    "inline style": {
+      what: "סטייל JSX ישיר: style={{ color: 'red', padding: 8 }}.",
+      need: "מהיר לדוגמאות; לא מומלץ לתחזוקה. עדיף Tailwind/className.",
+    },
+    "CSS import": {
+      what: "import './style.css' ב-JS.",
+      need: "Vite/webpack בonderstand מטפלים. מסדרים specificity.",
+    },
+    "parent component": {
+      what: "קומפוננטה שמכילה אחרת ומעבירה props.",
+      need: "<Parent><Child prop={x}/></Parent>",
+    },
+    "child component": {
+      what: "קומפוננטה שמקבלת props מההורה.",
+      need: "function Child({ prop }) { return <div>{prop}</div> }",
+    },
+    "MainScreen": {
+      what: "Container component שמרכז state ומעביר ל-children.",
+      need: "ב-React Router לרוב ב-path '/'.",
+    },
+    "AddPost": {
+      what: "form component להוספת פוסט.",
+      need: "state פנימי לinput + onSubmit שקורא ל-parent callback.",
+    },
+    "PostList": {
+      what: "presentational component שמרנדר רשימה.",
+      need: "props.posts.map(p => <Post key={p.id}/>)",
+    },
+    "props": {
+      what: "data שעובר מ-parent ל-child component.",
+      need: "read-only בילד. שינוי דורש callback מההורה.",
+    },
+    "Component": {
+      what: "פונקציה (או class) שמחזירה JSX.",
+      need: "PascalCase שם. <Greeting name='שיר' />",
+    },
+    "JSX": {
+      what: "syntax extension ל-JS שמראה כמו HTML.",
+      need: "transpiles ל-React.createElement. תומך ב-{expression}.",
+    },
+    "React": {
+      what: "ספריית UI declarative — components + state + virtual DOM.",
+      need: "ReactDOM.createRoot + render. hooks ב-function components.",
+    },
+    "React + TypeScript": {
+      what: "React עם type-safety ל-props/state/refs.",
+      need: "interface Props + function Comp({ prop }: Props).",
+    },
+    "React Native": {
+      what: "React לmobile native (iOS/Android).",
+      need: "components: View, Text, Image. Expo לdev מהיר.",
+    },
+    "useState": {
+      what: "hook ל-state פנימי בקומפוננטה.",
+      need: "const [count, setCount] = useState(0). re-render בכל setX.",
+    },
+    "setState": {
+      what: "function שמעדכן state.",
+      need: "functional update setX(prev => prev+1) בטוח ב-stale closures.",
+    },
+    "useEffect": {
+      what: "hook ל-side effects (fetch, subscriptions, DOM).",
+      need: "[] = mount only, [a] = כש-a משתנה. return cleanup.",
+    },
+    "useRef": {
+      what: "hook ל-mutable container ללא re-render.",
+      need: "useRef(null). ref.current = value. ל-DOM: <input ref={r}/>.",
+    },
+    "useMemo": {
+      what: "hook ל-memoize ערך מחושב.",
+      need: "useMemo(() => expensiveCalc(x), [x]). measure לפני.",
+    },
+    "useContext": {
+      what: "hook לקריאת ערך מ-Context Provider.",
+      need: "useContext(MyCtx) — value מ-Provider קרוב או default.",
+    },
+    "createContext": {
+      what: "function ליצירת Context object.",
+      need: "const Ctx = createContext(default). { Provider, Consumer }.",
+    },
+    "Hook": {
+      what: "function שמחילה ב-use* (useState, useEffect).",
+      need: "רק ב-top-level של function component, בסדר עקבי.",
+    },
+    "Provider": {
+      what: "<Ctx.Provider value={...}> — מספק ערך לעץ.",
+      need: "children קוראים דרך useContext(Ctx).",
+    },
+    "Context API": {
+      what: "מנגנון React לpassing data דרך עץ ללא props.",
+      need: "createContext + Provider + useContext. לא רחב מדי (re-renders).",
+    },
+    "Prop Drilling": {
+      what: "העברת prop דרך רכיבים שלא משתמשים בו.",
+      need: "Context או state library פותרים.",
+    },
+    "state update": {
+      what: "setX(newValue) — async, מתזמן re-render.",
+      need: "אל תקרא ל-x מיד אחרי setX — תקבל את הערך הישן.",
+    },
+    "expensive calculation": {
+      what: "חישוב כבד שירוץ בכל render אם לא memoized.",
+      need: "useMemo כשתלוי ב-state. measure בProfiler ראשון.",
+    },
+    "ref": {
+      what: "object עם .current — לא מטריגר re-render.",
+      need: "ל-DOM access או mutable values שלא צריכים render.",
+    },
+    "ref.current": {
+      what: "השדה של ref שמחזיק את הערך.",
+      need: "useRef מחזיר { current }. שינוי לא triggers re-render.",
+    },
+    "DOM element": {
+      what: "אלמנט בDOM, נגיש דרך ref.",
+      need: "useRef + ref={r} → r.current = HTMLElement.",
+    },
+    "focus": {
+      what: "השמת cursor על element (input).",
+      need: "useEffect + ref.current?.focus() אחרי mount.",
+    },
+    "side effect": {
+      what: "פעולה מחוץ ל-component (fetch, DOM, timer).",
+      need: "ב-useEffect, לא ב-render body.",
+    },
+    "immutable": {
+      what: "לא משנים את האובייקט — יוצרים חדש.",
+      need: "ב-React: setItems([...items, newItem]), לא items.push.",
+    },
+    "mutable": {
+      what: "ניתן לשינוי במקום.",
+      need: "JS arrays ו-objects mutable by default. State צריך immutable.",
+    },
+    "onChange": {
+      what: "event handler לשינוי input.",
+      need: "<input onChange={(e) => setX(e.target.value)} />",
+    },
+    "addPost": {
+      what: "callback להוספת פוסט מ-parent.",
+      need: "מועבר ל-AddPost כ-prop, נקרא בonSubmit.",
+    },
+    "deletePost": {
+      what: "callback למחיקת פוסט.",
+      need: "מועבר ל-PostList → לכל Post — ע\"י id.",
+    },
+    "TypeScript": {
+      what: "JavaScript + static types בזמן compile.",
+      need: "תופס bugs לפני runtime. tsc compiles ל-JS.",
+    },
+    "tsc": {
+      what: "TypeScript compiler CLI.",
+      need: "tsc app.ts → app.js. tsc -p tsconfig.json לproject.",
+    },
+    "Compiler": {
+      what: "תוכנה שמתרגמת קוד source ל-output (JS, machine code).",
+      need: "TS: tsc. Babel: לJS modern → ES5.",
+    },
+    "tsconfig.json": {
+      what: "config של TS compiler.",
+      need: "strict: true מומלץ. target, module, lib, paths.",
+    },
+    "string": {
+      what: "primitive type ל-טקסט.",
+      need: "'hello', \"hi\", `template ${x}`. immutable.",
+    },
+    "number": {
+      what: "primitive type למספרים (float64).",
+      need: "כולל NaN, Infinity. Number.isInteger() לבדיקה.",
+    },
+    "tuple": {
+      what: "TS array עם ordered fixed types: [string, number].",
+      need: "useState החזרה הוא tuple: [value, setter].",
+    },
+    "enum": {
+      what: "TS construct לקבוצת ערכים בעלי שם.",
+      need: "enum Color { Red, Blue }. string enum מומלץ: Red = 'red'.",
+    },
+    "void": {
+      what: "return type לפונקציה שלא מחזירה ערך.",
+      need: "function log(): void { console.log() }",
+    },
+    "never": {
+      what: "type שלעולם לא מקבל ערך — לפונקציה שזורקת/לופ אינסופי.",
+      need: "exhaustiveness checks ב-switch על union.",
+    },
+    "readonly": {
+      what: "modifier למנוע שינוי שדה.",
+      need: "readonly id: string. ב-array: ReadonlyArray<T>.",
+    },
+    "optional field": {
+      what: "field שלא חובה: name?: string.",
+      need: "אז name יכול להיות string או undefined.",
+    },
+    "type alias": {
+      what: "type X = ... — שם חלופי לtype.",
+      need: "תומך ב-union, primitives, mapped, conditional.",
+    },
+    "type": {
+      what: "type alias — keyword ב-TS.",
+      need: "type ID = string | number.",
+    },
+    "interface": {
+      what: "TS construct ל-shape של object.",
+      need: "interface User { id: string }. תומך ב-extends ו-merging.",
+    },
+    "extends interface": {
+      what: "interface יורש מ-interface אחר.",
+      need: "interface Admin extends User { role: 'admin' }",
+    },
+    "Union Type": {
+      what: "X | Y — ערך מאחד הטיפוסים.",
+      need: "narrow לפני שימוש דרך typeof, in, או discriminator.",
+    },
+    "Type Narrowing": {
+      what: "צמצום union לטיפוס ספציפי דרך בדיקות runtime.",
+      need: "if (typeof x === 'string') { /* x: string */ }",
+    },
+    "any": {
+      what: "TS escape — כל פעולה מותרת, אין safety.",
+      need: "להימנע. unknown בטוח יותר — דורש narrowing.",
+    },
+    "type annotation": {
+      what: "ציון סוג מפורש: let x: number = 5.",
+      need: "TS מסיק (infer) ברוב המקרים — חובה רק כשנדרש.",
+    },
+    "Typing Props": {
+      what: "interface ל-React component props.",
+      need: "function Btn({ label }: { label: string }) {}",
+    },
+    "Typing State": {
+      what: "generic ל-useState: useState<string|null>(null).",
+      need: "נחוץ כש-initial value הוא subset של ה-state.",
+    },
+    "Function Prop Type": {
+      what: "type לcallback prop: onSave: (id: string) => void.",
+      need: "void = no return; אפשר לcheain async.",
+    },
+    "models folder": {
+      what: "src/models/ — מקום קונבנציונלי לטיפוסים משותפים.",
+      need: "Todo.ts, User.ts. interfaces וtypes פנימיים.",
+    },
+    "Todo.ts": {
+      what: "interface Todo { id, title, completed }.",
+      need: "מקור אמת ל-shape של todo בכל הapp.",
+    },
+    "Genre": {
+      what: "type לקטגוריות ספרים: 'fiction' | 'science'.",
+      need: "literal union סגור — IDE autocomplete + type-safe.",
+    },
+    ".js": {
+      what: "סיומת JavaScript.",
+      need: "תמיד executable בדפדפן ו-Node. תוצר של tsc/build.",
+    },
+    "array type": {
+      what: "T[] או Array<T> — מערך של T.",
+      need: "number[] = מערך של מספרים. ReadonlyArray<T> ל-immutable.",
+    },
+    "DOM": {
+      what: "Document Object Model — עץ HTML שניתן לתפעל ב-JS.",
+      need: "document.querySelector, getElementById, innerHTML.",
+    },
+    "querySelector": {
+      what: "document.querySelector(css) — ראשון תואם.",
+      need: "מקבל CSS selector. .class, #id, tag, [attr].",
+    },
+    "querySelectorAll": {
+      what: "document.querySelectorAll(css) — NodeList של תואמים.",
+      need: "Array.from() ל-array אמיתי.",
+    },
+    "getElementById": {
+      what: "document.getElementById('id') — element או null.",
+      need: "מהיר יותר מ-querySelector. unique לפי id.",
+    },
+    "innerHTML": {
+      what: "string של HTML בתוך element. גם read וגם write.",
+      need: "מסוכן עם user input — XSS! עדיף textContent או DOMPurify.",
+    },
+    "setAttribute": {
+      what: "element.setAttribute('name', value).",
+      need: "ל-attributes שאין להם property: data-*, aria-*.",
+    },
+    "createElement": {
+      what: "document.createElement('div') — אלמנט חדש.",
+      need: "צריך appendChild ל-DOM כדי שיופיע.",
+    },
+    "appendChild": {
+      what: "parent.appendChild(child) — מוסיף ב-end.",
+      need: "מתאים ל-list rendering. modern: parent.append(child) (תומך multiple).",
+    },
+    "removeChild": {
+      what: "parent.removeChild(child).",
+      need: "modern: child.remove() (אין צורך ב-parent ref).",
+    },
+    "replaceChild": {
+      what: "parent.replaceChild(newChild, oldChild).",
+      need: "modern: oldChild.replaceWith(newChild).",
+    },
+    "getElementsByTagName": {
+      what: "document.getElementsByTagName('div') — HTMLCollection.",
+      need: "live collection — מתעדכנת אוטומטית.",
+    },
+    "getElementsByClassName": {
+      what: "document.getElementsByClassName('btn').",
+      need: "live HTMLCollection. לרוב querySelectorAll עדיף.",
+    },
+    "Document Object Model": {
+      what: "המודל של HTML בזיכרון של הדפדפן — ניתן לתפעל ב-JS.",
+      need: "document API. כל element הוא node בעץ.",
+    },
+    "semantic HTML": {
+      what: "תגים שאומרים מה הם: <header>, <nav>, <main>, <article>.",
+      need: "בטוח ל-a11y ו-SEO. מחליף <div> כשהמשמעות ברורה.",
+    },
+    "HTML document": {
+      what: "קובץ .html שהדפדפן קורא.",
+      need: "<!DOCTYPE html><html><head/><body/></html>",
+    },
+    "HTML form": {
+      what: "<form> עם inputs לשליחה ל-server.",
+      need: "method='POST' action='/api'. כל input חייב name.",
+    },
+    "label": {
+      what: "<label for='id'> — קושר ל-input.",
+      need: "click על label = focus על input. חיוני ל-a11y.",
+    },
+    "CSS selector": {
+      what: "ביטוי שבוחר elements לעיצוב.",
+      need: ".class, #id, tag, [attr], parent > child.",
+    },
+    "client side": {
+      what: "Code שרץ בדפדפן.",
+      need: "JS, React, DOM. ה-server לא רואה ב-runtime.",
+    },
+    "Client Side": {
+      what: "Code שרץ בדפדפן.",
+      need: "JS, React, DOM. ה-server לא רואה ב-runtime.",
+    },
+    "Closure": {
+      what: "function שזוכרת variables מ-scope שבו נוצרה.",
+      need: "use case: data privacy, partial application, factory functions.",
+    },
+    "Scope": {
+      what: "טווח נראות של variables.",
+      need: "function scope (var), block scope (let/const), module scope, global.",
+    },
+    "lexical scope": {
+      what: "scope נקבע לפי איפה הקוד נכתב, לא איפה רץ.",
+      need: "JS משתמש ב-lexical (closure-based).",
+    },
+    "scope chain": {
+      what: "סדר חיפוש של variables — local → outer → global.",
+      need: "מה שמאפשר closures לעבוד.",
+    },
+    "closure variables": {
+      what: "variables שה-inner function זוכרת מ-outer.",
+      need: "כל קריאה ל-outer יוצרת closure חדש.",
+    },
+    "closure in setTimeout": {
+      what: "setTimeout(() => use(x), N) זוכר את x.",
+      need: "באג קלאסי: for(var i=0;i<3;i++) setTimeout(() => log(i)) → 3,3,3.",
+    },
+    "stale closure": {
+      what: "closure תופס value מ-render קודם — ערך ישן.",
+      need: "פתרון: useRef או functional setState.",
+    },
+    "closure in event handlers": {
+      what: "handler זוכר state בזמן הbind, לא תמיד עדכני.",
+      need: "ב-React: deps array של useEffect. או useRef.",
+    },
+    "closure in useEffect": {
+      what: "effect זוכר variables מ-render הספציפי.",
+      need: "כל הvariables שconsumes חייבים להיות ב-deps.",
+    },
+    "Promise": {
+      what: "object שמייצג async operation עם resolve/reject.",
+      need: "then, catch, finally. await מחכה ל-resolve.",
+    },
+    "Asynchronous": {
+      what: "פעולה שלא חוסמת — חוזרת מיד עם Promise.",
+      need: "fetch, setTimeout, fs.readFile.",
+    },
+    "Synchronous": {
+      what: "פעולה שחוסמת עד שמסיימת.",
+      need: "JSON.parse, Date.now, JSON.stringify.",
+    },
+    "async/await": {
+      what: "syntax sugar מעל Promises.",
+      need: "async function f() { const x = await p; }. נראה sync.",
+    },
+    "catch (Promise)": {
+      what: "promise.catch(err => ...) או try/catch עם await.",
+      need: "כל async דורש error handling — אחרת unhandled rejection.",
+    },
+    "Error Object": {
+      what: "instance של Error/TypeError/RangeError.",
+      need: "throw new Error('msg'). ב-catch: err.message, err.stack.",
+    },
+    "Error": {
+      what: "constructor base ל-exceptions.",
+      need: "throw new Error(msg). subclass לcustom errors.",
+    },
+    "Exception": {
+      what: "אירוע שמתרחש כשמשהו לא צפוי.",
+      need: "throw + try/catch. לא לצוד את כולם — רק הצפויים.",
+    },
+    "try/catch": {
+      what: "block לתפיסת exceptions.",
+      need: "finally תמיד רץ. async דורש try/catch סביב await.",
+    },
+    "Task Manager": {
+      what: "אפליקציה לניהול משימות (CRUD).",
+      need: "פרויקט בסיסי לתרגול state, events, localStorage.",
+    },
+    "variables": {
+      what: "שמות שמחזיקים ערכים.",
+      need: "let/const. let משתנה, const קבוע (binding).",
+    },
+    "events": {
+      what: "פעולות משתמש שאפשר להאזין להן: click, submit, keypress.",
+      need: "addEventListener('event', handler).",
+    },
+    "objects": {
+      what: "אוסף key-value pairs.",
+      need: "{ name: 'Tal', age: 30 }. ניגשים: obj.name או obj['name'].",
+    },
+    "conditions": {
+      what: "if/else, switch, ternary.",
+      need: "מבצע קוד שונה לפי תנאי. boolean expressions.",
+    },
+    "arrays": {
+      what: "רשימות של ערכים מסודרים.",
+      need: "[1,2,3]. arr[0], arr.length, arr.push, arr.map.",
+    },
+    "functions": {
+      what: "בלוקים של קוד עם שם — לקריאה חוזרת.",
+      need: "function f(a,b) { return a+b }. arrow: (a,b) => a+b.",
+    },
+    "Mongoose validation": {
+      what: "schema-level rules: required, min, max, enum, validate.",
+      need: "כל .save() מריץ validation. catch ב-error.errors.",
+    },
+    "Supabase Auth": {
+      what: "auth as a service: email/oauth/magic links.",
+      need: "supabase.auth.signInWithPassword. session ב-cookie.",
+    },
+    "Firebase Auth": {
+      what: "Google's auth — קל אבל vendor lock-in.",
+      need: "signInWithEmailAndPassword. תומך ב-many providers.",
+    },
+    "Kinde/Appwrite": {
+      what: "BaaS אלטרנטיבי ל-Firebase/Supabase.",
+      need: "Kinde מתמקד ב-auth+billing. Appwrite open-source.",
+    },
+    "password": {
+      what: "סיסמה — חייב לבצע hash לפני אחסון.",
+      need: "bcrypt עם salt rounds 10. אף פעם לא plain text!",
+    },
+    "server-side storage": {
+      what: "אחסון על השרת (DB) ולא על הclient.",
+      need: "sensitive data: passwords (hashed), tokens, PII.",
+    },
+    "Git": {
+      what: "VCS — version control להיסטוריה של קוד.",
+      need: "branches, commits, merges, push/pull. github.com למה לעלות.",
+    },
+    "pull request": {
+      what: "PR — בקשה למיזוג branch. כולל review.",
+      need: "תיאור + tests + screenshots. CI מריץ לפני merge.",
+    },
+    "npm scripts": {
+      what: "package.json scripts: build, test, dev.",
+      need: "npm run X. לרוב dev עם Vite, build ל-production.",
+    },
+    "ESLint": {
+      what: "linter ל-JS/TS — תופס bugs פוטנציאליים.",
+      need: ".eslintrc + npm run lint. אינטגרציה ב-IDE.",
+    },
+    "Prettier": {
+      what: "code formatter — opinionated.",
+      need: ".prettierrc + npm run format. מתאים לconfig + .editorconfig.",
+    },
+    "package.json": {
+      what: "מטא של פרויקט: deps, scripts, version.",
+      need: "npm install קורא dependencies, devDependencies.",
+    },
+    "npm": {
+      what: "Node Package Manager — מנהל packages של JS.",
+      need: "npm install pkg, npm run script. lockfile: package-lock.json.",
+    },
+    "npm init": {
+      what: "יוצר package.json חדש.",
+      need: "npm init -y לdefault. הראשון בכל פרויקט חדש.",
+    },
+    "npm start": {
+      what: "npm run start — מריץ סקריפט start.",
+      need: "לרוב production-like. dev עם npm run dev.",
+    },
+    "dependencies": {
+      what: "packages שהקוד צריך ב-runtime.",
+      need: "package.json.dependencies. devDependencies לbuild only.",
+    },
+    "require": {
+      what: "CommonJS import — Node legacy.",
+      need: "const x = require('fs'). modern: import x from 'fs'.",
+    },
+    "module.exports": {
+      what: "CommonJS export — Node legacy.",
+      need: "module.exports = { x, y }. modern: export.",
+    },
+    "V8": {
+      what: "JS engine של Chrome ו-Node — מבצע JS.",
+      need: "אופטימיזציות: JIT, hidden classes. Node מריץ V8 ב-server.",
+    },
+    "CLI": {
+      what: "Command Line Interface — תוכנה שמופעלת ב-shell.",
+      need: "כלים: git, npm, tsc, eslint.",
+    },
+    "Command Line Interface": {
+      what: "ממשק טקסטואלי לפעולות (terminal/cmd).",
+      need: "מהיר יותר מ-GUI לdevelopers. scriptable.",
+    },
+    "node file.js": {
+      what: "מריץ קובץ JS עם Node runtime.",
+      need: "Node קורא, מפרסר, מריץ. console.log ל-stdout.",
+    },
+    "File System": {
+      what: "API של Node לקרוא/לכתוב קבצים.",
+      need: "fs module. ב-modern: fs/promises ל-async.",
+    },
+    "fs": {
+      what: "Node module ל-filesystem.",
+      need: "import fs from 'fs'. fs.readFile, fs.writeFile.",
+    },
+    "fs.readFile": {
+      what: "קוראת תוכן קובץ.",
+      need: "fs.readFile(path, 'utf8', (err, data) => {}) — או promise.",
+    },
+    "fs.writeFile": {
+      what: "כותבת תוכן לקובץ (overwrite).",
+      need: "fs.writeFile(path, content, cb). Promise: await.",
+    },
+    "fs.appendFile": {
+      what: "מוסיפה תוכן לסוף קובץ.",
+      need: "logger pattern. ייוצר אם לא קיים.",
+    },
+    "fs.rename": {
+      what: "מחליף שם / מזיז קובץ.",
+      need: "fs.rename(old, new, cb). atomic ב-same FS.",
+    },
+    "fs.unlink": {
+      what: "מוחק קובץ.",
+      need: "אין undelete! ב-prod עדיף move-to-trash.",
+    },
+    "fs.open": {
+      what: "פתיחת file descriptor — low-level.",
+      need: "fs.openSync ב-rare cases. רוב הזמן readFile/writeFile.",
+    },
+    "dir": {
+      what: "תיקייה (directory).",
+      need: "fs.readdir, fs.mkdir, fs.rmdir.",
+    },
+    "mkdir": {
+      what: "יצירת תיקייה: fs.mkdir.",
+      need: "{ recursive: true } ליצור nested paths.",
+    },
+    "type nul": {
+      what: "Windows command ליצירת קובץ ריק.",
+      need: "Linux/Mac: touch file.txt. PowerShell: New-Item.",
+    },
+    "Pointer": {
+      what: "reference — שני משתנים מצביעים על אותו object.",
+      need: "JS objects מועברים by-reference. primitives by-value.",
+    },
+    "By Reference": {
+      what: "מעבר של reference (pointer) — שינוי משפיע על שני המקומות.",
+      need: "JS: objects, arrays, functions. שינוי בfunction → משנה outside.",
+    },
+    "By Value": {
+      what: "מעבר עותק של ה-value.",
+      need: "JS: primitives (number, string, boolean). שינוי לא משפיע.",
+    },
+    "Composition vs Inheritance": {
+      what: "Composition: build by combining; Inheritance: extend.",
+      need: "React מעדיף composition (children, render props).",
+    },
+    "Container vs Presentational": {
+      what: "Container: state+logic. Presentational: pure UI.",
+      need: "פרק: <UserListContainer/> wraps <UserList items={...}/>.",
+    },
+    "Lifting State Up": {
+      what: "העברת state ל-ancestor משותף.",
+      need: "כשכמה siblings צריכים אותו data.",
+    },
+    "State Management": {
+      what: "ניהול state חוצה-קומפוננטות.",
+      need: "useState (local), Context (medium), Redux/Zustand (global).",
+    },
+    "Data Flow": {
+      what: "כיוון העברת data — ב-React: top-down (props).",
+      need: "events bubbling up דרך callbacks. unidirectional.",
+    },
+    "Code Splitting": {
+      what: "פיצול bundle לchunks קטנים.",
+      need: "React.lazy + Suspense. dynamic import('...').",
+    },
+    "Performance Optimization": {
+      what: "מהירות UI — memoization, virtualization, lazy loading.",
+      need: "measure ראשון (Profiler). over-optimize מזיק.",
+    },
+    "Error Boundaries": {
+      what: "React component שתופס errors מ-children.",
+      need: "componentDidCatch + getDerivedStateFromError. או ספרייה.",
+    },
+    "Testing Strategies": {
+      what: "unit (Vitest), integration (Testing Library), E2E (Playwright).",
+      need: "פירמידה: הרבה unit, פחות integration, מעט E2E.",
+    },
+    "Component Architecture": {
+      what: "ארגון components: presentational, container, smart, dumb.",
+      need: "כיום React Server Components מוסיפים שכבה.",
+    },
+    "Index": {
+      what: "מיקום ב-array (0-based) או DB index.",
+      need: "DB index = מבנה data לחיפוש מהיר על column.",
+    },
+    "index": {
+      what: "ב-Mongoose: createIndex או schema.index().",
+      need: "{ email: 1 }. unique: true. compound indexes.",
+    },
+    "pop": {
+      what: "arr.pop() — מוציא איבר אחרון, מחזיר אותו.",
+      need: "מוטטיבי. arr ריק → undefined.",
+    },
+    "push": {
+      what: "arr.push(x) — מוסיף בסוף, מחזיר length חדש.",
+      need: "מוטטיבי. push(a,b,c) מוסיף כמה.",
+    },
+    "shift": {
+      what: "arr.shift() — מוציא ראשון.",
+      need: "אטי על arrays גדולים — O(n).",
+    },
+    "unshift": {
+      what: "arr.unshift(x) — מוסיף לראש.",
+      need: "אטי O(n). spread עדיף ל-immutable.",
+    },
+    "splice": {
+      what: "arr.splice(start, count, ...items) — מוסיף/מסיר במקום.",
+      need: "מוטטיבי. ל-immutable: slice + spread.",
+    },
+    "sort": {
+      what: "arr.sort(compareFn) — ממיין במקום.",
+      need: "default = string sort. compareFn(a,b) לnumeric: a-b.",
+    },
+    "undefined": {
+      what: "ערך לintialized/missing.",
+      need: "typeof undefined === 'undefined'. void 0 = undefined.",
+    },
+    "uppercase": {
+      what: "אותיות גדולות. str.toUpperCase().",
+      need: "Locale-aware: toLocaleUpperCase ל-Hebrew/Turkish.",
+    },
+    "lowercase": {
+      what: "אותיות קטנות. str.toLowerCase().",
+      need: "case-insensitive comparison: a.toLowerCase() === b.toLowerCase().",
+    },
+    "Array": {
+      what: "מבנה data רשימתי ב-JS.",
+      need: "Array.from, Array.isArray, ...spread.",
+    },
+    "Object": {
+      what: "key-value collection ב-JS.",
+      need: "Object.keys/values/entries. spread, freeze, assign.",
+    },
+    "Property": {
+      what: "key-value זוג ב-object או DOM.",
+      need: "obj.key, obj['key']. delete obj.key למחיקה.",
+    },
+    "Method": {
+      what: "function שהיא property של object.",
+      need: "obj.greet = function() {}. arrow לא מקבל own this.",
+    },
+    "import": {
+      what: "ESM import: import x from 'mod'.",
+      need: "type=\"module\" או .mjs. שונה מ-require.",
+    },
+    "export default": {
+      what: "ESM default export — אחד לקובץ.",
+      need: "export default function App() {}. import App from './App'.",
+    },
+    "className": {
+      what: "ב-JSX: replacement ל-class (reserved word).",
+      need: "<div className='btn'>. תבנית: cn('a', cond && 'b').",
+    },
+    "yצירת מערך חדש (new array)": {
+      what: "[...oldArr, x] או arr.concat(x).",
+      need: "ב-React: state חדש = הפניה חדשה.",
+    },
+    "יצירת מערך חדש (new array)": {
+      what: "[...oldArr, x] או arr.concat(x).",
+      need: "ב-React: state חדש = הפניה חדשה.",
+    },
+    "יצירת מערך חדש מתוך קיים": {
+      what: "map או filter — מחזירים מערך חדש.",
+      need: "items.map(x => x*2). items.filter(x => x>0).",
+    },
+    "סינון לפי תנאי": {
+      what: "filter — מחזיר רק איברים שעוברים תנאי.",
+      need: "items.filter(x => x.active).",
+    },
+    "עבודה עם ערכים לפי אינדקס": {
+      what: "arr[i] לקריאה. forEach((x,i) => ...) ל-iterate.",
+      need: "i מתחיל מ-0. arr.length-1 הוא האחרון.",
+    },
+    "getItem": {
+      what: "localStorage/sessionStorage.getItem(key).",
+      need: "מחזיר string או null. JSON.parse לאובייקטים.",
+    },
+    "setItem": {
+      what: "storage.setItem(key, value).",
+      need: "value הופך אוטומטית ל-string. JSON.stringify לאובייקטים.",
+    },
+    "setTimeout": {
+      what: "schedules a callback after delay (ms): setTimeout(fn, 1000).",
+      need: "Returns id; clearTimeout(id) cancels. 0ms = next tick (after current sync code).",
+    },
+    "GitHub workflow": {
+      what: "GitHub Actions yaml בקובץ .github/workflows/.",
+      need: "name, on (triggers), jobs (runs-on, steps with uses/run).",
+    },
+    "union": {
+      what: "TS A | B — value either A or B.",
+      need: "narrow before accessing variant-specific fields (typeof, in, discriminator).",
+    },
+    "Category": {
+      what: "literal union לקטגוריות הוצאה: food | rent | other.",
+      need: "סגור — IDE autocomplete + type-safe לעומת string פתוח.",
+    },
+    "memoization": {
+      what: "שמירת תוצאת חישוב לקלטים חוזרים.",
+      need: "useMemo לערך, useCallback לfunction. measure לפני.",
+    },
+
+
   };
 
   global.CONCISE_CONCEPT_DEFINITIONS = Object.freeze(defs);
