@@ -1242,6 +1242,22 @@
       what: "interface להוצאה ב-Budget Manager: { amount: number, category: Category, date: Date }.",
       need: "category לרוב string union או enum כדי שאפשר יהיה לסכם לפי קטגוריה.",
     },
+    "Budget Summary": {
+      what: "סיכום התקציב: סך הכנסות, סך הוצאות, ומאזן (income - expense) על תקופה נתונה.",
+      need: "מחושב ב-filter+reduce על מערך Transactions, מוצג כ-dashboard עם 3 כרטיסים.",
+    },
+    "Category Breakdown": {
+      what: "פירוט הוצאות לפי קטגוריה (food/rent/fun/...) עם סכום ואחוז מהסך הכל.",
+      need: "groupBy על category + reduce sum. נפוץ ל-pie chart / bar chart.",
+    },
+    "Transaction": {
+      what: "רישום כספי בודד: סכום, סוג (income/expense), קטגוריה, תאריך.",
+      need: "structure בסיסי ב-Budget Manager — type discriminator לזיהוי income vs expense.",
+    },
+    "Amount": {
+      what: "ערך מספרי של תנועה (positive number). תמיד נשמר כ-number, לא string.",
+      need: "validation: > 0, parsing מ-input string לפני שמירה.",
+    },
     "Strongly Typed": {
       what: "שפה שדורשת התאמת טיפוסים ולא עושה implicit conversion ב-runtime.",
       need: "ב-TypeScript: 'foo' + 1 → compile error. ב-JS: '\"foo\" + 1' → 'foo1'.",
