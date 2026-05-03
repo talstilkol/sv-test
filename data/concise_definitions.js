@@ -1230,13 +1230,81 @@
       what: "סיומת קובץ של TypeScript — קוד עם type annotations.",
       need: ".tsx ל-React+JSX; tsc מקמפל ל-.js לפני הרצה.",
     },
+    "Type Safety": {
+      what: "ב-TypeScript: בדיקת טיפוסים בזמן compile. שגיאות נתפסות לפני runtime.",
+      need: "תוסיף annotations ל-functions ו-state כדי שהcompiler יזהה ניסיונות העברת string ל-number.",
+    },
+    "{}": {
+      what: "סוגריים מסולסלים ב-JSX מאפשרים להזריק JS expression: <h1>{name}</h1>.",
+      need: "כל ביטוי JS מתאים: משתנה, חישוב, condition && <Item />, או arr.map(...).",
+    },
+    "Income": {
+      what: "interface ל-הכנסה ב-Budget Manager: { amount: number, source: string, date: Date }.",
+      need: "בדרך כלל בא עם type discriminator: 'income' | 'expense' לסיווג בעיבוד.",
+    },
+    "Expense": {
+      what: "interface להוצאה ב-Budget Manager: { amount: number, category: Category, date: Date }.",
+      need: "category לרוב string union או enum כדי שאפשר יהיה לסכם לפי קטגוריה.",
+    },
+    "Budget Summary": {
+      what: "סיכום התקציב: סך הכנסות, סך הוצאות, ומאזן (income - expense) על תקופה נתונה.",
+      need: "מחושב ב-filter+reduce על מערך Transactions, מוצג כ-dashboard עם 3 כרטיסים.",
+    },
+    "BaseUser": {
+      what: "interface משותף לכל סוגי משתמש (Guest/Registered) — מחזיק שדות בסיס: id, name, type.",
+      need: "extension via interface extends או intersection types ל-RegisteredUser/GuestUser.",
+    },
+    "GuestUser": {
+      what: "משתמש לא רשום — extends BaseUser עם type: 'guest'. גישה מוגבלת לתכונות ציבוריות.",
+      need: "discriminated union עם RegisteredUser; type narrowing לפני גישה ל-fields ייחודיים.",
+    },
+    "RegisteredUser": {
+      what: "משתמש רשום — extends BaseUser עם type: 'registered', email, profile, history.",
+      need: "discriminated union; אפשר type guards (isRegistered) לcheck ב-runtime.",
+    },
+    "AI Pair Programming": {
+      what: "עבודה עם AI כשותף שני בכתיבת קוד — driver/navigator במצב ש-AI מציע, human מחליט.",
+      need: "Cursor/Copilot/Claude Code; שמירה על review human, אין trust עיוור באוטוקומפליישנים.",
+    },
+    "AI Limitations": {
+      what: "מגבלות LLM: hallucinations, context window finite, training cutoff, no real-time, statistical not reasoning.",
+      need: "אזהרה קבועה — verify עם docs, run code, RAG/citation ל-knowledge base אמיתי.",
+    },
+    "Category Breakdown": {
+      what: "פירוט הוצאות לפי קטגוריה (food/rent/fun/...) עם סכום ואחוז מהסך הכל.",
+      need: "groupBy על category + reduce sum. נפוץ ל-pie chart / bar chart.",
+    },
+    "Transaction": {
+      what: "רישום כספי בודד: סכום, סוג (income/expense), קטגוריה, תאריך.",
+      need: "structure בסיסי ב-Budget Manager — type discriminator לזיהוי income vs expense.",
+    },
+    "Amount": {
+      what: "ערך מספרי של תנועה (positive number). תמיד נשמר כ-number, לא string.",
+      need: "validation: > 0, parsing מ-input string לפני שמירה.",
+    },
+    "Strongly Typed": {
+      what: "שפה שדורשת התאמת טיפוסים ולא עושה implicit conversion ב-runtime.",
+      need: "ב-TypeScript: 'foo' + 1 → compile error. ב-JS: '\"foo\" + 1' → 'foo1'.",
+    },
+    "Cluster": {
+      what: "ב-MongoDB Atlas: קבוצת replicas/shards שמספקים HA + scale.",
+      need: "Free tier (M0) מתאים לפיתוח. Production צריך תכנון shard keys.",
+    },
+    "Connection String": {
+      what: "URL שמכיל פרטי התחברות ל-DB: mongodb+srv://user:pass@host/dbname.",
+      need: "תמיד שמור ב-env var (.env), אף פעם לא הצמד לקוד.",
+    },
+    "Props": {
+      what: "ב-React: data שמועבר מ-parent ל-child component.",
+      need: "props read-only בילד. שינוי דורש callback מההורה (lifting state up).",
+    },
+    "Value": {
+      what: "ב-MongoDB document: הערך של field, נגיש דרך dot notation: doc.fieldName.",
+      need: "ב-Mongoose שווה גם doc.get('fieldName'). doc.toObject() להמרה ל-plain JS.",
+    },
     "Book": {
       what: "data type שמייצג ספר — id, title, author, וקטגוריה.",
       need: "interface או type עם שדות. לא class — אין בו behavior.",
-    },
-    "Amount": {
-      what: "שדה number שמייצג סכום כסף בעסקה.",
-      need: "number מספיק לסכומים יומיומיים; ל-precision קיצוני יש Decimal/BigNumber.",
     },
     "npm install": {
       what: "פקודה שמתקינה את התלויות מ-package.json לתיקיית node_modules.",
@@ -1249,14 +1317,6 @@
     "User": {
       what: "type של משתמש — בד״כ discriminated union: Guest | Registered.",
       need: "kind כ-tag לזיהוי הסוג, ואז narrowing ב-if לפני גישה לשדות ייחודיים.",
-    },
-    "BaseUser": {
-      what: "interface בסיסי שמכיל שדות משותפים לכל משתמש (id, kind).",
-      need: "extends BaseUser בכל variant; דומה ל-class abstract בלי implementation.",
-    },
-    "Budget Summary": {
-      what: "type שמסכם הכנסות/הוצאות/יתרה לתקופה — output של חישוב.",
-      need: "readonly fields על summary; לחשב מחדש בכל שינוי במקום למוטט.",
     },
     "interface vs type": {
       what: "interface = declaration merging + extends; type alias = unions/primitives.",
