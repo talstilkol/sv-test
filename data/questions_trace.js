@@ -2413,6 +2413,484 @@ var QUESTIONS_TRACE = [
     explanation:
       "בקשת chat כוללת שני סוגי הודעות (system/user), מודל מוגדר במפורש, ופרמטר temperature משפיע על יציבות הפלט.",
   },
+
+  // ============================================================================
+  // Phase 2.A batch — high-impact traces for closures, async, useState (15)
+  // ============================================================================
+
+  {
+    id: "trace_closures_setTimeout_var",
+    conceptKey: "lesson_closures::closure in setTimeout",
+    level: 5,
+    title: "for עם var ו-setTimeout",
+    code: "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}\n// Tick: כל ה-setTimeouts ממתינים, אז i כבר 3, ואז callbacks רצים.",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה ייכנס לתור (callback queue) בכל איטרציה?",
+        answer: "פונקציה שתדפיס את הערך של i באותו רגע שתרוץ",
+        hint: "var הוא function-scoped, לא block-scoped — אותו i משותף לכל ה-callbacks.",
+      },
+      {
+        line: 4,
+        prompt: "אחרי שהלולאה מסתיימת, מה הערך של i?",
+        answer: "3",
+        hint: "הלולאה רצה עד ש-i >= 3.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס בקונסול בסוף?",
+        answer: "3 3 3",
+        hint: "כל ה-callbacks קוראים את אותו i, שכבר 3.",
+      },
+    ],
+    explanation:
+      "var משתף scope של הפונקציה כולה. ה-callbacks ב-setTimeout נדחים אחרי הלולאה — אז כשהם רצים, i כבר הגיע ל-3. החלפה ל-let יוצרת binding חדש בכל איטרציה (block-scoped) ומדפיסה 0 1 2.",
+  },
+
+  {
+    id: "trace_closures_setTimeout_let",
+    conceptKey: "lesson_closures::closure in setTimeout",
+    level: 5,
+    title: "for עם let ו-setTimeout",
+    code: "for (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}\n// תיקון לבעיה הקלאסית של var.",
+    steps: [
+      {
+        line: 1,
+        prompt: "מה ההבדל המהותי בין let ל-var ב-for?",
+        answer: "let יוצר binding חדש לכל איטרציה (block scope)",
+        hint: "let scoped לבלוק { } של הלולאה.",
+      },
+      {
+        line: 2,
+        prompt: "מה הקשר של ה-callback ב-setTimeout ל-i?",
+        answer: "callback נסגר על ה-i הספציפי של אותה איטרציה",
+        hint: "כל קריאה ל-setTimeout מקבלת ערך i ייחודי.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס בסוף?",
+        answer: "0 1 2",
+        hint: "שלושה closures שונים, כל אחד עם i משלו.",
+      },
+    ],
+    explanation:
+      "let block-scoped בכל איטרציה — כל callback סגור על ה-i של אותה ריצה. זה ה-fix הסטנדרטי לבעיה של var ב-async loops.",
+  },
+
+  {
+    id: "trace_async_await_order",
+    conceptKey: "lesson_15::Promise",
+    level: 6,
+    title: "סדר ריצה של async/await ו-Promise",
+    code: "console.log('1');\nsetTimeout(() => console.log('2'), 0);\nPromise.resolve().then(() => console.log('3'));\nconsole.log('4');",
+    steps: [
+      {
+        line: 1,
+        prompt: "מה יודפס ראשון?",
+        answer: "1",
+        hint: "קוד סינכרוני רץ קודם, בסדר הופעתו.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס שני?",
+        answer: "4",
+        hint: "console.log('4') הוא סינכרוני, רץ לפני כל async.",
+      },
+      {
+        line: 3,
+        prompt: "מה רץ לפני setTimeout, microtask או macrotask?",
+        answer: "microtask",
+        hint: "Promise callbacks הם microtasks. setTimeout הוא macrotask. microtasks קודמות.",
+      },
+      {
+        line: 3,
+        prompt: "מה יודפס שלישי?",
+        answer: "3",
+        hint: "ה-microtask של ה-Promise.then.",
+      },
+      {
+        line: 2,
+        prompt: "מה יודפס רביעי?",
+        answer: "2",
+        hint: "setTimeout callback אחרון בתור.",
+      },
+    ],
+    explanation:
+      "סדר ה-event loop: סינכרוני → microtasks (Promise.then) → macrotasks (setTimeout). הפלט: 1, 4, 3, 2.",
+  },
+
+  {
+    id: "trace_async_function_return",
+    conceptKey: "lesson_15::async",
+    level: 5,
+    title: "מה async function מחזירה",
+    code: "async function getUser() {\n  return { name: 'Tal' };\n}\nconst result = getUser();\nconsole.log(result);\nresult.then(user => console.log(user.name));",
+    steps: [
+      {
+        line: 1,
+        prompt: "מהי ה-return type של async function תמיד?",
+        answer: "Promise",
+        hint: "async עוטף את הערך ב-Promise אוטומטית.",
+      },
+      {
+        line: 4,
+        prompt: "מה type של result?",
+        answer: "Promise",
+        hint: "אפילו אם הפונקציה מחזירה object רגיל.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס ב-console.log(result)?",
+        answer: "Promise {<fulfilled>: {name: 'Tal'}}",
+        hint: "console.log מציג את ה-Promise object, לא את הערך פנימה.",
+      },
+      {
+        line: 5,
+        prompt: "מה יודפס ב-result.then?",
+        answer: "Tal",
+        hint: ".then מקבל את הערך שעטוף ב-Promise.",
+      },
+    ],
+    explanation:
+      "async function תמיד מחזירה Promise. גישה לערך דורשת await או .then. שגיאה נפוצה: לחשוב שאפשר להשתמש בערך מיידית.",
+  },
+
+  {
+    id: "trace_useState_batching",
+    conceptKey: "lesson_22::useState",
+    level: 6,
+    title: "setState מרובה באותה פונקציה",
+    code: "function Counter() {\n  const [count, setCount] = useState(0);\n  function increment() {\n    setCount(count + 1);\n    setCount(count + 1);\n    setCount(count + 1);\n  }\n  return <button onClick={increment}>{count}</button>;\n}",
+    steps: [
+      {
+        line: 4,
+        prompt: "מה הערך של count כש-increment נקרא בפעם הראשונה?",
+        answer: "0",
+        hint: "ה-state ההתחלתי.",
+      },
+      {
+        line: 4,
+        prompt: "אחרי שלוש קריאות setCount(count+1), מה הערך החדש?",
+        answer: "1",
+        hint: "כל שלוש הקריאות משתמשות באותו count=0. setCount(0+1) = 1, שלוש פעמים.",
+      },
+      {
+        line: 4,
+        prompt: "איך לתקן ל-3?",
+        answer: "setCount(prev => prev + 1)",
+        hint: "Functional update מקבל את הערך הקודם, לא תופס ערך ישן ב-closure.",
+      },
+    ],
+    explanation:
+      "setCount(count + 1) שלוש פעמים = 1 בלבד (closures על אותו count=0). הפתרון: setCount(prev => prev + 1) שמתעדכן בשרשרת.",
+  },
+
+  {
+    id: "trace_useEffect_deps_missing",
+    conceptKey: "lesson_24::dependency array",
+    level: 6,
+    title: "useEffect בלי deps — re-run בכל render",
+    code: "function App() {\n  const [n, setN] = useState(0);\n  useEffect(() => {\n    console.log('effect ran with n=', n);\n    setN(n + 1);\n  }); // אין deps array!\n  return <div>{n}</div>;\n}",
+    steps: [
+      {
+        line: 6,
+        prompt: "מה קורה כשאין deps array בכלל?",
+        answer: "ה-effect רץ אחרי כל render",
+        hint: "[] = פעם אחת. [a] = רק כש-a משתנה. אין array = כל render.",
+      },
+      {
+        line: 5,
+        prompt: "מה setN(n+1) גורם?",
+        answer: "re-render עם n חדש",
+        hint: "כל setState מטריגר render מחדש.",
+      },
+      {
+        line: 3,
+        prompt: "מה התוצאה הסופית של הקוד הזה?",
+        answer: "infinite loop",
+        hint: "render → effect → setN → re-render → effect → setN → ...",
+      },
+    ],
+    explanation:
+      "אנטי-pattern קלאסי: useEffect בלי deps + setState בתוך → infinite loop. תיקון: הוסף [] (run once) או deps רלוונטי.",
+  },
+
+  {
+    id: "trace_useRef_no_rerender",
+    conceptKey: "lesson_24::useRef",
+    level: 5,
+    title: "useRef לא גורם re-render",
+    code: "function Timer() {\n  const count = useRef(0);\n  function tick() {\n    count.current = count.current + 1;\n    console.log('count is', count.current);\n  }\n  return <button onClick={tick}>increment</button>;\n}",
+    steps: [
+      {
+        line: 4,
+        prompt: "מה קורה ל-count.current אחרי לחיצה?",
+        answer: "עולה ב-1",
+        hint: "ref.current זה mutable container רגיל.",
+      },
+      {
+        line: 4,
+        prompt: "האם ה-component מתרנדר מחדש?",
+        answer: "לא",
+        hint: "שינוי ל-ref.current לא מטריגר re-render — זה ההבדל מ-state.",
+      },
+      {
+        line: 7,
+        prompt: "מה הערך שהמשתמש רואה ב-button label?",
+        answer: "increment (לא משתנה)",
+        hint: "ה-DOM לא מתעדכן כי אין re-render. רק ה-console מתעדכן.",
+      },
+    ],
+    explanation:
+      "useRef מחזיק ערך mutable שלא טריגר render. לערך שצריך להיראות ב-UI — useState.",
+  },
+
+  {
+    id: "trace_array_map_filter",
+    conceptKey: "lesson_11::map",
+    level: 4,
+    title: "שרשור map + filter",
+    code: "const nums = [1, 2, 3, 4, 5];\nconst result = nums\n  .filter(n => n % 2 === 0)\n  .map(n => n * 10);\nconsole.log(result);",
+    steps: [
+      {
+        line: 3,
+        prompt: "מה filter מחזיר?",
+        answer: "[2, 4]",
+        hint: "רק זוגיים מהמערך המקורי.",
+      },
+      {
+        line: 4,
+        prompt: "מה map עושה על [2, 4]?",
+        answer: "[20, 40]",
+        hint: "כל איבר כפול 10.",
+      },
+      {
+        line: 5,
+        prompt: "מה יודפס?",
+        answer: "[20, 40]",
+        hint: "התוצאה אחרי שני השלבים.",
+      },
+      {
+        line: 1,
+        prompt: "האם nums השתנה?",
+        answer: "לא",
+        hint: "filter ו-map לא מוטטיביים — מחזירים מערכים חדשים.",
+      },
+    ],
+    explanation:
+      "filter ואז map = pipeline נפוץ. שני המערכים החדשים נוצרים ללא שינוי המקור (immutable).",
+  },
+
+  {
+    id: "trace_object_destructuring",
+    conceptKey: "lesson_11::destructuring",
+    level: 3,
+    title: "destructuring עם default ו-rename",
+    code: "const user = { name: 'Tal', age: 30 };\nconst { name: fullName, role = 'guest', age } = user;\nconsole.log(fullName, role, age);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה הערך של fullName?",
+        answer: "Tal",
+        hint: "name: fullName = rename של ה-property.",
+      },
+      {
+        line: 2,
+        prompt: "מה הערך של role?",
+        answer: "guest",
+        hint: "role לא קיים ב-user, אז ברירת המחדל מופעלת.",
+      },
+      {
+        line: 3,
+        prompt: "מה יודפס?",
+        answer: "Tal guest 30",
+        hint: "שלושת הערכים, מופרדים ברווח.",
+      },
+    ],
+    explanation:
+      "destructuring תומך ב-rename (`name: fullName`) ו-defaults (`role = 'guest'`). הקובינציה שמישית ב-React props.",
+  },
+
+  {
+    id: "trace_promise_all",
+    conceptKey: "lesson_15::Promise",
+    level: 6,
+    title: "Promise.all עם תוצאות מעורבות",
+    code: "async function run() {\n  const [a, b, c] = await Promise.all([\n    Promise.resolve(1),\n    Promise.resolve(2),\n    Promise.resolve(3),\n  ]);\n  console.log(a + b + c);\n}\nrun();",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה Promise.all מחזיר?",
+        answer: "Promise של array",
+        hint: "כל הערכים מקובצים בסדר המקורי.",
+      },
+      {
+        line: 2,
+        prompt: "האם Promise.all מחכה לכולם?",
+        answer: "כן",
+        hint: "ממתין לכולם להצליח. אם אחד נכשל — הכל נדחה.",
+      },
+      {
+        line: 6,
+        prompt: "מה יודפס?",
+        answer: "6",
+        hint: "1 + 2 + 3.",
+      },
+    ],
+    explanation:
+      "Promise.all מקבילי — כל הPromises רצים יחד. resolve כשכולם נגמרים. reject על הראשון שנכשל. Promise.allSettled לא מתבטל על rejection.",
+  },
+
+  {
+    id: "trace_typescript_narrowing",
+    conceptKey: "lesson_27::Type Narrowing",
+    level: 6,
+    title: "Type narrowing עם typeof",
+    code: "function format(value: string | number) {\n  if (typeof value === 'string') {\n    return value.toUpperCase();\n  }\n  return value.toFixed(2);\n}\nconsole.log(format('hello'));\nconsole.log(format(3.14159));",
+    steps: [
+      {
+        line: 2,
+        prompt: "אחרי בדיקת typeof, מה הטיפוס של value בתוך ה-if?",
+        answer: "string",
+        hint: "TS מצמצם את ה-union לפי ה-guard.",
+      },
+      {
+        line: 4,
+        prompt: "ב-return בלי if (אחרי הבדיקה), מה הטיפוס של value?",
+        answer: "number",
+        hint: "TS יודע שאם לא string, חייב להיות number.",
+      },
+      {
+        line: 6,
+        prompt: "מה יודפס מ-format('hello')?",
+        answer: "HELLO",
+        hint: "toUpperCase על 'hello'.",
+      },
+      {
+        line: 7,
+        prompt: "מה יודפס מ-format(3.14159)?",
+        answer: "3.14",
+        hint: "toFixed(2) ל-2 ספרות אחרי הנקודה.",
+      },
+    ],
+    explanation:
+      "typeof guard מצמצם union ל-variant ספציפי. TS יודע שאחרי הצמצום הראשון, ה-else משאיר את שאר ה-union.",
+  },
+
+  {
+    id: "trace_useState_lazy_init",
+    conceptKey: "lesson_22::useState",
+    level: 5,
+    title: "useState עם lazy initializer",
+    code: "function expensiveCompute() {\n  console.log('computing!');\n  return 42;\n}\nfunction App() {\n  const [v, setV] = useState(expensiveCompute());\n  return <div>{v}</div>;\n}\n// vs\nfunction AppLazy() {\n  const [v, setV] = useState(expensiveCompute);\n  return <div>{v}</div>;\n}",
+    steps: [
+      {
+        line: 6,
+        prompt: "כמה פעמים expensiveCompute() תרוץ ב-App אחרי 3 renders?",
+        answer: "3",
+        hint: "כל קריאה ל-useState(expr) מבצעת את expr — גם אם הערך לא בשימוש בrenders הבאים.",
+      },
+      {
+        line: 11,
+        prompt: "כמה פעמים תרוץ ב-AppLazy אחרי 3 renders?",
+        answer: "1",
+        hint: "useState(fn) — ה-fn רץ פעם אחת ב-mount.",
+      },
+    ],
+    explanation:
+      "useState(expr) מחשב כל render ומזרק. useState(fn) (lazy initializer) רץ רק במunt. שמש כשהחישוב יקר.",
+  },
+
+  {
+    id: "trace_react_event_bubbling",
+    conceptKey: "lesson_13::event",
+    level: 5,
+    title: "Event bubbling ב-React",
+    code: "<div onClick={() => console.log('div')}>\n  <button onClick={() => console.log('button')}>Click</button>\n</div>",
+    steps: [
+      {
+        line: 2,
+        prompt: "אחרי click על ה-button, מה יודפס ראשון?",
+        answer: "button",
+        hint: "ה-event מתחיל ב-target.",
+      },
+      {
+        line: 1,
+        prompt: "מה יודפס שני?",
+        answer: "div",
+        hint: "event bubbling — האירוע עולה לhorses.",
+      },
+      {
+        line: 2,
+        prompt: "איך עוצרים את ה-bubbling?",
+        answer: "event.stopPropagation()",
+        hint: "מתודה של event שעוצרת את ההתפשטות.",
+      },
+    ],
+    explanation:
+      "Events מתחילים ב-target ועולים ל-ancestors. stopPropagation עוצר. preventDefault שונה — מבטל ברירת מחדל (form submit, link follow).",
+  },
+
+  {
+    id: "trace_closure_counter",
+    conceptKey: "lesson_closures::closure",
+    level: 5,
+    title: "closure factory למונה",
+    code: "function makeCounter() {\n  let count = 0;\n  return {\n    increment: () => ++count,\n    get: () => count,\n  };\n}\nconst c = makeCounter();\nc.increment();\nc.increment();\nc.increment();\nconsole.log(c.get());",
+    steps: [
+      {
+        line: 2,
+        prompt: "איפה count מאוחסן?",
+        answer: "ב-closure של ה-functions שחוזרות",
+        hint: "count לא נגיש מבחוץ, רק דרך increment/get.",
+      },
+      {
+        line: 12,
+        prompt: "מה יודפס?",
+        answer: "3",
+        hint: "כל increment מעלה ב-1, מ-0 התחלתי.",
+      },
+      {
+        line: 8,
+        prompt: "האם makeCounter() שני יחלקו count?",
+        answer: "לא",
+        hint: "כל קריאה יוצרת closure חדש עם count נפרד.",
+      },
+    ],
+    explanation:
+      "Closures מאפשרות data privacy ו-stateful functions. כל קריאה ל-makeCounter() = instance עצמאי.",
+  },
+
+  {
+    id: "trace_spread_immutable",
+    conceptKey: "lesson_22::spread",
+    level: 5,
+    title: "Spread ל-immutable update",
+    code: "const user = { name: 'Tal', age: 30 };\nconst updated = { ...user, age: 31 };\nconsole.log(user.age);\nconsole.log(updated.age);\nconsole.log(user === updated);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה updated מכיל?",
+        answer: "{ name: 'Tal', age: 31 }",
+        hint: "spread מעתיק כל properties; age האחרון מנצח.",
+      },
+      {
+        line: 3,
+        prompt: "מה user.age?",
+        answer: "30",
+        hint: "user לא השתנה — spread יוצר object חדש.",
+      },
+      {
+        line: 5,
+        prompt: "מה user === updated?",
+        answer: "false",
+        hint: "שני objects שונים, references שונים.",
+      },
+    ],
+    explanation:
+      "Spread יוצר עותק רדוד עם override. ב-React חיוני: setState({ ...user, age: 31 }) — reference חדש מטריגר re-render.",
+  },
 ];
 
 // Browser bridge: expose under QUESTIONS_BANK.trace so the trainer's
