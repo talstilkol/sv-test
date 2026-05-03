@@ -502,5 +502,13 @@
       "nextActivity": "trace",
       "requiredEvidence": "Add one trace item tied to this real conceptKey and code-bearing behavior."
     }
-  ]
+  ],
+  "sourceOfTruth": {
+    "status": "historical",
+    "reportVersion": "report-source-of-truth-v1",
+    "evaluatedAt": "2026-05-03",
+    "sourceDate": "2026-05-02",
+    "source": "report-archive",
+    "reason": "date-mismatch-with-source-of-truth"
+  }
 }

@@ -2,7 +2,7 @@
 // Caches the app shell + primary lessons for offline use.
 // Cache strategy: cache-first for static assets, network-first for HTML.
 
-const CACHE_VERSION = "lumen-v2.4.131-autosave";
+const CACHE_VERSION = "lumen-v2.4.141-cluster-engine";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 
 // Resources that MUST be available offline (the App Shell + core data)
@@ -13,7 +13,7 @@ const SHELL_ASSETS = [
   "/style.css",
   "/style.css?v=concept-sprint-v69",
   "/app.js",
-  "/app.js?v=autosave-v78",
+  "/app.js?v=cleanup-shards-v105",
   "/content-loader.js",
   "/content-loader.js?v=content-validation-v1",
   "/src/main.js",
@@ -207,6 +207,8 @@ const SHELL_ASSETS = [
   "/data/lesson26.js",
   "/data/lesson27.js",
   "/data/lesson_closures.js",
+  "/data/cluster_index.js?v=cluster-v1",
+  "/src/core/cluster-engine.js?v=cluster-engine-v1",
   "/data/workbook_taskmanager.js",
   "/data/ai_development.js",
   "/data/react_blueprint.js",

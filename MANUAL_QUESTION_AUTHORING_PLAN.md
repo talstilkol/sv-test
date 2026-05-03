@@ -1,5 +1,11 @@
 # Manual Question Authoring Plan
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-05-02
+> Source-of-truth refresh date: 2026-05-06
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 Date: 2026-05-02
 
 ## Summary
@@ -750,3 +756,4 @@ Date: 2026-05-02
 | `workbook_taskmanager::Task Manager` | P2-deferred | 3 | 2 | 1 (trace) | unknown/unavailable |
 | `workbook_taskmanager::try/catch` | P2-deferred | 3 | 2 | 1 (trace) | unknown/unavailable |
 | `workbook_taskmanager::variables` | P2-deferred | 3 | 2 | 1 (trace) | unknown/unavailable |
+

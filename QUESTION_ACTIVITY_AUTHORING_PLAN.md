@@ -1,4 +1,10 @@
 # Question Activity Authoring Plan
+
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-05-02
+> Source-of-truth refresh date: 2026-05-06
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
 Date: 2026-05-02
 ## Summary
 - Coverage ready: no
@@ -52,3 +58,4 @@ Date: 2026-05-02
 | 38 | `lesson_19::DOM` | חזרה וסיכום JavaScript | trace | Trace 0 · Build 0 · Bug 0 | Add one trace item tied to this real conceptKey and code-bearing behavior. |
 | 39 | `lesson_19::event` | חזרה וסיכום JavaScript | trace | Trace 0 · Build 0 · Bug 0 | Add one trace item tied to this real conceptKey and code-bearing behavior. |
 | 40 | `lesson_19::event loop` | חזרה וסיכום JavaScript | trace | Trace 0 · Build 0 · Bug 0 | Add one trace item tied to this real conceptKey and code-bearing behavior. |
+

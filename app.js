@@ -1096,27 +1096,13 @@ document.addEventListener("DOMContentLoaded", () => {
       sidebarContextCount.textContent = count ? `${count} פריטים` : "";
     }
 
+    // UX 2026-05-02: side menu = simple tree only (no header/breadcrumb extras).
     const treeHtml = sections.length
-      ? `
-        <div class="ctx-map-head">
-          <strong>${esc(contextTreeSource.title || "עץ ניווט")}</strong>
-          <span>נושא → תת נושא → תת תת נושא → מושג</span>
-        </div>
-        <div class="ctx-tree-root">${sections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
-      : `
-        <div class="ctx-map-head">
-          <strong>${esc(contextTreeSource.title || "עץ ניווט")}</strong>
-          <span>נושא → תת נושא → תת תת נושא → מושג</span>
-        </div>
-        <div class="ctx-empty">אין ענפים תואמים.</div>`;
+      ? `<div class="ctx-tree-root">${sections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
+      : `<div class="ctx-empty">אין ענפים תואמים.</div>`;
 
     const sidebarTreeHtml = sidebarSections.length
-      ? `
-        <div class="ctx-map-head">
-          <strong>${esc(contextTreeSource.title || "עץ ניווט")}</strong>
-          <span>נושא → תת נושא → תת תת נושא → מושג</span>
-        </div>
-        <div class="ctx-tree-root">${sidebarSections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
+      ? `<div class="ctx-tree-root">${sidebarSections.map((node, i) => renderContextNode(node, [i])).join("")}</div>`
       : "";
 
     if (contextTreeBody) contextTreeBody.innerHTML = treeHtml;
@@ -7468,6 +7454,42 @@ document.addEventListener("DOMContentLoaded", () => {
     setRightSidebarCollapsed(!document.body.classList.contains("right-sidebar-collapsed"));
   });
 
+  // UX 2026-05-02: "Collapse both" toggles right sidebar AND top chrome together.
+  document.getElementById("chrome-collapse-both-btn")?.addEventListener("click", () => {
+    const bothCollapsed =
+      document.body.classList.contains("right-sidebar-collapsed") &&
+      document.body.classList.contains("top-chrome-collapsed");
+    setRightSidebarCollapsed(!bothCollapsed);
+    setTopChromeCollapsed(!bothCollapsed);
+  });
+
+  // UX 2026-05-02: Left-action-bar proxies clicks to the original (now hidden) controls.
+  // After triggering, also close the parent <details> popup so the menu collapses.
+  document.querySelectorAll(".left-action-bar [data-lab-trigger]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const targetId = btn.dataset.labTrigger;
+      const target = document.getElementById(targetId);
+      if (target) {
+        // Force-show hidden buttons momentarily so the click handler runs.
+        const wasHidden = target.hidden;
+        if (wasHidden) target.hidden = false;
+        target.click();
+        if (wasHidden) target.hidden = true;
+      }
+      // Collapse the parent details (popup menu)
+      const parentDetails = btn.closest("details.lab-menu");
+      if (parentDetails) parentDetails.open = false;
+      // Don't propagate to the parent summary
+      e.stopPropagation();
+    });
+  });
+  // Close left-action-bar popups when clicking outside
+  document.addEventListener("click", (e) => {
+    document.querySelectorAll(".left-action-bar details.lab-menu[open]").forEach((d) => {
+      if (!d.contains(e.target)) d.open = false;
+    });
+  });
+
   if (mobileContextQuery) {
     const onMobileContextChange = () => {
       syncContextTreeToggleVisibility();
@@ -7702,8 +7724,39 @@ document.addEventListener("DOMContentLoaded", () => {
     function save(arr) {
       try { localStorage.setItem(POCKET_KEY, JSON.stringify(arr)); } catch (_) {}
     }
+    // UX 2026-05-02: Pocket cards with 6-level explanations + level switcher.
+    const POCKET_LEVEL_KEY = "lumenportal:pocket:viewLevel:v1";
+    const LEVEL_LABELS = ["סבתא", "ילד", "חייל", "סטודנט", "ג'וניור", "פרופ׳"];
+    const LEVEL_KEYS = ["grandma", "child", "soldier", "student", "junior", "professor"];
+    function loadPocketLevels() {
+      try { return JSON.parse(localStorage.getItem(POCKET_LEVEL_KEY) || "{}"); } catch (_) { return {}; }
+    }
+    function savePocketLevels(map) {
+      try { localStorage.setItem(POCKET_LEVEL_KEY, JSON.stringify(map)); } catch (_) {}
+    }
+    function getPocketLevelExplanation(concept, levelIdx) {
+      // Try the rich levels object first (SVCollege concepts have this).
+      if (concept.levels && typeof concept.levels === "object" && !Array.isArray(concept.levels)) {
+        const key = LEVEL_KEYS[levelIdx];
+        const text = concept.levels[key];
+        if (text) {
+          // Take first sentence, max 180 chars.
+          const trimmed = String(text).split(/[.!?]\s/)[0];
+          return trimmed.length > 180 ? trimmed.slice(0, 178) + "…" : trimmed;
+        }
+      }
+      // Array form (legacy)
+      if (Array.isArray(concept.levels) && concept.levels[levelIdx]) {
+        return String(concept.levels[levelIdx]).slice(0, 180);
+      }
+      // Fallback to simpleExplanation
+      const fallback = concept.simpleExplanation || concept.explanation || "אין הסבר ברמה זו.";
+      return String(fallback).slice(0, 180);
+    }
+
     function refresh() {
       const items = load();
+      const pocketLevels = loadPocketLevels();
       countEl.textContent = items.length;
       countEl.style.display = items.length ? "flex" : "none";
       if (items.length === 0) {
@@ -7716,16 +7769,25 @@ document.addEventListener("DOMContentLoaded", () => {
           const lesson = (window.LESSONS_DATA || []).find((l) => l.id === lessonId);
           const concept = lesson?.concepts.find((c) => c.conceptName === conceptName);
           if (!concept) return "";
-          const explainer = (concept.levels?.[0] || concept.levels?.[1] || "").slice(0, 140);
+          const lvlIdx = Math.max(0, Math.min(5, Number(pocketLevels[entry] ?? 0)));
+          const explainer = getPocketLevelExplanation(concept, lvlIdx);
           return `
-            <div class="pocket-card">
+            <div class="pocket-card" data-pocket-entry="${esc(entry)}">
               <div class="pocket-card-head">
-                <span class="pocket-card-name">${esc(conceptName)}</span>
+                <button class="pocket-card-name pocket-jump" data-pocket-goto="${esc(entry)}" title="פתח את המושג בשיעור">${esc(conceptName)}</button>
                 <span class="pocket-card-lesson">${esc(lesson.title)}</span>
                 <button class="pocket-remove" data-pocket-remove="${esc(entry)}" aria-label="הסר מהכיס">✕</button>
               </div>
-              <div class="pocket-card-body">${esc(explainer)}${explainer.length === 140 ? "..." : ""}</div>
-              <button class="pocket-goto" data-pocket-goto="${esc(entry)}">🔍 פתח מושג</button>
+              <div class="pocket-level-row">
+                <button class="pocket-level-btn" data-pocket-level-down="${esc(entry)}" ${lvlIdx === 0 ? "disabled" : ""} aria-label="הורד רמה">−</button>
+                <span class="pocket-level-label">רמה ${lvlIdx + 1}: ${esc(LEVEL_LABELS[lvlIdx])}</span>
+                <button class="pocket-level-btn" data-pocket-level-up="${esc(entry)}" ${lvlIdx === 5 ? "disabled" : ""} aria-label="העלה רמה">+</button>
+              </div>
+              <div class="pocket-card-body">${esc(explainer)}</div>
+              <div class="pocket-card-actions">
+                <button class="pocket-goto" data-pocket-goto="${esc(entry)}">🔍 פתח מושג</button>
+                <button class="pocket-mastery" data-pocket-mastery="${esc(entry)}" title="הבנתי — לבחון אותי על רמה 7 כדי לסמן ✓">✅ הבנתי — בחן אותי</button>
+              </div>
             </div>`;
         }).join("");
         // Wire removal
@@ -7736,20 +7798,67 @@ document.addEventListener("DOMContentLoaded", () => {
             const next = load().filter((x) => x !== key);
             save(next);
             refresh();
-            // Update mark on any visible button
             document.querySelectorAll(`[data-pocket-key="${cssEscape(key)}"]`).forEach((bt) => bt.classList.remove("is-pocketed"));
+            if (typeof window.updateAchievementsRail === "function") window.updateAchievementsRail();
           });
         });
+        // Level up/down
+        list.querySelectorAll("[data-pocket-level-up]").forEach((b) => {
+          b.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const key = b.dataset.pocketLevelUp;
+            const map = loadPocketLevels();
+            map[key] = Math.min(5, Number(map[key] ?? 0) + 1);
+            savePocketLevels(map);
+            refresh();
+          });
+        });
+        list.querySelectorAll("[data-pocket-level-down]").forEach((b) => {
+          b.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const key = b.dataset.pocketLevelDown;
+            const map = loadPocketLevels();
+            map[key] = Math.max(0, Number(map[key] ?? 0) - 1);
+            savePocketLevels(map);
+            refresh();
+          });
+        });
+        // Jump to concept (click name or open button)
         list.querySelectorAll("[data-pocket-goto]").forEach((b) => {
           b.addEventListener("click", () => {
             const key = b.dataset.pocketGoto;
             const [lessonId, conceptName] = key.split("::");
             if (typeof openLesson === "function") openLesson(lessonId);
-            // Mark which concept to scroll to
             selectedConceptByLesson[lessonId] = conceptName;
             setTimeout(() => {
               const el = document.querySelector(`.concept-card[data-concept="${cssEscape(conceptName)}"]`);
               el?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 300);
+            closePocketPanel();
+          });
+        });
+        // Mastery — "I got it, test me on level 7"
+        list.querySelectorAll("[data-pocket-mastery]").forEach((b) => {
+          b.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const key = b.dataset.pocketMastery;
+            const [lessonId, conceptName] = key.split("::");
+            // Open the lesson + jump to concept + invoke a level-7 quiz hint
+            if (typeof openLesson === "function") openLesson(lessonId);
+            selectedConceptByLesson[lessonId] = conceptName;
+            // Mark a flag the lesson view will pick up — request hardest-level test.
+            try {
+              localStorage.setItem("lumenportal:pendingMasteryTest:v1", JSON.stringify({
+                lessonId, conceptName, requestedAt: Date.now(),
+              }));
+            } catch (_) {}
+            setTimeout(() => {
+              const el = document.querySelector(`.concept-card[data-concept="${cssEscape(conceptName)}"]`);
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "center" });
+                el.classList.add("level-questions-flash");
+                setTimeout(() => el.classList.remove("level-questions-flash"), 1600);
+              }
             }, 300);
             closePocketPanel();
           });
@@ -7786,15 +7895,91 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     closeBtn?.addEventListener("click", closePocketPanel);
 
+    // ----- Auto-pocket-on-failure (2026-05-02) -----
+    // Failed concept → auto-added to pocket. Stays until proved understood
+    // (2 consecutive correct answers on questions of that concept).
+    // Manual removal marks the concept as "dismissed" so we don't re-add.
+    const POCKET_AUTO_KEY = "lumenportal:pocket:autoAdded:v1";
+    const POCKET_DISMISSED_KEY = "lumenportal:pocket:dismissed:v1";
+    const POCKET_STREAK_KEY = "lumenportal:pocket:correctStreak:v1";
+    const POCKET_PROOF_THRESHOLD = 2;
+    function loadStringSet(key) {
+      try { return new Set(JSON.parse(localStorage.getItem(key) || "[]")); } catch (_) { return new Set(); }
+    }
+    function saveStringSet(key, set) {
+      try { localStorage.setItem(key, JSON.stringify(Array.from(set))); } catch (_) {}
+    }
+    function loadStreaks() {
+      try { return JSON.parse(localStorage.getItem(POCKET_STREAK_KEY) || "{}"); } catch (_) { return {}; }
+    }
+    function saveStreaks(map) {
+      try { localStorage.setItem(POCKET_STREAK_KEY, JSON.stringify(map)); } catch (_) {}
+    }
+
     // Expose API for action handler
     window.pocketToggle = function (key) {
       const items = load();
       const idx = items.indexOf(key);
-      if (idx === -1) items.push(key);
-      else items.splice(idx, 1);
+      const auto = loadStringSet(POCKET_AUTO_KEY);
+      const dismissed = loadStringSet(POCKET_DISMISSED_KEY);
+      if (idx === -1) {
+        items.push(key);
+        // Manual add → no longer dismissed
+        dismissed.delete(key);
+      } else {
+        items.splice(idx, 1);
+        // Manual remove → user dismissed; remember so we don't re-add automatically.
+        dismissed.add(key);
+        auto.delete(key);
+      }
       save(items);
+      saveStringSet(POCKET_AUTO_KEY, auto);
+      saveStringSet(POCKET_DISMISSED_KEY, dismissed);
       refresh();
     };
+
+    // Called by applyAnswer. Adds failed concepts to pocket; on enough
+    // correct streak in a row, removes auto-added concepts.
+    window.pocketAutoSync = function (key, correct) {
+      if (!key || typeof key !== "string") return;
+      const items = load();
+      const auto = loadStringSet(POCKET_AUTO_KEY);
+      const dismissed = loadStringSet(POCKET_DISMISSED_KEY);
+      const streaks = loadStreaks();
+      let changed = false;
+
+      if (!correct) {
+        // Reset streak — student failed.
+        if (streaks[key]) { delete streaks[key]; }
+        // Auto-add to pocket if not already there and user hasn't dismissed it.
+        if (!items.includes(key) && !dismissed.has(key)) {
+          items.push(key);
+          auto.add(key);
+          changed = true;
+        } else if (items.includes(key) && !auto.has(key) && !dismissed.has(key)) {
+          // Already manually pocketed — leave alone but don't track in auto.
+        }
+      } else {
+        // Correct answer — only track streak if concept is auto-pocketed.
+        if (auto.has(key) && items.includes(key)) {
+          streaks[key] = (streaks[key] || 0) + 1;
+          if (streaks[key] >= POCKET_PROOF_THRESHOLD) {
+            const i = items.indexOf(key);
+            if (i !== -1) items.splice(i, 1);
+            auto.delete(key);
+            delete streaks[key];
+            changed = true;
+          }
+        }
+      }
+
+      save(items);
+      saveStringSet(POCKET_AUTO_KEY, auto);
+      saveStringSet(POCKET_DISMISSED_KEY, dismissed);
+      saveStreaks(streaks);
+      if (changed) refresh();
+    };
+
     window.pocketIsHidden = function (hidden) {
       // Allow Mock Exam to hide the FAB during exam
       fab.style.display = hidden ? "none" : "";
@@ -8575,7 +8760,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const btn = document.createElement("button");
       btn.className = "lesson-nav-btn";
       if (quizCompleted[lesson.id]) btn.classList.add("completed");
-      btn.innerHTML = `<span class="num">${index + 1}</span><span class="lesson-label">${lesson.title}</span>`;
+      // UX 2026-05-02: % completion per lesson (avg level/7 across concepts)
+      let pct = 0;
+      try {
+        const concepts = lesson.concepts || [];
+        if (concepts.length) {
+          const total = concepts.reduce((sum, c) => {
+            const sc = (typeof getScore === "function") ? getScore(lesson.id, c.conceptName) : { level: 0 };
+            const lvl = Number(sc.level || 0);
+            return sum + Math.min(7, lvl) / 7;
+          }, 0);
+          pct = Math.round((total / concepts.length) * 100);
+        }
+      } catch (_) {}
+      const pctClass = pct === 0 ? "zero" : (pct >= 100 ? "complete" : "");
+      btn.innerHTML = `<span class="num">${index + 1}</span><span class="lesson-label">${lesson.title}</span><span class="lesson-completion-pct ${pctClass}">${pct}%</span>`;
       btn.dataset.id = lesson.id;
       btn.dataset.searchText = (
         lesson.title +
@@ -9529,15 +9728,42 @@ document.addEventListener("DOMContentLoaded", () => {
     hideAllViews();
     setPortalDecisionAid("home");
     currentLessonId = null;
-    currentLessonTitle.textContent = "ברוכים הבאים לפורטל המומחים";
+    currentLessonTitle.textContent = "ברוכים הבאים לפורטל";
     currentLessonDesc.textContent =
-      "בחרו שיעור מהתפריט כדי להתחיל ללמוד. כל מושג מוסבר ב-6 רמות שונות — מסבתא ועד פרופסור!";
+      "השמירה האוטומטית פועלת. תמיד תוכל להמשיך מהנקודה האחרונה שלך.";
     welcomeScreen.style.display = "flex";
     document.getElementById("open-home")?.classList.add("active");
     setHomeContextTree();
     scrollToTop();
     sidebar.classList.remove("open");
+    // UX 2026-05-02: refresh resume CTA on the welcome screen
+    if (typeof updateWelcomeResumeButton === "function") updateWelcomeResumeButton();
   });
+
+  // UX 2026-05-02: Welcome screen resume button — points to last opened lesson.
+  function updateWelcomeResumeButton() {
+    const btn = document.getElementById("welcome-resume-btn");
+    const targetEl = document.getElementById("welcome-resume-target");
+    if (!btn || !targetEl) return;
+    let last = null;
+    try {
+      const raw = localStorage.getItem("lumenportal:lastOpenedLesson:v1");
+      if (raw) last = JSON.parse(raw);
+    } catch (_) {}
+    if (last && last.lessonId && last.lessonTitle) {
+      targetEl.textContent = String(last.lessonTitle).slice(0, 50);
+      btn.hidden = false;
+      btn.onclick = () => {
+        if (typeof openLesson === "function") openLesson(last.lessonId);
+      };
+    } else {
+      btn.hidden = true;
+    }
+  }
+  // Expose so other handlers can call it after a lesson opens/saves.
+  window.updateWelcomeResumeButton = updateWelcomeResumeButton;
+  document.addEventListener("DOMContentLoaded", updateWelcomeResumeButton);
+  setTimeout(updateWelcomeResumeButton, 1000);
   document.getElementById("brand-home-btn")?.addEventListener("click", () => {
     document.getElementById("open-home")?.click();
   });
@@ -10065,10 +10291,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const dueBadge = due
               ? `<span class="km-due-badge" title="חזרה לפי SRS — הגיע מועד">🔁 חזרה מומלצת</span>`
               : "";
+            // PHASE-J: cluster badge in knowledge map
+            const cluster = (typeof window !== "undefined" && window.CLUSTER_INDEX)
+              ? window.CLUSTER_INDEX.findByConcept(lesson.id, c.conceptName)
+              : null;
+            const clusterBadge = cluster
+              ? `<span class="km-cluster-badge ${cluster.docSection ? "has-doc" : "no-doc"}" title="קלסטר השוואה: ${esc(cluster.title)} — ${cluster.members.length} חברים${cluster.docSection ? " · " + esc(cluster.docSection) : ""}" data-cluster-id="${esc(cluster.id)}">🧩 ${esc(cluster.title.slice(0, 28))}${cluster.title.length > 28 ? "…" : ""}</span>`
+              : "";
             return `
-              <div class="km-concept-row ${rowCls}" data-lesson="${esc(lesson.id)}" data-concept="${esc(c.conceptName)}">
+              <div class="km-concept-row ${rowCls}" data-lesson="${esc(lesson.id)}" data-concept="${esc(c.conceptName)}" ${cluster ? `data-cluster-id="${esc(cluster.id)}"` : ""}>
                 <div class="km-concept-name" title="פתח את המושג בשיעור">${esc(c.conceptName)}</div>
                 ${masteryBadge}
+                ${clusterBadge}
                 ${dueBadge}
                 ${bankBadges}
                 ${stages}
@@ -11199,9 +11433,81 @@ document.addEventListener("DOMContentLoaded", () => {
     if (core && typeof core.canMarkV === "function") return core.canMarkV(sc, concept);
     if (sc.markedKnown) return false;
     if (isScoreMastered(sc)) return false; // already mastered, no need
+
+    // Cluster-aware anti-cheat (PHASE H):
+    // If concept belongs to a comparison cluster, require correct answers across
+    // multiple cluster members — not just THIS concept. This prevents students
+    // from drilling one easy member to V the whole cluster.
+    const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
+    const cluster = clusterApi ? clusterApi.findByConcept(lessonId, conceptName) : null;
+
+    if (cluster) {
+      const clusterDiff = Math.max(cluster.difficulty, getDifficulty(concept));
+      if (clusterDiff >= 7) return false; // hard cluster — must master via 7 levels
+      const perMemberNeed = Math.max(1, Math.ceil(correctNeededForV(clusterDiff) / 2));
+      // Count how many cluster members have at least perMemberNeed correct answers
+      let membersPassed = 0;
+      let membersExisting = 0;
+      cluster.members.forEach((memberName) => {
+        // Look across all lessons that contain this cluster
+        for (const lessonRef of (cluster.lessons || [lessonId])) {
+          const memberScore = scores[conceptKey(lessonRef, memberName)];
+          if (memberScore) {
+            membersExisting++;
+            if (Number(memberScore.correctRunCount || 0) >= perMemberNeed) membersPassed++;
+            break;
+          }
+        }
+      });
+      // Require at least half of cluster members verified (round up)
+      const requiredMembers = Math.max(1, Math.ceil(cluster.members.length / 2));
+      return membersPassed >= requiredMembers;
+    }
+
     const need = correctNeededForV(getDifficulty(concept));
     if (!isFinite(need)) return false; // hard concepts cannot be V'd
     return sc.correctRunCount >= need;
+  }
+
+  // Returns cluster verification status: how many members user has verified vs needed
+  function clusterVStatus(lessonId, conceptName) {
+    // Sprint 4: delegated to src/core/cluster-engine.js for testability
+    if (typeof window !== "undefined" && window.ClusterEngine) {
+      return window.ClusterEngine.computeClusterVStatus(
+        scores, conceptKey, correctNeededForV, lessonId, conceptName,
+      );
+    }
+    // Fallback (engine not loaded — shouldn't happen in production)
+    const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
+    const cluster = clusterApi ? clusterApi.findByConcept(lessonId, conceptName) : null;
+    if (!cluster) return null;
+    const clusterDiff = cluster.difficulty;
+    const perMemberNeed = Math.max(1, Math.ceil(correctNeededForV(clusterDiff) / 2));
+    let membersPassed = 0;
+    cluster.members.forEach((memberName) => {
+      for (const lessonRef of (cluster.lessons || [lessonId])) {
+        const memberScore = scores[conceptKey(lessonRef, memberName)];
+        if (memberScore && Number(memberScore.correctRunCount || 0) >= perMemberNeed) {
+          membersPassed++;
+          break;
+        }
+      }
+    });
+    const requiredMembers = Math.max(1, Math.ceil(cluster.members.length / 2));
+    return {
+      cluster,
+      membersPassed,
+      requiredMembers,
+      perMemberNeed,
+      verified: membersPassed >= requiredMembers,
+      weakMember: cluster.members.find((m) => {
+        for (const lessonRef of (cluster.lessons || [lessonId])) {
+          const sc = scores[conceptKey(lessonRef, m)];
+          if (!sc || Number(sc.correctRunCount || 0) < perMemberNeed) return true;
+        }
+        return false;
+      }),
+    };
   }
 
   function markAsKnown(lessonId, conceptName) {
@@ -11219,6 +11525,30 @@ document.addEventListener("DOMContentLoaded", () => {
       sc.masteryGate.reason = "manual-known-is-not-mastery";
       sc.masteryGate.message = "סימון ידוע עוזר למאמן, אבל ציון 100 דורש תשובה נכונה לשאלת אתגר.";
     }
+
+    // PHASE H: cluster propagation — if concept is in a cluster, mark all members
+    // (anti-cheat already verified cross-cluster knowledge in canMarkV)
+    const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
+    const cluster = clusterApi ? clusterApi.findByConcept(lessonId, conceptName) : null;
+    if (cluster) {
+      cluster.members.forEach((memberName) => {
+        if (memberName === conceptName) return;
+        for (const lessonRef of (cluster.lessons || [lessonId])) {
+          const memberRef = findConceptByKeyLoose(conceptKey(lessonRef, memberName));
+          if (memberRef) {
+            const ms = ensureScore(lessonRef, memberName);
+            if (!ms.markedKnown) {
+              ms.markedKnown = true;
+              ms.markedKnownAt = Date.now();
+              ms.level = Math.min(6, Math.max(Number(ms.level) || 1, 4));
+              ms.viaCluster = cluster.id;
+            }
+            break;
+          }
+        }
+      });
+    }
+
     saveScores();
   }
 
@@ -12366,6 +12696,13 @@ document.addEventListener("DOMContentLoaded", () => {
       mode: meta.mode || "question",
       concept,
     });
+    // Auto-pocket: failure adds the concept to the student's pocket; correct
+    // streak (2 in a row) removes it. Lets the student "prove" they understand.
+    try {
+      if (typeof window.pocketAutoSync === "function") {
+        window.pocketAutoSync(conceptKey(lessonId, conceptName), !!correct);
+      }
+    } catch (_) {}
     let mistakeRecord = null;
     let tagSignals = { allKeys: [conceptKey(lessonId, conceptName)], relatedKeys: [] };
     if (correct) {
@@ -12498,7 +12835,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Trainer state
-  let trainerMode = "adaptive"; // "adaptive" | "weak" | "mixed"
+  let trainerMode = "adaptive"; // "adaptive" | "weak" | "mixed" | "cluster"
+  let trainerClusterFilter = null; // Set to cluster.id when in "cluster" mode
   let trainerCurrent = null; // { lesson, concept, question }
   let trainerStats = { asked: 0, correct: 0, wrong: 0 };
   let trainerLastAnswered = false;
@@ -13366,6 +13704,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return sc.level <= 3; // grandma/child/soldier — still considered weak
       });
       if (filtered.length === 0) filtered = pool;
+    } else if (trainerMode === "cluster" && trainerClusterFilter) {
+      // PHASE-K: Cluster mode — only quiz on members of the active cluster
+      const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
+      const cluster = clusterApi ? clusterApi.getById(trainerClusterFilter) : null;
+      if (cluster) {
+        const memberSet = new Set(cluster.members.map((m) => m.toLowerCase()));
+        filtered = pool.filter(({ concept }) => memberSet.has(String(concept.conceptName || "").toLowerCase()));
+        if (filtered.length === 0) filtered = pool; // safety fallback
+      }
     }
 
     const weights = filtered.map(({ lesson, concept }) =>
@@ -13866,6 +14213,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const stageBadge = `${question.kind === "fill" ? "✍️ השלמת קוד" : "🅰️ שאלה אמריקנית"}`;
     const progressBadge = `שלבים ברמה ${sc.level}: ${sc.passedMC ? "🅰️✅" : "🅰️◯"} ${needsCodeFill(concept) ? (sc.passedFill ? "✍️✅" : "✍️◯") : ""}`.trim();
+    // PHASE-K: cluster context in trainer card
+    const cluster = (typeof window !== "undefined" && window.CLUSTER_INDEX)
+      ? window.CLUSTER_INDEX.findByConcept(lesson.id, concept.conceptName)
+      : null;
+    const clusterContext = cluster
+      ? `<div class="trainer-cluster-context" data-cluster-id="${esc(cluster.id)}" title="המושג שייך לקלסטר השוואה">
+          <span class="tcc-icon">🧩</span>
+          <div class="tcc-body">
+            <strong>${esc(cluster.title)}</strong>
+            <span class="tcc-members">חברים: ${esc(cluster.members.join(" · "))}</span>
+            ${cluster.docSection ? `<span class="tcc-doc">📖 בלוק לימוד מאוחד: ${esc(cluster.docSection)}</span>` : ""}
+          </div>
+        </div>`
+      : "";
     const retestBanner = trainerCurrent.retestItem
       ? `<div class="adaptive-retest-banner">
           <strong>🔁 ${esc(trainerCurrent.retestItem.label || "שאלת תיקון")}</strong>
@@ -13914,6 +14275,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="tq-stage-badge">${stageBadge}</span>
         <span class="tq-progress-badge">${progressBadge}</span>
       </div>
+      ${clusterContext}
       ${retestBanner}
       ${renderTrainerConfidenceControls()}
       <div class="question-learning-layout trainer">
@@ -14593,6 +14955,8 @@ document.addEventListener("DOMContentLoaded", () => {
     hideAllViews();
     setPortalDecisionAid("trainer");
     currentLessonId = null;
+    // PHASE-K: clear cluster filter unless we're in cluster mode
+    if (trainerMode !== "cluster") trainerClusterFilter = null;
     currentLessonTitle.textContent = "🧠 מאמן הידע";
     currentLessonDesc.textContent =
       "המערכת מציגה שאלות אדפטיביות. כל תשובה מעדכנת את הציון של המושג ואת רמת השליטה הכללית.";
@@ -29567,6 +29931,133 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${lesson.id}::${concept.conceptName}`;
   }
 
+  // ------- Achievements rail navigation buttons (UX 2026-05-02) -------
+  // Back / Home buttons in the top thin rail.
+  if (typeof window !== "undefined") {
+    document.addEventListener("DOMContentLoaded", () => {
+      const backBtn = document.getElementById("ach-nav-back");
+      const homeBtn = document.getElementById("ach-nav-home");
+      if (backBtn) {
+        backBtn.addEventListener("click", () => {
+          // Use history.back if any history entries exist; otherwise go home.
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            document.getElementById("open-home")?.click();
+          }
+        });
+      }
+      if (homeBtn) {
+        homeBtn.addEventListener("click", () => {
+          document.getElementById("open-home")?.click();
+        });
+      }
+    });
+  }
+
+  // ------- Achievements rail (UX 2026-05-02) -------
+  function updateAchievementsRail() {
+    try {
+      const lessons = window.LESSONS_DATA || [];
+      let total = 0, passed = 0, mastered = 0, levelSum = 0;
+      lessons.forEach((lesson) => {
+        (lesson.concepts || []).forEach((concept) => {
+          total += 1;
+          const sc = (typeof getScore === "function") ? getScore(lesson.id, concept.conceptName) : { level: 0 };
+          const lvl = Number(sc.level || 0);
+          levelSum += Math.min(7, lvl);
+          if (lvl >= 5) passed += 1;
+          if (lvl >= 7) mastered += 1;
+        });
+      });
+      const performancePct = total > 0 ? Math.round((levelSum / (total * 7)) * 100) : 0;
+      const passedEl = document.getElementById("ach-passed-value");
+      const masteredEl = document.getElementById("ach-mastered-value");
+      const pocketEl = document.getElementById("ach-pocket-value");
+      const xpEl = document.getElementById("ach-xp-value");
+      const nameEl = document.getElementById("ach-student-name");
+      const perfEl = document.getElementById("ach-perf-value");
+      if (passedEl) passedEl.textContent = `${passed}/${total}`;
+      if (masteredEl) masteredEl.textContent = `${mastered}/${total}`;
+      if (pocketEl) {
+        try {
+          const pocket = JSON.parse(localStorage.getItem("lumenportal:pocket:v1") || "[]");
+          pocketEl.textContent = String(Array.isArray(pocket) ? pocket.length : 0);
+        } catch (_) {
+          pocketEl.textContent = "0";
+        }
+      }
+      // Student name from active profile
+      if (nameEl) {
+        try {
+          const profilesRaw = localStorage.getItem("lumenportal:profiles:v1");
+          const activeId = localStorage.getItem("lumenportal:activeProfile:v1");
+          if (profilesRaw && activeId) {
+            const profiles = JSON.parse(profilesRaw);
+            const me = Array.isArray(profiles) ? profiles.find((p) => p && p.id === activeId) : null;
+            if (me && me.name) nameEl.textContent = String(me.name).slice(0, 20);
+          }
+        } catch (_) {}
+      }
+      // XP from getXP if available
+      if (xpEl && typeof window.__lumenGetXP === "function") {
+        try { xpEl.textContent = String(window.__lumenGetXP()); } catch (_) {}
+      } else if (xpEl) {
+        try {
+          const profilePrefix = (function() {
+            const id = localStorage.getItem("lumenportal:activeProfile:v1");
+            return id ? `lumenportal:profile:${id}:` : "";
+          })();
+          const xpKey = profilePrefix + "lumenportal:xp:v1";
+          const raw = localStorage.getItem(xpKey) || localStorage.getItem("lumenportal:xp:v1") || "0";
+          xpEl.textContent = String(parseInt(raw, 10) || 0);
+        } catch (_) {}
+      }
+      if (perfEl) perfEl.textContent = `${performancePct}%`;
+    } catch (_) {}
+  }
+  if (typeof window !== "undefined") {
+    window.updateAchievementsRail = updateAchievementsRail;
+    document.addEventListener("DOMContentLoaded", updateAchievementsRail);
+    setTimeout(updateAchievementsRail, 800);
+    // Refresh on storage change (other tabs) and pocket changes
+    window.addEventListener("storage", (e) => {
+      if (!e.key) return;
+      if (e.key.includes("scores") || e.key.includes("pocket")) updateAchievementsRail();
+    });
+  }
+
+  // ------- Enrichment ordering + force-open helpers (UX 2026-05-02) -------
+  const ENRICHMENT_ORDER_KEY = "lumenportal:enrichment-order:v1";
+  function getStoredEnrichmentOrder() {
+    try {
+      const raw = localStorage.getItem(ENRICHMENT_ORDER_KEY);
+      if (!raw) return null;
+      const arr = JSON.parse(raw);
+      return Array.isArray(arr) ? arr.filter((x) => typeof x === "string") : null;
+    } catch (_) {
+      return null;
+    }
+  }
+  function applyEnrichmentOrder(panels) {
+    const order = getStoredEnrichmentOrder();
+    if (!order || !order.length) return panels;
+    const byId = new Map(panels.map((p) => [p.id, p]));
+    const ordered = [];
+    order.forEach((id) => {
+      if (byId.has(id)) {
+        ordered.push(byId.get(id));
+        byId.delete(id);
+      }
+    });
+    byId.forEach((p) => ordered.push(p));
+    return ordered;
+  }
+  function forceDetailsOpen(html) {
+    if (!html || typeof html !== "string") return html || "";
+    return html.replace(/<details(?!\s+open)(\s|>)/gi, "<details open$1");
+  }
+
   function renderConceptStepTabs(steps = [], activeId = "") {
     if (!steps.length) return "";
     return `
@@ -29695,6 +30186,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function lessonQuestionBankQuestionText(item, concept) {
+    // Fill questions: prefer hint as a question prompt; code shown separately below
+    if (item && item.kind === "fill") {
+      const hint = item.question.hint || item.question.question || item.question.prompt;
+      if (hint && String(hint).trim()) return String(hint).trim();
+      // No hint — generate a useful prompt from the code
+      if (item.question.code) return `השלם את ה-____ בקוד למטה (${concept.conceptName})`;
+    }
     return item.question.question ||
       item.question.prompt ||
       item.question.title ||
@@ -29722,6 +30220,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>`;
     }
+    const fillCode = item.question.code || item.question.codeBlock || item.question.prompt || "";
     return `
       <form class="lesson-qbank-question" data-lesson-qbank-kind="fill" data-lesson-qbank-fill>
         <div class="lesson-qbank-meta">
@@ -29729,7 +30228,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <span>רמת אתגר ${esc(item.challenge)}/6</span>
         </div>
         <p>${esc(questionText)}</p>
-        ${item.question.codeBlock ? `<pre class="lesson-qbank-code"><code>${esc(item.question.codeBlock)}</code></pre>` : ""}
+        ${fillCode ? `<pre class="lesson-qbank-code"><code>${esc(fillCode)}</code></pre>` : ""}
         <div class="lesson-qbank-fill-row">
           <input type="text" class="lesson-qbank-input" name="qbank-answer" autocomplete="off" aria-label="תשובה לשאלת בנק שאלות" />
           <button type="submit" class="lesson-qbank-submit">בדוק</button>
@@ -29979,17 +30478,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button type="button" class="lesson-nav-step primary" data-lesson-step="1" ${selectedIndex >= concepts.length - 1 ? "disabled" : ""}>המושג הבא</button>
                 ${nextLesson ? `<button type="button" class="lesson-nav-next-lesson" data-lesson-next="${esc(nextLesson.id)}">השיעור הבא</button>` : ""}
               </span>
-              ${concepts.map((concept, index) => `
+              ${concepts.map((concept, index) => {
+                // UX 2026-05-02: status colors — green = mastered (V), red = failed/in-pocket
+                const cSc = (typeof getScore === "function") ? getScore(lesson.id, concept.conceptName) : { level: 0 };
+                const isMastered = cSc.markedKnown === true || Number(cSc.level || 0) >= 7;
+                const inPocket = (function(){ try { return JSON.parse(localStorage.getItem("lumenportal:pocket:v1") || "[]").includes(`${lesson.id}::${concept.conceptName}`); } catch(_) { return false; } })();
+                const hasWrong = Number(cSc.wrongCount || 0) > 0 || Number(cSc.lapses || 0) > 0;
+                const statusClass = isMastered ? "chip-mastered" : ((inPocket || hasWrong) ? "chip-needs-work" : "");
+                return `
                 <button
                   type="button"
                   role="listitem"
-                  class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""}"
+                  class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""} ${statusClass}"
                   data-lesson-concept-jump="${esc(concept.conceptName)}"
-                  title="פתח את ${esc(concept.conceptName)}">
+                  title="פתח את ${esc(concept.conceptName)}${isMastered ? " — ✅ עברת" : (inPocket ? " — 📌 בכיס" : (hasWrong ? " — צריך חיזוק" : ""))}">
                   <span>${esc(index + 1)}</span>
                   ${esc(concept.conceptName)}
                 </button>
-              `).join("")}
+              `}).join("")}
             </div>
           </div>
         ` : ""}
@@ -30009,28 +30515,56 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderLessonOneLineOverview(lesson, concepts) {
+    const clusterApi = (typeof window !== "undefined" && window.CLUSTER_INDEX) || null;
     return `
       <section class="lesson-compact-panel" data-page-section="מושגי השיעור" aria-label="מבט שורה אחת על מושגי השיעור">
         <div class="lesson-compact-head">
           <h4>מושגי השיעור בשורה אחת</h4>
           <span>${concepts.length} מושגים</span>
         </div>
+        <div class="lesson-compact-help" style="margin:0.4rem 0 0.6rem; color:var(--text-muted); font-size:0.85rem;">
+          🔴 קשה (7+) חייב ללמוד · 🟡 גבולי (6) ניתן לסימון V · 🟢 קל (≤5) סמן V לאחר אימות במאמן · 🧩 = שייך לקלסטר השוואה.
+        </div>
         <div class="lesson-compact-list">
-          ${concepts.map((concept, index) => `
+          ${concepts.map((concept, index) => {
+            const ownDiff = getDifficulty(concept);
+            const cluster = clusterApi ? clusterApi.findByConcept(lesson.id, concept.conceptName) : null;
+            const diff = cluster ? Math.max(cluster.difficulty, ownDiff) : ownDiff;
+            const sc = getScore(lesson.id, concept.conceptName);
+            const isMastered = sc.markedKnown === true || Number(sc.level || 0) >= 7;
+            const allowV = diff <= 6 && !isMastered;
+            const need = correctNeededForV(diff);
+            const haveCount = Math.max(0, Number(sc.correctRunCount || 0));
+            const canV = allowV && isFinite(need) && haveCount >= need;
+            const diffClass = diff >= 7 ? "diff-hard" : (diff === 6 ? "diff-mid" : "diff-easy");
+            const diffLabel = diff >= 7 ? "🔴 קשה" : (diff === 6 ? "🟡 גבולי" : "🟢 קל");
+            const vBadge = isMastered
+              ? `<span class="lcr-v done" title="נסגר ✓" aria-label="המושג סומן כמוכר">✓ ידוע</span>`
+              : (allowV
+                ? (canV
+                  ? `<button type="button" class="lcr-v ready" data-mark-v-row="${esc(concept.conceptName)}" title="לחץ לסימון V" aria-label="סמן ${esc(concept.conceptName)} כמוכר">✓ סמן V</button>`
+                  : `<button type="button" class="lcr-v locked" data-trainer-vcheck="${esc(concept.conceptName)}" title="המאמן יבחן אותך — עוד ${Math.max(0, (isFinite(need)?need:0) - haveCount)} תשובות נכונות נדרשות" aria-label="פתח את המאמן לאימות ידיעה">🔒 ${haveCount}/${isFinite(need) ? need : '∞'} במאמן</button>`)
+                : `<span class="lcr-v hard" title="קושי ${diff} — חובה ללמוד עד מאסטר" aria-label="מושג קשה — אין סימון V">📖 חובה ללמוד</span>`);
+            const clusterBadge = cluster
+              ? `<span class="lcr-cluster ${cluster.docSection ? 'has-doc' : 'no-doc'}" title="קלסטר השוואה: ${esc(cluster.title)} — חברים: ${esc(cluster.members.join(', '))}${cluster.docSection ? '\nתוכן מאוחד: ' + esc(cluster.docSection) : ''}" data-cluster-id="${esc(cluster.id)}">🧩 ${esc(cluster.title)}${cluster.docSection ? ' ✓' : ''}</span>`
+              : "";
+            return `
             <article
               class="lesson-compact-row"
               data-page-section="${esc(concept.conceptName)}"
-              data-lesson-compact-open="${esc(concept.conceptName)}"
-              role="button"
-              tabindex="0"
-              aria-label="פתח כרטיס מלא: ${esc(concept.conceptName)}">
+              data-concept-difficulty="${diff}"
+              data-difficulty-tier="${diffClass}"
+              ${cluster ? `data-cluster-id="${esc(cluster.id)}"` : ''}
+              aria-label="${esc(concept.conceptName)} — קושי ${diff}/10${cluster ? ' — קלסטר ' + esc(cluster.title) : ''}">
               <span class="lesson-compact-index">${index + 1}</span>
-              <div>
-                <h5>${esc(concept.conceptName)}</h5>
+              <div class="lesson-compact-body" data-lesson-compact-open="${esc(concept.conceptName)}" role="button" tabindex="0">
+                <h5>${esc(concept.conceptName)} <span class="lcr-diff ${diffClass}" title="רמת קושי ${diff}/10">${diffLabel} ${diff}/10</span></h5>
                 <p>${esc(conceptSprintOneLine(concept) || "אין עדיין הגדרה קצרה למושג הזה.")}</p>
+                ${clusterBadge}
               </div>
-            </article>
-          `).join("")}
+              <div class="lesson-compact-actions">${vBadge}</div>
+            </article>`;
+          }).join("")}
         </div>
       </section>`;
   }
@@ -30127,6 +30661,63 @@ document.addEventListener("DOMContentLoaded", () => {
         openConcept();
       });
     });
+
+    // PHASE G/H — V-mark buttons in single-line view
+    lessonBody.querySelectorAll("[data-mark-v-row]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const lesson = window.LESSONS_DATA.find((item) => item.id === currentLessonId);
+        const conceptName = btn.getAttribute("data-mark-v-row");
+        if (!lesson || !conceptName) return;
+        const status = (typeof clusterVStatus === "function") ? clusterVStatus(lesson.id, conceptName) : null;
+        const concept = (lesson.concepts || []).find((c) => c.conceptName === conceptName);
+        if (!canMarkV(lesson.id, conceptName, concept)) {
+          alert("אנטי-רמאות: עדיין לא וידאת ידיעה במאמן.");
+          return;
+        }
+        const clusterMsg = status && status.cluster
+          ? `\n(הפעולה תסמן V לכל ${status.cluster.members.length} חברי הקלסטר ״${status.cluster.title}״ — אימות אנטי-רמאות עבר)`
+          : "";
+        if (confirm(`לסמן את "${conceptName}" כמושג ידוע?${clusterMsg}`)) {
+          markAsKnown(lesson.id, conceptName);
+          // Refresh the lesson view
+          if (typeof renderLessonContent === "function") renderLessonContent();
+          else if (typeof showLesson === "function") showLesson(lesson.id);
+        }
+      });
+    });
+    lessonBody.querySelectorAll("[data-trainer-vcheck]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const lesson = window.LESSONS_DATA.find((item) => item.id === currentLessonId);
+        const conceptName = btn.getAttribute("data-trainer-vcheck");
+        if (!lesson || !conceptName) return;
+        const status = (typeof clusterVStatus === "function") ? clusterVStatus(lesson.id, conceptName) : null;
+        // Pick weakest cluster member if cluster exists, else this concept
+        let targetConcept = conceptName;
+        let targetLesson = lesson;
+        if (status && status.weakMember) {
+          const cluster = status.cluster;
+          // PHASE-K: enable cluster mode in trainer
+          trainerMode = "cluster";
+          trainerClusterFilter = cluster.id;
+          for (const lessonRef of (cluster.lessons || [lesson.id])) {
+            const candidate = (window.LESSONS_DATA || []).find((l) => l.id === lessonRef);
+            const found = candidate && (candidate.concepts || []).find((c) => c.conceptName.toLowerCase() === status.weakMember.toLowerCase());
+            if (found) {
+              targetConcept = found.conceptName;
+              targetLesson = candidate;
+              break;
+            }
+          }
+        }
+        const concept = (targetLesson.concepts || []).find((c) => c.conceptName === targetConcept);
+        openTrainer();
+        if (concept) {
+          requestAnimationFrame(() => nextQuestionForConcept(targetLesson, concept));
+        }
+      });
+    });
   }
 
   function lessonIndexById(lessonId) {
@@ -30151,17 +30742,23 @@ document.addEventListener("DOMContentLoaded", () => {
           ${nextLesson ? `<button type="button" class="lesson-nav-next-lesson" data-lesson-next="${esc(nextLesson.id)}">השיעור הבא</button>` : ""}
         </div>
         <div class="lesson-concept-chip-strip" role="list" aria-label="מושגי השיעור">
-          ${concepts.map((concept, index) => `
+          ${concepts.map((concept, index) => {
+            const cSc = (typeof getScore === "function") ? getScore(lesson.id, concept.conceptName) : { level: 0 };
+            const isMastered = cSc.markedKnown === true || Number(cSc.level || 0) >= 7;
+            const inPocket = (function(){ try { return JSON.parse(localStorage.getItem("lumenportal:pocket:v1") || "[]").includes(`${lesson.id}::${concept.conceptName}`); } catch(_) { return false; } })();
+            const hasWrong = Number(cSc.wrongCount || 0) > 0 || Number(cSc.lapses || 0) > 0;
+            const statusClass = isMastered ? "chip-mastered" : ((inPocket || hasWrong) ? "chip-needs-work" : "");
+            return `
             <button
               type="button"
               role="listitem"
-              class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""}"
+              class="lesson-concept-chip ${concept.conceptName === selectedConcept.conceptName ? "active" : ""} ${statusClass}"
               data-lesson-concept-jump="${esc(concept.conceptName)}"
-              title="פתח את ${esc(concept.conceptName)}">
+              title="פתח את ${esc(concept.conceptName)}${isMastered ? " — ✅ עברת" : (inPocket ? " — 📌 בכיס" : (hasWrong ? " — צריך חיזוק" : ""))}">
               <span>${esc(index + 1)}</span>
               ${esc(concept.conceptName)}
             </button>
-          `).join("")}
+          `}).join("")}
         </div>
       </nav>`;
   }
@@ -30789,27 +31386,34 @@ document.addEventListener("DOMContentLoaded", () => {
       }] : []),
     ];
 
-    const enrichmentPanelsHTML = [
-      renderDeepDivePanel(concept),
-      renderExtendedExplanationPanel(concept),
-      renderExtrasPanel(concept, sc, diff),
-      renderMnemonicPanel(concept),
-      renderAntiPatternsPanel(concept),
-      renderAnimatorPanel(concept),
-      renderWhatIfPanel(concept),
-      renderConceptComicPanel(concept),
-      renderConceptVideoPanel(concept),
-      renderStageZeroPanel(concept),
-      renderMemoryPalacePanel(concept),
-      renderProblemFirstPanel(concept),
-      renderBugHuntPanel(lesson, concept),
-      renderMiniBuildPanel(lesson, concept),
-      renderWarStoriesPanel(concept),
-      renderComparisonsPanel(concept),
-      renderMetaphorCarousel(k),
-      renderScenariosPanel(k),
-      renderCounterfactualPanel(k),
-    ].filter(Boolean).join("");
+    // UX update 2026-05-02: enrichment panels are collapsible cards.
+    // User-controlled order via lumenportal:enrichment-order:v1 (settings panel).
+    // All cards default to OPEN so the learner sees them right away.
+    const enrichmentPanels = [
+      { id: "deepDive", html: renderDeepDivePanel(concept) },
+      { id: "extendedExplanation", html: renderExtendedExplanationPanel(concept) },
+      { id: "extras", html: renderExtrasPanel(concept, sc, diff) },
+      { id: "mnemonic", html: renderMnemonicPanel(concept) },
+      { id: "antiPatterns", html: renderAntiPatternsPanel(concept) },
+      { id: "animator", html: renderAnimatorPanel(concept) },
+      { id: "whatIf", html: renderWhatIfPanel(concept) },
+      { id: "conceptComic", html: renderConceptComicPanel(concept) },
+      { id: "conceptVideo", html: renderConceptVideoPanel(concept) },
+      { id: "stageZero", html: renderStageZeroPanel(concept) },
+      { id: "memoryPalace", html: renderMemoryPalacePanel(concept) },
+      { id: "problemFirst", html: renderProblemFirstPanel(concept) },
+      { id: "bugHunt", html: renderBugHuntPanel(lesson, concept) },
+      { id: "miniBuild", html: renderMiniBuildPanel(lesson, concept) },
+      { id: "warStories", html: renderWarStoriesPanel(concept) },
+      { id: "comparisons", html: renderComparisonsPanel(concept) },
+      { id: "metaphorCarousel", html: renderMetaphorCarousel(k) },
+      { id: "scenarios", html: renderScenariosPanel(k) },
+      { id: "counterfactual", html: renderCounterfactualPanel(k) },
+    ].filter((p) => p.html);
+    const orderedEnrichmentPanels = applyEnrichmentOrder(enrichmentPanels);
+    const enrichmentPanelsHTML = orderedEnrichmentPanels
+      .map((p) => `<div class="enrichment-card" data-enrichment-id="${esc(p.id)}">${forceDetailsOpen(p.html)}</div>`)
+      .join("");
 
     stepDefinitions.push({
       id: "enrichment",
@@ -30838,11 +31442,13 @@ document.addEventListener("DOMContentLoaded", () => {
       selectedConceptStepByConcept[stepStateKey] = stepDefinitions[0]?.id || "definition";
     }
     const activeConceptStepId = selectedConceptStepByConcept[stepStateKey];
-    const stepTabsHTML = renderConceptStepTabs(stepDefinitions, activeConceptStepId);
+    // UX update 2026-05-02: show all concept parts open in sequence below the concept
+    // (no tabs/collapse) so the learner sees everything without clicking.
+    const stepTabsHTML = "";
     lastRenderedConceptStepTabsHTML = stepTabsHTML;
     const conceptStepsHTML = stepDefinitions.map((step) =>
       renderConceptStep(step.id, step.title, step.body, {
-        active: step.id === activeConceptStepId,
+        active: true,
         className: `concept-step-${step.id}`,
       }),
     ).join("");
@@ -30872,8 +31478,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     `;
 
+    // UX 2026-05-02: status flag for color coding the card
+    const cardInPocket = (function(){ try { return JSON.parse(localStorage.getItem("lumenportal:pocket:v1") || "[]").includes(`${lesson.id}::${concept.conceptName}`); } catch(_) { return false; } })();
+    const cardHasWrong = Number(sc.wrongCount || 0) > 0 || Number(sc.lapses || 0) > 0;
+    const cardStatus = (sc.markedKnown === true || actualLevel >= 7) ? "mastered" : ((cardInPocket || cardHasWrong) ? "needs-work" : "neutral");
+
     return `
-      <div class="concept-card adaptive" data-cid="${idx}" data-concept="${esc(concept.conceptName)}">
+      <div class="concept-card adaptive" data-cid="${idx}" data-concept="${esc(concept.conceptName)}" data-status="${cardStatus}">
         ${prereqWarning}
         <div class="concept-card-head">
           <h4>${esc(concept.conceptName)}</h4>
@@ -30884,7 +31495,8 @@ document.addEventListener("DOMContentLoaded", () => {
             ${masteredBadge}
             ${vProgressBadge}
             ${overrideBadge}
-            <span class="tq-level-pill ${realLvlInfo.cssClass}" title="הרמה האישית שלך במושג">${realLvlInfo.icon} רמה ${actualLevel}/7</span>
+            <button class="tq-level-pill ${realLvlInfo.cssClass} tq-level-pill-clickable" data-action="open-level-questions" data-concept="${esc(concept.conceptName)}" title="לחץ כדי להתחיל לעלות ברמה — פתיחת השאלות" aria-label="התחל בחינה לעליה ברמה במושג ${esc(concept.conceptName)}">${realLvlInfo.icon} רמה ${actualLevel}/7</button>
+            <button class="tq-pocket-quick" data-action="pocket-toggle" data-pocket-key="${esc(lesson.id + "::" + concept.conceptName)}" title="שמור לכיס" aria-label="שמור ${esc(concept.conceptName)} לכיס">📌</button>
           </div>
         </div>
 
@@ -32044,6 +32656,18 @@ document.addEventListener("DOMContentLoaded", () => {
               expEl.parentNode.insertBefore(overlay, expEl.nextSibling);
               btn.textContent = "✕ הסתר ELI5";
             }
+          } else if (action === "open-level-questions") {
+            // UX 2026-05-02: Click on level pill → scroll to questions section + flash highlight
+            const conceptName = btn.dataset.concept;
+            const card = btn.closest(".concept-card");
+            if (!card) return;
+            const questionsSection = card.querySelector('[data-concept-step="questions"]') || card.querySelector(".concept-quiz-slot");
+            if (questionsSection) {
+              questionsSection.scrollIntoView({ behavior: "smooth", block: "center" });
+              questionsSection.classList.add("level-questions-flash");
+              setTimeout(() => questionsSection.classList.remove("level-questions-flash"), 1600);
+            }
+            return;
           } else if (action === "pocket-toggle") {
             // Pocket Concept Card: toggle save
             const key = btn.dataset.pocketKey;
@@ -32570,6 +33194,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // =========== QUIZ ENGINE ===========
   function renderQuiz() {
+    // UX update 2026-05-02: hide end-of-lesson quiz block.
+    // Per-concept questions live inside each concept card (the "שאלות" step
+    // of stepDefinitions) so the learner sees them right under each concept.
+    if (quizSection) quizSection.style.display = "none";
+    return;
+  }
+  function renderQuizDeprecatedFullImpl() {
     const lesson = window.LESSONS_DATA.find((l) => l.id === currentLessonId);
     if (!lesson || !lesson.quiz || lesson.quiz.length === 0) {
       quizSection.style.display = "none";
@@ -36316,6 +36947,16 @@ document.addEventListener("DOMContentLoaded", () => {
         body: json,
         keepalive: true,
       });
+      // Log the successful save for debugging "did it save?" issues
+      try {
+        if (typeof window.__lumenAppendProgressLog === "function") {
+          window.__lumenAppendProgressLog("auto-save-flush", {
+            scoresCount: Object.keys(snapshot.scores || {}).length,
+            xp: (snapshot.economy && snapshot.economy.xp) || 0,
+            activeProfile: snapshot.activeProfileId || "(none)",
+          });
+        }
+      } catch (_) {}
     } catch (e) {
       // Silent — autosave is best-effort
     }
@@ -36366,6 +37007,55 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   window.addEventListener("pagehide", () => {
     try { localAutoSaveFlush(); } catch (_) {}
+  });
+
+  // PERIODIC AUTO-SAVE — every 3 minutes, regardless of user activity
+  // Fires even if user is just reading. Critical for not losing progress.
+  const PERIODIC_SAVE_INTERVAL_MS = 3 * 60 * 1000; // 3 minutes
+  let periodicSaveTimer = null;
+  function startPeriodicAutoSave() {
+    if (periodicSaveTimer) clearInterval(periodicSaveTimer);
+    periodicSaveTimer = setInterval(async () => {
+      try {
+        await localAutoSaveFlush();
+        appendProgressLog("periodic-save", { interval: "3min" });
+      } catch (e) {}
+    }, PERIODIC_SAVE_INTERVAL_MS);
+  }
+  // Start the periodic timer 30 seconds after boot (give boot a chance to settle)
+  setTimeout(startPeriodicAutoSave, 30000);
+
+  // LOCAL PROGRESS LOG — append-only history of save events + key milestones
+  // Keeps last 200 entries in localStorage for quick "did it actually save?" checks
+  const PROGRESS_LOG_KEY = "lumenportal:progress-log:v1";
+  const PROGRESS_LOG_MAX = 200;
+  function readProgressLog() {
+    try { return JSON.parse(localStorage.getItem(PROGRESS_LOG_KEY) || "[]"); }
+    catch (_) { return []; }
+  }
+  function appendProgressLog(eventType, payload = {}) {
+    try {
+      const log = readProgressLog();
+      log.push({
+        t: new Date().toISOString(),
+        e: eventType,
+        ...payload,
+      });
+      // Trim to max
+      while (log.length > PROGRESS_LOG_MAX) log.shift();
+      // Bypass autosave hook to avoid recursion
+      const origSet = Storage.prototype.setItem;
+      origSet.call(localStorage, PROGRESS_LOG_KEY, JSON.stringify(log));
+    } catch (_) {}
+  }
+  // Expose for debugging + cross-scope logging
+  window.__lumenProgressLog = readProgressLog;
+  window.__lumenAppendProgressLog = appendProgressLog;
+
+  // Log boot
+  appendProgressLog("boot", {
+    activeProfile: localStorage.getItem("lumenportal:activeProfile:v1") || "(none)",
+    cacheVersion: typeof CACHE_VERSION !== "undefined" ? CACHE_VERSION : "unknown",
   });
 
   // ===== end Local Auto-Save =====

@@ -94,6 +94,175 @@ var LESSON_11 = {
         "let num1 = 50;\nlet num2 = num1; // שכפול לפי ערך\n\nnum2 = 100;\n\nconsole.log(num1); // עדיין 50\nconsole.log(num2); // כעת 100",
       codeExplanation:
         "כשמדובר במספרים אין קשר חי. המחשב מצלם את התוכן של הראשון, והופך למיושן ובלתי תלוי לגבי עתידו של השני.",
+      analogy: {
+        hebrew:
+          "צילום של תעודה בסורק: אתה הולך עם העותק. אם תקרע אותו — המקור בתיק שלך אצלך. כל שינוי בעותק לא נוגע במקור.",
+        concrete:
+          "ב-WhatsApp, כשמעתיקים הודעה (long press → Copy) — מקבלים טקסט ב-clipboard. עריכה לא משנה את ההודעה המקורית.",
+      },
+      deepDive: {
+        purpose:
+          "JS מעביר primitive types (number, string, boolean, undefined, null, symbol, bigint) by-value כדי שכל משתנה יהיה אטומי ובלתי תלוי. זה מבטיח שאין mutation מקרי.",
+        problem:
+          "ללא by-value: כל הקצאה הייתה reference, וכל ++ או הקצאת מספר היה משפיע על ערך הקודם. עזרה ל-immutability ולdebug.",
+        withoutIt:
+          "Java גם מעביר primitives by-value (Integer הוא immutable wrapper). Python יותר מורכב — הכל by-reference, אבל primitives הם immutable, אז התוצאה זהה.",
+        useWhen:
+          "כל primitive — number, string, boolean. גם NaN וגם Infinity. הכלל: 'אם זה לא object/array/function — by value'.",
+      },
+      extendedExplanation: {
+        intro:
+          "JS שומר primitives על Stack — אזור זיכרון מהיר ומסודר. Stack frames נמחקים כשהפונקציה מסיימת. כל primitive שייך ל-frame בודד.",
+        mechanics:
+          "let a = 5: JS מקצה slot ב-stack עם value 5. let b = a: JS מקצה slot חדש ומעתיק את ה-value. b = 10: שינוי slot של b, slot של a לא נגוע.",
+        edgeCases:
+          "1) String — נראה כ-by-reference (שיתוף memory) אך מתנהג כ-by-value (immutable). 2) NaN === NaN → false! בדיקה: Number.isNaN(). 3) +0 === -0 → true (אבל Object.is(+0,-0) → false). 4) BigInt by-value אבל לא === number-with-same-value.",
+        performance:
+          "Primitive copy = O(1) — bytes-level copy. אין overhead של GC על primitives ב-stack. number 8 bytes, boolean 1 byte. לעומת object שמועבר 8 bytes pointer בלבד אבל מוקצה ב-heap.",
+      },
+      extras: [
+        {
+          title: "אנלוגיה",
+          body: "כל primitive הוא תיבה סגורה — אין דרך 'לשנות' תוכן, רק להחליף את כל התיבה.",
+        },
+        {
+          title: "טריוויה",
+          body: "ב-JS Strings הם immutable — אבל הם גם 'שיתופיים' פנימית (string interning). 'hello' === 'hello' → true (אותה pointer פנימי), אך השינוי בלתי אפשרי.",
+        },
+        {
+          title: "טיפ",
+          body: "כשעובדים עם primitives — אין צורך ב-clone. const b = a; הוא העתקה אמיתית. רק objects/arrays דורשים spread או structuredClone.",
+        },
+      ],
+      mnemonic: {
+        phrase: "VAL = Value And Liberty",
+        decoded:
+          "by-Value נותן חופש: כל משתנה עצמאי. שינוי באחד = שום השפעה על האחר. זאת liberty.",
+      },
+      antiPatterns: [
+        {
+          bad: "let a = 5; let b = a; b++; if (a !== 5) console.log('strange');",
+          good: "let a = 5; let b = a; b++; // a עדיין 5, b הוא 6",
+          reason:
+            "מתכנת שמגיע מ-C++ עם references מצפה ש-b++ ישנה את a. ב-JS primitives — לא קורה.",
+        },
+        {
+          bad: "function inc(n) { n++; } let x = 5; inc(x); console.log(x); // 5, לא 6",
+          good: "function inc(n) { return n + 1; } let x = inc(5); // 6",
+          reason:
+            "פונקציה לא יכולה לשנות primitive שהועבר אליה. תחזיר ערך חדש.",
+        },
+        {
+          bad: "if (NaN === NaN) {...} // never runs",
+          good: "if (Number.isNaN(value)) {...}",
+          reason:
+            "NaN מיוחד — אינו שווה לעצמו. תמיד Number.isNaN() לבדיקה.",
+        },
+      ],
+      bugHunt: {
+        code:
+          "function increase(num, by) {\n  num = num + by;\n}\nlet score = 50;\nincrease(score, 10);\nconsole.log(score); // ?",
+        bug:
+          "המתכנת ציפה שscore יהיה 60 כי הפונקציה מעלה את num. בפועל score נשאר 50 — primitive הוא by-value, השינוי על num בתוך הפונקציה לא מדליף החוצה.",
+        fix:
+          "function increase(num, by) { return num + by; } let score = increase(score, 10); — תחזיר ערך, השתמש בו.",
+      },
+      warStories: [
+        "ב-bootcamp שאל סטודנט: 'הוספתי 1 ל-x בפונקציה, ובחוץ x לא השתנה. JS שבור?'. הסברתי לו 5 דקות על stack. הוא אמר 'אז זה כמו לקבל 50₪ מחבר — אם אני שורף אותם, החבר עדיין רק נתן.'",
+        "ב-React, סטודנטית כתבה const newCount = count; newCount = count + 1; setCount(newCount). 'למה לא עובד?' — כי const newCount = count זה copy by-value. count הוא integer, immutable. הקוד שגוי בעצם — newCount = count + 1 על const = error. צריך let. רגע, גם זה לא עובד! צריך setCount(count + 1).",
+        "Senior dev אמר לי: 'תמיד תזכור — primitives הם photos. objects הם windows.' זה הbest analogy שהיה לי.",
+      ],
+      comparisons: [
+        {
+          topic: "By Value vs By Reference",
+          vs: "By Reference",
+          when_a:
+            "primitives — number/string/boolean/undefined/null/symbol/bigint. כל הקצאה = העתקה אמיתית.",
+          when_b:
+            "objects/arrays/functions/Map/Set. הקצאה = pointer copy. שינויים מדליפים.",
+        },
+        {
+          topic: "Stack vs Heap",
+          vs: "Heap",
+          when_a:
+            "Stack: primitives. גישה מהירה (CPU registers), אוטומטית מתנקה ב-frame exit.",
+          when_b:
+            "Heap: objects. גישה דרך pointer, ניקוי דרך GC.",
+        },
+        {
+          topic: "JS by-value vs Java by-value",
+          vs: "Java",
+          when_a:
+            "JS: primitives by-value. אין box/unbox.",
+          when_b:
+            "Java: primitives by-value, אבל Integer/String objects by-reference (גם אם immutable).",
+        },
+      ],
+      conceptComic: {
+        panels: [
+          {
+            frame: "מסגרת 1: בית של אבא, מספר 50 על תיבת דואר.",
+            caption: "אבא: 'יש לי 50 גלידות בקופסה.'",
+          },
+          {
+            frame: "מסגרת 2: אבא נותן לבנו צילום של 50.",
+            caption: "אבא: 'הנה צילום של המספר. תקח לך עותק!'",
+          },
+          {
+            frame: "מסגרת 3: הילד משנה את הצילום שלו ל-100.",
+            caption: "ילד: 'אני אהפוך אותו ל-100. אבא לא ידע!'",
+          },
+          {
+            frame: "מסגרת 4: אבא מסתכל בקופסה — עדיין 50!",
+            caption:
+              "אבא: 'אני עדיין רואה 50.' (זה היה צילום! אין reference!)",
+          },
+        ],
+      },
+      conceptVideo: {
+        script:
+          "[0-5] לפני שתבין by-reference, חייבים to grasp by-value.\n\n[5-25] let a = 5; let b = a. עכשיו a ו-b שני slots עצמאיים. אם b = 10, a נשאר 5.\n\n[25-45] למה? primitive (number/string/boolean) שב-stack. כל הקצאה = bytes copy. אין שיתוף.\n\n[45-60] השוואה: const arr = [1,2]; const arr2 = arr — pointer copy. הם משוייכים. by-value (primitives) או by-reference (objects). תזכור זאת.",
+        durationSec: 60,
+      },
+      memoryPalace: {
+        rooms: [
+          {
+            room: "ארון תיוק במשרד",
+            image: "כל מגירה עם שם משתנה ומספר/טקסט ארוז",
+            anchor:
+              "כל primitive גר במגירה משלו. let b = a יוצר מגירה חדשה עם תוכן זהה — לא חולקות שום דבר.",
+          },
+          {
+            room: "מכונת צילום",
+            image: "עותק יוצא של מסמך, המקור נכנס בחזרה לשולחן",
+            anchor: "by-value = צילום. שני העותקים עצמאיים מהרגע שיצאו.",
+          },
+        ],
+      },
+      problemFirst: {
+        problem:
+          "אתה רוצה לבדוק אם משתנה הוא 'הסכום הסופי'. שמרת snapshot לפני שינויים. הוספת 5. למה ה-snapshot גם השתנה?",
+        naive:
+          "המתכנת חושב: 'JS משתף את המספר!'",
+        refined:
+          "ה-snapshot לא השתנה — primitive by-value. אם זה נראה ש-snapshot השתנה — בטח שכחת לעשות const snapshot = total ולא let snapshot = total (זה עדיין copy אבל סימן שיש בעיה אחרת ב-flow).",
+      },
+      stageZero: {
+        broken:
+          "let arr = [1, 2, 3];\nlet copy = arr; // 'עותק'\ncopy.push(4);\nconsole.log(arr); // [1,2,3,4]?! המתכנת ציפה ל-[1,2,3]",
+        whatBreaks:
+          "המתכנת חשב ש-by-value עובד גם ל-arrays. לא! arrays הם objects → by-reference. copy ו-arr מצביעים לאותו array.",
+        fixed:
+          "let copy = [...arr]; — spread = העתקה רדודה. עכשיו push לcopy לא משפיע על arr. by-value כללי רק לprimitives.",
+      },
+      whatIf: {
+        scenario:
+          "מה היה קורה אילו JS היה מעביר primitives by-reference?",
+        change:
+          "let a = 5; let b = a; b = 10; — ו-a גם הופך ל-10.",
+        outcome:
+          "1) חוסר יכולת לעבוד עם counters ושומרי מצב. 2) bug-prone — שינויים מדליפים בכל מקום. 3) בלתי אפשרי לעבוד עם תאריכים, IDs, תכונות. 4) השפה הייתה דומה ל-Java עם everything boxed — לא JS. 5) ב-Haskell/Erlang אין mutation בכלל — הם immutable, וכל copy הוא 'free' אופטימלית. JS בחר במודל דומה ל-C: primitives by-value, objects by-pointer.",
+      },
     },
 
     // 4. By Reference
@@ -125,6 +294,182 @@ var LESSON_11 = {
         "const basket1 = ['Milk'];\nconst basket2 = basket1; // חלילה: רק חוט מושך\n\nbasket2.push('Apple');\n\nconsole.log(basket1); // ['Milk', 'Apple'] -> נפגע!",
       codeExplanation:
         "ההקצאה יצרה הפנייה (Reference / Pointer) בלבד. לא נוצר מערך חדש בזיכרון, אלא רחוב חדש שמוביל לאותו מערך בדיוק.",
+      analogy: {
+        hebrew:
+          "כתובת בית משותפת על שני שלטים שונים: שני אנשים שונים אומרים שהם 'גרים' ברחוב הרצל 5 — בפועל זאת אותה דירה. אם אחד צובע את הקיר, השני נכנס ורואה צבע חדש.",
+        concrete:
+          "Google Drive מסומן 'shared'. שני משתמשים, אותו קובץ. שינוי אצל אחד = ההורדה הבאה של השני נראית אחרת.",
+      },
+      deepDive: {
+        purpose:
+          "JavaScript משתמש ב-by-reference עבור כל הטיפוסים המורכבים (Object, Array, Function, Map, Set) כדי להעביר אובייקטים גדולים בין פונקציות בלי להעתיק מגה-בייטים בכל קריאה.",
+        problem:
+          "ללא reference: כל קריאה לפונקציה הייתה מעתיקה את כל ה-array/object — תוכנת לקוחות עם 100K משתמשים הייתה גוססת תחת copy-overhead.",
+        withoutIt:
+          "תכנות פונקציונלי טהור (Haskell) מעתיק תמיד — דורש GC חכם וטכניקות persistent data structures. ב-JS עם reference, ה-pattern הוא mutation זול — אבל מסוכן.",
+        useWhen:
+          "מועיל: state management גדול (Redux store), DOM nodes, large datasets. מסוכן: copy של state ב-React, פונקציות 'pure' שלא צריכות לשנות input.",
+      },
+      extendedExplanation: {
+        intro:
+          "ב-JavaScript יש שני סוגי טיפוסים: Primitives (number, string, boolean, undefined, null, symbol, bigint) שמועברים by value, ו-Objects (כולל arrays, functions) שמועברים by reference.",
+        mechanics:
+          "כל אובייקט נוצר ב-Heap (אזור זיכרון דינמי). כשאתה כותב const a = [1,2], המשתנה a שומר רק את הכתובת (pointer) של המערך ב-Heap. const b = a מעתיק את הכתובת — שני המשתנים מצביעים לאותו array.",
+        edgeCases:
+          "1) Object.freeze() עצמו by reference — frozen reference יכול עדיין להצביע לאותו object. 2) JSON.parse(JSON.stringify(obj)) = deep clone (אבל לא תומך Date/Map/Set/circular). 3) structuredClone() = deep clone מודרני, תומך הכל. 4) === על שני objects בודק reference equality, לא value.",
+        performance:
+          "passing by reference = O(1) — רק pointer copy. deep cloning עם structuredClone = O(n) על גודל ה-object. ב-React, mutation ישיר של state = render skipped (כי ה-reference זהה) — זה הסיכון העיקרי.",
+      },
+      extras: [
+        {
+          title: "אנלוגיה",
+          body: "shared Google Doc — שני אנשים, אותו קובץ; כל שינוי נראה אצל שניהם בו זמנית.",
+        },
+        {
+          title: "טיפ זהירות",
+          body: "תמיד שאל: 'האם אני רוצה לשנות את המקור או לעבוד על עותק?' אם עותק — השתמש ב-spread (...) או structuredClone().",
+        },
+        {
+          title: "טריוויה",
+          body: "ב-JS אין pass-by-reference אמיתי כמו ב-C++. יש 'pass-by-sharing' — מעבירים את ה-pointer by value (אם תקבע a = newArray בתוך פונקציה, המקור לא יושפע).",
+        },
+      ],
+      mnemonic: {
+        phrase: "REF = Real-time Echo of Friend",
+        decoded:
+          "כל reference הוא הד בזמן אמת: מה שמשנים אצל אחד, נשמע מיד אצל החבר. כדי להפסיק את ההד — צריך לשבור את הקשר (clone).",
+      },
+      antiPatterns: [
+        {
+          bad: "function addItem(arr, item) { arr.push(item); return arr; }",
+          good: "function addItem(arr, item) { return [...arr, item]; }",
+          reason:
+            "המקור משתנה — שגיאה קלאסית ב-React שגורמת לcomponent לא לrerender (state reference זהה).",
+        },
+        {
+          bad: "const newUser = oldUser; newUser.name = 'Tal'; // משנה גם את oldUser",
+          good: "const newUser = { ...oldUser, name: 'Tal' };",
+          reason:
+            "שכפול שטחי עם spread בורא reference חדש — שינוי לא מדליף למקור.",
+        },
+        {
+          bad: "function reset(state) { state.items = []; } // mutates",
+          good: "function reset(state) { return { ...state, items: [] }; }",
+          reason:
+            "פונקציה pure לא משנה argument. החזר state חדש; הקורא יחליט אם להחליף.",
+        },
+      ],
+      bugHunt: {
+        code:
+          "const original = { count: 0 };\nconst snapshot = original;\nfunction increment() { snapshot.count++; }\nincrement();\nincrement();\nconsole.log(original.count); // ?",
+        bug:
+          "המתכנת חשב ש-snapshot הוא עותק עצמאי, אז שינויים בו לא ישפיעו על original. בפועל snapshot ו-original מצביעים לאותו object — original.count יהיה 2, לא 0.",
+        fix:
+          "const snapshot = { ...original }; — יוצר object חדש עם אותם values אבל reference נפרד. עכשיו increment() משנה רק את snapshot.",
+      },
+      warStories: [
+        "בproject e-commerce, מנהל המוצר שמר את ה-cart במשתנה savedCart לפני 'שחזור'. בכל הוספה, savedCart גם השתנה. בלקיחה חזרה, ה-cart נראה כאילו לא עזב. גילינו את הבאג רק אחרי 3 ימים — וכל הצוות התווכח. הפתרון: structuredClone(cart) בכל snapshot.",
+        "בקוד Redux ישן, מתכנת שינה state ב-reducer ישירות (state.users.push(newUser)). הreducer החזיר את ה-state — אבל React לא rendered כי ה-reference לא השתנה. לקח שעות לdebug.",
+        "בtests של Jest, הזרקנו mock object לפונקציה. הפונקציה שינתה אותו. הtest הבא קיבל אובייקט 'מלוכלך'. הפתרון: beforeEach עם structuredClone של mock. כשהבנו את הסיבה — שיניתי את כל ה-test suite שלנו.",
+      ],
+      comparisons: [
+        {
+          topic: "By Reference vs By Value",
+          vs: "By Value (primitive types)",
+          when_a:
+            "שולחים objects/arrays/functions לפונקציות, או מנהלים state גדול. ה-pointer copy = זול.",
+          when_b:
+            "שולחים number/string/boolean. Copy אמיתי — שינוי לא מדליף.",
+        },
+        {
+          topic: "Spread vs structuredClone",
+          vs: "structuredClone()",
+          when_a:
+            "Spread (...obj) = shallow copy. מספיק כש-state רדוד (1 רמה).",
+          when_b:
+            "structuredClone() = deep copy. כש-state nested או מכיל Date/Map/Set.",
+        },
+        {
+          topic: "JSON.parse(JSON.stringify) vs structuredClone",
+          vs: "structuredClone()",
+          when_a:
+            "JSON trick: עובד ל-plain JSON, אבל מאבד Date, Map, Set, undefined, function, circular refs.",
+          when_b:
+            "structuredClone: native (Chrome 98+, Node 17+), תומך כל type, מטפל ב-circular references.",
+        },
+      ],
+      conceptComic: {
+        panels: [
+          {
+            frame: "מסגרת 1: רחל יוצרת מערך — `const cart = ['חלב']`",
+            caption: "רחל: 'יש לי רשימת קניות. רק חלב!'",
+          },
+          {
+            frame: "מסגרת 2: רחל מעבירה את ה-cart לחברה — `const friendCart = cart`",
+            caption: "רחל לחברה: 'תקבלי עותק של הרשימה שלי!'",
+          },
+          {
+            frame: "מסגרת 3: החברה מוסיפה — `friendCart.push('עוגיות')`",
+            caption: "חברה: 'אני אוסיף עוגיות. רחל לא תידע.'",
+          },
+          {
+            frame: "מסגרת 4: רחל בודקת את הרשימה שלה — `console.log(cart)`",
+            caption:
+              "רחל: 'מה זה? עוגיות? למה יש עוגיות אצלי?!' 😱 (הסוד: זאת הייתה אותה רשימה כל הזמן!)",
+          },
+        ],
+      },
+      conceptVideo: {
+        script:
+          "[פתיחה — 5 שניות]\nראינו ב-by-value שהמשתנים הם תיבות נפרדות. אבל מה קורה עם objects ו-arrays?\n\n[התקפה — 30 שניות]\nכשאתה כותב const a = [1,2,3], JS יוצר את המערך ב-Heap, ובמשתנה a שומר רק את הכתובת. כשאתה כותב const b = a, אתה מעתיק רק את הכתובת — לא את המערך.\n\n[הדגמה — 20 שניות]\na.push(4) — שניהם רואים [1,2,3,4]. למה? כי הם מצביעים לאותו object.\n\n[סיכום — 5 שניות]\nאם רוצים עותק אמיתי: spread (...) לרדוד, structuredClone() לעמוק. תמיד תשאל את עצמך: 'אני משנה את המקור?'",
+        durationSec: 60,
+      },
+      memoryPalace: {
+        rooms: [
+          {
+            room: "מטבח משותף בקיבוץ",
+            image: "מקרר עם שלט: 'משותף לכל החברים'",
+            anchor:
+              "כל מי שיש לו 'מפתח' (reference) למקרר רואה את אותו אוכל. אם אחד אוכל גבינה — לכולם נגמרה.",
+          },
+          {
+            room: "סלון עם מסך גדול אחד",
+            image: "שני אנשים יושבים מול אותו טלוויזיון",
+            anchor:
+              "שניהם רואים את אותה תוכנית. אם אחד מחליף ערוץ, השני רואה את הערוץ החדש מיד — אין שני מסכים.",
+          },
+          {
+            room: "סלון עם 2 מסכים נפרדים",
+            image: "שני אנשים, כל אחד עם טלוויזיון משלו",
+            anchor:
+              "זה by value — copy. אם אחד מחליף ערוץ, השני נשאר באותו ערוץ. spread/clone יוצר את המצב הזה.",
+          },
+        ],
+      },
+      problemFirst: {
+        problem:
+          "אתה כותב Todo App. הוספת todo חדש ל-list, אבל React לא מרענן את ה-UI. למה?",
+        naive:
+          "המתכנת המתחיל: 'בטח שכחתי לקרוא ל-setTodos'. הוא מוסיף עוד setTodos(todos) — ועדיין לא עובד.",
+        refined:
+          "הסיבה: setTodos(todos) — כשהוא קודם עשה todos.push(newTodo). React משווה reference ישן לreference חדש. שניהם זהים (אותו array!) → לא rerender. הפתרון: setTodos([...todos, newTodo]) — array חדש, reference חדש.",
+      },
+      stageZero: {
+        broken:
+          "function addUser(users, name) {\n  users.push({ name });\n  return users;\n}\n\nconst original = [{ name: 'Alice' }];\nconst withBob = addUser(original, 'Bob');\nconsole.log(original.length); // 2 — original נפגע!",
+        whatBreaks:
+          "הפונקציה אמורה להיות 'pure' (לא משנה input). אבל היא קוראת ל-push על users — ש-by reference זה אותו array של המקור. original לא רק שלא נשמר — הוא הופך לידוע.",
+        fixed:
+          "function addUser(users, name) {\n  return [...users, { name }];\n}\n// pure: יוצר array חדש, original לא משתנה.",
+      },
+      whatIf: {
+        scenario:
+          "מה היה קורה אילו JavaScript היה מעביר את כל הטיפוסים by value (כמו primitives)?",
+        change:
+          "כל const b = a על array היה יוצר עותק עמוק אוטומטית.",
+        outcome:
+          "1) Bug-free יותר — אין mutation מקרי. 2) ביצועים גרועים מאוד — copy של array של 1M איברים בכל משתנה. 3) React לא היה צריך immutable patterns — כל שינוי הוא inherently חדש. 4) בעיות עמוקות יותר עם circular references. השפה הייתה דומה יותר ל-Haskell.",
+      },
     },
 
     // 5. Pointer
@@ -153,6 +498,183 @@ var LESSON_11 = {
         "const pointerA = { power: 100 };\nconst pointerB = pointerA; \n// B הוא לא עצם אלא פוינטר נוסף לאותו רכיב זיכרון",
       codeExplanation:
         "אנו לא יכולים לראות את הכתובת המספרית ממש ב-JS, אבל המנוע חי סביבה, לכן קל לו להעביר עצמים ענקיים בין פונקציות (הוא רק שולח פתק קל עם 'מצביע').",
+      analogy: {
+        hebrew:
+          "כתובת ב-Waze: לא שמרת את כל הבית בטלפון, רק את הקואורדינטות. כל מי שיש לו את הכתובת מגיע לאותו מקום פיזי.",
+        concrete:
+          "Bookmark בדפדפן: שמירת URL = pointer. URL לא מחזיק את הדף, רק את הכתובת. כשלוחצים — הדפדפן הולך לכתובת ומביא את הדף הנוכחי.",
+      },
+      deepDive: {
+        purpose:
+          "Pointer הוא הabstraction שמאפשר לJavaScript להעביר אובייקטים גדולים בלי לכפול memory. במקום להעתיק 1MB array — מעבירים 8 bytes pointer.",
+        problem:
+          "ללא pointers: כל הקצאת variable של object הייתה copy עמוק → memory blowup, GC עבודה אינסופית, ביצועים גרועים.",
+        withoutIt:
+          "C/C++ חושפים pointers ישירות (int* p = &x). ב-JS המנוע מחביא את הpointer מאחורי abstraction. אתה לא רואה את הכתובת אבל היא קיימת ב-V8.",
+        useWhen:
+          "תמיד! כל פעם שאתה כותב const x = {}; — JS יוצר object ב-Heap ושומר pointer ב-x. השאלה החשובה: 'אני שולח את ה-object או את ה-pointer?' (תמיד pointer ב-JS).",
+      },
+      extendedExplanation: {
+        intro:
+          "ב-JS, primitive values שוכנים ב-Stack. Objects שוכנים ב-Heap (אזור זיכרון דינמי גדול). Variables של objects מחזיקים pointer (8 bytes על מערכות 64bit) שמצביע למקום ה-object ב-Heap.",
+        mechanics:
+          "const x = { a: 1 }: JS מקצה זיכרון ב-Heap, יוצר את ה-object שם, ושומר ב-x את הכתובת. const y = x: copy את הכתובת — y מצביע לאותו object. y.a = 2: V8 הולך לכתובת, משנה את ה-property. גם x רואה את השינוי.",
+        edgeCases:
+          "1) כשאתה עושה const x = null, ה-pointer מוגדר ל-null — אין object. 2) GC (V8) מסיר objects שאף pointer לא מצביע אליהם. 3) Circular references (a.next = a) — עדיין מנוקים ע״י mark-and-sweep. 4) WeakRef + WeakMap — מאפשרים pointer 'חלש' שלא מונע GC.",
+        performance:
+          "Pointer copy = O(1), 8 bytes. עומס memory: 8 bytes per variable + actual object size. עלות הdereferencing (גישה ל-y.a): טעינה מ-Heap (cache miss אפשרי). אופטימיזציה: V8 inlines properties של objects קטנים, מטמין hidden classes לcache hits מהירים.",
+      },
+      extras: [
+        {
+          title: "אנלוגיה",
+          body: "Pointer = post-it עם כתובת. הקופסה הגדולה במחסן — הpost-it בידיך.",
+        },
+        {
+          title: "טריוויה",
+          body: "ב-V8, אופטימיזציות 'pointer compression' מקטינות pointer-size מ-8 bytes ל-4 (חוסכות זיכרון). השפעה: ~40% פחות RAM ב-Chrome.",
+        },
+        {
+          title: "טיפ",
+          body: "כשאתה רואה 'שני משתנים מצביעים לאותו דבר' זה כתובת זהה — הם עצמם אינם 'שווים' באופן ייחודי. שינוי דרך אחד נראה דרך השני.",
+        },
+      ],
+      mnemonic: {
+        phrase: "PNT = Pointing to a Notable Treasure",
+        decoded:
+          "Pointer הוא חיצים. הוא לא מחזיק את האוצר — הוא רק מצביע איפה הוא נמצא. אם תאבד את החיצים, האוצר נשאר. אם תאבד את האוצר — החיצים בטלים.",
+      },
+      antiPatterns: [
+        {
+          bad: "if (obj1 == obj2) { /* same content? */ }",
+          good:
+            "if (JSON.stringify(obj1) === JSON.stringify(obj2)) {...} // shallow content check",
+          reason:
+            "== ו-=== על objects בודקים pointer equality, לא content. שני objects שונים עם אותו תוכן — !==.",
+        },
+        {
+          bad: "const arr = [1,2,3]; arr = [4,5,6]; // ReassignmentError",
+          good: "let arr = [1,2,3]; arr = [4,5,6]; // ok",
+          reason:
+            "const מקפיא את ה-pointer (הbinding). תוכן ה-array — עדיין mutable. אם אתה רוצה להחליף pointer — let.",
+        },
+        {
+          bad: "function clearObject(obj) { obj = {}; } // doesn't clear caller's obj",
+          good:
+            "function clearObject(obj) { for (const k in obj) delete obj[k]; }",
+          reason:
+            "obj = {} בתוך פונקציה משנה את הpointer הLOCAL בלבד. ה-caller לא מושפע. אם רוצים לרוקן — מוטציה (delete).",
+        },
+      ],
+      bugHunt: {
+        code:
+          "const a = { id: 1 };\nconst b = { id: 1 };\nif (a === b) {\n  console.log('same');\n} else {\n  console.log('different');\n}",
+        bug:
+          "המתכנת ציפה ל-'same' כי ה-content זהה. אבל === על objects בודק pointer. a ו-b הם שני objects שונים ב-Heap — pointers שונים → 'different'.",
+        fix:
+          "אם רוצים לבדוק content: lodash.isEqual(a,b), JSON.stringify על objects קטנים, או שיווי manual לcomplex compare.",
+      },
+      warStories: [
+        "ב-startup שלי, צוות שני שאל למה משתמשים מקבלים נתוני משתמשים אחרים. הקוד היה: const userCopy = activeUser; userCopy.token = newToken;. הם 'העתיקו' את המשתמש לעבודה. בפועל — שינו את ה-original. כל משתמש קיבל token שגוי.",
+        "ב-React debug, מצאנו שsetState עם אותו object לא rendered. למה? React משווה pointers (Object.is). אם פsetState({...state, key:val}) — pointer חדש → render. אם setState(state) — אותו pointer → דילוג.",
+        "באג קלאסי בRedux: reducer ש-mutate state מחזיר אותו state — connect() לא יודע אם השתנה. הfix: תמיד החזר state חדש (immer.js עוזר).",
+      ],
+      comparisons: [
+        {
+          topic: "JS pointer vs C++ pointer",
+          vs: "C++",
+          when_a:
+            "JS: pointers נסתרים. אין &, *, [], או pointer arithmetic. בטוח אבל פחות גמיש.",
+          when_b:
+            "C++: pointers חשופים. arithmetic, dereferencing מפורש. גמיש אבל מסוכן (NULL deref, dangling).",
+        },
+        {
+          topic: "Pointer vs Reference",
+          vs: "JS by-reference",
+          when_a:
+            "Pointer = הabstraction הטכנית של ה-engine. כתובת ב-Heap.",
+          when_b:
+            "By-Reference = השם הסמנטי של הslip — שני משתנים מצביעים לאותו object.",
+        },
+        {
+          topic: "Strong pointer vs WeakRef",
+          vs: "WeakRef",
+          when_a:
+            "Strong: const x = obj; — מונע GC כל עוד x קיים.",
+          when_b:
+            "WeakRef: new WeakRef(obj) — לא מונע GC. אם אין pointer חזק, GC ינקה.",
+        },
+      ],
+      conceptComic: {
+        panels: [
+          {
+            frame: "מסגרת 1: ארגז גדול במחסן עם תכולה יקרה",
+            caption: "מחסן: יש פה ארגז של 1000 פריטים — אסור לזיז!",
+          },
+          {
+            frame: "מסגרת 2: שני אנשים מקבלים pieces of paper עם 'B-12'",
+            caption: "שני העובדים: 'אנחנו צריכים את הארגז B-12!'",
+          },
+          {
+            frame: "מסגרת 3: שניהם הולכים לאותו ארגז",
+            caption: "B-12 = הכתובת. Pointer זהה!",
+          },
+          {
+            frame: "מסגרת 4: אחד מוסיף פריט לארגז. השני בא ורואה אותו",
+            caption: "Modification visible — אותו object, אותם changes.",
+          },
+        ],
+      },
+      conceptVideo: {
+        script:
+          "[0-5] Pointer הוא הסוד מאחורי כל by-reference.\n\n[5-25] בJS: const x = {} יוצר object ב-Heap. במשתנה x נשמרת רק הכתובת — pointer של 8 bytes.\n\n[25-45] const y = x: y מקבל את אותו pointer. שניהם מצביעים לאותו ארגז ב-Heap. y.a = 1 → גם x.a = 1.\n\n[45-60] טיפ: x === y בודק pointer-equality. שני objects עם אותו content אבל לא אותו pointer → false. השוואת content דורשת deep-equal.",
+        durationSec: 60,
+      },
+      memoryPalace: {
+        rooms: [
+          {
+            room: "תיבת מכתבים בכניסה",
+            image: "מספר 47 על תיבה. בפנים — מכתבים.",
+            anchor:
+              "המספר 47 = pointer. המכתבים = object ב-Heap. הpointer לא מחזיק את המכתבים — הוא מצביע אליהם.",
+          },
+          {
+            room: "טבלת מנויים בלובי",
+            image: "כל שורה: שם → מספר תיבה",
+            anchor:
+              "כמה אנשים יכולים לחלוק את אותו מספר. 'דוד', 'דנה' — שניהם תיבה 47. כל מה שאחד שם — השני מקבל.",
+          },
+          {
+            room: "פח לזריקה",
+            image: "תיבה ישנה ללא בעלים",
+            anchor:
+              "אם אף שורה בטבלה לא מצביעה ל-47, GC זורק. WeakRef = שם בעיפרון שנמחק קל.",
+          },
+        ],
+      },
+      problemFirst: {
+        problem:
+          "אתה כותב מערכת cache. שמרת user object במשתנה cachedUser. הוספת event handler שמשנה user.lastSeen. הcachedUser גם השתנה — צרכת cache stale!",
+        naive:
+          "המתכנת חושב: 'cachedUser = user — זה copy.' לא! זה pointer copy. שניהם מצביעים לאותו object.",
+        refined:
+          "אם רוצים cache אמיתי — structuredClone(user). או JSON.parse(JSON.stringify(user)) ל-snapshot עמוק. צריך deep clone.",
+      },
+      stageZero: {
+        broken:
+          "function logUser(user) {\n  console.log('Before:', user);\n  user.processed = true;\n  console.log('After:', user);\n}\nconst original = { name: 'Alice' };\nlogUser(original);\nconsole.log('Outside:', original); // processed: true!",
+        whatBreaks:
+          "הפונקציה אמורה רק לlog — אבל היא mutating את המקור. user הוא pointer ל-original, שינוי דרך user נראה ב-original.",
+        fixed:
+          "function logUser(user) { console.log(user); } — לא לשנות. או: const localCopy = structuredClone(user); אם צריך עיבוד פנימי.",
+      },
+      whatIf: {
+        scenario:
+          "מה היה קורה אילו JS חשף pointers ישירות (כמו C++)?",
+        change:
+          "let *p = &obj; (*p).a = 5;",
+        outcome:
+          "1) ביצועים יותר טובים — אופטימיזציות ידניות. 2) NULL pointer dereferences = crashes. 3) Memory leaks ידניים. 4) Buffer overflows = security holes (כמו ב-C). 5) GC לא יוכל לעבוד אוטומטית. השפה הייתה מסוכנת מאוד עבור web. לכן JS בחר pointers מוסתרים — בטיחות > גמישות.",
+      },
     },
 
     // 6. undefined
@@ -584,7 +1106,178 @@ var LESSON_11 = {
         "          30  =(מתמזג)=\n" +
         "               [ 60! ]",
       codeExample: "const bills = [100, 50, 20];\n// ה-0 בסוף זה 'סכום התחלתי' לקופה\nconst total = bills.reduce((acc, current) => acc + current, 0);\nconsole.log(total); // 170",
-      codeExplanation: "Reduce היא הבוס הגדול. מכתירה את הפריטים לפעולה מדויקת שמאגדת כל ערך אל זכרון פנימי מתגלגל (Accumulator) לקבלת דוח סופי אחיד."
+      codeExplanation: "Reduce היא הבוס הגדול. מכתירה את הפריטים לפעולה מדויקת שמאגדת כל ערך אל זכרון פנימי מתגלגל (Accumulator) לקבלת דוח סופי אחיד.",
+      analogy: {
+        hebrew:
+          "סוכמן כדורגל בסוף משחק: הוא לא זוכר כל בעיטה — הוא זוכר רק 'מי קלע מתי' (accumulator) ובסוף יש סיכום: '3-1 לטוטנהאם'. כל אירוע מעדכן את ה-running total.",
+        concrete:
+          "מחשבון דמי סופ״ש בקיוסק: התחלת היום = 0 שקלים. כל לקוח מוסיף לקופה. בסוף היום יש סכום אחד (לא רשימת תקבולים).",
+      },
+      deepDive: {
+        purpose:
+          "reduce הוא הuniversal-array-folder. כל פעולת aggregation על array (sum, max, group, flatten, count) ניתנת לכתיבה כ-reduce. גם map ו-filter ניתנים להגדרה דרך reduce — היא הפונקציה היסודית.",
+        problem:
+          "בלי reduce: צריך for-loop + counter externe + הרבה boilerplate. עם reduce: ביטוי declarative אחד.",
+        withoutIt:
+          "ב-Python יש functools.reduce; ב-Java Stream.reduce; ב-Haskell foldl/foldr. בכל שפה פונקציונלית reduce/fold הוא primitive.",
+        useWhen:
+          "כשאתה רוצה ערך אחד מ-array של ערכים. סכום, ממוצע, max, group-by, flatten, count, build-object-from-pairs. מתי לא: אם מספיק map (transform 1:1) או filter (subset).",
+      },
+      extendedExplanation: {
+        intro:
+          "reduce(callback, initialValue) מקבל פונקציה ו-(אופציונלי) ערך התחלתי. הפונקציה מקבלת (accumulator, currentValue, currentIndex, array) ומחזירה את ה-accumulator החדש.",
+        mechanics:
+          "הפעלה: arr.reduce((acc, curr) => acc + curr, 0). בכל איטרציה: callback(acc, curr) מחזיר acc חדש שמועבר לאיטרציה הבאה. בסוף, acc הסופי מוחזר. אם לא העברת initialValue — הראשון ב-array הוא initial, ההפעלה מתחילה מ-index 1.",
+        edgeCases:
+          "1) reduce על [] בלי initialValue → TypeError! תמיד תן initial. 2) reduceRight = right-to-left. 3) acc יכול להיות כל type — array, object, number, string. 4) בתוך callback אסור לשנות את ה-array המקורי (race conditions).",
+        performance:
+          "O(n) — passes כל איבר פעם אחת. מהיר כמו for-loop (V8 inlines). בעיות performance מתחילות אם בכל iteration אתה יוצר object חדש (acc = {...acc, [key]: value}) — O(n²). פתרון: mutation מקומי בתוך acc אם הוא נוצר ב-initial.",
+      },
+      extras: [
+        {
+          title: "אנלוגיה",
+          body: "סופג כדור שלג: כל פעם שעובר עוד שלג, גודלו עולה. בסוף יש כדור אחד גדול.",
+        },
+        {
+          title: "טיפ",
+          body: "תמיד התחל עם initialValue! זה גם מסמן את הtype של הaccumulator (לקוראים) וגם מונע באג של array ריק.",
+        },
+        {
+          title: "trick",
+          body: "reduce יכול לעשות גם group-by: arr.reduce((acc, x) => ({ ...acc, [x.cat]: [...(acc[x.cat]||[]), x] }), {})",
+        },
+      ],
+      mnemonic: {
+        phrase: "ACC = Accumulator Carries Cargo",
+        decoded:
+          "ה-accumulator הוא משאית שצוברת מטען. כל איטרציה היא תחנה — היא לוקחת עוד מטען (current) ונוסעת קדימה. בסוף הנסיעה — כל המטען בידיה.",
+      },
+      antiPatterns: [
+        {
+          bad: "arr.reduce((acc, x) => { acc.push(x*2); return acc; }, [])",
+          good: "arr.map(x => x * 2)",
+          reason:
+            "אם רק transform 1:1 — map קריא יותר. reduce שמחזיר array באותו אורך = abuse.",
+        },
+        {
+          bad: "arr.reduce((acc, x) => acc + x) // missing initial",
+          good: "arr.reduce((acc, x) => acc + x, 0)",
+          reason:
+            "ללא initial: array ריק זורק TypeError. עם initial: עובד תמיד.",
+        },
+        {
+          bad: "arr.reduce((acc, x) => { return { ...acc, [x.id]: x }; }, {})",
+          good:
+            "arr.reduce((acc, x) => { acc[x.id] = x; return acc; }, {})",
+          reason:
+            "Spread בכל iteration = O(n²). mutation על acc שיצרת בinitial = OK ו-O(n).",
+        },
+      ],
+      bugHunt: {
+        code:
+          "const numbers = [];\nconst sum = numbers.reduce((a, b) => a + b);\nconsole.log(sum);",
+        bug:
+          "TypeError: Reduce of empty array with no initial value. כי לא העברת initialValue, ו-array ריק → אין איפה להתחיל.",
+        fix:
+          "const sum = numbers.reduce((a, b) => a + b, 0); — initial 0 פותר. כעת sum = 0 ל-empty array.",
+      },
+      warStories: [
+        "קוד חישוב שכר בstartup: reduce על array של pay slips. בעובד חדש (array ריק) — crash. במקום sum=0 קיבלנו exception. הLearned: אסור לקבל array מ-API בלי initial value בreduce.",
+        "ב-React, השתמשתי ב-reduce כדי לבנות object אחיד. עשיתי { ...acc, [k]: v } בכל iteration. ב-array של 10,000 איברים, render לקח 4 שניות. החלפתי ל-mutation acc[k]=v + initial {} — render ל-200ms.",
+        "Tutorial של reduce שכתבתי הזכיר רק sum/multiply. סטודנט שאל 'איך עושים group by?' — לא ידעתי לרגע. אחרי שעיצבתי תשובה (initial = {}, מקצים [x.cat] = [...]), הבנתי שreduce הוא ה-Swiss-Army-knife האמיתי.",
+      ],
+      comparisons: [
+        {
+          topic: "reduce vs map",
+          vs: "map",
+          when_a:
+            "reduce: מ-array → ערך יחיד (number, object, string).",
+          when_b: "map: מ-array → array באותו אורך עם transform.",
+        },
+        {
+          topic: "reduce vs filter",
+          vs: "filter",
+          when_a: "reduce: aggregation גמיש (sum/group/build).",
+          when_b: "filter: subset של array (אותו type).",
+        },
+        {
+          topic: "reduce vs forEach",
+          vs: "forEach",
+          when_a:
+            "reduce: pure, מחזיר ערך, אפשר לchain. אין side effects.",
+          when_b:
+            "forEach: side effects only (console.log, push to external). לא מחזיר.",
+        },
+      ],
+      conceptComic: {
+        panels: [
+          {
+            frame: "מסגרת 1: בנק ריק. הקופה מציגה 0 ש״ח. (initialValue)",
+            caption: "בנקאי: 'תחזית: 0 שקלים בקופה.'",
+          },
+          {
+            frame: "מסגרת 2: לקוח 1 מפקיד 100 ש״ח. הקופה: 0+100=100",
+            caption: "acc = 100 (אחרי השטר הראשון)",
+          },
+          {
+            frame: "מסגרת 3: לקוח 2 מפקיד 50. הקופה: 100+50=150",
+            caption: "acc = 150 (אחרי השני)",
+          },
+          {
+            frame: "מסגרת 4: לקוח 3 מפקיד 20. סוף יום: 170",
+            caption: "reduce סיים. הסכום הסופי מוחזר!",
+          },
+        ],
+      },
+      conceptVideo: {
+        script:
+          "[0-5] reduce זה לא מפלצת — זה רק קופה שצוברת.\n\n[5-25] arr.reduce((acc, curr) => acc + curr, 0). שני שמות: acc (זוכר) + curr (החדש). בכל סיבוב, acc + curr = acc חדש. זה ההד.\n\n[25-50] דוגמה: [100, 50, 20]. סיבוב 1: acc=0, curr=100 → 100. סיבוב 2: acc=100, curr=50 → 150. סיבוב 3: acc=150, curr=20 → 170. סוף.\n\n[50-60] תזכור: 1) initial value תמיד. 2) acc יכול להיות גם object/array. 3) זה הכלי לכל aggregation.",
+        durationSec: 60,
+      },
+      memoryPalace: {
+        rooms: [
+          {
+            room: "כניסה לבנק",
+            image: "כסף שולחני עם 0 ש״ח על הצג",
+            anchor: "0 = initialValue. כאן הכל מתחיל.",
+          },
+          {
+            room: "שורת הקופאים",
+            image: "כל קופאי מקבל שטר ומוסיף לכספת מרכזית",
+            anchor:
+              "כל איטרציה = קופאי. acc = הכספת המרכזית. curr = השטר החדש.",
+          },
+          {
+            room: "מנהל הסניף",
+            image: "מקבל את הכספת המלאה בסוף היום",
+            anchor: "ערך הסיום של reduce = המספר היחיד שמוחזר.",
+          },
+        ],
+      },
+      problemFirst: {
+        problem:
+          "יש לך array של מוצרים [{ name, price, qty }]. תחשב סך הכל לקנייה.",
+        naive:
+          "for-loop עם total = 0; for (const p of products) total += p.price * p.qty; — עובד אבל מילוליי.",
+        refined:
+          "products.reduce((sum, p) => sum + p.price * p.qty, 0). שורה אחת, declarative, אין משתנה חיצוני.",
+      },
+      stageZero: {
+        broken:
+          "const arr = [1, 2, 3];\nconst result = arr.reduce((acc, n) => {\n  acc.push(n * 2);\n}, []);\nconsole.log(result); // undefined!",
+        whatBreaks:
+          "השכחה: callback של reduce חייב להחזיר את acc החדש. כאן acc.push() מחזיר number (length) ואז return implicitly undefined → acc הופך undefined באיטרציה הבאה.",
+        fixed:
+          "arr.reduce((acc, n) => { acc.push(n*2); return acc; }, []) — explicit return. עוד יותר טוב: arr.map(n => n*2).",
+      },
+      whatIf: {
+        scenario:
+          "מה היה קורה אילו reduce היה מבצע איטרציה במקביל (parallel) במקום sequential?",
+        change:
+          "כל איבר היה מעובד בו-זמנית בthread נפרד.",
+        outcome:
+          "1) Sum/count עדיין יעבדו (associative). 2) String concat — לא יעבוד (לא associative — הסדר חשוב). 3) Race conditions על acc משותף. 4) ביצועים מהירים יותר על arrays עצומים. בשפות מקבילות (Spark, Hadoop) יש parallel reduce — אבל רק עבור operations associative.",
+      },
     },
 
     // 21. spread
