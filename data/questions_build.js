@@ -1349,6 +1349,355 @@ export default mongoose.model('User', userSchema);`,
     hint: "bcrypt.hash async. salt rounds 10 = balance בין מהירות לבטיחות. אל תחזיר את ה-hash ל-client.",
     explanation: "אף פעם לא לאחסן passwords plain. bcrypt עם salt = standard. החזרת user ל-client חייב להיות בלי passwordHash.",
   },
+
+  // ============================================================================
+  // Phase 2.B batch 2 — more Build exercises (10)
+  // ============================================================================
+
+  {
+    id: "build_jwt_sign_verify",
+    conceptKey: "lesson_auth_security::JWT",
+    level: 6,
+    title: "JWT sign + verify",
+    prompt: "כתוב signToken(userId) שמייצר JWT עם payload { userId } + expiresIn 1h. כתוב verifyToken(token) שמחזיר את ה-payload או null על שגיאה.",
+    starter: `// import jwt from 'jsonwebtoken';
+const SECRET = process.env.JWT_SECRET;
+function signToken(userId) {
+  // הקוד שלך
+}
+function verifyToken(token) {
+  // הקוד שלך
+}`,
+    tests: [
+      { regex: "jwt\\.sign", description: "jwt.sign", flags: "" },
+      { regex: "jwt\\.verify", description: "jwt.verify", flags: "" },
+      { regex: "userId", description: "payload userId", flags: "" },
+      { regex: "expiresIn", description: "expiresIn", flags: "" },
+      { regex: "try", description: "try ב-verify", flags: "" },
+      { regex: "catch", description: "catch מחזיר null", flags: "" },
+    ],
+    reference: `function signToken(userId) {
+  return jwt.sign({ userId }, SECRET, { expiresIn: '1h' });
+}
+function verifyToken(token) {
+  try {
+    return jwt.verify(token, SECRET);
+  } catch (err) {
+    return null;
+  }
+}`,
+    hint: "jwt.sign(payload, secret, options). jwt.verify זורק error — try/catch.",
+    explanation: "JWT = self-contained tokens. expiresIn קצר ל-access (15m-1h), refresh ארוך יותר. SECRET ב-env בלבד.",
+  },
+
+  {
+    id: "build_react_context_theme",
+    conceptKey: "lesson_23::Context API",
+    level: 6,
+    title: "Theme Context",
+    prompt: "כתוב ThemeContext עם value 'light'/'dark', ThemeProvider שמספק toggle, ו-useTheme hook לקריאת ה-context.",
+    starter: `// import { createContext, useContext, useState } from 'react';
+// כתוב את הקוד כאן`,
+    tests: [
+      { regex: "createContext", description: "createContext", flags: "" },
+      { regex: "useState", description: "useState ל-theme", flags: "" },
+      { regex: "Provider", description: "Provider component", flags: "" },
+      { regex: "useContext", description: "useContext", flags: "" },
+      { regex: "function\\s+useTheme|const\\s+useTheme", description: "useTheme hook", flags: "" },
+      { regex: "'light'|\"light\"", description: "default 'light'", flags: "" },
+      { regex: "'dark'|\"dark\"", description: "value 'dark'", flags: "" },
+    ],
+    reference: `const ThemeContext = createContext({ theme: 'light', toggle: () => {} });
+function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light');
+  const toggle = () => setTheme(t => t === 'light' ? 'dark' : 'light');
+  return <ThemeContext.Provider value={{ theme, toggle }}>{children}</ThemeContext.Provider>;
+}
+function useTheme() {
+  return useContext(ThemeContext);
+}`,
+    hint: "createContext עם default. Provider עוטף children. custom hook לעטיפה נקייה של useContext.",
+    explanation: "Context = data sharing דרך עץ. custom hook (useTheme) = better DX, מקפל את useContext + ה-Context object.",
+  },
+
+  {
+    id: "build_useMemo_filter",
+    conceptKey: "lesson_24::useMemo",
+    level: 6,
+    title: "Filtered list עם useMemo",
+    prompt: "כתוב SearchableList שמקבל items + query, מסנן items.filter(x => x.name.includes(query)), ומrenders <ul>. השתמש ב-useMemo.",
+    starter: `function SearchableList({ items, query }) {
+  // הקוד שלך
+}`,
+    tests: [
+      { regex: "useMemo", description: "useMemo", flags: "" },
+      { regex: "items", description: "items prop", flags: "" },
+      { regex: "query", description: "query prop", flags: "" },
+      { regex: "\\.filter", description: ".filter", flags: "" },
+      { regex: "\\.includes", description: ".includes", flags: "" },
+      { regex: "<ul", description: "<ul>", flags: "i" },
+      { regex: "\\.map", description: ".map", flags: "" },
+    ],
+    reference: `function SearchableList({ items, query }) {
+  const filtered = useMemo(
+    () => items.filter(x => x.name.includes(query)),
+    [items, query]
+  );
+  return (
+    <ul>
+      {filtered.map(item => <li key={item.id}>{item.name}</li>)}
+    </ul>
+  );
+}`,
+    hint: "useMemo(fn, deps). deps = [items, query] — recalc רק כשמשתנים.",
+    explanation: "useMemo מתאים לחישובים יקרים. כאן filter על מערך גדול — הימנעות מrecalc ב-renders שלא קשורים.",
+  },
+
+  {
+    id: "build_zod_schema",
+    conceptKey: "lesson_27::interface",
+    level: 6,
+    title: "Zod schema לvalidation",
+    prompt: "הגדר Zod schema ל-User: email (valid email), age (number ≥18), name (string min 2).",
+    starter: `// import { z } from 'zod';
+const UserSchema = // הקוד שלך`,
+    tests: [
+      { regex: "z\\.object", description: "z.object", flags: "" },
+      { regex: "email:\\s*z\\.string\\(\\)\\.email", description: "email validator", flags: "" },
+      { regex: "age:\\s*z\\.number", description: "age: z.number", flags: "" },
+      { regex: "\\.min\\(18\\)", description: "min(18) על age", flags: "" },
+      { regex: "name:\\s*z\\.string", description: "name: z.string", flags: "" },
+      { regex: "\\.min\\(2\\)", description: "min(2) על name", flags: "" },
+    ],
+    reference: `const UserSchema = z.object({
+  email: z.string().email(),
+  age: z.number().min(18),
+  name: z.string().min(2),
+});`,
+    hint: "z.object({...}) ל-shape. z.string().email() לemail. z.number().min(N) לrange.",
+    explanation: "Zod = runtime validation עם type inference. UserSchema.parse(data) זורק על invalid; safeParse מחזיר { success, data | error }.",
+  },
+
+  {
+    id: "build_express_middleware_auth",
+    conceptKey: "lesson_17::middleware",
+    level: 7,
+    title: "Auth middleware",
+    prompt: "כתוב middleware authMiddleware שבודק Authorization header עם 'Bearer X', מאמת JWT, ושומר user ב-req.user. אם לא תקין: 401.",
+    starter: `function authMiddleware(req, res, next) {
+  // הקוד שלך
+}`,
+    tests: [
+      { regex: "req\\.headers", description: "req.headers", flags: "" },
+      { regex: "Authorization|authorization", description: "Authorization header", flags: "" },
+      { regex: "Bearer", description: "Bearer scheme", flags: "" },
+      { regex: "jwt\\.verify", description: "jwt.verify", flags: "" },
+      { regex: "401", description: "401 על fail", flags: "" },
+      { regex: "next\\(\\)", description: "next() על success", flags: "" },
+      { regex: "req\\.user", description: "req.user = payload", flags: "" },
+    ],
+    reference: `function authMiddleware(req, res, next) {
+  const auth = req.headers.authorization;
+  if (!auth || !auth.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Missing token' });
+  }
+  const token = auth.slice(7);
+  try {
+    req.user = jwt.verify(token, process.env.JWT_SECRET);
+    next();
+  } catch (err) {
+    return res.status(401).json({ error: 'Invalid token' });
+  }
+}`,
+    hint: "Bearer scheme: 'Bearer <token>'. slice(7) להסיר prefix. next() ממשיך, אחרת res עם 401.",
+    explanation: "auth middleware נפוץ. שמור user ב-req למסלולים הבאים. החזרה ב-401 (לא 403) כשאין token תקין.",
+  },
+
+  {
+    id: "build_react_form_validation",
+    conceptKey: "lesson_22::form basics",
+    level: 6,
+    title: "Form עם validation בסיסי",
+    prompt: "כתוב EmailForm: input + submit. validation: email חייב @. אם invalid, הצג שגיאה. אם valid, קרא ל-onSubmit prop.",
+    starter: `function EmailForm({ onSubmit }) {
+  // הקוד שלך
+}`,
+    tests: [
+      { regex: "useState", description: "useState ל-email + error", flags: "" },
+      { regex: "value=", description: "controlled input", flags: "" },
+      { regex: "onChange", description: "onChange handler", flags: "" },
+      { regex: "@", description: "בדיקת @", flags: "" },
+      { regex: "preventDefault", description: "preventDefault", flags: "" },
+      { regex: "onSubmit", description: "onSubmit prop", flags: "" },
+      { regex: "error|שגיאה", description: "הצגת error", flags: "" },
+    ],
+    reference: `function EmailForm({ onSubmit }) {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!email.includes('@')) {
+      setError('אימייל לא תקין');
+      return;
+    }
+    setError('');
+    onSubmit(email);
+  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input value={email} onChange={e => setEmail(e.target.value)} />
+      {error && <span>{error}</span>}
+      <button>שלח</button>
+    </form>
+  );
+}`,
+    hint: "validation ב-handleSubmit לפני setError. preventDefault עוצר reload.",
+    explanation: "Client validation = UX מהיר. תמיד גם server validation כי client יכול להיעקף. error UI נסתר עד שיש שגיאה.",
+  },
+
+  {
+    id: "build_localStorage_hook",
+    conceptKey: "lesson_24::useState",
+    level: 6,
+    title: "useLocalStorage hook",
+    prompt: "כתוב custom hook useLocalStorage(key, initialValue) שמתנהג כמו useState אבל מסנכרן עם localStorage.",
+    starter: `function useLocalStorage(key, initialValue) {
+  // הקוד שלך
+}`,
+    tests: [
+      { regex: "useState", description: "useState פנימי", flags: "" },
+      { regex: "localStorage", description: "localStorage", flags: "" },
+      { regex: "getItem", description: "getItem", flags: "" },
+      { regex: "setItem", description: "setItem", flags: "" },
+      { regex: "JSON\\.parse", description: "JSON.parse לpercifying", flags: "" },
+      { regex: "JSON\\.stringify", description: "JSON.stringify לכתיבה", flags: "" },
+      { regex: "return\\s*\\[", description: "return [value, setter]", flags: "" },
+    ],
+    reference: `function useLocalStorage(key, initialValue) {
+  const [value, setValue] = useState(() => {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : initialValue;
+  });
+  function update(newValue) {
+    setValue(newValue);
+    localStorage.setItem(key, JSON.stringify(newValue));
+  }
+  return [value, update];
+}`,
+    hint: "useState עם lazy initializer לקריאה מ-localStorage. החזרה: [value, custom setter שכותב גם ל-storage].",
+    explanation: "Custom hooks = הרכבת hooks לAPI שימושית. Pattern: same shape כ-useState אבל עם side effect של persistence.",
+  },
+
+  {
+    id: "build_nextjs_route_handler",
+    conceptKey: "lesson_nextjs::API route",
+    level: 6,
+    title: "Next.js route handler",
+    prompt: "כתוב app/api/users/route.ts: GET = מחזיר {users}; POST = מקבל {name} ב-body, מחזיר 201 + new user.",
+    starter: `// app/api/users/route.ts
+// import { NextRequest } from 'next/server';
+// הקוד שלך`,
+    tests: [
+      { regex: "export\\s+(async\\s+)?function\\s+GET", description: "export GET", flags: "" },
+      { regex: "export\\s+(async\\s+)?function\\s+POST", description: "export POST", flags: "" },
+      { regex: "NextResponse\\.json|Response\\.json", description: "Response.json", flags: "" },
+      { regex: "await\\s+req\\.json|request\\.json", description: "req.json()", flags: "" },
+      { regex: "201", description: "status 201 ל-POST", flags: "" },
+    ],
+    reference: `let users = [];
+let nextId = 1;
+export async function GET() {
+  return Response.json({ users });
+}
+export async function POST(request) {
+  const { name } = await request.json();
+  const user = { id: nextId++, name };
+  users.push(user);
+  return Response.json(user, { status: 201 });
+}`,
+    hint: "Next.js 13+ App Router: export function per HTTP method. await request.json() ל-body. Response.json(data, { status }) להחזרה.",
+    explanation: "Route handlers ב-Next.js 13+: file-based, async functions per method. החליף את pages/api מהגרסאות הישנות.",
+  },
+
+  {
+    id: "build_useReducer_todo",
+    conceptKey: "lesson_24::useReducer",
+    level: 7,
+    title: "Todo עם useReducer",
+    prompt: "כתוב TodoApp עם useReducer: state = todos[]; actions: ADD (text), TOGGLE (id), REMOVE (id). רנדר רשימה + form להוספה.",
+    starter: `function TodoApp() {
+  // הקוד שלך
+}`,
+    tests: [
+      { regex: "useReducer", description: "useReducer", flags: "" },
+      { regex: "ADD", description: "action ADD", flags: "" },
+      { regex: "TOGGLE", description: "action TOGGLE", flags: "" },
+      { regex: "REMOVE", description: "action REMOVE", flags: "" },
+      { regex: "dispatch", description: "dispatch", flags: "" },
+      { regex: "switch|action\\.type", description: "switch על type", flags: "" },
+      { regex: "\\.\\.\\.", description: "spread (immutable)", flags: "" },
+      { regex: "<form|<input", description: "form/input", flags: "i" },
+    ],
+    reference: `function TodoApp() {
+  function reducer(state, action) {
+    switch (action.type) {
+      case 'ADD': return [...state, { id: Date.now(), text: action.text, done: false }];
+      case 'TOGGLE': return state.map(t => t.id === action.id ? { ...t, done: !t.done } : t);
+      case 'REMOVE': return state.filter(t => t.id !== action.id);
+      default: return state;
+    }
+  }
+  const [todos, dispatch] = useReducer(reducer, []);
+  const [text, setText] = useState('');
+  return (
+    <div>
+      <form onSubmit={e => { e.preventDefault(); dispatch({ type: 'ADD', text }); setText(''); }}>
+        <input value={text} onChange={e => setText(e.target.value)} />
+        <button>+</button>
+      </form>
+      <ul>
+        {todos.map(t => (
+          <li key={t.id}>
+            <input type="checkbox" checked={t.done} onChange={() => dispatch({ type: 'TOGGLE', id: t.id })} />
+            {t.text}
+            <button onClick={() => dispatch({ type: 'REMOVE', id: t.id })}>×</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}`,
+    hint: "useReducer לstate מורכב יותר. action = { type, payload }. reducer מחזיר state חדש (immutable).",
+    explanation: "useReducer לטענות עם logic מורכב או הרבה actions. spread/map/filter ל-immutable updates.",
+  },
+
+  {
+    id: "build_debounce_hook",
+    conceptKey: "lesson_24::useEffect",
+    level: 7,
+    title: "useDebounce hook",
+    prompt: "כתוב useDebounce(value, delay) שמחזיר את value אחרי delay ms של 'דממה' (אין שינוי). שימושי לחיפוש live.",
+    starter: `function useDebounce(value, delay) {
+  // הקוד שלך
+}`,
+    tests: [
+      { regex: "useState", description: "useState ל-debounced", flags: "" },
+      { regex: "useEffect", description: "useEffect", flags: "" },
+      { regex: "setTimeout", description: "setTimeout", flags: "" },
+      { regex: "clearTimeout", description: "clearTimeout בcleanup", flags: "" },
+      { regex: "return", description: "return debounced value", flags: "" },
+    ],
+    reference: `function useDebounce(value, delay) {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const id = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(id);
+  }, [value, delay]);
+  return debounced;
+}`,
+    hint: "כל שינוי של value מאתחל timer חדש. cleanup = clearTimeout של הקודם.",
+    explanation: "Debounce = השהיית עדכון עד שמשתמש מפסיק לדפדף. שימושי ב-search inputs כדי לא לעמוס על השרת בכל הקלדה.",
+  },
 ];
 
 // Export to global scope (no module system in this app)
