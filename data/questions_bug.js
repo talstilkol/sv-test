@@ -1118,6 +1118,364 @@ async function login(email, password) {
 }`,
     explanation: "JWT ב-localStorage = vulnerable ל-XSS. httpOnly cookie לא נגיש ל-JS. בנוסף secure (HTTPS only) ו-sameSite=strict (anti-CSRF).",
   },
+
+  // ============================================================================
+  // Phase 2.C batch 2 — more Bug Hunts (10)
+  // ============================================================================
+
+  {
+    id: "bug_async_forEach",
+    conceptKey: "lesson_15::Promise",
+    level: 6,
+    title: "await בתוך forEach לא ממתין",
+    brokenCode:
+`async function processAll(items) {
+  items.forEach(async item => {
+    await processItem(item);
+  });
+  console.log('done');
+}`,
+    bugLine: 6,
+    hint: "מתי 'done' מודפס?",
+    options: [
+      "forEach לא ממתין ל-Promises שה-callback מחזיר. 'done' מודפס מיד, לפני שה-items עובדו.",
+      "async function לא יכולה להיות בתוך forEach",
+      "processItem לא מוגדר",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`async function processAll(items) {
+  for (const item of items) {
+    await processItem(item);
+  }
+  console.log('done');
+}
+// או מקבילי: await Promise.all(items.map(item => processItem(item)))`,
+    explanation: "forEach מתעלם מ-Promises המוחזרות. for-of עם await מבצע סדרתית. Promise.all עם map מבצע מקבילית.",
+  },
+
+  {
+    id: "bug_useMemo_no_deps",
+    conceptKey: "lesson_24::useMemo",
+    level: 7,
+    title: "useMemo בלי deps array",
+    brokenCode:
+`function Stats({ data }) {
+  const sum = useMemo(() => {
+    return data.reduce((s, x) => s + x, 0);
+  });
+  return <div>{sum}</div>;
+}`,
+    bugLine: 4,
+    hint: "מה useMemo עושה כשאין deps?",
+    options: [
+      "בלי deps array, useMemo מחשב מחדש בכל render — לא חוסך כלום (אותו דבר כמו לקרוא לפונקציה ישירות).",
+      "useMemo לא צריך deps",
+      "data.reduce זורק שגיאה",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`function Stats({ data }) {
+  const sum = useMemo(() => {
+    return data.reduce((s, x) => s + x, 0);
+  }, [data]);
+  return <div>{sum}</div>;
+}`,
+    explanation: "useMemo דורש deps array. בלעדיו = recalc בכל render. עם [data] = recalc רק כש-data משתנה.",
+  },
+
+  {
+    id: "bug_form_no_preventDefault",
+    conceptKey: "lesson_22::form basics",
+    level: 4,
+    title: "form ללא preventDefault",
+    brokenCode:
+`function SearchForm({ onSearch }) {
+  const [q, setQ] = useState('');
+  function handleSubmit() {
+    onSearch(q);
+  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input value={q} onChange={e => setQ(e.target.value)} />
+      <button>Search</button>
+    </form>
+  );
+}`,
+    bugLine: 3,
+    hint: "מה קורה בdefault על form submit?",
+    options: [
+      "form submit ברירת מחדל מטעין את הדף מחדש (GET לאותה URL). state אובד וה-callback לא קורה כראוי.",
+      "useState לא עובד ב-form",
+      "onSearch לא מוגדר",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`function SearchForm({ onSearch }) {
+  const [q, setQ] = useState('');
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSearch(q);
+  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input value={q} onChange={e => setQ(e.target.value)} />
+      <button>Search</button>
+    </form>
+  );
+}`,
+    explanation: "form submit ברירת מחדל = navigation. ב-SPA חיוני להוסיף e.preventDefault() ב-handler.",
+  },
+
+  {
+    id: "bug_useState_object_partial",
+    conceptKey: "lesson_22::useState",
+    level: 5,
+    title: "setState עם object רק חלק מהשדות",
+    brokenCode:
+`function Profile() {
+  const [user, setUser] = useState({ name: 'Tal', age: 30, email: 'a@b.com' });
+  function birthday() {
+    setUser({ age: user.age + 1 });
+  }
+  return <div>{user.name}, {user.age}, {user.email}</div>;
+}`,
+    bugLine: 4,
+    hint: "useState דומה ל-setState של class? לא...",
+    options: [
+      "useState לא ממזג — setUser({ age: ... }) מחליף את כל ה-object. name ו-email נעלמים.",
+      "user.age + 1 לא מתחשב",
+      "setUser לא קיים",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`function Profile() {
+  const [user, setUser] = useState({ name: 'Tal', age: 30, email: 'a@b.com' });
+  function birthday() {
+    setUser({ ...user, age: user.age + 1 });
+  }
+  return <div>{user.name}, {user.age}, {user.email}</div>;
+}`,
+    explanation: "useState != this.setState (class). הוא לא ממזג shallowly — מחליף לחלוטין. spread (...user) שומר על שאר השדות.",
+  },
+
+  {
+    id: "bug_event_handler_arg",
+    conceptKey: "lesson_21::Component",
+    level: 5,
+    title: "callback עם args בvjsx",
+    brokenCode:
+`function ItemList({ items, onClick }) {
+  return items.map(item => (
+    <button key={item.id} onClick={onClick(item.id)}>
+      {item.name}
+    </button>
+  ));
+}`,
+    bugLine: 3,
+    hint: "מה onClick={onClick(item.id)} עושה?",
+    options: [
+      "onClick(item.id) קורה בזמן render לכל item — מבצע את ה-callback מיד, לא ב-click. result (undefined) הופך ל-handler.",
+      "onClick לא תומך ב-args",
+      "items.map לא מחזיר JSX",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`function ItemList({ items, onClick }) {
+  return items.map(item => (
+    <button key={item.id} onClick={() => onClick(item.id)}>
+      {item.name}
+    </button>
+  ));
+}`,
+    explanation: "כדי לעטוף callback עם arg ל-event: () => onClick(arg). זה reference לפונקציה חדשה, לא קריאה מיידית.",
+  },
+
+  {
+    id: "bug_useEffect_cleanup_missing",
+    conceptKey: "lesson_24::side effect",
+    level: 6,
+    title: "subscription ללא cleanup",
+    brokenCode:
+`function Clock() {
+  const [time, setTime] = useState(new Date());
+  useEffect(() => {
+    setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+  }, []);
+  return <div>{time.toLocaleTimeString()}</div>;
+}`,
+    bugLine: 7,
+    hint: "מה קורה כש-Clock unmounts?",
+    options: [
+      "אין cleanup — ה-interval ממשיך לרוץ אחרי unmount. setTime זורק warning ('updating state on unmounted component'). memory leak.",
+      "setInterval לא עובד",
+      "new Date() לא עובד",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`function Clock() {
+  const [time, setTime] = useState(new Date());
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+  return <div>{time.toLocaleTimeString()}</div>;
+}`,
+    explanation: "useEffect cleanup חיוני ל-subscriptions/intervals/listeners. הקפד תמיד לחזור עם cleanup function. clearInterval ב-unmount.",
+  },
+
+  {
+    id: "bug_typescript_any",
+    conceptKey: "lesson_26::any",
+    level: 5,
+    title: "any מכבה type-safety",
+    brokenCode:
+`function fetchUser(id: string): any {
+  // returns user data
+}
+const user = fetchUser('123');
+console.log(user.namee.toUpperCase()); // typo!`,
+    bugLine: 5,
+    hint: "האם TS תופס את ה-typo?",
+    options: [
+      "any מכבה את כל בדיקות ה-types. typo כמו .namee (במקום .name) לא נתפס בcompile — הקוד מקרס בruntime.",
+      "TS תופס את הtypo",
+      "fetchUser לא מוגדר",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`interface User { id: string; name: string; }
+function fetchUser(id: string): User {
+  // returns user data with proper type
+  return { id, name: '' } as User; // example
+}
+const user = fetchUser('123');
+console.log(user.name.toUpperCase()); // TS catches typos`,
+    explanation: "any = פתח אחורי. תמיד עדיף unknown (דורש narrow), או interface ספציפית. גם generic <T> טוב.",
+  },
+
+  {
+    id: "bug_express_async_error",
+    conceptKey: "lesson_17::middleware",
+    level: 7,
+    title: "async middleware בלי error handling",
+    brokenCode:
+`app.get('/users/:id', async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.json(user);
+});`,
+    bugLine: 3,
+    hint: "מה קורה אם findById זורק?",
+    options: [
+      "Express 4 לא תופס async errors אוטומטית — Promise rejection unhandled. השרת קורס או תקוע.",
+      "findById לא תומך ב-await",
+      "req.params לא קיים",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`app.get('/users/:id', async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ error: 'not found' });
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+// או express-async-errors module שמטפל אוטומטית`,
+    explanation: "Express 4 לא תופס Promise rejections. תמיד try/catch + next(err) ב-async routes. Express 5 (beta) עושה זאת אוטומטית.",
+  },
+
+  {
+    id: "bug_dependency_array_object",
+    conceptKey: "lesson_24::dependency array",
+    level: 7,
+    title: "object ב-deps array",
+    brokenCode:
+`function User({ id }) {
+  const [user, setUser] = useState(null);
+  const config = { id, retries: 3 };
+  useEffect(() => {
+    fetch('/api/user/' + id, { retries: config.retries })
+      .then(r => r.json()).then(setUser);
+  }, [config]);
+  return <div>{user?.name}</div>;
+}`,
+    bugLine: 4,
+    hint: "מה קורה ל-config בכל render?",
+    options: [
+      "config = object literal חדש בכל render → reference חדש → useEffect חושב שהוא השתנה → infinite refetch.",
+      "config לא יכול להיות בdeps",
+      "fetch לא מקבל retries",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`function User({ id }) {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    fetch('/api/user/' + id, { retries: 3 })
+      .then(r => r.json()).then(setUser);
+  }, [id]); // primitive dep only
+  return <div>{user?.name}</div>;
+}`,
+    explanation: "useEffect משווה deps עם Object.is (reference). object literal חדש כל render = שונה. השתמש ב-primitives, או useMemo על ה-object.",
+  },
+
+  {
+    id: "bug_react_state_in_callback",
+    conceptKey: "lesson_closures::stale closure",
+    level: 7,
+    title: "stale state ב-event listener",
+    brokenCode:
+`function Counter() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    function handle() {
+      console.log('current:', count);
+    }
+    window.addEventListener('keydown', handle);
+    return () => window.removeEventListener('keydown', handle);
+  }, []);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}`,
+    bugLine: 5,
+    hint: "המשתמש לוחץ על הכפתור 5 פעמים, אז keydown. מה count מודפס?",
+    options: [
+      "0 — handle נסגר על count=0 מ-effect הראשון. effect לא רץ שוב כי deps=[].",
+      "5 — current value",
+      "undefined",
+      "throws error"
+    ],
+    correctIndex: 0,
+    fix:
+`function Counter() {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(count);
+  useEffect(() => { countRef.current = count; });
+  useEffect(() => {
+    function handle() {
+      console.log('current:', countRef.current);
+    }
+    window.addEventListener('keydown', handle);
+    return () => window.removeEventListener('keydown', handle);
+  }, []);
+  return <button onClick={() => setCount(c => c + 1)}>{count}</button>;
+}`,
+    explanation: "Listener מ-effect [] תפס count=0 ב-closure. useRef + sync ב-effect שני פותר. אלטרנטיבה: הוסף count ל-deps (יסיר ויוסיף listener בכל שינוי).",
+  },
 ];
 
 // Export to global scope (no module system in this app)
