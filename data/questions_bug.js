@@ -770,6 +770,354 @@ app.post('/users', (req, res) => {
     explanation: "URL הוא string מטבעו. כל path/query parameters הם strings. השוואה === 1 (number) תמיד false. parseInt או String comparison.",
   },
 
+  // ============================================================================
+  // Phase 2.C batch — high-impact bugs across React/async/closures (10)
+  // ============================================================================
+
+  {
+    id: "bug_useeffect_async",
+    conceptKey: "lesson_24::side effect",
+    level: 6,
+    title: "useEffect שמחזיר Promise",
+    brokenCode:
+`function UserProfile({ userId }) {
+  const [user, setUser] = useState(null);
+  useEffect(async () => {
+    const data = await fetch('/api/user/' + userId).then(r => r.json());
+    setUser(data);
+  }, [userId]);
+  return <div>{user?.name}</div>;
+}`,
+    bugLine: 3,
+    hint: "האם useEffect callback יכולה להיות async function?",
+    options: [
+      "useEffect callback לא צריכה להחזיר Promise — async function תמיד מחזירה Promise. cleanup לא יעבוד נכון.",
+      "fetch לא מחזיר Promise",
+      "userId לא ב-deps array",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`function UserProfile({ userId }) {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/user/' + userId)
+      .then(r => r.json())
+      .then(data => { if (!cancelled) setUser(data); });
+    return () => { cancelled = true; };
+  }, [userId]);
+  return <div>{user?.name}</div>;
+}`,
+    explanation: "useEffect מצפה לreturn או undefined או cleanup function. async תמיד מחזירה Promise — React לא יקרא לזה כ-cleanup. עוטפים async בתוך non-async, או בwrapping function.",
+  },
+
+  {
+    id: "bug_setstate_object_mutation",
+    conceptKey: "lesson_22::immutable",
+    level: 6,
+    title: "מוטציה של state object",
+    brokenCode:
+`function UserCard() {
+  const [user, setUser] = useState({ name: 'Tal', age: 30 });
+  function birthday() {
+    user.age += 1;
+    setUser(user);
+  }
+  return <button onClick={birthday}>{user.age}</button>;
+}`,
+    bugLine: 5,
+    hint: "האם React מזהה ש-user השתנה?",
+    options: [
+      "user.age += 1 משנה את ה-object במקום, ו-setUser(user) מקבל את אותה הפניה — React חושב ששום דבר לא השתנה",
+      "useState לא תומך ב-objects",
+      "user לא מוגדר",
+      "שגיאת syntax"
+    ],
+    correctIndex: 0,
+    fix:
+`function UserCard() {
+  const [user, setUser] = useState({ name: 'Tal', age: 30 });
+  function birthday() {
+    setUser({ ...user, age: user.age + 1 });
+  }
+  return <button onClick={birthday}>{user.age}</button>;
+}`,
+    explanation: "React משתמש ב-Object.is לזיהוי שינוי state. שינוי במקום שומר על אותה הפניה — Object.is מחזיר true, אין re-render. spread יוצר object חדש = הפניה חדשה = re-render.",
+  },
+
+  {
+    id: "bug_map_no_key",
+    conceptKey: "lesson_21::map",
+    level: 4,
+    title: "key=index ב-list ניתן לשינוי",
+    brokenCode:
+`function TodoList() {
+  const [todos, setTodos] = useState([]);
+  function addToTop() {
+    setTodos([{ id: Date.now(), text: 'new' }, ...todos]);
+  }
+  return (
+    <ul>
+      {todos.map((todo, i) => <li key={i}>{todo.text}</li>)}
+    </ul>
+  );
+}`,
+    bugLine: 8,
+    hint: "מה קורה ל-keys כשמוסיפים item לראש הרשימה?",
+    options: [
+      "key={i} שובר state פנימי כשהסדר משתנה — React חושב שכל ה-items שונו, מאבד inputs",
+      "todos.map לא תומך ב-2 פרמטרים",
+      "todo.text לא קיים",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`function TodoList() {
+  const [todos, setTodos] = useState([]);
+  function addToTop() {
+    setTodos([{ id: Date.now(), text: 'new' }, ...todos]);
+  }
+  return (
+    <ul>
+      {todos.map(todo => <li key={todo.id}>{todo.text}</li>)}
+    </ul>
+  );
+}`,
+    explanation: "key חיוני לזיהוי items בין renders. index משתנה כשהסדר משתנה (insert, delete, sort) — React חושב שכל ה-items שונו. id יציב הוא הפתרון.",
+  },
+
+  {
+    id: "bug_stale_closure_setinterval",
+    conceptKey: "lesson_closures::stale closure",
+    level: 6,
+    title: "stale closure ב-setInterval",
+    brokenCode:
+`function Timer() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCount(count + 1);
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+  return <div>{count}</div>;
+}`,
+    bugLine: 5,
+    hint: "המונה תקוע על 1. למה?",
+    options: [
+      "ה-effect רץ פעם אחת ([] deps) — count תפוס ב-closure על 0 לתמיד. setCount(0+1) שוב ושוב = 1.",
+      "setInterval לא עובד ב-React",
+      "useState לא מאתחל ל-0",
+      "clearInterval חוסם את setCount"
+    ],
+    correctIndex: 0,
+    fix:
+`function Timer() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCount(prev => prev + 1);
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+  return <div>{count}</div>;
+}`,
+    explanation: "Stale closure קלאסי: callback קלט את count מ-render ראשון. functional update setCount(prev => ...) לא תופס count ב-closure — מקבל את הערך העדכני בכל קריאה.",
+  },
+
+  {
+    id: "bug_async_loop_var",
+    conceptKey: "lesson_closures::closure in setTimeout",
+    level: 5,
+    title: "for עם var ו-callbacks",
+    brokenCode:
+`for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log('i =', i), 100);
+}`,
+    bugLine: 1,
+    hint: "מה הערך של i כשה-callbacks רצים?",
+    options: [
+      "var function-scoped — כל ה-callbacks קוראים את אותו i, שהוא 3 בסוף הלולאה. הפלט: 3, 3, 3.",
+      "setTimeout לא רץ ב-loops",
+      "console.log לא מקבל 2 args",
+      "אין שגיאה — מדפיס 0, 1, 2"
+    ],
+    correctIndex: 0,
+    fix:
+`for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log('i =', i), 100);
+}`,
+    explanation: "var משותף לכל ה-callbacks. let block-scoped יוצר binding חדש לכל איטרציה — כל callback סגור על i משלו. תיקון של מילה אחת = 0, 1, 2.",
+  },
+
+  {
+    id: "bug_promise_unhandled",
+    conceptKey: "lesson_15::Promise",
+    level: 5,
+    title: "Promise בלי catch",
+    brokenCode:
+`function loadData() {
+  fetch('/api/data')
+    .then(r => r.json())
+    .then(data => updateUI(data));
+}
+loadData();`,
+    bugLine: 4,
+    hint: "מה קורה אם ה-fetch נכשל או JSON parse נכשל?",
+    options: [
+      "אין catch — שגיאות הופכות ל-UnhandledPromiseRejection. ה-app לא יידע על הכשל.",
+      "fetch לא מחזיר Promise",
+      "updateUI לא תופס שגיאה",
+      "אין שגיאה"
+    ],
+    correctIndex: 0,
+    fix:
+`function loadData() {
+  fetch('/api/data')
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(data => updateUI(data))
+    .catch(err => showError(err));
+}
+loadData();`,
+    explanation: "כל Promise chain חייב catch. גם אם fetch מצליח, r.ok יכול להיות false (4xx/5xx) — צריך לבדוק. unhandled rejections גורמות בעיות בייצור.",
+  },
+
+  {
+    id: "bug_event_handler_invocation",
+    conceptKey: "lesson_21::Component",
+    level: 4,
+    title: "קריאה מיידית במקום reference",
+    brokenCode:
+`function App() {
+  function handleClick() {
+    console.log('clicked');
+  }
+  return <button onClick={handleClick()}>Click</button>;
+}`,
+    bugLine: 5,
+    hint: "מה קורה ב-render?",
+    options: [
+      "handleClick() נקרא בזמן render — מדפיס מיד ומחזיר undefined. onClick={undefined} = אין handler.",
+      "handleClick לא מוגדר",
+      "console.log לא עובד ב-React",
+      "אין שגיאה — כפתור עובד"
+    ],
+    correctIndex: 0,
+    fix:
+`function App() {
+  function handleClick() {
+    console.log('clicked');
+  }
+  return <button onClick={handleClick}>Click</button>;
+}`,
+    explanation: "JSX onClick מצפה ל-function reference, לא לקריאה. handleClick() מבצע מיד; handleClick (ללא סוגריים) מעביר את ה-function. עם args: () => handleClick(arg).",
+  },
+
+  {
+    id: "bug_object_compare",
+    conceptKey: "lesson_11::By Reference",
+    level: 5,
+    title: "השוואת objects עם ===",
+    brokenCode:
+`const a = { x: 1 };
+const b = { x: 1 };
+if (a === b) {
+  console.log('shouldn't print');
+} else {
+  console.log('different');
+}`,
+    bugLine: 3,
+    hint: "מה === מבצע על objects?",
+    options: [
+      "=== על objects = השוואת reference, לא תוכן. שני objects עם אותם values עדיין שונים.",
+      "=== לא עובד עם objects",
+      "x: 1 שונה",
+      "אין שגיאה — מדפיס 'shouldn't print'"
+    ],
+    correctIndex: 0,
+    fix:
+`const a = { x: 1 };
+const b = { x: 1 };
+if (JSON.stringify(a) === JSON.stringify(b)) {
+  console.log('same content');
+}\n// או lodash _.isEqual, או deep-equal manual`,
+    explanation: "JS אין operator ל-deep equality. === על objects = pointer comparison. Lodash isEqual, או JSON.stringify (אם אין functions/Dates), או manual recursive.",
+  },
+
+  {
+    id: "bug_useeffect_no_deps",
+    conceptKey: "lesson_24::infinite loop",
+    level: 6,
+    title: "useEffect בלי deps + setState = infinite loop",
+    brokenCode:
+`function Counter() {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    setN(n + 1);
+  });
+  return <div>{n}</div>;
+}`,
+    bugLine: 5,
+    hint: "כמה פעמים ה-effect ירוץ?",
+    options: [
+      "אין deps array — effect רץ אחרי כל render. setN מטריגר render → effect → setN → infinite.",
+      "useEffect לא תומך ב-setState",
+      "n לא מוגדר",
+      "אין שגיאה — n מתעדכן ל-1"
+    ],
+    correctIndex: 0,
+    fix:
+`function Counter() {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    setN(n + 1);
+  }, []); // [] = run once
+  return <div>{n}</div>;
+}`,
+    explanation: "אנטי-pattern קלאסי. בלי deps array, ה-effect רץ אחרי כל render. setState בתוך = render אינסופי. תמיד צריך לחשוב על deps.",
+  },
+
+  {
+    id: "bug_jwt_localstorage",
+    conceptKey: "lesson_auth_security::XSS boundary",
+    level: 7,
+    title: "אחסון JWT ב-localStorage",
+    brokenCode:
+`async function login(email, password) {
+  const res = await fetch('/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password })
+  });
+  const { token } = await res.json();
+  localStorage.setItem('jwt', token);
+}`,
+    bugLine: 7,
+    hint: "מה הסיכון של JWT ב-localStorage?",
+    options: [
+      "localStorage נגיש לכל JS — כל XSS גונב את ה-token. עדיף httpOnly cookie מ-server.",
+      "localStorage לא תומך ב-strings",
+      "token לא מוחזר",
+      "אין סיכון"
+    ],
+    correctIndex: 0,
+    fix:
+`// Server-side:
+// res.cookie('jwt', token, { httpOnly: true, secure: true, sameSite: 'strict' });
+
+async function login(email, password) {
+  await fetch('/login', {
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({ email, password })
+  });
+  // No client-side token handling - browser sends cookie automatically
+}`,
+    explanation: "JWT ב-localStorage = vulnerable ל-XSS. httpOnly cookie לא נגיש ל-JS. בנוסף secure (HTTPS only) ו-sameSite=strict (anti-CSRF).",
+  },
 ];
 
 // Export to global scope (no module system in this app)

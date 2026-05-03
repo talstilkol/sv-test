@@ -2522,7 +2522,7 @@ var QUESTIONS_TRACE = [
 
   {
     id: "trace_async_function_return",
-    conceptKey: "lesson_15::async",
+    conceptKey: "lesson_15::Asynchronous",
     level: 5,
     title: "מה async function מחזירה",
     code: "async function getUser() {\n  return { name: 'Tal' };\n}\nconst result = getUser();\nconsole.log(result);\nresult.then(user => console.log(user.name));",
@@ -2684,7 +2684,7 @@ var QUESTIONS_TRACE = [
 
   {
     id: "trace_object_destructuring",
-    conceptKey: "lesson_11::destructuring",
+    conceptKey: "lesson_19::destructuring",
     level: 3,
     title: "destructuring עם default ו-rename",
     code: "const user = { name: 'Tal', age: 30 };\nconst { name: fullName, role = 'guest', age } = user;\nconsole.log(fullName, role, age);",
@@ -2804,7 +2804,7 @@ var QUESTIONS_TRACE = [
 
   {
     id: "trace_react_event_bubbling",
-    conceptKey: "lesson_13::event",
+    conceptKey: "lesson_19::event",
     level: 5,
     title: "Event bubbling ב-React",
     code: "<div onClick={() => console.log('div')}>\n  <button onClick={() => console.log('button')}>Click</button>\n</div>",
@@ -2864,7 +2864,7 @@ var QUESTIONS_TRACE = [
 
   {
     id: "trace_spread_immutable",
-    conceptKey: "lesson_22::spread",
+    conceptKey: "lesson_19::spread",
     level: 5,
     title: "Spread ל-immutable update",
     code: "const user = { name: 'Tal', age: 30 };\nconst updated = { ...user, age: 31 };\nconsole.log(user.age);\nconsole.log(updated.age);\nconsole.log(user === updated);",
