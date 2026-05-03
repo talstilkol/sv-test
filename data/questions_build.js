@@ -1515,7 +1515,7 @@ const UserSchema = // הקוד שלך`,
 
   {
     id: "build_react_form_validation",
-    conceptKey: "lesson_22::form basics",
+    conceptKey: "lesson_18::form",
     level: 6,
     title: "Form עם validation בסיסי",
     prompt: "כתוב EmailForm: input + submit. validation: email חייב @. אם invalid, הצג שגיאה. אם valid, קרא ל-onSubmit prop.",
@@ -1557,7 +1557,7 @@ const UserSchema = // הקוד שלך`,
 
   {
     id: "build_localStorage_hook",
-    conceptKey: "lesson_24::useState",
+    conceptKey: "lesson_22::useState",
     level: 6,
     title: "useLocalStorage hook",
     prompt: "כתוב custom hook useLocalStorage(key, initialValue) שמתנהג כמו useState אבל מסנכרן עם localStorage.",
@@ -1621,7 +1621,7 @@ export async function POST(request) {
 
   {
     id: "build_useReducer_todo",
-    conceptKey: "lesson_24::useReducer",
+    conceptKey: "lesson_24::useMemo",
     level: 7,
     title: "Todo עם useReducer",
     prompt: "כתוב TodoApp עם useReducer: state = todos[]; actions: ADD (text), TOGGLE (id), REMOVE (id). רנדר רשימה + form להוספה.",

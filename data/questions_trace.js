@@ -2891,6 +2891,478 @@ var QUESTIONS_TRACE = [
     explanation:
       "Spread יוצר עותק רדוד עם override. ב-React חיוני: setState({ ...user, age: 31 }) — reference חדש מטריגר re-render.",
   },
+
+  // ============================================================================
+  // Phase 2.A batch 2 — more high-impact Trace exercises (15)
+  // ============================================================================
+
+  {
+    id: "trace_promise_race",
+    conceptKey: "lesson_15::Promise",
+    level: 6,
+    title: "Promise.race עם timeout",
+    code: "function delay(ms, value) {\n  return new Promise(r => setTimeout(() => r(value), ms));\n}\nasync function run() {\n  const winner = await Promise.race([\n    delay(100, 'A'),\n    delay(50, 'B'),\n    delay(200, 'C'),\n  ]);\n  console.log(winner);\n}\nrun();",
+    steps: [
+      {
+        line: 5,
+        prompt: "מה Promise.race מחזיר?",
+        answer: "Promise שמתממש עם הראשון שמתממש",
+        hint: "race = מי שמסיים ראשון מנצח, גם אם reject.",
+      },
+      {
+        line: 7,
+        prompt: "מי הכי מהיר מהשלושה?",
+        answer: "B (50ms)",
+        hint: "delay(50, 'B') הוא ה-shortest.",
+      },
+      {
+        line: 10,
+        prompt: "מה יודפס?",
+        answer: "B",
+        hint: "B הראשון להתממש.",
+      },
+    ],
+    explanation:
+      "Promise.race מחזיר את הראשון שמתממש (resolve או reject). שימושי ל-timeout pattern: race([fetch, sleep(N).then(throw)]).",
+  },
+
+  {
+    id: "trace_array_reduce",
+    conceptKey: "lesson_11::reduce",
+    level: 5,
+    title: "reduce לסכום",
+    code: "const nums = [1, 2, 3, 4];\nconst sum = nums.reduce((acc, x) => acc + x, 0);\nconsole.log(sum);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה הערך ההתחלתי של acc?",
+        answer: "0",
+        hint: "הפרמטר השני של reduce.",
+      },
+      {
+        line: 2,
+        prompt: "אחרי שלב 1: acc=?",
+        answer: "1",
+        hint: "0 + 1 = 1.",
+      },
+      {
+        line: 2,
+        prompt: "אחרי כל האיברים, מה sum?",
+        answer: "10",
+        hint: "1+2+3+4 = 10.",
+      },
+    ],
+    explanation:
+      "reduce מצמצם array לערך אחד. (acc, x) => newAcc. תמיד ספק initial value (0 כאן) למקרה של array ריק.",
+  },
+
+  {
+    id: "trace_array_some_every",
+    conceptKey: "lesson_11::filter",
+    level: 4,
+    title: "some ו-every",
+    code: "const nums = [2, 4, 6, 8];\nconst allEven = nums.every(n => n % 2 === 0);\nconst hasOdd = nums.some(n => n % 2 === 1);\nconsole.log(allEven, hasOdd);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה every מחזיר?",
+        answer: "true",
+        hint: "כל האיברים זוגיים.",
+      },
+      {
+        line: 3,
+        prompt: "מה some מחזיר?",
+        answer: "false",
+        hint: "אין אף אי-זוגי.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "true false",
+        hint: "console.log מפריד ב-space.",
+      },
+    ],
+    explanation:
+      "every = כולם passes. some = לפחות אחד passes. שניהם מפסיקים מוקדם (short-circuit).",
+  },
+
+  {
+    id: "trace_object_keys_values",
+    conceptKey: "lesson_19::object",
+    level: 4,
+    title: "Object.keys ו-Object.values",
+    code: "const user = { name: 'Tal', age: 30 };\nconst keys = Object.keys(user);\nconst values = Object.values(user);\nconsole.log(keys);\nconsole.log(values);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה Object.keys(user) מחזיר?",
+        answer: "['name', 'age']",
+        hint: "array של ה-keys.",
+      },
+      {
+        line: 3,
+        prompt: "מה Object.values(user) מחזיר?",
+        answer: "['Tal', 30]",
+        hint: "array של ה-values בסדר תואם.",
+      },
+    ],
+    explanation:
+      "Object.keys/values/entries לסיבוב על properties של object. סדר ב-modern JS: integer keys לפי גודל, string keys לפי insertion.",
+  },
+
+  {
+    id: "trace_string_split_join",
+    conceptKey: "lesson_11::string",
+    level: 3,
+    title: "split + map + join",
+    code: "const csv = 'apple,banana,cherry';\nconst result = csv.split(',').map(s => s.toUpperCase()).join('-');\nconsole.log(result);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה csv.split(',') מחזיר?",
+        answer: "['apple', 'banana', 'cherry']",
+        hint: "מפרק ל-array לפי המפריד.",
+      },
+      {
+        line: 2,
+        prompt: "אחרי map(toUpperCase)?",
+        answer: "['APPLE', 'BANANA', 'CHERRY']",
+        hint: "כל איבר ל-uppercase.",
+      },
+      {
+        line: 2,
+        prompt: "אחרי join('-')?",
+        answer: "APPLE-BANANA-CHERRY",
+        hint: "מצרף ל-string עם המפריד.",
+      },
+    ],
+    explanation:
+      "Pipeline נפוץ: string → array → transform → string. split + join הם הפכיים בערך.",
+  },
+
+  {
+    id: "trace_truthy_falsy",
+    conceptKey: "lesson_11::boolean",
+    level: 4,
+    title: "ערכי truthy ו-falsy",
+    code: "const values = [0, '', null, undefined, NaN, false, [], {}, '0', 'false'];\nconst truthies = values.filter(Boolean);\nconsole.log(truthies.length);",
+    steps: [
+      {
+        line: 1,
+        prompt: "כמה ערכי falsy יש?",
+        answer: "6",
+        hint: "0, '', null, undefined, NaN, false.",
+      },
+      {
+        line: 1,
+        prompt: "האם [] ו-{} truthy או falsy?",
+        answer: "truthy",
+        hint: "כל object/array (גם ריקים) truthy ב-JS.",
+      },
+      {
+        line: 1,
+        prompt: "האם '0' (string) truthy?",
+        answer: "כן",
+        hint: "string לא ריק = truthy. גם 'false' truthy.",
+      },
+      {
+        line: 3,
+        prompt: "מה length של truthies?",
+        answer: "4",
+        hint: "[], {}, '0', 'false' = 4 truthy.",
+      },
+    ],
+    explanation:
+      "Falsy ב-JS: 0, '', null, undefined, NaN, false. כל השאר truthy — כולל [] ו-{} ו-'0'. filter(Boolean) הוא דרך אידיומטית להסיר falsies.",
+  },
+
+  {
+    id: "trace_chained_optional",
+    conceptKey: "lesson_19::object",
+    level: 5,
+    title: "?. עם null",
+    code: "const user = { profile: null };\nconst name = user?.profile?.name?.toUpperCase();\nconsole.log(name);",
+    steps: [
+      {
+        line: 2,
+        prompt: "מה ?.profile מחזיר כש-user.profile = null?",
+        answer: "undefined",
+        hint: "?. עוצר אם השמאלי null/undefined.",
+      },
+      {
+        line: 2,
+        prompt: "מה ?.name על undefined מחזיר?",
+        answer: "undefined",
+        hint: "ממשיך להיות undefined.",
+      },
+      {
+        line: 3,
+        prompt: "מה יודפס?",
+        answer: "undefined",
+        hint: "כל הtoUpperCase לא רץ.",
+      },
+    ],
+    explanation:
+      "Optional chaining (?.) עוצר ב-null/undefined ומחזיר undefined. נמנע משגיאת 'Cannot read property X of null'. מתאים גם ל-? לproblems: arr?.[0], func?.()",
+  },
+
+  {
+    id: "trace_nullish_coalescing",
+    conceptKey: "lesson_11::boolean",
+    level: 5,
+    title: "?? לעומת ||",
+    code: "const a = 0 || 'default';\nconst b = 0 ?? 'default';\nconst c = '' || 'default';\nconst d = '' ?? 'default';\nconsole.log(a, b, c, d);",
+    steps: [
+      {
+        line: 1,
+        prompt: "מה a?",
+        answer: "default",
+        hint: "0 הוא falsy — || מחליף.",
+      },
+      {
+        line: 2,
+        prompt: "מה b?",
+        answer: "0",
+        hint: "0 הוא לא null/undefined — ?? משאיר.",
+      },
+      {
+        line: 3,
+        prompt: "מה c?",
+        answer: "default",
+        hint: "'' falsy.",
+      },
+      {
+        line: 4,
+        prompt: "מה d?",
+        answer: "''",
+        hint: "'' לא nullish — ?? משאיר.",
+      },
+    ],
+    explanation:
+      "|| מחליף על כל falsy (0, '', false, null, undefined). ?? רק על null/undefined. משתמשים ב-?? כש-0 או '' הם ערכים תקינים.",
+  },
+
+  {
+    id: "trace_template_literal",
+    conceptKey: "lesson_11::string",
+    level: 3,
+    title: "template literals עם expressions",
+    code: "const name = 'Tal';\nconst age = 30;\nconst msg = `${name} is ${age + 1} next year`;\nconsole.log(msg);",
+    steps: [
+      {
+        line: 3,
+        prompt: "האם age + 1 מחושב לפני ה-string?",
+        answer: "כן",
+        hint: "${...} מחושב ואז משולב.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "Tal is 31 next year",
+        hint: "30 + 1 = 31, מובנה ב-string.",
+      },
+    ],
+    explanation:
+      "Template literals (backticks) תומכים ב-${expr} עבור הזרקה דינמית. multi-line בלי \\n. עדיף על concat.",
+  },
+
+  {
+    id: "trace_array_destructuring",
+    conceptKey: "lesson_19::destructuring",
+    level: 4,
+    title: "array destructuring עם default ו-rest",
+    code: "const [a, b = 99, ...rest] = [1, undefined, 3, 4, 5];\nconsole.log(a, b, rest);",
+    steps: [
+      {
+        line: 1,
+        prompt: "מה a?",
+        answer: "1",
+        hint: "האיבר הראשון.",
+      },
+      {
+        line: 1,
+        prompt: "מה b כש-second הוא undefined?",
+        answer: "99",
+        hint: "default מופעל ב-undefined.",
+      },
+      {
+        line: 1,
+        prompt: "מה rest?",
+        answer: "[3, 4, 5]",
+        hint: "כל מה שנשאר אחרי השניים הראשונים.",
+      },
+    ],
+    explanation:
+      "destructuring תומך ב-defaults (= value), rest (...) להתאסף. defaults רק על undefined (לא null או 0).",
+  },
+
+  {
+    id: "trace_for_of_iter",
+    conceptKey: "lesson_19::for",
+    level: 4,
+    title: "for-of עם async",
+    code: "async function process(items) {\n  for (const item of items) {\n    const result = await doWork(item);\n    console.log('done', item);\n  }\n  console.log('all done');\n}",
+    steps: [
+      {
+        line: 2,
+        prompt: "האם for-of ממתין ל-await?",
+        answer: "כן",
+        hint: "for-of עובד טוב עם async/await — שלא כמו forEach.",
+      },
+      {
+        line: 4,
+        prompt: "כל איטרציה עוצרת עד doWork מסיים?",
+        answer: "כן",
+        hint: "סדרתי, לא מקבילי.",
+      },
+      {
+        line: 6,
+        prompt: "מתי 'all done' מודפס?",
+        answer: "אחרי כל ה-items הסתיימו",
+        hint: "הלולאה ממתינה לכל אחד.",
+      },
+    ],
+    explanation:
+      "for-of עובד עם await (forEach לא). למקבילי: Promise.all(items.map(...)). לא לערב — Promise.all מהיר, for-of עוצר על שגיאה.",
+  },
+
+  {
+    id: "trace_react_state_func_update",
+    conceptKey: "lesson_22::useState",
+    level: 6,
+    title: "functional setState batching",
+    code: "function App() {\n  const [n, setN] = useState(0);\n  function triple() {\n    setN(prev => prev + 1);\n    setN(prev => prev + 1);\n    setN(prev => prev + 1);\n  }\n  return <button onClick={triple}>{n}</button>;\n}",
+    steps: [
+      {
+        line: 4,
+        prompt: "ראשון: prev = 0 → newN?",
+        answer: "1",
+        hint: "0 + 1.",
+      },
+      {
+        line: 5,
+        prompt: "שני: prev מקבל את הערך הקודם של ה-functional update?",
+        answer: "1",
+        hint: "React מצרף functional updates בשרשרת.",
+      },
+      {
+        line: 6,
+        prompt: "שלישי: prev?",
+        answer: "2",
+        hint: "ממשיך מ-1.",
+      },
+      {
+        line: 8,
+        prompt: "אחרי click, מה n?",
+        answer: "3",
+        hint: "0 → 1 → 2 → 3.",
+      },
+    ],
+    explanation:
+      "Functional updates שרשור — prev מקבל את output של הקודם. בניגוד ל-setN(n+1) שלוש פעמים שהיה תוצאה 1.",
+  },
+
+  {
+    id: "trace_react_useEffect_deps_array",
+    conceptKey: "lesson_24::useEffect",
+    level: 6,
+    title: "useEffect עם deps מתחלפים",
+    code: "function User({ id }) {\n  useEffect(() => {\n    console.log('fetch user', id);\n    return () => console.log('cleanup', id);\n  }, [id]);\n  return null;\n}\n// id changes from 1 to 2",
+    steps: [
+      {
+        line: 3,
+        prompt: "ראשית, עם id=1, מה יודפס?",
+        answer: "fetch user 1",
+        hint: "ה-effect רץ אחרי mount.",
+      },
+      {
+        line: 4,
+        prompt: "כש-id משתנה ל-2, מה קורה ראשון?",
+        answer: "cleanup 1",
+        hint: "cleanup של ה-effect הקודם.",
+      },
+      {
+        line: 3,
+        prompt: "ואז?",
+        answer: "fetch user 2",
+        hint: "ה-effect רץ עם הערך החדש.",
+      },
+    ],
+    explanation:
+      "Pattern של useEffect: cleanup מ-prev → run new. חיוני להחזיר cleanup function לפעולות נמשכות (subscriptions, fetches).",
+  },
+
+  {
+    id: "trace_react_conditional_rendering",
+    conceptKey: "lesson_21::rendering",
+    level: 4,
+    title: "JSX conditional עם &&",
+    code: "function Cart({ items }) {\n  return (\n    <div>\n      {items.length && <p>{items.length} items</p>}\n      {items.length > 0 && <p>{items.length} items</p>}\n    </div>\n  );\n}\n// items = []",
+    steps: [
+      {
+        line: 4,
+        prompt: "כש-items=[], items.length = 0. מה React מציג?",
+        answer: "0",
+        hint: "0 הוא falsy אבל React מציג מספרים בJSX.",
+      },
+      {
+        line: 5,
+        prompt: "כש-items=[], 0 > 0 = false. מה React מציג?",
+        answer: "כלום",
+        hint: "false ב-JSX = לא מוצג.",
+      },
+    ],
+    explanation:
+      "Gotcha קלאסי: 0 && X מחזיר 0 — וReact מציג '0' בדף. תמיד השווה מפורש: items.length > 0. או הפוך ל-boolean: !!items.length.",
+  },
+
+  {
+    id: "trace_event_loop_microtask",
+    conceptKey: "lesson_19::event loop",
+    level: 7,
+    title: "microtask מתעדף על macrotask",
+    code: "console.log('1');\nsetTimeout(() => console.log('2'), 0);\nPromise.resolve()\n  .then(() => console.log('3'))\n  .then(() => console.log('4'));\nconsole.log('5');",
+    steps: [
+      {
+        line: 1,
+        prompt: "מה יודפס ראשון?",
+        answer: "1",
+        hint: "סינכרוני קודם.",
+      },
+      {
+        line: 6,
+        prompt: "מה יודפס שני?",
+        answer: "5",
+        hint: "סינכרוני בסוף הסקריפט.",
+      },
+      {
+        line: 4,
+        prompt: "כל ה-microtasks (שני then's) רצים לפני setTimeout?",
+        answer: "כן",
+        hint: "microtask queue מתפנה לפני macrotask.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס שלישי?",
+        answer: "3",
+        hint: "ה-then הראשון.",
+      },
+      {
+        line: 5,
+        prompt: "ורביעי?",
+        answer: "4",
+        hint: "ה-then השני.",
+      },
+      {
+        line: 2,
+        prompt: "ולבסוף?",
+        answer: "2",
+        hint: "ה-macrotask.",
+      },
+    ],
+    explanation:
+      "Event loop: sync → microtasks (Promise then) drained completely → macrotask (setTimeout) → repeat. הפלט: 1, 5, 3, 4, 2.",
+  },
 ];
 
 // Browser bridge: expose under QUESTIONS_BANK.trace so the trainer's
