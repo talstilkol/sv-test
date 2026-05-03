@@ -40,6 +40,9 @@
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
+  window.addEventListener("error", (e) => {
+    window.__lumenIIFEError = window.__lumenIIFEError || { msg: e.message, file: e.filename, line: e.lineno, col: e.colno };
+  });
   const standaloneMuseumMode = (() => {
     try {
       const params = new URLSearchParams(window.location.search);
@@ -8280,9 +8283,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })();
 
     window.__lumenModalManager = modalManager;
-    const createManagedModalController = typeof modalManager.create === "function"
-      ? (entry) => modalManager.create(entry)
-      : (entry) => ({ open: entry.open, close: entry.close });
+    // (inner createManagedModalController removed — outer one at line 7709
+    //  is in scope, and the duplicate caused TDZ on earlier references in
+    //  this initViewMode IIFE.)
 
     // ----- Glossary modal -----
     const glossaryModal = document.getElementById("glossary-modal");
@@ -37202,4 +37205,8 @@ document.addEventListener("DOMContentLoaded", () => {
     setPortalDecisionAid("home");
     setHomeContextTree();
   }, 150);
+
+  // QA sentinel: confirms DOMContentLoaded callback completed
+  window.__lumenIIFEComplete = true;
+  window.__lumenOpenTrainerBtnFound = !!openTrainerBtn;
 });
