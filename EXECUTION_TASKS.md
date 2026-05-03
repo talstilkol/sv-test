@@ -38,23 +38,6 @@
 | `QUESTION_ACTIVITY_AUTHORING_PLAN` | `222` פערי activity לא-עדיפותיים; `svcollegePriorityGaps: 0` |
 | `BRUTAL_MASTER_PLAN_AUDIT` | `243` פריטים: `DONE 17`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 219` |
 
-## ✅ SVCollege 6-Level Concept Coverage — הושלם 2026-05-02
-
-עד 2026-05-02 ~15:55, 7 קבצי lesson_*.js של SVCollege לא הכילו את שדה `levels` (6 רמות הסבר: grandma/child/soldier/student/junior/professor) — סה"כ 118 מושגים חסרים. כעת הכל מכוסה:
-
-- [V] LEVELS-01 — lesson_sql_orm.js: 17 concepts × 6 levels (verified script: 17/17). 2026-05-02 14:30.
-- [V] LEVELS-02 — lesson_nextjs.js: 18 concepts × 6 levels (verified 18/18). 2026-05-02 14:55.
-- [V] LEVELS-03 — lesson_nestjs.js: 16 concepts × 6 levels (verified 16/16). 2026-05-02 15:15.
-- [V] LEVELS-04 — lesson_devops_deploy.js: 17 concepts × 6 levels (verified 17/17). 2026-05-02 15:30.
-- [V] LEVELS-05 — lesson_ai_engineering.js: 19 concepts × 6 levels (verified 19/19). 2026-05-02 15:42.
-- [V] LEVELS-06 — lesson_design_systems.js: 12 concepts × 6 levels (verified 12/12). 2026-05-02 15:47.
-- [V] LEVELS-07 — lesson_auth_security.js: 19 concepts × 6 levels (verified 19/19). 2026-05-02 15:55.
-- [V] LEVELS-08 — Test verification: 774/774 tests pass. 2026-05-02 15:58.
-- [V] LEVELS-09 — museum-access-smoke fix (cache version reference). 2026-05-02 15:58.
-- [V] LEVELS-10 — Commit: `2422dc7` "Phase 2: 6-level explanations for all 118 SVCollege concepts". 2026-05-02 16:00.
-
-מסמכי source-of-truth: [TASKS_NUMBERED.md](TASKS_NUMBERED.md), [MASTER_PLAN_V2_PERSONAL.md](MASTER_PLAN_V2_PERSONAL.md).
-
 ## תוכנית "World #1 Portal" — שולבה 2026-05-02
 
 תוכנית 6 שלבים להפיכת LumenPortal לפורטל לימוד Full-Stack #1 בעולם. מבוססת על vanilla JS (ללא React) לטעינה מיידית. מסמך מלא: [/Users/tal/.claude/plans/breezy-conjuring-pinwheel.md].

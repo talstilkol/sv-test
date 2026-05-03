@@ -2,7 +2,7 @@
 
 > **Historical / Superseded**: this artifact is older than the current source-of-truth run.
 > Captured on: 2026-05-02
-> Source-of-truth refresh date: 2026-05-06
+> Source-of-truth refresh date: 2026-05-03
 > Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
 
 

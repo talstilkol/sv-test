@@ -18,15 +18,15 @@
     },
     {
       "id": "QUESTION_COVERAGE_TARGETS",
-      "status": "red",
-      "detail": "ready=false, mcGap=235, fillGap=292, version=question-coverage-targets-v1",
+      "status": "green",
+      "detail": "ready=true, mcGap=0, fillGap=0, version=question-coverage-targets-v1",
       "date": "2026-05-03",
       "source": "questionCoverage"
     },
     {
       "id": "QUESTION_QUALITY",
       "status": "yellow",
-      "detail": "questionQualityIndex=98.8%, total=2924",
+      "detail": "questionQualityIndex=98.1%, total=4206",
       "date": "2026-05-03"
     },
     {
@@ -37,15 +37,6 @@
     }
   ],
   "findings": [
-    {
-      "id": "recon-001",
-      "severity": "P1",
-      "finding": "Feature coverage is clean while question coverage remains red. Do not claim both as current production truth.",
-      "evidence": {
-        "feature": "strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2",
-        "questions": "ready=false, mcGap=235, fillGap=292, version=question-coverage-targets-v1"
-      }
-    },
     {
       "id": "recon-003",
       "severity": "P1",

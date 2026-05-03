@@ -2,7 +2,7 @@
 
 > **Historical / Superseded**: this artifact is older than the current source-of-truth run.
 > Captured on: 2026-05-02
-> Source-of-truth refresh date: 2026-05-06
+> Source-of-truth refresh date: 2026-05-03
 > Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
 
 
@@ -53,5 +53,6 @@ Generated from repository data files. The report is deterministic and does not u
 - Strict target failures ignore modules explicitly marked as non-strict because they are tracked as staged coverage work.
 - Evidence gate failures block Done modules that lack an outcome metric or repository evidence.
 - This report is the source of truth for content-module coverage counters in Phase 5.
+
 
 
