@@ -1090,6 +1090,265 @@ function About() { return <h1>אודות</h1>; }`,
     hint: "201 = Created (לא 200). 400 = Bad Request. status() chained לפני json().",
     explanation: "REST conventions: 201 ליצירה, 400 לvalidation error. json() אחרי status() — שניהם chainable.",
   },
+
+  // ============================================================================
+  // Phase 2.B batch — high-impact Build exercises (8)
+  // ============================================================================
+
+  {
+    id: "build_useeffect_fetch",
+    conceptKey: "lesson_24::fetching data",
+    level: 6,
+    title: "Component שמעלה data ב-mount",
+    prompt: "כתוב UserList שמטעין משתמשים מ-/api/users דרך useEffect. הצג ul של names. השתמש ב-useState ל-state.",
+    starter: `function UserList() {
+  // הקוד שלך כאן
+}`,
+    tests: [
+      { regex: "useState", description: "useState ל-state", flags: "" },
+      { regex: "useEffect", description: "useEffect ל-fetch", flags: "" },
+      { regex: "fetch", description: "fetch /api/users", flags: "" },
+      { regex: "\\.then|await", description: "טפל ב-Promise", flags: "" },
+      { regex: "<ul", description: "הצג <ul>", flags: "i" },
+      { regex: "\\.map", description: "map על ה-array", flags: "" },
+    ],
+    reference: `function UserList() {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    fetch('/api/users').then(r => r.json()).then(setUsers);
+  }, []);
+  return <ul>{users.map(u => <li key={u.id}>{u.name}</li>)}</ul>;
+}`,
+    hint: "useEffect עם [] = run once. fetch מחזיר Promise. setUsers ב-then.",
+    explanation: "Pattern קלאסי: useState ל-data, useEffect עם fetch, render conditional. בproduction להוסיף AbortController ב-cleanup.",
+  },
+
+  {
+    id: "build_form_controlled",
+    conceptKey: "lesson_22::controlled input",
+    level: 5,
+    title: "Login form controlled",
+    prompt: "כתוב LoginForm עם email + password inputs. שני State משלהם. onSubmit מעביר { email, password } לonLogin prop.",
+    starter: `function LoginForm({ onLogin }) {
+  // הקוד שלך כאן
+}`,
+    tests: [
+      { regex: "useState", description: "useState ל-fields", flags: "" },
+      { regex: "value=", description: "value מ-state", flags: "" },
+      { regex: "onChange", description: "onChange handler", flags: "" },
+      { regex: "onSubmit|handleSubmit", description: "submit handler", flags: "" },
+      { regex: "onLogin", description: "קריאה ל-onLogin", flags: "" },
+      { regex: "preventDefault", description: "preventDefault", flags: "" },
+    ],
+    reference: `function LoginForm({ onLogin }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  function handleSubmit(e) {
+    e.preventDefault();
+    onLogin({ email, password });
+  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input value={email} onChange={e => setEmail(e.target.value)} />
+      <input value={password} onChange={e => setPassword(e.target.value)} type="password" />
+      <button>Login</button>
+    </form>
+  );
+}`,
+    hint: "controlled input: value + onChange. event.preventDefault ב-submit לעצור default reload.",
+    explanation: "controlled forms: state מקבל value, onChange מעדכן. submit עוצר default ושולח ל-callback.",
+  },
+
+  {
+    id: "build_ts_interface_user",
+    conceptKey: "lesson_27::interface",
+    level: 5,
+    title: "TS interface User",
+    prompt: "הגדר interface User עם id (string), email (string), age (number אופציונלי), kind ('admin' | 'guest').",
+    starter: `// הגדר את User כאן`,
+    tests: [
+      { regex: "interface\\s+User", description: "interface User", flags: "" },
+      { regex: "id:\\s*string", description: "id: string", flags: "" },
+      { regex: "email:\\s*string", description: "email: string", flags: "" },
+      { regex: "age\\?:\\s*number", description: "age?: number (optional)", flags: "" },
+      { regex: "kind:\\s*['\"]admin['\"]\\s*\\|\\s*['\"]guest['\"]", description: "kind union", flags: "" },
+    ],
+    reference: `interface User {
+  id: string;
+  email: string;
+  age?: number;
+  kind: 'admin' | 'guest';
+}`,
+    hint: "?: ל-optional fields. literal union: 'a' | 'b'.",
+    explanation: "interface = shape ב-TS. ? ל-optional. union לערכים סגורים — IDE autocomplete + type-safe.",
+  },
+
+  {
+    id: "build_async_promise_chain",
+    conceptKey: "lesson_15::Asynchronous",
+    level: 6,
+    title: "async function with try/catch",
+    prompt: "כתוב fetchUser(id) שעושה fetch ל-/api/user/{id}. החזר את ה-data. ב-error: log + throw.",
+    starter: `async function fetchUser(id) {
+  // הקוד שלך כאן
+}`,
+    tests: [
+      { regex: "async\\s+function", description: "async function", flags: "" },
+      { regex: "try", description: "try block", flags: "" },
+      { regex: "catch", description: "catch block", flags: "" },
+      { regex: "await\\s+fetch", description: "await fetch", flags: "" },
+      { regex: "console\\.error|console\\.log", description: "log ב-catch", flags: "" },
+      { regex: "throw", description: "throw מחדש", flags: "" },
+    ],
+    reference: `async function fetchUser(id) {
+  try {
+    const res = await fetch('/api/user/' + id);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  } catch (err) {
+    console.error('fetchUser failed:', err);
+    throw err;
+  }
+}`,
+    hint: "try/catch סביב await. log ל-debugging, throw כדי שה-caller יידע.",
+    explanation: "async/await + try/catch = error handling קריא יותר מ-Promise.then.catch. throw מחדש מאפשר ל-caller להחליט.",
+  },
+
+  {
+    id: "build_express_crud_users",
+    conceptKey: "lesson_17::Express",
+    level: 6,
+    title: "Express CRUD endpoints",
+    prompt: "כתוב 4 endpoints לCRUD על users (in-memory array): GET /users, GET /users/:id, POST /users, DELETE /users/:id.",
+    starter: `const users = [];
+let nextId = 1;
+// הוסף endpoints כאן`,
+    tests: [
+      { regex: "app\\.get\\(['\"]\\/users['\"]", description: "GET /users", flags: "" },
+      { regex: "app\\.get\\(['\"]\\/users\\/:id", description: "GET /users/:id", flags: "" },
+      { regex: "app\\.post\\(['\"]\\/users['\"]", description: "POST /users", flags: "" },
+      { regex: "app\\.delete\\(['\"]\\/users\\/:id", description: "DELETE /users/:id", flags: "" },
+      { regex: "req\\.params\\.id", description: "req.params.id", flags: "" },
+      { regex: "req\\.body", description: "req.body", flags: "" },
+      { regex: "status\\(404\\)", description: "404 לא נמצא", flags: "" },
+    ],
+    reference: `const users = [];
+let nextId = 1;
+app.get('/users', (req, res) => res.json(users));
+app.get('/users/:id', (req, res) => {
+  const u = users.find(x => x.id === parseInt(req.params.id, 10));
+  if (!u) return res.status(404).json({ error: 'not found' });
+  res.json(u);
+});
+app.post('/users', (req, res) => {
+  const u = { id: nextId++, ...req.body };
+  users.push(u);
+  res.status(201).json(u);
+});
+app.delete('/users/:id', (req, res) => {
+  const i = users.findIndex(x => x.id === parseInt(req.params.id, 10));
+  if (i === -1) return res.status(404).end();
+  users.splice(i, 1);
+  res.status(204).end();
+});`,
+    hint: "params לdynamic id, body לdata. status 404 בlostings, 201 בcreated, 204 בdeleted (no body).",
+    explanation: "REST CRUD: GET (idempotent), POST (create + 201), DELETE (idempotent + 204). הקפד על status codes.",
+  },
+
+  {
+    id: "build_useReducer_counter",
+    conceptKey: "lesson_24::state update",
+    level: 6,
+    title: "Counter עם useReducer",
+    prompt: "כתוב Counter עם useReducer. תומך ב-INCREMENT, DECREMENT, RESET. הצג button לכל action.",
+    starter: `function Counter() {
+  // הקוד שלך כאן
+}`,
+    tests: [
+      { regex: "useReducer", description: "useReducer", flags: "" },
+      { regex: "INCREMENT", description: "INCREMENT action", flags: "" },
+      { regex: "DECREMENT", description: "DECREMENT action", flags: "" },
+      { regex: "RESET", description: "RESET action", flags: "" },
+      { regex: "dispatch", description: "dispatch", flags: "" },
+      { regex: "switch|action\\.type", description: "switch על type", flags: "" },
+    ],
+    reference: `function Counter() {
+  function reducer(state, action) {
+    switch (action.type) {
+      case 'INCREMENT': return state + 1;
+      case 'DECREMENT': return state - 1;
+      case 'RESET': return 0;
+      default: return state;
+    }
+  }
+  const [count, dispatch] = useReducer(reducer, 0);
+  return (
+    <div>
+      <span>{count}</span>
+      <button onClick={() => dispatch({ type: 'INCREMENT' })}>+</button>
+      <button onClick={() => dispatch({ type: 'DECREMENT' })}>-</button>
+      <button onClick={() => dispatch({ type: 'RESET' })}>Reset</button>
+    </div>
+  );
+}`,
+    hint: "useReducer(reducer, initialState) → [state, dispatch]. reducer = (state, action) => newState.",
+    explanation: "useReducer עדיף על useState למצבים מורכבים עם logic — ה-reducer מרכז את כל המעברים. דומה ל-Redux בקטן.",
+  },
+
+  {
+    id: "build_mongoose_user_model",
+    conceptKey: "lesson_20::Schema",
+    level: 6,
+    title: "Mongoose User model",
+    prompt: "הגדר Mongoose Schema + Model ל-User: email (required, unique), passwordHash (required), createdAt (default: Date.now).",
+    starter: `// import mongoose from 'mongoose';
+// הגדר Schema + Model כאן`,
+    tests: [
+      { regex: "new\\s+(mongoose\\.)?Schema", description: "new Schema", flags: "" },
+      { regex: "email", description: "email field", flags: "" },
+      { regex: "required:\\s*true", description: "required: true", flags: "" },
+      { regex: "unique:\\s*true", description: "unique: true", flags: "" },
+      { regex: "passwordHash", description: "passwordHash field", flags: "" },
+      { regex: "default:\\s*Date\\.now", description: "default: Date.now", flags: "" },
+      { regex: "mongoose\\.model|model\\(", description: "model()", flags: "" },
+    ],
+    reference: `import mongoose from 'mongoose';
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  passwordHash: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
+});
+export default mongoose.model('User', userSchema);`,
+    hint: "Schema fields = { type, required, unique, default }. mongoose.model('Name', schema) ל-export.",
+    explanation: "Schema מגדיר shape + validation + indexes. Model = class לעבודה עם documents. unique: true יוצר MongoDB index אוטומטי.",
+  },
+
+  {
+    id: "build_bcrypt_signup",
+    conceptKey: "lesson_auth_security::password hashing",
+    level: 7,
+    title: "Sign-up עם bcrypt",
+    prompt: "כתוב async signup(email, password) שעושה: bcrypt.hash(password, 10), שמירת user ב-DB עם passwordHash, החזרת user (בלי הסיסמה).",
+    starter: `async function signup(email, password) {
+  // הקוד שלך כאן
+}`,
+    tests: [
+      { regex: "async", description: "async function", flags: "" },
+      { regex: "bcrypt\\.hash", description: "bcrypt.hash", flags: "" },
+      { regex: "10", description: "salt rounds 10", flags: "" },
+      { regex: "User\\.create|new\\s+User", description: "DB insert", flags: "" },
+      { regex: "passwordHash", description: "passwordHash field", flags: "" },
+      { regex: "return", description: "return user", flags: "" },
+    ],
+    reference: `async function signup(email, password) {
+  const passwordHash = await bcrypt.hash(password, 10);
+  const user = await User.create({ email, passwordHash });
+  const { passwordHash: _, ...safe } = user.toObject();
+  return safe;
+}`,
+    hint: "bcrypt.hash async. salt rounds 10 = balance בין מהירות לבטיחות. אל תחזיר את ה-hash ל-client.",
+    explanation: "אף פעם לא לאחסן passwords plain. bcrypt עם salt = standard. החזרת user ל-client חייב להיות בלי passwordHash.",
+  },
 ];
 
 // Export to global scope (no module system in this app)
