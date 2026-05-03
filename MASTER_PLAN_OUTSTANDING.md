@@ -25,6 +25,43 @@ This document records the brutal-honest gap between the executed work and the or
 ### Phase 5.C — Architecture merge
 - PR #25 (funny-bhabha WORLD1-B1/B2) merged into main — DONE
 
+### Phase 3 — Browser UI verification (BREAKTHROUGH 2026-05-03)
+After fixing the **TDZ bug** at line 8286 (commit `322a148`), the entire UI navigation works.
+- **3.0** TDZ fix verified ✅ — trainer view renders fully on click
+- **3.1** 22/23 top tabs verified working in browser (single-tab-per-second)
+  - working: trainer, knowledge-map, codeblocks, trace, settings, flashcards,
+    grandma-knowledge, programming-basics, programming-principles, programming-museum,
+    language-tools, reward-store, mock-exam, learning-evidence, capstones, blueprints,
+    comparator, concept-sprint, study-mode, code-anatomy, home
+  - **HANGS THE PAGE: open-guide** — `renderGuide()` synchronously builds HTML for
+    22 topics × thousands of questions per topic. Needs pagination or lazy render.
+  - missing button: `open-knowledge-gaps` (was renamed to gap-matrix-view)
+- **3.2** Sidebar verified: profile panel, search input, lesson tree all present
+- **3.3** Responsive verified: 375px (mobile) and 768px (tablet) both render without
+  horizontal overflow. Mobile shows compressed stats bar.
+- **3.4** Navigation history verified:
+  - Back button traverses chain: trace → codeblocks → trainer → code-anatomy ✅
+  - Home button returns to welcome-screen ✅
+
+### TDZ Fix Postmortem
+Root cause: PR #25 (funny-bhabha) merge introduced a duplicate
+`const createManagedModalController` declaration inside the `initViewMode` IIFE
+(line 8286), which shadowed the outer one at line 7709. Hoisting put line 8035
+(an earlier reference) in the Temporal Dead Zone, throwing
+"Cannot access 'createManagedModalController' before initialization" — which
+aborted the DOMContentLoaded callback and **prevented all 24 tab click handlers
+from being registered**.
+
+Detection: I added QA sentinels (window.__lumenIIFEComplete, error capture)
+and reloaded with cleared SW cache. The error surfaced exactly at line 8035.
+
+Fix (commit `322a148`): Removed the redundant inner const at 8286 (outer was
+in scope and identical).
+
+Lesson learned: Code merges that introduce duplicate declarations in the same
+scope create TDZ violations even if the bodies are identical. Validate any
+multi-file merge by *running the page in a browser* before declaring success.
+
 ## ⚠️ Partial / Faked / Caveated
 
 ### Phase 0.2 — Bulk-capped levels (191 questions) — RECONSIDERED
