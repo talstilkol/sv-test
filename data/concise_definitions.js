@@ -1246,6 +1246,18 @@
       what: "סיכום התקציב: סך הכנסות, סך הוצאות, ומאזן (income - expense) על תקופה נתונה.",
       need: "מחושב ב-filter+reduce על מערך Transactions, מוצג כ-dashboard עם 3 כרטיסים.",
     },
+    "BaseUser": {
+      what: "interface משותף לכל סוגי משתמש (Guest/Registered) — מחזיק שדות בסיס: id, name, type.",
+      need: "extension via interface extends או intersection types ל-RegisteredUser/GuestUser.",
+    },
+    "GuestUser": {
+      what: "משתמש לא רשום — extends BaseUser עם type: 'guest'. גישה מוגבלת לתכונות ציבוריות.",
+      need: "discriminated union עם RegisteredUser; type narrowing לפני גישה ל-fields ייחודיים.",
+    },
+    "RegisteredUser": {
+      what: "משתמש רשום — extends BaseUser עם type: 'registered', email, profile, history.",
+      need: "discriminated union; אפשר type guards (isRegistered) לcheck ב-runtime.",
+    },
     "Category Breakdown": {
       what: "פירוט הוצאות לפי קטגוריה (food/rent/fun/...) עם סכום ואחוז מהסך הכל.",
       need: "groupBy על category + reduce sum. נפוץ ל-pie chart / bar chart.",
