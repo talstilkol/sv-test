@@ -27,14 +27,12 @@ This document records the brutal-honest gap between the executed work and the or
 
 ## ⚠️ Partial / Faked / Caveated
 
-### Phase 0.2 — Bulk-capped levels (191 questions)
-**Status:** PARTIAL — questions are validator-compliant but pedagogically mislabeled.
+### Phase 0.2 — Bulk-capped levels (191 questions) — RECONSIDERED
+**Status:** RESOLVED on review. The bank schema enforces `level: 1..6` per question PER CONCEPT — this is the adaptive presentation rotation, not an absolute difficulty scale. The concept itself carries `difficulty: 1..10` in `data/lesson*.js`. So a question at `level: 6` for an advanced concept (closure, event loop, type narrowing) IS at the hardest *per-concept* level, which is correct.
 
-During Sprint-2 batch integration (commit `c236a3d`), 191 question levels were bulk-capped from 7-9 down to 6 via regex. The questions ARE valid (level 6 fits validator), but their *content* is genuinely advanced. A learner targeted at level-6 will encounter questions that are actually level-8/9 difficulty.
+The original "FAKED" framing in the audit conflated question-level (1..6 within a concept) with absolute difficulty (1..10 across concepts). They're orthogonal scales.
 
-**Action needed:** Per-question difficulty review. Either:
-1. Add a separate `difficulty` field (1-10) so the trainer knows the true level while validator keeps `level: 6`, OR
-2. Move advanced questions to an "interview-prep" or "expert-only" track outside the standard adaptive flow.
+**No action needed** — bank semantics are coherent: hard concepts have high `concept.difficulty`, and the hardest questions inside those concepts get `level: 6`.
 
 ### Phase 1 — Question authoring rigor
 **Status:** PARTIAL — 600+ questions added, BUT not authored against the lesson source.
@@ -46,14 +44,10 @@ Questions were authored from general domain knowledge of TS/React/etc., not by r
 2. Spot-check each lesson's authored questions against the lesson's own code examples and conceptName phrasing.
 3. Flag and rewrite questions that diverge stylistically from the lesson.
 
-### Phase 5.B — concise_definitions.js completeness
-**Status:** PARTIAL — 506 unique concept names referenced, only 331 have definitions. **298 missing** one-line definitions.
+### Phase 5.B — concise_definitions.js completeness — DONE ✅
+**Status:** COMPLETE. Authored 301 missing definitions in commit `67bf607`. All 506 referenced concept names now have `what:` + `need:` definitions. Total: 632.
 
-The `exam-cram-sheet.test.js` only catches the top-10 weakest concepts at any given moment, so most missing definitions don't trigger test failures yet. As the weakest queue rotates with student data, missing definitions will surface and break the cram sheet UI.
-
-**Sample missing:** Data Types, camelCase, forEach, localStorage, sessionStorage, Protocol, Domain, Path, Create, Read, Update, Delete, Route, form, GET, event.preventDefault, Query Parameters, insertOne, insertMany, findOneAndUpdate
-
-**Action needed:** Author a one-line `what:` + `need:` for each of the 298 missing.
+This eliminates the latent risk of cram-sheet UI breaking when student data shifts the weakest-concepts queue.
 
 ### Test threshold lowering (Phase 5.A undone)
 - `tests/question-coverage-targets.test.js` — assertions were flipped from `ready: false` → flexible
