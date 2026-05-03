@@ -1258,6 +1258,14 @@
       what: "משתמש רשום — extends BaseUser עם type: 'registered', email, profile, history.",
       need: "discriminated union; אפשר type guards (isRegistered) לcheck ב-runtime.",
     },
+    "AI Pair Programming": {
+      what: "עבודה עם AI כשותף שני בכתיבת קוד — driver/navigator במצב ש-AI מציע, human מחליט.",
+      need: "Cursor/Copilot/Claude Code; שמירה על review human, אין trust עיוור באוטוקומפליישנים.",
+    },
+    "AI Limitations": {
+      what: "מגבלות LLM: hallucinations, context window finite, training cutoff, no real-time, statistical not reasoning.",
+      need: "אזהרה קבועה — verify עם docs, run code, RAG/citation ל-knowledge base אמיתי.",
+    },
     "Category Breakdown": {
       what: "פירוט הוצאות לפי קטגוריה (food/rent/fun/...) עם סכום ואחוז מהסך הכל.",
       need: "groupBy על category + reduce sum. נפוץ ל-pie chart / bar chart.",
