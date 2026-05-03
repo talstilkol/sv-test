@@ -26874,10 +26874,6 @@ document.addEventListener("DOMContentLoaded", () => {
       : null;
   }
 
-  const createManagedModalController = typeof window.__lumenModalManager?.create === "function"
-    ? (entry) => window.__lumenModalManager.create(entry)
-    : (entry) => ({ open: entry.open, close: entry.close });
-
   let supportScreenshotPayload = null;
   const supportReportModal = document.getElementById("support-report-modal");
   const supportReportModalController = createManagedModalController({
