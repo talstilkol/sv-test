@@ -26060,75 +26060,157 @@ document.addEventListener("DOMContentLoaded", () => {
       </details>`;
   }
 
+  function renderGuideTopicBody(topicEl, topic) {
+    if (topicEl.dataset.rendered) return;
+    topicEl.dataset.rendered = "1";
+    const body = topicEl.querySelector(".guide-topic-body");
+    if (!body) return;
+    const counts = bankByTopic(topic.id);
+    const blocksHTML = (topic.blocks || []).map(renderBlock).join("");
+
+    const mcHTML = counts.mc.length
+      ? counts.mc
+          .map((q, i) => {
+            const qid = `q_${topic.id}_mc_${i}`;
+            const lvl = LEVEL_INFO[q.level] || LEVEL_INFO[3];
+            const ref = q.conceptKey ? findConceptByKeyLoose(q.conceptKey) : null;
+            return `
+              <div class="guide-q-card" data-qid="${qid}" data-correct="${q.correctIndex}" data-concept="${esc(q.conceptKey || "")}" data-kind="mc">
+                <div class="guide-q-meta">
+                  <span>שאלה ${i + 1}</span>
+                  <span class="lvl-pill ${lvl.cssClass}">${lvl.icon} רמה ${q.level}</span>
+                </div>
+                <div class="guide-q-text">${esc(q.question)}</div>
+                ${renderQuestionPrereqPanel({ question: q, lesson: ref?.lesson || null, concept: ref?.concept || null, mode: "guide" })}
+                <div class="guide-q-options">
+                  ${q.options
+                    .map(
+                      (opt, oi) =>
+                        `<button class="guide-q-option" data-i="${oi}">${esc(opt)}</button>`,
+                    )
+                    .join("")}
+                </div>
+                <div class="guide-q-feedback" data-explanation="${esc(q.explanation || "")}"></div>
+              </div>`;
+          })
+          .join("")
+      : `<p style="color:var(--text-muted);font-size:0.9rem;">אין עדיין שאלות אמריקניות לנושא זה במאגר. השתמש במאמן הידע לאימון אדפטיבי.</p>`;
+
+    const fillHTML = counts.fill.length
+      ? counts.fill
+          .map((q, i) => {
+            const qid = `q_${topic.id}_fill_${i}`;
+            const lvl = LEVEL_INFO[q.level] || LEVEL_INFO[3];
+            const ref = q.conceptKey ? findConceptByKeyLoose(q.conceptKey) : null;
+            return `
+              <div class="guide-q-card" data-qid="${qid}" data-answer="${esc(q.answer)}" data-concept="${esc(q.conceptKey || "")}" data-kind="fill">
+                <div class="guide-q-meta">
+                  <span>קטע ${i + 1} · ${esc(q.hint || "")}</span>
+                  <span class="lvl-pill ${lvl.cssClass}">${lvl.icon} רמה ${q.level}</span>
+                </div>
+                <div class="guide-code"><pre><code>${esc(q.code)}</code></pre></div>
+                ${renderQuestionPrereqPanel({ question: q, lesson: ref?.lesson || null, concept: ref?.concept || null, mode: "guide" })}
+                <div class="guide-q-fill-row">
+                  <input type="text" class="guide-q-fill-input" placeholder="הקלד את הטוקן החסר..." dir="ltr" autocomplete="off" spellcheck="false" />
+                  <button class="guide-q-fill-submit">✅ בדוק</button>
+                </div>
+                <div class="guide-q-feedback" data-explanation="${esc(q.explanation || "")}"></div>
+              </div>`;
+          })
+          .join("")
+      : `<p style="color:var(--text-muted);font-size:0.9rem;">אין עדיין קטעי קוד להשלמה לנושא זה במאגר.</p>`;
+
+    body.innerHTML = `
+      ${blocksHTML}
+      <div class="guide-quiz-section">
+        <h4>🅰️ שאלות אמריקניות (${counts.mc.length})</h4>
+        ${mcHTML}
+      </div>
+      <div class="guide-quiz-section">
+        <h4>✍️ קטעי קוד להשלמה (${counts.fill.length})</h4>
+        ${fillHTML}
+      </div>`;
+
+    wireQuestionPrerequisiteNavigation(body);
+
+    body.querySelectorAll(".guide-q-card[data-kind='mc']").forEach((card) => {
+      const correct = parseInt(card.dataset.correct, 10);
+      const conceptKeyStr = card.dataset.concept;
+      const optionButtons = card.querySelectorAll(".guide-q-option");
+      bindArrowKeyNavigation(optionButtons);
+      optionButtons.forEach((btn) => {
+        bindEnterToSubmitButton(btn);
+        btn.addEventListener("click", () => {
+          if (card.classList.contains("answered")) return;
+          const sel = parseInt(btn.dataset.i, 10);
+          const isCorrect = sel === correct;
+          card.classList.add("answered");
+          card.classList.add(isCorrect ? "correct" : "wrong");
+          card.querySelectorAll(".guide-q-option").forEach((o) => {
+            o.classList.add("disabled");
+            const i = parseInt(o.dataset.i, 10);
+            if (i === correct) o.classList.add("correct");
+            else if (i === sel) o.classList.add("wrong");
+          });
+          applyGuideAnswer(conceptKeyStr, "mc", isCorrect, card, {
+            question: questionFromGuideCard(card, "mc"),
+            selectedIdx: sel,
+            mode: "guide",
+          });
+        });
+      });
+    });
+
+    body.querySelectorAll(".guide-q-card[data-kind='fill']").forEach((card) => {
+      const expected = (card.dataset.answer || "").trim();
+      const conceptKeyStr = card.dataset.concept;
+      const input = card.querySelector(".guide-q-fill-input");
+      const submitBtn = card.querySelector(".guide-q-fill-submit");
+
+      function submit() {
+        if (card.classList.contains("answered")) return;
+        const userAns = (input.value || "").trim();
+        if (!userAns) return;
+        const isCorrect =
+          userAns.toLowerCase() === expected.toLowerCase();
+        card.classList.add("answered");
+        card.classList.add(isCorrect ? "correct" : "wrong");
+        input.classList.add(isCorrect ? "correct" : "wrong");
+        input.disabled = true;
+        submitBtn.disabled = true;
+        applyGuideAnswer(conceptKeyStr, "fill", isCorrect, card, {
+          question: questionFromGuideCard(card, "fill"),
+          answer: userAns,
+          mode: "guide",
+        });
+      }
+
+      submitBtn?.addEventListener("click", submit);
+      input?.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          submit();
+        }
+      });
+    });
+  }
+
   function renderGuide() {
     const container = document.getElementById("guide-topics-container");
     if (!container) return;
     const guide = window.QUICK_GUIDE || { topics: [] };
     const q = (guideQuery || "").toLowerCase().trim();
 
-    const topicsHTML = guide.topics
-      .filter((t) => {
-        if (!q) return true;
-        const hay = (t.title + " " + (t.blocks || []).map((b) => (b.text || b.code || "")).join(" ")).toLowerCase();
-        return hay.includes(q);
-      })
+    const filteredTopics = guide.topics.filter((t) => {
+      if (!q) return true;
+      const hay = (t.title + " " + (t.blocks || []).map((b) => (b.text || b.code || "")).join(" ")).toLowerCase();
+      return hay.includes(q);
+    });
+
+    const topicsHTML = filteredTopics
       .map((topic) => {
         const counts = bankByTopic(topic.id);
         const isOpen = !!guideOpenStates[topic.id];
-        const blocksHTML = (topic.blocks || []).map(renderBlock).join("");
-
-        // Build the embedded quizzes
-        const mcHTML = counts.mc.length
-          ? counts.mc
-              .map((q, i) => {
-                const qid = `q_${topic.id}_mc_${i}`;
-                const lvl = LEVEL_INFO[q.level] || LEVEL_INFO[3];
-                const ref = q.conceptKey ? findConceptByKeyLoose(q.conceptKey) : null;
-                return `
-                  <div class="guide-q-card" data-qid="${qid}" data-correct="${q.correctIndex}" data-concept="${esc(q.conceptKey || "")}" data-kind="mc">
-                    <div class="guide-q-meta">
-                      <span>שאלה ${i + 1}</span>
-                      <span class="lvl-pill ${lvl.cssClass}">${lvl.icon} רמה ${q.level}</span>
-                    </div>
-                    <div class="guide-q-text">${esc(q.question)}</div>
-                    ${renderQuestionPrereqPanel({ question: q, lesson: ref?.lesson || null, concept: ref?.concept || null, mode: "guide" })}
-                    <div class="guide-q-options">
-                      ${q.options
-                        .map(
-                          (opt, oi) =>
-                            `<button class="guide-q-option" data-i="${oi}">${esc(opt)}</button>`,
-                        )
-                        .join("")}
-                    </div>
-                    <div class="guide-q-feedback" data-explanation="${esc(q.explanation || "")}"></div>
-                  </div>`;
-              })
-              .join("")
-          : `<p style="color:var(--text-muted);font-size:0.9rem;">אין עדיין שאלות אמריקניות לנושא זה במאגר. השתמש במאמן הידע לאימון אדפטיבי.</p>`;
-
-        const fillHTML = counts.fill.length
-          ? counts.fill
-              .map((q, i) => {
-                const qid = `q_${topic.id}_fill_${i}`;
-                const lvl = LEVEL_INFO[q.level] || LEVEL_INFO[3];
-                const ref = q.conceptKey ? findConceptByKeyLoose(q.conceptKey) : null;
-                return `
-                  <div class="guide-q-card" data-qid="${qid}" data-answer="${esc(q.answer)}" data-concept="${esc(q.conceptKey || "")}" data-kind="fill">
-                    <div class="guide-q-meta">
-                      <span>קטע ${i + 1} · ${esc(q.hint || "")}</span>
-                      <span class="lvl-pill ${lvl.cssClass}">${lvl.icon} רמה ${q.level}</span>
-                    </div>
-                    <div class="guide-code"><pre><code>${esc(q.code)}</code></pre></div>
-                    ${renderQuestionPrereqPanel({ question: q, lesson: ref?.lesson || null, concept: ref?.concept || null, mode: "guide" })}
-                    <div class="guide-q-fill-row">
-                      <input type="text" class="guide-q-fill-input" placeholder="הקלד את הטוקן החסר..." dir="ltr" autocomplete="off" spellcheck="false" />
-                      <button class="guide-q-fill-submit">✅ בדוק</button>
-                    </div>
-                    <div class="guide-q-feedback" data-explanation="${esc(q.explanation || "")}"></div>
-                  </div>`;
-              })
-              .join("")
-          : `<p style="color:var(--text-muted);font-size:0.9rem;">אין עדיין קטעי קוד להשלמה לנושא זה במאגר.</p>`;
 
         return `
           <div class="guide-topic ${isOpen ? "is-open" : ""}" data-topic="${esc(topic.id)}">
@@ -26144,23 +26226,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span class="chev">◀</span>
               </div>
             </div>
-            <div class="guide-topic-body">
-              ${blocksHTML}
-              <div class="guide-quiz-section">
-                <h4>🅰️ שאלות אמריקניות (${counts.mc.length})</h4>
-                ${mcHTML}
-              </div>
-              <div class="guide-quiz-section">
-                <h4>✍️ קטעי קוד להשלמה (${counts.fill.length})</h4>
-                ${fillHTML}
-              </div>
-            </div>
+            <div class="guide-topic-body"></div>
           </div>`;
       })
       .join("") ||
       `<div class="tq-empty"><div class="big-icon">🔍</div><p>לא נמצאו נושאים שתואמים לחיפוש.</p></div>`;
     container.innerHTML = `${renderInterviewPrepMode(q)}${topicsHTML}`;
-    wireQuestionPrerequisiteNavigation(container);
+
     container.querySelectorAll("[data-interview-concept]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const key = btn.getAttribute("data-interview-concept");
@@ -26169,75 +26241,24 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Click to expand/collapse
+    const topicMap = {};
+    filteredTopics.forEach((t) => { topicMap[t.id] = t; });
+
     container.querySelectorAll(".guide-topic").forEach((topicEl) => {
       const tid = topicEl.dataset.topic;
+      const topic = topicMap[tid];
+      if (!topic) return;
+
+      if (guideOpenStates[tid]) {
+        renderGuideTopicBody(topicEl, topic);
+      }
+
       topicEl.querySelector(".guide-topic-head")?.addEventListener("click", () => {
         guideOpenStates[tid] = !guideOpenStates[tid];
         topicEl.classList.toggle("is-open", guideOpenStates[tid]);
-      });
-
-      // MC click handlers
-      topicEl.querySelectorAll(".guide-q-card[data-kind='mc']").forEach((card) => {
-        const correct = parseInt(card.dataset.correct, 10);
-        const conceptKeyStr = card.dataset.concept;
-        const optionButtons = card.querySelectorAll(".guide-q-option");
-        bindArrowKeyNavigation(optionButtons);
-        optionButtons.forEach((btn) => {
-          bindEnterToSubmitButton(btn);
-          btn.addEventListener("click", () => {
-            if (card.classList.contains("answered")) return;
-            const sel = parseInt(btn.dataset.i, 10);
-            const isCorrect = sel === correct;
-            card.classList.add("answered");
-            card.classList.add(isCorrect ? "correct" : "wrong");
-        card.querySelectorAll(".guide-q-option").forEach((o) => {
-              o.classList.add("disabled");
-              const i = parseInt(o.dataset.i, 10);
-              if (i === correct) o.classList.add("correct");
-              else if (i === sel) o.classList.add("wrong");
-            });
-            applyGuideAnswer(conceptKeyStr, "mc", isCorrect, card, {
-              question: questionFromGuideCard(card, "mc"),
-              selectedIdx: sel,
-              mode: "guide",
-            });
-          });
-        });
-      });
-
-      // Fill click handlers
-      topicEl.querySelectorAll(".guide-q-card[data-kind='fill']").forEach((card) => {
-        const expected = (card.dataset.answer || "").trim();
-        const conceptKeyStr = card.dataset.concept;
-        const input = card.querySelector(".guide-q-fill-input");
-        const submitBtn = card.querySelector(".guide-q-fill-submit");
-
-        function submit() {
-          if (card.classList.contains("answered")) return;
-          const userAns = (input.value || "").trim();
-          if (!userAns) return;
-          const isCorrect =
-            userAns.toLowerCase() === expected.toLowerCase();
-          card.classList.add("answered");
-          card.classList.add(isCorrect ? "correct" : "wrong");
-          input.classList.add(isCorrect ? "correct" : "wrong");
-          input.disabled = true;
-          submitBtn.disabled = true;
-          applyGuideAnswer(conceptKeyStr, "fill", isCorrect, card, {
-            question: questionFromGuideCard(card, "fill"),
-            answer: userAns,
-            mode: "guide",
-          });
+        if (guideOpenStates[tid]) {
+          renderGuideTopicBody(topicEl, topic);
         }
-
-        submitBtn?.addEventListener("click", submit);
-        input?.addEventListener("keydown", (ev) => {
-          if (ev.key === "Enter") {
-            ev.preventDefault();
-            submit();
-          }
-        });
       });
     });
     setGuideContextTree();
@@ -26801,14 +26822,35 @@ document.addEventListener("DOMContentLoaded", () => {
     renderGuide();
   });
   document.getElementById("guide-expand-all")?.addEventListener("click", () => {
-    (window.QUICK_GUIDE?.topics || []).forEach((t) => {
-      guideOpenStates[t.id] = true;
+    const guide = window.QUICK_GUIDE || { topics: [] };
+    const topicMap = {};
+    guide.topics.forEach((t) => { topicMap[t.id] = t; });
+    const container = document.getElementById("guide-topics-container");
+    if (!container) return;
+    const topicEls = Array.from(container.querySelectorAll(".guide-topic"));
+    topicEls.forEach((el) => {
+      const tid = el.dataset.topic;
+      guideOpenStates[tid] = true;
+      el.classList.add("is-open");
     });
-    renderGuide();
+    let idx = 0;
+    function renderNext() {
+      if (idx >= topicEls.length) return;
+      const el = topicEls[idx++];
+      const topic = topicMap[el.dataset.topic];
+      if (topic) renderGuideTopicBody(el, topic);
+      requestAnimationFrame(renderNext);
+    }
+    requestAnimationFrame(renderNext);
   });
   document.getElementById("guide-collapse-all")?.addEventListener("click", () => {
     guideOpenStates = {};
-    renderGuide();
+    const container = document.getElementById("guide-topics-container");
+    if (container) {
+      container.querySelectorAll(".guide-topic.is-open").forEach((el) => {
+        el.classList.remove("is-open");
+      });
+    }
   });
   document.getElementById("grandma-knowledge-search")?.addEventListener("input", (e) => {
     grandmaKnowledgeQuery = e.target.value;
