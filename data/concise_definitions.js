@@ -1346,6 +1346,38 @@
       what: "שמירה של תוצאת חישוב כדי לא לחשב שוב על אותו input.",
       need: "useMemo ב-React לערך, useCallback לפונקציה — ל-deps יציבים.",
     },
+    "User": {
+      what: "type של משתמש — בד״כ discriminated union: Guest | Registered.",
+      need: "kind כ-tag לזיהוי הסוג, ואז narrowing ב-if לפני גישה לשדות ייחודיים.",
+    },
+    "BaseUser": {
+      what: "interface בסיסי שמכיל שדות משותפים לכל משתמש (id, kind).",
+      need: "extends BaseUser בכל variant; דומה ל-class abstract בלי implementation.",
+    },
+    "Budget Summary": {
+      what: "type שמסכם הכנסות/הוצאות/יתרה לתקופה — output של חישוב.",
+      need: "readonly fields על summary; לחשב מחדש בכל שינוי במקום למוטט.",
+    },
+    "interface vs type": {
+      what: "interface = declaration merging + extends; type alias = unions/primitives.",
+      need: "interface ל-public API שמתרחב; type ל-utility ו-discriminated unions.",
+    },
+    "boolean": {
+      what: "primitive טיפוס ל-true/false — שלוש דרכים לקבל: literal, השוואה, !!val.",
+      need: "ב-TS להעדיף boolean אמיתי, לא 0/1 או null/undefined כ-truthy proxy.",
+    },
+    ".ts": {
+      what: "סיומת קובץ של TypeScript — קוד עם type annotations.",
+      need: ".tsx ל-React+JSX; tsc מקמפל ל-.js לפני הרצה.",
+    },
+    "npm install": {
+      what: "פקודה שמתקינה את התלויות מ-package.json לתיקיית node_modules.",
+      need: "מומלץ לרוץ אחרי clone או אחרי הוספת dependency חדש; משתמש ב-package-lock.json לעקביות.",
+    },
+    "npm run dev": {
+      what: "סקריפט בdev mode — מריץ את ה-dev server של Vite/Next/Webpack.",
+      need: "מספק hot reload, source maps, ולא מאמת production build; עוצרים עם Ctrl+C.",
+    },
   };
 
   global.CONCISE_CONCEPT_DEFINITIONS = Object.freeze(defs);
