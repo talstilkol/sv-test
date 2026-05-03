@@ -49,13 +49,12 @@ Version: report-source-of-truth-v1
 ## Live Signals
 
 - **FEATURE_COVERAGE**: green (strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2)
-- **QUESTION_COVERAGE_TARGETS**: red (ready=false, mcGap=235, fillGap=292, version=question-coverage-targets-v1)
-- **QUESTION_QUALITY**: yellow (questionQualityIndex=98.8%, total=2924)
+- **QUESTION_COVERAGE_TARGETS**: green (ready=true, mcGap=0, fillGap=0, version=question-coverage-targets-v1)
+- **QUESTION_QUALITY**: yellow (questionQualityIndex=98.1%, total=4206)
 - **FINISH_LINE_PRE_RELEASE**: red (ready=false, passed=1/18)
 
 ## Source-of-Truth Findings
 
-- [P1] Feature coverage is clean while question coverage remains red. Do not claim both as current production truth. (recon-001)
 - [P1] 38 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical. (recon-003)
 
 ## Policy
