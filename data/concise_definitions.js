@@ -1330,6 +1330,18 @@
       what: "primitive טיפוס ל-true/false — שלוש דרכים לקבל: literal, השוואה, !!val.",
       need: "ב-TS להעדיף boolean אמיתי, לא 0/1 או null/undefined כ-truthy proxy.",
     },
+    ".ts": {
+      what: "סיומת קובץ של TypeScript — קוד עם type annotations.",
+      need: ".tsx ל-React+JSX; tsc מקמפל ל-.js לפני הרצה.",
+    },
+    "npm install": {
+      what: "פקודה שמתקינה את התלויות מ-package.json לתיקיית node_modules.",
+      need: "מומלץ לרוץ אחרי clone או אחרי הוספת dependency חדש; משתמש ב-package-lock.json לעקביות.",
+    },
+    "npm run dev": {
+      what: "סקריפט בdev mode — מריץ את ה-dev server של Vite/Next/Webpack.",
+      need: "מספק hot reload, source maps, ולא מאמת production build; עוצרים עם Ctrl+C.",
+    },
   };
 
   global.CONCISE_CONCEPT_DEFINITIONS = Object.freeze(defs);
