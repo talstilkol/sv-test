@@ -3363,6 +3363,616 @@ var QUESTIONS_TRACE = [
     explanation:
       "Event loop: sync → microtasks (Promise then) drained completely → macrotask (setTimeout) → repeat. הפלט: 1, 5, 3, 4, 2.",
   },
+
+  // ============================================================================
+  // Phase 2.A batch 3 — 20 more Trace exercises
+  // ============================================================================
+
+  {
+    id: "trace_react_useState_init_function",
+    conceptKey: "lesson_22::useState",
+    level: 5,
+    title: "useState עם initial value vs initial function",
+    code: "function expensive() {\n  console.log('computing...');\n  return 42;\n}\nfunction A() {\n  const [v] = useState(expensive());\n  return null;\n}\nfunction B() {\n  const [v] = useState(expensive);\n  return null;\n}",
+    steps: [
+      {
+        line: 6,
+        prompt: "בכל render של A, expensive() רץ?",
+        answer: "כן",
+        hint: "useState(expr) מחשב את expr בכל render — useState מתעלם מהתוצאה אחרי mount, אבל החישוב כבר רץ.",
+      },
+      {
+        line: 10,
+        prompt: "בכל render של B, expensive רץ?",
+        answer: "לא — רק במunt",
+        hint: "useState(fn) — ה-fn רץ פעם אחת ב-mount.",
+      },
+    ],
+    explanation:
+      "Lazy initial state: useState(() => expensive()) או useState(expensive) — ה-fn מופעל רק במunt. מתאים לחישובים יקרים או reads מ-localStorage.",
+  },
+
+  {
+    id: "trace_react_useState_async_value",
+    conceptKey: "lesson_22::useState",
+    level: 6,
+    title: "setState async — הערך לא מיידי",
+    code: "function App() {\n  const [n, setN] = useState(0);\n  function handle() {\n    setN(5);\n    console.log(n);\n  }\n  return <button onClick={handle}>{n}</button>;\n}",
+    steps: [
+      {
+        line: 4,
+        prompt: "אחרי setN(5), מה n באותו handler?",
+        answer: "0",
+        hint: "n הוא variable ב-closure של ה-render. setN לא משנה אותו.",
+      },
+      {
+        line: 5,
+        prompt: "מה יודפס בקונסול?",
+        answer: "0",
+        hint: "n עדיין הערך הישן בתוך ה-handler.",
+      },
+      {
+        line: 7,
+        prompt: "ב-render הבא, מה הערך של n?",
+        answer: "5",
+        hint: "ה-render הבא מקבל את הערך החדש.",
+      },
+    ],
+    explanation:
+      "setState async — הערך החדש זמין רק ב-render הבא. בתוך אותה פונקציה, n נשאר הערך הישן (closure על render הקודם).",
+  },
+
+  {
+    id: "trace_react_props_destructure",
+    conceptKey: "lesson_21::props",
+    level: 4,
+    title: "props destructuring עם default",
+    code: "function Greeting({ name = 'אורח', greeting = 'שלום' }) {\n  return greeting + ', ' + name;\n}\nconsole.log(Greeting({}));\nconsole.log(Greeting({ name: 'תמר' }));\nconsole.log(Greeting({ greeting: 'היי', name: 'דני' }));",
+    steps: [
+      {
+        line: 4,
+        prompt: "ראשון: {}. מה ייוצר?",
+        answer: "שלום, אורח",
+        hint: "שני defaults מופעלים.",
+      },
+      {
+        line: 5,
+        prompt: "שני: { name: 'תמר' }. מה?",
+        answer: "שלום, תמר",
+        hint: "name מועבר, greeting default.",
+      },
+      {
+        line: 6,
+        prompt: "שלישי: שני props מועברים?",
+        answer: "היי, דני",
+        hint: "שניהם מהקריאה.",
+      },
+    ],
+    explanation:
+      "Destructuring עם defaults = ברירת מחדל אם הערך undefined (לא 0/false/null). pattern נפוץ ל-React props.",
+  },
+
+  {
+    id: "trace_async_throw_in_then",
+    conceptKey: "lesson_15::Promise",
+    level: 6,
+    title: "throw בתוך .then נתפס ב-catch",
+    code: "Promise.resolve(1)\n  .then(x => {\n    console.log('got', x);\n    throw new Error('oops');\n  })\n  .then(x => console.log('not reached'))\n  .catch(err => console.log('caught:', err.message))\n  .finally(() => console.log('done'));",
+    steps: [
+      {
+        line: 2,
+        prompt: "אחרי .then הראשון, מה יודפס?",
+        answer: "got 1",
+        hint: "ה-then רץ עם x=1.",
+      },
+      {
+        line: 4,
+        prompt: "throw מחזיר אותנו ל-catch או ל-then הבא?",
+        answer: "ל-catch",
+        hint: "throw בתוך then = rejection של ה-promise.",
+      },
+      {
+        line: 6,
+        prompt: "האם 'not reached' מודפס?",
+        answer: "לא",
+        hint: "ה-then הבא מדולג כשיש rejection.",
+      },
+      {
+        line: 7,
+        prompt: "מה .catch מקבל?",
+        answer: "Error: oops",
+        hint: "ה-error שזרק.",
+      },
+      {
+        line: 8,
+        prompt: "האם .finally רץ?",
+        answer: "כן",
+        hint: "תמיד רץ — אחרי success או error.",
+      },
+    ],
+    explanation:
+      "throw ב-then = rejection. .then הבאים מדלגים עד .catch. .finally תמיד רץ. Pattern: load → process → catch errors → cleanup ב-finally.",
+  },
+
+  {
+    id: "trace_typescript_intersect",
+    conceptKey: "lesson_27::Union Type",
+    level: 6,
+    title: "intersection vs union",
+    code: "type Named = { name: string };\ntype Aged = { age: number };\ntype Both = Named & Aged;\ntype Either = Named | Aged;\nconst person: Both = { name: 'Tal', age: 30 };\nconst something: Either = { name: 'X' };",
+    steps: [
+      {
+        line: 3,
+        prompt: "Both דורש מה?",
+        answer: "גם name וגם age",
+        hint: "& = intersection — שני ה-shapes בו זמנית.",
+      },
+      {
+        line: 4,
+        prompt: "Either דורש?",
+        answer: "אחד מהם (לפחות)",
+        hint: "| = union — אחד מספיק.",
+      },
+      {
+        line: 6,
+        prompt: "האם something יכול להיות { name: 'X' } בלבד?",
+        answer: "כן",
+        hint: "Either מספק לפחות אחד.",
+      },
+    ],
+    explanation:
+      "intersection (&) דורש את כל ה-fields. union (|) מספיק עם variant אחד. discriminated unions הם השילוב הנפוץ של union + tag.",
+  },
+
+  {
+    id: "trace_typescript_keyof",
+    conceptKey: "lesson_26::interface",
+    level: 7,
+    title: "keyof operator ב-TS",
+    code: "interface User {\n  id: number;\n  name: string;\n  email: string;\n}\ntype UserKey = keyof User;\nfunction get<K extends keyof User>(user: User, key: K): User[K] {\n  return user[key];\n}",
+    steps: [
+      {
+        line: 6,
+        prompt: "מה הערכים האפשריים של UserKey?",
+        answer: "'id' | 'name' | 'email'",
+        hint: "keyof מחזיר את ה-keys כ-literal union.",
+      },
+      {
+        line: 7,
+        prompt: "User[K] עם K='name' זה איזה type?",
+        answer: "string",
+        hint: "indexed access — User['name'] = string.",
+      },
+      {
+        line: 7,
+        prompt: "האם get(user, 'wrong') מקומפל?",
+        answer: "לא",
+        hint: "TS תופס שם key לא חוקי בcompile.",
+      },
+    ],
+    explanation:
+      "keyof + indexed access = generic safe getters. K extends keyof T מבטיח שה-key קיים, ו-T[K] מחזיר את הtype הנכון.",
+  },
+
+  {
+    id: "trace_class_inheritance",
+    conceptKey: "lesson_19::class",
+    level: 5,
+    title: "extends + super",
+    code: "class Animal {\n  constructor(name) { this.name = name; }\n  greet() { return 'I am ' + this.name; }\n}\nclass Dog extends Animal {\n  constructor(name, breed) {\n    super(name);\n    this.breed = breed;\n  }\n  greet() { return super.greet() + ', a ' + this.breed; }\n}\nconst d = new Dog('Rex', 'lab');\nconsole.log(d.greet());",
+    steps: [
+      {
+        line: 7,
+        prompt: "super(name) עושה מה?",
+        answer: "קורא ל-constructor של Animal",
+        hint: "super = parent class. חובה לקרוא לפני this ב-constructor יורש.",
+      },
+      {
+        line: 10,
+        prompt: "super.greet() מחזיר?",
+        answer: "I am Rex",
+        hint: "ה-method של ה-parent.",
+      },
+      {
+        line: 13,
+        prompt: "מה יודפס?",
+        answer: "I am Rex, a lab",
+        hint: "ה-greet של Dog מצרף.",
+      },
+    ],
+    explanation:
+      "extends + super = irregular OOP ב-JS. super() ב-constructor יורש. super.method() ב-overrides לקריאה ל-parent.",
+  },
+
+  {
+    id: "trace_express_middleware_order",
+    conceptKey: "lesson_18::Express",
+    level: 6,
+    title: "סדר middleware ב-Express",
+    code: "app.use((req, res, next) => {\n  console.log('1: logger');\n  next();\n});\napp.use((req, res, next) => {\n  console.log('2: auth');\n  next();\n});\napp.get('/users', (req, res) => {\n  console.log('3: handler');\n  res.json({});\n});",
+    steps: [
+      {
+        line: 1,
+        prompt: "Request מגיע ל-/users — מה רץ ראשון?",
+        answer: "1: logger",
+        hint: "Express רץ ב-order של app.use.",
+      },
+      {
+        line: 5,
+        prompt: "אחר כך?",
+        answer: "2: auth",
+        hint: "next() מתקדם ל-next middleware.",
+      },
+      {
+        line: 8,
+        prompt: "ולבסוף?",
+        answer: "3: handler",
+        hint: "Route handler.",
+      },
+      {
+        line: 3,
+        prompt: "מה היה קורה אם logger לא קורא ל-next()?",
+        answer: "ה-request תקוע — auth ו-handler לא רצים",
+        hint: "next() חיוני לזרימה.",
+      },
+    ],
+    explanation:
+      "Express middleware רץ ב-order של רישום. כל אחד חייב next() להעביר ל-next, או res.send לסיים. בלעדיהם — request hangs.",
+  },
+
+  {
+    id: "trace_mongo_chained",
+    conceptKey: "lesson_20::find",
+    level: 6,
+    title: "Mongoose chained query",
+    code: "const users = await User.find({ active: true })\n  .sort({ createdAt: -1 })\n  .limit(10)\n  .select('name email')\n  .lean();",
+    steps: [
+      {
+        line: 1,
+        prompt: "find({active:true}) מסנן מה?",
+        answer: "users עם active: true",
+        hint: "filter על field.",
+      },
+      {
+        line: 2,
+        prompt: "sort({ createdAt: -1 }) ממיין?",
+        answer: "מהחדש לישן",
+        hint: "-1 = descending.",
+      },
+      {
+        line: 3,
+        prompt: "limit(10) משאיר?",
+        answer: "10 הראשונים",
+        hint: "אחרי הsort.",
+      },
+      {
+        line: 4,
+        prompt: ".select('name email') מחזיר?",
+        answer: "רק name ו-email (+ _id)",
+        hint: "projection — limited fields.",
+      },
+      {
+        line: 5,
+        prompt: ".lean() עושה?",
+        answer: "מחזיר plain JS objects במקום Mongoose documents",
+        hint: "ביצועים טובים יותר, אבל בלי .save() ו-virtuals.",
+      },
+    ],
+    explanation:
+      "Query chain ב-Mongoose: filter → sort → limit → project → lean. כל שלב מחזיר Query, חוץ מ-await שמפעיל. lean = ביצועים גבוהים לקריאה בלבד.",
+  },
+
+  {
+    id: "trace_react_render_once",
+    conceptKey: "lesson_22::useState",
+    level: 5,
+    title: "useState מפעיל render רק עם value שונה",
+    code: "function App() {\n  const [v, setV] = useState(5);\n  function handle() {\n    setV(5);\n    console.log('clicked');\n  }\n  return <button onClick={handle}>{v}</button>;\n}",
+    steps: [
+      {
+        line: 4,
+        prompt: "setV(5) — האם React מרנדר מחדש?",
+        answer: "לא",
+        hint: "Object.is(5, 5) = true — bailout.",
+      },
+      {
+        line: 5,
+        prompt: "האם 'clicked' מודפס?",
+        answer: "כן",
+        hint: "ה-handler רץ. רק ה-render מדולג.",
+      },
+    ],
+    explanation:
+      "React משתמש ב-Object.is להשוואה. אותו ערך = bailout (אין re-render). שמושי לאופטימיזציה אוטומטית.",
+  },
+
+  {
+    id: "trace_array_copy_pitfall",
+    conceptKey: "lesson_19::spread",
+    level: 5,
+    title: "spread shallow copy",
+    code: "const original = [{ a: 1 }, { a: 2 }];\nconst copy = [...original];\ncopy[0].a = 99;\nconsole.log(original[0].a);",
+    steps: [
+      {
+        line: 2,
+        prompt: "spread עושה copy של מה?",
+        answer: "ה-array (shell), אבל לא ה-objects בתוך",
+        hint: "shallow — references לאותם objects.",
+      },
+      {
+        line: 3,
+        prompt: "copy[0] מצביע על אותו object של original[0]?",
+        answer: "כן",
+        hint: "shallow copy — שני ה-arrays חולקים את ה-objects.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "99",
+        hint: "השינוי משפיע גם על original.",
+      },
+    ],
+    explanation:
+      "spread = shallow copy. עבור deep copy: structuredClone(arr) או lodash _.cloneDeep. JSON trick (parse(stringify)) מאבד Date/Map/functions.",
+  },
+
+  {
+    id: "trace_localStorage_json",
+    conceptKey: "lesson_19::localStorage",
+    level: 5,
+    title: "localStorage עם objects",
+    code: "const user = { name: 'Tal', age: 30 };\nlocalStorage.setItem('user', user);\nconst saved = localStorage.getItem('user');\nconsole.log(saved);\nconsole.log(saved.name);",
+    steps: [
+      {
+        line: 2,
+        prompt: "setItem עם object — מה נשמר?",
+        answer: "'[object Object]'",
+        hint: "localStorage שומר רק strings — object עובר toString.",
+      },
+      {
+        line: 3,
+        prompt: "מה getItem מחזיר?",
+        answer: "'[object Object]'",
+        hint: "אותו string.",
+      },
+      {
+        line: 5,
+        prompt: "saved.name?",
+        answer: "undefined",
+        hint: "saved הוא string, אין לו property name.",
+      },
+    ],
+    explanation:
+      "localStorage שומר רק strings. תמיד JSON.stringify לפני setItem ו-JSON.parse אחרי getItem. שגיאה נפוצה מאוד.",
+  },
+
+  {
+    id: "trace_react_inline_function",
+    conceptKey: "lesson_24::useMemo",
+    level: 7,
+    title: "inline arrow לכל child = re-render",
+    code: "function Parent() {\n  const [n, setN] = useState(0);\n  return (\n    <ChildMemoed onClick={() => doSomething(n)} />\n  );\n}\nconst ChildMemoed = React.memo(({ onClick }) => {\n  console.log('Child render');\n  return <button onClick={onClick}>+</button>;\n});",
+    steps: [
+      {
+        line: 4,
+        prompt: "האם React.memo עוצר re-render כש-Parent מתעדכן?",
+        answer: "לא — onClick הוא function חדשה בכל render",
+        hint: "() => ... יוצר reference חדש בכל render. memo משווה props ב-shallow.",
+      },
+      {
+        line: 4,
+        prompt: "כדי שmemo יעבוד, מה צריך?",
+        answer: "useCallback סביב ה-arrow",
+        hint: "useCallback שומר reference יציב בעוד deps לא משתנים.",
+      },
+    ],
+    explanation:
+      "React.memo דורש props יציבים. inline arrows = reference חדש כל render → memo bypassed. useCallback או move out of component.",
+  },
+
+  {
+    id: "trace_typescript_satisfies",
+    conceptKey: "lesson_26::type annotation",
+    level: 7,
+    title: "as vs satisfies (TS 4.9+)",
+    code: "type Status = 'active' | 'inactive';\nconst s1 = { status: 'active' as Status };\nconst s2 = { status: 'active' } satisfies { status: Status };",
+    steps: [
+      {
+        line: 2,
+        prompt: "type של s1.status?",
+        answer: "Status (יותר רחב)",
+        hint: "as widens — type של 'active' הוא Status.",
+      },
+      {
+        line: 3,
+        prompt: "type של s2.status?",
+        answer: "'active' (literal, narrower)",
+        hint: "satisfies מאמת shape בלי לאבד literal narrowing.",
+      },
+    ],
+    explanation:
+      "as = type assertion (אומר ל-TS 'סמוך עליי'). satisfies = type validation, שומר על literal types. עדיף ב-config objects ו-data.",
+  },
+
+  {
+    id: "trace_destructure_swap",
+    conceptKey: "lesson_19::destructuring",
+    level: 4,
+    title: "swap עם destructuring",
+    code: "let a = 1;\nlet b = 2;\n[a, b] = [b, a];\nconsole.log(a, b);",
+    steps: [
+      {
+        line: 3,
+        prompt: "[b, a] על הימני יוצר?",
+        answer: "[2, 1]",
+        hint: "array literal עם הערכים הנוכחיים.",
+      },
+      {
+        line: 3,
+        prompt: "[a, b] בשמאל מבצע?",
+        answer: "destructuring assignment",
+        hint: "a = 2, b = 1.",
+      },
+      {
+        line: 4,
+        prompt: "מה יודפס?",
+        answer: "2 1",
+        hint: "החלפו תפקידים.",
+      },
+    ],
+    explanation:
+      "swap בלי משתנה זמני. הצד הימני מחושב לפני ההשמה. שימוש נפוץ ב-functional code.",
+  },
+
+  {
+    id: "trace_recursive_factorial",
+    conceptKey: "lesson_19::function",
+    level: 5,
+    title: "פונקציה רקורסיבית",
+    code: "function factorial(n) {\n  if (n <= 1) return 1;\n  return n * factorial(n - 1);\n}\nconsole.log(factorial(4));",
+    steps: [
+      {
+        line: 5,
+        prompt: "factorial(4) קורא ל?",
+        answer: "factorial(3)",
+        hint: "n=4 → n * factorial(3).",
+      },
+      {
+        line: 3,
+        prompt: "מה factorial(1)?",
+        answer: "1",
+        hint: "base case.",
+      },
+      {
+        line: 5,
+        prompt: "תוצאה סופית?",
+        answer: "24",
+        hint: "4 * 3 * 2 * 1 = 24.",
+      },
+    ],
+    explanation:
+      "Recursion = פונקציה שקוראת לעצמה. Base case חיוני (n<=1) למניעת stack overflow. Stack: 4! → 4*3! → 4*3*2! → ...",
+  },
+
+  {
+    id: "trace_react_useEffect_cleanup_subscription",
+    conceptKey: "lesson_24::side effect",
+    level: 6,
+    title: "useEffect עם subscription",
+    code: "function MouseTracker() {\n  const [pos, setPos] = useState({ x: 0, y: 0 });\n  useEffect(() => {\n    function move(e) { setPos({ x: e.clientX, y: e.clientY }); }\n    window.addEventListener('mousemove', move);\n    return () => window.removeEventListener('mousemove', move);\n  }, []);\n  return <div>{pos.x}, {pos.y}</div>;\n}",
+    steps: [
+      {
+        line: 5,
+        prompt: "מתי addEventListener רץ?",
+        answer: "אחרי mount הראשון",
+        hint: "useEffect [] — פעם אחת.",
+      },
+      {
+        line: 6,
+        prompt: "מתי removeEventListener רץ?",
+        answer: "ב-unmount",
+        hint: "ה-cleanup רץ ב-unmount (או לפני re-run, אבל deps=[] אז רק unmount).",
+      },
+      {
+        line: 6,
+        prompt: "למה חשוב לחזור עם cleanup?",
+        answer: "למנוע memory leak — ה-listener ימשיך אחרי שה-component נעלם",
+        hint: "בלי cleanup, ה-listener עדיין מחזיק reference ל-setPos.",
+      },
+    ],
+    explanation:
+      "Pattern קלאסי: subscribe ב-effect, unsubscribe ב-cleanup. חיוני ל-event listeners, intervals, WebSocket connections, observers.",
+  },
+
+  {
+    id: "trace_react_useState_object_init",
+    conceptKey: "lesson_22::useState",
+    level: 5,
+    title: "useState עם object initial",
+    code: "function App() {\n  const [user, setUser] = useState({ name: '', age: 0 });\n  function setName(name) {\n    setUser({ name }); // מתפקדת?\n  }\n  return null;\n}",
+    steps: [
+      {
+        line: 4,
+        prompt: "setUser({ name }) מחליף את כל ה-object או ממזג?",
+        answer: "מחליף — setUser לא ממזג",
+        hint: "useState לא כמו class setState. הוא מחליף.",
+      },
+      {
+        line: 4,
+        prompt: "אחרי setName('Tal'), מה user?",
+        answer: "{ name: 'Tal' } — age נעלם!",
+        hint: "אין age — רק name.",
+      },
+      {
+        line: 4,
+        prompt: "תיקון?",
+        answer: "setUser({ ...user, name })",
+        hint: "spread שומר את שאר השדות.",
+      },
+    ],
+    explanation:
+      "useState replace, לא merge. spread (...user) חיוני לעדכוני partial. נפוץ במיוחד ב-form state.",
+  },
+
+  {
+    id: "trace_async_parallel_vs_serial",
+    conceptKey: "lesson_15::Promise",
+    level: 7,
+    title: "Promise.all vs await ברצף",
+    code: "async function serial() {\n  const a = await fetch('/a');\n  const b = await fetch('/b');\n  return [a, b];\n}\nasync function parallel() {\n  const [a, b] = await Promise.all([fetch('/a'), fetch('/b')]);\n  return [a, b];\n}",
+    steps: [
+      {
+        line: 1,
+        prompt: "serial: כמה זמן לוקח אם כל fetch = 100ms?",
+        answer: "200ms",
+        hint: "סדרתי — אחד אחרי השני.",
+      },
+      {
+        line: 6,
+        prompt: "parallel: כמה זמן?",
+        answer: "100ms",
+        hint: "מקבילי — שניהם רצים ביחד.",
+      },
+      {
+        line: 7,
+        prompt: "מתי לבחור serial על parallel?",
+        answer: "כשהשני תלוי בערך של הראשון",
+        hint: "אם b צריך a, אין ברירה.",
+      },
+    ],
+    explanation:
+      "await ברצף = serial. Promise.all = parallel (כשאין תלויות). חיסכון משמעותי בזמן בקריאות API מקבילות.",
+  },
+
+  {
+    id: "trace_dom_event_target",
+    conceptKey: "lesson_19::event",
+    level: 6,
+    title: "event.target vs event.currentTarget",
+    code: "<div onClick={(e) => {\n  console.log('target:', e.target.tagName);\n  console.log('currentTarget:', e.currentTarget.tagName);\n}}>\n  <button>Click me</button>\n</div>",
+    steps: [
+      {
+        line: 5,
+        prompt: "המשתמש לוחץ על ה-button. event.target?",
+        answer: "BUTTON",
+        hint: "target = ה-element שעליו לחצו בפועל.",
+      },
+      {
+        line: 5,
+        prompt: "event.currentTarget?",
+        answer: "DIV",
+        hint: "currentTarget = ה-element שעליו ה-listener.",
+      },
+      {
+        line: 1,
+        prompt: "אם המשתמש לוחץ על ה-div עצמו, target?",
+        answer: "DIV",
+        hint: "ה-target הוא ה-element שאיתו האירוע מתחיל.",
+      },
+    ],
+    explanation:
+      "target = source of event. currentTarget = element עם ה-listener. event delegation משתמש ב-target לזיהוי המקור הפנימי.",
+  },
 ];
 
 // Browser bridge: expose under QUESTIONS_BANK.trace so the trainer's
