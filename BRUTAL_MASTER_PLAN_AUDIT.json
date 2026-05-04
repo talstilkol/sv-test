@@ -3220,5 +3220,13 @@
       "confidence": "medium",
       "reason": "Marked done and has local implementation/test/report artifacts. This still does not prove real-world usage unless separately stated."
     }
-  ]
+  ],
+  "sourceOfTruth": {
+    "status": "active",
+    "reportVersion": "report-source-of-truth-v1",
+    "evaluatedAt": "2026-05-04",
+    "sourceDate": "2026-05-04",
+    "source": "report-active",
+    "reason": "fresh-to-source-of-truth"
+  }
 }

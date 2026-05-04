@@ -13,7 +13,7 @@ _(audit complete; resuming execution)_
 - [ ] **WCAG 2.1 AA — keyboard-only walkthrough** of trainer + mock-exam (~30min) ⚠️ browser required
 - [ ] **WCAG 2.1 AA — color-contrast audit** on dark + light themes (~30min) ⚠️ browser required
 - [ ] **Take a real mock-exam end-to-end** — answer all 30 Qs, submit, verify scoring (~30min) ⚠️ browser required
-- [ ] **Lighthouse audit** — get actual FCP/LCP/CLS/TTI numbers (~20min) ⚠️ browser required
+- [x] **Lighthouse audit** — FCP 11.4s, LCP 57.3s, CLS 0.064, TTI 57.3s, TBT 330ms. Perf 47 (blocked on P2 app.js split). **A11Y 100** (heading fix applied). Best Practices 81 (sync XHR, advisory). SEO 100.
 - [x] **Real `npm audit` review** — 0 vulnerabilities
 - [x] **Privacy/TOS** — PRIVACY.md (65L) + TERMS.md (46L) + STUDENT_PRIVACY_DATA_RETENTION_POLICY.md (47L) exist
 - [x] **Real README.md** — 112 lines, covers quickstart, architecture, activity counts, scripts
@@ -60,6 +60,7 @@ _(audit complete; resuming execution)_
 - [x] **Hebrew quality audit** — 0 niqqud; regex fixed to exclude maqaf false positives
 - [x] **Phase 1.A** — all 29 lessons scanned: no content gaps, all coverage targets met
 - [x] **Phase 1.C** — 0 orphaned questions, 0 concepts with < 3 MC or < 1 Fill
+- [x] **Lighthouse audit** — ran against dist; A11Y 98 → fixed h3→h2 heading order → A11Y 100. Perf 47 (known: blocked on app.js split). SEO 100.
 
 ### Tech-Debt Phase A
 - [x] CI release-gates GH Action — 4 missing strict gates added
