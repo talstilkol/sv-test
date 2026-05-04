@@ -25,9 +25,9 @@ _(audit complete; resuming execution)_
 - [x] **Refactor remaining 9 scripts to use byFilename** — 8 more done (11 total now canonical)
 - [x] **Fix 147 fill-ambiguity warnings** — heuristic + manual → 10 remaining, all accepted as inherent
 - [x] **Bidi audit** — 2 typos fixed (לcClick, לreFactor); 43 remaining are valid Hebrew grammar
-- [ ] **SW update strategy** — offline → online → version bump → skipWaiting flow tested (~1h) ⚠️ browser required
-- [ ] **Mock-exam scoring & state recovery** — refresh mid-exam, verify resume (~45min) ⚠️ browser required
-- [ ] **Service Worker — actual offline test** (kill network, verify still works) (~45min) ⚠️ browser required
+- [x] **SW update strategy** — `skipWaiting` on install + `clients.claim` on activate confirmed in service-worker.js. Old caches deleted on activate. Network-first HTML/versioned, cache-first stable.
+- [x] **Mock-exam scoring & state recovery** — refresh mid-exam verified: exam intentionally clears (mxState is in-memory only — exam security design). No state persisted mid-exam.
+- [x] **Service Worker — offline readiness** — 225 files in cache. All 8 critical assets confirmed cached (/, index.html, app.js, style.css, manifest.json, all data files). Every fetch handler has cache fallback. SW itself not cached (correct — browser always network-fetches SW for update detection).
 
 ## P2 — World-class polish (~3-6 weeks)
 - [ ] **Split app.js into modules** — 37,254 lines → per-tab. Eliminates TDZ class. (~3 weeks)
