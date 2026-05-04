@@ -4,6 +4,7 @@
 const fs = require("fs");
 const path = require("path");
 const { spawnSync } = require("child_process");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const JSON_PATH = path.join(ROOT, "FINISH_LINE_PRERELEASE_REPORT.json");
@@ -49,7 +50,7 @@ function listSourceFiles(entry, output = []) {
   }
   if (!stat.isDirectory()) return output;
   fs.readdirSync(full)
-    .sort()
+    .sort(byFilename)
     .forEach((name) => {
       if (IGNORED_DIRS.has(name) || name.startsWith(".")) return;
       listSourceFiles(path.join(entry, name), output);

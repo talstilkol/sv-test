@@ -3,6 +3,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "report-source-of-truth-v1";
@@ -76,7 +77,7 @@ function isHistoricalDate(reportDate) {
 }
 
 function collectTrackedJsonArtifacts() {
-  const files = fs.readdirSync(ROOT).filter((file) => file.endsWith(".json")).sort();
+  const files = fs.readdirSync(ROOT).filter((file) => file.endsWith(".json")).sort(byFilename);
   const out = [];
   for (const fileName of files) {
     const fullPath = path.join(ROOT, fileName);

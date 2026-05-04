@@ -23,6 +23,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const { byFilename } = require("./lib/sort.js");
 
 const STRICT = process.argv.includes("--strict");
 const ROOT = path.resolve(__dirname, "..");
@@ -32,7 +33,8 @@ const DATA_DIR = path.join(ROOT, "data");
 function loadDataFiles() {
   const sandbox = { window: {}, console };
   const files = fs.readdirSync(DATA_DIR)
-    .filter((f) => f.endsWith(".js") && f !== "questions_bank_seeded.js");
+    .filter((f) => f.endsWith(".js") && f !== "questions_bank_seeded.js")
+    .sort(byFilename);
   for (const f of files) {
     const code = fs.readFileSync(path.join(DATA_DIR, f), "utf8");
     try {

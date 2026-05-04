@@ -3,6 +3,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const REPORT_VERSION = "no-auto-question-generation-v1";
@@ -53,7 +54,7 @@ function listFiles(entry, output = []) {
     return output;
   }
   if (!stat.isDirectory()) return output;
-  for (const name of fs.readdirSync(full).sort()) {
+  for (const name of fs.readdirSync(full).sort(byFilename)) {
     if (name === "node_modules" || name === "output" || name.startsWith(".")) continue;
     listFiles(path.join(entry, name), output);
   }

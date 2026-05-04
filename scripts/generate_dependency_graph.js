@@ -5,6 +5,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
@@ -12,7 +13,8 @@ const OUT_FILE = path.join(ROOT, "docs", "exam-prep", "CONCEPT_DEPENDENCIES.md")
 
 const LESSON_FILES = fs
   .readdirSync(DATA_DIR)
-  .filter((f) => f.startsWith("lesson_") && f.endsWith(".js"));
+  .filter((f) => f.startsWith("lesson_") && f.endsWith(".js"))
+  .sort(byFilename);
 
 function loadLesson(filename) {
   const filePath = path.join(DATA_DIR, filename);
