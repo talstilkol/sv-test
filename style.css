@@ -8,7 +8,7 @@
   --border-glass: rgba(255, 255, 255, 0.06);
   --border-accent: rgba(99, 102, 241, 0.25);
   --text-main: #e8ecf4;
-  --text-muted: #7a849a;
+  --text-muted: #98a3b8;   /* WCAG AA: bumped from #7a849a (4.47:1) → 5.6:1 on bg-dark; affects ~360 selectors */
   --text-bright: #ffffff;
   --primary: #6366f1;
   --primary-glow: rgba(99, 102, 241, 0.35);
@@ -22104,8 +22104,8 @@ button.grandma-crumb:hover {
   gap: 0.3rem;
   padding: 0.15rem 0.55rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(99, 102, 241, 0.15);   /* WCAG AA: was rgba(255,255,255,0.05) which was 1.18:1 over the page bg per naive audit; primary tint at 0.15 reads as a real pill */
+  border: 1px solid rgba(99, 102, 241, 0.3);
   font-size: 0.78rem;
 }
 .achievements-rail .ach-icon { font-size: 0.95rem; }

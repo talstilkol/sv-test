@@ -655,13 +655,13 @@ function discoverLessonFiles() {
   return fs.readdirSync(DATA_DIR)
     .filter((f) => /^lesson(_|\d).*\.js$/i.test(f) && !f.includes(".test."))
     .sort((a, b) => {
-      // Numeric lessons first (lesson11 < lesson12), then named bridges
+      // Numeric lessons first (lesson11 < lesson12), then named bridges by codepoint.
       const an = a.match(/^lesson(\d+)\.js$/);
       const bn = b.match(/^lesson(\d+)\.js$/);
       if (an && bn) return Number(an[1]) - Number(bn[1]);
       if (an) return -1;
       if (bn) return 1;
-      return a.localeCompare(b);
+      return a < b ? -1 : a > b ? 1 : 0;
     });
 }
 

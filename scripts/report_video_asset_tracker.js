@@ -4,6 +4,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
@@ -20,7 +21,7 @@ function loadData() {
   const sandbox = { window: {}, console };
   fs.readdirSync(DATA_DIR)
     .filter((file) => file.endsWith(".js"))
-    .sort((a, b) => a.localeCompare(b))
+    .sort(byFilename)
     .forEach((file) => {
       const code = fs.readFileSync(path.join(DATA_DIR, file), "utf8");
       vm.runInNewContext(code, sandbox, { filename: file });
