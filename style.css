@@ -27918,6 +27918,88 @@ html.cosmetic-accessible-outline .museum-section {
 }
 
 /* ============================================
+   GDPR/CCPA consent banner
+   ============================================ */
+#consent-banner {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 10000;        /* above onboarding so it gates onboarding */
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-glass);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+  padding: 1rem 1.2rem;
+}
+#consent-banner[hidden] { display: none; }
+.consent-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.2rem;
+  align-items: center;
+}
+@media (max-width: 720px) {
+  .consent-inner { grid-template-columns: 1fr; }
+  .consent-actions { justify-content: stretch !important; }
+}
+.consent-text h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  color: var(--text-bright);
+}
+.consent-text p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.consent-text code {
+  direction: ltr;
+  unicode-bidi: plaintext;
+  background: rgba(129, 140, 248, 0.12);
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+}
+.consent-text a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.consent-actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.consent-btn {
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.consent-btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg-dark);     /* indigo-400 bg + dark text = high contrast button */
+}
+.consent-btn-primary:hover,
+.consent-btn-primary:focus-visible {
+  filter: brightness(1.1);
+}
+.consent-btn-secondary {
+  background: transparent;
+  color: var(--text-main);
+}
+.consent-btn-secondary:hover,
+.consent-btn-secondary:focus-visible {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ============================================
    First-run onboarding overlay
    ============================================ */
 #onboarding-overlay {

@@ -5,20 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LumenPortal — סיכום חומרי הלימוד המלא ב-6 רמות</title>
     <meta name="description" content="פורטל לימוד Full-Stack מלא: כל שיעור מוסבר ב-6 רמות — מסבתא ועד פרופסור, עם בלוקי קוד, הסברי עומק ושאלונים." />
-    <!-- Content Security Policy — restricts scripts to same-origin (inline allowed
-         for the boot script + a few computed style attributes). No third-party
-         scripts permitted. Google Fonts is the only external origin. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';" />
-    <script>
-      (() => {
-        try {
-          const params = new URLSearchParams(window.location.search);
-          if (params.get("standalone") === "museum" || params.get("view") === "museum") {
-            document.documentElement.classList.add("standalone-museum-boot");
-          }
-        } catch (_) {}
-      })();
-    </script>
+    <!-- Content Security Policy. script-src is strict 'self' — no inline JS
+         allowed. style-src keeps 'unsafe-inline' for legacy inline style="..."
+         attributes (z-index, display:none) used throughout the SPA; converting
+         those to classes is on the tech-debt backlog. No third-party scripts
+         permitted. Google Fonts is the only external origin. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';" />
+    <script src="src/boot/standalone-museum.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
       rel="stylesheet"
@@ -1590,6 +1583,25 @@
       </div>
     </div>
 
+    <!-- GDPR/CCPA consent banner — gates whether we're allowed to use
+         localStorage at all. Must run BEFORE the onboarding overlay so the
+         user makes the storage decision before we save anything. -->
+    <div id="consent-banner" hidden role="dialog" aria-labelledby="consent-title" aria-describedby="consent-body">
+      <div class="consent-inner">
+        <div class="consent-text">
+          <h2 id="consent-title">🍪 אחסון מקומי בלבד</h2>
+          <p id="consent-body">
+            LumenPortal שומר את ההתקדמות שלך (ציונים, רפלקציות, מבחנים) ב-<code>localStorage</code> של הדפדפן שלך בלבד.
+            <strong>שום נתון לא נשלח לשרת חיצוני.</strong> ראה <a href="PRIVACY.md" target="_blank" rel="noopener">הצהרת פרטיות</a> ו-<a href="TERMS.md" target="_blank" rel="noopener">תנאי שימוש</a>.
+          </p>
+        </div>
+        <div class="consent-actions">
+          <button id="consent-accept" class="consent-btn consent-btn-primary">מאשר/ת — לשמור התקדמות</button>
+          <button id="consent-decline" class="consent-btn consent-btn-secondary">לא מאשר/ת — בלי שמירה</button>
+        </div>
+      </div>
+    </div>
+
     <!-- First-run onboarding overlay — gated by localStorage["lumen-onboarded"]. -->
     <div id="onboarding-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
       <div class="onboarding-panel">
@@ -1616,37 +1628,6 @@
         <button class="onboarding-skip" id="onboarding-skip">דלג, אני מכיר/ה את הפלטפורמה</button>
       </div>
     </div>
-    <script>
-      (() => {
-        // Show onboarding overlay only on first visit (localStorage flag).
-        function init() {
-          try {
-            if (localStorage.getItem("lumen-onboarded") === "1") return;
-          } catch (_) { return; }
-          const overlay = document.getElementById("onboarding-overlay");
-          if (!overlay) return;
-          overlay.removeAttribute("hidden");
-          const dismiss = (target) => {
-            try { localStorage.setItem("lumen-onboarded", "1"); } catch (_) {}
-            overlay.setAttribute("hidden", "");
-            if (target) {
-              const btn = document.getElementById(target);
-              if (btn) btn.click();
-            }
-          };
-          overlay.querySelectorAll("[data-onboarding]").forEach((btn) => {
-            btn.addEventListener("click", () => dismiss(btn.getAttribute("data-onboarding")));
-          });
-          document.getElementById("onboarding-skip")?.addEventListener("click", () => dismiss(null));
-          // Esc key dismisses too
-          overlay.addEventListener("keydown", (e) => { if (e.key === "Escape") dismiss(null); });
-        }
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", init);
-        } else {
-          init();
-        }
-      })();
-    </script>
+    <script src="src/boot/consent-onboarding.js"></script>
   </body>
 </html>

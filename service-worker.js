@@ -18,6 +18,8 @@ const SHELL_ASSETS = [
   "/content-loader.js?v=content-validation-v1",
   "/src/main.js",
   "/src/main.js?v=core-bootstrap-v2",
+  "/src/boot/standalone-museum.js",
+  "/src/boot/consent-onboarding.js",
   "/src/core/runtime.js",
   "/src/core/sanitize.js",
   "/src/core/sanitize-early.js",
