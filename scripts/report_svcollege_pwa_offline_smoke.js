@@ -143,7 +143,7 @@ function buildReport() {
     ["standalone display", manifest.display === "standalone"],
     ["rtl hebrew manifest", manifest.lang === "he" && manifest.dir === "rtl"],
     ["maskable icons", (manifest.icons || []).some((icon) => String(icon.purpose || "").includes("maskable"))],
-    ["service worker registration", html.includes("app.js?v=cleanup-shards-v106") && sw.includes('self.addEventListener("install"') && read("app.js").includes('.register("service-worker.js", { scope: "/" })')],
+    ["service worker registration", html.includes("app.js?v=cleanup-shards-v107") && sw.includes('self.addEventListener("install"') && read("app.js").includes('.register("service-worker.js", { scope: "/" })')],
     ["cache version", sw.includes('const CACHE_VERSION = "lumen-v2.4.141-cluster-engine"')],
     ["install precache", sw.includes("cache.addAll(SHELL_ASSETS.map")],
     ["activate cleanup", sw.includes('self.addEventListener("activate"') && sw.includes("caches.delete(k)")],

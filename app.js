@@ -36627,19 +36627,42 @@ document.addEventListener("DOMContentLoaded", () => {
     return communityConceptKeyInput?.value || "";
   }
 
+  const LOCAL_THREADS_KEY = "lumenportal:community-threads:v1";
+
+  function getLocalThreads(conceptKey) {
+    try { return (JSON.parse(localStorage.getItem(LOCAL_THREADS_KEY) || "{}")[conceptKey]) || []; } catch (_) { return []; }
+  }
+
+  function saveLocalThread(thread) {
+    try {
+      const all = JSON.parse(localStorage.getItem(LOCAL_THREADS_KEY) || "{}");
+      const key = thread.conceptKey;
+      all[key] = [thread, ...(all[key] || [])].slice(0, 50);
+      localStorage.setItem(LOCAL_THREADS_KEY, JSON.stringify(all));
+    } catch (_) {}
+  }
+
   async function loadCommunityThreadsFromForm() {
+    const conceptKey = communityConceptKey();
+    if (!conceptKey.trim()) {
+      updateCommunityDiscussionStatus("טעינת דיונים חסומה: הכנס concept key.", "blocked");
+      return;
+    }
     const core = communityDiscussionsCore();
+    const config = ensureSupabaseSyncConfig();
+    if (!config) {
+      const threads = getLocalThreads(conceptKey);
+      renderCommunityThreads(threads);
+      updateCommunityDiscussionStatus(
+        threads.length ? `${threads.length} פתקים מקומיים למושג הזה.` : "אין פתקים מקומיים למושג הזה — צור דיון כדי להוסיף.",
+        "ready",
+      );
+      return;
+    }
     if (!core) {
       updateCommunityDiscussionStatus("טעינת דיונים חסומה: מודול community-discussions לא נטען.", "error");
       return;
     }
-    const conceptKey = communityConceptKey();
-    if (!conceptKey.trim()) {
-      updateCommunityDiscussionStatus("טעינת דיונים חסומה: צריך concept key.", "blocked");
-      return;
-    }
-    const config = ensureSupabaseSyncConfig();
-    if (!config) return;
     updateCommunityDiscussionStatus("טוען דיונים מ-Supabase...", "blocked");
     try {
       const report = await core.fetchConceptDiscussionThreads({ config, conceptKey });
@@ -36654,22 +36677,33 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function createCommunityThreadFromForm() {
+    const conceptKey = communityConceptKey();
+    const title = communityThreadTitleInput?.value?.trim() || "";
+    const body = communityThreadBodyInput?.value?.trim() || "";
+    if (!conceptKey.trim() || !title) {
+      updateCommunityDiscussionStatus("יצירת דיון חסומה: צריך concept key וכותרת.", "blocked");
+      return;
+    }
     const core = communityDiscussionsCore();
+    const config = ensureSupabaseSyncConfig();
+    if (!config) {
+      const thread = { id: `local-${Date.now()}`, conceptKey, title, body, status: "open", createdAt: new Date().toLocaleDateString("he-IL"), source: "local" };
+      saveLocalThread(thread);
+      if (communityThreadTitleInput) communityThreadTitleInput.value = "";
+      if (communityThreadBodyInput) communityThreadBodyInput.value = "";
+      updateCommunityDiscussionStatus(`פתק נוסף: "${title}" (מקומי).`, "ready");
+      renderCommunityThreads(getLocalThreads(conceptKey));
+      return;
+    }
     if (!core) {
       updateCommunityDiscussionStatus("יצירת דיון חסומה: מודול community-discussions לא נטען.", "error");
       return;
     }
-    const draft = core.normalizeDiscussionDraft({
-      conceptKey: communityConceptKey(),
-      title: communityThreadTitleInput?.value || "",
-      body: communityThreadBodyInput?.value || "",
-    });
+    const draft = core.normalizeDiscussionDraft({ conceptKey, title, body });
     if (!draft.valid) {
       updateCommunityDiscussionStatus("יצירת דיון חסומה: צריך concept key וכותרת.", "blocked");
       return;
     }
-    const config = ensureSupabaseSyncConfig();
-    if (!config) return;
     updateCommunityDiscussionStatus("יוצר דיון ב-Supabase...", "blocked");
     try {
       const created = await core.createConceptDiscussionThread({ config, draft });
