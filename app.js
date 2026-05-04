@@ -35485,7 +35485,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const entry = allConcepts().find((e) => e.concept.conceptName === conceptName);
     if (!entry) return null;
     return {
-      explanation: entry.concept.simpleExplanation || entry.concept.explanation || "",
+      explanation: entry.concept.levels?.soldier || entry.concept.levels?.student || entry.concept.levels?.child || "",
       code: entry.concept.codeExample || "",
       codeNote: entry.concept.codeExplanation || "",
       lessonTitle: entry.lesson.title || "",
