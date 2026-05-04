@@ -1,5 +1,11 @@
 # Question Coverage Targets
 
+> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
+> Captured on: 2026-05-03
+> Source-of-truth refresh date: 2026-05-04
+> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
+
+
 Date: 2026-05-03
 
 ## Summary
@@ -15,3 +21,4 @@ Date: 2026-05-03
 - Manual-only: learner-facing coverage is enforced on hand-authored questions only.
 - Generated/seeded archives are ignored and not loaded by this report.
 - New questions must be authored and reviewed manually before entering the curated bank.
+

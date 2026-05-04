@@ -301,7 +301,7 @@
   "sourceOfTruth": {
     "status": "historical",
     "reportVersion": "report-source-of-truth-v1",
-    "evaluatedAt": "2026-05-03",
+    "evaluatedAt": "2026-05-04",
     "sourceDate": "2026-04-30",
     "source": "report-archive",
     "reason": "date-mismatch-with-source-of-truth"

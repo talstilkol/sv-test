@@ -37,7 +37,7 @@ Version: report-source-of-truth-v1
 | QUESTION_QUALITY_REPORT | historical | 2026-04-30 | question-quality-v1 | markdown+json | 2026-04-30 |
 | QUESTION_REMEDIATION_QUEUE | historical | 2026-04-28 | question-remediation-v1 | markdown+json | 2026-04-28 |
 | QUESTION_REUSE_AUDIT_REPORT | historical | 2026-04-29 | question-reuse-audit-v1 | markdown+json | md date missing |
-| REPORT_SOURCE_OF_TRUTH | historical | 2026-05-03 | report-source-of-truth-v1 | markdown+json | 2026-05-03 |
+| REPORT_SOURCE_OF_TRUTH | active | 2026-05-04 | report-source-of-truth-v1 | markdown+json | 2026-05-04 |
 | ROADMAP_90_DAY_WAVES | historical | 2026-04-29 | roadmap-90-day-waves-v1 | markdown+json | 2026-04-29 |
 | SVCOLLEGE_COMMAND_CENTER | historical | 2026-04-28 | svcollege-command-center-v1 | markdown+json | md date missing |
 | SVCOLLEGE_READINESS_REPORT | historical | 2026-04-28 | svcollege-readiness-v1 | markdown+json | md date missing |
@@ -55,7 +55,7 @@ Version: report-source-of-truth-v1
 
 ## Source-of-Truth Findings
 
-- [P1] 38 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical. (recon-003)
+- [P1] 37 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical. (recon-003)
 
 ## Policy
 

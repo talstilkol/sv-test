@@ -5,8 +5,8 @@
   "scope": "generated report freshness + contradiction reconciliation",
   "artifactSummary": {
     "total": 38,
-    "historical": 38,
-    "active": 0
+    "historical": 37,
+    "active": 1
   },
   "policy": "Reconciliation uses live rebuilds of feature and question coverage reports. Any report older than today's source-of-truth date is marked historical/superseded. Live decisions must be driven by active reports in this file.",
   "signals": [
@@ -40,10 +40,10 @@
     {
       "id": "recon-003",
       "severity": "P1",
-      "finding": "38 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical.",
+      "finding": "37 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical.",
       "evidence": {
         "sourceOfTruthDate": "2026-05-04",
-        "staleArtifacts": 38
+        "staleArtifacts": 37
       }
     }
   ],
@@ -334,9 +334,9 @@
     },
     {
       "id": "REPORT_SOURCE_OF_TRUTH",
-      "state": "historical",
-      "date": "2026-05-03",
-      "mdDate": "2026-05-03",
+      "state": "active",
+      "date": "2026-05-04",
+      "mdDate": "2026-05-04",
       "reportVersion": "report-source-of-truth-v1",
       "type": "markdown+json",
       "title": "scripts/report_source_of_truth.js"
