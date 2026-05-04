@@ -12768,6 +12768,7 @@ body.museum-video-modal-open {
   color: #bfdbfe;
   overflow-x: auto;
   white-space: pre;
+  max-width: 100%;
 }
 
 .pb-code code {
@@ -21101,6 +21102,7 @@ button.grandma-crumb:hover {
   margin: 0 0 10px 0;
   overflow-x: auto;
   line-height: 1.6;
+  max-width: 100%;
 }
 .code-anatomy-token {
   display: inline-block;
@@ -21450,11 +21452,11 @@ button.grandma-crumb:hover {
   flex-wrap: wrap;
 }
 .km-btn-mini.primary {
-  background: #6366f1;
-  border-color: #6366f1;
+  background: #4f46e5;
+  border-color: #4f46e5;
   color: white;
 }
-.km-btn-mini.primary:hover { background: #4f46e5; }
+.km-btn-mini.primary:hover { background: #4338ca; }
 
 .mx-question-nav {
   display: flex;
@@ -22754,6 +22756,9 @@ button.grandma-crumb:hover {
     --text-bright: #0a0b10;
     --shadow-lg: 0 8px 24px rgba(20, 23, 33, 0.12);
   }
+  /* A11Y: FAB icon colors fail contrast on light bg — use dark variants */
+  :root:not(.theme-dark):not(.theme-light) .pocket-fab { color: #b45309; }
+  :root:not(.theme-dark):not(.theme-light) .view-mode-fab { color: #4338ca; }
 }
 
 /* Settings panel — theme toggle */
