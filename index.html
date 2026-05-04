@@ -149,7 +149,7 @@
         </div>
 
         <div class="sidebar-search">
-          <input type="text" id="search-input" placeholder="🔍 חיפוש מושג או שיעור..." />
+          <input type="text" id="search-input" aria-label="חיפוש מושג או שיעור" placeholder="🔍 חיפוש מושג או שיעור..." />
         </div>
 
         <div class="sidebar-scroll">
@@ -169,7 +169,7 @@
         <!-- Hidden but kept for compatibility: header/count/search/progress refs -->
         <strong id="sidebar-context-title" hidden>תוכן עניינים</strong>
         <span id="sidebar-context-count" hidden></span>
-        <input type="text" id="sidebar-context-search" hidden />
+        <input type="text" id="sidebar-context-search" aria-label="חיפוש בעץ ההקשר" hidden />
         <div id="global-progress" hidden></div>
         <div id="progress-text" hidden></div>
       </nav>
@@ -208,7 +208,7 @@
             <strong>📖 מילון מונחים</strong>
             <button class="modal-close" id="glossary-close" aria-label="סגור">✕</button>
           </div>
-          <input type="text" class="modal-search" id="glossary-search" placeholder="🔍 חפש מונח (use, async, JSX, סטייט...)" />
+          <input type="text" class="modal-search" id="glossary-search" aria-label="חיפוש במילון" placeholder="🔍 חפש מונח (use, async, JSX, סטייט...)" />
           <div class="modal-body" id="glossary-list"></div>
         </div>
       </div>
@@ -223,11 +223,11 @@
           <div class="modal-body">
             <p>סכם את הלמידה שלך היום בכמה שורות. זה עוזר לזיכרון ארוך-טווח.</p>
             <label class="reflect-label">📚 מה למדתי היום?</label>
-            <textarea id="reflect-learned" rows="3" placeholder="לדוגמה: הבנתי איך useEffect עובד עם deps array..."></textarea>
+            <textarea id="reflect-learned" aria-label="מה למדתי היום" rows="3" placeholder="לדוגמה: הבנתי איך useEffect עובד עם deps array..."></textarea>
             <label class="reflect-label">🤔 מה היה קשה?</label>
-            <textarea id="reflect-stuck" rows="2" placeholder="באיזה מושג נתקעת הכי הרבה?"></textarea>
+            <textarea id="reflect-stuck" aria-label="במה נתקעתי" rows="2" placeholder="באיזה מושג נתקעת הכי הרבה?"></textarea>
             <label class="reflect-label">📊 רמת ביטחון (0-100%)</label>
-            <input type="range" id="reflect-confidence" min="0" max="100" value="50" />
+            <input type="range" id="reflect-confidence" aria-label="רמת ביטחון בלמידה (0-100)" min="0" max="100" value="50" />
             <div class="reflect-confidence-out" id="reflect-confidence-out">50%</div>
             <button class="km-btn-mini primary" id="reflect-save">💾 שמור</button>
             <div class="reflect-history" id="reflect-history"></div>
@@ -827,8 +827,8 @@
                 <div class="km-mastery-text" id="km-mastery-text">רמת שליטה: 0%</div>
               </div>
               <div class="km-toolbar">
-                <input type="text" id="km-search" placeholder="🔍 חיפוש מושג..." />
-                <select id="km-filter">
+                <input type="text" id="km-search" aria-label="חיפוש מושג במפת ידע" placeholder="🔍 חיפוש מושג..." />
+                <select id="km-filter" aria-label="סינון מפת ידע">
                   <option value="all">הצג הכל</option>
                   <option value="unknown">רק חלשים (רמה 1-2)</option>
                   <option value="known">רק מאסטר (רמה 7)</option>
@@ -979,7 +979,7 @@
               <h2 id="guide-title">📖 מדריך מקוצר — מפת החומר</h2>
               <p id="guide-subtitle"></p>
               <div class="guide-toolbar">
-                <input type="text" id="guide-search" placeholder="🔍 חיפוש בנושאים..." />
+                <input type="text" id="guide-search" aria-label="חיפוש בנושאי המדריך" placeholder="🔍 חיפוש בנושאים..." />
                 <button class="km-btn-mini" id="guide-expand-all">📂 פתח הכל</button>
                 <button class="km-btn-mini" id="guide-collapse-all">📁 כווץ הכל</button>
               </div>
@@ -993,7 +993,7 @@
               <h2 id="grandma-knowledge-title">👵 ידע מורחב ברמת סבתא</h2>
               <p id="grandma-knowledge-subtitle"></p>
               <div class="guide-toolbar grandma-toolbar">
-                <input type="text" id="grandma-knowledge-search" placeholder="🔍 חיפוש בענפי העץ או במושגים..." />
+                <input type="text" id="grandma-knowledge-search" aria-label="חיפוש בעץ הידע" placeholder="🔍 חיפוש בענפי העץ או במושגים..." />
                 <button class="km-btn-mini" id="grandma-knowledge-expand-all">📂 פתח את כל העץ</button>
                 <button class="km-btn-mini" id="grandma-knowledge-collapse-all">📁 כווץ לעץ ראשי</button>
               </div>
@@ -1016,7 +1016,7 @@
                 <div class="fc-stat done"><span class="n" id="fc-reviewed">0</span><span>נסקרו בסשן</span></div>
               </div>
               <div class="fc-toolbar">
-                <input type="text" id="fc-search" placeholder="🔍 חיפוש מושג, שיעור או הסבר..." />
+                <input type="text" id="fc-search" aria-label="חיפוש בכרטיסיות לימוד" placeholder="🔍 חיפוש מושג, שיעור או הסבר..." />
                 <select id="fc-filter" aria-label="סינון כרטיסיות">
                   <option value="due">🔁 חזרה מומלצת + חדשים</option>
                   <option value="weak">⚠️ חלשים</option>
@@ -1092,7 +1092,7 @@
             </p>
             <!-- P1.5.0c — Filters toolbar -->
             <div class="anatomy-toolbar">
-              <input type="text" id="anatomy-search" placeholder="🔍 חיפוש מושג / קוד..." />
+              <input type="text" id="anatomy-search" aria-label="חיפוש בניתוח קוד" placeholder="🔍 חיפוש מושג / קוד..." />
               <select id="anatomy-lesson-filter" aria-label="סנן לפי שיעור">
                 <option value="">📚 כל השיעורים</option>
               </select>
@@ -1115,10 +1115,10 @@
               <h2>🔬 Code Trace — חיזוי פלט שורה אחר שורה</h2>
               <p>קרא את הקוד, חזה את הפלט בכל שלב. כל תשובה נכונה מעלה את הניקוד למושג המקושר.</p>
               <div class="trace-toolbar">
-                <select id="trace-filter-lesson" class="cb-select">
+                <select id="trace-filter-lesson" class="cb-select" aria-label="סינון Code Trace לפי שיעור">
                   <option value="all">כל השיעורים</option>
                 </select>
-                <select id="trace-filter-level" class="cb-select">
+                <select id="trace-filter-level" class="cb-select" aria-label="סינון Code Trace לפי רמה">
                   <option value="all">כל הרמות</option>
                   <option value="1">רמה 1-2 (קל)</option>
                   <option value="3">רמה 3-4 (בינוני)</option>
@@ -1196,7 +1196,7 @@
               <h2>⚖️ השוואות זוגות — מתי להשתמש במה</h2>
               <p>טבלאות השוואה לזוגות מושגים שמתבלבלים. לחץ על זוג כדי לראות פירוט שורה-שורה.</p>
               <div class="cmp-toolbar">
-                <input type="text" id="cmp-search" placeholder="🔍 חיפוש (useState / props / Tailwind)..." />
+                <input type="text" id="cmp-search" aria-label="חיפוש בהשוואת מושגים" placeholder="🔍 חיפוש (useState / props / Tailwind)..." />
                 <button class="km-btn-mini" id="cmp-expand-all">⬇️ פתח הכל</button>
                 <button class="km-btn-mini" id="cmp-collapse-all">⬆️ סגור הכל</button>
               </div>
@@ -1251,11 +1251,11 @@
                 <div class="cb-stat"><span class="n" id="cb-stat-progress">0%</span><span>שליטה כללית</span></div>
               </div>
               <div class="cb-toolbar">
-                <input type="text" id="cb-search" placeholder="🔍 חיפוש בבלוקים..." />
-                <select id="cb-filter-lesson" class="cb-select">
+                <input type="text" id="cb-search" aria-label="חיפוש בבלוקי קוד" placeholder="🔍 חיפוש בבלוקים..." />
+                <select id="cb-filter-lesson" class="cb-select" aria-label="סינון בלוקים לפי שיעור">
                   <option value="all">כל השיעורים</option>
                 </select>
-                <select id="cb-filter-difficulty" class="cb-select">
+                <select id="cb-filter-difficulty" class="cb-select" aria-label="סינון בלוקים לפי קושי">
                   <option value="all">כל הרמות</option>
                   <option value="1">🟢 בסיסי</option>
                   <option value="2">🟡 בינוני</option>
@@ -1287,7 +1287,7 @@
         <div class="support-report-grid">
           <label>
             סוג
-            <select id="support-report-type">
+            <select id="support-report-type" aria-label="סוג דיווח תמיכה">
               <option value="bug">באג</option>
               <option value="content">תוכן</option>
               <option value="ui">ממשק</option>
@@ -1298,7 +1298,7 @@
           </label>
           <label>
             חומרה
-            <select id="support-report-severity">
+            <select id="support-report-severity" aria-label="חומרת הדיווח">
               <option value="medium">בינוני</option>
               <option value="low">נמוך</option>
               <option value="high">גבוה</option>
@@ -1308,15 +1308,15 @@
         </div>
         <label class="support-report-field">
           כותרת
-          <input id="support-report-title-input" type="text" autocomplete="off" />
+          <input id="support-report-title-input" aria-label="כותרת הדיווח" type="text" autocomplete="off" />
         </label>
         <label class="support-report-field">
           תיאור
-          <textarea id="support-report-description" rows="4"></textarea>
+          <textarea id="support-report-description" aria-label="תיאור הדיווח" rows="4"></textarea>
         </label>
         <label class="support-report-field">
           צילום מסך
-          <input id="support-report-screenshot" type="file" accept="image/png,image/jpeg,image/webp" />
+          <input id="support-report-screenshot" aria-label="קובץ צילום מסך לדיווח" type="file" accept="image/png,image/jpeg,image/webp" />
         </label>
         <div class="support-report-context" id="support-report-context"></div>
         <div class="support-report-actions">
@@ -1500,7 +1500,7 @@
           <button id="reflection-close-w12" class="refl-close" aria-label="סגור">✕</button>
         </div>
         <p class="refl-prompt">מה למדת היום? מה היה קשה? מה רצית לחזק?</p>
-        <textarea id="reflection-text" class="refl-textarea" rows="4" placeholder="כתוב כאן את המחשבות שלך..."></textarea>
+        <textarea id="reflection-text" class="refl-textarea" aria-label="טקסט רפלקציה" rows="4" placeholder="כתוב כאן את המחשבות שלך..."></textarea>
         <div class="refl-rating">
           <span>איך הרגשת היום?</span>
           <div class="refl-stars">
