@@ -34,16 +34,9 @@
           <span class="ach-rail-mini" id="ach-rail-mini" aria-hidden="true">📊</span>
         </summary>
         <div id="achievements-rail" class="achievements-rail" role="status" aria-live="polite" aria-label="סרגל הישגים">
-          <!-- UX 2026-05-02: Navigation buttons in the achievements rail -->
-          <button class="ach-nav-btn" id="ach-nav-back" type="button" aria-label="חזרה לעמוד הקודם" title="חזרה לעמוד הקודם">
-            <span aria-hidden="true">←</span>
-            <span class="ach-nav-label">חזרה</span>
-          </button>
-          <button class="ach-nav-btn" id="ach-nav-home" type="button" aria-label="חזרה לעמוד הבית" title="חזרה לעמוד הבית">
-            <span aria-hidden="true">🏠</span>
-            <span class="ach-nav-label">בית</span>
-          </button>
-          <span class="ach-rail-divider" aria-hidden="true"></span>
+          <!-- 2026-05-04: Removed duplicate Back/Home nav buttons. The site-trail-nav
+               below has the same buttons but with smarter in-app history (siteNavigationStack
+               vs naïve window.history.back). Achievements rail now focuses on stats only. -->
           <!-- UX 2026-05-02: Student name + XP + performance summary -->
           <span class="ach-rail-item ach-student" title="הפרופיל הפעיל">
             <span class="ach-icon">👤</span>

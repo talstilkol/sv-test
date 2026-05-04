@@ -14099,10 +14099,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function weakCount() {
+    // "Weak" should mean ATTEMPTED but stuck at low level — not "fresh-start, never touched".
+    // Default sc.level=1 with sc.attempts=0 was being counted as weak, so a fresh
+    // user saw "568 חלשים ⚠️" which framed unstarted concepts as a problem.
+    // Knowledge-map view already had this distinction right.
     let w = 0;
     trainableConcepts().forEach(({ lesson, concept }) => {
       const sc = getScore(lesson.id, concept.conceptName);
-      if (sc.level <= 2) w++; // level 1 (סבתא) or 2 (כיתה א')
+      if (sc.attempts > 0 && sc.level <= 2) w++; // attempted but still at level 1-2
     });
     return w;
   }
@@ -30092,19 +30096,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ------- Achievements rail navigation buttons (UX 2026-05-02) -------
-  // Back / Home buttons in the top thin rail.
+  // Removed 2026-05-04: duplicated the smarter site-trail-nav buttons.
+  // Wiring kept defensive in case the markup is added back via a build step.
   if (typeof window !== "undefined") {
     document.addEventListener("DOMContentLoaded", () => {
       const backBtn = document.getElementById("ach-nav-back");
       const homeBtn = document.getElementById("ach-nav-home");
       if (backBtn) {
         backBtn.addEventListener("click", () => {
-          // Use history.back if any history entries exist; otherwise go home.
-          if (window.history.length > 1) {
-            window.history.back();
-          } else {
-            document.getElementById("open-home")?.click();
-          }
+          // Delegate to the smarter site-trail-nav handler if present.
+          const siteBack = document.getElementById("site-back-btn");
+          if (siteBack) { siteBack.click(); return; }
+          if (window.history.length > 1) window.history.back();
+          else document.getElementById("open-home")?.click();
         });
       }
       if (homeBtn) {
