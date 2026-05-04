@@ -35880,6 +35880,106 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsText(file);
   }
 
+  // ===== TEACHER PREVIEW (impersonation) =====
+  const PREVIEW_BACKUP_KEY = "lumenportal:teacher-preview-backup:v1";
+
+  function snapshotAllLumenKeys() {
+    const snap = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("lumenportal:")) snap[k] = localStorage.getItem(k);
+    }
+    return snap;
+  }
+
+  function restoreLumenKeysFromSnap(snap) {
+    // Remove all current lumenportal: keys
+    const toClear = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("lumenportal:") && k !== PREVIEW_BACKUP_KEY) toClear.push(k);
+    }
+    toClear.forEach((k) => localStorage.removeItem(k));
+    // Restore snapshot
+    Object.entries(snap).forEach(([k, v]) => localStorage.setItem(k, v));
+  }
+
+  function isInPreviewMode() {
+    return !!localStorage.getItem(PREVIEW_BACKUP_KEY);
+  }
+
+  function showPreviewBanner(studentName) {
+    const banner = document.getElementById("teacher-preview-banner");
+    const nameEl = document.getElementById("teacher-preview-name");
+    if (!banner) return;
+    if (nameEl) nameEl.textContent = studentName || "לא ידוע";
+    banner.removeAttribute("hidden");
+  }
+
+  function hidePreviewBanner() {
+    document.getElementById("teacher-preview-banner")?.setAttribute("hidden", "");
+  }
+
+  async function startTeacherPreview(file) {
+    if (!file) return;
+    let data;
+    try {
+      const text = await new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = (e) => resolve(String(e.target?.result || ""));
+        r.onerror = () => reject(new Error("read failed"));
+        r.readAsText(file);
+      });
+      data = JSON.parse(text);
+    } catch (_) {
+      alert("שגיאה בקריאת הקובץ — ודא שזה JSON תקין.");
+      return;
+    }
+    if (!data.version || (!data.scores && !data.proficiency)) {
+      alert("הקובץ אינו קובץ התקדמות תקין של LumenPortal.");
+      return;
+    }
+    const studentName = data.profile?.name || data.exportedAt || "לא ידוע";
+    // Backup current teacher state
+    const backup = snapshotAllLumenKeys();
+    localStorage.setItem(PREVIEW_BACKUP_KEY, JSON.stringify(backup));
+    // Apply student data (no confirmation needed — we have a backup)
+    try {
+      await applyProgressData(data, { requireConfirmation: false });
+    } catch (err) {
+      // Rollback
+      localStorage.removeItem(PREVIEW_BACKUP_KEY);
+      alert("שגיאה בטעינת נתוני התלמיד: " + (err.message || "unknown error"));
+      return;
+    }
+    showPreviewBanner(studentName);
+    // Reload UI to reflect student's state
+    window.location.reload();
+  }
+
+  function exitTeacherPreview() {
+    const raw = localStorage.getItem(PREVIEW_BACKUP_KEY);
+    if (!raw) { hidePreviewBanner(); return; }
+    try {
+      const backup = JSON.parse(raw);
+      localStorage.removeItem(PREVIEW_BACKUP_KEY);
+      restoreLumenKeysFromSnap(backup);
+    } catch (_) {
+      localStorage.removeItem(PREVIEW_BACKUP_KEY);
+    }
+    window.location.reload();
+  }
+
+  // Restore banner if we're still in preview mode after reload
+  if (isInPreviewMode()) {
+    try {
+      const backup = JSON.parse(localStorage.getItem(PREVIEW_BACKUP_KEY) || "{}");
+      // Try to show student's name from exported progress
+      const studentSnap = buildProgressSnapshot();
+      showPreviewBanner(studentSnap.profile?.name || "תלמיד");
+    } catch (_) { showPreviewBanner("תלמיד"); }
+  }
+
   function progressSyncCore() {
     return window.LUMEN_CORE && window.LUMEN_CORE.progressSync;
   }
@@ -36024,6 +36124,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Wire export/import buttons (added to settings/profile area)
+  document.getElementById("btn-preview-student")?.addEventListener("click", () => {
+    const picker = document.getElementById("teacher-preview-file");
+    if (!picker) return;
+    picker.onchange = (e) => { if (e.target.files?.[0]) startTeacherPreview(e.target.files[0]); };
+    picker.click();
+  });
+  document.getElementById("btn-exit-preview")?.addEventListener("click", exitTeacherPreview);
   document.getElementById("btn-export-progress")?.addEventListener("click", exportProgress);
   document.getElementById("btn-import-progress")?.addEventListener("click", () => {
     const picker = document.createElement("input");

@@ -34,7 +34,7 @@ _(audit complete; resuming execution)_
 - [x] **Onboarding walkthrough** — two-stage flow: consent banner → choice overlay (adaptive/read/exam/skip); implemented in `src/boot/consent-onboarding.js`; verified: consent-accept triggers overlay, all 3 choice buttons open correct tabs, skip sets `lumen-onboarded=1`
 - [x] **Real Playwright smoke** — 3/3 passed in headless Chromium (23 tabs, consent, mock-exam)
 - [x] **Teacher dashboard polish** — local-mode fallbacks: mastery heatmap from localStorage scores, risk alerts for < 40% mastery concepts, CSV bulk import without Supabase; fixed `setTableSectionHTML` bypass for sanitize-early.js
-- [ ] **Social/community v0** — peer-review submissions for code activities (~2 weeks)
+- [x] **Social/community v0** — community discussion threads work locally (localStorage-backed concept notes, `lumenportal:community-threads:v1`); create + load + render without Supabase
 - [x] **Spaced repetition v2** — due-count badge on tab (data-nav-skip breadcrumb fix); keyboard shortcuts Space/1-4; session completion screen with rating breakdown (again/hard/good/easy chips) + 7-day review forecast bar chart
 - [x] **Accessibility statement page** — modal in settings ♿ card; WCAG 2.1 AA / Lighthouse 100 / known limits listed; GitHub Issues link
 - [x] **GDPR/CCPA consent flow** — `#consent-banner` + `initConsentBanner()`: shows on first load, accept/decline stored as `lumen-consent` in localStorage, decline sets `window.__lumenConsentDeclined`

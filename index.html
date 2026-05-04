@@ -608,6 +608,10 @@
 
                 <section class="settings-card settings-card-wide" aria-label="ניהול מתקדם">
                   <h3>ניהול מתקדם</h3>
+                  <div class="teacher-impersonate-row">
+                    <button class="km-btn-mini" id="btn-preview-student" type="button" title="טען קובץ JSON של תלמיד וצפה בפורטל מנקודת מבטו (ללא שינוי נתוניך)">👁 צפה כתלמיד</button>
+                    <input type="file" id="teacher-preview-file" accept=".json,application/json" style="display:none" aria-label="בחר קובץ התקדמות תלמיד" />
+                  </div>
                   <details class="teacher-class-panel">
                     <summary>ניהול כיתה למורה</summary>
                     <div class="teacher-class-form">
@@ -1465,7 +1469,7 @@
     <!-- P4.6.4 — HTML sanitization must patch legacy rendering before app.js -->
     <script src="lib/vendor/dompurify.min.js"></script>
     <script src="src/core/sanitize-early.js"></script>
-    <script src="app.js?v=cleanup-shards-v107"></script>
+    <script src="app.js?v=cleanup-shards-v108"></script>
     <script type="module" src="/src/main.js?v=core-bootstrap-v2"></script>
 
     <!-- W12 — Achievements overlay -->
@@ -1695,5 +1699,9 @@
     </div>
     <script src="src/boot/lumen-confirm.js"></script>
     <script src="src/boot/consent-onboarding.js"></script>
+  <div id="teacher-preview-banner" role="alert" aria-live="assertive" hidden>
+    <span id="teacher-preview-label">מצב תצפית — תלמיד: <strong id="teacher-preview-name"></strong></span>
+    <button type="button" id="btn-exit-preview" class="km-btn-mini">✖ יציאה מתצפית</button>
+  </div>
   </body>
 </html>
