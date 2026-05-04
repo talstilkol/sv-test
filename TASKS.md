@@ -49,13 +49,14 @@ _(audit complete; resuming execution)_
 - [x] **Curriculum versioning v0** — `CURRICULUM_VERSION` constant; dismissible update banner on content change; `curriculumVersion` field stamped in progress export; `lumenportal:curriculum-version:v1` tracks last-seen version
 - [x] **Teacher impersonation** — view student's exact state for debugging (~3 days)
 - [ ] **Content marketplace** — third-party teachers can publish lessons (~3 weeks)
-- [ ] **Offline-first sync conflict resolution** — multiple devices, last-write-wins is wrong (~1 week)
+- [x] **Offline-first sync conflict resolution v0** — merge semantics for progress import: scores take max (level/attempts/correct/proofs), answered-questions union, economy max XP/coins + deduped rewardLog, weaknesses merged; "מיזוג התקדמות" button in settings
 
 ## Done in 2026-05-04 sessions ✅
 
 ### This session (continuation)
 - [x] **Teacher impersonation** — non-destructive student preview; backup/restore via `PREVIEW_BACKUP_KEY`; amber bottom banner; exit restores teacher state
 - [x] **Curriculum versioning v0** — `CURRICULUM_VERSION = "2026-05-04"`; dismissible update banner (top, blue); stamps `curriculumVersion` in progress export; `lumenportal:curriculum-version:v1` key
+- [x] **Offline-first sync conflict resolution v0** — `mergeProgressData()` + "מיזוג התקדמות" button; merge semantics: max scores/proofs, union answered-questions, max XP/coins, deduped rewardLog
 - [x] **Bidi audit** — script written, 2 typos fixed, 43 legit Hebrew grammar patterns accepted
 - [x] **byFilename refactor** — 8 more scripts updated (11 total canonical)
 - [x] **npm audit** — 0 vulnerabilities

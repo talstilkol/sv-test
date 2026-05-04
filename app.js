@@ -35884,6 +35884,155 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsText(file);
   }
 
+  // ===== OFFLINE SYNC MERGE =====
+  function mergeScoreObjects(local, incoming) {
+    const merged = Object.assign({}, local);
+    Object.keys(incoming).forEach((conceptKey) => {
+      const inc = incoming[conceptKey];
+      const loc = local[conceptKey];
+      if (!loc) { merged[conceptKey] = inc; return; }
+      merged[conceptKey] = {
+        ...loc,
+        level: Math.max(loc.level || 1, inc.level || 1),
+        attempts: Math.max(loc.attempts || 0, inc.attempts || 0),
+        correct: Math.max(loc.correct || 0, inc.correct || 0),
+        taggedAttempts: Math.max(loc.taggedAttempts || 0, inc.taggedAttempts || 0),
+        taggedCorrect: Math.max(loc.taggedCorrect || 0, inc.taggedCorrect || 0),
+        weakReports: Math.max(loc.weakReports || 0, inc.weakReports || 0),
+        correctRunCount: Math.max(loc.correctRunCount || 0, inc.correctRunCount || 0),
+        passedMC: !!(loc.passedMC || inc.passedMC),
+        passedFill: !!(loc.passedFill || inc.passedFill),
+        markedKnown: !!(loc.markedKnown || inc.markedKnown),
+        masteryProof: loc.masteryProof || inc.masteryProof || null,
+        oneLineProof: loc.oneLineProof || inc.oneLineProof || null,
+        scratchProof: loc.scratchProof || inc.scratchProof || null,
+        codeProof: loc.codeProof || inc.codeProof || null,
+        lastAttemptAt: (loc.lastAttemptAt || 0) >= (inc.lastAttemptAt || 0)
+          ? loc.lastAttemptAt : inc.lastAttemptAt,
+      };
+    });
+    return merged;
+  }
+
+  function mergeJsonArrayKey(localRaw, incomingRaw) {
+    try {
+      const localArr = JSON.parse(localRaw || "[]");
+      const incArr = JSON.parse(incomingRaw || "[]");
+      if (!Array.isArray(localArr) || !Array.isArray(incArr)) return incomingRaw;
+      return JSON.stringify([...new Set([...localArr, ...incArr])]);
+    } catch (_) { return incomingRaw; }
+  }
+
+  function mergeEconomy(localEcon, incomingEcon) {
+    const inc = incomingEcon || {};
+    const loc = localEcon || {};
+    const mergedLog = [...(loc.rewardLog || []), ...(inc.rewardLog || [])];
+    const seen = new Set();
+    const deduped = mergedLog.filter((entry) => {
+      const id = entry.id || entry.at || JSON.stringify(entry);
+      if (seen.has(id)) return false;
+      seen.add(id);
+      return true;
+    });
+    return {
+      xp: Math.max(Number(loc.xp) || 0, Number(inc.xp) || 0),
+      coins: Math.max(Number(loc.coins) || 0, Number(inc.coins) || 0),
+      lifetimeXp: Math.max(Number(loc.lifetimeXp) || 0, Number(inc.lifetimeXp) || 0),
+      lifetimeCoinsEarned: Math.max(Number(loc.lifetimeCoinsEarned) || 0, Number(inc.lifetimeCoinsEarned) || 0),
+      disabled: loc.disabled || inc.disabled,
+      rewardLog: deduped.slice(0, 80),
+      purchases: Object.assign({}, loc.purchases || {}, inc.purchases || {}),
+    };
+  }
+
+  async function mergeProgressData(incoming) {
+    const snapshot = buildProgressSnapshot();
+    const mergedScoresKey = Object.keys(snapshot.scores)[0] || "lumenportal:scores:v1";
+    const mergedScores = {};
+    const allScoreKeys = new Set([
+      ...Object.keys(snapshot.scores),
+      ...Object.keys(incoming.scores || {}),
+    ]);
+    allScoreKeys.forEach((k) => {
+      try {
+        const localObj = JSON.parse(snapshot.scores[k] || "{}");
+        const incObj = JSON.parse((incoming.scores || {})[k] || "{}");
+        mergedScores[k] = JSON.stringify(mergeScoreObjects(localObj, incObj));
+      } catch (_) { mergedScores[k] = snapshot.scores[k] || (incoming.scores || {})[k]; }
+    });
+    const mergedProf = {};
+    const allProfKeys = new Set([
+      ...Object.keys(snapshot.proficiency),
+      ...Object.keys(incoming.proficiency || {}),
+    ]);
+    allProfKeys.forEach((k) => {
+      try {
+        const localVal = JSON.parse(snapshot.proficiency[k] || "{}");
+        const incVal = JSON.parse((incoming.proficiency || {})[k] || "{}");
+        const merged = Object.assign({}, localVal);
+        if (typeof incVal.level === "number" && incVal.level > (merged.level || 0)) merged.level = incVal.level;
+        mergedProf[k] = JSON.stringify(merged);
+      } catch (_) { mergedProf[k] = snapshot.proficiency[k] || (incoming.proficiency || {})[k]; }
+    });
+    const mergedAQ = {};
+    const allAQKeys = new Set([
+      ...Object.keys(snapshot.answeredQuestions),
+      ...Object.keys(incoming.answeredQuestions || {}),
+    ]);
+    allAQKeys.forEach((k) => {
+      mergedAQ[k] = mergeJsonArrayKey(
+        snapshot.answeredQuestions[k],
+        (incoming.answeredQuestions || {})[k],
+      );
+    });
+    const mergedWeaknesses = Object.assign({}, snapshot.weaknesses, incoming.weaknesses || {});
+    const mergedEcon = mergeEconomy(snapshot.economy, incoming.economy);
+    Object.entries(mergedScores).forEach(([k, v]) => localStorage.setItem(k, v));
+    Object.entries(mergedProf).forEach(([k, v]) => localStorage.setItem(k, v));
+    Object.entries(mergedAQ).forEach(([k, v]) => localStorage.setItem(k, v));
+    Object.entries(mergedWeaknesses).forEach(([k, v]) => localStorage.setItem(k, v));
+    importEconomyExport(mergedEcon);
+  }
+
+  function mergeProgress(file) {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (!data.version || (!data.scores && !data.proficiency)) {
+          alert("הקובץ אינו קובץ התקדמות תקין של LumenPortal.");
+          return;
+        }
+        const summary =
+          `מיזוג התקדמות מהתקן אחר:\n` +
+          `${Object.keys(data.scores || {}).length} שיעורים · ${Number((data.economy || {}).xp) || 0} XP\n\n` +
+          `הנתון הטוב ביותר מכל מקור יישמר — ציונים, XP וסמני מסטרי גבוהים יותר ינצחו.`;
+        const confirmed = await (window.lumenConfirm
+          ? window.lumenConfirm(summary, {
+              title: "אישור מיזוג התקדמות",
+              primary: "מזג",
+              secondary: "ביטול",
+              danger: false,
+            })
+          : Promise.resolve(confirm(summary)));
+        if (!confirmed) return;
+        await mergeProgressData(data);
+        alert("המיזוג הצליח! רענן את הדף כדי לראות את הנתונים המאוחדים.");
+      } catch (err) {
+        alert("שגיאה בקובץ — ודא שזה קובץ JSON תקין שיוצא מ-LumenPortal.");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  document.getElementById("btn-merge-progress")?.addEventListener("click", () => {
+    const picker = document.createElement("input");
+    picker.type = "file";
+    picker.accept = ".json,application/json";
+    picker.onchange = (e) => { if (e.target.files[0]) mergeProgress(e.target.files[0]); };
+    picker.click();
+  });
+
   // ===== TEACHER PREVIEW (impersonation) =====
   const PREVIEW_BACKUP_KEY = "lumenportal:teacher-preview-backup:v1";
 
