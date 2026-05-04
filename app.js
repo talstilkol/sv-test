@@ -35418,7 +35418,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return card?.dataset.concept || "";
       })();
       const ctxBar = document.getElementById("ai-context-bar");
-      if (ctxBar) ctxBar.textContent = concName ? `📌 הקשר: ${concName}` : "";
+      const content = concName ? getConceptContent(concName) : null;
+      if (ctxBar) {
+        ctxBar.textContent = concName
+          ? `📌 ${concName}${content ? ` · ${content.lessonTitle}` : ""}` : "";
+      }
       if (prefillMsg) {
         const inp = document.getElementById("ai-input");
         if (inp) inp.value = prefillMsg;
@@ -35476,6 +35480,39 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
   };
 
+  function getConceptContent(conceptName) {
+    if (!conceptName) return null;
+    const entry = allConcepts().find((e) => e.concept.conceptName === conceptName);
+    if (!entry) return null;
+    return {
+      explanation: entry.concept.simpleExplanation || entry.concept.explanation || "",
+      code: entry.concept.codeExample || "",
+      codeNote: entry.concept.codeExplanation || "",
+      lessonTitle: entry.lesson.title || "",
+    };
+  }
+
+  function buildLocalAIResponse(mode, conceptName, userMessage) {
+    const content = getConceptContent(conceptName);
+    if (!content || !content.explanation) {
+      return getAIDemoResponse(mode, conceptName);
+    }
+    const codeBlock = content.code
+      ? `\n\nדוגמת קוד:\n\`\`\`js\n${content.code}\`\`\`${content.codeNote ? "\n" + content.codeNote : ""}`
+      : "";
+    if (mode === "explain") {
+      return `📖 ${conceptName} — מתוך: ${content.lessonTitle}\n\n${content.explanation}${codeBlock}`;
+    }
+    if (mode === "coach") {
+      const hint = content.explanation.slice(0, 120);
+      return `🧭 רמז למושג "${conceptName}":\n${hint}...\n\nנסה לענות שוב, ואם תיתקע — שאל "הסבר לי יותר" ואני אפתח את כל ההסבר.`;
+    }
+    if (mode === "check") {
+      return `✔️ בדיקה עצמית — "${conceptName}":\n\nלפי ההגדרה: "${content.explanation.slice(0, 100)}..."\n\nהאם תוכל לכתוב דוגמה קוד קצרה שממחישה את המושג? כתוב אותה בתיבת הטקסט ואני אנסה להעריך.`;
+    }
+    return getAIDemoResponse(mode, conceptName);
+  }
+
   function getAIDemoResponse(mode, conceptName) {
     const pool = AI_DEMO_RESPONSES[mode] || AI_DEMO_RESPONSES.coach;
     const usage = getAIUsage();
@@ -35532,9 +35569,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let reply = "";
     try {
       const data = await callProductionAITutor({ message: msg, mode: aiCurrentMode, concept: concName });
-      reply = data?.reply || getAIDemoResponse(aiCurrentMode, concName);
+      reply = data?.reply || buildLocalAIResponse(aiCurrentMode, concName, msg);
     } catch {
-      reply = getAIDemoResponse(aiCurrentMode, concName);
+      reply = buildLocalAIResponse(aiCurrentMode, concName, msg);
     }
 
     thinkingEl.remove();
