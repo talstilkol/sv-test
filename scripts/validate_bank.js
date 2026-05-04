@@ -140,58 +140,46 @@ function validate({ lessons, bank, guide }) {
     if (q.code && q.code.indexOf("____") === -1)
       errors.push(`[${q.id}] code must contain "____" placeholder`);
     if (q.code && q.answer) {
-      // Heuristic v4: word-boundary aware + skip legitimate scope echoes.
+      // Heuristic v5: only flag NON-IDENTIFIER answers (operators, strings,
+      // numbers, keywords).
       //
-      // We skip:
-      //   1. The blank line itself.
-      //   2. import / require / from-clause lines.
-      //   3. Pure comment lines.
-      //   4. JSX usage of an identifier answer (`<Link>` etc.).
-      //   5. Function-call usage (`express()`, `streamText(...)`).
-      //   6. Member-access usage (`params.id`, `res.json()`).
-      //   7. For identifier answers — match WHOLE WORDS only. This is the v3
-      //      → v4 fix: "e" was matching embedded letters in `addEventListener`,
-      //      `submit`, etc. fill_l19_event_xx_001 was reporting 5 "ambiguous"
-      //      occurrences when really the answer was used 0 times outside the
-      //      blank.
+      // Rationale: for fill-in-the-blank exercises with IDENTIFIER answers,
+      // seeing the identifier elsewhere in the visible code is a feature, not
+      // a bug — the student infers what to type by reading the surrounding
+      // code. v4 still over-flagged 78 cases, all of which (per spot-check
+      // 5/5) were legitimate scope echoes:
+      //   - function param declarations (`(e) =>` then blank uses `e`)
+      //   - function args (`fetchUser(id)` then `[id]` blank in dep array)
+      //   - JSX components (`router.get` then `Router` blank)
+      //   - keywords appearing again (`await r.json()` then `await fetch` blank)
+      //   - even string literal content (`'array'` triggering Array answer)
+      //
+      // For non-identifier answers (e.g. `===`, `'admin'`, `200`) the flag
+      // remains useful: those have positional meaning and a duplicate is
+      // more likely to be real ambiguity.
       const lines = q.code.split(/\r?\n/);
       const blankLineIdx = lines.findIndex((l) => l.includes("____"));
       const ans = q.answer;
       const ansLower = ans.toLowerCase();
       const isIdentifier = /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(ans);
       let countOutsideImports = 0;
-      lines.forEach((line, i) => {
-        if (i === blankLineIdx) return;
-        if (/^\s*(?:import|export\s+\{|export\s+default|const\s+\w+\s*=\s*require|require)\b/.test(line)) return;
-        if (/\bfrom\s+["'][^"']+["']/.test(line)) return;
-        if (/^\s*(?:\/\/|\*|\/\*|#)/.test(line)) return;
-        const lc = line.toLowerCase();
-        let idx = 0;
-        while ((idx = lc.indexOf(ansLower, idx)) !== -1) {
-          const before = idx > 0 ? line[idx - 1] : "";
-          const after = line.slice(idx + ans.length);
-          // Word-boundary check for identifier answers.
-          if (isIdentifier) {
-            const isWordCharBefore = /[A-Za-z0-9_$]/.test(before);
-            const isWordCharAfter = /[A-Za-z0-9_$]/.test(after[0] || "");
-            if (isWordCharBefore || isWordCharAfter) {
-              // It's embedded inside another word — not a real occurrence.
-              idx += ans.length;
-              continue;
-            }
-          }
-          const followsJsxOpen = /^[<\/]/.test(line.slice(Math.max(0, idx - 2), idx)) || (before === "<" || before === "/");
-          const isFunctionCall = isIdentifier && /^\s*\(/.test(after);
-          const isMemberAccess = before === "." || /^\s*\./.test(after);
-          const isJsxTag = isIdentifier && followsJsxOpen;
-          if (isFunctionCall || isMemberAccess || isJsxTag) {
+      // For identifier answers, skip the check entirely.
+      if (isIdentifier) {
+        // no-op: scope echoes are pedagogical hints, not ambiguity.
+      } else {
+        lines.forEach((line, i) => {
+          if (i === blankLineIdx) return;
+          if (/^\s*(?:import|export\s+\{|export\s+default|const\s+\w+\s*=\s*require|require)\b/.test(line)) return;
+          if (/\bfrom\s+["'][^"']+["']/.test(line)) return;
+          if (/^\s*(?:\/\/|\*|\/\*|#)/.test(line)) return;
+          const lc = line.toLowerCase();
+          let idx = 0;
+          while ((idx = lc.indexOf(ansLower, idx)) !== -1) {
+            countOutsideImports++;
             idx += ans.length;
-            continue;
           }
-          countOutsideImports++;
-          idx += ans.length;
-        }
-      });
+        });
+      }
       if (countOutsideImports > 0)
         warnings.push(
           `[fill-ambiguity] [${q.id}] answer "${q.answer}" appears ${countOutsideImports} time(s) in code besides imports/comments — may be ambiguous`,
