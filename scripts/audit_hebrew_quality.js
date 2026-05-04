@@ -44,8 +44,9 @@ const SUSPICIOUS_PATTERNS = [
   [/\bפרוייקט\b/, "פרוייקט → פרויקט (Academia)"],
 ];
 
-// Niqqud (vowel marks)
-const NIQQUD_RE = /[֑-ׇ]/;
+// Niqqud (vowel marks) — excludes U+05BE (MAQAF, legitimate compound joiner)
+// Ranges: U+0591–U+05AF cantillation, U+05B0–U+05BD vowel points, U+05C1–U+05C2 sin/shin dots
+const NIQQUD_RE = /[֑-ְ֯-ׇֽׁׂׅׄ]/;
 
 // Latin word in Hebrew sentence without LTR isolation
 const MIXED_DIR_RE = /[֐-׿].{0,2}[A-Za-z]{3,}.{0,2}[֐-׿]/;
