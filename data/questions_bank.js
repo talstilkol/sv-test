@@ -17248,7 +17248,7 @@ var QUESTIONS_BANK = {
       code: "const btn = document.querySelector('#submit');\nbtn.addEventListener('____', () => {\n  console.log('נלחץ!');\n});",
       answer: "click",
       hint: "שם האירוע להאזנה ללחיצה על כפתור.",
-      explanation: "addEventListener('click', handler) = מאזין לcClick. גם: 'input', 'submit', 'keydown', 'mouseover'.",
+      explanation: "addEventListener('click', handler) = מאזין לclick. גם: 'input', 'submit', 'keydown', 'mouseover'.",
     },
     // lesson_19::let
     {

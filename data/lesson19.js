@@ -194,7 +194,7 @@ var LESSON_19 = {
         "child": "function זה מכונה קטנה: היא מקבלת קלט, עושה משהו, ומחזירה תוצאה. function add(a, b) מקבלת שני מספרים ומחזירה את הסכום שלהם. אפשר להריץ את אותה מכונה מאות פעמים עם קלטים שונים.",
         "soldier": "function היא יחידה של קוד שניתן לקרוא לה (call) שוב ושוב. function declaration: function foo() {}. function expression: const foo = function() {} או const foo = () => {}. ההבדל העיקרי: declarations hoisted לחלוטין; expressions לא.",
         "student": "ב-JavaScript פונקציות הן first-class: ניתן להעביר אותן כארגומנטים, להחזיר מפונקציה, ולשמור במשתנים. זה הבסיס ל-callbacks, higher-order functions (map/filter/reduce), ו-functional programming patterns.",
-        "junior": "פונקציות טובות הן: שם פעולה ברור (createUser, getUserById), אחריות יחידה (Single Responsibility), input ידוע ו-output ידוע, ללא side effects אם אפשר. פונקציה ארוכה מ-30 שורות = ירוק לreFactor. פונקציה עם 5+ params = איתות לrefactor ל-options object.",
+        "junior": "פונקציות טובות הן: שם פעולה ברור (createUser, getUserById), אחריות יחידה (Single Responsibility), input ידוע ו-output ידוע, ללא side effects אם אפשר. פונקציה ארוכה מ-30 שורות = ירוק לrefactor. פונקציה עם 5+ params = איתות לrefactor ל-options object.",
         "professor": "כל function ב-JS היא Object של type 'function' עם prototype, length, name. בעת call, נוצר Execution Context חדש עם LexicalEnvironment חדש שיורש מ-outer environment — זה הבסיס ל-closures. arrow functions לא יוצרות this/arguments חדשים — הן יורשות מהouter, מה שעושה אותן בחירה טבעית בתוך methods שמשתמשים ב-callbacks (כי this נשאר נכון)."
       },
       "codeExample": "function add(a, b) {\n  return a + b;\n}\nconsole.log(add(3, 4)); // 7\n\n// arrow equivalent\nconst addArrow = (a, b) => a + b;",
