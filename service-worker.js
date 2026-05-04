@@ -230,6 +230,8 @@ const SHELL_ASSETS = [
   "/data/zz_questions_build_phase2.js?v=phase2-v1",
   "/data/zz_questions_trace_phase2.js",
   "/data/zz_questions_trace_phase2.js?v=phase2-v1",
+  "/data/zz_questions_trace_phase3.js",
+  "/data/zz_questions_trace_phase3.js?v=phase3-v1",
 ];
 
 // Install — cache the shell.
