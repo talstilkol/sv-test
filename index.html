@@ -1595,6 +1595,20 @@
       </div>
     </div>
 
+    <!-- Generic non-blocking confirm dialog — replaces native confirm() so we
+         don't ship jarring browser dialogs and so programmatic flows aren't
+         blocked. Promise-based API exposed as window.lumenConfirm(message, opts). -->
+    <div id="lumen-confirm" hidden role="dialog" aria-modal="true" aria-labelledby="lumen-confirm-title">
+      <div class="lumen-confirm-panel">
+        <h2 id="lumen-confirm-title" class="lumen-confirm-title">לאשר?</h2>
+        <p id="lumen-confirm-body" class="lumen-confirm-body"></p>
+        <div class="lumen-confirm-actions">
+          <button id="lumen-confirm-yes" class="lumen-confirm-btn lumen-confirm-btn-primary">אישור</button>
+          <button id="lumen-confirm-no" class="lumen-confirm-btn lumen-confirm-btn-secondary">ביטול</button>
+        </div>
+      </div>
+    </div>
+
     <!-- First-run onboarding overlay — gated by localStorage["lumen-onboarded"]. -->
     <div id="onboarding-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
       <div class="onboarding-panel">
@@ -1621,6 +1635,7 @@
         <button class="onboarding-skip" id="onboarding-skip">דלג, אני מכיר/ה את הפלטפורמה</button>
       </div>
     </div>
+    <script src="src/boot/lumen-confirm.js"></script>
     <script src="src/boot/consent-onboarding.js"></script>
   </body>
 </html>

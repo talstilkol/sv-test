@@ -24665,9 +24665,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("t-focus-weak")?.classList.remove("active");
     nextQuestion();
   });
-  document.getElementById("t-reset-scores")?.addEventListener("click", () => {
-    if (!confirm("לאפס את כל הציונים? סימוני V/X של מפת הידע לא ייפגעו."))
-      return;
+  document.getElementById("t-reset-scores")?.addEventListener("click", async () => {
+    const ok = await (window.lumenConfirm
+      ? window.lumenConfirm("סימוני V/X של מפת הידע לא ייפגעו.", {
+          title: "לאפס את כל הציונים?",
+          primary: "אפס",
+          secondary: "ביטול",
+          danger: true,
+        })
+      : Promise.resolve(confirm("לאפס את כל הציונים? סימוני V/X של מפת הידע לא ייפגעו.")));
+    if (!ok) return;
     scores = {};
     saveScores();
     trainerStats = { asked: 0, correct: 0, wrong: 0 };
@@ -27611,9 +27618,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function submitMockExam(autoTimeout) {
-    if (!autoTimeout && !confirm(`להגיש את המבחן? ענית על ${countMxAnswered()}/${mxState.questions.length} שאלות.`))
-      return;
+  async function submitMockExam(autoTimeout) {
+    if (!autoTimeout) {
+      const ok = await (window.lumenConfirm
+        ? window.lumenConfirm(`ענית על ${countMxAnswered()}/${mxState.questions.length} שאלות.`, {
+            title: "להגיש את המבחן?",
+            primary: "הגש",
+            secondary: "המשך לענות",
+          })
+        : Promise.resolve(confirm(`להגיש את המבחן? ענית על ${countMxAnswered()}/${mxState.questions.length} שאלות.`)));
+      if (!ok) return;
+    }
 
     stopMxTimer();
     // Restore Pocket FAB after exam
@@ -27987,11 +28002,17 @@ document.addEventListener("DOMContentLoaded", () => {
         </button>`)
       .join("");
     container.querySelectorAll(".mx-template-card").forEach((btn) => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", async () => {
         const tpl = EXAM_TEMPLATES.find((t) => t.id === btn.dataset.tid);
-        if (tpl && confirm(`להתחיל את "${tpl.name}"?\n${tpl.desc}\n\nאזהרה: יש טיימר. אין רמזים. אין AI.`)) {
-          startMockExam(tpl);
-        }
+        if (!tpl) return;
+        const ok = await (window.lumenConfirm
+          ? window.lumenConfirm(`${tpl.desc}\n\nאזהרה: יש טיימר. אין רמזים. אין AI.`, {
+              title: `להתחיל את "${tpl.name}"?`,
+              primary: "התחל",
+              secondary: "ביטול",
+            })
+          : Promise.resolve(confirm(`להתחיל את "${tpl.name}"?\n${tpl.desc}\n\nאזהרה: יש טיימר. אין רמזים. אין AI.`)));
+        if (ok) startMockExam(tpl);
       });
     });
     renderExamHistory();
@@ -28042,8 +28063,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Wire mock exam controls (idempotent — safe even if not in DOM)
   document.getElementById("open-mock-exam")?.addEventListener("click", openMockExam);
-  document.getElementById("mx-quit")?.addEventListener("click", () => {
-    if (confirm("לעצור את המבחן? ההתקדמות לא תישמר.")) {
+  document.getElementById("mx-quit")?.addEventListener("click", async () => {
+    const ok = await (window.lumenConfirm
+      ? window.lumenConfirm("ההתקדמות לא תישמר.", {
+          title: "לעצור את המבחן?",
+          primary: "עצור",
+          secondary: "המשך",
+          danger: true,
+        })
+      : Promise.resolve(confirm("לעצור את המבחן? ההתקדמות לא תישמר.")));
+    if (ok) {
       stopMxTimer();
       openMockExam();
     }

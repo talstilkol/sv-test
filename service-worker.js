@@ -20,6 +20,7 @@ const SHELL_ASSETS = [
   "/src/main.js?v=core-bootstrap-v2",
   "/src/boot/standalone-museum.js",
   "/src/boot/consent-onboarding.js",
+  "/src/boot/lumen-confirm.js",
   "/src/core/runtime.js",
   "/src/core/sanitize.js",
   "/src/core/sanitize-early.js",

@@ -15859,11 +15859,26 @@ body.museum-video-modal-open {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .trainer-toolbar .km-btn-mini.active {
   background: var(--gradient-primary);
   border-color: transparent;
+  color: #fff;
+}
+
+/* Push destructive actions to the end of the row + add a visual divider so
+   "איפוס ציונים" is not visually equal to the filter/display toggles. */
+.trainer-toolbar .km-btn-mini.danger {
+  margin-inline-start: auto;
+  background: rgba(239, 68, 68, 0.14);
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #fecaca;
+}
+.trainer-toolbar .km-btn-mini.danger:hover,
+.trainer-toolbar .km-btn-mini.danger:focus-visible {
+  background: rgba(239, 68, 68, 0.28);
   color: #fff;
 }
 
@@ -27915,6 +27930,84 @@ html.cosmetic-accessible-outline .museum-section {
   direction: ltr;
   unicode-bidi: plaintext;
   color: #a5f3fc;
+}
+
+/* ============================================
+   In-app confirm modal (replaces native confirm)
+   ============================================ */
+#lumen-confirm {
+  position: fixed;
+  inset: 0;
+  z-index: 10500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(10, 11, 16, 0.78);
+  backdrop-filter: blur(6px);
+}
+#lumen-confirm[hidden] { display: none; }
+.lumen-confirm-panel {
+  width: min(440px, 100%);
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 1.4rem 1.4rem 1.1rem;
+}
+.lumen-confirm-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  color: var(--text-bright);
+}
+.lumen-confirm-body {
+  margin: 0 0 1.2rem;
+  color: var(--text-main);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+.lumen-confirm-actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.lumen-confirm-btn {
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.lumen-confirm-btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg-dark);
+}
+.lumen-confirm-btn-primary:hover,
+.lumen-confirm-btn-primary:focus-visible {
+  filter: brightness(1.1);
+}
+.lumen-confirm-btn-secondary {
+  background: transparent;
+  color: var(--text-main);
+}
+.lumen-confirm-btn-secondary:hover,
+.lumen-confirm-btn-secondary:focus-visible {
+  background: rgba(255, 255, 255, 0.05);
+}
+.lumen-confirm-btn-danger {
+  background: var(--error);
+  border-color: var(--error);
+  color: #fff;
+}
+.lumen-confirm-btn-danger:hover,
+.lumen-confirm-btn-danger:focus-visible {
+  filter: brightness(1.1);
 }
 
 /* ============================================
