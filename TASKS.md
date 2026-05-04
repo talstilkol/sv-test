@@ -31,7 +31,7 @@ _(audit complete; resuming execution)_
 
 ## P2 — World-class polish (~3-6 weeks)
 - [ ] **Split app.js into modules** — 37,254 lines → per-tab. Eliminates TDZ class. (~3 weeks)
-- [ ] **Onboarding walkthrough** for first-time users (~1 week design + 1 week build)
+- [x] **Onboarding walkthrough** — two-stage flow: consent banner → choice overlay (adaptive/read/exam/skip); implemented in `src/boot/consent-onboarding.js`; verified: consent-accept triggers overlay, all 3 choice buttons open correct tabs, skip sets `lumen-onboarded=1`
 - [x] **Real Playwright smoke** — 3/3 passed in headless Chromium (23 tabs, consent, mock-exam)
 - [ ] **Teacher dashboard polish** — analytics + bulk import (~1 week)
 - [ ] **Social/community v0** — peer-review submissions for code activities (~2 weeks)

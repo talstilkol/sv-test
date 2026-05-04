@@ -37400,26 +37400,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== end Local Auto-Save =====
 
-  // =========== CONSENT BANNER ===========
-  (function initConsentBanner() {
-    const CONSENT_KEY = "lumen-consent";
-    const banner = document.getElementById("consent-banner");
-    if (!banner) return;
-    const acceptBtn = document.getElementById("consent-accept");
-    const declineBtn = document.getElementById("consent-decline");
-    function dismiss(choice) {
-      try { localStorage.setItem(CONSENT_KEY, choice); } catch (_) {}
-      banner.setAttribute("hidden", "");
-      if (choice === "declined") {
-        window.__lumenConsentDeclined = true;
-      }
-    }
-    acceptBtn?.addEventListener("click", () => dismiss("accepted"));
-    declineBtn?.addEventListener("click", () => dismiss("declined"));
-    if (localStorage.getItem(CONSENT_KEY) === null) {
-      banner.removeAttribute("hidden");
-    }
-  })();
+  // Consent banner + onboarding overlay are handled by src/boot/consent-onboarding.js
+  // which runs before app.js. Keys: lumen-consent = "accept"/"decline",
+  // lumen-onboarded = "1". window.__lumenConsentDeclined is set on decline.
 
   // =========== ACCESSIBILITY STATEMENT ===========
   (function initA11yStatement() {
