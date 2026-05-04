@@ -1,0 +1,542 @@
+// data/zz_questions_bug_phase2.js
+//
+// Phase 2 Bug Hunt activity coverage — adds 29 bug exercises to reach 90.
+// Named zz_* to ensure load order after questions_bug.js.
+
+var QUESTIONS_BUG_PHASE2 = [
+  {
+    id: "bug_l19_let_001",
+    conceptKey: "lesson_19::let",
+    level: 3,
+    title: "let בלולאה ב-setTimeout",
+    brokenCode: "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 100);\n}",
+    bugLine: 1,
+    hint: "מה i כשה-callback רץ?",
+    options: [
+      "var i משותף לכל ה-callbacks; כשהם רצים i כבר 3",
+      "setTimeout לא עובד בלולאה",
+      "100ms קצר מדי",
+      "console.log לא מציג מספרים"
+    ],
+    correctIndex: 0,
+    fix: "for (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 100);\n}",
+    explanation: "var hoist גלובלי לפונקציה. let יוצר binding חדש לכל איטרציה — כל callback תופס i משלו.",
+  },
+  {
+    id: "bug_l19_const_001",
+    conceptKey: "lesson_19::const",
+    level: 2,
+    title: "ניסיון re-assign של const",
+    brokenCode: "const PI = 3.14;\nPI = 3.14159;\nconsole.log(PI);",
+    bugLine: 2,
+    hint: "מה קורה ב-PI = ...?",
+    options: [
+      "TypeError: Assignment to constant variable",
+      "console.log לא מודפס",
+      "הקוד עובד ומציג 3.14159",
+      "ReferenceError על PI"
+    ],
+    correctIndex: 0,
+    fix: "let PI = 3.14;\nPI = 3.14159;\nconsole.log(PI);",
+    explanation: "const חוסם re-assignment. אם רוצים לשנות — let.",
+  },
+  {
+    id: "bug_l19_arrow_001",
+    conceptKey: "lesson_19::arrow function",
+    level: 4,
+    title: "this ב-arrow function",
+    brokenCode: "const obj = {\n  name: 'A',\n  greet: () => console.log(this.name)\n};\nobj.greet();",
+    bugLine: 3,
+    hint: "מה this ב-arrow function?",
+    options: [
+      "arrow function לא מקבל this של obj — יקח את ה-this של ה-scope החיצוני",
+      "obj.greet לא מוגדר",
+      "name חייב להיות capitalized",
+      "צריך עקוף() במקום ()=>"
+    ],
+    correctIndex: 0,
+    fix: "const obj = {\n  name: 'A',\n  greet() { console.log(this.name); }\n};\nobj.greet();",
+    explanation: "Arrow לא binding ל-this; פונקציה רגילה כן. למתודות באובייקט — תמיד shorthand או function.",
+  },
+  {
+    id: "bug_l19_map_001",
+    conceptKey: "lesson_19::map",
+    level: 3,
+    title: "map בלי return",
+    brokenCode: "const doubled = [1,2,3].map(n => { n * 2 });\nconsole.log(doubled);",
+    bugLine: 1,
+    hint: "מה ההבדל בין n*2 ו-{n*2}?",
+    options: [
+      "סוגריים מסולסלים יוצרים body — צריך return",
+      "map לא עובד עם arrow",
+      "צריך לכתוב n => n.value * 2",
+      "הקוד עובד"
+    ],
+    correctIndex: 0,
+    fix: "const doubled = [1,2,3].map(n => n * 2);",
+    explanation: "{ ... } עם arrow = function body. צריך return מפורש. ביטוי בלי {} = implicit return.",
+  },
+  {
+    id: "bug_l19_break_001",
+    conceptKey: "lesson_19::break",
+    level: 3,
+    title: "break מ-forEach",
+    brokenCode: "[1,2,3].forEach(n => {\n  if (n === 2) break;\n  console.log(n);\n});",
+    bugLine: 2,
+    hint: "האם forEach מקבל break?",
+    options: [
+      "break לא עובד ב-forEach (זה callback) — צריך for/of או .some",
+      "break צריך semicolon",
+      "צריך n === 2.0",
+      "הקוד עובד"
+    ],
+    correctIndex: 0,
+    fix: "for (const n of [1,2,3]) {\n  if (n === 2) break;\n  console.log(n);\n}",
+    explanation: "forEach קורא לפונקציה — break/continue לא חלים על loop חיצוני. השתמש ב-for/of או .some.",
+  },
+  {
+    id: "bug_l19_try_001",
+    conceptKey: "lesson_19::try",
+    level: 4,
+    title: "throw async ללא await",
+    brokenCode: "async function load() {\n  try {\n    fetch('/api/x').then(r => { throw new Error('x'); });\n  } catch (e) {\n    console.log('caught', e.message);\n  }\n}",
+    bugLine: 3,
+    hint: "האם catch תופס throw מ-.then?",
+    options: [
+      "catch לא תופס throw מ-promise; צריך await או .catch",
+      "throw לא יכול להיות בתוך .then",
+      "fetch לא מחזיר promise",
+      "Error חייב להיות class"
+    ],
+    correctIndex: 0,
+    fix: "async function load() {\n  try {\n    const r = await fetch('/api/x');\n    if (!r.ok) throw new Error('x');\n  } catch (e) { console.log('caught', e.message); }\n}",
+    explanation: "try/catch תופס רק שגיאות סינכרוניות או awaited. .then יוצר promise נפרד שצריך .catch.",
+  },
+  {
+    id: "bug_l19_scope_001",
+    conceptKey: "lesson_19::scope",
+    level: 4,
+    title: "var ב-block scope",
+    brokenCode: "function f() {\n  if (true) {\n    var x = 1;\n  }\n  console.log(x);\n}",
+    bugLine: 5,
+    hint: "האם var נשאר בתוך הבלוק?",
+    options: [
+      "זה בכוונה? var hoists ל-function scope, x נגיש בחוץ",
+      "x נמחק אחרי }",
+      "צריך let",
+      "x undefined"
+    ],
+    correctIndex: 0,
+    fix: "function f() {\n  let x;\n  if (true) {\n    x = 1;\n  }\n  console.log(x);\n}",
+    explanation: "var לא מכבד block scope. אם רוצים scope נכון — let. ב-strict mode/lint זה אזהרה.",
+  },
+  {
+    id: "bug_l20_findone_001",
+    conceptKey: "lesson_20::findOne",
+    level: 4,
+    title: "findOne ללא await",
+    brokenCode: "app.get('/u/:id', (req, res) => {\n  const u = User.findOne({ _id: req.params.id });\n  res.json(u);\n});",
+    bugLine: 2,
+    hint: "מה findOne מחזיר?",
+    options: [
+      "findOne מחזיר Promise — צריך await; res.json שולח Promise במקום הנתונים",
+      "User.findOne לא קיים",
+      "צריך new User",
+      "res.json לא תומך באובייקטים"
+    ],
+    correctIndex: 0,
+    fix: "app.get('/u/:id', async (req, res) => {\n  const u = await User.findOne({ _id: req.params.id });\n  res.json(u);\n});",
+    explanation: "Mongoose queries הם Promise-like. ללא await מקבלים את ה-query object ולא את ה-document.",
+  },
+  {
+    id: "bug_l20_update_001",
+    conceptKey: "lesson_20::findOneAndUpdate",
+    level: 4,
+    title: "findOneAndUpdate ללא {new:true}",
+    brokenCode: "const updated = await User.findOneAndUpdate(\n  { _id: id },\n  { name: 'NEW' }\n);\nconsole.log(updated.name);",
+    bugLine: 1,
+    hint: "מה ברירת המחדל?",
+    options: [
+      "ברירת מחדל מחזירה את ה-doc לפני העדכון; updated.name = הישן",
+      "צריך לקרוא לזה updateOne",
+      "name חייב להיות object",
+      "_id חייב להיות string"
+    ],
+    correctIndex: 0,
+    fix: "const updated = await User.findOneAndUpdate(\n  { _id: id },\n  { name: 'NEW' },\n  { new: true }\n);",
+    explanation: "{new:true} מבקש את ה-doc אחרי העדכון. בלי זה — מקבלים את הגרסה הישנה.",
+  },
+  {
+    id: "bug_l20_filter_001",
+    conceptKey: "lesson_20::$ne",
+    level: 4,
+    title: "$ne חסר",
+    brokenCode: "// רוצים רק users שלא admin:\nconst nonAdmins = await User.find({ role: 'admin' });",
+    bugLine: 2,
+    hint: "מה הקוד עושה?",
+    options: [
+      "החזיר רק admins (חוסר $ne); צריך { role: { $ne: 'admin' } }",
+      "find לא תומך ב-strings",
+      "role לא יכול להיות 'admin'",
+      "צריך findMany"
+    ],
+    correctIndex: 0,
+    fix: "const nonAdmins = await User.find({ role: { $ne: 'admin' } });",
+    explanation: "{ role: 'admin' } = שווה. עבור 'לא שווה' צריך $ne. או $not, $nin בהתאם.",
+  },
+  {
+    id: "bug_l21_export_001",
+    conceptKey: "lesson_21::export default",
+    level: 2,
+    title: "import בלי {} למרות named export",
+    brokenCode: "// utils.js:\nexport const add = (a,b) => a+b;\n// app.js:\nimport add from './utils';\nadd(1,2);",
+    bugLine: 4,
+    hint: "מה ההבדל בין default ו-named?",
+    options: [
+      "named export דורש { add }; ללא {} זה default אבל אין כזה",
+      "צריך require",
+      "ב-utils.js לא היה default",
+      "import חייב להיות בסוף הקובץ"
+    ],
+    correctIndex: 0,
+    fix: "import { add } from './utils';\nadd(1,2);",
+    explanation: "named exports מיובאים עם {}. default — בלי. אם אין default, import default יחזיר undefined.",
+  },
+  {
+    id: "bug_l21_jsx_001",
+    conceptKey: "lesson_21::{}",
+    level: 2,
+    title: "JS ב-JSX ללא {}",
+    brokenCode: "function App() {\n  const name = 'דני';\n  return <p>שלום name</p>;\n}",
+    bugLine: 3,
+    hint: "איך מחליפים משתנה ב-JSX?",
+    options: [
+      "name מודפס כטקסט; צריך {name}",
+      "צריך גרשיים סביב name",
+      "<p> לא תומך במשתנים",
+      "צריך to-string"
+    ],
+    correctIndex: 0,
+    fix: "function App() {\n  const name = 'דני';\n  return <p>שלום {name}</p>;\n}",
+    explanation: "ב-JSX, ביטוי JS עוטפים ב-{}. בלי זה — מודפס כטקסט מילולי.",
+  },
+  {
+    id: "bug_l21_inline_001",
+    conceptKey: "lesson_21::inline style",
+    level: 2,
+    title: "style עם string במקום object",
+    brokenCode: "function App() {\n  return <p style='color: red;'>טקסט</p>;\n}",
+    bugLine: 2,
+    hint: "ב-React, style מקבל מה?",
+    options: [
+      "style ב-React מקבל object, לא string: {{color: 'red'}}",
+      "צריך style.color",
+      "לא תומך ב-color",
+      "<p> לא תומך ב-style"
+    ],
+    correctIndex: 0,
+    fix: "function App() {\n  return <p style={{ color: 'red' }}>טקסט</p>;\n}",
+    explanation: "ב-React style = object. {{...}}: חיצוני JSX, פנימי object literal. שמות properties ב-camelCase.",
+  },
+  {
+    id: "bug_l22_state_001",
+    conceptKey: "lesson_22::state",
+    level: 4,
+    title: "Mutation של state",
+    brokenCode: "function Cart() {\n  const [items, setItems] = useState([]);\n  const add = (it) => {\n    items.push(it);\n    setItems(items);\n  };\n}",
+    bugLine: 4,
+    hint: "האם React רואה את השינוי?",
+    options: [
+      "items.push משנה את אותו array; React לא יראה שינוי reference",
+      "useState לא תומך במערכים",
+      "צריך JSON.parse",
+      "push מחזיר undefined"
+    ],
+    correctIndex: 0,
+    fix: "function Cart() {\n  const [items, setItems] = useState([]);\n  const add = (it) => setItems([...items, it]);\n}",
+    explanation: "React משתמש ב-Object.is להשוואה. אותו reference = bail out. תמיד spread או map/filter.",
+  },
+  {
+    id: "bug_l22_props_001",
+    conceptKey: "lesson_22::props",
+    level: 3,
+    title: "props.children חסר",
+    brokenCode: "function Card({ title }) {\n  return <div>{title}</div>;\n}\nfunction App() {\n  return <Card title='A'><p>תוכן</p></Card>;\n}",
+    bugLine: 2,
+    hint: "איפה ה-<p>?",
+    options: [
+      "Card לא מציגה {children} — התוכן לא יוצג",
+      "title לא יכול להיות יחד עם children",
+      "צריך className",
+      "<p> לא חוקי בתוך <Card>"
+    ],
+    correctIndex: 0,
+    fix: "function Card({ title, children }) {\n  return <div><h2>{title}</h2>{children}</div>;\n}",
+    explanation: "JSX בין tags של component מועבר כ-children. אם לא מציגים — אין render.",
+  },
+  {
+    id: "bug_l22_pass_func_001",
+    conceptKey: "lesson_22::passing function as prop",
+    level: 4,
+    title: "קריאה לפונקציה במקום העברה",
+    brokenCode: "function App() {\n  const log = () => console.log('clicked');\n  return <button onClick={log()}>לחץ</button>;\n}",
+    bugLine: 3,
+    hint: "מה log() עושה ב-render?",
+    options: [
+      "log() קורא ל-log מיד — onClick מקבל undefined",
+      "log לא יכול להיות const",
+      "צריך onClick=log()()",
+      "console.log לא עובד"
+    ],
+    correctIndex: 0,
+    fix: "function App() {\n  const log = () => console.log('clicked');\n  return <button onClick={log}>לחץ</button>;\n}",
+    explanation: "onClick מצפה ל-function reference. log() קוראת לפונקציה ומחזירה את ערכה (undefined).",
+  },
+  {
+    id: "bug_l23_link_001",
+    conceptKey: "lesson_23::Link",
+    level: 3,
+    title: "<a href> במקום <Link>",
+    brokenCode: "function Nav() {\n  return <a href='/about'>אודות</a>;\n}",
+    bugLine: 2,
+    hint: "מה קורה כשלוחצים?",
+    options: [
+      "<a href> טוען מחדש את הדף — מאבדים state SPA",
+      "/about לא קיים",
+      "צריך target='_blank'",
+      "<a> לא נתמך ב-React"
+    ],
+    correctIndex: 0,
+    fix: "import { Link } from 'react-router-dom';\nfunction Nav() {\n  return <Link to='/about'>אודות</Link>;\n}",
+    explanation: "<Link> מבטל default ומשתמש ב-history. <a> רגיל = full page reload.",
+  },
+  {
+    id: "bug_l23_route_001",
+    conceptKey: "lesson_23::Route",
+    level: 3,
+    title: "Route ללא element",
+    brokenCode: "<Routes>\n  <Route path='/' component={Home} />\n</Routes>",
+    bugLine: 2,
+    hint: "RR v6 שינה את ה-API.",
+    options: [
+      "v6 השתמש ב-element prop, לא component: element={<Home />}",
+      "Home צריך להיות class",
+      "path חייב /index",
+      "Routes לא תומך ב-Route"
+    ],
+    correctIndex: 0,
+    fix: "<Routes>\n  <Route path='/' element={<Home />} />\n</Routes>",
+    explanation: "ב-RR v6 component={Home} הוחלף ב-element={<Home />} — JSX, לא class reference.",
+  },
+  {
+    id: "bug_l23_context_001",
+    conceptKey: "lesson_23::createContext",
+    level: 5,
+    title: "useContext ללא Provider",
+    brokenCode: "const Ctx = createContext();\nfunction App() {\n  return <Page />;\n}\nfunction Page() {\n  const v = useContext(Ctx);\n  return <p>{v.name}</p>;\n}",
+    bugLine: 7,
+    hint: "מה v אם אין Provider?",
+    options: [
+      "createContext() ללא default = undefined; v.name יזרוק TypeError",
+      "useContext לא יכול בלי Provider",
+      "createContext חייב לקבל array",
+      "Page לא יכולה לקרוא Context"
+    ],
+    correctIndex: 0,
+    fix: "const Ctx = createContext({ name: 'guest' });\nfunction App() {\n  return <Ctx.Provider value={{ name: 'דני' }}><Page /></Ctx.Provider>;\n}",
+    explanation: "createContext(default) — אם אין Provider, מקבלים את ה-default. אסור undefined.",
+  },
+  {
+    id: "bug_l24_fetch_001",
+    conceptKey: "lesson_24::fetch",
+    level: 5,
+    title: "fetch deps חסר",
+    brokenCode: "function User({ id }) {\n  const [data, setData] = useState(null);\n  useEffect(() => {\n    fetch(`/api/user/${id}`).then(r => r.json()).then(setData);\n  }, []);\n  return <p>{data?.name}</p>;\n}",
+    bugLine: 5,
+    hint: "מה קורה כש-id משתנה?",
+    options: [
+      "deps=[] = רץ פעם אחת. אם id משתנה — לא נטען מחדש",
+      "fetch לא תומך ב-template literals",
+      "useState לא יכול להיות null",
+      "?. לא נתמך"
+    ],
+    correctIndex: 0,
+    fix: "function User({ id }) {\n  const [data, setData] = useState(null);\n  useEffect(() => {\n    fetch(`/api/user/${id}`).then(r => r.json()).then(setData);\n  }, [id]);\n  return <p>{data?.name}</p>;\n}",
+    explanation: "כל value שה-effect משתמש בו (פרט ל-state setters) חייב להיות ב-deps.",
+  },
+  {
+    id: "bug_l24_memo_001",
+    conceptKey: "lesson_24::memoization",
+    level: 5,
+    title: "useMemo ללא deps",
+    brokenCode: "function App({ items }) {\n  const sum = useMemo(() => items.reduce((a,b) => a+b, 0));\n  return <p>{sum}</p>;\n}",
+    bugLine: 2,
+    hint: "deps array חסר.",
+    options: [
+      "ללא deps array, useMemo מחשב בכל render — עוקף את ה-cache",
+      "useMemo לא צריך deps",
+      "reduce לא נתמך ב-useMemo",
+      "items חייב להיות מספר"
+    ],
+    correctIndex: 0,
+    fix: "function App({ items }) {\n  const sum = useMemo(() => items.reduce((a,b) => a+b, 0), [items]);\n}",
+    explanation: "deps array חובה. בלי זה — useMemo רץ בכל render, מבטל את היתרון. ESLint warn את זה.",
+  },
+  {
+    id: "bug_l24_ref_001",
+    conceptKey: "lesson_24::ref.current",
+    level: 4,
+    title: "ref.current לפני mount",
+    brokenCode: "function App() {\n  const ref = useRef(null);\n  ref.current.focus();\n  return <input ref={ref} />;\n}",
+    bugLine: 3,
+    hint: "מתי ref.current מוקצה?",
+    options: [
+      "ref.current = null ב-render הראשון; null.focus() זורק",
+      "useRef לא תומך ב-input",
+      "צריך ref={ref.current}",
+      "focus לא קיים על input"
+    ],
+    correctIndex: 0,
+    fix: "function App() {\n  const ref = useRef(null);\n  useEffect(() => { ref.current?.focus(); }, []);\n  return <input ref={ref} />;\n}",
+    explanation: "ref.current זמין רק אחרי mount. גישה ב-render = null. useEffect [] = ריצה אחרי mount.",
+  },
+  {
+    id: "bug_l26_any_001",
+    conceptKey: "lesson_26::Type Safety",
+    level: 4,
+    title: "any מבטל TypeScript",
+    brokenCode: "function add(a: any, b: any): any {\n  return a + b;\n}\nadd('1', 2);  // OK ב-TS, '12' ב-runtime",
+    bugLine: 1,
+    hint: "מה any עושה?",
+    options: [
+      "any מבטל את כל ה-type checking — עדיף unknown או generics",
+      "any חייב להיות capitalized",
+      "any לא נתמך",
+      "צריך any[]"
+    ],
+    correctIndex: 0,
+    fix: "function add(a: number, b: number): number {\n  return a + b;\n}",
+    explanation: "any = escape hatch — מאבדים את כל היתרונות של TS. unknown מאלץ type narrowing. generics נמירים.",
+  },
+  {
+    id: "bug_l26_optional_001",
+    conceptKey: "lesson_26::Typing Props",
+    level: 3,
+    title: "ניסיון לגשת ל-optional",
+    brokenCode: "type Props = { name?: string };\nfunction Greet({ name }: Props) {\n  return <p>{name.toUpperCase()}</p>;\n}",
+    bugLine: 3,
+    hint: "name יכול להיות undefined.",
+    options: [
+      "name? = string | undefined; undefined.toUpperCase() זורק",
+      "toUpperCase לא קיים",
+      "name חייב להיות capitalized",
+      "<p> לא תומך ב-string"
+    ],
+    correctIndex: 0,
+    fix: "type Props = { name?: string };\nfunction Greet({ name = 'אורח' }: Props) {\n  return <p>{name.toUpperCase()}</p>;\n}",
+    explanation: "optional = string | undefined. תיקון: default value או name?.toUpperCase() עם optional chaining.",
+  },
+  {
+    id: "bug_l26_enum_001",
+    conceptKey: "lesson_26::enum",
+    level: 4,
+    title: "השוואת enum למחרוזת",
+    brokenCode: "enum Status { Active, Inactive }\nconst s: Status = Status.Active;\nif (s === 'Active') console.log('match');",
+    bugLine: 3,
+    hint: "מה ערך numeric של Status.Active?",
+    options: [
+      "numeric enum: Status.Active = 0; השוואה למחרוזת תמיד false",
+      "צריך === בלבד",
+      "Status לא קיים",
+      "if לא תומך ב-enum"
+    ],
+    correctIndex: 0,
+    fix: "if (s === Status.Active) console.log('match');\n// או: enum Status { Active = 'Active', Inactive = 'Inactive' }",
+    explanation: "numeric enum = ערכים 0,1,2... להשוואה למחרוזת — string enum (Active = 'Active').",
+  },
+  {
+    id: "bug_l18_validation_001",
+    conceptKey: "lesson_18::validation",
+    level: 4,
+    title: "ולידציה רק ב-client",
+    brokenCode: "// client:\nif (form.email.includes('@')) submit();\n\n// server:\napp.post('/signup', (req, res) => {\n  User.create(req.body);\n  res.send('ok');\n});",
+    bugLine: 5,
+    hint: "מה אם attacker שולח ישירות ל-API?",
+    options: [
+      "אין validation בשרת — אפשר לשלוח email לא תקין דרך curl/Postman",
+      "client validation מספיקה",
+      "User.create לא דורש email",
+      "express לא תומך ב-validation"
+    ],
+    correctIndex: 0,
+    fix: "app.post('/signup', (req, res) => {\n  if (!req.body.email?.includes('@')) return res.status(400).json({ error: 'email' });\n  User.create(req.body);\n  res.send('ok');\n});",
+    explanation: "client validation = UX. server validation = security. תמיד server-side. attacker יכול לעקוף client.",
+  },
+  {
+    id: "bug_l18_password_001",
+    conceptKey: "lesson_18::password",
+    level: 5,
+    title: "סיסמה ב-plain text",
+    brokenCode: "app.post('/signup', async (req, res) => {\n  const { email, password } = req.body;\n  await User.create({ email, password });\n  res.send('ok');\n});",
+    bugLine: 3,
+    hint: "מה אם DB דולף?",
+    options: [
+      "password נשמר plain text — דליפה חושפת את כל הסיסמאות",
+      "express לא מאפשר זה",
+      "צריך JSON.stringify",
+      "User.create לא תומך ב-password"
+    ],
+    correctIndex: 0,
+    fix: "const bcrypt = require('bcrypt');\napp.post('/signup', async (req, res) => {\n  const { email, password } = req.body;\n  const hash = await bcrypt.hash(password, 10);\n  await User.create({ email, password: hash });\n  res.send('ok');\n});",
+    explanation: "אסור plain text. bcrypt + salt + cost factor. במקרה דליפה — הסיסמאות לא חשופות.",
+  },
+  {
+    id: "bug_workbook_async_001",
+    conceptKey: "workbook_taskmanager::async/await",
+    level: 4,
+    title: "forEach עם async",
+    brokenCode: "const ids = [1, 2, 3];\nids.forEach(async (id) => {\n  await deleteUser(id);\n});\nconsole.log('all done');",
+    bugLine: 5,
+    hint: "האם 'all done' באמת בסוף?",
+    options: [
+      "forEach לא מחכה ל-async callbacks; 'all done' מודפס מיד",
+      "forEach לא תומך ב-async",
+      "deleteUser לא קיים",
+      "console.log לא עובד אחרי await"
+    ],
+    correctIndex: 0,
+    fix: "const ids = [1, 2, 3];\nfor (const id of ids) {\n  await deleteUser(id);\n}\nconsole.log('all done');",
+    explanation: "forEach מתעלם מהחזרה (Promise) — 'all done' רץ לפני שה-deletes מסתיימים. for/of עם await או Promise.all.",
+  },
+  {
+    id: "bug_react_blueprint_001",
+    conceptKey: "react_blueprint::State Management",
+    level: 5,
+    title: "Prop drilling עמוק",
+    brokenCode: "// App -> Layout -> Sidebar -> Profile -> Avatar\n// כל אחד מקבל user, user, user, user\n// 4 רמות של pass-through",
+    bugLine: 3,
+    hint: "איך מעבירים state עמוק?",
+    options: [
+      "prop drilling רע — Context או State Management כמו Redux/Zustand",
+      "prop drilling יעיל",
+      "צריך useState ב-Avatar",
+      "אין דרך אחרת"
+    ],
+    correctIndex: 0,
+    fix: "// const UserCtx = createContext();\n// <UserCtx.Provider value={user}>...\n// const user = useContext(UserCtx);",
+    explanation: "Context מתאים ל-state גלובלי קל. עבור state מורכב — Redux, Zustand, Jotai.",
+  },
+];
+
+if (typeof window !== "undefined") {
+  window.QUESTIONS_BUG_PHASE2 = QUESTIONS_BUG_PHASE2;
+  if (window.QUESTIONS_BUG && Array.isArray(window.QUESTIONS_BUG)) {
+    window.QUESTIONS_BUG.push(...QUESTIONS_BUG_PHASE2);
+  } else {
+    window.QUESTIONS_BUG = QUESTIONS_BUG_PHASE2.slice();
+  }
+  if (window.QUESTIONS_BANK) {
+    if (!window.QUESTIONS_BANK.bug) window.QUESTIONS_BANK.bug = [];
+    window.QUESTIONS_BANK.bug.push(...QUESTIONS_BUG_PHASE2);
+  }
+}
