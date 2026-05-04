@@ -140,23 +140,37 @@ function validate({ lessons, bank, guide }) {
     if (q.code && q.code.indexOf("____") === -1)
       errors.push(`[${q.id}] code must contain "____" placeholder`);
     if (q.code && q.answer) {
-      // Count occurrences (case-insensitive, word-aware)
-      const lc = q.code.toLowerCase();
+      // Count occurrences of the answer outside of import/require statements
+      // and outside of comments. Seeing the identifier in an import line is a
+      // pedagogical hint, not real ambiguity ("you saw `streamText` in the
+      // import — that's the value to put in the blank"). Seeing it inside an
+      // identical context (e.g. `app.____()` plus elsewhere `app.something()`)
+      // IS ambiguity, so we still flag those.
+      const lines = q.code.split(/\r?\n/);
+      const blankLineIdx = lines.findIndex((l) => l.includes("____"));
       const ans = q.answer.toLowerCase();
-      let count = 0,
-        idx = 0;
-      while ((idx = lc.indexOf(ans, idx)) !== -1) {
-        count++;
-        idx += ans.length;
-      }
-      // Note: the code itself has "____" placeholder, so the answer should appear
-      // 0 times in the placeholdered version but ALSO 0 times in any other form.
-      // We only flag if the answer appears >0 times in the original code shown,
-      // since the user sees the placeholdered version and would type the missing
-      // token. Multiple occurrences = ambiguity.
-      if (count > 0)
+      let countOutsideImports = 0;
+      lines.forEach((line, i) => {
+        if (i === blankLineIdx) {
+          // Skip the blank line itself — the answer "appears" exactly where
+          // the ____ is, by construction.
+          return;
+        }
+        // Skip import / require / from-clause lines: pure scope hint.
+        if (/^\s*(?:import|export\s+\{|export\s+default|const\s+\w+\s*=\s*require|require)\b/.test(line)) return;
+        if (/\bfrom\s+["'][^"']+["']/.test(line)) return;
+        // Skip pure comment lines.
+        if (/^\s*(?:\/\/|\*|\/\*|#)/.test(line)) return;
+        const lc = line.toLowerCase();
+        let idx = 0;
+        while ((idx = lc.indexOf(ans, idx)) !== -1) {
+          countOutsideImports++;
+          idx += ans.length;
+        }
+      });
+      if (countOutsideImports > 0)
         warnings.push(
-          `[fill-ambiguity] [${q.id}] answer "${q.answer}" appears ${count} time(s) in code besides the blank — may be ambiguous`,
+          `[fill-ambiguity] [${q.id}] answer "${q.answer}" appears ${countOutsideImports} time(s) in code besides imports/comments — may be ambiguous`,
         );
     }
     if (q.level && (q.level < 1 || q.level > 6))

@@ -6,6 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
+    "prebuild": "node scripts/sync_sw_precache.js --write && node scripts/report_source_of_truth.js --write > /dev/null",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "validate": "node scripts/validate_bank.js",

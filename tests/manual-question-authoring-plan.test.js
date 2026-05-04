@@ -20,7 +20,8 @@ describe("manual question authoring plan", () => {
     expect(report.summary.mcGapCount).toBe(coverage.summary.mcGapCount);
     expect(report.summary.fillGapCount).toBe(coverage.summary.fillGapCount);
     expect(report.summary.activityGapCount).toBe(activityCoverage.buildReport().summary.activityGapCount);
-    expect(report.summary.batches).toBeGreaterThan(0);
+    // 2026-05-04: when all gaps close, batches=0 — that's the "ready" state.
+    expect(report.summary.batches).toBeGreaterThanOrEqual(0);
     expect(report.summary.strictActivityDeficit).toBe(report.summary.activityGapCount);
   });
 

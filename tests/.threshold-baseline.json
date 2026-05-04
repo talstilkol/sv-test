@@ -2,6 +2,30 @@
   "generatedAt": "2026-05-04",
   "tests": [
     {
+      "file": "tests/app-smoke.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 2000
+    },
+    {
+      "file": "tests/app-smoke.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 1000
+    },
+    {
+      "file": "tests/app-smoke.test.js",
+      "op": "GTE",
+      "n": 2,
+      "value": 29
+    },
+    {
+      "file": "tests/app-smoke.test.js",
+      "op": "GTE",
+      "n": 3,
+      "value": 500
+    },
+    {
       "file": "tests/capstones.test.js",
       "op": "GTE",
       "n": 0,
@@ -257,7 +281,7 @@
       "file": "tests/question-activity-authoring-plan.test.js",
       "op": "GTE",
       "n": 0,
-      "value": 10
+      "value": 25
     },
     {
       "file": "tests/question-coverage-targets.test.js",

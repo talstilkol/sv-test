@@ -11,9 +11,9 @@ This file tracks numeric thresholds in tests that were **softened** during a rel
 ### `tests/question-activity-authoring-plan.test.js`
 | Field | Original | Current | Reason |
 |---|---:|---:|---|
-| `summary.totalGaps >= ?` | 220 | 10 | 2026-05-04. Phase 2 closed 159 of 195 trace+build+bug gaps. New floor is 10 because more gaps can show up if a future lesson adds new code-bearing concepts. |
+| `summary.totalGaps >= ?` | 220 | 25 | 2026-05-04. Phase 2 closed 159 of 195 gaps. Tightened from 10 → 25 to catch regressions (real current value 36). |
 
-**Restore-up condition:** when remaining 36 activity gaps drop to 0, raise the floor to `0` and remove this entry.
+**Restore-up condition:** when all 36 remaining gaps close (Tailwind + Next/Nest + workbook + react_blueprint concepts authored), drop this assertion entirely (test for `ready === true`).
 
 ### `scripts/report_performance_budget.js`
 | Field | Original | Current | Reason |

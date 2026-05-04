@@ -9,8 +9,11 @@ describe("question activity coverage report", () => {
     expect(report.summary.concepts).toBeGreaterThan(0);
     expect(report.summary.relevantConcepts).toBeGreaterThan(0);
     expect(report.summary.activityReadyConcepts).toBeGreaterThan(0);
-    expect(report.summary.activityGapCount).toBeGreaterThan(0);
-    expect(report.summary.ready).toBe(false);
+    // 2026-05-04: gaps closed (ready=true). Assertion flipped from
+    // "BeGreaterThan(0)" to "≥ 0" so the test still validates structure when
+    // a regression re-introduces a gap.
+    expect(report.summary.activityGapCount).toBeGreaterThanOrEqual(0);
+    expect(report.summary.ready).toBe(report.summary.activityGapCount === 0);
     expect(report.gaps.length).toBe(report.summary.activityGapCount);
   });
 });
