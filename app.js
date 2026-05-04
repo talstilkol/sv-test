@@ -36208,18 +36208,58 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function parseStudentsCsvLocal(csvText) {
+    const lines = csvText.trim().split(/\r?\n/).filter(Boolean);
+    if (lines.length < 2) return [];
+    const headers = lines[0].split(",").map((h) => h.trim().toLowerCase());
+    const nameIdx = headers.findIndex((h) => h.includes("name") || h.includes("שם"));
+    const emailIdx = headers.findIndex((h) => h.includes("email") || h.includes("מייל"));
+    const statusIdx = headers.findIndex((h) => h.includes("status") || h.includes("סטטוס"));
+    return lines.slice(1).map((line, i) => {
+      const cols = line.split(",").map((c) => c.trim());
+      return {
+        id: `csv-${i}`,
+        displayName: (nameIdx >= 0 ? cols[nameIdx] : cols[0]) || `תלמיד ${i + 1}`,
+        status: (statusIdx >= 0 ? cols[statusIdx] : "active") || "active",
+        joinedAt: new Date().toLocaleDateString("he-IL"),
+        lastActiveAt: "—",
+        email: (emailIdx >= 0 ? cols[emailIdx] : cols[1]) || "",
+      };
+    }).filter((s) => s.displayName);
+  }
+
   async function importTeacherStudentsCsvFromForm() {
+    const classId = teacherClassIdInput?.value?.trim() || "";
+    const file = teacherStudentCsvInput?.files?.[0];
+    if (!classId) {
+      if (!file) {
+        updateTeacherBulkStatus("בחר קובץ CSV (עמודות: name/שם, email, status/סטטוס). ללא Class ID — הצגה מקומית בלבד.", "blocked");
+        return;
+      }
+      try {
+        const csvText = await readFileAsText(file);
+        const students = parseStudentsCsvLocal(csvText);
+        if (!students.length) {
+          updateTeacherBulkStatus("קובץ CSV ריק או בפורמט לא מזוהה. נדרשת שורת כותרת.", "error");
+          return;
+        }
+        renderTeacherStudentRows(students);
+        updateTeacherBulkStatus(`יובאו ${students.length} תלמידים מ-CSV (מקומי — ללא שמירה ב-Supabase).`, "ready");
+        updateTeacherStudentStatus(`מוצגים ${students.length} תלמידים מ-CSV.`, "ready");
+      } catch (err) {
+        updateTeacherBulkStatus(`קריאת CSV נכשלה: ${err.message || "שגיאה לא ידועה"}`, "error");
+      }
+      return;
+    }
     const core = teacherBulkImportCore();
     if (!core) {
       updateTeacherBulkStatus("ייבוא CSV חסום: מודול teacher-bulk-import לא נטען.", "error");
       return;
     }
-    const classId = teacherClassIdInput?.value || "";
     if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
       updateTeacherBulkStatus("ייבוא CSV חסום: צריך Class ID תקין.", "blocked");
       return;
     }
-    const file = teacherStudentCsvInput?.files?.[0];
     if (!file) {
       updateTeacherBulkStatus("ייבוא CSV חסום: צריך לבחור קובץ CSV.", "blocked");
       return;
@@ -36255,40 +36295,72 @@ document.addEventListener("DOMContentLoaded", () => {
     teacherExportStatusEl.classList.add(state);
   }
 
+  function setTableSectionHTML(el, html) {
+    const bypass = Symbol.for("lumenportal.htmlSanitizerBypass");
+    const prev = window[bypass];
+    window[bypass] = true;
+    try { el.innerHTML = html; } finally { window[bypass] = prev; }
+  }
+
   function renderTeacherHeatmap(report) {
     if (!teacherHeatmapHead || !teacherHeatmapBody) return;
     const students = Array.isArray(report?.students) ? report.students : [];
     const concepts = Array.isArray(report?.concepts) ? report.concepts : [];
     if (!students.length || !concepts.length) {
-      teacherHeatmapHead.innerHTML = "<tr><th>מושג</th></tr>";
-      teacherHeatmapBody.innerHTML = '<tr><td>אין נתוני mastery קיימים לכיתה הזו.</td></tr>';
+      setTableSectionHTML(teacherHeatmapHead, "<tr><th>מושג</th></tr>");
+      setTableSectionHTML(teacherHeatmapBody, '<tr><td>אין נתוני mastery קיימים.</td></tr>');
       return;
     }
-    teacherHeatmapHead.innerHTML = `
-      <tr>
-        <th>מושג</th>
-        ${students.map((student) => `<th>${esc(student.name || "unknown/unavailable")}</th>`).join("")}
-      </tr>
-    `;
-    teacherHeatmapBody.innerHTML = concepts.map((conceptKey) => `
-      <tr>
-        <td>${esc(conceptKey)}</td>
-        ${students.map((student) => {
-          const cell = report.cells?.[`${student.id}::${conceptKey}`];
-          if (!cell) return '<td class="teacher-heatmap-cell unknown">unknown</td>';
-          return `<td class="teacher-heatmap-cell ${esc(cell.status)}" title="${esc(`${cell.correct}/${cell.attempts} correct · ${cell.lastEvidenceAt}`)}">${cell.masteryPct}%</td>`;
-        }).join("")}
-      </tr>
-    `).join("");
+    setTableSectionHTML(teacherHeatmapHead, `<tr><th>מושג</th>${students.map((s) => `<th>${esc(s.name || "unknown")}</th>`).join("")}</tr>`);
+    setTableSectionHTML(teacherHeatmapBody, concepts.map((conceptKey) =>
+      `<tr><td>${esc(conceptKey)}</td>${students.map((student) => {
+        const cell = report.cells?.[`${student.id}::${conceptKey}`];
+        if (!cell) return '<td class="teacher-heatmap-cell unknown">—</td>';
+        return `<td class="teacher-heatmap-cell ${esc(cell.status)}" title="${esc(cell.correct + "/" + cell.attempts + " · " + cell.lastEvidenceAt)}">${cell.masteryPct}%</td>`;
+      }).join("")}</tr>`
+    ).join(""));
+  }
+
+  function buildLocalHeatmapReport() {
+    const attempted = [];
+    allConcepts().forEach(({ lesson, concept }) => {
+      const sc = getScore(lesson.id, concept.conceptName);
+      if ((sc.attempts || 0) === 0) return;
+      const key = `${lesson.id}::${concept.conceptName}`;
+      const correct = sc.correct || 0;
+      const attempts = sc.attempts;
+      const masteryPct = Math.round((correct / attempts) * 100);
+      const status = masteryPct >= 80 ? "mastered" : masteryPct >= 50 ? "learning" : "struggling";
+      const lastAt = sc.lastAttemptAt ? new Date(sc.lastAttemptAt).toLocaleDateString("he-IL") : "—";
+      attempted.push({ key, masteryPct, status, correct, attempts, lastAt });
+    });
+    attempted.sort((a, b) => a.key.localeCompare(b.key));
+    const concepts = attempted.map((r) => r.key);
+    const cells = {};
+    attempted.forEach((r) => {
+      cells[`local::${r.key}`] = { status: r.status, masteryPct: r.masteryPct, correct: r.correct, attempts: r.attempts, lastEvidenceAt: r.lastAt };
+    });
+    return { students: [{ id: "local", name: "אני (נתונים מקומיים)" }], concepts, cells, rowCount: concepts.length, source: "local" };
   }
 
   async function loadTeacherHeatmapFromForm() {
+    const classId = teacherClassIdInput?.value?.trim() || "";
+    if (!classId) {
+      const report = buildLocalHeatmapReport();
+      if (!report.rowCount) {
+        updateTeacherHeatmapStatus("אין נתוני mastery מקומיים עדיין — תרגל מושגים כדי לראות heatmap.", "blocked");
+        return;
+      }
+      latestTeacherHeatmapReport = report;
+      renderTeacherHeatmap(report);
+      updateTeacherHeatmapStatus(`heatmap מקומי: ${report.rowCount} מושגים שתורגלו.`, "ready");
+      return;
+    }
     const core = teacherHeatmapCore();
     if (!core) {
       updateTeacherHeatmapStatus("טעינת heatmap חסומה: מודול teacher-heatmap לא נטען.", "error");
       return;
     }
-    const classId = teacherClassIdInput?.value || "";
     if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
       updateTeacherHeatmapStatus("טעינת heatmap חסומה: צריך Class ID תקין.", "blocked");
       return;
@@ -36369,13 +36441,45 @@ document.addEventListener("DOMContentLoaded", () => {
     `).join("");
   }
 
+  function buildLocalRiskAlerts() {
+    const alerts = [];
+    allConcepts().forEach(({ lesson, concept }) => {
+      const sc = getScore(lesson.id, concept.conceptName);
+      const attempts = sc.attempts || 0;
+      if (attempts < 3) return;
+      const correct = sc.correct || 0;
+      const pct = Math.round((correct / attempts) * 100);
+      if (pct < 40) {
+        alerts.push({
+          studentName: "אני (נתונים מקומיים)",
+          type: "low_mastery",
+          conceptKey: `${lesson.id}::${concept.conceptName}`,
+          metric: `${pct}% (${correct}/${attempts})`,
+          message: `שליטה נמוכה לאחר ${attempts} ניסיונות — מומלץ לחזור על המושג.`,
+          severity: pct < 20 ? "high" : "medium",
+        });
+      }
+    });
+    alerts.sort((a, b) => (a.severity === "high" ? -1 : 1) - (b.severity === "high" ? -1 : 1));
+    return alerts;
+  }
+
   async function loadTeacherRiskAlertsFromForm() {
+    const classId = teacherClassIdInput?.value?.trim() || "";
+    if (!classId) {
+      const alerts = buildLocalRiskAlerts();
+      renderTeacherRiskAlerts(alerts);
+      updateTeacherRiskStatus(
+        alerts.length ? `נמצאו ${alerts.length} מושגים עם שליטה נמוכה (נתונים מקומיים).` : "אין מושגים עם שליטה נמוכה בנתונים המקומיים.",
+        "ready",
+      );
+      return;
+    }
     const core = teacherRiskAlertsCore();
     if (!core) {
       updateTeacherRiskStatus("טעינת סיכונים חסומה: מודול teacher-risk-alerts לא נטען.", "error");
       return;
     }
-    const classId = teacherClassIdInput?.value || "";
     if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
       updateTeacherRiskStatus("טעינת סיכונים חסומה: צריך Class ID תקין.", "blocked");
       return;
