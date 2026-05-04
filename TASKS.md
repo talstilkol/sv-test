@@ -35,7 +35,7 @@ _(audit complete; resuming execution)_
 - [x] **Real Playwright smoke** — 3/3 passed in headless Chromium (23 tabs, consent, mock-exam)
 - [ ] **Teacher dashboard polish** — analytics + bulk import (~1 week)
 - [ ] **Social/community v0** — peer-review submissions for code activities (~2 weeks)
-- [ ] **Spaced repetition v2** — SRS already exists, but UI surface is minimal (~3 days)
+- [x] **Spaced repetition v2** — due-count badge on tab (data-nav-skip breadcrumb fix); keyboard shortcuts Space/1-4; session completion screen with rating breakdown (again/hard/good/easy chips) + 7-day review forecast bar chart
 - [x] **Accessibility statement page** — modal in settings ♿ card; WCAG 2.1 AA / Lighthouse 100 / known limits listed; GitHub Issues link
 - [x] **GDPR/CCPA consent flow** — `#consent-banner` + `initConsentBanner()`: shows on first load, accept/decline stored as `lumen-consent` in localStorage, decline sets `window.__lumenConsentDeclined`
 

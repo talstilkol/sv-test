@@ -1352,6 +1352,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return String(value || "").replace(/\s+/g, " ").trim();
   }
 
+  function getTabLabel(tab) {
+    if (!tab) return "";
+    let text = "";
+    tab.childNodes.forEach((node) => {
+      if (node.nodeType === Node.ELEMENT_NODE && node.dataset.navSkip) return;
+      text += node.textContent || "";
+    });
+    return text || tab.getAttribute("aria-label") || "";
+  }
+
   function isSiteViewVisible(el) {
     return !!el && !el.hidden && el.style.display !== "none";
   }
@@ -1384,7 +1394,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return {
         type: "tab",
         id: activeTab.dataset.tab || activeTab.id || "tab",
-        label: cleanSiteNavText(activeTab.textContent || activeTab.getAttribute("aria-label") || "טאב"),
+        label: cleanSiteNavText(getTabLabel(activeTab) || activeTab.getAttribute("aria-label") || "טאב"),
       };
     }
 
@@ -1409,7 +1419,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabItems = topTabs
       .map((tab) => {
         const id = tab.dataset.tab || tab.id || "";
-        const label = cleanSiteNavText(tab.textContent || tab.getAttribute("aria-label") || "");
+        const label = cleanSiteNavText(getTabLabel(tab) || tab.getAttribute("aria-label") || "");
         if (!id || !label) return "";
         const active = state.type === "tab" && state.id === id ? " active" : "";
         return `<button class="site-map-item${active}" type="button" data-site-tab="${esc(id)}">${esc(label)}</button>`;
@@ -26644,14 +26654,52 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (completed) {
+      const sessionStats = (() => {
+        try { return JSON.parse(localStorage.getItem(FLASHCARDS_STATS_KEY) || "{}"); } catch (_) { return {}; }
+      })();
+      const DAY_MS_FC = window.SRS?.DAY_MS || 86400000;
+      const nowFc = Date.now();
+      const forecast = Array.from({ length: 7 }, (_, i) => ({ day: i, count: 0 }));
+      allConcepts().forEach(({ lesson, concept }) => {
+        const sc = getScore(lesson.id, concept.conceptName);
+        if (!sc.srsState?.due) return;
+        const daysUntil = Math.round((sc.srsState.due - nowFc) / DAY_MS_FC);
+        const bucket = daysUntil <= 0 ? 0 : Math.min(daysUntil, 6);
+        forecast[bucket].count++;
+      });
+      const maxFc = Math.max(1, ...forecast.map((f) => f.count));
+      const DAY_LABELS = ["היום", "מחר", "+2", "+3", "+4", "+5", "+6"];
+      const ratingChips = [
+        { key: "again", label: "↺ Again" },
+        { key: "hard", label: "קשה" },
+        { key: "good", label: "טוב" },
+        { key: "easy", label: "קל" },
+      ].map(({ key, label }) => {
+        const n = sessionStats[key] || 0;
+        return `<div class="fc-rating-chip ${key}"><span class="fc-chip-n">${n}</span><span class="fc-chip-label">${label}</span></div>`;
+      }).join("");
+      const forecastBars = forecast.map((f, i) => {
+        const h = Math.max(3, Math.round((f.count / maxFc) * 48));
+        return `<div class="fc-forecast-col${i === 0 ? " today" : ""}">
+          <span class="fc-forecast-n">${f.count > 0 ? f.count : ""}</span>
+          <div class="fc-forecast-bar-wrap"><div class="fc-forecast-bar" style="height:${h}px"></div></div>
+          <span class="fc-forecast-day">${DAY_LABELS[i]}</span>
+        </div>`;
+      }).join("");
       shell.innerHTML = `
         <div class="fc-complete">
           <div class="big-icon">✅</div>
           <h3>הסשן הושלם</h3>
-          <p>נסקרו ${flashcardsReviewed} כרטיסים. אפשר להתחיל שוב עם אותו סינון או לעבור למפת הידע כדי לראות את השינוי ברמות.</p>
+          <p>נסקרו ${flashcardsReviewed} כרטיסים בסשן זה.</p>
           <div class="fc-complete-actions">
             <button class="km-btn-mini" id="fc-restart-complete">↺ התחל שוב</button>
             <button class="km-btn-mini" id="fc-open-km-complete">🗺️ פתח מפת ידע</button>
+          </div>
+          <div class="fc-session-summary">
+            <h4>דירוג סשן זה</h4>
+            <div class="fc-rating-breakdown">${ratingChips}</div>
+            <h4>תזמון חזרות — 7 ימים הבאים</h4>
+            <div class="fc-forecast"><div class="fc-forecast-bars">${forecastBars}</div></div>
           </div>
         </div>`;
       document.getElementById("fc-restart-complete")?.addEventListener("click", () => {
@@ -26710,8 +26758,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button class="fc-rate hard" data-fc-rate="hard">קשה</button>
                 <button class="fc-rate good" data-fc-rate="good">טוב</button>
                 <button class="fc-rate easy" data-fc-rate="easy">קל</button>
+                <p class="fc-keyboard-hint"><kbd>1</kbd> Again &nbsp;<kbd>2</kbd> קשה &nbsp;<kbd>3</kbd> טוב &nbsp;<kbd>4</kbd> קל</p>
               `
-              : `<button class="fc-reveal-btn" id="fc-reveal">הצג תשובה</button>`
+              : `<button class="fc-reveal-btn" id="fc-reveal">הצג תשובה</button>
+                 <p class="fc-keyboard-hint"><kbd>Space</kbd> הצג תשובה</p>`
           }
           <button class="km-btn-mini" id="fc-open-lesson">פתח בשיעור</button>
         </div>
@@ -26816,6 +26866,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateProgress();
     saveFlashcardsSession();
     renderFlashcards();
+    updateFcDueBadge();
   }
 
   document.getElementById("fc-search")?.addEventListener("input", (e) => {
@@ -26839,6 +26890,51 @@ document.addEventListener("DOMContentLoaded", () => {
     flashcardIndex = 0;
     flashcardsRevealed = false;
     refreshFlashcards();
+  });
+
+  // SRS v2: due-count badge on the flashcards tab button
+  function updateFcDueBadge() {
+    const badge = document.getElementById("fc-due-badge");
+    if (!badge) return;
+    const due = allConcepts().reduce((n, { lesson, concept }) => {
+      const sc = getScore(lesson.id, concept.conceptName);
+      return n + (isSrsDue(sc) || (sc.attempts || 0) === 0 ? 1 : 0);
+    }, 0);
+    if (due > 0) {
+      badge.textContent = due > 99 ? "99+" : String(due);
+      badge.removeAttribute("hidden");
+      badge.setAttribute("aria-label", `${due} כרטיסים לחזרה היום`);
+    } else {
+      badge.setAttribute("hidden", "");
+    }
+  }
+  // Initial badge after scores load
+  setTimeout(updateFcDueBadge, 200);
+
+  // SRS v2: keyboard shortcuts inside the flashcards view
+  document.addEventListener("keydown", (e) => {
+    const fcView = document.getElementById("flashcards-view");
+    if (!fcView || fcView.style.display !== "block") return;
+    // Don't fire if focus is in an input/textarea/select
+    const tag = (document.activeElement?.tagName || "").toUpperCase();
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    // Don't fire if the a11y statement modal is open
+    if (!document.getElementById("a11y-statement-modal")?.hidden) return;
+    const completed = flashcardQueue.length > 0 && flashcardIndex >= flashcardQueue.length;
+    if (completed) return;
+    if (e.key === " " || e.code === "Space") {
+      e.preventDefault();
+      if (!flashcardsRevealed) {
+        flashcardsRevealed = true;
+        renderFlashcards();
+        updateFcDueBadge();
+      }
+    } else if (flashcardsRevealed) {
+      if (e.key === "1") { e.preventDefault(); rateFlashcard("again"); }
+      else if (e.key === "2") { e.preventDefault(); rateFlashcard("hard"); }
+      else if (e.key === "3") { e.preventDefault(); rateFlashcard("good"); }
+      else if (e.key === "4") { e.preventDefault(); rateFlashcard("easy"); }
+    }
   });
 
   // Toolbar wiring (guide)
