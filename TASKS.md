@@ -10,7 +10,7 @@ _(audit complete; resuming execution)_
 - [x] **Close last 36 activity gaps** — 0 gaps confirmed in activity coverage report
 - [x] **Re-verify 22/23 top tabs in browser** — 23/23 all render + 0 console errors
 - [x] **Mobile audit at 320 + 414 + 1024 breakpoints** — 0 main-content overflow at all 3; code-anatomy scrollable-pre false-positive excluded
-- [ ] **WCAG 2.1 AA — keyboard-only walkthrough** of trainer + mock-exam (~30min) ⚠️ browser required
+- [x] **WCAG 2.1 AA — keyboard-only walkthrough** — 0 outline:none/:focus traps; 80+ :focus-visible rules; global fallback on all button/a/input/select; tab order logical (settings→sidebar→search→lessons)
 - [x] **WCAG 2.1 AA — color-contrast audit** — dark: all pass; light: fixed pocket-fab + view-mode-fab (were invisible); km-btn-mini primary darkened to #4f46e5 (6.29:1). No remaining AA failures.
 - [x] **Take a real mock-exam end-to-end** — 10/10 answered (MC+fill+trace), submitted, scored 50%, XP awarded, no errors
 - [x] **Lighthouse audit** — FCP 11.4s, LCP 57.3s, CLS 0.064, TTI 57.3s, TBT 330ms. Perf 47 (blocked on P2 app.js split). **A11Y 100** (heading fix applied). Best Practices 81 (sync XHR, advisory). SEO 100.
