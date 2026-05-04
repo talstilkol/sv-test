@@ -1,6 +1,6 @@
 # Report Source of Truth
 
-Date: 2026-05-03
+Date: 2026-05-04
 Version: report-source-of-truth-v1
 
 ## Tracked Artifacts
@@ -31,13 +31,13 @@ Version: report-source-of-truth-v1
 | PRICING_PACKAGING_PLAN_REPORT | historical | 2026-04-29 | pricing-packaging-plan-v1 | markdown+json | 2026-04-29 |
 | QUESTION_ACTIVITY_AUTHORING_PLAN | historical | 2026-05-02 | question-activity-authoring-plan-v1 | markdown+json | 2026-05-02 |
 | QUESTION_ACTIVITY_COVERAGE_REPORT | historical | 2026-04-30 | question-activity-coverage-v1 | markdown+json | 2026-04-30 |
-| QUESTION_COVERAGE_TARGETS | historical | 2026-05-01 | question-coverage-targets-v1 | markdown+json | 2026-05-01 |
+| QUESTION_COVERAGE_TARGETS | historical | 2026-05-03 | question-coverage-targets-v1 | markdown+json | 2026-05-03 |
 | QUESTION_CURRICULUM_COVERAGE_REPORT | historical | 2026-05-02 | curriculum-coverage-v1 | markdown+json | 2026-05-02 |
 | QUESTION_QA_CHECKLIST | historical | 2026-04-30 | question-qa-checklist-v2 | markdown+json | md date missing |
 | QUESTION_QUALITY_REPORT | historical | 2026-04-30 | question-quality-v1 | markdown+json | 2026-04-30 |
 | QUESTION_REMEDIATION_QUEUE | historical | 2026-04-28 | question-remediation-v1 | markdown+json | 2026-04-28 |
 | QUESTION_REUSE_AUDIT_REPORT | historical | 2026-04-29 | question-reuse-audit-v1 | markdown+json | md date missing |
-| REPORT_SOURCE_OF_TRUTH | historical | 2026-05-02 | report-source-of-truth-v1 | markdown+json | 2026-05-02 |
+| REPORT_SOURCE_OF_TRUTH | historical | 2026-05-03 | report-source-of-truth-v1 | markdown+json | 2026-05-03 |
 | ROADMAP_90_DAY_WAVES | historical | 2026-04-29 | roadmap-90-day-waves-v1 | markdown+json | 2026-04-29 |
 | SVCOLLEGE_COMMAND_CENTER | historical | 2026-04-28 | svcollege-command-center-v1 | markdown+json | md date missing |
 | SVCOLLEGE_READINESS_REPORT | historical | 2026-04-28 | svcollege-readiness-v1 | markdown+json | md date missing |
@@ -50,7 +50,7 @@ Version: report-source-of-truth-v1
 
 - **FEATURE_COVERAGE**: green (strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2)
 - **QUESTION_COVERAGE_TARGETS**: green (ready=true, mcGap=0, fillGap=0, version=question-coverage-targets-v1)
-- **QUESTION_QUALITY**: yellow (questionQualityIndex=98.1%, total=4206)
+- **QUESTION_QUALITY**: yellow (questionQualityIndex=97.9%, total=4762)
 - **FINISH_LINE_PRE_RELEASE**: red (ready=false, passed=1/18)
 
 ## Source-of-Truth Findings

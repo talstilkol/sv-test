@@ -1,6 +1,6 @@
 {
   "reportVersion": "report-source-of-truth-v1",
-  "date": "2026-05-03",
+  "date": "2026-05-04",
   "source": "scripts/report_source_of_truth.js",
   "scope": "generated report freshness + contradiction reconciliation",
   "artifactSummary": {
@@ -14,26 +14,26 @@
       "id": "FEATURE_COVERAGE",
       "status": "green",
       "detail": "strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2",
-      "date": "2026-05-03"
+      "date": "2026-05-04"
     },
     {
       "id": "QUESTION_COVERAGE_TARGETS",
       "status": "green",
       "detail": "ready=true, mcGap=0, fillGap=0, version=question-coverage-targets-v1",
-      "date": "2026-05-03",
+      "date": "2026-05-04",
       "source": "questionCoverage"
     },
     {
       "id": "QUESTION_QUALITY",
       "status": "yellow",
-      "detail": "questionQualityIndex=98.1%, total=4206",
-      "date": "2026-05-03"
+      "detail": "questionQualityIndex=97.9%, total=4762",
+      "date": "2026-05-04"
     },
     {
       "id": "FINISH_LINE_PRE_RELEASE",
       "status": "red",
       "detail": "ready=false, passed=1/18",
-      "date": "2026-05-03"
+      "date": "2026-05-04"
     }
   ],
   "findings": [
@@ -42,7 +42,7 @@
       "severity": "P1",
       "finding": "38 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical.",
       "evidence": {
-        "sourceOfTruthDate": "2026-05-03",
+        "sourceOfTruthDate": "2026-05-04",
         "staleArtifacts": 38
       }
     }
@@ -267,8 +267,8 @@
     {
       "id": "QUESTION_COVERAGE_TARGETS",
       "state": "historical",
-      "date": "2026-05-01",
-      "mdDate": "2026-05-01",
+      "date": "2026-05-03",
+      "mdDate": "2026-05-03",
       "reportVersion": "question-coverage-targets-v1",
       "type": "markdown+json",
       "title": "QUESTION_COVERAGE_TARGETS"
@@ -335,8 +335,8 @@
     {
       "id": "REPORT_SOURCE_OF_TRUTH",
       "state": "historical",
-      "date": "2026-05-02",
-      "mdDate": "2026-05-02",
+      "date": "2026-05-03",
+      "mdDate": "2026-05-03",
       "reportVersion": "report-source-of-truth-v1",
       "type": "markdown+json",
       "title": "scripts/report_source_of_truth.js"
