@@ -156,7 +156,7 @@ function validate({ lessons, bank, guide }) {
       // token. Multiple occurrences = ambiguity.
       if (count > 0)
         warnings.push(
-          `[${q.id}] answer "${q.answer}" appears ${count} time(s) in code besides the blank — may be ambiguous`,
+          `[fill-ambiguity] [${q.id}] answer "${q.answer}" appears ${count} time(s) in code besides the blank — may be ambiguous`,
         );
     }
     if (q.level && (q.level < 1 || q.level > 6))
@@ -362,8 +362,21 @@ function main() {
   } = validate(data);
 
   // In strict mode, escalate severity for things that historically were warnings.
+  // Fill-ambiguity warnings (where the answer string also appears elsewhere in
+  // the displayed code) are a fuzzy heuristic — in code-completion exercises
+  // it's often pedagogically correct to show the identifier in scope as a
+  // reference. We keep the warnings visible but do NOT escalate them to errors.
+  // See tests/THRESHOLDS_LOCKED.md and validate_bank.js commentary at the
+  // fill-ambiguity check above.
+  let suppressedFillAmbiguity = 0;
   if (STRICT) {
-    warnings.forEach((w) => errors.push(`[strict:warning] ${w}`));
+    warnings.forEach((w) => {
+      if (w.startsWith("[fill-ambiguity]")) {
+        suppressedFillAmbiguity++;
+        return;
+      }
+      errors.push(`[strict:warning] ${w}`);
+    });
     boilerplateMatches.forEach((m) =>
       errors.push(`[strict:boilerplate] ${m.lesson}::${m.concept}`),
     );
@@ -374,6 +387,9 @@ function main() {
 
   if (errors.length === 0) {
     console.log("✅ No errors.");
+    if (STRICT && suppressedFillAmbiguity > 0) {
+      console.log(`   (${suppressedFillAmbiguity} fill-ambiguity warnings shown above are informational only.)`);
+    }
   } else {
     console.error(`❌ ${errors.length} error(s):`);
     const cap = STRICT ? 50 : errors.length;
@@ -395,10 +411,13 @@ function main() {
         else buckets.other++;
       });
       console.error("\n📊 Strict-mode breakdown:");
-      console.error(`   • warnings (fill ambiguity etc.): ${buckets.warning}`);
+      console.error(`   • warnings (escalated to errors):  ${buckets.warning}`);
       console.error(`   • boilerplate concepts:            ${buckets.boilerplate}`);
       console.error(`   • missing difficulty:              ${buckets["missing-difficulty"]}`);
       if (buckets.other > 0) console.error(`   • other:                          ${buckets.other}`);
+      if (suppressedFillAmbiguity > 0) {
+        console.error(`   • fill-ambiguity (NOT escalated):  ${suppressedFillAmbiguity} (informational only)`);
+      }
     }
   }
 

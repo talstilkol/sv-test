@@ -3319,7 +3319,7 @@ var QUESTIONS_TRACE = [
   {
     id: "trace_event_loop_microtask",
     conceptKey: "lesson_19::event loop",
-    level: 7,
+    level: 6,
     title: "microtask מתעדף על macrotask",
     code: "console.log('1');\nsetTimeout(() => console.log('2'), 0);\nPromise.resolve()\n  .then(() => console.log('3'))\n  .then(() => console.log('4'));\nconsole.log('5');",
     steps: [
@@ -3527,7 +3527,7 @@ var QUESTIONS_TRACE = [
   {
     id: "trace_typescript_keyof",
     conceptKey: "lesson_26::interface",
-    level: 7,
+    level: 6,
     title: "keyof operator ב-TS",
     code: "interface User {\n  id: number;\n  name: string;\n  email: string;\n}\ntype UserKey = keyof User;\nfunction get<K extends keyof User>(user: User, key: K): User[K] {\n  return user[key];\n}",
     steps: [
@@ -3749,7 +3749,7 @@ var QUESTIONS_TRACE = [
   {
     id: "trace_react_inline_function",
     conceptKey: "lesson_24::useMemo",
-    level: 7,
+    level: 6,
     title: "inline arrow לכל child = re-render",
     code: "function Parent() {\n  const [n, setN] = useState(0);\n  return (\n    <ChildMemoed onClick={() => doSomething(n)} />\n  );\n}\nconst ChildMemoed = React.memo(({ onClick }) => {\n  console.log('Child render');\n  return <button onClick={onClick}>+</button>;\n});",
     steps: [
@@ -3773,7 +3773,7 @@ var QUESTIONS_TRACE = [
   {
     id: "trace_typescript_satisfies",
     conceptKey: "lesson_26::type annotation",
-    level: 7,
+    level: 6,
     title: "as vs satisfies (TS 4.9+)",
     code: "type Status = 'active' | 'inactive';\nconst s1 = { status: 'active' as Status };\nconst s2 = { status: 'active' } satisfies { status: Status };",
     steps: [
@@ -3917,7 +3917,7 @@ var QUESTIONS_TRACE = [
   {
     id: "trace_async_parallel_vs_serial",
     conceptKey: "lesson_15::Promise",
-    level: 7,
+    level: 6,
     title: "Promise.all vs await ברצף",
     code: "async function serial() {\n  const a = await fetch('/a');\n  const b = await fetch('/b');\n  return [a, b];\n}\nasync function parallel() {\n  const [a, b] = await Promise.all([fetch('/a'), fetch('/b')]);\n  return [a, b];\n}",
     steps: [

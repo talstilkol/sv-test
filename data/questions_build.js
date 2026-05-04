@@ -1326,7 +1326,7 @@ export default mongoose.model('User', userSchema);`,
   {
     id: "build_bcrypt_signup",
     conceptKey: "lesson_auth_security::password hashing",
-    level: 7,
+    level: 6,
     title: "Sign-up עם bcrypt",
     prompt: "כתוב async signup(email, password) שעושה: bcrypt.hash(password, 10), שמירת user ב-DB עם passwordHash, החזרת user (בלי הסיסמה).",
     starter: `async function signup(email, password) {
@@ -1481,7 +1481,7 @@ const UserSchema = // הקוד שלך`,
   {
     id: "build_express_middleware_auth",
     conceptKey: "lesson_17::middleware",
-    level: 7,
+    level: 6,
     title: "Auth middleware",
     prompt: "כתוב middleware authMiddleware שבודק Authorization header עם 'Bearer X', מאמת JWT, ושומר user ב-req.user. אם לא תקין: 401.",
     starter: `function authMiddleware(req, res, next) {
@@ -1622,7 +1622,7 @@ export async function POST(request) {
   {
     id: "build_useReducer_todo",
     conceptKey: "lesson_24::useMemo",
-    level: 7,
+    level: 6,
     title: "Todo עם useReducer",
     prompt: "כתוב TodoApp עם useReducer: state = todos[]; actions: ADD (text), TOGGLE (id), REMOVE (id). רנדר רשימה + form להוספה.",
     starter: `function TodoApp() {
@@ -1674,7 +1674,7 @@ export async function POST(request) {
   {
     id: "build_debounce_hook",
     conceptKey: "lesson_24::useEffect",
-    level: 7,
+    level: 6,
     title: "useDebounce hook",
     prompt: "כתוב useDebounce(value, delay) שמחזיר את value אחרי delay ms של 'דממה' (אין שינוי). שימושי לחיפוש live.",
     starter: `function useDebounce(value, delay) {

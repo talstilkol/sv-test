@@ -1084,7 +1084,7 @@ if (JSON.stringify(a) === JSON.stringify(b)) {
   {
     id: "bug_jwt_localstorage",
     conceptKey: "lesson_auth_security::XSS boundary",
-    level: 7,
+    level: 6,
     title: "אחסון JWT ב-localStorage",
     brokenCode:
 `async function login(email, password) {
@@ -1158,7 +1158,7 @@ async function login(email, password) {
   {
     id: "bug_useMemo_no_deps",
     conceptKey: "lesson_24::useMemo",
-    level: 7,
+    level: 6,
     title: "useMemo בלי deps array",
     brokenCode:
 `function Stats({ data }) {
@@ -1368,7 +1368,7 @@ console.log(user.name.toUpperCase()); // TS catches typos`,
   {
     id: "bug_express_async_error",
     conceptKey: "lesson_17::middleware",
-    level: 7,
+    level: 6,
     title: "async middleware בלי error handling",
     brokenCode:
 `app.get('/users/:id', async (req, res) => {
@@ -1401,7 +1401,7 @@ console.log(user.name.toUpperCase()); // TS catches typos`,
   {
     id: "bug_dependency_array_object",
     conceptKey: "lesson_24::dependency array",
-    level: 7,
+    level: 6,
     title: "object ב-deps array",
     brokenCode:
 `function User({ id }) {
@@ -1437,7 +1437,7 @@ console.log(user.name.toUpperCase()); // TS catches typos`,
   {
     id: "bug_react_state_in_callback",
     conceptKey: "lesson_closures::stale closure",
-    level: 7,
+    level: 6,
     title: "stale state ב-event listener",
     brokenCode:
 `function Counter() {
