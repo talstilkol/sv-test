@@ -6,6 +6,7 @@ const path = require("path");
 const vm = require("vm");
 const { loadQuestionBanks } = require("./report_question_quality.js");
 const { stableHash } = require("./audit_distractors.js");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
@@ -81,7 +82,7 @@ function deterministicSample(questions, ratio = SAMPLE_RATIO) {
 function dataFilesMatching(pattern) {
   return fs.readdirSync(DATA_DIR)
     .filter((file) => pattern.test(file))
-    .sort((a, b) => a.localeCompare(b));
+    .sort(byFilename);
 }
 
 function loadDataSandbox(files) {

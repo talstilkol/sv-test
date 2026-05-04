@@ -63,6 +63,25 @@ jobs:
       - name: SVCollege readiness metadata gate
         run: node scripts/report_svcollege_readiness.js --strict --summary
 
+      # Tab matrix — all 15 SVCollege modules × 15 tab slots must be filled.
+      - name: SVCollege tab matrix gate
+        run: node scripts/report_svcollege_tab_matrix.js --strict --summary
+
+      # Manual question coverage — 100% concept coverage across MC + Fill.
+      - name: Question coverage targets gate
+        run: node scripts/report_question_coverage_targets.js --strict --summary
+
+      # SW precache must match the <script src="data/..."> tags in index.html.
+      # Adding a new data file without updating the SW silently breaks offline
+      # mode; this gate fails the build until they match.
+      - name: Service worker precache sync gate
+        run: node scripts/sync_sw_precache.js
+
+      # Test threshold drift watchdog — fails when a numeric bar moved in the
+      # easier-to-pass direction without an entry in tests/THRESHOLDS_LOCKED.md.
+      - name: Threshold drift gate
+        run: node scripts/check_threshold_drift.js --strict
+
       # Phase 5 — full-bank question quality gate.
       # Fails on blocker-level MC/Fill issues. Warnings stay visible in the
       # generated report and remediation queue.

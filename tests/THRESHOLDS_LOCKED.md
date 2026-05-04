@@ -1,0 +1,46 @@
+# Locked Test Thresholds
+
+This file tracks numeric thresholds in tests that were **softened** during a release sprint to keep CI green. Every entry here must justify *why* the bar moved and what would let it move back up.
+
+**Rule:** if you find yourself lowering a `toBeGreaterThanOrEqual`, raising a `toBeLessThanOrEqual`, or growing a budget, add an entry here in the same PR. The pre-commit hint (`scripts/check_threshold_drift.js`) will warn you.
+
+---
+
+## Currently softened
+
+### `tests/question-activity-authoring-plan.test.js`
+| Field | Original | Current | Reason |
+|---|---:|---:|---|
+| `summary.totalGaps >= ?` | 220 | 10 | 2026-05-04. Phase 2 closed 159 of 195 trace+build+bug gaps. New floor is 10 because more gaps can show up if a future lesson adds new code-bearing concepts. |
+
+**Restore-up condition:** when remaining 36 activity gaps drop to 0, raise the floor to `0` and remove this entry.
+
+### `scripts/report_performance_budget.js`
+| Field | Original | Current | Reason |
+|---|---:|---:|---|
+| `BUDGETS["app.js"]` | 1,700,000 | 1,750,000 | 2026-05-04. PR #25 (funny-bhabha) merged WORLD1 architecture which grew app.js past 1.7MB. Tightened from 1.8MB → 1.75MB this session (current size 1,728,608). |
+
+**Restore-down condition:** Phase B Tech Debt task "Split app.js into modules" — once the monolith is split, app.js itself should drop below 1MB.
+
+---
+
+## How to use
+
+```bash
+# Show every threshold currently softened
+cat tests/THRESHOLDS_LOCKED.md
+
+# Run drift check (used by pre-commit + CI)
+node scripts/check_threshold_drift.js
+```
+
+When a threshold needs to move:
+
+1. **Tightening (good):** edit the test/script, run tests, update the `Current` column. If a row reaches its `Original`, delete it.
+2. **Softening (yellow flag):** edit the test, **then** add or update a row here in the SAME commit. PR description must explain why softening is the right move (vs. fixing the regression).
+
+## Drift watcher
+
+`scripts/check_threshold_drift.js` (called from a pre-commit hook + CI) scans test files for `toBeGreaterThanOrEqual(N)` and `toBeLessThanOrEqual(N)` calls, plus the `BUDGETS` object in `report_performance_budget.js`. If any value moves DOWN (>=) or UP (<=) versus a baseline file, the hook prints a warning and asks you to update this file.
+
+The baseline is `tests/.threshold-baseline.json`, regenerated whenever this file is updated.

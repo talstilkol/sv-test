@@ -4,6 +4,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
@@ -16,7 +17,7 @@ const TARGET_FILL_PER_CODE_CONCEPT = 2;
 function dataFiles() {
   return fs.readdirSync(DATA_DIR)
     .filter((file) => file.endsWith(".js") && file !== "questions_bank_seeded.js")
-    .sort((a, b) => a.localeCompare(b));
+    .sort(byFilename);
 }
 
 function loadData() {

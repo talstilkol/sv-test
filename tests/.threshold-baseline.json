@@ -1,0 +1,679 @@
+{
+  "generatedAt": "2026-05-04",
+  "tests": [
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 5
+    },
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 6
+    },
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 2,
+      "value": 5
+    },
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 3,
+      "value": 5
+    },
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 4,
+      "value": 5
+    },
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 5,
+      "value": 5
+    },
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 6,
+      "value": 3
+    },
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 7,
+      "value": 5
+    },
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 8,
+      "value": 3
+    },
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 9,
+      "value": 1
+    },
+    {
+      "file": "tests/capstones.test.js",
+      "op": "GTE",
+      "n": 10,
+      "value": 3
+    },
+    {
+      "file": "tests/concise-definitions.test.js",
+      "op": "LTE",
+      "n": 0,
+      "value": 95
+    },
+    {
+      "file": "tests/course-blueprints.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 1
+    },
+    {
+      "file": "tests/course-blueprints.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 5
+    },
+    {
+      "file": "tests/course-blueprints.test.js",
+      "op": "GTE",
+      "n": 2,
+      "value": 2
+    },
+    {
+      "file": "tests/course-blueprints.test.js",
+      "op": "GTE",
+      "n": 3,
+      "value": 2
+    },
+    {
+      "file": "tests/course-blueprints.test.js",
+      "op": "GTE",
+      "n": 4,
+      "value": 2
+    },
+    {
+      "file": "tests/exam-week-hardening-content.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 5
+    },
+    {
+      "file": "tests/exam-week-hardening-content.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 3
+    },
+    {
+      "file": "tests/feature-coverage.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 31
+    },
+    {
+      "file": "tests/feature-coverage.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 23
+    },
+    {
+      "file": "tests/feature-coverage.test.js",
+      "op": "GTE",
+      "n": 2,
+      "value": 89
+    },
+    {
+      "file": "tests/feature-coverage.test.js",
+      "op": "GTE",
+      "n": 3,
+      "value": 100
+    },
+    {
+      "file": "tests/glossary.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 200
+    },
+    {
+      "file": "tests/glossary.test.js",
+      "op": "LTE",
+      "n": 0,
+      "value": 95
+    },
+    {
+      "file": "tests/interview-prep.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 10
+    },
+    {
+      "file": "tests/interview-prep.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/interview-prep.test.js",
+      "op": "GTE",
+      "n": 2,
+      "value": 2
+    },
+    {
+      "file": "tests/keyboard-accessibility.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 2
+    },
+    {
+      "file": "tests/keyboard-accessibility.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 5
+    },
+    {
+      "file": "tests/keyboard-accessibility.test.js",
+      "op": "GTE",
+      "n": 2,
+      "value": 3
+    },
+    {
+      "file": "tests/keyboard-accessibility.test.js",
+      "op": "GTE",
+      "n": 3,
+      "value": 5
+    },
+    {
+      "file": "tests/keyboard-accessibility.test.js",
+      "op": "GTE",
+      "n": 4,
+      "value": 10
+    },
+    {
+      "file": "tests/keyboard-accessibility.test.js",
+      "op": "GTE",
+      "n": 5,
+      "value": 15
+    },
+    {
+      "file": "tests/keyboard-accessibility.test.js",
+      "op": "GTE",
+      "n": 6,
+      "value": 3
+    },
+    {
+      "file": "tests/lesson-assets.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 1
+    },
+    {
+      "file": "tests/manual-blocker-question-authoring.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 3
+    },
+    {
+      "file": "tests/manual-blocker-question-authoring.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/manual-blocker-question-authoring.test.js",
+      "op": "GTE",
+      "n": 2,
+      "value": 27
+    },
+    {
+      "file": "tests/manual-question-blocker-map.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 3
+    },
+    {
+      "file": "tests/manual-question-blocker-map.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/mistake-agent.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 20
+    },
+    {
+      "file": "tests/question-activity-authoring-plan.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 10
+    },
+    {
+      "file": "tests/question-coverage-targets.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 0
+    },
+    {
+      "file": "tests/question-coverage-targets.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 0
+    },
+    {
+      "file": "tests/question-coverage-targets.test.js",
+      "op": "GTE",
+      "n": 2,
+      "value": 0
+    },
+    {
+      "file": "tests/question-quality-report.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 430
+    },
+    {
+      "file": "tests/question-quality-report.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 88
+    },
+    {
+      "file": "tests/question-reuse-audit.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 1086
+    },
+    {
+      "file": "tests/question-reuse-audit.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 384
+    },
+    {
+      "file": "tests/report-curriculum-coverage.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 0
+    },
+    {
+      "file": "tests/report-curriculum-coverage.test.js",
+      "op": "LTE",
+      "n": 0,
+      "value": 12
+    },
+    {
+      "file": "tests/rng.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 0
+    },
+    {
+      "file": "tests/rng.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 0
+    },
+    {
+      "file": "tests/source-of-truth.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 4
+    },
+    {
+      "file": "tests/srs.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 1
+    },
+    {
+      "file": "tests/srs.test.js",
+      "op": "LTE",
+      "n": 0,
+      "value": 365
+    },
+    {
+      "file": "tests/srs.test.js",
+      "op": "LTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/supabase-class-assignments-schema.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 4
+    },
+    {
+      "file": "tests/supabase-class-concept-mastery-schema.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 3
+    },
+    {
+      "file": "tests/supabase-class-students-schema.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 4
+    },
+    {
+      "file": "tests/supabase-community-moderation-schema.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 6
+    },
+    {
+      "file": "tests/supabase-concept-discussion-votes-schema.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 3
+    },
+    {
+      "file": "tests/supabase-concept-discussions-schema.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 4
+    },
+    {
+      "file": "tests/supabase-peer-review-schema.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 8
+    },
+    {
+      "file": "tests/svcollege-accessibility-smoke.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 7
+    },
+    {
+      "file": "tests/svcollege-accessibility-smoke.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 20
+    },
+    {
+      "file": "tests/svcollege-ai-engineering-content.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 0
+    },
+    {
+      "file": "tests/svcollege-auth-content.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 19
+    },
+    {
+      "file": "tests/svcollege-auth-content.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 0
+    },
+    {
+      "file": "tests/svcollege-auth-content.test.js",
+      "op": "GTE",
+      "n": 2,
+      "value": 3
+    },
+    {
+      "file": "tests/svcollege-console-gate.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 5
+    },
+    {
+      "file": "tests/svcollege-context-tree-smoke.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 20
+    },
+    {
+      "file": "tests/svcollege-design-systems-content.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 0
+    },
+    {
+      "file": "tests/svcollege-devops-content.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 0
+    },
+    {
+      "file": "tests/svcollege-foundation-tooling-activity-traces.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 3
+    },
+    {
+      "file": "tests/svcollege-foundation-tooling-activity-traces.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-lesson11-activity-traces.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-lesson11-activity-traces.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-lesson12-activity-traces.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-lesson12-activity-traces.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-lesson13-activity-traces.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 3
+    },
+    {
+      "file": "tests/svcollege-lesson13-activity-traces.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-lesson15-activity-traces.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 3
+    },
+    {
+      "file": "tests/svcollege-lesson15-activity-traces.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-lesson16-activity-traces.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 3
+    },
+    {
+      "file": "tests/svcollege-lesson16-activity-traces.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-lesson17-activity-traces.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 3
+    },
+    {
+      "file": "tests/svcollege-lesson17-activity-traces.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-nestjs-content.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 0
+    },
+    {
+      "file": "tests/svcollege-nextjs-content.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 0
+    },
+    {
+      "file": "tests/svcollege-nextjs-content.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 3
+    },
+    {
+      "file": "tests/svcollege-pwa-offline-smoke.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 13
+    },
+    {
+      "file": "tests/svcollege-readiness-report.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 0
+    },
+    {
+      "file": "tests/svcollege-readiness-report.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 0
+    },
+    {
+      "file": "tests/svcollege-readiness-report.test.js",
+      "op": "LTE",
+      "n": 0,
+      "value": 100
+    },
+    {
+      "file": "tests/svcollege-readiness-report.test.js",
+      "op": "LTE",
+      "n": 1,
+      "value": 100
+    },
+    {
+      "file": "tests/svcollege-screenshot-evidence.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 320
+    },
+    {
+      "file": "tests/svcollege-screenshot-evidence.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 320
+    },
+    {
+      "file": "tests/svcollege-sql-orm-content.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 17
+    },
+    {
+      "file": "tests/svcollege-sql-orm-content.test.js",
+      "op": "GTE",
+      "n": 1,
+      "value": 3
+    },
+    {
+      "file": "tests/svcollege-sql-orm-content.test.js",
+      "op": "GTE",
+      "n": 2,
+      "value": 3
+    },
+    {
+      "file": "tests/svcollege-sql-orm-content.test.js",
+      "op": "GTE",
+      "n": 3,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-sql-orm-content.test.js",
+      "op": "GTE",
+      "n": 4,
+      "value": 0
+    },
+    {
+      "file": "tests/svcollege-sql-orm-content.test.js",
+      "op": "GTE",
+      "n": 5,
+      "value": 2
+    },
+    {
+      "file": "tests/svcollege-tab-matrix.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 14
+    },
+    {
+      "file": "tests/svcollege-visual-overlap-audit.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 7
+    },
+    {
+      "file": "tests/video-asset-tracker.test.js",
+      "op": "GTE",
+      "n": 0,
+      "value": 10
+    }
+  ],
+  "budgets": [
+    {
+      "file": "scripts/report_performance_budget.js",
+      "op": "BUDGET",
+      "key": "index.html",
+      "value": 120000
+    },
+    {
+      "file": "scripts/report_performance_budget.js",
+      "op": "BUDGET",
+      "key": "app.js",
+      "value": 1750000
+    },
+    {
+      "file": "scripts/report_performance_budget.js",
+      "op": "BUDGET",
+      "key": "style.css",
+      "value": 700000
+    },
+    {
+      "file": "scripts/report_performance_budget.js",
+      "op": "BUDGET",
+      "key": "service-worker.js",
+      "value": 30000
+    }
+  ]
+}
