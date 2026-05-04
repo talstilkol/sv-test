@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LumenPortal — סיכום חומרי הלימוד המלא ב-6 רמות</title>
     <meta name="description" content="פורטל לימוד Full-Stack מלא: כל שיעור מוסבר ב-6 רמות — מסבתא ועד פרופסור, עם בלוקי קוד, הסברי עומק ושאלונים." />
+    <!-- Content Security Policy — restricts scripts to same-origin (inline allowed
+         for the boot script + a few computed style attributes). No third-party
+         scripts permitted. Google Fonts is the only external origin. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';" />
     <script>
       (() => {
         try {
@@ -1585,5 +1589,64 @@
         </div>
       </div>
     </div>
+
+    <!-- First-run onboarding overlay — gated by localStorage["lumen-onboarded"]. -->
+    <div id="onboarding-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
+      <div class="onboarding-panel">
+        <h1 id="onboarding-title">👋 ברוכים הבאים ל-LumenPortal</h1>
+        <p class="onboarding-sub">פורטל לימוד Full-Stack JavaScript · 29 שיעורים · 568 מושגים · 4,762 שאלות · 727 פעילויות מעשיות</p>
+        <p class="onboarding-q">איך הכי נוח להתחיל?</p>
+        <div class="onboarding-choices">
+          <button class="onboarding-choice" data-onboarding="open-trainer">
+            <span class="onboarding-icon" aria-hidden="true">🎯</span>
+            <span class="onboarding-label">התחל מאימון אדפטיבי</span>
+            <span class="onboarding-hint">המאמן יבחר את המושג הבא לפי החוזקות שלך</span>
+          </button>
+          <button class="onboarding-choice" data-onboarding="open-study-mode">
+            <span class="onboarding-icon" aria-hidden="true">📚</span>
+            <span class="onboarding-label">תקרא קודם, תתרגל אחר כך</span>
+            <span class="onboarding-hint">ללמוד את חומר השיעור בסדר רגיל</span>
+          </button>
+          <button class="onboarding-choice" data-onboarding="open-mock-exam">
+            <span class="onboarding-icon" aria-hidden="true">📝</span>
+            <span class="onboarding-label">תעבור בחינת רמה</span>
+            <span class="onboarding-hint">מבחן 15 שאלות שמשקף את היכולת הנוכחית</span>
+          </button>
+        </div>
+        <button class="onboarding-skip" id="onboarding-skip">דלג, אני מכיר/ה את הפלטפורמה</button>
+      </div>
+    </div>
+    <script>
+      (() => {
+        // Show onboarding overlay only on first visit (localStorage flag).
+        function init() {
+          try {
+            if (localStorage.getItem("lumen-onboarded") === "1") return;
+          } catch (_) { return; }
+          const overlay = document.getElementById("onboarding-overlay");
+          if (!overlay) return;
+          overlay.removeAttribute("hidden");
+          const dismiss = (target) => {
+            try { localStorage.setItem("lumen-onboarded", "1"); } catch (_) {}
+            overlay.setAttribute("hidden", "");
+            if (target) {
+              const btn = document.getElementById(target);
+              if (btn) btn.click();
+            }
+          };
+          overlay.querySelectorAll("[data-onboarding]").forEach((btn) => {
+            btn.addEventListener("click", () => dismiss(btn.getAttribute("data-onboarding")));
+          });
+          document.getElementById("onboarding-skip")?.addEventListener("click", () => dismiss(null));
+          // Esc key dismisses too
+          overlay.addEventListener("keydown", (e) => { if (e.key === "Escape") dismiss(null); });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", init);
+        } else {
+          init();
+        }
+      })();
+    </script>
   </body>
 </html>

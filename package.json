@@ -16,6 +16,8 @@
     "thresholds:check": "node scripts/check_threshold_drift.js",
     "thresholds:check:strict": "node scripts/check_threshold_drift.js --strict",
     "thresholds:update": "node scripts/check_threshold_drift.js --update",
+    "contrast:check": "node scripts/check_contrast.js",
+    "contrast:check:strict": "node scripts/check_contrast.js --strict",
     "audit:distractors": "node scripts/audit_distractors.js --write --strict",
     "questions:feedback-batch": "node scripts/build_llm_distractor_batch.js --summary",
     "questions:feedback-batch:write": "node scripts/build_llm_distractor_batch.js --write --summary",

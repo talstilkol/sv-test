@@ -82,6 +82,12 @@ jobs:
       - name: Threshold drift gate
         run: node scripts/check_threshold_drift.js --strict
 
+      # WCAG AA contrast on style.css :root variables. Catches color-system
+      # regressions before they reach the browser. Caught --primary at 4.4:1
+      # and --text-muted at 4.47:1 in the 2026-05 sprint.
+      - name: WCAG AA contrast gate
+        run: node scripts/check_contrast.js --strict
+
       # Phase 5 — full-bank question quality gate.
       # Fails on blocker-level MC/Fill issues. Warnings stay visible in the
       # generated report and remediation queue.
