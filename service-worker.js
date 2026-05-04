@@ -80,6 +80,8 @@ const SHELL_ASSETS = [
   "/data/questions_trace.js",
   "/data/zz_questions_trace_phase2.js",
   "/data/zz_questions_trace_phase2.js?v=phase2-v1",
+  "/data/zz_questions_build_phase2.js",
+  "/data/zz_questions_build_phase2.js?v=phase2-v1",
   "/data/svcollege_traces_sql_orm.js",
   "/data/svcollege_traces_sql_orm.js?v=svcollege-sql-orm-v2",
   "/data/svcollege_traces_auth.js",
