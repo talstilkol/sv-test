@@ -28210,3 +28210,97 @@ html.cosmetic-accessible-outline .museum-section {
 .onboarding-skip:focus-visible {
   color: var(--text-main);
 }
+
+/* ============================================
+   Accessibility statement modal
+   ============================================ */
+#a11y-statement-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+#a11y-statement-modal[hidden] { display: none; }
+.a11y-statement-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 11, 16, 0.78);
+  backdrop-filter: blur(6px);
+}
+.a11y-statement-panel {
+  position: relative;
+  width: min(640px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 1.8rem 1.6rem 1.4rem;
+  direction: rtl;
+}
+.a11y-statement-close {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  background: transparent;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.3rem 0.55rem;
+  transition: var(--transition);
+}
+.a11y-statement-close:hover,
+.a11y-statement-close:focus-visible {
+  color: var(--text-bright);
+  border-color: var(--primary);
+}
+.a11y-statement-panel > h2 {
+  margin: 0 0 0.2rem;
+  font-size: 1.25rem;
+  color: var(--text-bright);
+}
+.a11y-statement-date {
+  margin: 0 0 1.2rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.a11y-statement-panel section {
+  margin-bottom: 1.1rem;
+}
+.a11y-statement-panel h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.95rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.a11y-statement-panel p,
+.a11y-statement-panel li {
+  color: var(--text-main);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.a11y-statement-panel ul {
+  margin: 0;
+  padding-inline-start: 1.4rem;
+}
+.a11y-statement-panel code {
+  direction: ltr;
+  unicode-bidi: plaintext;
+  background: rgba(129, 140, 248, 0.12);
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+}
+.a11y-statement-panel a {
+  color: var(--primary);
+  text-decoration: underline;
+}

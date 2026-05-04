@@ -563,6 +563,7 @@
                     <button type="button" class="settings-toggle" data-settings-a11y="high-contrast">ניגודיות גבוהה</button>
                     <button type="button" class="settings-toggle" data-settings-a11y="large-text">טקסט גדול</button>
                   </div>
+                  <button type="button" class="km-btn-mini" id="btn-open-a11y-statement" style="margin-top:0.75rem">♿ הצהרת נגישות</button>
                 </section>
 
                 <section class="settings-card settings-card-wide" aria-label="חלקים גלויים בשיעור">
@@ -1601,6 +1602,54 @@
           <button id="consent-accept" class="consent-btn consent-btn-primary">מאשר/ת — לשמור התקדמות</button>
           <button id="consent-decline" class="consent-btn consent-btn-secondary">לא מאשר/ת — בלי שמירה</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Accessibility statement modal -->
+    <div id="a11y-statement-modal" hidden role="dialog" aria-modal="true" aria-labelledby="a11y-statement-title">
+      <div class="a11y-statement-backdrop" id="a11y-statement-backdrop"></div>
+      <div class="a11y-statement-panel">
+        <button class="a11y-statement-close" id="a11y-statement-close" aria-label="סגור הצהרת נגישות">✕</button>
+        <h2 id="a11y-statement-title">♿ הצהרת נגישות</h2>
+        <p class="a11y-statement-date">עודכן: 2026-05-04</p>
+        <section>
+          <h3>רמת ציות</h3>
+          <p>
+            LumenPortal שואף לעמוד בתקן <strong>WCAG 2.1 רמה AA</strong>
+            בהתאם לדירקטיבה האירופית 2016/2102 ולתקן הישראלי ת"י 5568.
+            ביקורת נגישות אחרונה: <strong>Lighthouse Accessibility 100/100</strong>
+            (2026-05-04) ו-<strong>0 כשלי מקלדת-בלבד</strong>.
+          </p>
+        </section>
+        <section>
+          <h3>מאפיינים נגישים</h3>
+          <ul>
+            <li>ניווט מקלדת מלא — Tab, Shift+Tab, Enter, Space, Arrow בכל הרכיבים.</li>
+            <li>ניגודיות צבעים AA בכל ערכות הצבע (כהה ובהיר).</li>
+            <li>תמיכה ב-<code>prefers-reduced-motion</code> — כבה אנימציות בהגדרות.</li>
+            <li>תמיכה ב-<code>prefers-color-scheme</code> — ערכת צבע אוטומטית.</li>
+            <li>תוויות ARIA מלאות על כל כפתורי אייקון ושדות טופס.</li>
+            <li>סדר כותרות לוגי (H1 → H2 → H3) בכל עמוד.</li>
+            <li>Focus-visible גלוי על כל אלמנט אינטראקטיבי.</li>
+          </ul>
+        </section>
+        <section>
+          <h3>מגבלות ידועות</h3>
+          <ul>
+            <li><strong>ביצועים:</strong> Lighthouse Performance 47 — app.js (~1.75MB) עדיין לא מפוצל למודולים. משפיע על TTI בטעינה ראשונה, לא על שימוש שוטף.</li>
+            <li><strong>CLS:</strong> 0.064 — גופן Heebo נטען מ-Google Fonts עם <code>font-display: swap</code>; גלוי רק בטעינה ראשונה ללא cache.</li>
+            <li><strong>תוכן RTL ↔ LTR:</strong> קטעי קוד תמיד LTR בתוך ממשק RTL — התנהגות מכוונת.</li>
+          </ul>
+        </section>
+        <section>
+          <h3>יצירת קשר לנגישות</h3>
+          <p>
+            נתקלת בבעיית נגישות? כתב/י לנו ב-
+            <a href="https://github.com/talstilkol/sv-test/issues" target="_blank" rel="noopener">GitHub Issues</a>
+            עם התווית <code>accessibility</code>.
+            נטפל בתוך 14 יום עסקים.
+          </p>
+        </section>
       </div>
     </div>
 

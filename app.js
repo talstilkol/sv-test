@@ -37304,6 +37304,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== end Local Auto-Save =====
 
+  // =========== CONSENT BANNER ===========
+  (function initConsentBanner() {
+    const CONSENT_KEY = "lumen-consent";
+    const banner = document.getElementById("consent-banner");
+    if (!banner) return;
+    const acceptBtn = document.getElementById("consent-accept");
+    const declineBtn = document.getElementById("consent-decline");
+    function dismiss(choice) {
+      try { localStorage.setItem(CONSENT_KEY, choice); } catch (_) {}
+      banner.setAttribute("hidden", "");
+      if (choice === "declined") {
+        window.__lumenConsentDeclined = true;
+      }
+    }
+    acceptBtn?.addEventListener("click", () => dismiss("accepted"));
+    declineBtn?.addEventListener("click", () => dismiss("declined"));
+    if (localStorage.getItem(CONSENT_KEY) === null) {
+      banner.removeAttribute("hidden");
+    }
+  })();
+
+  // =========== ACCESSIBILITY STATEMENT ===========
+  (function initA11yStatement() {
+    const modal = document.getElementById("a11y-statement-modal");
+    const openBtn = document.getElementById("btn-open-a11y-statement");
+    const closeBtn = document.getElementById("a11y-statement-close");
+    const backdrop = document.getElementById("a11y-statement-backdrop");
+    if (!modal || !openBtn) return;
+    let lastFocus = null;
+    function openModal() {
+      lastFocus = document.activeElement;
+      modal.removeAttribute("hidden");
+      closeBtn?.focus();
+    }
+    function closeModal() {
+      modal.setAttribute("hidden", "");
+      lastFocus?.focus();
+    }
+    openBtn.addEventListener("click", openModal);
+    closeBtn?.addEventListener("click", closeModal);
+    backdrop?.addEventListener("click", closeModal);
+    modal.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { e.preventDefault(); closeModal(); }
+    });
+  })();
+
   // =========== BOOT ===========
   installFeatureErrorTelemetry();
   // Restore profile from server file BEFORE rendering anything dependent on profile

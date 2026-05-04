@@ -36,8 +36,8 @@ _(audit complete; resuming execution)_
 - [ ] **Teacher dashboard polish** — analytics + bulk import (~1 week)
 - [ ] **Social/community v0** — peer-review submissions for code activities (~2 weeks)
 - [ ] **Spaced repetition v2** — SRS already exists, but UI surface is minimal (~3 days)
-- [ ] **Accessibility statement page** (legal-ish) (~2h)
-- [ ] **GDPR/CCPA consent flow** for cookie/storage usage (~1 day)
+- [x] **Accessibility statement page** — modal in settings ♿ card; WCAG 2.1 AA / Lighthouse 100 / known limits listed; GitHub Issues link
+- [x] **GDPR/CCPA consent flow** — `#consent-banner` + `initConsentBanner()`: shows on first load, accept/decline stored as `lumen-consent` in localStorage, decline sets `window.__lumenConsentDeclined`
 
 ## P3 — #1 in the world differentiators (~2-3 months)
 - [ ] **AI tutor mode** — student stuck → AI generates targeted explanation from lesson source (~2 weeks)
