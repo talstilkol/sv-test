@@ -7043,9 +7043,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setCodeblocksContextTree() {
     const blocks = (window.CODE_BLOCKS && window.CODE_BLOCKS.blocks) || [];
-    const byLesson = {};
+    // Object.create(null) — concept names like "constructor" / "toString" /
+    // "valueOf" are real JS concepts in the curriculum, but on a plain {} they
+    // collide with Object.prototype methods (functions, not arrays), causing
+    // .push to throw. Null-prototype objects have no inherited members.
+    const byLesson = Object.create(null);
     blocks.forEach((block) => {
-      if (!byLesson[block.lessonId]) byLesson[block.lessonId] = {};
+      if (!byLesson[block.lessonId]) byLesson[block.lessonId] = Object.create(null);
       if (!byLesson[block.lessonId][block.conceptName]) byLesson[block.lessonId][block.conceptName] = [];
       byLesson[block.lessonId][block.conceptName].push(block);
     });
@@ -7088,10 +7092,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setTraceContextTree() {
     const traces = filteredTraces();
-    const byLesson = {};
+    // Object.create(null) — concept names like "constructor" / "toString"
+    // collide with Object.prototype on a plain {} object. See comment in
+    // setCodeblocksContextTree above.
+    const byLesson = Object.create(null);
     traces.forEach((trace) => {
       const [lessonId, conceptName] = (trace.conceptKey || "").split("::");
-      if (!byLesson[lessonId]) byLesson[lessonId] = {};
+      if (!byLesson[lessonId]) byLesson[lessonId] = Object.create(null);
       if (!byLesson[lessonId][conceptName]) byLesson[lessonId][conceptName] = [];
       byLesson[lessonId][conceptName].push(trace);
     });
