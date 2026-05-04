@@ -1,0 +1,15 @@
+{
+  "nodes": 450,
+  "edges": 565,
+  "cycles": 0,
+  "sampleCycles": [],
+  "entries": 15,
+  "orphans": 1,
+  "sampleOrphans": [
+    "lesson_11::undefined"
+  ],
+  "unreachable": 0,
+  "sampleUnreachable": [],
+  "crossLessonForward": 0,
+  "sampleCrossLessonForward": []
+}

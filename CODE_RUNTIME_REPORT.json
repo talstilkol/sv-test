@@ -1,0 +1,562 @@
+{
+  "total": 568,
+  "checked": 198,
+  "skipped": 370,
+  "fails": [
+    {
+      "conceptKey": "ai_development::Cursor",
+      "err": "Invalid or unexpected token",
+      "codePreview": "# .cursorrules — הוראות לפרויקט שלך\n# Cursor יקרא את הקובץ הזה לפני כל בקשה.\n\n- "
+    },
+    {
+      "conceptKey": "ai_development::Windsurf",
+      "err": "Invalid left-hand side expression in prefix operation",
+      "codePreview": "// .windsurf/workflows/deploy.md — workflow מקצר\n// Windsurf יוכל להריץ אותו כש-"
+    },
+    {
+      "conceptKey": "ai_development::Prompt Engineering",
+      "err": "userCode is not defined",
+      "codePreview": "// דוגמה ל-bad vs. good prompt\n\n// BAD: גנרי, ללא הקשר\nconst bad = 'תקן לי את הק"
+    },
+    {
+      "conceptKey": "ai_development::AI Code Review",
+      "err": "Invalid or unexpected token",
+      "codePreview": "# .github/workflows/ai-review.yml\nname: AI Code Review\non: { pull_request: { typ"
+    },
+    {
+      "conceptKey": "lesson_15::Error",
+      "err": "Assignment to constant variable.",
+      "codePreview": "console.log('מתחילים');\nconst a = 10;\na = 20; // 💥 TypeError: Assignment to con"
+    },
+    {
+      "conceptKey": "lesson_15::Scope",
+      "err": "secret is not defined",
+      "codePreview": "const globalVar = 'אני גלובלי, הכל רואים';\n\nfunction showScope() {\n  const secre"
+    },
+    {
+      "conceptKey": "lesson_17::URL",
+      "err": "URL is not defined",
+      "codePreview": "// כתובת URL מלאה:\n// https://api.weather.com/forecast?city=TelAviv&days=7\n\n// ב"
+    },
+    {
+      "conceptKey": "lesson_17::method",
+      "err": "app is not defined",
+      "codePreview": "// כל method מקבל handler משלו ב-Express:\napp.get('/items', handler);    // קריא"
+    },
+    {
+      "conceptKey": "lesson_17::1xx-2xx-3xx",
+      "err": "res is not defined",
+      "codePreview": "// 200 - OK (ברירת מחדל)\nres.json(data);\n\n// 201 - Created (אחרי POST)\nres.statu"
+    },
+    {
+      "conceptKey": "lesson_19::alert",
+      "err": "alert is not defined",
+      "codePreview": "alert('hello from browser');"
+    },
+    {
+      "conceptKey": "lesson_19::if/else",
+      "err": "isConnected is not defined",
+      "codePreview": "if (isConnected) {\n  start();\n} else {\n  stop();\n}"
+    },
+    {
+      "conceptKey": "lesson_19::switch",
+      "err": "status is not defined",
+      "codePreview": "switch (status) {\n  case 200:\n    console.log('ok');\n    break;\n  default:\n    c"
+    },
+    {
+      "conceptKey": "lesson_19::inheritance",
+      "err": "User is not defined",
+      "codePreview": "class Admin extends User { }"
+    },
+    {
+      "conceptKey": "lesson_19::throw",
+      "err": "user is not defined",
+      "codePreview": "if (!user) { throw new Error('missing user'); }"
+    },
+    {
+      "conceptKey": "lesson_20::Collection",
+      "err": "db is not defined",
+      "codePreview": "const users = db.collection('users');"
+    },
+    {
+      "conceptKey": "lesson_20::Value",
+      "err": "doc is not defined",
+      "codePreview": "const value = doc.name;"
+    },
+    {
+      "conceptKey": "lesson_20::insertOne",
+      "err": "User is not defined",
+      "codePreview": "User.create({ name: 'Dana' });"
+    },
+    {
+      "conceptKey": "lesson_20::insertMany",
+      "err": "User is not defined",
+      "codePreview": "User.insertMany([{ name: 'A' }, { name: 'B' }]);"
+    },
+    {
+      "conceptKey": "lesson_20::find",
+      "err": "User is not defined",
+      "codePreview": "User.find({});"
+    },
+    {
+      "conceptKey": "lesson_20::findOne",
+      "err": "User is not defined",
+      "codePreview": "User.findOne({ name: 'Dana' });"
+    },
+    {
+      "conceptKey": "lesson_20::findOneAndUpdate",
+      "err": "User is not defined",
+      "codePreview": "User.findOneAndUpdate({ name: 'Dana' }, { $set: { age: 31 } });"
+    },
+    {
+      "conceptKey": "lesson_20::update",
+      "err": "User is not defined",
+      "codePreview": "User.updateOne({ name: 'Dana' }, { $set: { age: 31 } });"
+    },
+    {
+      "conceptKey": "lesson_20::updateMany",
+      "err": "User is not defined",
+      "codePreview": "User.updateMany({}, { $set: { active: true } });"
+    },
+    {
+      "conceptKey": "lesson_20::deleteOne",
+      "err": "User is not defined",
+      "codePreview": "User.deleteOne({ name: 'Dana' });"
+    },
+    {
+      "conceptKey": "lesson_20::deleteMany",
+      "err": "User is not defined",
+      "codePreview": "User.deleteMany({ active: false });"
+    },
+    {
+      "conceptKey": "lesson_21::Vite",
+      "err": "Unexpected token ':'",
+      "codePreview": "// package.json (נוצר אוטומטית)\n{\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\":"
+    },
+    {
+      "conceptKey": "lesson_21::npm create vite@latest",
+      "err": "Unexpected identifier 'npm'",
+      "codePreview": "$ npm create vite@latest my-react-app\n✔ Select a framework: › React\n✔ Select a v"
+    },
+    {
+      "conceptKey": "lesson_21::npm install",
+      "err": "Unexpected identifier 'npm'",
+      "codePreview": "// בתוך תיקיית הפרויקט:\n$ npm install\n// או להוסיף חבילה ספציפית:\n$ npm install "
+    },
+    {
+      "conceptKey": "lesson_21::npm run dev",
+      "err": "Unexpected identifier 'npm'",
+      "codePreview": "$ npm run dev\nVITE v5.0.0  ready in 312 ms\n➜  Local:   http://localhost:5173/\n//"
+    },
+    {
+      "conceptKey": "lesson_21::App.css",
+      "err": "Unexpected token '.'",
+      "codePreview": ".app {\n  font-family: sans-serif;\n  padding: 1rem;\n}\n\n.btn-primary {\n  backgroun"
+    },
+    {
+      "conceptKey": "lesson_22::mutable",
+      "err": "items is not defined",
+      "codePreview": "// ❌ mutation — לא יגרום ל-re-render\nitems.push(newItem);\nsetItems(items);\n\n// ✅"
+    },
+    {
+      "conceptKey": "lesson_26::TypeScript",
+      "err": "Unexpected token ':'",
+      "codePreview": "// JavaScript — אין הגנה\nfunction greet(name) { return `Hello, ${name.toUpperCas"
+    },
+    {
+      "conceptKey": "lesson_26::Strongly Typed",
+      "err": "Unexpected token ':'",
+      "codePreview": "let count: number = 5;\ncount = '10';  // ✗ Type 'string' is not assignable to ty"
+    },
+    {
+      "conceptKey": "lesson_26::Compiler",
+      "err": "Missing initializer in const declaration",
+      "codePreview": "// app.ts\nconst age: number = 30;\nconsole.log(age);\n\n// אחרי tsc:\n// app.js\ncons"
+    },
+    {
+      "conceptKey": "lesson_26::tsc",
+      "err": "Unexpected identifier 'npm'",
+      "codePreview": "$ npm install --save-dev typescript\n$ npx tsc --init             # צור tsconfig."
+    },
+    {
+      "conceptKey": "lesson_26::.js",
+      "err": "Missing initializer in const declaration",
+      "codePreview": "// המקור (.ts)\nconst x: number = 5;\n\n// אחרי compile (.js)\nconst x = 5;"
+    },
+    {
+      "conceptKey": "lesson_26::tsconfig.json",
+      "err": "Unexpected token ':'",
+      "codePreview": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2020\",\n    \"strict\": true,\n    \"jsx\": "
+    },
+    {
+      "conceptKey": "lesson_26::array type",
+      "err": "Missing initializer in const declaration",
+      "codePreview": "const ages: number[] = [25, 30, 35];\nages.push(40);  // ✓\nages.push('forty');  /"
+    },
+    {
+      "conceptKey": "lesson_26::Type Safety",
+      "err": "Unexpected token ':'",
+      "codePreview": "function getUser(id: string): User { ... }\n\n// Compile error caught:\ngetUser(42)"
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::LangChain",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const chain = prompt.pipe(model).pipe(parser);\nconst answer = await chain.invoke"
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::prompt messages",
+      "err": "userQuestion is not defined",
+      "codePreview": "const messages = [\n  { role: 'system', content: 'ענה בעברית קצרה וברורה.' },\n  {"
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::token budget",
+      "err": "relevantChunks is not defined",
+      "codePreview": "const compactContext = relevantChunks.slice(0, 4).join('\\n---\\n');"
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::embeddings",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const vector = await createEmbedding('איך עובד JWT?');\nconst matches = await vec"
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::RAG",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const chunks = await retrieveRelevantChunks(question);\nconst answer = await askM"
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::agent loop",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "for (const step of allowedSteps) {\n  const decision = await planner.next(state);"
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::guardrails",
+      "err": "user is not defined",
+      "codePreview": "if (!user.canAskAi) throw new Error('AI quota exceeded');\nif (containsPrivateDat"
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::evaluation",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const score = await gradeAnswer({ question, expected, actual, rubric });"
+    },
+    {
+      "conceptKey": "lesson_ai_engineering::fine-tuning boundary",
+      "err": "needsFreshPrivateKnowledge is not defined",
+      "codePreview": "const strategy = needsFreshPrivateKnowledge ? 'RAG' : 'prompt-or-fine-tune';"
+    },
+    {
+      "conceptKey": "lesson_auth_security::authentication",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const user = await verifyCredentials(email, password);\nif (!user) return res.sta"
+    },
+    {
+      "conceptKey": "lesson_auth_security::session",
+      "err": "req is not defined",
+      "codePreview": "req.session.userId = user.id;\nres.json({ ok: true });"
+    },
+    {
+      "conceptKey": "lesson_auth_security::refresh token",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const nextAccessToken = await rotateRefreshToken(refreshToken);"
+    },
+    {
+      "conceptKey": "lesson_auth_security::OAuth",
+      "err": "Unexpected token '...'",
+      "codePreview": "GET /auth/provider\nGET /auth/callback?code=...&state=..."
+    },
+    {
+      "conceptKey": "lesson_auth_security::provider auth",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const session = await authProvider.getSession(request);\nif (!session) return red"
+    },
+    {
+      "conceptKey": "lesson_auth_security::bcrypt",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const ok = await bcrypt.compare(password, user.passwordHash);"
+    },
+    {
+      "conceptKey": "lesson_auth_security::CSRF",
+      "err": "req is not defined",
+      "codePreview": "if (req.method !== 'GET') verifyCsrfToken(req);"
+    },
+    {
+      "conceptKey": "lesson_auth_security::XSS boundary",
+      "err": "element is not defined",
+      "codePreview": "element.textContent = userInput;\n// not: element.innerHTML = userInput"
+    },
+    {
+      "conceptKey": "lesson_auth_security::CORS",
+      "err": "app is not defined",
+      "codePreview": "app.use(cors({ origin: allowedOrigin, credentials: true }));"
+    },
+    {
+      "conceptKey": "lesson_auth_security::Supabase Auth",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const session = await supabaseAuth.getSession(request);"
+    },
+    {
+      "conceptKey": "lesson_auth_security::Firebase Auth",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const decoded = await verifyProviderToken(idToken);"
+    },
+    {
+      "conceptKey": "lesson_design_systems::design tokens",
+      "err": "Unexpected token ':'",
+      "codePreview": ":root {\n  --radius: 0.5rem;\n  --brand: 221 83% 53%;\n}"
+    },
+    {
+      "conceptKey": "lesson_design_systems::cn helper",
+      "err": "cn is not defined",
+      "codePreview": "const className = cn('rounded-md px-3', error && 'border-red-500');"
+    },
+    {
+      "conceptKey": "lesson_design_systems::cva",
+      "err": "cva is not defined",
+      "codePreview": "const buttonVariants = cva('inline-flex items-center', {\n  variants: { variant: "
+    },
+    {
+      "conceptKey": "lesson_design_systems::theme tokens",
+      "err": "Unexpected token '.'",
+      "codePreview": ".dark {\n  --background: 222 47% 11%;\n  --foreground: 210 40% 98%;\n}"
+    },
+    {
+      "conceptKey": "lesson_design_systems::component registry",
+      "err": "components is not defined",
+      "codePreview": "components/ui/button.tsx\ncomponents/ui/dialog.tsx\ncomponents/ui/form.tsx"
+    },
+    {
+      "conceptKey": "lesson_design_systems::design system testing",
+      "err": "expect is not defined",
+      "codePreview": "expect(screen.getByRole('button', { name: 'שמור' })).toBeEnabled();"
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::production readiness",
+      "err": "Unexpected identifier 'run'",
+      "codePreview": "npm run build\nnpm test -- --run\nnpm run validate:strict"
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::Vercel deploy",
+      "err": "Unexpected identifier 'push'",
+      "codePreview": "git push origin main\n# Vercel מזהה שינוי, מריץ build ויוצר deployment"
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::build command",
+      "err": "Unexpected token ':'",
+      "codePreview": "\"scripts\": { \"build\": \"vite build\", \"test\": \"vitest run\" }"
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::Docker",
+      "err": "Unexpected identifier 'build'",
+      "codePreview": "docker build -t lumen-api .\ndocker run -p 3000:3000 lumen-api"
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::image",
+      "err": "Unexpected identifier 'images'",
+      "codePreview": "docker images\nlumen-api:latest"
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::container",
+      "err": "Unexpected identifier 'ps'",
+      "codePreview": "docker ps\nCONTAINER ID   IMAGE       PORTS"
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::Docker Compose",
+      "err": "Unexpected token '.'",
+      "codePreview": "services:\n  api:\n    build: .\n  db:\n    image: postgres:16"
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::service",
+      "err": "db is not defined",
+      "codePreview": "services:\n  api:\n    depends_on: [db]\n  db:\n    image: postgres:16"
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::volume",
+      "err": "Label 'volumes' has already been declared",
+      "codePreview": "volumes:\n  db_data:\n\nservices:\n  db:\n    volumes: [db_data:/var/lib/postgresql/d"
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::CI",
+      "err": "Unexpected token ':'",
+      "codePreview": "on: [push, pull_request]\njobs:\n  validate:\n    steps:\n      - run: npm ci\n      "
+    },
+    {
+      "conceptKey": "lesson_devops_deploy::release checklist",
+      "err": "Unexpected identifier 'only'",
+      "codePreview": "Go only if: CI green, env configured, migrations reviewed, smoke passed, rollbac"
+    },
+    {
+      "conceptKey": "lesson_html_css_foundations::box model",
+      "err": "Unexpected token '*'",
+      "codePreview": "*, *::before, *::after {\n  box-sizing: border-box;\n}\n.card {\n  width: 300px;\n  p"
+    },
+    {
+      "conceptKey": "lesson_nestjs::dependency injection",
+      "err": "missing ) after argument list",
+      "codePreview": "constructor(private readonly tasksService: TasksService) {}"
+    },
+    {
+      "conceptKey": "lesson_nestjs::decorator",
+      "err": "Invalid or unexpected token",
+      "codePreview": "@Post()\ncreate(@Body() dto: CreateTaskDto) { return this.tasksService.create(dto"
+    },
+    {
+      "conceptKey": "lesson_nestjs::validation pipe",
+      "err": "app is not defined",
+      "codePreview": "app.useGlobalPipes(new ValidationPipe({ whitelist: true }));"
+    },
+    {
+      "conceptKey": "lesson_nestjs::guard",
+      "err": "Invalid or unexpected token",
+      "codePreview": "@UseGuards(JwtAuthGuard)\n@Get('me')\nprofile() { return this.usersService.current"
+    },
+    {
+      "conceptKey": "lesson_nestjs::pipe",
+      "err": "Invalid or unexpected token",
+      "codePreview": "@Get(':id')\nfindOne(@Param('id', ParseIntPipe) id: number) { return this.tasksSe"
+    },
+    {
+      "conceptKey": "lesson_nestjs::middleware",
+      "err": "consumer is not defined",
+      "codePreview": "consumer.apply(RequestLoggerMiddleware).forRoutes('*');"
+    },
+    {
+      "conceptKey": "lesson_nestjs::interceptor",
+      "err": "Invalid or unexpected token",
+      "codePreview": "@UseInterceptors(ClassSerializerInterceptor)\n@Get()\nfindAll() { return this.task"
+    },
+    {
+      "conceptKey": "lesson_nestjs::testing module",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const moduleRef = await Test.createTestingModule({ providers: [TasksService, fak"
+    },
+    {
+      "conceptKey": "lesson_nextjs::App Router",
+      "err": "app is not defined",
+      "codePreview": "app/\n  layout.jsx\n  page.jsx\n  dashboard/page.jsx"
+    },
+    {
+      "conceptKey": "lesson_nextjs::Vercel deploy",
+      "err": "Unexpected identifier 'run'",
+      "codePreview": "npm run build\n# deploy דרך Git integration או CLI מאושר בפרויקט"
+    },
+    {
+      "conceptKey": "lesson_sql_orm::PostgreSQL",
+      "err": "Unexpected identifier 'TABLE'",
+      "codePreview": "CREATE TABLE courses (\n  id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  "
+    },
+    {
+      "conceptKey": "lesson_sql_orm::database",
+      "err": "Unexpected identifier 'DATABASE'",
+      "codePreview": "CREATE DATABASE learning_portal;"
+    },
+    {
+      "conceptKey": "lesson_sql_orm::table",
+      "err": "Unexpected identifier 'TABLE'",
+      "codePreview": "CREATE TABLE lessons (\n  id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  "
+    },
+    {
+      "conceptKey": "lesson_sql_orm::column",
+      "err": "Unexpected identifier 'TABLE'",
+      "codePreview": "ALTER TABLE lessons\nADD COLUMN estimated_minutes integer NOT NULL DEFAULT 45;"
+    },
+    {
+      "conceptKey": "lesson_sql_orm::primary key",
+      "err": "Unexpected identifier 'TABLE'",
+      "codePreview": "CREATE TABLE students (\n  id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n "
+    },
+    {
+      "conceptKey": "lesson_sql_orm::foreign key",
+      "err": "Unexpected identifier 'TABLE'",
+      "codePreview": "CREATE TABLE enrollments (\n  student_id integer NOT NULL REFERENCES students(id)"
+    },
+    {
+      "conceptKey": "lesson_sql_orm::relation",
+      "err": "Unexpected number",
+      "codePreview": "students 1--many enrollments many--1 courses"
+    },
+    {
+      "conceptKey": "lesson_sql_orm::schema",
+      "err": "Unexpected identifier 'SCHEMA'",
+      "codePreview": "CREATE SCHEMA learning;\nCREATE TABLE learning.lessons (\n  id integer GENERATED A"
+    },
+    {
+      "conceptKey": "lesson_sql_orm::migration",
+      "err": "Unexpected identifier 'TABLE'",
+      "codePreview": "ALTER TABLE courses\nADD COLUMN slug text UNIQUE;\n\nUPDATE courses\nSET slug = lowe"
+    },
+    {
+      "conceptKey": "lesson_sql_orm::ORM",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const courses = await orm.course.findMany({\n  where: { active: true },\n  orderBy"
+    },
+    {
+      "conceptKey": "lesson_sql_orm::Prisma",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const course = await prisma.course.create({\n  data: { title: input.title, active"
+    },
+    {
+      "conceptKey": "lesson_sql_orm::Drizzle",
+      "err": "await is only valid in async functions and the top level bodies of modules",
+      "codePreview": "const rows = await db\n  .select({ title: courses.title })\n  .from(courses)\n  .wh"
+    },
+    {
+      "conceptKey": "lesson_sql_orm::transaction",
+      "err": "Unexpected identifier 'accounts'",
+      "codePreview": "BEGIN;\nUPDATE accounts SET balance = balance - 100 WHERE id = 1;\nUPDATE accounts"
+    },
+    {
+      "conceptKey": "lesson_tooling_git::Git",
+      "err": "Unexpected identifier 'status'",
+      "codePreview": "git status\ngit add src/App.jsx\ngit commit -m \"add login form\"\ngit log --oneline"
+    },
+    {
+      "conceptKey": "lesson_tooling_git::repository",
+      "err": "Unexpected identifier 'clone'",
+      "codePreview": "git clone https://github.com/team/app.git\ncd app\ngit remote -v"
+    },
+    {
+      "conceptKey": "lesson_tooling_git::working tree",
+      "err": "Unexpected identifier 'status'",
+      "codePreview": "git status --short\n# M src/App.jsx\n# ?? notes.md"
+    },
+    {
+      "conceptKey": "lesson_tooling_git::staging area",
+      "err": "Unexpected identifier 'add'",
+      "codePreview": "git add src/App.jsx\ngit diff --staged\ngit commit -m \"wire login form\""
+    },
+    {
+      "conceptKey": "lesson_tooling_git::commit",
+      "err": "Unexpected identifier 'add'",
+      "codePreview": "git add .\ngit commit -m \"fix empty task validation\""
+    },
+    {
+      "conceptKey": "lesson_tooling_git::branch",
+      "err": "Unexpected token 'switch'",
+      "codePreview": "git switch -c feature/login-form\ngit branch --show-current"
+    },
+    {
+      "conceptKey": "lesson_tooling_git::pull request",
+      "err": "Unexpected identifier 'push'",
+      "codePreview": "git push -u origin feature/login-form\n# פותחים PR ב-GitHub ומחכים ל-review + CI"
+    },
+    {
+      "conceptKey": "lesson_tooling_git::GitHub workflow",
+      "err": "Unexpected identifier 'pull'",
+      "codePreview": "git pull --ff-only\ngit switch -c feature/search\nnpm test\ngit push -u origin feat"
+    },
+    {
+      "conceptKey": "lesson_tooling_git::npm scripts",
+      "err": "Unexpected token ':'",
+      "codePreview": "{\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"vite build\",\n    \"test\": \"vite"
+    },
+    {
+      "conceptKey": "lesson_tooling_git::ESLint",
+      "err": "Unexpected identifier 'run'",
+      "codePreview": "npm run lint\n# no-unused-vars: 'count' is assigned but never used"
+    },
+    {
+      "conceptKey": "lesson_tooling_git::Prettier",
+      "err": "Unexpected identifier 'run'",
+      "codePreview": "npm run format\n# או format-on-save דרך VS Code"
+    }
+  ]
+}

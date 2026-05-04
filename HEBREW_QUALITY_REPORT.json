@@ -1,0 +1,38 @@
+{
+  "niqqud": [
+    {
+      "location": "ai_development::description",
+      "snippet": "כיצד מפתח־ת מודרני־ת משלב/ת מודלים ושירותי AI בעבודה היומיומ"
+    },
+    {
+      "location": "ai_development::Windsurf::codeExplanation",
+      "snippet": "ה-workflow מאפשר למפתח־ת לחסוך הקלדה חוזרת: סדרת צעדים שה-ag"
+    },
+    {
+      "location": "ai_development::AI Pair Programming::levels.soldier",
+      "snippet": "AI Pair Programming = workflow של מפתח־ת + AI עוזר. שני מצבי"
+    },
+    {
+      "location": "workbook_taskmanager::functions::levels.junior",
+      "snippet": "כשפיצלתי ל-Task Manager לפונקציות קטנות — קיבלתי קוד שאפשר ל"
+    },
+    {
+      "location": "workbook_taskmanager::async/await::levels.grandma",
+      "snippet": "async/await זו 'דרך נחמדה לכתוב המתנה': במקום שורה ארוכה של "
+    },
+    {
+      "location": "mc_l19_network_002::explanation",
+      "snippet": "Timing tab מפרק את ה-latency לשלבים: DNS lookup, TCP, TLS, T"
+    },
+    {
+      "location": "mc_l19_spread_002::explanation",
+      "snippet": "Object spread מעתיק כל properties מ-obj, ואז name: 'B' מגיע "
+    },
+    {
+      "location": "mc_wb_vars_002::feedback[3]",
+      "snippet": "❌ DOM-as-state מקשה לdebug + רינדור־מחדש לא־יעיל."
+    }
+  ],
+  "typos": {},
+  "mixedDir": []
+}

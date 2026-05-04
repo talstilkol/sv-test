@@ -1,0 +1,779 @@
+{
+  "codeExamples": {
+    "total": 568,
+    "checked": 279,
+    "skipped": 289,
+    "fails": [
+      {
+        "conceptKey": "ai_development::Cursor",
+        "err": "Invalid or unexpected token",
+        "codePreview": "# .cursorrules — הוראות לפרויקט שלך\n# Cursor יקרא את הקובץ הזה לפני כל בקשה.\n\n- "
+      },
+      {
+        "conceptKey": "ai_development::Windsurf",
+        "err": "Invalid left-hand side expression in prefix operation",
+        "codePreview": "// .windsurf/workflows/deploy.md — workflow מקצר\n// Windsurf יוכל להריץ אותו כש-"
+      },
+      {
+        "conceptKey": "ai_development::Claude Code",
+        "err": "Invalid or unexpected token",
+        "codePreview": "# CLAUDE.md — זיכרון פרויקט שClaude Code יקרא תמיד\n## Stack\n- Node 20, Express 4"
+      },
+      {
+        "conceptKey": "lesson_21::Vite",
+        "err": "Unexpected token ':'",
+        "codePreview": "// package.json (נוצר אוטומטית)\n{\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\":"
+      },
+      {
+        "conceptKey": "lesson_22::array reference",
+        "err": "Identifier 'addItem' has already been declared",
+        "codePreview": "// ❌ באג מוכר\nconst [items, setItems] = useState([]);\nconst addItem = (x) => {\n "
+      },
+      {
+        "conceptKey": "lesson_26::TypeScript",
+        "err": "Unexpected token ':'",
+        "codePreview": "// JavaScript — אין הגנה\nfunction greet(name) { return `Hello, ${name.toUpperCas"
+      },
+      {
+        "conceptKey": "lesson_26::Strongly Typed",
+        "err": "Unexpected token ':'",
+        "codePreview": "let count: number = 5;\ncount = '10';  // ✗ Type 'string' is not assignable to ty"
+      },
+      {
+        "conceptKey": "lesson_26::Compiler",
+        "err": "Missing initializer in const declaration",
+        "codePreview": "// app.ts\nconst age: number = 30;\nconsole.log(age);\n\n// אחרי tsc:\n// app.js\ncons"
+      },
+      {
+        "conceptKey": "lesson_26::.js",
+        "err": "Missing initializer in const declaration",
+        "codePreview": "// המקור (.ts)\nconst x: number = 5;\n\n// אחרי compile (.js)\nconst x = 5;"
+      },
+      {
+        "conceptKey": "lesson_auth_security::OAuth",
+        "err": "Unexpected token '...'",
+        "codePreview": "GET /auth/provider\nGET /auth/callback?code=...&state=..."
+      },
+      {
+        "conceptKey": "lesson_design_systems::design tokens",
+        "err": "Unexpected token ':'",
+        "codePreview": ":root {\n  --radius: 0.5rem;\n  --brand: 221 83% 53%;\n}"
+      },
+      {
+        "conceptKey": "lesson_devops_deploy::preview deployment",
+        "err": "Unexpected token '>'",
+        "codePreview": "branch -> pull request -> preview URL -> review -> merge"
+      },
+      {
+        "conceptKey": "lesson_devops_deploy::build command",
+        "err": "Unexpected token ':'",
+        "codePreview": "\"scripts\": { \"build\": \"vite build\", \"test\": \"vitest run\" }"
+      },
+      {
+        "conceptKey": "lesson_devops_deploy::Docker",
+        "err": "Unexpected identifier 'build'",
+        "codePreview": "docker build -t lumen-api .\ndocker run -p 3000:3000 lumen-api"
+      },
+      {
+        "conceptKey": "lesson_devops_deploy::image",
+        "err": "Unexpected identifier 'images'",
+        "codePreview": "docker images\nlumen-api:latest"
+      },
+      {
+        "conceptKey": "lesson_devops_deploy::container",
+        "err": "Unexpected identifier 'ps'",
+        "codePreview": "docker ps\nCONTAINER ID   IMAGE       PORTS"
+      },
+      {
+        "conceptKey": "lesson_devops_deploy::CD",
+        "err": "Unexpected identifier 'branch'",
+        "codePreview": "main branch -> CI green -> production deploy"
+      },
+      {
+        "conceptKey": "lesson_devops_deploy::smoke test",
+        "err": "Unexpected token '>'",
+        "codePreview": "open / -> assert title\nopen /login -> assert form\nopen /health -> assert ok"
+      },
+      {
+        "conceptKey": "lesson_nestjs::guard",
+        "err": "Invalid or unexpected token",
+        "codePreview": "@UseGuards(JwtAuthGuard)\n@Get('me')\nprofile() { return this.usersService.current"
+      },
+      {
+        "conceptKey": "lesson_nestjs::pipe",
+        "err": "Invalid or unexpected token",
+        "codePreview": "@Get(':id')\nfindOne(@Param('id', ParseIntPipe) id: number) { return this.tasksSe"
+      },
+      {
+        "conceptKey": "lesson_nestjs::interceptor",
+        "err": "Invalid or unexpected token",
+        "codePreview": "@UseInterceptors(ClassSerializerInterceptor)\n@Get()\nfindAll() { return this.task"
+      },
+      {
+        "conceptKey": "lesson_nextjs::file-system routing",
+        "err": "Unexpected token '>'",
+        "codePreview": "app/about/page.jsx -> /about\napp/products/page.jsx -> /products"
+      },
+      {
+        "conceptKey": "lesson_sql_orm::relation",
+        "err": "Unexpected number",
+        "codePreview": "students 1--many enrollments many--1 courses"
+      },
+      {
+        "conceptKey": "react_blueprint::Component Architecture",
+        "err": "Unexpected end of input",
+        "codePreview": "// feature-based folder structure (מומלץ)\nsrc/\n  features/\n    products/\n      P"
+      }
+    ]
+  },
+  "fills": {
+    "total": 1764,
+    "checked": 1094,
+    "skipped": 670,
+    "fails": [
+      {
+        "id": "fill_l15_anon_manual_001",
+        "conceptKey": "lesson_15::anonymous function",
+        "err": "Unexpected token '=>'",
+        "answer": "function",
+        "codePreview": "setTimeout(function() => console.log('Hello'), 1000);"
+      },
+      {
+        "id": "fill_async_004",
+        "conceptKey": "lesson_15::Promise",
+        "err": "Unexpected token ','",
+        "answer": "resolve",
+        "codePreview": "const p = new Promise((resolve, reject) => {\n  setTimeout(() => /* fulfill with "
+      },
+      {
+        "id": "fill_html_css_005",
+        "conceptKey": "lesson_html_css_foundations::box model",
+        "err": "Unexpected token '*'",
+        "answer": "border-box",
+        "codePreview": "* {\n  box-sizing: border-box;\n}"
+      },
+      {
+        "id": "fill_la_oauth_001",
+        "conceptKey": "lesson_auth_security::OAuth",
+        "err": "Unexpected token '...'",
+        "answer": "state",
+        "codePreview": "// callback URL\nGET /auth/callback?code=...&state=xyz123"
+      },
+      {
+        "id": "fill_lai_struct_001",
+        "conceptKey": "lesson_ai_engineering::structured output",
+        "err": "await is only valid in async functions and the top level bodies of modules",
+        "answer": "schema",
+        "codePreview": "// כפיית JSON תקין\nconst result = await openai.chat.completions.create({\n  model"
+      },
+      {
+        "id": "fill_l18_node_eee_001",
+        "conceptKey": "lesson_18::Node.js",
+        "err": "Invalid or unexpected token",
+        "answer": "node",
+        "codePreview": "# Run JS server-side\nnode server.js"
+      },
+      {
+        "id": "fill_l20_atlas_bbb_001",
+        "conceptKey": "lesson_20::MongoDB Atlas",
+        "err": "Invalid or unexpected token",
+        "answer": "srv",
+        "codePreview": "# Connection string\nMONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/dbname"
+      },
+      {
+        "id": "fill_l17_protocol_aaa_001",
+        "conceptKey": "lesson_17::Protocol",
+        "err": "Unexpected end of input",
+        "answer": "//",
+        "codePreview": "// Modern web protocol\nhttps:///example.com"
+      },
+      {
+        "id": "fill_l17_domain_aaa_001",
+        "conceptKey": "lesson_17::Domain",
+        "err": "Unexpected end of input",
+        "answer": "domain",
+        "codePreview": "// URL components: protocol://domain:port/path\nhttps://api.example.com:443/users"
+      },
+      {
+        "id": "fill_l26_string_zz_001",
+        "conceptKey": "lesson_26::string",
+        "err": "Unexpected token ':'",
+        "answer": "string",
+        "codePreview": "// Type annotation\nlet name: string = 'Tal';"
+      },
+      {
+        "id": "fill_l26_number_zz_001",
+        "conceptKey": "lesson_26::number",
+        "err": "Unexpected token ':'",
+        "answer": "number",
+        "codePreview": "// Numeric type\nlet age: number = 30;"
+      },
+      {
+        "id": "fill_l26_boolean_zz_001",
+        "conceptKey": "lesson_26::boolean",
+        "err": "Unexpected token ':'",
+        "answer": "boolean",
+        "codePreview": "// Boolean type\nlet active: boolean = true;"
+      },
+      {
+        "id": "fill_l26_array_zz_001",
+        "conceptKey": "lesson_26::array type",
+        "err": "Unexpected token ':'",
+        "answer": "]",
+        "codePreview": "// Array of numbers\nlet scores: number[]] = [10, 20, 30];"
+      },
+      {
+        "id": "fill_l26_void_zz_001",
+        "conceptKey": "lesson_26::void",
+        "err": "Unexpected token ':'",
+        "answer": "void",
+        "codePreview": "// No meaningful return\nfunction log(msg: string): void {\n  console.log(msg);\n}"
+      },
+      {
+        "id": "fill_l26_tuple_zz_001",
+        "conceptKey": "lesson_26::tuple",
+        "err": "Unexpected token ':'",
+        "answer": "number",
+        "codePreview": "// Tuple - fixed-length, typed positions\nlet pair: [string, number] = ['Tal', 30"
+      },
+      {
+        "id": "fill_l26_strongly_typed_zz_001",
+        "conceptKey": "lesson_26::Strongly Typed",
+        "err": "Unexpected token ':'",
+        "answer": "error",
+        "codePreview": "// Strongly typed - no implicit conversion\nlet x: number = 5;\n// x = 'hello'; //"
+      },
+      {
+        "id": "fill_l26_compiler_zz_001",
+        "conceptKey": "lesson_26::Compiler",
+        "err": "Invalid or unexpected token",
+        "answer": "tsc",
+        "codePreview": "# Compile TypeScript\ntsc index.ts"
+      },
+      {
+        "id": "fill_l26_tsc_noemit_zz_001",
+        "conceptKey": "lesson_26::tsc",
+        "err": "Invalid or unexpected token",
+        "answer": "noEmit",
+        "codePreview": "# Type-check only (no .js output)\ntsc --noEmit"
+      },
+      {
+        "id": "fill_l26_tsconfig_zz_001",
+        "conceptKey": "lesson_26::tsconfig.json",
+        "err": "Unexpected token ':'",
+        "answer": "true",
+        "codePreview": "// Strict mode\n{\n  \"compilerOptions\": {\n    \"strict\": true\n  }\n}"
+      },
+      {
+        "id": "fill_l20_atlas_yy_001",
+        "conceptKey": "lesson_20::MongoDB Atlas",
+        "err": "Unexpected token ':'",
+        "answer": "srv",
+        "codePreview": "// Connection string format\nmongodb+srv://user:pass@cluster.mongodb.net/dbname"
+      },
+      {
+        "id": "fill_l19_catch_xx_001",
+        "conceptKey": "lesson_19::catch",
+        "err": "Unexpected token '...'",
+        "answer": "catch",
+        "codePreview": "// Handle error\ntry { ... } catch (e) {\n  console.error(e);\n}"
+      },
+      {
+        "id": "fill_l26_array_ww_001",
+        "conceptKey": "lesson_26::array type",
+        "err": "Missing initializer in const declaration",
+        "answer": "string",
+        "codePreview": "// Array of strings\nconst names: string[] = ['Tal', 'Yael'];"
+      },
+      {
+        "id": "fill_l18_node_vv_001",
+        "conceptKey": "lesson_18::Node.js",
+        "err": "Invalid or unexpected token",
+        "answer": "node",
+        "codePreview": "# Run Node script\nnode server.js"
+      },
+      {
+        "id": "fill_l17_response_uu_001",
+        "conceptKey": "lesson_17::Response",
+        "err": "Unexpected token ']'",
+        "answer": "json",
+        "codePreview": "// Send JSON response\nres.json({ users: [...] });"
+      },
+      {
+        "id": "fill_es_logical_assign_ll_001",
+        "conceptKey": "lesson_19::nested object",
+        "err": "Unexpected token '='",
+        "answer": "?",
+        "codePreview": "// Assign only if null/undefined\nconfig.timeout ?= 5000;"
+      },
+      {
+        "id": "fill_hook_transition_kk_001",
+        "conceptKey": "lesson_22::Hook",
+        "err": "Unexpected token ')'",
+        "answer": "startTransition",
+        "codePreview": "// Mark update as non-urgent\nconst [isPending, startTransition] = useTransition("
+      },
+      {
+        "id": "fill_build_alias_ff_001",
+        "conceptKey": "lesson_21::Vite",
+        "err": "Unexpected token ':'",
+        "answer": "alias",
+        "codePreview": "// vite.config.js\nresolve: {\n  alias: {\n    '@': '/src'\n  }\n}"
+      },
+      {
+        "id": "fill_build_tsc_noemit_ff_001",
+        "conceptKey": "lesson_26::TypeScript",
+        "err": "Invalid or unexpected token",
+        "answer": "noEmit",
+        "codePreview": "# Type check without emitting JS\ntsc --noEmit"
+      },
+      {
+        "id": "fill_build_lockfile_ff_001",
+        "conceptKey": "lesson_21::Vite",
+        "err": "Invalid or unexpected token",
+        "answer": "package",
+        "codePreview": "# npm lockfile filename ensures reproducible installs\npackage-lock.json"
+      },
+      {
+        "id": "fill_build_engines_ff_001",
+        "conceptKey": "lesson_21::Vite",
+        "err": "Unexpected token ':'",
+        "answer": "engines",
+        "codePreview": "// package.json — Node version requirement\n\"engines\": {\n  \"node\": \">=20\"\n}"
+      },
+      {
+        "id": "fill_build_browserslist_ff_001",
+        "conceptKey": "lesson_21::Vite",
+        "err": "Unexpected token ':'",
+        "answer": "browserslist",
+        "codePreview": "// package.json\n\"browserslist\": [\n  \"> 1%\",\n  \"last 2 versions\",\n  \"not dead\"\n]"
+      },
+      {
+        "id": "fill_perf_compression_ee_001",
+        "conceptKey": "lesson_17::HTTP",
+        "err": "Unexpected token ':'",
+        "answer": "gzip",
+        "codePreview": "// Request header\nAccept-Encoding: br, gzip"
+      },
+      {
+        "id": "fill_ts_never_dd_001",
+        "conceptKey": "lesson_26::TypeScript",
+        "err": "Unexpected token ':'",
+        "answer": "never",
+        "codePreview": "// Function that never returns\nfunction fail(msg: string): never {\n  throw new E"
+      },
+      {
+        "id": "fill_ts_void_dd_001",
+        "conceptKey": "lesson_26::TypeScript",
+        "err": "Unexpected token ':'",
+        "answer": "void",
+        "codePreview": "// No meaningful return\nfunction log(msg: string): void {\n  console.log(msg);\n}"
+      },
+      {
+        "id": "fill_stream_bb_001",
+        "conceptKey": "lesson_ai_engineering::streaming response",
+        "err": "await is only valid in async functions and the top level bodies of modules",
+        "answer": "textStream",
+        "codePreview": "const { textStream } = await streamText({ model, prompt });\nfor await (const chu"
+      },
+      {
+        "id": "fill_messages_create_bb_001",
+        "conceptKey": "lesson_ai_engineering::OpenAI API",
+        "err": "await is only valid in async functions and the top level bodies of modules",
+        "answer": "create",
+        "codePreview": "const r = await client.messages.create({\n  model: 'claude-opus-4-7',\n  messages:"
+      },
+      {
+        "id": "fill_nestjs_guard_z_001",
+        "conceptKey": "lesson_nestjs::guard",
+        "err": "Invalid or unexpected token",
+        "answer": "UseGuards",
+        "codePreview": "@UseGuards(AuthGuard)\n@Get('/profile')\ngetProfile(@User() user) { return user; }"
+      },
+      {
+        "id": "fill_docker_run_y_001",
+        "conceptKey": "lesson_devops_deploy::Docker",
+        "err": "Unexpected identifier 'run'",
+        "answer": "run",
+        "codePreview": "docker run -p 3000:3000 myapp"
+      },
+      {
+        "id": "fill_css_box_u_001",
+        "conceptKey": "lesson_html_css_foundations::box model",
+        "err": "Unexpected token '*'",
+        "answer": "sizing",
+        "codePreview": "* {\n  box-sizing: border-box;\n}"
+      },
+      {
+        "id": "fill_l26_str_t_001",
+        "conceptKey": "lesson_26::string",
+        "err": "Unexpected token ':'",
+        "answer": "string",
+        "codePreview": "let name: string = 'Tal';"
+      },
+      {
+        "id": "fill_l26_num_t_001",
+        "conceptKey": "lesson_26::number",
+        "err": "Unexpected token ':'",
+        "answer": "number",
+        "codePreview": "let age: number = 30;"
+      },
+      {
+        "id": "fill_l26_arr_t_001",
+        "conceptKey": "lesson_26::array type",
+        "err": "Unexpected token ':'",
+        "answer": "[]",
+        "codePreview": "let nums: number[] = [1, 2, 3];"
+      },
+      {
+        "id": "fill_l26_never_t_001",
+        "conceptKey": "lesson_26::never",
+        "err": "Unexpected token ':'",
+        "answer": "never",
+        "codePreview": "function fail(msg: string): never {\n  throw new Error(msg);\n}"
+      },
+      {
+        "id": "fill_l11_isarray_001",
+        "conceptKey": "lesson_11::Array",
+        "err": "Unexpected token ')'",
+        "answer": "isArray",
+        "codePreview": "if (Array.isArray(x)) {\n  x.forEach(...);\n}"
+      },
+      {
+        "id": "fill_aidev_claude_001",
+        "conceptKey": "ai_development::Claude Code",
+        "err": "Invalid or unexpected token",
+        "answer": "npm",
+        "codePreview": "// Claude Code יכול להריץ scripts ב-shell\n# In Claude Code session:\n!npm test --"
+      },
+      {
+        "id": "fill_l26_strongly_001",
+        "conceptKey": "lesson_26::Strongly Typed",
+        "err": "Unexpected token ':'",
+        "answer": "number",
+        "codePreview": "// TypeScript — annotation של type במשתנה\nlet age: number = 30;"
+      },
+      {
+        "id": "fill_l26_tuple_001",
+        "conceptKey": "lesson_26::tuple",
+        "err": "Missing initializer in const declaration",
+        "answer": "number",
+        "codePreview": "// TS tuple — array עם types קבועים בכל position\nconst pair: [string, number] = "
+      },
+      {
+        "id": "fill_ldev_buildcmd_001",
+        "conceptKey": "lesson_devops_deploy::build command",
+        "err": "Unexpected token ':'",
+        "answer": "build",
+        "codePreview": "// package.json — build script ל-Vite\n\"scripts\": {\n  \"build\": \"vite build\"\n}"
+      },
+      {
+        "id": "fill_lds_tokens_001",
+        "conceptKey": "lesson_design_systems::design tokens",
+        "err": "Unexpected token ':'",
+        "answer": "root",
+        "codePreview": "/* design tokens כ-CSS variables */\n:root {\n  --color-primary: #3b82f6;\n  --spac"
+      },
+      {
+        "id": "fill_ldev_smoke_001",
+        "conceptKey": "lesson_devops_deploy::smoke test",
+        "err": "Unexpected token '>'",
+        "answer": "title",
+        "codePreview": "// smoke test script\nopen('/') -> assert title\nopen('/login') -> assert form\nope"
+      },
+      {
+        "id": "fill_nest_001",
+        "conceptKey": "lesson_nestjs::interceptor",
+        "err": "Invalid or unexpected token",
+        "answer": "ClassSerializerInterceptor",
+        "codePreview": "@UseInterceptors(ClassSerializerInterceptor)\n@Get()\nfindAll() { return this.task"
+      },
+      {
+        "id": "fill_devops_004",
+        "conceptKey": "lesson_devops_deploy::container",
+        "err": "Unexpected identifier 'run'",
+        "answer": "lumenportal",
+        "codePreview": "docker run --rm -p 3000:3000 lumenportal"
+      },
+      {
+        "id": "fill_devops_005",
+        "conceptKey": "lesson_devops_deploy::Vercel deploy",
+        "err": "Unexpected identifier 'prod'",
+        "answer": "production",
+        "codePreview": "vercel --prod\n# deploys the current project to production"
+      },
+      {
+        "id": "fill_tooling_005",
+        "conceptKey": "lesson_tooling_git::ESLint",
+        "err": "Unexpected token ':'",
+        "answer": "src",
+        "codePreview": "\"lint\": \"eslint src\""
+      },
+      {
+        "id": "fill_tooling_006",
+        "conceptKey": "lesson_tooling_git::Prettier",
+        "err": "Unexpected token ':'",
+        "answer": "src",
+        "codePreview": "\"format\": \"prettier --write src\""
+      },
+      {
+        "id": "fill_tooling_011",
+        "conceptKey": "lesson_tooling_git::Prettier",
+        "err": "Unexpected token ':'",
+        "answer": "check",
+        "codePreview": "\"format:verify\": \"prettier --check src\""
+      },
+      {
+        "id": "fill_tooling_npm_manual_001",
+        "conceptKey": "lesson_tooling_git::npm scripts",
+        "err": "Unexpected token ':'",
+        "answer": "unit",
+        "codePreview": "\"scripts\": {\n  \"dev\": \"vite\",\n  \"unit\": \"node --test\"\n}"
+      },
+      {
+        "id": "fill_l25_tailwind_install_002",
+        "conceptKey": "lesson_25::Tailwind installation",
+        "err": "Invalid or unexpected token",
+        "answer": "@tailwind base",
+        "codePreview": "/* index.css */\n@tailwind base;\n@tailwind components;\n@tailwind utilities;"
+      },
+      {
+        "id": "fill_ai_dev_cursor_001",
+        "conceptKey": "ai_development::Cursor",
+        "err": "Invalid or unexpected token",
+        "answer": "approval",
+        "codePreview": "# .cursorrules\n- Use Tailwind.\n- Do not add dependencies without approval."
+      },
+      {
+        "id": "fill_l16_run_001",
+        "conceptKey": "lesson_16::node file.js",
+        "err": "Unexpected identifier 'app'",
+        "answer": "node",
+        "codePreview": "// הפקודה לריצת קובץ JS בסביבת הריצה:\nnode app.js"
+      },
+      {
+        "id": "fill_l16_run_002",
+        "conceptKey": "lesson_16::node file.js",
+        "err": "Unexpected identifier 'server'",
+        "answer": "node",
+        "codePreview": "// מריצים קובץ שרת:\nnode server.js"
+      },
+      {
+        "id": "fill_l16_mkdir_002",
+        "conceptKey": "lesson_16::mkdir",
+        "err": "Unexpected identifier 'src'",
+        "answer": "components",
+        "codePreview": "// יצירת תיקיות מקוננות בבת אחת:\nmkdir -p src/components/utils"
+      },
+      {
+        "id": "fill_l26_number_001",
+        "conceptKey": "lesson_26::number",
+        "err": "Unexpected token ':'",
+        "answer": "number",
+        "codePreview": "let age: number = 25;"
+      },
+      {
+        "id": "fill_l26_string_001",
+        "conceptKey": "lesson_26::string",
+        "err": "Unexpected token ':'",
+        "answer": "string",
+        "codePreview": "let name: string = 'Alice';"
+      },
+      {
+        "id": "fill_l26_boolean_001",
+        "conceptKey": "lesson_26::boolean",
+        "err": "Unexpected token ':'",
+        "answer": "boolean",
+        "codePreview": "let isActive: boolean = true;"
+      },
+      {
+        "id": "fill_l26_void_001",
+        "conceptKey": "lesson_26::void",
+        "err": "Unexpected token ':'",
+        "answer": "void",
+        "codePreview": "function log(msg: string): void {\n  console.log(msg);\n}"
+      },
+      {
+        "id": "fill_l26_any_001",
+        "conceptKey": "lesson_26::any",
+        "err": "Unexpected token ':'",
+        "answer": "any",
+        "codePreview": "let unknownValue: any = getDataFromAPI();"
+      },
+      {
+        "id": "fill_l26_array_001",
+        "conceptKey": "lesson_26::array type",
+        "err": "Unexpected token ':'",
+        "answer": "number[]",
+        "codePreview": "let scores: number[] = [90, 85, 92];"
+      },
+      {
+        "id": "fill_lwb_pair_001",
+        "conceptKey": "ai_development::AI Pair Programming",
+        "err": "Unexpected end of input",
+        "answer": "comment",
+        "codePreview": "// AI pair programming pattern\n// 1. Write the comment\n// 2. Let AI complete\n// "
+      },
+      {
+        "id": "fill_laie_ft_002",
+        "conceptKey": "lesson_ai_engineering::fine-tuning boundary",
+        "err": "Unexpected token ':'",
+        "answer": "system",
+        "codePreview": "// Fine-tuning training data format\n{\n  \"messages\": [\n    {\"role\": \"system\", \"co"
+      },
+      {
+        "id": "fill_l17_read_002",
+        "conceptKey": "lesson_17::Read",
+        "err": "missing ) after argument list",
+        "answer": "get",
+        "codePreview": "// Read = קריאת נתונים\n// ב-REST ממופה ל-HTTP method:\napp.get(('/api/users', han"
+      },
+      {
+        "id": "fill_l17_update_002",
+        "conceptKey": "lesson_17::Update",
+        "err": "missing ) after argument list",
+        "answer": "put",
+        "codePreview": "// עדכון מלא של משתמש:\napp.put(('/api/users/:id', (req, res) => {\n  Object.assig"
+      },
+      {
+        "id": "fill_l17_json_002",
+        "conceptKey": "lesson_17::JSON",
+        "err": "missing ) after argument list",
+        "answer": "json",
+        "codePreview": "// שליחת תשובה בפורמט JSON:\nres.json(({ name: 'Tal', age: 25 });"
+      },
+      {
+        "id": "fill_l18_get_001",
+        "conceptKey": "lesson_18::GET",
+        "err": "missing ) after argument list",
+        "answer": "get",
+        "codePreview": "// Route שמחזיר את כל המשתמשים:\napp.get(('/users', (req, res) => {\n  res.json(us"
+      },
+      {
+        "id": "fill_l19_localst_002",
+        "conceptKey": "lesson_19::localStorage",
+        "err": "missing ) after argument list",
+        "answer": "setItem",
+        "codePreview": "// שמירת נתון בדפדפן לצמיתות:\nlocalStorage.setItem(('theme', 'dark');"
+      },
+      {
+        "id": "fill_l19_sessionst_002",
+        "conceptKey": "lesson_19::sessionStorage",
+        "err": "missing ) after argument list",
+        "answer": "getItem",
+        "codePreview": "// קריאת נתון מ-sessionStorage:\nconst theme = sessionStorage.getItem(('theme');"
+      },
+      {
+        "id": "fill_l16_type_nul_002",
+        "conceptKey": "lesson_16::type nul",
+        "err": "Invalid or unexpected token",
+        "answer": "touch",
+        "codePreview": "# Mac/Linux - יצירת קובץ ריק:\ntouch index.js"
+      },
+      {
+        "id": "fill_lai_claude_code_002",
+        "conceptKey": "ai_development::Claude Code",
+        "err": "Invalid or unexpected token",
+        "answer": "CLAUDE",
+        "codePreview": "# קובץ הזיכרון של Claude Code בשורש הפרויקט:\n# CLAUDE.md"
+      },
+      {
+        "id": "fill_lnest_interceptor_001",
+        "conceptKey": "lesson_nestjs::interceptor",
+        "err": "Invalid or unexpected token",
+        "answer": "UseInterceptors",
+        "codePreview": "@UseInterceptors(ClassSerializerInterceptor)\n@Get()\nfindAll() { return this.task"
+      },
+      {
+        "id": "fill_ldev_vercel_001",
+        "conceptKey": "lesson_devops_deploy::Vercel deploy",
+        "err": "Unexpected identifier 'prod'",
+        "answer": "prod",
+        "codePreview": "// Deploy to production with Vercel CLI\nvercel --prod"
+      },
+      {
+        "id": "fill_ldev_preview_001",
+        "conceptKey": "lesson_devops_deploy::preview deployment",
+        "err": "Unexpected token '>'",
+        "answer": "request",
+        "codePreview": "// Preview deployment flow\nbranch -> pull request -> preview URL -> review -> me"
+      },
+      {
+        "id": "fill_ldev_container_001",
+        "conceptKey": "lesson_devops_deploy::container",
+        "err": "Unexpected identifier 'ps'",
+        "answer": "ps",
+        "codePreview": "// Show running containers\ndocker ps"
+      },
+      {
+        "id": "fill_l26_strongtyped_002",
+        "conceptKey": "lesson_26::Strongly Typed",
+        "err": "Unexpected token ':'",
+        "answer": "parseInt",
+        "codePreview": "let count: number = 5;\ncount = parseInt('10', 10);"
+      },
+      {
+        "id": "fill_l26_array_002",
+        "conceptKey": "lesson_26::array type",
+        "err": "Missing initializer in const declaration",
+        "answer": "number",
+        "codePreview": "const nums: number[] = [1, 2, 3];"
+      },
+      {
+        "id": "fill_l26_tuple_002",
+        "conceptKey": "lesson_26::tuple",
+        "err": "Missing initializer in const declaration",
+        "answer": "number",
+        "codePreview": "// tuple עם שני איברים בטיפוסים שונים:\nconst pair: [string, number] = ['age', 30"
+      },
+      {
+        "id": "fill_l26_void_002",
+        "conceptKey": "lesson_26::void",
+        "err": "Unexpected token ':'",
+        "answer": "void",
+        "codePreview": "function log(msg: string): void {\n  console.log(msg);\n}"
+      },
+      {
+        "id": "fill_l26_any_002",
+        "conceptKey": "lesson_26::any",
+        "err": "Unexpected token ':'",
+        "answer": "unknown",
+        "codePreview": "// safer alternative ל-any — דורש narrowing:\nlet val: unknown = JSON.parse(input"
+      },
+      {
+        "id": "fill_l27_narrow_001",
+        "conceptKey": "lesson_27::Type Narrowing",
+        "err": "Unexpected token ':'",
+        "answer": "typeof",
+        "codePreview": "function show(x: string | number) {\n  if (typeof x === 'string') {\n    console.l"
+      },
+      {
+        "id": "fill_l26_boolean_003",
+        "conceptKey": "lesson_26::boolean",
+        "err": "Unexpected token ':'",
+        "answer": "boolean",
+        "codePreview": "let isLoggedIn: boolean = false;"
+      },
+      {
+        "id": "fill_ldevops_cd_002",
+        "conceptKey": "lesson_devops_deploy::CD",
+        "err": "Invalid or unexpected token",
+        "answer": "deploy",
+        "codePreview": "# CD step אחרי build:\n- name: Deploy\n  run: vercel deploy --prod"
+      },
+      {
+        "id": "fill_lsql_schema_002",
+        "conceptKey": "lesson_sql_orm::schema",
+        "err": "Unexpected identifier 'User'",
+        "answer": "model",
+        "codePreview": "// Prisma schema.prisma:\nmodel User {\n  id    Int    @id @default(autoincrement("
+      }
+    ]
+  },
+  "builds": {
+    "total": 100,
+    "checked": 14,
+    "skipped": 86,
+    "fails": []
+  }
+}
