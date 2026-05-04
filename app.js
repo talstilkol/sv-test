@@ -10580,9 +10580,16 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("km-go-trainer")?.addEventListener("click", () => {
     openTrainer();
   });
-  document.getElementById("km-reset")?.addEventListener("click", () => {
-    if (!confirm("איפוס מלא של מפת הידע: ימחק את כל הציונים והסטטוסים. להמשיך?"))
-      return;
+  document.getElementById("km-reset")?.addEventListener("click", async () => {
+    const ok = await (window.lumenConfirm
+      ? window.lumenConfirm("ימחק את כל הציונים ואת כל סימוני V/X של מפת הידע.", {
+          title: "איפוס מלא של מפת הידע",
+          primary: "אפס הכל",
+          secondary: "ביטול",
+          danger: true,
+        })
+      : Promise.resolve(confirm("איפוס מלא של מפת הידע: ימחק את כל הציונים והסטטוסים. להמשיך?")));
+    if (!ok) return;
     proficiency = {};
     scores = {};
     saveProficiency();
@@ -29468,14 +29475,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Reset block answers
-      blockEl.querySelector(".cb-reset-btn")?.addEventListener("click", (ev) => {
+      blockEl.querySelector(".cb-reset-btn")?.addEventListener("click", async (ev) => {
         ev.stopPropagation();
-        if (
-          !confirm(
-            `לאפס את התשובות של "${block.title}"?\n\nהמצב של הניקוד הכללי לא ישתנה — רק הסימון של איזה שאלות נענו בבלוק זה.`,
-          )
-        )
-          return;
+        const ok = await (window.lumenConfirm
+          ? window.lumenConfirm("הניקוד הכללי לא ישתנה — רק הסימון של איזה שאלות נענו בבלוק זה.", {
+              title: `לאפס את התשובות של "${block.title}"?`,
+              primary: "אפס בלוק",
+              secondary: "ביטול",
+            })
+          : Promise.resolve(confirm(`לאפס את התשובות של "${block.title}"?\n\nהמצב של הניקוד הכללי לא ישתנה — רק הסימון של איזה שאלות נענו בבלוק זה.`)));
+        if (!ok) return;
         if (cbState[block.id]) {
           delete cbState[block.id];
           saveCbState();
@@ -30857,7 +30866,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // PHASE G/H — V-mark buttons in single-line view
     lessonBody.querySelectorAll("[data-mark-v-row]").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
+      btn.addEventListener("click", async (e) => {
         e.stopPropagation();
         const lesson = window.LESSONS_DATA.find((item) => item.id === currentLessonId);
         const conceptName = btn.getAttribute("data-mark-v-row");
@@ -30869,14 +30878,20 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
         const clusterMsg = status && status.cluster
-          ? `\n(הפעולה תסמן V לכל ${status.cluster.members.length} חברי הקלסטר ״${status.cluster.title}״ — אימות אנטי-רמאות עבר)`
+          ? `הפעולה תסמן V לכל ${status.cluster.members.length} חברי הקלסטר ״${status.cluster.title}״ (אימות אנטי-רמאות עבר).`
           : "";
-        if (confirm(`לסמן את "${conceptName}" כמושג ידוע?${clusterMsg}`)) {
-          markAsKnown(lesson.id, conceptName);
-          // Refresh the lesson view
-          if (typeof renderLessonContent === "function") renderLessonContent();
-          else if (typeof showLesson === "function") showLesson(lesson.id);
-        }
+        const ok = await (window.lumenConfirm
+          ? window.lumenConfirm(clusterMsg, {
+              title: `לסמן את "${conceptName}" כמושג ידוע?`,
+              primary: "סמן V",
+              secondary: "ביטול",
+            })
+          : Promise.resolve(confirm(`לסמן את "${conceptName}" כמושג ידוע?${clusterMsg ? "\n" + clusterMsg : ""}`)));
+        if (!ok) return;
+        markAsKnown(lesson.id, conceptName);
+        // Refresh the lesson view
+        if (typeof renderLessonContent === "function") renderLessonContent();
+        else if (typeof showLesson === "function") showLesson(lesson.id);
       });
     });
     lessonBody.querySelectorAll("[data-trainer-vcheck]").forEach((btn) => {
@@ -32686,7 +32701,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       card.querySelectorAll("[data-action]").forEach((btn) => {
-        btn.addEventListener("click", (ev) => {
+        btn.addEventListener("click", async (ev) => {
           ev.stopPropagation();
           const action = btn.dataset.action;
           if (action === "simplify") {
@@ -33043,9 +33058,18 @@ document.addEventListener("DOMContentLoaded", () => {
             if (allPass && refBox) refBox.hidden = false;
           } else if (action === "mark-v") {
             // Confirm shortcut, then mark and re-render
-            if (confirm(`לסמן את "${concept.conceptName}" כמושג ידוע? המאמן לא יציג אותו יותר.`)) {
-              markAsKnown(lesson.id, concept.conceptName);
-              refreshConceptCard(concept.conceptName); // P1.1.2 — per-card
+            const conceptNameLocal = concept.conceptName;
+            const lessonIdLocal = lesson.id;
+            const ok = await (window.lumenConfirm
+              ? window.lumenConfirm("המאמן לא יציג אותו יותר.", {
+                  title: `לסמן את "${conceptNameLocal}" כמושג ידוע?`,
+                  primary: "סמן V",
+                  secondary: "ביטול",
+                })
+              : Promise.resolve(confirm(`לסמן את "${conceptNameLocal}" כמושג ידוע? המאמן לא יציג אותו יותר.`)));
+            if (ok) {
+              markAsKnown(lessonIdLocal, conceptNameLocal);
+              refreshConceptCard(conceptNameLocal);
             }
           } else if (action === "report-weak") {
             reportWeak(lesson.id, concept.conceptName);
@@ -33929,16 +33953,30 @@ document.addEventListener("DOMContentLoaded", () => {
       const hasProgress =
         Object.keys(scores).length > 0 || Object.keys(proficiency).length > 0;
       if (hasProgress) {
-        const ok = confirm(
-          `🔄 מאגר השאלות עודכן מגרסה ${stored} → ${version}.\n` +
-            `האם לרענן את ההתקדמות המקומית? (זה יאפס טבלת ציונים ו-SRS)`,
-        );
-        if (ok) {
-          scores = {};
-          proficiency = {};
-          saveScores();
-          saveProficiency();
-        }
+        // Show non-blocking modal AFTER boot completes, so app loads first.
+        const askLater = async () => {
+          const ok = await (window.lumenConfirm
+            ? window.lumenConfirm(
+                `מאגר השאלות עודכן מגרסה ${stored} → ${version}.\nאם תאשר/י, ההתקדמות המקומית (ציונים + SRS) תתאפס.`,
+                {
+                  title: "🔄 מאגר עודכן — לרענן התקדמות?",
+                  primary: "אפס התקדמות",
+                  secondary: "השאר התקדמות",
+                  danger: true,
+                },
+              )
+            : Promise.resolve(confirm(
+                `🔄 מאגר השאלות עודכן מגרסה ${stored} → ${version}.\nהאם לרענן את ההתקדמות המקומית? (זה יאפס טבלת ציונים ו-SRS)`,
+              )));
+          if (ok) {
+            scores = {};
+            proficiency = {};
+            saveScores();
+            saveProficiency();
+          }
+        };
+        if (document.readyState === "complete") setTimeout(askLater, 250);
+        else window.addEventListener("load", () => setTimeout(askLater, 250));
       }
     }
 
@@ -35686,7 +35724,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  function applyProgressData(data, { requireConfirmation = true } = {}) {
+  async function applyProgressData(data, { requireConfirmation = true } = {}) {
     if (!data.version || (!data.scores && !data.proficiency && !data.economy && !data.answeredQuestions && !data.weaknesses)) {
       throw new Error("invalid format");
     }
@@ -35694,12 +35732,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const purchaseCount = Object.keys(economy.purchases || {}).length;
     const rewardCount = Array.isArray(economy.rewardLog) ? economy.rewardLog.length : 0;
     if (requireConfirmation) {
-      const confirmed = confirm(
-        `ייבוא ${Object.keys(data.scores || {}).length} שיעורים, ${Object.keys(data.proficiency || {}).length} רמות ידע, ` +
-        `${Object.keys(data.answeredQuestions || {}).length} מאגרי שאלות שנענו, ${Object.keys(data.weaknesses || {}).length} מאגרי חולשות, ` +
-        `${Number(economy.xp) || 0} XP, ${Number(economy.coins) || 0} מטבעות, ${purchaseCount} רכישות ו-${rewardCount} רשומות reward?\n` +
-        "פעולה זו תדרוס נתונים קיימים בדפדפן זה."
-      );
+      const summary =
+        `ייבוא: ${Object.keys(data.scores || {}).length} שיעורים · ${Object.keys(data.proficiency || {}).length} רמות ידע · ` +
+        `${Object.keys(data.answeredQuestions || {}).length} מאגרי שאלות · ${Object.keys(data.weaknesses || {}).length} חולשות · ` +
+        `${Number(economy.xp) || 0} XP · ${Number(economy.coins) || 0} מטבעות · ${purchaseCount} רכישות · ${rewardCount} reward records.\n\nפעולה זו תדרוס את הנתונים הקיימים בדפדפן.`;
+      const confirmed = await (window.lumenConfirm
+        ? window.lumenConfirm(summary, {
+            title: "אישור ייבוא נתונים",
+            primary: "ייבא ודרוס",
+            secondary: "ביטול",
+            danger: true,
+          })
+        : Promise.resolve(confirm(summary)));
       if (!confirmed) return false;
     }
     Object.entries(data.scores || {}).forEach(([k, v]) => localStorage.setItem(k, v));
@@ -35721,10 +35765,17 @@ document.addEventListener("DOMContentLoaded", () => {
             alert(integrity.reason);
             return;
           }
-          const continueLegacy = confirm(`${integrity.reason}\n\nלהמשיך בייבוא בכל זאת?`);
+          const continueLegacy = await (window.lumenConfirm
+            ? window.lumenConfirm(integrity.reason + "\n\nלהמשיך בייבוא בכל זאת?", {
+                title: "אזהרת תקינות ייבוא",
+                primary: "המשך",
+                secondary: "ביטול",
+                danger: true,
+              })
+            : Promise.resolve(confirm(`${integrity.reason}\n\nלהמשיך בייבוא בכל זאת?`)));
           if (!continueLegacy) return;
         }
-        if (!applyProgressData(data, { requireConfirmation: true })) return;
+        if (!(await applyProgressData(data, { requireConfirmation: true }))) return;
         alert("הייבוא הצליח! רענן את הדף כדי לראות את הנתונים.");
       } catch (err) {
         alert("שגיאה בקובץ — ודא שזה קובץ JSON תקין שיוצא מ-LumenPortal.");

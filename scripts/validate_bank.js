@@ -140,30 +140,51 @@ function validate({ lessons, bank, guide }) {
     if (q.code && q.code.indexOf("____") === -1)
       errors.push(`[${q.id}] code must contain "____" placeholder`);
     if (q.code && q.answer) {
-      // Count occurrences of the answer outside of import/require statements
-      // and outside of comments. Seeing the identifier in an import line is a
-      // pedagogical hint, not real ambiguity ("you saw `streamText` in the
-      // import — that's the value to put in the blank"). Seeing it inside an
-      // identical context (e.g. `app.____()` plus elsewhere `app.something()`)
-      // IS ambiguity, so we still flag those.
+      // Heuristic v3: an "ambiguity" is when the answer appears in the SAME
+      // syntactic role as the blank. Legitimate "scope echoes" are NOT
+      // ambiguous — they're pedagogical references the student uses to deduce
+      // what to type.
+      //
+      // We skip:
+      //   1. The blank line itself (answer "appears" by construction).
+      //   2. import / require / from-clause lines (pure scope hint).
+      //   3. Pure comment lines.
+      //   4. JSX usage of an identifier answer: `<Link>`, `<Link />`, `</Link>`.
+      //   5. Function-call usage when the answer is a callable identifier:
+      //      `express()`, `streamText({...})`.
+      //   6. Member-access usage: `params.id`, `res.json()`, `app.use()`.
+      //   7. Object-literal value references where the key is a JSX prop name:
+      //      `{props}` destructuring or `{Link}` named-import (already filtered
+      //      via import-line rule but covers re-exports).
+      //
+      // We DON'T skip if the answer appears in code at the SAME shape as the
+      // blank — e.g. blank is `app.____(3000)` and elsewhere we see
+      // `app.listen(80)` — that's actual ambiguity.
       const lines = q.code.split(/\r?\n/);
       const blankLineIdx = lines.findIndex((l) => l.includes("____"));
-      const ans = q.answer.toLowerCase();
+      const ans = q.answer;
+      const ansLower = ans.toLowerCase();
+      const isIdentifier = /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(ans);
       let countOutsideImports = 0;
       lines.forEach((line, i) => {
-        if (i === blankLineIdx) {
-          // Skip the blank line itself — the answer "appears" exactly where
-          // the ____ is, by construction.
-          return;
-        }
-        // Skip import / require / from-clause lines: pure scope hint.
+        if (i === blankLineIdx) return;
         if (/^\s*(?:import|export\s+\{|export\s+default|const\s+\w+\s*=\s*require|require)\b/.test(line)) return;
         if (/\bfrom\s+["'][^"']+["']/.test(line)) return;
-        // Skip pure comment lines.
         if (/^\s*(?:\/\/|\*|\/\*|#)/.test(line)) return;
         const lc = line.toLowerCase();
         let idx = 0;
-        while ((idx = lc.indexOf(ans, idx)) !== -1) {
+        while ((idx = lc.indexOf(ansLower, idx)) !== -1) {
+          const before = idx > 0 ? line[idx - 1] : "";
+          const after = line.slice(idx + ans.length);
+          const followsJsxOpen = /^[<\/]/.test(line.slice(Math.max(0, idx - 2), idx)) || (before === "<" || before === "/");
+          const isFunctionCall = isIdentifier && /^\s*\(/.test(after);
+          const isMemberAccess = before === "." || /^\s*\./.test(after);
+          const isJsxTag = isIdentifier && followsJsxOpen;
+          if (isFunctionCall || isMemberAccess || isJsxTag) {
+            // legitimate scope reference — not ambiguity
+            idx += ans.length;
+            continue;
+          }
           countOutsideImports++;
           idx += ans.length;
         }
