@@ -39,17 +39,24 @@ _(audit complete; resuming execution)_
 - [x] **Accessibility statement page** — modal in settings ♿ card; WCAG 2.1 AA / Lighthouse 100 / known limits listed; GitHub Issues link
 - [x] **GDPR/CCPA consent flow** — `#consent-banner` + `initConsentBanner()`: shows on first load, accept/decline stored as `lumen-consent` in localStorage, decline sets `window.__lumenConsentDeclined`
 
-## P3 — #1 in the world differentiators (~2-3 months)
-- [ ] **AI tutor mode** — student stuck → AI generates targeted explanation from lesson source (~2 weeks)
-- [ ] **Live code execution** — sandboxed JS runtime, real npm-package emulation (~3 weeks; could use StackBlitz/CodeSandbox iframe)
-- [ ] **Multilingual content** — at minimum English-mirror of Hebrew (RTL ↔ LTR toggle) (~3-6 weeks per language)
-- [ ] **LMS integrations** — SCORM, LTI, Google Classroom, Moodle (~2 weeks)
-- [ ] **Mobile native apps** (React Native shell over web) (~4 weeks)
-- [ ] **Adaptive difficulty engine v2** — RL-based recommendation (~4 weeks)
+## P3 — ממוקד למוצר לימוד אישי לבחינה
+
+### ✅ Done
 - [x] **Curriculum versioning v0** — `CURRICULUM_VERSION` constant; dismissible update banner on content change; `curriculumVersion` field stamped in progress export; `lumenportal:curriculum-version:v1` tracks last-seen version
 - [x] **Teacher impersonation** — view student's exact state for debugging (~3 days)
-- [ ] **Content marketplace** — third-party teachers can publish lessons (~3 weeks)
 - [x] **Offline-first sync conflict resolution v0** — merge semantics for progress import: scores take max (level/attempts/correct/proofs), answered-questions union, economy max XP/coins + deduped rewardLog, weaknesses merged; "מיזוג התקדמות" button in settings
+- [x] **AI tutor local mode** — `buildLocalAIResponse()` pulls real concept explanation/code from lesson data; explain/coach/check modes; offline-first
+
+### ⬆️ High priority for exam prep
+- [ ] **Live code execution** — sandboxed JS runtime, real npm-package emulation (~3 weeks; could use StackBlitz/CodeSandbox iframe)
+- [ ] **Adaptive difficulty engine v2** — question selection weighted by weak spots / recent errors (~1-2 weeks)
+- [ ] **Mobile native apps** (React Native shell over web) (~4 weeks)
+
+### ⬇️ Not needed for personal study tool (moved to bottom)
+- [ ] **AI tutor mode** (full production) — Supabase Edge Function + real LLM replies (~2 weeks)
+- [ ] **LMS integrations** — SCORM, LTI, Google Classroom, Moodle (~2 weeks)
+- [ ] **Multilingual content** — at minimum English-mirror of Hebrew (RTL ↔ LTR toggle) (~3-6 weeks per language)
+- [ ] **Content marketplace** — third-party teachers can publish lessons (~3 weeks)
 
 ## Done in 2026-05-04 sessions ✅
 
