@@ -18,6 +18,8 @@
     "thresholds:update": "node scripts/check_threshold_drift.js --update",
     "contrast:check": "node scripts/check_contrast.js",
     "contrast:check:strict": "node scripts/check_contrast.js --strict",
+    "smoke:browser": "playwright test",
+    "smoke:browser:install": "playwright install chromium",
     "audit:distractors": "node scripts/audit_distractors.js --write --strict",
     "questions:feedback-batch": "node scripts/build_llm_distractor_batch.js --summary",
     "questions:feedback-batch:write": "node scripts/build_llm_distractor_batch.js --write --summary",
@@ -176,6 +178,7 @@
     "test:watch": "vitest"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "happy-dom": "^20.9.0",
     "vitest": "^4.1.5"
   },

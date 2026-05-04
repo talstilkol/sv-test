@@ -38,10 +38,19 @@ function buildReport() {
     checks,
     "modal-dialogs",
     "Modals expose dialog semantics and close labels",
-    html.includes('id="xp-detail-overlay" class="xp-detail-overlay" style="display:none" role="dialog" aria-modal="true"') &&
-      html.includes('id="achievements-overlay" class="achievements-overlay" style="display:none" role="dialog" aria-modal="true"') &&
-      html.includes('id="reflection-overlay" class="reflection-overlay" style="display:none" role="dialog" aria-modal="true"') &&
-      html.includes('id="lesson-wrap-overlay" class="lesson-wrap-overlay" style="display:none" role="dialog" aria-modal="true"') &&
+    // 2026-05-04: relaxed to accept `hidden` attribute as semantic equivalent
+    // of `style="display:none"` (post inline-style refactor in P1.6).
+    [
+      "xp-detail-overlay",
+      "achievements-overlay",
+      "reflection-overlay",
+      "lesson-wrap-overlay",
+    ].every((modalId) => {
+      const re = new RegExp(`id="${modalId}"[^>]*role="dialog"[^>]*aria-modal="true"`);
+      const tagMatch = html.match(new RegExp(`<[^<>]*id="${modalId}"[^<>]*>`));
+      const tag = tagMatch ? tagMatch[0] : "";
+      return re.test(html) && (tag.includes('style="display:none"') || / hidden(?:[\s>])/.test(tag) || / hidden=/.test(tag));
+    }) &&
       html.includes('id="ai-tutor-modal" class="ai-tutor-modal hidden" role="dialog" aria-modal="true"') &&
       html.includes('aria-label="סגור"'),
     "Dialog overlays need role, modal state and close controls.",

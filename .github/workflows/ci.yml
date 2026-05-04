@@ -88,6 +88,15 @@ jobs:
       - name: WCAG AA contrast gate
         run: node scripts/check_contrast.js --strict
 
+      # Real Chromium smoke — clicks 23 top tabs, verifies 0 console errors,
+      # consent + onboarding flow, mock-exam launches without native dialog.
+      # Caught the "frame-ancestors in <meta>" CSP warning that JSDOM smoke missed.
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Real-browser smoke (Playwright Chromium)
+        run: npx playwright test
+
       # Phase 5 — full-bank question quality gate.
       # Fails on blocker-level MC/Fill issues. Warnings stay visible in the
       # generated report and remediation queue.

@@ -14417,7 +14417,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${renderQuestionPrereqPanel({ question, lesson, concept, mode: "trainer" })}
       </div>
       <div id="tq-feedback-slot"></div>
-      <div class="tq-actions" id="tq-actions" style="display:none">
+      <div class="tq-actions" id="tq-actions" hidden>
         <button class="tq-btn primary" id="tq-next">➡️ שאלה הבאה</button>
         <button class="tq-btn secondary" id="tq-open-lesson">📖 פתח את השיעור</button>
         <button class="tq-btn secondary" id="tq-skip">⏭️ דלג בלי לענות</button>
@@ -14520,7 +14520,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <button class="tq-btn secondary" id="trace-hint">💡 רמז</button>
             <button class="tq-btn secondary" id="trace-skip">⏭️ דלג בשלב</button>
           </div>
-          <div class="trace-hint" id="trace-hint-slot" style="display:none"></div>
+          <div class="trace-hint" id="trace-hint-slot" hidden></div>
           <div class="trace-feedback" id="trace-feedback-slot"></div>
         </div>`;
     } else {
@@ -14556,7 +14556,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${renderQuestionPrereqPanel({ question: supportQuestion, lesson, concept, mode: "trainer" })}
       </div>
       <div id="tq-feedback-slot"></div>
-      <div class="tq-actions" id="tq-actions" style="display:none">
+      <div class="tq-actions" id="tq-actions" hidden>
         <button class="tq-btn primary" id="tq-next">➡️ שאלה הבאה</button>
         <button class="tq-btn secondary" id="tq-open-lesson">📖 פתח את השיעור</button>
         <button class="tq-btn secondary" id="tq-skip">⏭️ דלג</button>
@@ -28494,8 +28494,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="bq-options">
           ${bug.options.map((opt, i) => `<button class="bq-opt" data-opt="${i}">${esc(opt)}</button>`).join("")}
         </div>
-        <div class="bq-explanation" id="bq-explanation" style="display:none">${esc(bug.explanation)}</div>
-        <button class="bq-next-btn" id="bq-next" style="display:none">המשך ←</button>
+        <div class="bq-explanation" id="bq-explanation" hidden>${esc(bug.explanation)}</div>
+        <button class="bq-next-btn" id="bq-next" hidden>המשך ←</button>
       </div>`;
   }
 
@@ -31556,8 +31556,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <button class="pathway-btn${currentPathway === 'parent' ? ' active' : ''}" data-action="set-pathway" data-pathway="parent" title="הסבר לאדם לא טכני">🧑‍🏫</button>
           <button class="pathway-btn${currentPathway === 'technical' ? ' active' : ''}" data-action="set-pathway" data-pathway="technical" title="הסבר טכני מלא">👨‍💻</button>
         </div>` : ""}
-        <p class="concept-explanation"${pathwayText ? ' style="display:none"' : ""}>${esc(explanation)}</p>
-        ${pathwayText ? `<p class="pathway-explanation">${esc(pathwayText)}</p>` : '<p class="pathway-explanation" style="display:none"></p>'}
+        <p class="concept-explanation"${pathwayText ? ' hidden' : ""}>${esc(explanation)}</p>
+        ${pathwayText ? `<p class="pathway-explanation">${esc(pathwayText)}</p>` : '<p class="pathway-explanation" hidden></p>'}
         ${renderAudioModeButton(concept, explanation)}
       `,
       },
@@ -31584,7 +31584,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <button class="code-tool-btn run-btn" data-action="run-code" data-card-cid="${idx}" aria-label="הרץ את הקוד בסביבה מבודדת" title="הרץ את הקוד בסביבה מבודדת — תראה את ה-console.log">🚀 הרץ</button>
           </div>
           <pre data-code-original="${esc(concept.codeExample)}"><code>${esc(concept.codeExample)}</code></pre>
-          <div class="code-runner-output" data-runner-output="${idx}" style="display:none;"></div>
+          <div class="code-runner-output" data-runner-output="${idx}" hidden></div>
           ${
             concept.codeExplanation
               ? `<div class="code-explanation"><strong>💡 פינת הקוד:</strong> ${esc(concept.codeExplanation)}</div>`

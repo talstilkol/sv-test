@@ -140,26 +140,20 @@ function validate({ lessons, bank, guide }) {
     if (q.code && q.code.indexOf("____") === -1)
       errors.push(`[${q.id}] code must contain "____" placeholder`);
     if (q.code && q.answer) {
-      // Heuristic v3: an "ambiguity" is when the answer appears in the SAME
-      // syntactic role as the blank. Legitimate "scope echoes" are NOT
-      // ambiguous — they're pedagogical references the student uses to deduce
-      // what to type.
+      // Heuristic v4: word-boundary aware + skip legitimate scope echoes.
       //
       // We skip:
-      //   1. The blank line itself (answer "appears" by construction).
-      //   2. import / require / from-clause lines (pure scope hint).
+      //   1. The blank line itself.
+      //   2. import / require / from-clause lines.
       //   3. Pure comment lines.
-      //   4. JSX usage of an identifier answer: `<Link>`, `<Link />`, `</Link>`.
-      //   5. Function-call usage when the answer is a callable identifier:
-      //      `express()`, `streamText({...})`.
-      //   6. Member-access usage: `params.id`, `res.json()`, `app.use()`.
-      //   7. Object-literal value references where the key is a JSX prop name:
-      //      `{props}` destructuring or `{Link}` named-import (already filtered
-      //      via import-line rule but covers re-exports).
-      //
-      // We DON'T skip if the answer appears in code at the SAME shape as the
-      // blank — e.g. blank is `app.____(3000)` and elsewhere we see
-      // `app.listen(80)` — that's actual ambiguity.
+      //   4. JSX usage of an identifier answer (`<Link>` etc.).
+      //   5. Function-call usage (`express()`, `streamText(...)`).
+      //   6. Member-access usage (`params.id`, `res.json()`).
+      //   7. For identifier answers — match WHOLE WORDS only. This is the v3
+      //      → v4 fix: "e" was matching embedded letters in `addEventListener`,
+      //      `submit`, etc. fill_l19_event_xx_001 was reporting 5 "ambiguous"
+      //      occurrences when really the answer was used 0 times outside the
+      //      blank.
       const lines = q.code.split(/\r?\n/);
       const blankLineIdx = lines.findIndex((l) => l.includes("____"));
       const ans = q.answer;
@@ -176,12 +170,21 @@ function validate({ lessons, bank, guide }) {
         while ((idx = lc.indexOf(ansLower, idx)) !== -1) {
           const before = idx > 0 ? line[idx - 1] : "";
           const after = line.slice(idx + ans.length);
+          // Word-boundary check for identifier answers.
+          if (isIdentifier) {
+            const isWordCharBefore = /[A-Za-z0-9_$]/.test(before);
+            const isWordCharAfter = /[A-Za-z0-9_$]/.test(after[0] || "");
+            if (isWordCharBefore || isWordCharAfter) {
+              // It's embedded inside another word — not a real occurrence.
+              idx += ans.length;
+              continue;
+            }
+          }
           const followsJsxOpen = /^[<\/]/.test(line.slice(Math.max(0, idx - 2), idx)) || (before === "<" || before === "/");
           const isFunctionCall = isIdentifier && /^\s*\(/.test(after);
           const isMemberAccess = before === "." || /^\s*\./.test(after);
           const isJsxTag = isIdentifier && followsJsxOpen;
           if (isFunctionCall || isMemberAccess || isJsxTag) {
-            // legitimate scope reference — not ambiguity
             idx += ans.length;
             continue;
           }

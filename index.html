@@ -9,8 +9,15 @@
          allowed. style-src keeps 'unsafe-inline' for legacy inline style="..."
          attributes (z-index, display:none) used throughout the SPA; converting
          those to classes is on the tech-debt backlog. No third-party scripts
-         permitted. Google Fonts is the only external origin. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';" />
+         permitted. Google Fonts is the only external origin.
+
+         NOTE: `frame-ancestors` is intentionally NOT in this meta tag because
+         browsers ignore it when delivered via <meta>. Production deployment
+         should set the equivalent header at the host:
+            Content-Security-Policy: frame-ancestors 'none'
+            X-Frame-Options: DENY
+         Either prevents clickjacking via iframe embedding. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; form-action 'self'; base-uri 'self';" />
     <script src="src/boot/standalone-museum.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
@@ -340,7 +347,7 @@
         <nav class="top-tabs-bar" id="top-tabs-bar">
           <!-- W12 — Streak + XP widgets, compact in the existing top toolbar -->
           <div class="w12-top-bar" id="w12-top-bar" aria-label="רצף, XP והישגים">
-            <span id="streak-widget" class="streak-widget" title="רצף לימוד" style="display:none">🔥 0</span>
+            <span id="streak-widget" class="streak-widget" title="רצף לימוד" hidden>🔥 0</span>
             <span id="xp-widget" class="xp-widget" title="נקודות ניסיון">⭐ 0 XP</span>
             <button id="open-achievements" class="w12-btn" title="הישגים" aria-label="פתח הישגים">🏆</button>
             <button id="btn-open-reflection" class="w12-btn" title="רפלקציה יומית" aria-label="פתח רפלקציה יומית">📝</button>
@@ -433,7 +440,7 @@
               class="portal-decision-aid glass-panel"
               id="portal-decision-aid"
               aria-label="מבט מהיר והשוואות לפי טאב"
-              style="display: none;"
+              hidden
             ></section>
           </details>
           <div class="site-breadcrumb" id="site-breadcrumb" aria-live="polite">בית</div>
@@ -513,7 +520,7 @@
           </div>
 
           <!-- Settings View — default display, sync, export/import and advanced ops -->
-          <div class="settings-view" id="settings-view" style="display:none">
+          <div class="settings-view" id="settings-view" hidden>
             <div class="settings-shell glass-panel">
               <div class="settings-head">
                 <div>
@@ -747,7 +754,7 @@
           </div>
 
           <!-- Programming Basics View -->
-          <div class="programming-basics-view" id="programming-basics-view" style="display:none">
+          <div class="programming-basics-view" id="programming-basics-view" hidden>
             <div class="pb-hero glass-panel">
               <div>
                 <h2>🧱 אבני הבסיס של התכנות</h2>
@@ -763,7 +770,7 @@
           </div>
 
           <!-- Programming Principles View -->
-          <div class="programming-principles-view" id="programming-principles-view" style="display:none">
+          <div class="programming-principles-view" id="programming-principles-view" hidden>
             <div class="pb-hero glass-panel">
               <div>
                 <h2>🧭 עקרונות היסוד של תכנות טוב</h2>
@@ -778,12 +785,12 @@
           </div>
 
           <!-- Standalone Programming Language Museum View -->
-          <div class="programming-museum-view" id="programming-museum-view" style="display:none">
+          <div class="programming-museum-view" id="programming-museum-view" hidden>
             <div id="programming-museum-content"></div>
           </div>
 
           <!-- Language & Development Tools Comparison View -->
-          <div class="language-tools-view" id="language-tools-view" style="display:none">
+          <div class="language-tools-view" id="language-tools-view" hidden>
             <div class="lt-hero glass-panel">
               <div>
                 <h2>🧮 השוואת שפות וכלי פיתוח</h2>
@@ -798,7 +805,7 @@
           </div>
 
           <!-- Knowledge Map View -->
-          <div class="knowledge-map" id="knowledge-map-view" style="display:none">
+          <div class="knowledge-map" id="knowledge-map-view" hidden>
             <div class="km-header glass-panel">
               <div class="km-title">
                 <h2>🗺️ מפת הידע האישית שלך</h2>
@@ -851,7 +858,7 @@
           </div>
 
           <!-- Study Mode View (Adaptive) -->
-          <div class="study-mode" id="study-mode-view" style="display:none">
+          <div class="study-mode" id="study-mode-view" hidden>
             <div class="study-header glass-panel">
               <h2>🎯 לימוד מותאם — חיזוק החולשות שלך</h2>
               <p id="study-subtitle">המערכת תעביר אותך על המושגים שסימנת כחלשים, אחד אחרי השני.</p>
@@ -866,7 +873,7 @@
           </div>
 
           <!-- Trainer View (Adaptive Quiz + Live Scorecard) -->
-          <div class="trainer-view" id="trainer-view" style="display:none">
+          <div class="trainer-view" id="trainer-view" hidden>
             <div class="trainer-dashboard glass-panel">
               <div class="trainer-dash-head">
                 <h2>🧠 מאמן הידע — דוח רמות חי</h2>
@@ -896,7 +903,7 @@
             </div>
 
             <!-- W8 Bug Quest modal (overlay) -->
-            <div class="bug-quest-overlay" id="bug-quest-overlay" style="display:none" role="dialog" aria-modal="true">
+            <div class="bug-quest-overlay" id="bug-quest-overlay" hidden role="dialog" aria-modal="true">
               <div class="bug-quest-modal glass-panel">
                 <div class="bq-header">
                   <div>
@@ -910,7 +917,7 @@
             </div>
 
             <!-- W8 Pair-Match game panel -->
-            <div class="pair-match-panel glass-panel" id="pair-match-panel" style="display:none">
+            <div class="pair-match-panel glass-panel" id="pair-match-panel" hidden>
               <div class="pm-header">
                 <h3 id="pm-title">🎯 התאמות</h3>
                 <button class="pm-close-btn" id="pm-close">✕ סגור</button>
@@ -928,14 +935,14 @@
               <!-- Active question injected here -->
             </div>
 
-            <div class="trainer-report glass-panel" id="trainer-report" style="display:none">
+            <div class="trainer-report glass-panel" id="trainer-report" hidden>
               <h3>📊 דוח ציונים מלא — לפי שיעור</h3>
               <div class="trainer-report-body" id="trainer-report-body"></div>
             </div>
           </div>
 
           <!-- Concept Sprint View — pure concept checks that feed the Knowledge Trainer -->
-          <div class="concept-sprint-view" id="concept-sprint-view" style="display:none">
+          <div class="concept-sprint-view" id="concept-sprint-view" hidden>
             <div class="concept-sprint-shell glass-panel">
               <div class="concept-sprint-head">
                 <div>
@@ -949,7 +956,7 @@
           </div>
 
           <!-- Reward Store View — spend earned learning coins on experiences, not grades -->
-          <div class="reward-store-view" id="reward-store-view" style="display:none">
+          <div class="reward-store-view" id="reward-store-view" hidden>
             <div class="reward-store-shell glass-panel">
               <div class="reward-store-head">
                 <div>
@@ -964,7 +971,7 @@
           </div>
 
           <!-- Quick Guide View -->
-          <div class="guide-view" id="guide-view" style="display:none">
+          <div class="guide-view" id="guide-view" hidden>
             <div class="guide-header glass-panel">
               <h2 id="guide-title">📖 מדריך מקוצר — מפת החומר</h2>
               <p id="guide-subtitle"></p>
@@ -978,7 +985,7 @@
           </div>
 
           <!-- Grandma Knowledge View -->
-          <div class="guide-view grandma-knowledge-view" id="grandma-knowledge-view" style="display:none">
+          <div class="guide-view grandma-knowledge-view" id="grandma-knowledge-view" hidden>
             <div class="guide-header glass-panel">
               <h2 id="grandma-knowledge-title">👵 ידע מורחב ברמת סבתא</h2>
               <p id="grandma-knowledge-subtitle"></p>
@@ -993,7 +1000,7 @@
           </div>
 
           <!-- SRS Flashcards View -->
-          <div class="flashcards-view" id="flashcards-view" style="display:none">
+          <div class="flashcards-view" id="flashcards-view" hidden>
             <div class="fc-header glass-panel">
               <div class="fc-title">
                 <h2>🃏 כרטיסיות חזרה</h2>
@@ -1037,7 +1044,7 @@
           </div>
 
           <!-- Active Lesson Content (Hidden until selected) -->
-          <div class="active-lesson" id="active-lesson" style="display: none">
+          <div class="active-lesson" id="active-lesson" hidden>
             <div class="lesson-banner glass-panel" id="lesson-banner">
               <span class="lesson-banner-icon">🎯</span>
               <div class="lesson-banner-text">
@@ -1055,7 +1062,7 @@
             </article>
 
             <!-- Quiz Section -->
-            <section class="quiz-section glass-panel" id="quiz-section" style="display:none">
+            <section class="quiz-section glass-panel" id="quiz-section" hidden>
               <div class="quiz-header">
                 <h3>📝 שאלון — בדוק את הידע שלך!</h3>
                 <p class="quiz-subtitle">ענה על כל השאלות כדי לוודא שהבנת את החומר לעומקו</p>
@@ -1065,9 +1072,9 @@
               </div>
               <div class="quiz-actions">
                 <button class="quiz-submit-btn" id="quiz-submit">✅ בדוק תשובות</button>
-                <button class="quiz-reset-btn" id="quiz-reset" style="display:none">🔄 נסה שוב</button>
+                <button class="quiz-reset-btn" id="quiz-reset" hidden>🔄 נסה שוב</button>
               </div>
-              <div class="quiz-results" id="quiz-results" style="display:none">
+              <div class="quiz-results" id="quiz-results" hidden>
                 <div class="quiz-score" id="quiz-score"></div>
                 <div class="quiz-feedback" id="quiz-feedback"></div>
               </div>
@@ -1075,7 +1082,7 @@
           </div>
 
           <!-- Code Anatomy View -->
-          <div class="anatomy-page glass-panel" id="code-anatomy-view" style="display:none">
+          <div class="anatomy-page glass-panel" id="code-anatomy-view" hidden>
             <h2>📐 פירוק קוד — מה התפקיד של כל רכיב?</h2>
             <p class="anatomy-page-intro">
               קטעי קוד מהשיעורים עם הסבר על תפקיד כל מילה / סימן / משתנה. <strong>בחר מה להציג</strong> — אל תיכשל בעומס.
@@ -1100,7 +1107,7 @@
           </div>
 
           <!-- Code Trace View -->
-          <div class="trace-view" id="trace-view" style="display:none">
+          <div class="trace-view" id="trace-view" hidden>
             <div class="trace-header glass-panel">
               <h2>🔬 Code Trace — חיזוי פלט שורה אחר שורה</h2>
               <p>קרא את הקוד, חזה את הפלט בכל שלב. כל תשובה נכונה מעלה את הניקוד למושג המקושר.</p>
@@ -1120,11 +1127,11 @@
             <!-- List of traces (when no active session) -->
             <div class="trace-list" id="trace-list"></div>
             <!-- Active trace player (hidden until user picks one) -->
-            <div class="trace-player glass-panel" id="trace-player" style="display:none"></div>
+            <div class="trace-player glass-panel" id="trace-player" hidden></div>
           </div>
 
           <!-- P2.2 — Gap Matrix View -->
-          <div class="gap-matrix-view" id="gap-matrix-view" style="display:none">
+          <div class="gap-matrix-view" id="gap-matrix-view" hidden>
             <div class="gm-header glass-panel">
               <h2>📊 מטריצת פערים — היכן צריך לחזק?</h2>
               <p>סקירה של כל נושאי הלימוד לפי מצב שליטה. לחץ על שורה לפרטי המושגים.</p>
@@ -1141,7 +1148,7 @@
           </div>
 
           <!-- P6.1 — Learning Evidence View -->
-          <div class="learning-evidence-view" id="learning-evidence-view" style="display:none">
+          <div class="learning-evidence-view" id="learning-evidence-view" hidden>
             <div class="le-header glass-panel">
               <div>
                 <h2>📈 ראיות למידה — האם באמת משתפרים?</h2>
@@ -1157,7 +1164,7 @@
           </div>
 
           <!-- P6.3 — Capstone Project Track -->
-          <div class="capstones-view" id="capstones-view" style="display:none">
+          <div class="capstones-view" id="capstones-view" hidden>
             <div class="capstones-header glass-panel">
               <div>
                 <h2>🏗️ פרויקטי גמר — Capstones</h2>
@@ -1169,7 +1176,7 @@
           </div>
 
           <!-- W24 — Course Blueprint + Exam Alignment -->
-          <div class="blueprints-view" id="blueprints-view" style="display:none">
+          <div class="blueprints-view" id="blueprints-view" hidden>
             <div class="blueprints-header glass-panel">
               <div>
                 <h2>🧾 יישור SVCollege — AI & Full Stack</h2>
@@ -1181,7 +1188,7 @@
           </div>
 
           <!-- Side-by-Side Comparator View -->
-          <div class="comparator-view" id="comparator-view" style="display:none">
+          <div class="comparator-view" id="comparator-view" hidden>
             <div class="cmp-header glass-panel">
               <h2>⚖️ השוואות זוגות — מתי להשתמש במה</h2>
               <p>טבלאות השוואה לזוגות מושגים שמתבלבלים. לחץ על זוג כדי לראות פירוט שורה-שורה.</p>
@@ -1195,7 +1202,7 @@
           </div>
 
           <!-- P1.5.1 — Mock Exam View -->
-          <div class="mock-exam-view" id="mock-exam-view" style="display:none">
+          <div class="mock-exam-view" id="mock-exam-view" hidden>
             <!-- Settings (template picker) -->
             <div class="mx-settings glass-panel" id="mx-settings">
               <h2>📝 מבחן מדומה</h2>
@@ -1208,7 +1215,7 @@
             </div>
 
             <!-- Active exam runner -->
-            <div class="mx-runner glass-panel" id="mx-runner" style="display:none">
+            <div class="mx-runner glass-panel" id="mx-runner" hidden>
               <div class="mx-runner-head">
                 <div class="mx-progress" id="mx-progress" aria-live="polite"></div>
                 <div class="mx-timer" id="mx-timer" aria-live="polite">⏱️ 00:00</div>
@@ -1225,11 +1232,11 @@
             </div>
 
             <!-- Result screen -->
-            <div class="mx-result glass-panel" id="mx-result" style="display:none"></div>
+            <div class="mx-result glass-panel" id="mx-result" hidden></div>
           </div>
 
           <!-- Code Blocks View -->
-          <div class="codeblocks-view" id="codeblocks-view" style="display:none">
+          <div class="codeblocks-view" id="codeblocks-view" hidden>
             <div class="cb-header glass-panel">
               <h2 id="cb-title">💻 למד בלוקי קוד</h2>
               <p id="cb-subtitle">בלוקי קוד אמיתיים עם הסבר עברי לכל שורה. ענה על השאלות והעלה את הניקוד שלך לכל מושג.</p>
@@ -1459,7 +1466,7 @@
     <script type="module" src="/src/main.js?v=core-bootstrap-v2"></script>
 
     <!-- W12 — Achievements overlay -->
-    <div id="achievements-overlay" class="achievements-overlay" style="display:none" role="dialog" aria-modal="true">
+    <div id="achievements-overlay" class="achievements-overlay" hidden role="dialog" aria-modal="true">
       <div class="achievements-modal glass-panel">
         <div class="ach-modal-head">
           <h3>🏆 הישגים</h3>
@@ -1470,7 +1477,7 @@
     </div>
 
     <!-- W12 — XP detail panel -->
-    <div id="xp-detail-overlay" class="xp-detail-overlay" style="display:none" role="dialog" aria-modal="true">
+    <div id="xp-detail-overlay" class="xp-detail-overlay" hidden role="dialog" aria-modal="true">
       <div class="xp-detail-modal glass-panel">
         <div class="xp-detail-head">
           <h3>⭐ מצב XP ומטבעות</h3>
@@ -1481,7 +1488,7 @@
     </div>
 
     <!-- W12 — Daily Reflection modal -->
-    <div id="reflection-overlay" class="reflection-overlay" style="display:none" role="dialog" aria-modal="true">
+    <div id="reflection-overlay" class="reflection-overlay" hidden role="dialog" aria-modal="true">
       <div class="reflection-modal glass-panel">
         <div class="refl-head">
           <div>
@@ -1511,7 +1518,7 @@
     </div>
 
     <!-- W12 — Lesson-end 60-second wrap-up -->
-    <div id="lesson-wrap-overlay" class="lesson-wrap-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="lesson-wrap-title">
+    <div id="lesson-wrap-overlay" class="lesson-wrap-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="lesson-wrap-title">
       <div class="lesson-wrap-modal glass-panel">
         <div class="lw-head">
           <div>

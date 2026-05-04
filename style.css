@@ -27932,6 +27932,20 @@ html.cosmetic-accessible-outline .museum-section {
   color: #a5f3fc;
 }
 
+/* HTML `hidden` attribute MUST win over component-specific display: rules
+   for OVERLAY-class modals. Without this, `display: flex` in the overlay CSS
+   beats the user-agent stylesheet's `[hidden] { display: none }` and the
+   modal stays visible / clickable despite the attribute. Scoped to overlay
+   classes so non-overlay code paths (e.g. `style.display = "block"` in app.js)
+   keep working. */
+.xp-detail-overlay[hidden],
+.achievements-overlay[hidden],
+.reflection-overlay[hidden],
+.lesson-wrap-overlay[hidden],
+.ai-tutor-modal[hidden] {
+  display: none !important;
+}
+
 /* ============================================
    In-app confirm modal (replaces native confirm)
    ============================================ */
