@@ -1469,7 +1469,7 @@
     <!-- P4.6.4 — HTML sanitization must patch legacy rendering before app.js -->
     <script src="lib/vendor/dompurify.min.js"></script>
     <script src="src/core/sanitize-early.js"></script>
-    <script src="app.js?v=cleanup-shards-v108"></script>
+    <script src="app.js?v=cleanup-shards-v109"></script>
     <script type="module" src="/src/main.js?v=core-bootstrap-v2"></script>
 
     <!-- W12 — Achievements overlay -->
@@ -1699,6 +1699,10 @@
     </div>
     <script src="src/boot/lumen-confirm.js"></script>
     <script src="src/boot/consent-onboarding.js"></script>
+  <div id="curriculum-update-banner" role="status" aria-live="polite" hidden>
+    <span id="curriculum-update-label">📚 תוכן עודכן — גרסת תוכן <strong id="curriculum-update-version"></strong> זמינה</span>
+    <button type="button" id="btn-curriculum-dismiss" class="km-btn-mini" aria-label="סגור הודעת עדכון תוכן">✖ סגור</button>
+  </div>
   <div id="teacher-preview-banner" role="alert" aria-live="assertive" hidden>
     <span id="teacher-preview-label">מצב תצפית — תלמיד: <strong id="teacher-preview-name"></strong></span>
     <button type="button" id="btn-exit-preview" class="km-btn-mini">✖ יציאה מתצפית</button>

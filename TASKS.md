@@ -46,14 +46,16 @@ _(audit complete; resuming execution)_
 - [ ] **LMS integrations** — SCORM, LTI, Google Classroom, Moodle (~2 weeks)
 - [ ] **Mobile native apps** (React Native shell over web) (~4 weeks)
 - [ ] **Adaptive difficulty engine v2** — RL-based recommendation (~4 weeks)
-- [ ] **Curriculum versioning** — students on cohort v1 don't get cohort v2 changes mid-course (~1 week)
-- [ ] **Teacher impersonation** — view student's exact state for debugging (~3 days)
+- [x] **Curriculum versioning v0** — `CURRICULUM_VERSION` constant; dismissible update banner on content change; `curriculumVersion` field stamped in progress export; `lumenportal:curriculum-version:v1` tracks last-seen version
+- [x] **Teacher impersonation** — view student's exact state for debugging (~3 days)
 - [ ] **Content marketplace** — third-party teachers can publish lessons (~3 weeks)
 - [ ] **Offline-first sync conflict resolution** — multiple devices, last-write-wins is wrong (~1 week)
 
 ## Done in 2026-05-04 sessions ✅
 
 ### This session (continuation)
+- [x] **Teacher impersonation** — non-destructive student preview; backup/restore via `PREVIEW_BACKUP_KEY`; amber bottom banner; exit restores teacher state
+- [x] **Curriculum versioning v0** — `CURRICULUM_VERSION = "2026-05-04"`; dismissible update banner (top, blue); stamps `curriculumVersion` in progress export; `lumenportal:curriculum-version:v1` key
 - [x] **Bidi audit** — script written, 2 typos fixed, 43 legit Hebrew grammar patterns accepted
 - [x] **byFilename refactor** — 8 more scripts updated (11 total canonical)
 - [x] **npm audit** — 0 vulnerabilities

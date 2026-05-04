@@ -43,6 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("error", (e) => {
     window.__lumenIIFEError = window.__lumenIIFEError || { msg: e.message, file: e.filename, line: e.lineno, col: e.colno };
   });
+  const CURRICULUM_VERSION = "2026-05-04";
+  const CURRICULUM_VERSION_KEY = "lumenportal:curriculum-version:v1";
+
   const standaloneMuseumMode = (() => {
     try {
       const params = new URLSearchParams(window.location.search);
@@ -35777,6 +35780,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = {
       version: 2,
       exportedAt: Number.isNaN(date.getTime()) ? new Date(0).toISOString() : date.toISOString(),
+      curriculumVersion: CURRICULUM_VERSION,
       profile: {
         id: localProfileStore?.activeProfile?.id || "",
         name: localProfileStore?.activeProfile?.name || "",
@@ -35979,6 +35983,28 @@ document.addEventListener("DOMContentLoaded", () => {
       showPreviewBanner(studentSnap.profile?.name || "תלמיד");
     } catch (_) { showPreviewBanner("תלמיד"); }
   }
+
+  // ===== CURRICULUM VERSIONING =====
+  function checkCurriculumVersion() {
+    const stored = localStorage.getItem(CURRICULUM_VERSION_KEY) || "";
+    if (!stored) {
+      // First visit — record silently
+      localStorage.setItem(CURRICULUM_VERSION_KEY, CURRICULUM_VERSION);
+      return;
+    }
+    if (stored === CURRICULUM_VERSION) return;
+    // New version available — show banner
+    const banner = document.getElementById("curriculum-update-banner");
+    const versionEl = document.getElementById("curriculum-update-version");
+    if (!banner) return;
+    if (versionEl) versionEl.textContent = CURRICULUM_VERSION;
+    banner.removeAttribute("hidden");
+  }
+
+  document.getElementById("btn-curriculum-dismiss")?.addEventListener("click", () => {
+    document.getElementById("curriculum-update-banner")?.setAttribute("hidden", "");
+    localStorage.setItem(CURRICULUM_VERSION_KEY, CURRICULUM_VERSION);
+  });
 
   function progressSyncCore() {
     return window.LUMEN_CORE && window.LUMEN_CORE.progressSync;
@@ -37708,6 +37734,8 @@ document.addEventListener("DOMContentLoaded", () => {
     setPortalDecisionAid("home");
     setHomeContextTree();
   }, 150);
+
+  checkCurriculumVersion();
 
   // QA sentinel: confirms DOMContentLoaded callback completed
   window.__lumenIIFEComplete = true;

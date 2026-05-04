@@ -28436,6 +28436,32 @@ html.cosmetic-accessible-outline .museum-section {
   text-decoration: underline;
 }
 
+/* ===== Curriculum Update Banner ===== */
+#curriculum-update-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  background: #0ea5e9;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+#curriculum-update-banner[hidden] { display: none !important; }
+#curriculum-update-banner #btn-curriculum-dismiss {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  border-color: rgba(255,255,255,0.5);
+  padding: 0.2rem 0.6rem;
+}
+
 /* ===== Teacher Preview Banner ===== */
 #teacher-preview-banner {
   position: fixed;
