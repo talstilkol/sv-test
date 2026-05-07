@@ -5053,6 +5053,41 @@ to{opacity:1}
 .hxm-exam-ide-terminal-row small{color:#94a3b8;line-height:1.35}
 .hxm-exam-ide-terminal-row.done{border-color:#22c55e5c}
 .hxm-exam-topic-list .hxm-exam-ide-section-list{max-height:42rem}
+.hxm-exam-task-ide-portal{background:linear-gradient(135deg,#020617,#0b1220 46%,#07111f);border-color:#38bdf861;border-radius:14px;grid-template-rows:auto minmax(44rem,1fr) auto auto;gap:.75rem;padding:.8rem;display:grid}
+.hxm-exam-portal-commandbar{background:#020617d6;border:1px solid #1d4ed85c;border-radius:12px;grid-template-columns:minmax(0,1fr) auto minmax(15rem,.5fr);align-items:center;gap:.75rem;padding:.65rem;display:grid}
+.hxm-exam-portal-brand{align-items:center;gap:.65rem;display:flex}
+.hxm-exam-portal-brand>span{color:#020617;background:linear-gradient(135deg,#67e8f9,#fef08a);border-radius:10px;padding:.34rem .5rem;font-weight:1000}
+.hxm-exam-portal-brand strong,.hxm-exam-portal-brand small{display:block}
+.hxm-exam-portal-brand strong{color:#f8fafc;font-size:1.08rem}
+.hxm-exam-portal-brand small{color:#94a3b8;margin-top:.12rem}
+.hxm-exam-portal-tabs{gap:.32rem;display:flex}
+.hxm-exam-portal-tabs b{color:#c4b5fd;background:#111827;border:1px solid #334155;border-radius:999px;padding:.28rem .55rem;font-size:.72rem}
+.hxm-exam-portal-gate{grid-area:auto;background:#02061775;border-radius:10px;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem;padding:.35rem;display:grid}
+.hxm-exam-portal-gate article{margin:0}
+.hxm-exam-portal-shell{direction:ltr;grid-template-columns:minmax(15rem,.78fr) minmax(0,1.55fr) minmax(17rem,.92fr);grid-template-areas:"files center questions";gap:.75rem;min-height:0;display:grid}
+.hxm-exam-portal-files{grid-area:files}
+.hxm-exam-portal-center{grid-area:center;grid-template-rows:minmax(17rem,.48fr) minmax(18rem,.52fr);gap:.75rem;min-width:0;display:grid}
+.hxm-exam-task-ide-portal .hxm-exam-question-pages{visibility:visible;display:grid;max-height:none;overflow:hidden}
+.hxm-exam-portal-questions{grid-area:questions}
+.hxm-exam-portal-files,.hxm-exam-portal-questions,.hxm-exam-portal-panel{direction:rtl;background:#0f172ad9;border:1px solid #334155;border-radius:12px;min-width:0;overflow:hidden}
+.hxm-exam-portal-file-list{gap:.42rem;max-height:40rem;padding:.55rem;display:grid;overflow:auto}
+.hxm-exam-portal-file{color:#dbeafe;text-align:start;background:#0206178c;border:1px solid #334155;border-radius:8px;gap:.18rem;padding:.5rem;display:grid}
+.hxm-exam-portal-file.target,.hxm-exam-portal-file.active{border-color:#facc15;color:#fef3c7}
+.hxm-exam-portal-file code{color:#fde68a;overflow-wrap:anywhere}
+.hxm-exam-portal-file span,.hxm-exam-portal-file small{color:#94a3b8;line-height:1.35}
+.hxm-exam-portal-explain,.hxm-exam-portal-code{max-height:30rem;padding:.65rem;overflow:auto}
+.hxm-exam-portal-explain section,.hxm-exam-portal-explain header,.hxm-exam-portal-explain article,.hxm-exam-portal-code section,.hxm-exam-portal-code article,.hxm-exam-portal-code details{background:#02061770;border:1px solid #334155;border-radius:10px;margin:0 0 .6rem;padding:.65rem}
+.hxm-exam-portal-code,.hxm-exam-portal-code pre,.hxm-exam-portal-code code{direction:ltr;text-align:left}
+.hxm-exam-portal-task-children{border-top:1px solid #33415573;gap:.28rem;margin:.35rem 2.4rem 0 0;padding:.35rem 0 0;display:grid}
+.hxm-exam-portal-task{color:#cbd5e1;text-align:start;background:#0206178a;border:1px solid #334155;border-radius:7px;padding:.38rem .46rem;display:grid}
+.hxm-exam-portal-task b,.hxm-exam-portal-task span,.hxm-exam-portal-task code{display:block}
+.hxm-exam-portal-task b{color:#e0f2fe;font-size:.76rem}
+.hxm-exam-portal-task span{color:#94a3b8;font-size:.72rem}
+.hxm-exam-portal-task code{color:#fde68a;font-size:.7rem}
+.hxm-exam-portal-task.active,.hxm-exam-question-title.active{border-color:#67e8f9;box-shadow:0 0 0 2px #67e8f91f}
+.hxm-exam-portal-task.locked{opacity:.72;border-color:#f871714a}
+.hxm-exam-portal-terminal{grid-area:auto}
+.hxm-exam-portal-page-library[hidden]{display:none!important}
 .hxm-exam-topic{border:1px solid #94a3b824;border-radius:6px;background:#02061752;overflow:hidden}
 .hxm-exam-topic>summary{cursor:pointer;grid-template-columns:2rem minmax(0,1fr) minmax(6.25rem,.48fr);gap:.45rem;padding:.5rem;display:grid;list-style:none}
 .hxm-exam-topic>summary::-webkit-details-marker{display:none}
@@ -5248,8 +5283,12 @@ to{opacity:1}
 .hxm-exam100-backlog-row{grid-template-columns:minmax(0,1fr) auto;display:grid}
 .hxm-exam100-backlog-row b{color:#fef3c7}
 .hxm-exam100-backlog-row.status-blocked-by-policy b{color:#fecaca}
-@media (width<=780px){.hxm-exam100-hero,.hxm-exam100-score,.hxm-exam100-final-head,.hxm-exam100-final-grid,.hxm-exam100-final-columns,.hxm-exam100-actions,.hxm-practical-guides-head,.hxm-practical-guide-grid,.hxm-practical-guide-card,.hxm-exam100-primary,.hxm-exam100-placement-grid,.hxm-exam100-journey-track,.hxm-exam100-schedule,.hxm-exam100-lag-banner,.hxm-exam100-backlog-row,.hxm-exam100-full-head,.hxm-exam100-full-metrics,.hxm-exam100-full-cards,.hxm-exam-task-tree-head,.hxm-exam-task-branches,.hxm-exam-task-project-tree li,.hxm-exam-task-subtask-grid,.hxm-exam-task-levels,.hxm-exam-section-levels,.hxm-solution-guide-head,.hxm-solution-guide-grid,.hxm-exam-task-ide,.hxm-exam-ide-terminal>div:last-child,.hxm-exam-ide-file-tree li,.hxm-task-board-audit,.hxm-time-storage-banner,.hxm-time-next-card{grid-template-columns:minmax(0,1fr)}
+@media (width<=780px){.hxm-exam100-hero,.hxm-exam100-score,.hxm-exam100-final-head,.hxm-exam100-final-grid,.hxm-exam100-final-columns,.hxm-exam100-actions,.hxm-practical-guides-head,.hxm-practical-guide-grid,.hxm-practical-guide-card,.hxm-exam100-primary,.hxm-exam100-placement-grid,.hxm-exam100-journey-track,.hxm-exam100-schedule,.hxm-exam100-lag-banner,.hxm-exam100-backlog-row,.hxm-exam100-full-head,.hxm-exam100-full-metrics,.hxm-exam100-full-cards,.hxm-exam-task-tree-head,.hxm-exam-task-branches,.hxm-exam-task-project-tree li,.hxm-exam-task-subtask-grid,.hxm-exam-task-levels,.hxm-exam-section-levels,.hxm-solution-guide-head,.hxm-solution-guide-grid,.hxm-exam-task-ide,.hxm-exam-portal-commandbar,.hxm-exam-portal-shell,.hxm-exam-portal-center,.hxm-exam-portal-gate,.hxm-exam-ide-terminal>div:last-child,.hxm-exam-ide-file-tree li,.hxm-task-board-audit,.hxm-time-storage-banner,.hxm-time-next-card{grid-template-columns:minmax(0,1fr)}
 .hxm-exam-task-ide{grid-template-areas:"explorer""editor""inspector""terminal"}
+.hxm-exam-task-ide-portal{grid-template-rows:auto auto auto}
+.hxm-exam-portal-shell{grid-template-areas:"questions""center""files"}
+.hxm-exam-portal-center{grid-template-rows:auto auto}
+.hxm-exam-portal-task-children{margin:.35rem 0 0}
 .hxm-exam-topic>summary{grid-template-columns:2rem minmax(0,1fr)}
 .hxm-exam-topic-progress{grid-column:1/-1}
 .hxm-exam-ide-code{max-width:100%}
