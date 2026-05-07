@@ -8405,6 +8405,19 @@ const target = Array.from(document.querySelectorAll(".top-tab")).find((tab) => (
 (target || document.getElementById("open-home"))?.click();
 return;
 }
+const welcomeFocus = e.target?.closest("[data-welcome-focus-target]");
+if (welcomeFocus) {
+  e.preventDefault();
+  const target = welcomeFocus.dataset.welcomeFocusTarget || "";
+  clickTopTab("mock-exam");
+  requestAnimationFrame(() => {
+    if (target === "task-board") document.getElementById("hxm-time-plan")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (target === "exam-ide") document.getElementById("hxm-exam-task-ide-portal")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (target === "videos") document.querySelector(".hxm-time-task.media.video")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (target === "exam-day") document.getElementById("hxm-exam-day-mode")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  return;
+}
 const advancedToggle = e.target?.closest("[data-exam-focus-advanced-toggle]");
 if (advancedToggle) {
 e.preventDefault();
@@ -9377,6 +9390,76 @@ if (step.action === "lesson" && step.lessonId) {
 openLesson(step.lessonId);
 }
 }
+const SIMPLE_ROUTE_PLAN_PROGRESS_KEY = "lumenportal:homeworkExamPlanProgress:v1";
+function simpleRouteSafeJson(raw) {
+  try { return raw ? JSON.parse(raw) || {} : {}; } catch (_) { return {}; }
+}
+function simpleRouteMinutesText(minutes) {
+  const total = Math.max(0, Math.round(Number(minutes || 0)));
+  const hours = Math.floor(total / 60);
+  const rest = total % 60;
+  if (!hours) return rest + " דק׳";
+  if (!rest) return hours + " שעות";
+  return hours + " שעות " + rest + " דק׳";
+}
+function simpleRouteProgressDone(record) {
+  return record === true || record?.done === true || record?.status === "done";
+}
+function simpleRoutePlanStatus() {
+  const mode = window.HOMEWORK_EXAM_MODE || {};
+  const plan = mode.masterPlan?.remainingTimePlan || {};
+  const progress = simpleRouteSafeJson(localStorage.getItem(SIMPLE_ROUTE_PLAN_PROGRESS_KEY));
+  const diagnosticProgress = simpleRouteSafeJson(localStorage.getItem(SIMPLE_ROUTE_DIAGNOSTIC_KEY));
+  let completed = 0;
+  const dayCounters = {};
+  (plan.weekTasks || []).filter((task) => !String(task.id || "").includes("watch-videos")).forEach((task) => {
+    const dayNumber = String(task.day || "").match(/\d+/);
+    const dayKey = dayNumber ? dayNumber[0] : "0";
+    dayCounters[dayKey] = (dayCounters[dayKey] || 0) + 1;
+    const progressId = "day-" + dayKey + "-task-" + dayCounters[dayKey];
+    if (simpleRouteProgressDone(progress[progressId])) completed += Number(task.minutes || 0);
+  });
+  ((plan.mediaAssetPlan || {}).videos || []).forEach((task) => {
+    if (simpleRouteProgressDone(progress[task.id || ""])) completed += Number(task.minutes || 0);
+  });
+  ((plan.mediaAssetPlan || {}).presentationImages || []).forEach((task) => {
+    if (simpleRouteProgressDone(progress[task.id || ""])) completed += Number(task.minutes || 0);
+  });
+  const diagnosticDone = Object.values(diagnosticProgress).filter(Boolean).length;
+  const diagnosticTotal = (mode.basicDiagnosticTracks || []).reduce((sum, track) => sum + (track.checks || []).length, 0);
+  const diagnosticMinutes = (plan.diagnosticTasks || []).reduce((sum, task) => sum + Number(task.minutes || 0), 0);
+  if (diagnosticTotal) completed += Math.round(diagnosticMinutes * diagnosticDone / diagnosticTotal);
+  const required = Number(plan.requiredMinutes || 6485);
+  const percent = required ? Math.min(100, Math.round((completed / required) * 100)) : 0;
+  const remaining = Math.max(0, required - completed);
+  const firstOpenDay = (plan.weekTasks || []).filter((task) => !String(task.id || "").includes("watch-videos"))[0];
+  const manualReviewCount = (((mode.examTaskTree || {}).sectionExercises || []).filter((item) => item.status === "manual_review" || item.autoScorable === false)).length;
+  const blockers = [];
+  if (diagnosticDone < diagnosticTotal) blockers.push("אבחון פתיחה לא סגור");
+  if (manualReviewCount) blockers.push(manualReviewCount + " סעיפי manual_review דורשים מקור מלא");
+  if (remaining > 0) blockers.push(simpleRouteMinutesText(remaining) + " עבודה חובה");
+  return {
+    percent,
+    remaining,
+    required,
+    requiredLabel: plan.requiredLabel || simpleRouteMinutesText(required),
+    nextTask: diagnosticDone < diagnosticTotal ? "אבחון בסיס" : ((firstOpenDay && firstOpenDay.title) || "פתח לוח משימות"),
+    blockers: blockers.length ? blockers.join(" · ") : "אין חסם גלוי. עבור לסימולציה מלאה.",
+  };
+}
+function updateSimpleRoutePlanStatus() {
+  const status = simpleRoutePlanStatus();
+  const boardPercent = document.getElementById("simple-route-board-percent");
+  const hoursLeft = document.getElementById("simple-route-hours-left");
+  const totalHours = document.getElementById("simple-route-total-hours");
+  const nextTask = document.getElementById("simple-route-next-task");
+  const blockers = document.getElementById("simple-route-blockers");
+  if (boardPercent) boardPercent.textContent = status.percent + "%";
+  if (hoursLeft) hoursLeft.textContent = simpleRouteMinutesText(status.remaining);
+  if (totalHours) totalHours.textContent = status.requiredLabel;
+  if (nextTask) nextTask.textContent = "המשימה הבאה: " + status.nextTask;
+  if (blockers) blockers.textContent = "חוסם מ-100 עכשיו: " + status.blockers;
+}
 function renderSimpleRouteNav() {
 const shell = document.getElementById("welcome-screen");
 const progressText = document.getElementById("simple-route-progress-text");
@@ -9388,6 +9471,7 @@ const backBtn = document.getElementById("simple-route-back-btn");
 const nextBtn = document.getElementById("simple-route-next-btn");
 const map = document.getElementById("simple-route-mini-map");
 if (!progressText || !stepText || !progressFill || !title || !desc || !backBtn || !nextBtn || !map) return;
+updateSimpleRoutePlanStatus();
 if (shell) shell.classList.add("simple-closed-mode");
 const stepIndex = loadSimpleRouteStep();
 const step = SIMPLE_ROUTE_STEPS[stepIndex];

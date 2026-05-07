@@ -1,8 +1,8 @@
 # MODEL LEAF TASK SCOREBOARD
 
-- total: `275`
-- mastered_100: `51`
-- good: `224`
+- total: `148`
+- mastered_100: `22`
+- good: `126`
 - weak: `0`
 - blocked_manual_review: `0`
 
@@ -82,142 +82,23 @@
 | 31:client_validation_rules:1 | 31 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 87 | 100 | 95 | GOOD | No fix needed. |
 | 31:node_file_io:1 | 31 | node_file_io | ליצור קובץ אם לא קיים. | 95 | 100 | 98 | GOOD | No fix needed. |
 | 31:server_html_route:1 | 31 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 91 | 100 | 96 | GOOD | No fix needed. |
-| 32:alerts_error_handling:1 | 32 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 32:api_get_filtered:1 | 32 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 32:api_post_create:1 | 32 | api_post_create | לקרוא req.body עם middleware מתאים. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 32:client_form_inputs:1 | 32 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 91 | 100 | 96 | GOOD | No fix needed. |
-| 32:client_list_render:1 | 32 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 32:client_navigation:1 | 32 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 32:client_validation_rules:1 | 32 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 32:db_uniqueness:1 | 32 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 32:js_algorithms:1 | 32 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 32:question_scope_inherited:1 | 32 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 32:server_html_route:1 | 32 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 33:js_algorithms:1 | 33 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 34:alerts_error_handling:1 | 34 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 34:api_get_filtered:1 | 34 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 95 | 100 | 98 | GOOD | No fix needed. |
-| 34:api_post_create:1 | 34 | api_post_create | לקרוא req.body עם middleware מתאים. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 34:client_form_inputs:1 | 34 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
-| 34:client_list_render:1 | 34 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 34:client_navigation:1 | 34 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 34:client_validation_rules:1 | 34 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 34:db_uniqueness:1 | 34 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 34:js_algorithms:1 | 34 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 34:question_scope_inherited:1 | 34 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 83 | 100 | 93 | GOOD | No fix needed. |
-| 34:server_html_route:1 | 34 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 35:db_uniqueness:1 | 35 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 36:alerts_error_handling:1 | 36 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 36:api_get_filtered:1 | 36 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 95 | 100 | 98 | GOOD | No fix needed. |
-| 36:api_post_create:1 | 36 | api_post_create | לקרוא req.body עם middleware מתאים. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 36:client_form_inputs:1 | 36 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
-| 36:client_list_render:1 | 36 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 36:client_navigation:1 | 36 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 36:client_validation_rules:1 | 36 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 36:db_uniqueness:1 | 36 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 36:js_algorithms:1 | 36 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 36:question_scope_inherited:1 | 36 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 36:server_html_route:1 | 36 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 37:alerts_error_handling:1 | 37 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 37:api_get_filtered:1 | 37 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 37:api_post_create:1 | 37 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 37:client_form_inputs:1 | 37 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
-| 37:client_list_render:1 | 37 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 37:client_navigation:1 | 37 | client_navigation | להגדיר מפת מסכים/routes. | 92 | 100 | 97 | GOOD | No fix needed. |
 | 37:client_validation_rules:1 | 37 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 98 | 100 | 99 | GOOD | No fix needed. |
-| 37:db_uniqueness:1 | 37 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 37:js_algorithms:1 | 37 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 37:question_scope_inherited:1 | 37 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 37:server_html_route:1 | 37 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 77 | 100 | 91 | GOOD | No fix needed. |
-| 38:alerts_error_handling:1 | 38 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 38:api_get_filtered:1 | 38 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 95 | 100 | 98 | GOOD | No fix needed. |
-| 38:api_post_create:1 | 38 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 38:client_form_inputs:1 | 38 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
-| 38:client_list_render:1 | 38 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 38:client_navigation:1 | 38 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 38:client_validation_rules:1 | 38 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 38:db_uniqueness:1 | 38 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 38:js_algorithms:1 | 38 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 38:question_scope_inherited:1 | 38 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 98 | 100 | 99 | GOOD | No fix needed. |
-| 38:server_html_route:1 | 38 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 77 | 100 | 91 | GOOD | No fix needed. |
-| 39:alerts_error_handling:1 | 39 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 39:api_get_filtered:1 | 39 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 95 | 100 | 98 | GOOD | No fix needed. |
-| 39:api_post_create:1 | 39 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 39:client_form_inputs:1 | 39 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
-| 39:client_list_render:1 | 39 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 39:client_navigation:1 | 39 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 39:client_validation_rules:1 | 39 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 90 | 100 | 96 | GOOD | No fix needed. |
-| 39:db_uniqueness:1 | 39 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 39:js_algorithms:1 | 39 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 39:question_scope_inherited:1 | 39 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 83 | 100 | 93 | GOOD | No fix needed. |
-| 39:server_html_route:1 | 39 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 91 | 100 | 96 | GOOD | No fix needed. |
 | 40:db_uniqueness:1 | 40 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 41:alerts_error_handling:1 | 41 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 41:api_get_filtered:1 | 41 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 95 | 100 | 98 | GOOD | No fix needed. |
-| 41:api_post_create:1 | 41 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 41:client_form_inputs:1 | 41 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
-| 41:client_list_render:1 | 41 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 41:client_navigation:1 | 41 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 41:client_validation_rules:1 | 41 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 41:db_uniqueness:1 | 41 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 41:js_algorithms:1 | 41 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 41:question_scope_inherited:1 | 41 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 41:server_html_route:1 | 41 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 91 | 100 | 96 | GOOD | No fix needed. |
-| 42:alerts_error_handling:1 | 42 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 42:api_get_filtered:1 | 42 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 42:api_post_create:1 | 42 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 42:client_form_inputs:1 | 42 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
-| 42:client_list_render:1 | 42 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 42:client_navigation:1 | 42 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 42:client_validation_rules:1 | 42 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 42:db_uniqueness:1 | 42 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 42:js_algorithms:1 | 42 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 42:question_scope_inherited:1 | 42 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 98 | 100 | 99 | GOOD | No fix needed. |
-| 42:server_html_route:1 | 42 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 43:js_algorithms:1 | 43 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 44:alerts_error_handling:1 | 44 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 44:api_get_filtered:1 | 44 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 95 | 100 | 98 | GOOD | No fix needed. |
-| 44:api_post_create:1 | 44 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 44:client_form_inputs:1 | 44 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 91 | 100 | 96 | GOOD | No fix needed. |
-| 44:client_list_render:1 | 44 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 44:client_navigation:1 | 44 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 44:client_validation_rules:1 | 44 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 98 | 100 | 99 | GOOD | No fix needed. |
-| 44:db_uniqueness:1 | 44 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 44:js_algorithms:1 | 44 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 44:question_scope_inherited:1 | 44 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 94 | 100 | 98 | GOOD | No fix needed. |
-| 44:server_html_route:1 | 44 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 91 | 100 | 96 | GOOD | No fix needed. |
-| 45:alerts_error_handling:1 | 45 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 45:api_get_filtered:1 | 45 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 95 | 100 | 98 | GOOD | No fix needed. |
-| 45:api_post_create:1 | 45 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 45:client_form_inputs:1 | 45 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 91 | 100 | 96 | GOOD | No fix needed. |
-| 45:client_list_render:1 | 45 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 45:client_navigation:1 | 45 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 45:client_validation_rules:1 | 45 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 45:db_uniqueness:1 | 45 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 45:js_algorithms:1 | 45 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 45:question_scope_inherited:1 | 45 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 90 | 100 | 96 | GOOD | No fix needed. |
-| 45:server_html_route:1 | 45 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 77 | 100 | 91 | GOOD | No fix needed. |
-| 46:alerts_error_handling:1 | 46 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 46:api_get_filtered:1 | 46 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 95 | 100 | 98 | GOOD | No fix needed. |
-| 46:api_post_create:1 | 46 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 46:client_form_inputs:1 | 46 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
-| 46:client_list_render:1 | 46 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 46:client_navigation:1 | 46 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 46:client_validation_rules:1 | 46 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 98 | 100 | 99 | GOOD | No fix needed. |
-| 46:db_uniqueness:1 | 46 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 46:js_algorithms:1 | 46 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 46:question_scope_inherited:1 | 46 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 90 | 100 | 96 | GOOD | No fix needed. |
-| 46:server_html_route:1 | 46 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 91 | 100 | 96 | GOOD | No fix needed. |
-| 47:alerts_error_handling:1 | 47 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 47:api_get_filtered:1 | 47 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 95 | 100 | 98 | GOOD | No fix needed. |
-| 47:api_post_create:1 | 47 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 47:client_form_inputs:1 | 47 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 47:client_list_render:1 | 47 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 47:client_navigation:1 | 47 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 47:client_validation_rules:1 | 47 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 98 | 100 | 99 | GOOD | No fix needed. |
-| 47:db_uniqueness:1 | 47 | db_uniqueness | להגדיר שדה מזהה חד-חד ערכי. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 47:js_algorithms:1 | 47 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 47:question_scope_inherited:1 | 47 | question_scope_inherited | לזהות שזה סעיף כותרת ולא דרישה טכנית ישירה. | 90 | 100 | 96 | GOOD | No fix needed. |
-| 47:server_html_route:1 | 47 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 91 | 100 | 96 | GOOD | No fix needed. |
 | 48:alerts_error_handling:1 | 48 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 48:api_get_filtered:1 | 48 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 48:api_post_create:1 | 48 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
@@ -226,7 +107,6 @@
 | 48:client_navigation:1 | 48 | client_navigation | להגדיר מפת מסכים/routes. | 92 | 100 | 97 | GOOD | No fix needed. |
 | 48:client_validation_rules:1 | 48 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 48:server_html_route:1 | 48 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 83 | 100 | 93 | GOOD | No fix needed. |
-| 49:api_get_filtered:1 | 49 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 95 | 100 | 98 | GOOD | No fix needed. |
 | 49:js_algorithms:1 | 49 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 50:alerts_error_handling:1 | 50 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 50:client_form_inputs:1 | 50 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
@@ -243,7 +123,6 @@
 | 55:alerts_error_handling:1 | 55 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 87 | 100 | 95 | GOOD | No fix needed. |
 | 55:client_form_inputs:1 | 55 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
 | 55:client_navigation:1 | 55 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 55:server_html_route:1 | 55 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 91 | 100 | 96 | GOOD | No fix needed. |
 | 56:client_form_inputs:1 | 56 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
 | 56:client_validation_rules:1 | 56 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 57:client_form_inputs:1 | 57 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
@@ -251,8 +130,6 @@
 | 58:client_list_render:1 | 58 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 58:client_navigation:1 | 58 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 58:client_validation_rules:1 | 58 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 98 | 100 | 99 | GOOD | No fix needed. |
-| 59:api_get_all:1 | 59 | api_get_all | להגדיר route GET ברור. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
-| 59:api_post_create:1 | 59 | api_post_create | לקרוא req.body עם middleware מתאים. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 59:server_html_route:1 | 59 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 91 | 100 | 96 | GOOD | No fix needed. |
 | 60:api_post_create:1 | 60 | api_post_create | לקרוא req.body עם middleware מתאים. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 61:api_get_all:1 | 61 | api_get_all | להגדיר route GET ברור. | 85 | 100 | 94 | GOOD | No fix needed. |
@@ -265,7 +142,6 @@
 | 64:client_form_inputs:1 | 64 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
 | 65:api_post_create:1 | 65 | api_post_create | לקרוא req.body עם middleware מתאים. | 87 | 100 | 95 | GOOD | No fix needed. |
 | 65:client_form_inputs:1 | 65 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
-| 66:api_get_filtered:1 | 66 | api_get_filtered | לקבל פרמטר סינון מ-query/body בהתאם דרישה. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 66:client_form_inputs:1 | 66 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 98 | 100 | 99 | GOOD | No fix needed. |
 | 66:client_list_render:1 | 66 | client_list_render | למפות נתונים ל-UI עקבי. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 67:client_validation_rules:1 | 67 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 98 | 100 | 99 | GOOD | No fix needed. |
@@ -274,12 +150,9 @@
 | 70:client_form_inputs:1 | 70 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
 | 70:client_validation_rules:1 | 70 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 71:alerts_error_handling:1 | 71 | alerts_error_handling | לעטוף פעולות async ב-try/catch. | 87 | 100 | 95 | GOOD | No fix needed. |
-| 71:api_put_update:1 | 71 | api_put_update | לקבל מזהה ושדות לעדכון. | 85 | 100 | 94 | GOOD | No fix needed. |
 | 71:client_form_inputs:1 | 71 | client_form_inputs | לתכנן מבנה טופס לפי דרישה (fields + types). | 85 | 100 | 94 | GOOD | No fix needed. |
 | 71:client_navigation:1 | 71 | client_navigation | להגדיר מפת מסכים/routes. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 71:client_validation_rules:1 | 71 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 90 | 100 | 96 | GOOD | No fix needed. |
-| 71:server_html_route:1 | 71 | server_html_route | להגדיר route מדויק לכל עמוד HTML. | 100 | 100 | 100 | MASTERED_100 | No fix needed. |
 | 72:js_algorithms:1 | 72 | js_algorithms | להבין קלט/פלט מדויק מהשאלה. | 85 | 100 | 94 | GOOD | No fix needed. |
-| 73:client_validation_rules:1 | 73 | client_validation_rules | להגדיר חוקים לכל שדה: required/length/range/regex. | 87 | 100 | 95 | GOOD | No fix needed. |
 | 73:node_file_io:1 | 73 | node_file_io | ליצור קובץ אם לא קיים. | 95 | 100 | 98 | GOOD | No fix needed. |
 | 73:oop_design:1 | 73 | oop_design | להגדיר class עם שדות חובה. | 90 | 100 | 96 | GOOD | No fix needed. |

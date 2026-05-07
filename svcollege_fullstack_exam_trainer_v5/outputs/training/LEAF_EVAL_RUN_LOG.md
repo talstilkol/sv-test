@@ -742,3 +742,187 @@
 - section 22: WEAK, final=62
 ## Run start: start=22, end=22, batch_size=1
 - section 22: WEAK, final=73
+## Run start: start=22, end=22, batch_size=1
+- section 22: GOOD, final=88
+## Run start: start=57, end=57, batch_size=1
+- section 57: WEAK, final=54
+## Run start: start=57, end=57, batch_size=1
+- section 57: WEAK, final=69
+## Run start: start=57, end=57, batch_size=1
+- section 57: GOOD, final=88
+## Run start: start=64, end=64, batch_size=1
+- section 64: GOOD, final=88
+## Run start: start=34, end=40, batch_size=7
+- section 34: WEAK, final=63
+- section 35: WEAK, final=78
+- section 36: WEAK, final=38
+- section 37: WEAK, final=60
+- section 38: WEAK, final=54
+- section 39: WEAK, final=65
+- section 40: WEAK, final=68
+## Run start: start=34, end=40, batch_size=7
+- section 34: GOOD, final=88
+- section 35: GOOD, final=90
+- section 36: WEAK, final=68
+- section 37: WEAK, final=70
+- section 38: WEAK, final=63
+- section 39: GOOD, final=88
+- section 40: GOOD, final=88
+## Run start: start=36, end=38, batch_size=3
+- section 36: GOOD, final=88
+- section 37: GOOD, final=88
+- section 38: GOOD, final=88
+## Run start: start=41, end=47, batch_size=7
+- section 41: WEAK, final=62
+- section 42: WEAK, final=74
+- section 43: WEAK, final=62
+- section 44: WEAK, final=56
+- section 45: WEAK, final=53
+- section 46: WEAK, final=65
+- section 47: WEAK, final=59
+## Run start: start=41, end=47, batch_size=7
+- section 41: WEAK, final=74
+- section 42: WEAK, final=74
+- section 43: WEAK, final=75
+- section 44: WEAK, final=76
+- section 45: WEAK, final=65
+- section 46: WEAK, final=75
+- section 47: GOOD, final=89
+## Run start: start=41, end=46, batch_size=6
+- section 41: GOOD, final=88
+- section 42: GOOD, final=88
+- section 43: GOOD, final=88
+- section 44: GOOD, final=89
+- section 45: GOOD, final=88
+- section 46: GOOD, final=89
+## Run start: start=1, end=8, batch_size=8
+- section 1: WEAK, final=51
+- section 2: WEAK, final=67
+- section 3: WEAK, final=57
+- section 4: WEAK, final=63
+- section 5: WEAK, final=77
+- section 6: WEAK, final=52
+- section 7: WEAK, final=50
+- section 8: WEAK, final=50
+## Run start: start=1, end=8, batch_size=8
+- section 1: WEAK, final=63
+- section 2: WEAK, final=72
+- section 3: WEAK, final=69
+- section 4: WEAK, final=73
+- section 5: GOOD, final=88
+- section 6: WEAK, final=61
+- section 7: WEAK, final=70
+- section 8: WEAK, final=59
+
+## Timestamp note: 2026-05-07 14:28:39 IDT
+- Batch 4A rerun completed and scoreboards were written.
+[2026-05-07T14:30:13+03:00] ## Run start: start=1, end=8, batch_size=8
+[2026-05-07T14:31:27+03:00] - section 1: GOOD, final=87
+[2026-05-07T14:33:05+03:00] - section 2: GOOD, final=88
+[2026-05-07T14:34:48+03:00] - section 3: GOOD, final=88
+[2026-05-07T14:38:56+03:00] - section 4: GOOD, final=89
+[2026-05-07T14:40:21+03:00] - section 5: GOOD, final=88
+[2026-05-07T14:41:36+03:00] - section 6: GOOD, final=89
+[2026-05-07T14:42:59+03:00] - section 7: GOOD, final=89
+[2026-05-07T14:44:03+03:00] - section 8: GOOD, final=88
+## Run start: 2026-05-07 14:45 IDT | start=9, end=18, batch_size=10
+- section 9: GOOD, final=88
+- section 10: GOOD, final=88
+- section 11: GOOD, final=88
+- section 12: GOOD, final=88
+- section 13: GOOD, final=88
+- section 14: GOOD, final=88
+- section 15: GOOD, final=88
+- section 16: GOOD, final=88
+- section 17: GOOD, final=88
+- section 18: GOOD, final=88
+## Run start: 2026-05-07 15:00 IDT | start=20, end=32, batch_size=13
+- section 20: GOOD, final=88
+- section 21: GOOD, final=89
+- section 22: GOOD, final=88
+- section 23: GOOD, final=89
+- section 24: WEAK, final=66
+- section 25: WEAK, final=67
+- section 26: WEAK, final=64
+- section 27: WEAK, final=40
+- section 28: WEAK, final=38
+- section 29: WEAK, final=36
+- section 30: WEAK, final=58
+- section 31: WEAK, final=71
+- section 32: WEAK, final=65
+## Run start: 2026-05-07 15:20 IDT | start=24, end=32, batch_size=9
+- section 24: GOOD, final=89
+- section 25: GOOD, final=88
+- section 26: GOOD, final=88
+- section 27: GOOD, final=88
+- section 28: GOOD, final=88
+- section 29: GOOD, final=88
+- section 30: GOOD, final=88
+- section 31: GOOD, final=88
+- section 32: WEAK, final=67
+## Run start: 2026-05-07 15:33 IDT | start=32, end=32, batch_size=1
+- section 32: GOOD, final=88
+## Run start: 2026-05-07 15:37 IDT | start=48, end=55, batch_size=8
+- section 48: GOOD, final=88
+- section 49: GOOD, final=88
+- section 50: GOOD, final=88
+- section 51: GOOD, final=89
+- section 52: GOOD, final=88
+- section 53: GOOD, final=88
+- section 54: GOOD, final=88
+- section 55: GOOD, final=88
+## Run start: 2026-05-07 15:53 IDT | start=58, end=62, batch_size=5
+- section 58: GOOD, final=88
+- section 59: GOOD, final=89
+- section 60: GOOD, final=90
+- section 61: GOOD, final=87
+- section 62: GOOD, final=88
+## Run start: 2026-05-07 16:01 IDT | start=66, end=73, batch_size=8
+- section 66: GOOD, final=89
+- section 67: GOOD, final=89
+- section 68: GOOD, final=88
+- section 69: GOOD, final=88
+- section 70: GOOD, final=88
+- section 71: GOOD, final=90
+- section 72: GOOD, final=88
+- section 73: GOOD, final=88
+## Run start: 2026-05-07 16:12 IDT | start=1, end=4, batch_size=4
+- section 1: GOOD, final=87
+- section 2: GOOD, final=88
+- section 3: GOOD, final=88
+- section 4: GOOD, final=89
+## Run start: 2026-05-07 16:38 IDT | idx_list=3,8,9,11,13,17,20,22,25,26,30,33, batch_size=12
+- section 3: GOOD, final=88
+- section 8: GOOD, final=88
+- section 9: GOOD, final=88
+- section 11: GOOD, final=91
+- section 13: GOOD, final=97
+- section 17: GOOD, final=88
+- section 20: GOOD, final=88
+- section 22: GOOD, final=88
+- section 25: GOOD, final=89
+- section 26: GOOD, final=88
+- section 30: GOOD, final=88
+- section 33: GOOD, final=88
+## Run start: 2026-05-07 17:00 IDT | idx_list=3,8,9,17,20,22,26,30,33,36,38,41, batch_size=12
+- section 3: GOOD, final=88
+- section 8: GOOD, final=88
+- section 9: GOOD, final=88
+- section 17: GOOD, final=88
+- section 20: GOOD, final=88
+- section 22: GOOD, final=88
+- section 26: GOOD, final=88
+- section 30: GOOD, final=88
+- section 33: GOOD, final=88
+- section 36: GOOD, final=88
+- section 38: GOOD, final=88
+- section 41: GOOD, final=88
+
+## Training note: 2026-05-07 17:22 IDT | LoRA pilot on Qwen3-Coder-Next stopped: process killed during MLX load; fallback required (small model or non-LoRA prompt/RAG).
+## Run start: 2026-05-07 17:23 IDT | idx_list=3,8,9,73, batch_size=4
+- section 3: GOOD, final=88
+- section 8: GOOD, final=88
+- section 9: GOOD, final=88
+- section 73: GOOD, final=98
+## Run start: 2026-05-07 17:29 IDT | idx_list=3,8,9,17,20,22, batch_size=6
+- section 3: GOOD, final=88

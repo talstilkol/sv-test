@@ -16,7 +16,7 @@ describe("service worker cache freshness", () => {
     expect(html).toContain("style.css?v=homework-exam-mode-v19");
     expect(html).toContain("app.js?v=homework-exam-mode-v6");
     expect(html).toContain('data-module-path="/src/main.js?v=core-bootstrap-v2"');
-    expect(html).toContain("src/boot/file-protocol-guard.js?v=file-protocol-guard-v1");
+    expect(html).toContain("src/boot/file-protocol-guard.js?v=file-protocol-guard-v2");
     expect(html).toContain("src/boot/module-bootstrap-loader.js?v=module-bootstrap-loader-v1");
     expect(html).toContain("src/views/exam100-path-core.js?v=exam100-path-core-v1");
     expect(html).toContain("content-loader.js?v=content-validation-v1");
@@ -24,7 +24,7 @@ describe("service worker cache freshness", () => {
     expect(sw).toContain("/app.js?v=homework-exam-mode-v6");
     expect(sw).toContain("/content-loader.js?v=content-validation-v1");
     expect(sw).toContain("/src/main.js?v=core-bootstrap-v2");
-    expect(sw).toContain("/src/boot/file-protocol-guard.js?v=file-protocol-guard-v1");
+    expect(sw).toContain("/src/boot/file-protocol-guard.js?v=file-protocol-guard-v2");
     expect(sw).toContain("/src/boot/module-bootstrap-loader.js?v=module-bootstrap-loader-v1");
     expect(sw).toContain("/src/views/exam100-path-core.js?v=exam100-path-core-v1");
     expect(sw).toContain("/src/core/cluster-engine.js");

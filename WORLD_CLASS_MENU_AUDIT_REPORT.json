@@ -50,13 +50,13 @@
       "detail": "The student sees percent complete, a linear map and rewards."
     },
     {
-      "id": "day-board-lag-engine",
-      "label": "Day board, overdue status and lag CTA are present",
+      "id": "primary-task-board-progress",
+      "label": "Primary task board, progress and next task are present",
       "weight": 10,
       "passed": true,
       "status": "pass",
       "severity": "P0",
-      "detail": "A delayed student gets a red lag message and one next-task CTA."
+      "detail": "The student sees one official task board with percent, remaining time and a next-task card."
     },
     {
       "id": "local-storage-not-authoritative",
@@ -101,7 +101,7 @@
       "passed": true,
       "status": "pass",
       "severity": "P1",
-      "detail": "The map, day board and arrows must not overflow on mobile."
+      "detail": "The map, primary task board and arrows must not overflow on mobile."
     },
     {
       "id": "release-gated-menu",

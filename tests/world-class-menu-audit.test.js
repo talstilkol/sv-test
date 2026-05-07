@@ -13,7 +13,7 @@ describe("world-class menu audit", () => {
       "closed-mode-only-exam100",
       "two-arrow-navigation",
       "progress-map-visible",
-      "day-board-lag-engine",
+      "primary-task-board-progress",
       "advanced-library-hidden",
       "release-gated-menu",
     ]));

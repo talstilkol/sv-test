@@ -1,15 +1,23 @@
 {
-  "generatedAt": "2026-05-07T09:31:02.487Z",
+  "generatedAt": "2026-05-07T13:24:23.405Z",
   "sourceFiles": [
     "index.html",
     "app.js"
   ],
-  "declaredIds": 628,
-  "referencedIds": 454,
+  "declaredIds": 633,
+  "referencedIds": 462,
   "missingRequiredCount": 0,
-  "missingOptionalCount": 0,
+  "missingOptionalCount": 3,
   "missingRequired": [],
-  "missingOptional": [],
-  "optionalAllowlist": [],
+  "missingOptional": [
+    "hxm-exam-day-mode",
+    "hxm-exam-task-ide-portal",
+    "hxm-time-plan"
+  ],
+  "optionalAllowlist": [
+    "hxm-exam-day-mode",
+    "hxm-exam-task-ide-portal",
+    "hxm-time-plan"
+  ],
   "status": "pass"
 }

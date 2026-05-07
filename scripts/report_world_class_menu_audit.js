@@ -101,14 +101,15 @@ function buildReport() {
   );
   addCheck(
     checks,
-    "day-board-lag-engine",
-    "Day board, overdue status and lag CTA are present",
+    "primary-task-board-progress",
+    "Primary task board, progress and next task are present",
     10,
-    view.includes("data-exam100-day-board") &&
-      view.includes("data-exam100-lag-banner") &&
-      view.includes("אתה בפיגור") &&
-      view.includes("data-exam100-next-task"),
-    "A delayed student gets a red lag message and one next-task CTA.",
+    view.includes("data-hxm-primary-task-board") &&
+      view.includes("data-hxm-time-required-percent") &&
+      view.includes("data-hxm-time-summary-left") &&
+      view.includes("data-hxm-time-next-card") &&
+      !view.includes("data-exam100-day-board"),
+    "The student sees one official task board with percent, remaining time and a next-task card.",
     "P0",
   );
   addCheck(
@@ -164,9 +165,10 @@ function buildReport() {
     8,
     cssHasMaxWidthMedia(css, 780) &&
       cssIncludes(css, ".hxm-exam100-journey-track") &&
-      cssIncludes(css, ".hxm-exam100-schedule") &&
-      cssIncludes(css, ".hxm-exam100-day-row"),
-    "The map, day board and arrows must not overflow on mobile.",
+      cssIncludes(css, ".hxm-time-plan>summary") &&
+      cssIncludes(css, ".hxm-time-task") &&
+      cssIncludes(css, ".hxm-time-next-card"),
+    "The map, primary task board and arrows must not overflow on mobile.",
     "P1",
   );
   addCheck(

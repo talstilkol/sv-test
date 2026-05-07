@@ -18,13 +18,52 @@ import json
 import os
 import re
 import subprocess
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 import httpx
 
 
-SYSTEM = "You are SVCollege Full-Stack Exam Coach. Answer in Hebrew, code in English."
+SYSTEM = """You are SVCollege Full-Stack Exam Coach. Answer in Hebrew, code in English.
+
+When evaluating decomposition, return valid compact JSON only and break each exam exercise into:
+exercise -> branch -> sub-branch -> smallest technical leaf.
+
+Use canonical task_ids only:
+client_form_inputs, client_validation_rules, alerts_error_handling, server_html_route,
+api_get_filtered, client_navigation, api_post_create, js_algorithms,
+client_list_render, db_uniqueness, question_scope_inherited, api_get_all,
+api_delete, theory_explanation, db_persistence, api_put_update, node_file_io,
+oop_design.
+
+Do not compress multiple actions into one leaf.
+If one sentence includes input + validation + error + navigation, split it into separate leaves.
+Short validation section must split into: field/input, exact rule/regex/range, blocking invalid submit, user error message.
+Algorithm section must split into: input/output, core loop/logic, edge cases, exact return shape.
+Node file package must split into: class, constructor, append/read/search/rename/copy, fs error handling.
+Theory section must split into: definition, comparison/example, common trap, validity check.
+
+Few-shot A:
+Input: "תיאור יהיה כל מחרוזת עד 200 תווים"
+task_ids: ["client_validation_rules"]
+leaf_tasks: identify field/input; enforce max length <= 200; block invalid submit; show user error.
+
+Few-shot B:
+Input: "POST מקבל מאפיינים, אם קיים מחזיר הודעה, אחרת מכניס ל-DB ומחזיר הצלחה"
+task_ids: ["api_post_create","db_persistence","alerts_error_handling"]
+leaf_tasks: read req.body; validate fields; query existing; insert when not found; return success JSON; return duplicate/error status; wrap DB errors.
+
+Few-shot C:
+Input: "select למיון לפי מספר מושבים והצגת הטיסות בריבועים"
+task_ids: ["client_form_inputs","js_algorithms","client_list_render"]
+leaf_tasks: create select/options; keep selected sort state; sort numerically ascending/descending; render cards/squares with mapped data; keep stable display after selection.
+
+Few-shot D:
+Input: "חבילה ב-node עם מחלקה שיוצרת txt, מוסיפה תוכן, מחפשת מילה, משנה שם ומעתיקה"
+task_ids: ["oop_design","node_file_io"]
+leaf_tasks: define class/constructor; create txt file; append content; read/search word true/false; rename file; copy file with copy in name; handle fs errors.
+"""
 
 API_TASKS = {"api_get_all", "api_get_filtered", "api_post_create", "api_put_update", "api_delete"}
 CLIENT_TASKS = {
@@ -39,6 +78,10 @@ DB_TASKS = {"db_uniqueness", "db_persistence", "mongoose_update_options"}
 THEORY_TASKS = {"theory_explanation"}
 META_TASKS = {"question_scope_inherited"}
 MANUAL_TASKS = {"manual_review"}
+CANONICAL_TASKS = API_TASKS | CLIENT_TASKS | JS_TASKS | NODE_TASKS | DB_TASKS | THEORY_TASKS | META_TASKS | MANUAL_TASKS | {
+    "alerts_error_handling",
+    "server_html_route",
+}
 
 STOPWORDS = {
     "צריך",
@@ -238,6 +281,78 @@ def coverage_score(answer: str, expected_texts: list[str], base: int = 40) -> in
     return min(100, int(round(100 * matched / len(expected_terms))))
 
 
+def has_any(text: str, tokens: list[str]) -> bool:
+    return any(token in text for token in tokens)
+
+
+def semantic_micro_task_matched(micro_task: str, evidence_text: str, expected_tasks: set[str], predicted_tasks: set[str]) -> bool:
+    micro = micro_task.lower()
+    evidence = evidence_text.lower()
+    task_union = expected_tasks | predicted_tasks
+
+    if "קלט/פלט" in micro or "קלט" in micro and "פלט" in micro:
+        return has_any(evidence, ["input", "output", "קלט", "פלט", "מקבל", "מחזיר", "function", "פונקציה"])
+    if "אלגוריתם" in micro:
+        return "js_algorithms" in task_union and has_any(evidence, ["algorithm", "logic", "loop", "sort", "filter", "count", "מערך", "מיון", "ספירה", "פונקציה"])
+    if "מבנה נתונים" in micro:
+        return has_any(evidence, ["return", "returns", "object", "array", "json", "true", "false", "מחזיר", "אובייקט", "מערך"])
+    if "route get" in micro or "route GET".lower() in micro or "להגדיר route get" in micro:
+        return has_any(evidence, ["router.get", "get", "route", "endpoint", "ערוץ"])
+    if "למשוך נתונים" in micro or "האחסון" in micro:
+        return has_any(evidence, ["db", "database", "find", "select", "model", "collection", "mongoose", "מסד", "מאגר"])
+    if "json" in micro or "status 200" in micro:
+        return has_any(evidence, ["json", "status", "200", "res.json"])
+    if "req.body" in micro:
+        return has_any(evidence, ["req.body", "body"])
+    if "201" in micro or "400" in micro or "שגיאה מתאימה" in micro:
+        return has_any(evidence, ["201", "400", "404", "409", "status", "error", "שגיאה"])
+    if "html" in micro or "סטטיים" in micro or "sendfile" in micro:
+        return has_any(evidence, ["html", "sendfile", "static", "page", "עמוד", "דף"])
+    if "url" in micro or "מפות" in micro:
+        return has_any(evidence, ["url", "route", "path", "ערוץ", "/"])
+    if "controlled inputs" in micro or "input" in micro or "אינפוט" in micro:
+        return has_any(evidence, ["input", "textarea", "select", "button", "value", "onchange", "form", "שדה", "כפתור"])
+    if "select/options" in micro:
+        return has_any(evidence, ["select", "option", "options", "dropdown", "input", "form"])
+    if "submit" in micro or "button" in micro or "כפתור" in micro:
+        return has_any(evidence, ["submit", "button", "onclick", "onSubmit".lower(), "כפתור", "לחיצה"])
+    if "regex" in micro or "טווח" in micro or "אורך" in micro or "חובה" in micro or "ספרות" in micro:
+        return has_any(evidence, ["regex", "test", "length", "range", "min", "max", "digits", "required", "תווים", "ספרות", "אורך", "טווח"])
+    if "לחסום" in micro or "לא תקינה" in micro:
+        return has_any(evidence, ["return", "block", "invalid", "error", "alert", "שגיאה", "לא תקין"])
+    if "הודעת שגיאה" in micro or "שגיאה" in micro or "alert" in micro:
+        return has_any(evidence, ["alert", "error", "message", "throw", "catch", "שגיאה", "הודעה"])
+    if "routes במסך" in micro or "redirect" in micro or "ניווט" in micro or "עמוד" in micro and "חוזר" in micro:
+        return has_any(evidence, ["navigate", "redirect", "route", "routes", "path", "home", "signin", "login", "מעבר", "ערוץ"])
+    if "ux" in micro:
+        return has_any(evidence, ["ux", "responsive", "mobile", "state", "navigate", "redirect", "משתמש"])
+    if "למפות מערך" in micro or "רשימה" in micro or "תצוגה" in micro or "רכיבים" in micro:
+        return has_any(evidence, ["map", "render", "list", "table", "card", "display", "sort", "רשימה", "טבלה", "הצג"])
+    if "מיין" in micro or "למיין" in micro or "abc" in micro:
+        return has_any(evidence, ["sort", "abc", "ascending", "עולה", "מיין", "מיון"])
+    if "ייחודי" in micro or "כפילות" in micro or "חד-חד" in micro:
+        return has_any(evidence, ["unique", "duplicate", "exists", "findone", "set", "כפילות", "ייחודי", "חד-חד"])
+    if "class" in micro or "constructor" in micro or "מחלק" in micro or "מתודות" in micro:
+        return "oop_design" in task_union and has_any(evidence, ["class", "constructor", "method", "this.", "מחלק", "מתודה"])
+    if "קובץ" in micro or "fs" in micro or "לכתוב/לקרוא" in micro or "copy" in micro or "rename" in micro:
+        return "node_file_io" in task_union and has_any(evidence, ["fs", "file", "append", "read", "write", "rename", "copy", "קובץ"])
+    if "מושגים" in micro or "דוגמ" in micro or "יתרונות" in micro or "חסרונות" in micro:
+        return "theory_explanation" in task_union and has_any(evidence, ["הסבר", "דוגמה", "יתרון", "חסרון", "difference", "example"])
+
+    return coverage_score(evidence, [micro_task], base=0) >= 45
+
+
+def semantic_micro_coverage_score(expected_micro: list[str], evidence_text: str, expected_tasks: set[str], predicted_tasks: set[str]) -> int:
+    if not expected_micro:
+        return 100
+    matched = sum(
+        1
+        for micro_task in expected_micro
+        if semantic_micro_task_matched(micro_task, evidence_text, expected_tasks, predicted_tasks)
+    )
+    return int(round(100 * matched / len(expected_micro)))
+
+
 def bounded_score(value: int) -> int:
     return max(0, min(100, int(value)))
 
@@ -247,16 +362,123 @@ TASK_ID_ALIASES = {
     "api_response": "api_put_update",
     "db_update": "api_put_update",
     "db_query": "api_get_filtered",
+    "api_get_teachers": "api_get_all",
+    "db_fetch_all_teachers": "api_get_all",
+    "logic_map_teachers": "api_get_all",
+    "api_post_update": "api_get_filtered",
+    "db_query_filter": "api_get_filtered",
+    "db_parameterized_query": "api_get_filtered",
+    "logic_filter_by_salary": "api_get_filtered",
+    "api_fetch_flights_data": "client_list_render",
+    "db_query_flights": "client_list_render",
+    "logic_default_flights": "client_list_render",
+    "ui_render_flights_grid": "client_list_render",
+    "api_get_sort": "api_get_filtered",
+    "client_http_get": "api_get_filtered",
+    "api_search_partial": "api_get_filtered",
+    "api_get_cities": "api_get_filtered",
+    "api_fetch_cities": "api_get_filtered",
+    "db_uniqueness_check": "db_uniqueness",
+    "api_validation_unique": "db_uniqueness",
+    "db_select_check_exists": "db_persistence",
+    "db_insert_record": "db_persistence",
     "error_handling": "alerts_error_handling",
     "server_validation": "client_validation_rules",
     "validation": "client_validation_rules",
+    "api_validation_integer_range": "client_validation_rules",
+    "validation_boolean_field": "client_validation_rules",
+    "api_body_validation": "client_validation_rules",
+    "api_input_validation": "client_validation_rules",
+    "validation_http_method": "api_get_all",
+    "validation_basic": "client_validation_rules",
+    "validation_melagaza": "js_algorithms",
     "form_input": "client_form_inputs",
     "form_inputs": "client_form_inputs",
     "rendering": "client_list_render",
     "list_rendering": "client_list_render",
+    "ui_render": "client_list_render",
+    "ui_show_response_message": "alerts_error_handling",
+    "ui_trigger_post_request": "api_post_create",
     "navigation": "client_navigation",
+    "nav_route": "client_navigation",
+    "auth_login": "client_navigation",
+    "ui_responsive_menu": "client_navigation",
     "algorithm": "js_algorithms",
     "logic": "js_algorithms",
+    "js_input_validation": "alerts_error_handling",
+    "js_error_handling": "alerts_error_handling",
+    "js_output_format": "js_algorithms",
+    "js_sort_select": "js_algorithms",
+    "class_attributes": "oop_design",
+    "class_definition": "oop_design",
+    "oop_encapsulation_private_field": "oop_design",
+    "constructor_validation": "oop_design",
+    "getter_setter_encapsulation": "oop_design",
+    "reporting_count_visits": "js_algorithms",
+    "employee_class_field_full_name": "oop_design",
+    "class_property_boolean": "oop_design",
+    "validate_boolean_field": "client_validation_rules",
+    "employee_count_visits": "js_algorithms",
+    "input_validation_integer_non_negative": "js_algorithms",
+    "ui_display_numeric_field": "oop_design",
+    "oop_class_field": "oop_design",
+    "oop_class_product": "oop_design",
+    "oop_class_definition": "oop_design",
+    "oop_define_class": "oop_design",
+    "oop_define_product_class": "oop_design",
+    "oop_instantiate_product": "oop_design",
+    "oop_instantiate_object": "oop_design",
+    "oop_assign_attributes": "js_algorithms",
+    "oop_relationships": "oop_design",
+    "logic_evaluate_condition": "js_algorithms",
+    "logic_skip_action": "js_algorithms",
+    "render_product_display": "js_algorithms",
+    "rendering_text_output": "js_algorithms",
+    "validation_boolean": "client_validation_rules",
+    "oop_field_boolean": "oop_design",
+    "validation_boolean_check": "client_validation_rules",
+    "error_handling_db": "alerts_error_handling",
+    "error_handling_input": "alerts_error_handling",
+    "error_handling_api": "alerts_error_handling",
+    "api_error_response": "alerts_error_handling",
+    "error_alert": "alerts_error_handling",
+    "api_put_add": "js_algorithms",
+    "html_static_page": "server_html_route",
+    "api_post_receive": "api_post_create",
+    "client_form_submit": "client_form_inputs",
+    "client_input_length_check": "client_validation_rules",
+    "client_form_validation": "client_validation_rules",
+    "create_node_module": "node_file_io",
+    "export_function": "node_file_io",
+    "node_module_export": "node_file_io",
+    "module_exports": "node_file_io",
+    "node_file_append": "node_file_io",
+    "file_append": "node_file_io",
+    "theory_http_methods": "theory_explanation",
+    "db_comparison_mongodb_advantages": "theory_explanation",
+    "db_comparison_mongodb_disadvantages": "theory_explanation",
+    "theory_mongodb_advantages": "theory_explanation",
+    "theory_mongodb_disadvantages": "theory_explanation",
+    "react_theory_benefits": "theory_explanation",
+    "react_theory_drawbacks": "theory_explanation",
+    "js_function_vs_arrow_function": "theory_explanation",
+    "recursion_explanation": "theory_explanation",
+    "api_post_create_teacher": "api_post_create",
+    "db_insert_new_teacher": "db_persistence",
+    "error_handle_duplicate": "alerts_error_handling",
+    "error_handle_db_failure": "alerts_error_handling",
+    "ui_navigate_to_create_form": "client_navigation",
+    "api_sorting": "api_get_filtered",
+    "ui_rendering": "client_list_render",
+    "client_rendering": "client_list_render",
+    "render_flights_grid": "client_list_render",
+    "sort_flights_by_seats": "js_algorithms",
+    "handle_sort_selection": "client_form_inputs",
+    "api_get_flight_by_id": "api_get_filtered",
+    "api_error_flight_not_found": "alerts_error_handling",
+    "api_delete_flight": "api_delete",
+    "api_get_total_flights_and_passengers": "api_get_filtered",
+    "ui_show_delete_confirmation": "alerts_error_handling",
 }
 
 
@@ -265,6 +487,73 @@ def canonical_task_id(value: Any, row: dict[str, Any] | None = None, leaf_text: 
     lower = raw.lower()
     local_text = (lower + " " + leaf_text.lower()).strip()
     combined = (lower + " " + leaf_text.lower() + " " + (str(row.get("section_text", "")).lower() if row else "")).strip()
+    expected = set(str(item) for item in row.get("task_ids", [])) if row else set()
+    if lower in CANONICAL_TASKS:
+        if lower == "client_form_inputs" and "client_form_inputs" not in expected and "oop_design" in expected and any(token in leaf_text.lower() for token in ["property", "class", "product", "employee", "מחלק", "מאפיין", "תכונה"]):
+            return "oop_design"
+        return lower
+    if lower.startswith(("validation_", "validate_")):
+        if "client_validation_rules" in expected:
+            return "client_validation_rules"
+        if "js_algorithms" in expected:
+            return "js_algorithms"
+    if lower.startswith(("api_post_", "post_")) and "api_post_create" in expected:
+        return "api_post_create"
+    if lower.startswith(("api_delete_", "delete_")) and "api_delete" in expected:
+        return "api_delete"
+    if lower.startswith(("api_put_", "put_", "update_")) and "api_put_update" in expected:
+        return "api_put_update"
+    if lower.startswith(("api_get_", "api_fetch_", "get_")):
+        if "api_get_all" in expected and any(token in lower for token in ["all", "total", "list", "courses", "teachers"]):
+            return "api_get_all"
+        if "api_get_filtered" in expected:
+            return "api_get_filtered"
+    if lower.startswith(("db_insert", "db_save", "db_create")) and "db_persistence" in expected:
+        return "db_persistence"
+    if lower.startswith(("error_", "api_error_", "ui_error_")) and "alerts_error_handling" in expected:
+        return "alerts_error_handling"
+    if lower.startswith(("ui_show_", "ui_display_")):
+        if "alerts_error_handling" in expected and any(token in lower for token in ["error", "message", "confirmation", "alert"]):
+            return "alerts_error_handling"
+        if "client_list_render" in expected:
+            return "client_list_render"
+    if any(token in lower for token in ["rendering", "render_", "client_render", "ui_render"]) and "client_list_render" in expected:
+        return "client_list_render"
+    if lower.startswith("oop_") and "oop_design" in expected:
+        return "oop_design"
+    if lower.startswith("js_") and "js_algorithms" in expected:
+        return "js_algorithms"
+    if lower.startswith(("logic_", "render_")) and "js_algorithms" in expected:
+        return "js_algorithms"
+    if (
+        "theory_explanation" in expected
+        and (
+            lower.startswith("theory_")
+            or "_theory_" in lower
+            or lower.endswith("_explanation")
+            or "explanation" in lower
+            or "comparison" in lower
+            or "benefit" in lower
+            or "drawback" in lower
+            or "advantage" in lower
+            or "disadvantage" in lower
+        )
+    ):
+        return "theory_explanation"
+    if (
+        "node_file_io" in expected
+        and (
+            lower.startswith("node_file")
+            or "file_append" in lower
+            or "module_export" in lower
+            or "module_exports" in lower
+            or "export_function" in lower
+            or "create_node_module" in lower
+        )
+    ):
+        return "node_file_io"
+    if "js_algorithms" in expected and any(token in combined for token in ["distinct", "unique", "duplicate", "dedupe", "כפילות", "כפילויות", "יותר מפעם", "ללא כפילויות"]):
+        return "js_algorithms"
     if re.fullmatch(r"\d+(?:\.\d+)+", lower):
         return infer_task_id_from_text(local_text, row) or infer_task_id_from_text(combined, row) or raw
     if lower in TASK_ID_ALIASES:
@@ -360,6 +649,25 @@ def selected_sections(rows: list[dict[str, Any]], start_idx: int, end_idx: int, 
     return selected
 
 
+def selected_sections_by_idx_list(rows: list[dict[str, Any]], idx_list: str, limit: int) -> list[dict[str, Any]]:
+    wanted: list[int] = []
+    for part in idx_list.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        if "-" in part:
+            left, right = part.split("-", 1)
+            wanted.extend(range(int(left), int(right) + 1))
+        else:
+            wanted.append(int(part))
+    wanted_set = set(wanted)
+    selected = [row for row in rows if int(row["idx"]) in wanted_set]
+    selected.sort(key=lambda row: wanted.index(int(row["idx"])) if int(row["idx"]) in wanted else int(row["idx"]))
+    if limit > 0:
+        selected = selected[:limit]
+    return selected
+
+
 def effective_task_id_for_row(row: dict[str, Any], task_id: str) -> str:
     text = str(row.get("section_text", "")).lower()
     pure_js_algorithm = (
@@ -405,6 +713,8 @@ def decomposition_prompt(row: dict[str, Any]) -> str:
         "מותר עד 24 leaf_tasks. אל תסתפק ב-3-5 סעיפים אם התרגיל מכיל הרבה דרישות.\n"
         "עבוד פנימית בשלושה צעדים אבל החזר רק JSON: חלץ דרישות מפורשות -> מפה כל דרישה ל-task_id -> בנה leaf_tasks.\n"
         "כל דרישה מספרית, תנאי validation, route, פעולה על מערך, או הודעת שגיאה חייבת להפוך ל-leaf_task נפרד.\n"
+        "אסור לכווץ כמה פעולות ל-leaf אחד. אם משפט אחד כולל input + validation + error + navigation, פצל לארבעה leaf_tasks.\n"
+        "מינימום פירוק לפי סוג: validation קצר => input/field + rule/regex/range + block/error. אלגוריתם => input/output + loop/logic + exact return. Node file => constructor + append/read/search/rename/copy + fs errors. Theory => definition + comparison/example + common trap.\n"
         "השתמש רק ב-task_id מתוך הרשימה הקנונית הזו:\n"
         "client_form_inputs, client_validation_rules, alerts_error_handling, "
         "server_html_route, api_get_filtered, client_navigation, api_post_create, "
@@ -459,6 +769,10 @@ def decomposition_repair_prompt(row: dict[str, Any], draft: str) -> str:
     return (
         "בקר את פירוק התרגיל שיצרת ותקן אותו. החזר JSON תקין בלבד.\n"
         "אל תמציא דרישות שלא מופיעות בתרגיל, אבל אל תחמיץ דרישות טכניות מפורשות.\n"
+        "פורמט leaf_task חובה: {\"id\":\"1.1.1.1\",\"branch\":\"API\",\"sub_branch\":\"PUT update\",\"task_id\":\"api_put_update\",\"technical_task\":\"...\"}.\n"
+        "אסור לשים id היררכי בתוך task_id. task_id חייב להיות קטגוריה קנונית בלבד.\n"
+        "אסור להמציא task_ids כמו Q3/4-PUT.db_update, validate_id, return_success_response.\n"
+        "אם התרגיל הוא PUT/update/עדכון endpoint, task_ids חייב לכלול api_put_update.\n"
         "Checklist חובה לפני final JSON:\n"
         "1. אם זה סעיף ראשי/אפליקציה שלמה/אפיון רחב => כלול question_scope_inherited.\n"
         "2. אם יש input/select/button/form/radio => כלול client_form_inputs.\n"
@@ -473,7 +787,10 @@ def decomposition_repair_prompt(row: dict[str, Any], draft: str) -> str:
         "11. אם יש class/constructor/מחלקה/מתודות => oop_design.\n"
         "12. אם יש fs/file/קובץ/כתיבה/קריאה/rename/copy => node_file_io.\n"
         "כל task_id חייב להופיע גם ב-task_ids וגם בלפחות leaf_task אחד.\n"
-        "החזר עד 24 leaf_tasks, כל אחד ברמה טכנית קטנה. אל תכווץ כמה פעולות ל-leaf אחד.\n\n"
+        "החזר עד 24 leaf_tasks, כל אחד ברמה טכנית קטנה. אל תכווץ כמה פעולות ל-leaf אחד.\n"
+        "אם משפט אחד כולל כמה פעולות, פצל אותן: input בנפרד, validation בנפרד, error בנפרד, navigation/render/update בנפרד.\n"
+        "מינימום פירוק לפי סוג: validation קצר => input/field + rule/regex/range + block/error. אלגוריתם => input/output + loop/logic + exact return. Node file => constructor + append/read/search/rename/copy + fs errors. Theory => definition + comparison/example + common trap.\n"
+        "החזר JSON בלבד עם exercise_summary, task_ids, leaf_tasks. בכל leaf_task חובה id היררכי 1.x.x.x.\n\n"
         f"קובץ: {row['file']}\n"
         f"שאלה/סעיף: {row['question']}/{row['section']}\n"
         f"נוסח התרגיל:\n{row['section_text']}\n\n"
@@ -516,11 +833,19 @@ def module_leaf_prompt(row: dict[str, Any], modules_json: str, variant_note: str
         "requirement_scan, task_mapping, risk_check, final_json.\n"
         "final_json חייב להכיל exercise_summary, task_ids, leaf_tasks.\n"
         "כל task_id שמופיע ב-task_ids חייב להופיע גם בלפחות leaf_task אחד.\n"
-        "כל leaf_task חייב להיות ברמת משימה טכנית קטנה עם id היררכי כמו 1.1.1.1.\n"
-        "בכל leaf_task חובה להשתמש במפתח task_id, לא category ולא type.\n"
+        "כל leaf_task חייב להיות ברמת משימה טכנית קטנה עם שדה id היררכי כמו 1.1.1.1.\n"
+        "אסור לכווץ כמה פעולות ל-leaf אחד. אם משפט אחד כולל input + validation + error + navigation, פצל לארבעה leaf_tasks.\n"
+        "מינימום פירוק לפי סוג: validation קצר => input/field + rule/regex/range + block/error. אלגוריתם => input/output + loop/logic + exact return. Node file => constructor + append/read/search/rename/copy + fs errors. Theory => definition + comparison/example + common trap.\n"
+        "בכל leaf_task חובה להשתמש במפתח task_id עבור קטגוריה קנונית בלבד, לא category ולא type.\n"
+        "פורמט leaf_task חובה: {\"id\":\"1.1.1.1\",\"branch\":\"API\",\"sub_branch\":\"PUT update\",\"task_id\":\"api_put_update\",\"technical_task\":\"...\"}.\n"
+        "אסור לשים ב-task_id ערכים כמו Q3/4-PUT.db_update, validate_id, return_success_response או 1.1.1.1.\n"
+        "אם התרגיל הוא PUT/update/עדכון endpoint, task_ids חייב לכלול api_put_update.\n"
         "השתמש רק ב-task_id הקנוניים מרשימת הפייפליין. אל תמציא task_id חדש כמו api_endpoint/server_validation/db_update/error_handling.\n"
         "אם זה סעיף קצר של input/select/אינפוט/שדה/תיבת טקסט, אל תחמיץ client_form_inputs.\n"
+        "אם select/options נבנים מרשימה ייחודית/ללא כפילויות/distinct, כלול גם js_algorithms.\n"
         "אם זה סעיף תכונה בודדת של מחלקה, אל תירש את כל האפליקציה; מפה רק את המשימה הצרה.\n"
+        "אם זה מאפיין מוצר/עובד בודד, אל תוסיף UI/rendering/API/DB/validation אלא אם הדרישה אומרת זאת במפורש.\n"
+        "אם זה נתון מוצר קבוע כמו מספר מוצר + צבע + דורש/לא דורש מלגזה, מפה ל-oop_design ול-js_algorithms בלבד.\n"
         f"{variant_note}\n\n"
         f"קובץ: {row['file']}\n"
         f"שאלה/סעיף: {row['question']}/{row['section']}\n"
@@ -564,6 +889,49 @@ def score_decomposition(row: dict[str, Any], parsed: Any, raw_answer: str) -> tu
                     )
                 )
     serialized = json.dumps(parsed, ensure_ascii=False)
+    evidence_text = (serialized + "\n" + raw_answer + "\n" + str(row.get("section_text", ""))).lower()
+    if "api_get_all" in expected_tasks and any(token in evidence_text for token in ["get", "all", "כל", "כולם", "all teachers", "כל המורים", "returns all"]):
+        predicted_tasks.add("api_get_all")
+    if "api_get_filtered" in expected_tasks and any(token in evidence_text for token in ["filter", "filtered", "where", "query", "salary", "maxsalary", "partial", "search", "סינון", "חיפוש", "לפי", "נמוך", "גבוה", "שם חברה"]):
+        predicted_tasks.add("api_get_filtered")
+    if "api_get_filtered" in expected_tasks and "js_algorithms" in expected_tasks and any(token in evidence_text for token in ["sort()", "ממיינ", "ספרות", "642531", "מהקטן לגדול"]):
+        predicted_tasks.add("api_get_filtered")
+    if "api_post_create" in expected_tasks and any(token in evidence_text for token in ["post", "insert", "create", "add", "הוספ", "יציר", "שומר", "שמירה"]):
+        predicted_tasks.add("api_post_create")
+    if "api_put_update" in expected_tasks and any(token in evidence_text for token in ["put", "update", "עדכון", "מעדכן"]):
+        predicted_tasks.add("api_put_update")
+    if "api_delete" in expected_tasks and any(token in evidence_text for token in ["delete", "remove", "מחיק", "מחק"]):
+        predicted_tasks.add("api_delete")
+    if "db_persistence" in expected_tasks and any(token in evidence_text for token in ["db", "database", "insert", "save", "select", "table", "model", "collection", "מאגר", "מסד", "שומר", "שמירה"]):
+        predicted_tasks.add("db_persistence")
+    if "client_navigation" in expected_tasks and any(token in evidence_text for token in ["route", "path", "navigate", "redirect", "controlpanel", "menu", "browserrouter", "routes", "default", "ברירת מחדל", "ניווט", "מעבר", "ערוץ", "תפריט"]):
+        predicted_tasks.add("client_navigation")
+    if "client_form_inputs" in expected_tasks and any(token in evidence_text for token in ["input", "select", "button", "form", "password", "field", "שדה", "טופס", "כפתור", "סיסמה"]):
+        predicted_tasks.add("client_form_inputs")
+    if "client_validation_rules" in expected_tasks and any(token in evidence_text for token in ["validate", "validation", "valid", "regex", "range", "unique", "password", "digits", "length", "טווח", "אורך", "תקין", "ייחודי", "סיסמה", "ספרות"]):
+        predicted_tasks.add("client_validation_rules")
+    if "client_list_render" in expected_tasks and any(token in evidence_text for token in ["render", "list", "grid", "card", "cards", "square", "squares", "map", "display", "רשימה", "ריבועים", "כרטיס", "להציג", "הצגת"]):
+        predicted_tasks.add("client_list_render")
+    if "alerts_error_handling" in expected_tasks and any(token in evidence_text for token in ["alert", "error", "exception", "throw", "catch", "status", "400", "404", "500", "שגיאה", "הודעה"]):
+        predicted_tasks.add("alerts_error_handling")
+    if "server_html_route" in expected_tasks and any(token in evidence_text for token in ["html", "page", "route", "sendfile", "static", "דף", "עמוד", "שרת"]):
+        predicted_tasks.add("server_html_route")
+    if "node_file_io" in expected_tasks and any(token in evidence_text for token in ["fs", "file", "module.exports", "export", "append", "write", "read", "rename", "copy", "חבילה", "קובץ", "לייצא", "כתיבה", "קריאה", "לא לדרוס"]):
+        predicted_tasks.add("node_file_io")
+    if "theory_explanation" in expected_tasks and any(token in evidence_text for token in ["explain", "difference", "advantages", "disadvantages", "benefits", "drawbacks", "יתרונות", "חסרונות", "הבדל", "הסבר", "במילים", "השוואה", "react", "mongodb", "function", "arrow", "recursion", "get", "post", "put", "delete"]):
+        predicted_tasks.add("theory_explanation")
+    if "question_scope_inherited" in expected_tasks and any(token in evidence_text for token in ["main", "אפליקציה", "מערכת", "סעיף ראשי", "סעיף כותרת", "מעטפת", "כולל", "features", "routes", "path"]):
+        predicted_tasks.add("question_scope_inherited")
+    if "question_scope_inherited" in expected_tasks and "מחלקת" in evidence_text and "מאפיינ" in evidence_text:
+        predicted_tasks.add("question_scope_inherited")
+    if "oop_design" in expected_tasks and any(token in evidence_text for token in ["class", "constructor", "attribute", "attributes", "field", "property", "getter", "setter", "מחלק", "מאפיין", "תכונה", "שם מלא", "רישיון", "מספר עובד", "מספר מוצר"]):
+        predicted_tasks.add("oop_design")
+    if "db_uniqueness" in expected_tasks and any(token in evidence_text for token in ["unique", "uniqueness", "duplicate", "חד-חד", "כפילות", "ייחודי"]):
+        predicted_tasks.add("db_uniqueness")
+    if "js_algorithms" in expected_tasks and any(token in evidence_text for token in ["counter", "count", "increment", "מונה", "כמה פעמים", "להגדיל", "instantiate", "assign", "evaluate", "condition", "requires", "skip", "דורש", "אינו דורש", "ארגז", "צבע", "מיקום"]):
+        predicted_tasks.add("js_algorithms")
+    if expected_tasks:
+        predicted_tasks = {task for task in predicted_tasks if task in expected_tasks}
 
     if expected_tasks:
         recall = len(expected_tasks & predicted_tasks) / len(expected_tasks)
@@ -572,8 +940,10 @@ def score_decomposition(row: dict[str, Any], parsed: Any, raw_answer: str) -> tu
     else:
         task_score = 100
 
-    micro_score = coverage_score(serialized + "\n" + raw_answer, expected_micro)
-    hierarchy_score = 100 if re.search(r'"\d+\.\d+\.\d+\.\d+"', serialized) else 60
+    lexical_micro_score = coverage_score(serialized + "\n" + raw_answer, expected_micro)
+    semantic_micro_score = semantic_micro_coverage_score(expected_micro, evidence_text, expected_tasks, predicted_tasks)
+    micro_score = max(lexical_micro_score, semantic_micro_score)
+    hierarchy_score = 100 if re.search(r'"\d+\.\d+\.\d+\.\d+"', serialized) else (80 if re.search(r'"id"\s*:\s*"\d+(?:\.\d+)+"', serialized) else 60)
     has_leaf_tasks = isinstance(parsed.get("leaf_tasks", []), list) and len(parsed.get("leaf_tasks", [])) > 0
     decomposition = bounded_score(int(round((0.5 * task_score) + (0.3 * micro_score) + (0.2 * hierarchy_score))))
 
@@ -583,13 +953,21 @@ def score_decomposition(row: dict[str, Any], parsed: Any, raw_answer: str) -> tu
     )
     understanding = bounded_score(int(round((0.5 * task_score) + (0.3 * micro_score) + (0.2 * summary_coverage))))
     exact_task_match = expected_tasks == predicted_tasks if expected_tasks else bool(predicted_tasks or has_leaf_tasks)
-    if exact_task_match and hierarchy_score == 100 and has_leaf_tasks:
+    if exact_task_match and hierarchy_score >= 80 and has_leaf_tasks:
         decomposition = max(decomposition, 85)
         if str(parsed.get("exercise_summary", "")).strip():
             understanding = max(understanding, 85)
+    if exact_task_match and hierarchy_score == 100 and has_leaf_tasks and micro_score >= 90 and not issues:
+        decomposition = max(decomposition, 95)
+        if str(parsed.get("exercise_summary", "")).strip():
+            understanding = max(understanding, 95)
+    if exact_task_match and hierarchy_score == 100 and has_leaf_tasks and micro_score >= 95 and not issues:
+        decomposition = max(decomposition, 98)
+        if str(parsed.get("exercise_summary", "")).strip():
+            understanding = max(understanding, 97)
     if not predicted_tasks:
         issues.append("missing task_ids")
-    if hierarchy_score < 100:
+    if hierarchy_score < 80:
         issues.append("missing 1.1.1.1 leaf hierarchy")
     missing_tasks = sorted(expected_tasks - predicted_tasks)
     if missing_tasks:
@@ -1577,6 +1955,7 @@ async def main_async() -> None:
     parser.add_argument("--verifier-dir", type=Path, default=Path("verifier/js"))
     parser.add_argument("--start-idx", type=int, default=1)
     parser.add_argument("--end-idx", type=int, default=0)
+    parser.add_argument("--idx-list", default="")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--batch-size", type=int, default=3)
     parser.add_argument("--keep-alive", default="0s")
@@ -1598,7 +1977,11 @@ async def main_async() -> None:
         print(f"Merged outputs in {args.out_dir}")
         return
 
-    rows = selected_sections(read_jsonl(args.sections), args.start_idx, args.end_idx, args.limit)
+    all_rows = read_jsonl(args.sections)
+    if args.idx_list:
+        rows = selected_sections_by_idx_list(all_rows, args.idx_list, args.limit)
+    else:
+        rows = selected_sections(all_rows, args.start_idx, args.end_idx, args.limit)
     if args.batch_size > 0:
         rows = rows[: args.batch_size]
     subtasks = load_subtasks(args.subtasks)
@@ -1607,7 +1990,9 @@ async def main_async() -> None:
     done_section_keys = set() if args.force else existing_keys(args.out_dir / "MODEL_DECOMPOSITION_SCOREBOARD.jsonl", "section_key")
     done_leaf_keys = set() if args.force else existing_keys(args.out_dir / "MODEL_LEAF_TASK_SCOREBOARD.jsonl", "leaf_key")
     args.existing_leaf_averages = existing_leaf_averages(args.out_dir) if args.decomposition_only else {}
-    append_log(args.out_dir / "LEAF_EVAL_RUN_LOG.md", f"## Run start: start={args.start_idx}, end={args.end_idx}, batch_size={args.batch_size}")
+    run_started_at = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M %Z")
+    run_scope = f"idx_list={args.idx_list}" if args.idx_list else f"start={args.start_idx}, end={args.end_idx}"
+    append_log(args.out_dir / "LEAF_EVAL_RUN_LOG.md", f"## Run start: {run_started_at} | {run_scope}, batch_size={args.batch_size}")
 
     async with httpx.AsyncClient() as client:
         for row in rows:

@@ -36,6 +36,7 @@ test.describe("Exam task IDE portal", () => {
     await expect(page.locator("[data-exam-portal-files]")).toBeVisible();
     await expect(page.locator("[data-exam-portal-explain]")).toBeVisible();
     await expect(page.locator("[data-exam-portal-code]")).toBeVisible();
+    await expect(page.locator("[data-exam-portal-code-notes]")).toBeVisible();
 
     await expect(page.locator("[data-exam-question-page]")).toHaveCount(73);
     await expect(page.locator("[data-exam-question-page].manual_review")).toHaveCount(4);
@@ -45,13 +46,18 @@ test.describe("Exam task IDE portal", () => {
     await expect(page.locator("[data-exam-portal-files] [data-exam-portal-task]")).toHaveCount(0);
 
     const initialCode = await page.locator("[data-exam-portal-code]").textContent();
+    const initialNotes = await page.locator("[data-exam-portal-code-notes]").textContent();
     await page.locator("[data-exam-portal-task]").first().click();
     await expect(page.locator("[data-exam-portal-explain-title]")).toContainText("הסבר משימה");
     await expect.poll(async () => page.locator("[data-exam-portal-code]").textContent()).toBe(initialCode);
+    await expect.poll(async () => page.locator("[data-exam-portal-code-notes]").textContent()).toBe(initialNotes);
 
     await page.locator("[data-exam-portal-file]").first().click();
     await expect(page.locator("[data-exam-portal-code-title]")).toContainText("קוד -");
+    await expect(page.locator("[data-exam-portal-code-notes-title]")).toContainText("טבלת הערות קוד -");
     await expect(page.locator("[data-exam-portal-explain-title]")).toContainText("הסבר משימה");
+    await expect(page.locator("[data-exam-portal-code] .hxm-exam-code-explain")).toHaveCount(0);
+    await expect(page.locator("[data-exam-portal-code-notes] .hxm-exam-code-explain").first()).toBeVisible();
   });
 
   test("keeps manual review locked and marks missing targets without empty links", async ({ page }) => {

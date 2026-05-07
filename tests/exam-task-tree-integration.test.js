@@ -109,12 +109,14 @@ describe("SVCollege exam task tree integration", () => {
     const css = read("style.css");
 
     expect(index).not.toContain('data-tab="exam-task-tree"');
-    expect(view).toContain("עץ תרגילי המבחן לפי נושאים");
+    expect(view).not.toContain("עץ תרגילי המבחן לפי נושאים");
+    expect(view).toContain("עץ פשוט לפי נושאים");
     expect(view).toContain("data-exam-task-technical-task");
     expect(view).toContain("data-exam-section-exercise");
     expect(view).toContain("data-exam-topic");
     expect(view).toContain("data-exam-topic-question");
-    expect(view).toContain("data-exam-question-toggle");
+    expect(view).toContain("data-exam-topic-task");
+    expect(view).toContain("data-exam-portal-code-notes");
     expect(view).toContain("data-exam-question-open");
     expect(view).toContain("data-exam-question-page");
     expect(view).toContain("exam-question-subtask");
@@ -133,8 +135,8 @@ describe("SVCollege exam task tree integration", () => {
     expect(view).toContain("updateExamQuestionTaskProgress");
     expect(view).toContain("updateExamTopicProgress");
     expect(view).toContain("renderExamTaskTreeSectionExercises");
-    expect(view).toContain("פותחים נושא");
-    expect(view).toContain("עמוד שאלה מלא");
+    expect(view).toContain("כל משימה מוצגת ב-3 שורות");
+    expect(view).toContain("עמוד IDE מלא");
     expect(view).toContain("ניקוד הסעיף ואיך לקבל 100");
     expect(view).toContain("משקל תרגול פנימי");
     expect(view).toContain("hxm-exam-question-code-card");
@@ -148,8 +150,10 @@ describe("SVCollege exam task tree integration", () => {
     expect(css).toContain(".hxm-exam-task-code pre");
     expect(css).toContain(".hxm-exam-topic");
     expect(css).toContain(".hxm-exam-question-row");
+    expect(css).toContain(".hxm-exam-topic-task-card");
     expect(css).toContain(".hxm-exam-question-page");
     expect(css).toContain(".hxm-exam-code-explain");
+    expect(css).toContain(".hxm-exam-portal-code-notes");
     expect(css).toContain(".hxm-exam-ide-file-tree");
     expect(css).toContain(".hxm-exam-task-subtask-grid");
     expect(css).toContain(".hxm-exam-question-subtasks");

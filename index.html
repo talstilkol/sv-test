@@ -7,7 +7,7 @@
 <meta name="description" content="פורטל לימוד Full-Stack מלא: כל שיעור מוסבר ב-6 רמות — מסבתא ועד פרופסור, עם בלוקי קוד, הסברי עומק ושאלונים." />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; form-action 'self'; base-uri 'self';" />
 <script src="src/boot/standalone-museum.js"></script>
-<script src="src/boot/file-protocol-guard.js?v=file-protocol-guard-v1"></script>
+<script src="src/boot/file-protocol-guard.js?v=file-protocol-guard-v2"></script>
 <link rel="stylesheet" href="style.css?v=homework-exam-mode-v19" />
 <link rel="manifest" href="manifest.json" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236366f1'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' fill='white' font-family='Arial,sans-serif'%3EL%3C/text%3E%3C/svg%3E" />
@@ -18,9 +18,13 @@
 </head>
 <body class="exam-focus-mode">
 <div id="file-protocol-warning" class="file-protocol-warning" hidden role="alert" aria-live="assertive">
+<div>
 <strong>פתחת את הפורטל כקובץ מקומי.</strong>
-כדי לקבל שמירה מלאה, Service Worker וטעינת מודולים בלי שגיאות, פתח דרך שרת מקומי:
-<code>npm run dev</code>
+<span>כדי לקבל שמירה מלאה, Service Worker וטעינת מודולים בלי שגיאות, הרץ בטרמינל ואז פתח את השרת המקומי.</span>
+</div>
+<code dir="ltr" data-file-dev-command>cd "/Users/tal/Desktop/חומרים לשיעור" && npm run dev</code>
+<button type="button" data-copy-dev-command aria-label="העתק פקודת npm run dev לטרמינל">העתק פקודה לטרמינל</button>
+<a href="http://127.0.0.1:5174/" data-open-dev-server>פתח אחרי ההרצה</a>
 </div>
 <div class="app-container">
 <details id="achievements-rail-wrap" class="achievements-rail-wrap" open>
@@ -408,6 +412,24 @@ hidden
 <div class="welcome-simple-progress" aria-hidden="true">
 <span id="simple-route-progress-fill" style="--home-progress: 0%"></span>
 </div>
+<div class="welcome-exam100-status" aria-label="מד שעות ואחוזי השלמה למסלול 100">
+<article><strong id="simple-route-board-percent">0%</strong><span>השלמת לוח</span></article>
+<article><strong id="simple-route-hours-left">108 שעות 5 דק׳</strong><span>שעות לסיום</span></article>
+<article><strong id="simple-route-total-hours">108 שעות 5 דק׳</strong><span>סך חובה</span></article>
+</div>
+<div class="welcome-next-task" id="simple-route-next-task" aria-live="polite">המשימה הבאה: אבחון בסיס</div>
+<div class="welcome-beginner-mode" aria-label="מצב תלמיד מתחיל">
+<strong>מצב תלמיד מתחיל</strong>
+<span>עובדים רק לפי הסדר: אבחון → לוח משימות → פורטל מבחן → סרטונים → סימולציה.</span>
+<div>
+<button type="button" data-welcome-focus-target="mock-exam">אבחון</button>
+<button type="button" data-welcome-focus-target="task-board">לוח משימות</button>
+<button type="button" data-welcome-focus-target="exam-ide">פורטל מבחן</button>
+<button type="button" data-welcome-focus-target="videos">סרטונים</button>
+<button type="button" data-welcome-focus-target="exam-day">סימולציה</button>
+</div>
+</div>
+<div class="welcome-blockers" id="simple-route-blockers">חוסם מ-100 עכשיו: אבחון פתיחה לא סגור.</div>
 <div class="welcome-mini-map" id="simple-route-mini-map" aria-label="מפת כל השלבים עד סיום המבחן"></div>
 <div class="welcome-current-step">
 <span aria-hidden="true">🎯</span>

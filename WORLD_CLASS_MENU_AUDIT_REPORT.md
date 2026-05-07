@@ -13,12 +13,12 @@ Grade: world-class-ready
 | Closed mode renders only Exam100 rows | pass | P0 | The primary path must not render the advanced library when exam focus is active. |
 | Closed route exposes only previous and next arrows | pass | P0 | The route should move through backward/forward only, not a menu of choices. |
 | Progress percent and graphical step map are visible | pass | P0 | The student sees percent complete, a linear map and rewards. |
-| Day board, overdue status and lag CTA are present | pass | P0 | A delayed student gets a red lag message and one next-task CTA. |
+| Primary task board, progress and next task are present | pass | P0 | The student sees one official task board with percent, remaining time and a next-task card. |
 | Local progress is clearly marked as recovery only | pass | P1 | The UI must not present localStorage as an official score proof. |
 | Legacy and advanced surfaces are hidden by default | pass | P0 | Legacy remains available but not as the primary decision surface. |
 | Solution guide is available only as extracted reference | pass | P1 | The solution guide should support practice without becoming a shortcut menu. |
 | Start-here area keeps next action prominent | pass | P1 | The beginner surface should tell the student what to do now. |
-| Closed route adapts to mobile width | pass | P1 | The map, day board and arrows must not overflow on mobile. |
+| Closed route adapts to mobile width | pass | P1 | The map, primary task board and arrows must not overflow on mobile. |
 | Menu and route are protected by release gates | pass | P1 | Critical menu expectations must be in tests and pre-release checks. |
 
 ## Remaining Tasks

@@ -1,6 +1,6 @@
 {
   "reportVersion": "distractor-exam-gate-v1",
-  "generatedAt": "2026-05-07T09:31:12.736Z",
+  "generatedAt": "2026-05-07T12:44:20.938Z",
   "thresholds": {
     "globalWarnPercent": 10,
     "examCriticalFailPercent": 15

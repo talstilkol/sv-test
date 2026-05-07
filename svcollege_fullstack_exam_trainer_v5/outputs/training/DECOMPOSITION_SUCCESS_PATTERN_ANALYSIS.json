@@ -1,22 +1,22 @@
 {
   "successful_ge85": {
-    "count": 19,
-    "avg_final": 88.16,
-    "avg_text_length": 131.84,
-    "avg_task_ids": 1.42,
-    "avg_leaf_average": 94.79,
+    "count": 35,
+    "avg_final": 88.23,
+    "avg_text_length": 93.29,
+    "avg_task_ids": 1.71,
+    "avg_leaf_average": 95.26,
     "top_keywords": [
-      [
-        "מערך",
-        5
-      ],
       [
         "פונקציה",
         5
       ],
       [
+        "מערך",
+        4
+      ],
+      [
         "אינפוט",
-        3
+        4
       ],
       [
         "GET",
@@ -31,6 +31,14 @@
         1
       ],
       [
+        "PUT",
+        1
+      ],
+      [
+        "select",
+        1
+      ],
+      [
         "כפתור",
         1
       ],
@@ -41,16 +49,24 @@
     ],
     "top_task_ids": [
       [
+        "oop_design",
+        14
+      ],
+      [
         "client_validation_rules",
-        8
+        13
       ],
       [
         "js_algorithms",
-        5
+        11
       ],
       [
         "client_form_inputs",
-        5
+        7
+      ],
+      [
+        "alerts_error_handling",
+        3
       ],
       [
         "theory_explanation",
@@ -61,8 +77,16 @@
         2
       ],
       [
-        "alerts_error_handling",
+        "question_scope_inherited",
         2
+      ],
+      [
+        "db_uniqueness",
+        2
+      ],
+      [
+        "api_put_update",
+        1
       ],
       [
         "node_file_io",
@@ -76,11 +100,11 @@
     "top_issues": []
   },
   "weak_lt85": {
-    "count": 54,
-    "avg_final": 57.98,
-    "avg_text_length": 187.72,
-    "avg_task_ids": 4.61,
-    "avg_leaf_average": 95.67,
+    "count": 38,
+    "avg_final": 63.21,
+    "avg_text_length": 249.39,
+    "avg_task_ids": 3.21,
+    "avg_leaf_average": 95.61,
     "top_keywords": [
       [
         "כפתור",
@@ -112,10 +136,6 @@
       ],
       [
         "אינפוט",
-        5
-      ],
-      [
-        "select",
         4
       ],
       [
@@ -127,58 +147,62 @@
         4
       ],
       [
-        "PUT",
+        "select",
+        3
+      ],
+      [
+        "DELETE",
         3
       ]
     ],
     "top_task_ids": [
       [
         "client_form_inputs",
-        29
-      ],
-      [
-        "alerts_error_handling",
-        26
-      ],
-      [
-        "client_validation_rules",
-        26
-      ],
-      [
-        "client_navigation",
-        23
-      ],
-      [
-        "api_get_filtered",
-        21
-      ],
-      [
-        "server_html_route",
-        21
-      ],
-      [
-        "client_list_render",
-        19
-      ],
-      [
-        "api_post_create",
-        18
-      ],
-      [
-        "js_algorithms",
-        18
-      ],
-      [
-        "db_uniqueness",
         16
       ],
       [
-        "question_scope_inherited",
+        "client_validation_rules",
+        15
+      ],
+      [
+        "alerts_error_handling",
         14
+      ],
+      [
+        "client_navigation",
+        12
+      ],
+      [
+        "api_get_filtered",
+        10
+      ],
+      [
+        "server_html_route",
+        10
+      ],
+      [
+        "client_list_render",
+        8
+      ],
+      [
+        "api_post_create",
+        7
+      ],
+      [
+        "js_algorithms",
+        7
       ],
       [
         "api_get_all",
         4
+      ],
+      [
+        "question_scope_inherited",
+        3
+      ],
+      [
+        "db_uniqueness",
+        3
       ]
     ],
     "top_issues": [
@@ -187,15 +211,7 @@
         6
       ],
       [
-        "missing expected task_ids: client_form_inputs",
-        4
-      ],
-      [
         "missing expected task_ids: client_navigation",
-        3
-      ],
-      [
-        "missing expected task_ids: alerts_error_handling, api_get_filtered, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, js_algorithms, question_scope_inherited, server_html_route",
         3
       ],
       [
@@ -203,15 +219,11 @@
         2
       ],
       [
+        "missing expected task_ids: client_form_inputs",
+        2
+      ],
+      [
         "missing expected task_ids: alerts_error_handling",
-        2
-      ],
-      [
-        "missing expected task_ids: alerts_error_handling, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, db_uniqueness, js_algorithms, question_scope_inherited, server_html_route",
-        2
-      ],
-      [
-        "missing expected task_ids: alerts_error_handling, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, js_algorithms, question_scope_inherited, server_html_route",
         2
       ],
       [
@@ -227,7 +239,19 @@
         1
       ],
       [
-        "model did not return parseable JSON",
+        "missing expected task_ids: client_validation_rules",
+        1
+      ],
+      [
+        "missing expected task_ids: api_delete, api_get_all, api_put_update",
+        1
+      ],
+      [
+        "missing expected task_ids: db_persistence",
+        1
+      ],
+      [
+        "missing expected task_ids: client_navigation, js_algorithms, question_scope_inherited",
         1
       ]
     ]

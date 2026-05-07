@@ -67,9 +67,11 @@ describe("Exam 100 Path UI contract", () => {
     expect(view).toContain("data-exam100-path-prev");
     expect(view).toContain("data-exam100-path-next");
     expect(view).toContain("hxm-exam100-current-step");
-    expect(view).toContain("data-exam100-day-board");
-    expect(view).toContain("data-exam100-lag-banner");
-    expect(view).toContain("data-exam100-next-task");
+    expect(view).toContain("data-hxm-primary-task-board");
+    expect(view).toContain("data-hxm-time-required-percent");
+    expect(view).toContain("data-hxm-time-next-card");
+    expect(view).not.toContain("data-exam100-day-board");
+    expect(view).not.toContain("data-exam100-lag-banner");
     expect(view).toContain("אין תפריט בחירה בתוך המסלול");
     expect(view).not.toContain("hxm-exam100-card");
     expect(view).not.toContain("data-exam100-question");
@@ -77,8 +79,9 @@ describe("Exam 100 Path UI contract", () => {
     expect(css).toContain("[hidden]");
     expect(cssIncludes(css, "display: none !important")).toBe(true);
     expect(css).toContain(".hxm-arrow-btn");
-    expect(css).toContain(".hxm-exam100-day-board");
-    expect(css).toContain(".hxm-exam100-lag-banner.behind");
+    expect(css).toContain(".hxm-time-plan-primary");
+    expect(css).not.toContain(".hxm-exam100-day-board");
+    expect(css).not.toContain(".hxm-exam100-lag-banner");
   });
 
   it("hides legacy portal chrome from the default closed Exam 100 route", () => {
@@ -117,11 +120,17 @@ describe("Exam 100 Path UI contract", () => {
     expect(html).toContain("0% התקדמות");
     expect(html).toContain("שלב 1 מתוך 10");
     expect(html).toContain("welcome-arrow-controls");
+    expect(html).toContain("simple-route-hours-left");
+    expect(html).toContain("simple-route-board-percent");
+    expect(html).toContain("מצב תלמיד מתחיל");
+    expect(html).toContain("חוסם מ-100 עכשיו");
     expect(html).toContain("← אחורה");
     expect(html).toContain("קדימה →");
     expect(html).not.toContain("פתח מדריך התחלה");
     expect(css).toContain(".welcome-simple-progress");
     expect(css).toContain(".welcome-arrow-btn.primary");
+    expect(css).toContain(".welcome-exam100-status");
+    expect(css).toContain(".welcome-beginner-mode");
   });
 
   it("keeps the Exam 100 routes closed with one next action and one gate per route", () => {
@@ -160,19 +169,20 @@ describe("Exam 100 Path UI contract", () => {
     expect(view).toContain("שמירה נכשלה");
   });
 
-  it("shows a deterministic seven-day board and lag CTA inside the closed route", () => {
+  it("keeps the primary task board as the single schedule source inside the closed route", () => {
     const view = fs.readFileSync(path.join(ROOT, "src/views/homework-exam-mode-view.js"), "utf8");
     const css = fs.readFileSync(path.join(ROOT, "style.css"), "utf8");
 
-    expect(view).toContain("function exam100DayPlan()");
-    expect(view).toContain("{ day: 1");
-    expect(view).toContain("{ day: 7");
-    expect(view).toContain("אתה בפיגור");
-    expect(view).toContain("התחל את המשימה הבאה");
-    expect(view).toContain("שמירה מקומית היא שחזור בלבד");
-    expect(view).toContain("state.startedAt = state.startedAt || new Date().toISOString()");
-    expect(css).toContain(".hxm-exam100-schedule");
-    expect(css).toContain(".hxm-exam100-day-row.overdue");
+    expect(view).toContain("renderRemainingTimePlan");
+    expect(view).toContain("data-hxm-primary-task-board");
+    expect(view).toContain("data-hxm-time-summary-percent");
+    expect(view).toContain("data-hxm-time-summary-left");
+    expect(view).toContain("data-hxm-time-next-card");
+    expect(view).not.toContain("function exam100DayPlan()");
+    expect(view).not.toContain("data-exam100-day-board");
+    expect(css).toContain(".hxm-time-plan-primary");
+    expect(css).not.toContain(".hxm-exam100-schedule");
+    expect(css).not.toContain(".hxm-exam100-day-row");
   });
 
   it("keeps readiness data available while the visible Exam 100 Path stays closed", () => {

@@ -223,6 +223,7 @@
     var value = String((title || "") + " " + (task || "")).toLowerCase();
     if (/\bts\b|typescript|type narrowing|enum|interface|union|book|genre/.test(value)) return "typescript";
     if (/\bjs\b|javascript|even\/odd|sequence|fibonacci|sort|סכום|מיון|ספרות/.test(value)) return "javascript";
+    if (/\bhtml\b|\bcss\b|\bdom\b|semantic|selector|responsive/.test(value)) return "html";
     if (/react|express|mongo|next|project|api|server|schema|routes|routing|forms|validations|validation|layout|ui|crud|פרויקט|ולידציות|שרת|טופס/.test(value)) return "project";
     return "examOps";
   }
@@ -312,6 +313,7 @@
     var match = day.match(/Heat\s+(\d+)/i);
     if (match) return Number(match[1]);
     var domain = task && task.domain;
+    if (domain === "html") return 10;
     if (domain === "project") return 9;
     if (domain === "javascript") return 5;
     if (domain === "typescript") return 4;
@@ -321,6 +323,7 @@
   function actionForPlanTask(task) {
     if (!task) return "start-homework-mock";
     if (task.materialIndex != null) return "scroll-hxm-material-backlog";
+    if (task.domain === "html") return "open-html-portal";
     if (task.domain === "project") return "scroll-hxm-templates";
     if (task.domain === "javascript") return "scroll-hxm-js";
     if (task.domain === "typescript") return "scroll-hxm-ts";
@@ -330,6 +333,7 @@
   function buttonForPlanTask(task) {
     if (!task) return "התחל סימולציה";
     if (task.materialIndex != null) return "פתח Backlog";
+    if (task.domain === "html") return "פתח HTML";
     if (task.domain === "project") return "פתח פרויקט";
     if (task.domain === "javascript") return "פתח JS";
     if (task.domain === "typescript") return "פתח TS";
@@ -393,6 +397,57 @@
       "<p><b>ראיה לפני מעבר:</b> <span data-hxm-today-proof=\"active\">" + esc(command.proof) + "</span></p>" +
       "<p class=\"hxm-today-blocked\"><b>חסום עכשיו:</b> <span data-hxm-today-blocked=\"active\">" + esc(command.blocked) + "</span></p></div>" +
       "<button class=\"km-btn-mini primary\" type=\"button\" data-hxm-action=\"" + esc(command.action) + "\" data-hxm-today-action=\"active\">" + esc(command.button) + "</button>" +
+    "</section>";
+  }
+
+  function renderExam100EntryGateway(path, state, current, progressPercent, esc) {
+    var routeAfterDiagnostic = current && current.title
+      ? current.title
+      : "תיקון חולשות -> Project 70 -> JS 20 -> TS 10 -> Mock Exam";
+    var wizardRows = [
+      {
+        title: "1. אבחון",
+        meta: "שער חובה לפני שיעורים, משימות וסימולציה.",
+        action: "scroll-hxm-basic-diagnostic",
+        label: "פתח אבחון",
+      },
+      {
+        title: "2. פורטל הלימודים",
+        meta: "מתחילים מ-HTML ואז ממשיכים לפי החולשות שעלו באבחון.",
+        lesson: "lesson_html_css_foundations",
+        label: "פתח HTML",
+      },
+      {
+        title: "3. לוח משימות",
+        meta: "מבצעים לפי סדר, רואים שעות ואחוז בכל רגע.",
+        href: "#hxm-time-plan",
+        label: "פתח לוח",
+      },
+      {
+        title: "4. פורטל מבחן IDE",
+        meta: "פותחים סעיפים, קבצים, הסברים, קוד וטבלת הערות.",
+        href: "#hxm-exam-task-ide-portal",
+        label: "פתח IDE",
+      },
+      {
+        title: "5. סימולציה מלאה",
+        meta: "רק אחרי שהשערים והמשימות החוסמות סגורים.",
+        action: "start-homework-mock",
+        label: "התחל מבחן",
+      },
+    ].map(function (step) {
+      return "<article><div><strong>" + esc(step.title) + "</strong><span>" + esc(step.meta) + "</span></div><em>" + esc(step.label) + "</em></article>";
+    }).join("");
+    return "<section class=\"hxm-exam-entry-gateway\" id=\"hxm-exam-entry-gateway\" data-hxm-entry-gateway aria-label=\"כניסה ברורה למסלול Exam100\">" +
+      "<header><div><span>מתחילים כאן</span><h4>הדרך לציון 100 מתחילה באבחון</h4><p>קודם אבחון. אחר כך פורטל הלימודים לפי נושא. כל משימה בלוח מפנה למקום שבו מבצעים אותה.</p></div><b data-hxm-entry-progress=\"" + esc(progressPercent) + "\">" + esc(progressPercent) + "% במסלול</b></header>" +
+      "<div class=\"hxm-entry-primary-grid\">" +
+        "<button class=\"hxm-entry-card diagnostic\" type=\"button\" data-hxm-action=\"scroll-hxm-basic-diagnostic\" aria-label=\"פתח את עמוד האבחון\"><strong>אבחון</strong><span>התחלה חובה: בדוק מה אתה יודע ומה חסר לפני כל שיעור או משימה.</span><em>פתח אבחון -></em></button>" +
+        "<button class=\"hxm-entry-card learning\" type=\"button\" data-hxm-open-lesson=\"lesson_html_css_foundations\" aria-label=\"פתח את פורטל הלימודים בעמוד HTML\"><strong>פורטל הלימודים: HTML</strong><span>כניסה ישירה לשיעור HTML/CSS Foundations בתוך פורטל הלימודים.</span><em>פתח HTML -></em></button>" +
+        "<a class=\"hxm-entry-card board\" href=\"#hxm-time-plan\" aria-label=\"פתח את לוח המשימות עם מד התקדמות\"><strong>לוח משימות</strong><span>כל המשימות, שעות שנותרו, אחוז השלמה, וקישור יעד לכל משימה.</span><em>פתח לוח -></em></a>" +
+        "<a class=\"hxm-entry-card ide\" href=\"#hxm-exam-task-ide-portal\" aria-label=\"פתח את פורטל משימות המבחן\"><strong>פורטל משימות מבחן</strong><span>עץ שאלות, קבצי קוד, הסברים, קוד וטבלת הערות.</span><em>פתח IDE -></em></a>" +
+      "</div>" +
+      "<div class=\"hxm-entry-wizard\" data-hxm-start-wizard><div><strong>סדר ביצוע סגור</strong><span>לא קופצים קדימה: אבחון -> שיעור -> משימה -> IDE -> סימולציה.</span></div><div class=\"hxm-entry-wizard-steps\">" + wizardRows + "</div></div>" +
+      "<div class=\"hxm-entry-route\"><strong>אחרי האבחון:</strong><span>" + esc(routeAfterDiagnostic) + "</span><small>" + esc(exam100SavedText(state)) + "</small></div>" +
     "</section>";
   }
 
@@ -771,44 +826,6 @@
     return Math.round(((index + 1) / total) * 100);
   }
 
-  function exam100DayPlan() {
-    return [
-      { day: 1, title: "אבחון + JS בסיס", minutes: 300 },
-      { day: 2, title: "React בסיס + state", minutes: 330 },
-      { day: 3, title: "Forms + validations", minutes: 360 },
-      { day: 4, title: "Project 70", minutes: 345 },
-      { day: 5, title: "Router + API + Mongo", minutes: 330 },
-      { day: 6, title: "TS 10 + חולשות", minutes: 300 },
-      { day: 7, title: "סימולציה מלאה", minutes: 300 },
-    ];
-  }
-
-  function exam100TotalMinutes(plan) {
-    return (plan || []).reduce(function (sum, day) {
-      return sum + Number(day.minutes || 0);
-    }, 0);
-  }
-
-  function exam100ScheduleState(state, pathIndex, stageCount) {
-    var plan = exam100DayPlan();
-    var totalMinutes = exam100TotalMinutes(plan);
-    var startedMs = Date.parse((state || {}).startedAt || (state || {}).savedAt || "");
-    var elapsedMinutes = Number.isFinite(startedMs)
-      ? Math.max(0, Math.floor((Date.now() - startedMs) / 60000))
-      : 0;
-    var progressRatio = stageCount > 1 ? pathIndex / (stageCount - 1) : 0;
-    var completedMinutes = Math.round(totalMinutes * Math.max(0, Math.min(1, progressRatio)));
-    var expectedMinutes = Math.min(totalMinutes, elapsedMinutes);
-    var lagMinutes = Math.max(0, expectedMinutes - completedMinutes);
-    return {
-      plan: plan,
-      totalMinutes: totalMinutes,
-      elapsedMinutes: elapsedMinutes,
-      completedMinutes: completedMinutes,
-      lagMinutes: lagMinutes,
-    };
-  }
-
   function exam100HoursText(minutes) {
     var total = Math.max(0, Math.round(Number(minutes || 0)));
     var hours = Math.floor(total / 60);
@@ -816,38 +833,6 @@
     if (!hours) return rest + " דק׳";
     if (!rest) return hours + " שעות";
     return hours + " שעות ו-" + rest + " דק׳";
-  }
-
-  function renderExam100Schedule(path, state, pathIndex, stages, esc) {
-    var schedule = exam100ScheduleState(state, pathIndex, stages.length);
-    var cumulative = 0;
-    var rows = schedule.plan.map(function (day) {
-      var start = cumulative;
-      var end = cumulative + Number(day.minutes || 0);
-      cumulative = end;
-      var doneInDay = Math.max(0, Math.min(Number(day.minutes || 0), schedule.completedMinutes - start));
-      var expectedInDay = Math.max(0, Math.min(Number(day.minutes || 0), schedule.elapsedMinutes - start));
-      var dayPercent = Number(day.minutes || 0) ? Math.round((doneInDay / Number(day.minutes || 0)) * 100) : 0;
-      var status = dayPercent >= 100 ? "done" : (expectedInDay > doneInDay ? "overdue" : (expectedInDay > 0 || dayPercent > 0 ? "current" : "planned"));
-      return "<article class=\"hxm-exam100-day-row " + esc(status) + "\" data-exam100-day-row data-status=\"" + esc(status) + "\">" +
-        "<b>יום " + esc(day.day) + "</b>" +
-        "<div><strong>" + esc(day.title) + "</strong><span>" + esc(dayPercent) + "% · " + esc(minutesText(day.minutes)) + "</span><i style=\"--day-progress:" + esc(dayPercent) + "%\"></i></div>" +
-        "<em>" + esc(status === "done" ? "בוצע" : status === "overdue" ? "בפיגור" : status === "current" ? "היום" : "בהמשך") + "</em>" +
-      "</article>";
-    }).join("");
-    var lag = schedule.lagMinutes;
-    var lagStatus = lag > 0 ? "behind" : "on-track";
-    var nextDisabled = pathIndex >= stages.length - 1 ? " disabled" : "";
-    var lagText = lag > 0
-      ? "אתה בפיגור " + exam100HoursText(lag) + " ביחס ללוז המתוכנן"
-      : "אתה בקצב ביחס ללוז המתוכנן";
-    return "<section class=\"hxm-exam100-schedule\" aria-label=\"לוח משימות לפי ימים\">" +
-      "<div class=\"hxm-exam100-lag-banner " + esc(lagStatus) + "\" data-exam100-lag-banner data-lag-minutes=\"" + esc(lag) + "\">" +
-        "<strong>" + esc(lagText) + "</strong>" +
-        "<button class=\"hxm-arrow-btn primary\" type=\"button\" data-exam100-next-task" + nextDisabled + ">התחל את המשימה הבאה</button>" +
-      "</div>" +
-      "<aside class=\"hxm-exam100-day-board\" data-exam100-day-board><div><h5>לוח משימות לפי ימים</h5><p>התקדמות יומית מחושבת מהמסלול הסגור. שמירה מקומית היא שחזור בלבד, לא ציון רשמי.</p></div>" + rows + "</aside>" +
-    "</section>";
   }
 
   function renderExamTaskTreeSectionExercises(tree, esc) {
@@ -918,10 +903,58 @@
   }
 
   function renderIdeCodeLines(code, esc) {
-    var lines = String(code || "unknown/unavailable").split("\n");
-    return lines.slice(0, 80).map(function (line, index) {
-      return "<span class=\"hxm-exam-ide-code-line\"><b>" + esc(index + 1) + "</b><code dir=\"ltr\">" + esc(line || " ") + "</code></span>";
+    var lines = codeWithoutComments(code).slice(0, 80);
+    return lines.map(function (line, index) {
+      return "<span class=\"hxm-exam-ide-code-line\"><b>" + esc(index + 1) + "</b><code dir=\"ltr\" lang=\"en\">" + esc(line || " ") + "</code></span>";
     }).join("");
+  }
+
+  function codeWithoutComments(code) {
+    var sourceLines = String(code || "unknown/unavailable").split("\n");
+    var inBlockComment = false;
+    var cleanRows = sourceLines.map(function (line) {
+      var output = "";
+      var quote = "";
+      var escaped = false;
+      for (var index = 0; index < line.length; index += 1) {
+        var char = line[index];
+        var next = line[index + 1] || "";
+        if (inBlockComment) {
+          if (char === "*" && next === "/") {
+            inBlockComment = false;
+            index += 1;
+          }
+          continue;
+        }
+        if (quote) {
+          output += char;
+          if (escaped) {
+            escaped = false;
+          } else if (char === "\\") {
+            escaped = true;
+          } else if (char === quote) {
+            quote = "";
+          }
+          continue;
+        }
+        if (char === "\"" || char === "'" || char === "`") {
+          quote = char;
+          output += char;
+          continue;
+        }
+        if (char === "/" && next === "/") break;
+        if (char === "/" && next === "*") {
+          inBlockComment = true;
+          index += 1;
+          continue;
+        }
+        output += char;
+      }
+      return output.replace(/\s+$/g, "");
+    }).filter(function (line) {
+      return line.trim();
+    });
+    return cleanRows.length ? cleanRows : ["unknown/unavailable"];
   }
 
   function internalPointValue(total, index, count) {
@@ -997,13 +1030,13 @@
   }
 
   function renderCodeLineExplanationRows(code, esc) {
-    var lines = String(code || "unknown/unavailable").split("\n");
+    var lines = codeWithoutComments(code);
     return lines.map(function (line, index) {
       var cleanLine = line.trim();
       var explanation = cleanLine
         ? explainCodeLine(cleanLine, index + 1)
         : "שורה " + (index + 1) + ": שורה ריקה לשיפור קריאות; לא מוסיפה לוגיקה.";
-      return "<tr><th>" + esc(index + 1) + "</th><td><code dir=\"ltr\">" + esc(line || " ") + "</code></td><td>" + esc(explanation) + "</td></tr>";
+      return "<tr><th scope=\"row\">" + esc(index + 1) + "</th><td class=\"hxm-code-only\"><code dir=\"ltr\" lang=\"en\">" + esc(line || " ") + "</code></td><td class=\"hxm-code-explain-text\" dir=\"rtl\">" + esc(explanation) + "</td></tr>";
     }).join("");
   }
 
@@ -1197,7 +1230,7 @@
       "<section class=\"hxm-exam-section-levels\"><article><h6>ברמת סבתא</h6><span>" + esc(recipe.grandmaExplanation || taskLevels.grandma || "unknown/unavailable") + "</span></article><article><h6>ברמה מקצועית</h6><span>" + esc(recipe.professionalExplanation || taskLevels.professional || "unknown/unavailable") + "</span></article></section>" +
       "<p>" + esc(recipe.explanation || "unknown/unavailable") + "</p>" +
       "<pre class=\"hxm-exam-ide-code\"><code>" + renderIdeCodeLines(recipe.code, esc) + "</code></pre>" +
-      "<table class=\"hxm-exam-code-explain\"><thead><tr><th>#</th><th>שורת קוד</th><th>מה השורה עושה</th></tr></thead><tbody>" + renderCodeLineExplanationRows(recipe.code, esc) + "</tbody></table>" +
+      "<table class=\"hxm-exam-code-explain\"><thead><tr><th>מספר שורה</th><th>קוד ללא הערות</th><th>הסבר</th></tr></thead><tbody>" + renderCodeLineExplanationRows(recipe.code, esc) + "</tbody></table>" +
       "<small><b>טעות נפוצה:</b> " + esc(recipe.commonMistake || "unknown/unavailable") + "</small>" +
       "<small><b>Gate 100:</b> " + esc(recipe.gate || task.gate || "unknown/unavailable") + "</small>" +
     "</article>";
@@ -1251,18 +1284,18 @@
         var rawStatus = String(exercise.status || (exercise.autoScorable ? "ready" : "manual_review")).replace(/-/g, "_");
         var status = (rawStatus === "manual_review" || exercise.autoScorable === false) ? "manual_review" : rawStatus;
         var progressSummary = examQuestionProgressSummary(exercise, model.taskLookup);
-        var previewRubric = (exercise.scoreRubric || []).slice(0, 3).map(function (item) {
-          return "<li><b>" + esc(item.points || 0) + " נק׳</b><span>" + esc(item.label || "") + "</span></li>";
-        }).join("");
         var portalTasks = renderExamPortalTaskButtons(exercise, esc);
-        return "<article class=\"hxm-exam-topic-question " + esc(status) + "\" data-exam-topic-question=\"" + esc(exercise.id || "") + "\">" +
+        var targetFile = ((exercise.projectFileTree || {}).targetFile) || "unknown/unavailable";
+        var taskSummary = (exercise.technicalSubtasks || []).slice(0, 2).map(function (step) {
+          return step.title || step.details || "unknown/unavailable";
+        }).join(" · ") || "משימה מלאה נפתחת בעמוד IDE";
+        var statusLine = (status === "manual_review" ? "נעול לעיון ידני" : "ready") + " · " + progressSummary.done + "/" + progressSummary.total + " · יעד: " + targetFile;
+        return "<article class=\"hxm-exam-topic-question hxm-exam-topic-task " + esc(status) + "\" data-exam-topic-question=\"" + esc(exercise.id || "") + "\" data-exam-topic-task=\"" + esc(exercise.id || "") + "\">" +
           "<div class=\"hxm-exam-question-row\">" +
-            "<button class=\"hxm-exam-question-plus\" type=\"button\" data-exam-question-toggle=\"" + esc(exercise.id || "") + "\" aria-expanded=\"false\" aria-label=\"הרחב פירוט קצר\">+</button>" +
-            "<button class=\"hxm-exam-question-title\" type=\"button\" data-exam-question-open=\"" + esc(exercise.id || "") + "\" data-exam-portal-question=\"" + esc(exercise.id || "") + "\"><strong>סעיף " + esc(exercise.idx || "") + " · " + esc(exercise.question || "") + "/" + esc(exercise.section || "") + "</strong><span>" + esc(exercise.sectionText || "unknown/unavailable") + "</span></button>" +
-            "<button class=\"hxm-exam-question-popout\" type=\"button\" data-exam-question-popout=\"" + esc(exercise.id || "") + "\">פתח IDE</button><em>" + esc(status === "manual_review" ? "manual_review" : "ready") + "</em><small data-exam-topic-question-progress=\"" + esc(exercise.id || "") + "\">" + esc(progressSummary.done) + "/" + esc(progressSummary.total) + " · " + esc(progressSummary.percent) + "%</small>" +
+            "<button class=\"hxm-exam-question-title hxm-exam-topic-task-card\" type=\"button\" data-exam-question-open=\"" + esc(exercise.id || "") + "\" data-exam-portal-question=\"" + esc(exercise.id || "") + "\" aria-label=\"" + esc("פתח עמוד IDE מלא לסעיף " + (exercise.idx || "")) + "\"><strong>סעיף " + esc(exercise.idx || "") + " · " + esc(exercise.question || "") + "/" + esc(exercise.section || "") + "</strong><span>" + esc(exercise.sectionText || "unknown/unavailable") + "</span><span>" + esc(taskSummary) + "</span><span>" + esc(statusLine) + "</span></button>" +
+            "<details class=\"hxm-exam-question-more\"><summary>עוד</summary><button class=\"hxm-exam-question-popout\" type=\"button\" data-exam-question-popout=\"" + esc(exercise.id || "") + "\">פתח חלון IDE חדש</button></details><em>" + esc(status === "manual_review" ? "manual_review" : "ready") + "</em><small data-exam-topic-question-progress=\"" + esc(exercise.id || "") + "\">" + esc(progressSummary.done) + "/" + esc(progressSummary.total) + " · " + esc(progressSummary.percent) + "%</small>" +
           "</div>" +
           "<div class=\"hxm-exam-portal-task-children\" data-exam-portal-task-children=\"" + esc(exercise.id || "") + "\">" + portalTasks + "</div>" +
-          "<div class=\"hxm-exam-question-preview\" data-exam-question-preview=\"" + esc(exercise.id || "") + "\" hidden><ol>" + previewRubric + "</ol><button type=\"button\" data-exam-question-open=\"" + esc(exercise.id || "") + "\">פתח עמוד שאלה מלא</button><button type=\"button\" data-exam-question-popout=\"" + esc(exercise.id || "") + "\">פתח בחלון IDE חדש</button></div>" +
         "</article>";
       }).join("");
       return "<details class=\"hxm-exam-topic" + esc(topicProgress.total > 0 && topicProgress.done === topicProgress.total ? " complete" : "") + "\" data-exam-topic=\"" + esc(branch.id || "") + "\"" + (index === 0 ? " open" : "") + "><summary><b>" + esc(index + 1) + "</b><span><strong>" + esc(branch.label || branch.id || "unknown/unavailable") + "</strong><em>" + esc(topic.exercises.length) + " שאלות · הסתברות " + esc(branch.probability || 0) + "%</em></span><small class=\"hxm-exam-topic-progress\"><strong data-exam-topic-progress-count=\"" + esc(branch.id || "") + "\">" + esc(topicProgress.done) + "/" + esc(topicProgress.total) + "</strong><em data-exam-topic-progress-percent=\"" + esc(branch.id || "") + "\">" + esc(topicProgress.percent) + "%</em><i><span data-exam-topic-progress-bar=\"" + esc(branch.id || "") + "\" style=\"width:" + esc(topicProgress.percent) + "%\"></span></i><mark data-exam-topic-next=\"" + esc(branch.id || "") + "\">" + esc(nextTopicLabel) + "</mark></small></summary><div class=\"hxm-exam-topic-questions\">" + questionRows + "</div></details>";
@@ -1281,14 +1314,14 @@
     }).join("");
     var fileRows = renderExamPortalFileTree(sectionExercises, esc);
     return "<section class=\"hxm-exam-task-ide hxm-exam-task-ide-portal hxm-exam-topic-browser\" id=\"hxm-exam-task-ide-portal\" data-exam-task-ide data-exam-task-ide-portal data-exam-portal-default-section=\"" + esc(firstReady.id || "") + "\" aria-label=\"פורטל משימות מבחן\">" +
-      "<header class=\"hxm-exam-portal-commandbar\"><div class=\"hxm-exam-portal-brand\"><span>IDE</span><div><strong>פורטל משימות מבחן</strong><small>Exam100 Task IDE · ימין שאלות · שמאל קבצים · מרכז הסבר וקוד</small></div></div><nav class=\"hxm-exam-portal-tabs\" aria-label=\"IDE tabs\"><b>Questions</b><b>Explanation</b><b>Code</b><b>Files</b></nav><aside class=\"hxm-exam-ide-inspector hxm-exam-portal-gate\" aria-label=\"Gate 100\"><article><b>" + esc(readyCount) + "/" + esc(sectionExercises.length) + "</b><span>ready auto-scorable</span></article><article><b>" + esc(manualCount) + "</b><span>manual_review locked</span></article></aside></header>" +
+      "<header class=\"hxm-exam-portal-commandbar\"><div class=\"hxm-exam-portal-brand\"><span>IDE</span><div><strong>פורטל משימות מבחן</strong><small>Exam100 Task IDE · ימין שאלות · שמאל קבצים · מרכז הסבר, קוד והערות</small></div></div><nav class=\"hxm-exam-portal-tabs\" aria-label=\"IDE tabs\"><b>Questions</b><b>Explanation</b><b>Code</b><b>Files</b></nav><aside class=\"hxm-exam-ide-inspector hxm-exam-portal-gate\" aria-label=\"Gate 100\"><article><b>" + esc(readyCount) + "/" + esc(sectionExercises.length) + "</b><span>ready auto-scorable</span></article><article><b>" + esc(manualCount) + "</b><span>manual_review locked</span></article></aside></header>" +
       "<div class=\"hxm-exam-portal-shell\">" +
         "<aside class=\"hxm-exam-portal-files\" data-exam-portal-files aria-label=\"עץ קבצי הקוד\"><div class=\"hxm-exam-ide-title\"><strong>עץ קבצי הקוד</strong><span>לחיצה כאן משנה רק את אזור הקוד</span></div><div class=\"hxm-exam-portal-file-list\" data-exam-portal-file-tree>" + fileRows + "</div></aside>" +
-        "<main class=\"hxm-exam-portal-center hxm-exam-question-pages\" aria-label=\"מרכז IDE\"><section class=\"hxm-exam-portal-panel explain\"><div class=\"hxm-exam-ide-editor-head\"><div><strong data-exam-portal-explain-title>הסברים</strong><span data-exam-portal-current-section>בחר סעיף מעץ השאלות מימין</span></div><b>RTL</b></div><div class=\"hxm-exam-portal-explain\" data-exam-portal-explain></div></section><section class=\"hxm-exam-portal-panel code\"><div class=\"hxm-exam-ide-editor-head\"><div><strong data-exam-portal-code-title>קוד</strong><span>בחר קובץ מעץ הקבצים משמאל. הניווט הימני לא משנה את הקוד.</span></div><b>LTR</b></div><div class=\"hxm-exam-portal-code\" data-exam-portal-code><section><h6>בחר קובץ</h6><p>הקוד יוצג כאן בלבד. נתון חסר נשאר unknown/unavailable.</p></section></div></section></main>" +
-        "<aside class=\"hxm-exam-portal-questions hxm-exam-topic-list\" data-exam-portal-questions aria-label=\"שאלות, סעיפים ומשימות\"><div class=\"hxm-exam-ide-title\"><strong>שאלות / סעיפים / משימות</strong><span>" + esc(model.topics.length) + " נושאים · " + esc(sectionExercises.length) + " שאלות</span></div><div class=\"hxm-exam-ide-section-list\">" + topicRows + "</div></aside>" +
+        "<main class=\"hxm-exam-portal-center hxm-exam-question-pages\" aria-label=\"מרכז IDE\"><section class=\"hxm-exam-portal-panel explain\"><div class=\"hxm-exam-ide-editor-head\"><div><strong data-exam-portal-explain-title>הסברים</strong><span data-exam-portal-current-section>בחר סעיף מעץ השאלות מימין</span></div><b>RTL</b></div><div class=\"hxm-exam-portal-explain\" data-exam-portal-explain></div></section><section class=\"hxm-exam-portal-panel code\"><div class=\"hxm-exam-ide-editor-head\"><div><strong data-exam-portal-code-title>קוד</strong><span>בחר קובץ מעץ הקבצים משמאל. הניווט הימני לא משנה את הקוד.</span></div><b>LTR</b></div><div class=\"hxm-exam-portal-code\" data-exam-portal-code><section><h6>בחר קובץ</h6><p>הקוד יוצג כאן בלבד. נתון חסר נשאר unknown/unavailable.</p></section></div></section><section class=\"hxm-exam-portal-panel notes\"><div class=\"hxm-exam-ide-editor-head\"><div><strong data-exam-portal-code-notes-title>טבלת הערות קוד</strong><span>שורה, קוד ללא הערות, הסבר. מופרד מאזור הקוד.</span></div><b>RTL</b></div><div class=\"hxm-exam-portal-code-notes\" data-exam-portal-code-notes><section><h6>בחר קובץ</h6><p>טבלת הערות הקוד תוצג כאן בנפרד מהקוד.</p></section></div></section></main>" +
+        "<aside class=\"hxm-exam-portal-questions hxm-exam-topic-list\" data-exam-portal-questions aria-label=\"עץ פשוט לפי נושאים ומשימות\"><div class=\"hxm-exam-ide-title\"><strong>עץ פשוט לפי נושאים</strong><span>כל משימה מוצגת ב-3 שורות. לחיצה פותחת עמוד IDE מלא.</span></div><div class=\"hxm-exam-ide-section-list\">" + topicRows + "</div></aside>" +
       "</div>" +
       "<footer class=\"hxm-exam-ide-terminal hxm-exam-portal-terminal\" aria-label=\"Task terminal\"><div class=\"hxm-exam-ide-title\"><strong>Status / Terminal</strong><span>משימות ready ראשונות · V נשמר מקומית ולא ציון רשמי</span></div><div>" + nextRows + "</div></footer>" +
-      "<div class=\"hxm-exam-portal-page-library\" data-exam-portal-page-library hidden>" + pageRows + "</div>" +
+      "<div class=\"hxm-exam-portal-page-library\" data-exam-portal-page-library hidden inert aria-hidden=\"true\">" + pageRows + "</div>" +
     "</section>";
   }
 
@@ -1297,18 +1330,8 @@
     var sortedBranches = tree.branches.slice().sort(function (a, b) {
       return Number(b.probability || 0) - Number(a.probability || 0) || String(a.label || "").localeCompare(String(b.label || ""));
     });
-    var totalTechnicalTasks = sortedBranches.reduce(function (sum, branch) {
-      return sum + (branch.subbranches || []).reduce(function (subSum, sub) {
-        return subSum + (Array.isArray(sub.technicalTasks) ? sub.technicalTasks.length : 0);
-      }, 0);
-    }, 0);
-    var study = tree.studyMinutes ? " · נוסף ללוח: " + exam100HoursText(tree.studyMinutes) : "";
     var ideRows = renderExamTaskIde(tree, sortedBranches, esc);
-    return "<section class=\"hxm-exam-task-tree\" data-exam-task-tree aria-label=\"עץ 73 סעיפי מבחן\">" +
-      "<div class=\"hxm-exam-task-tree-head\"><div><h5>עץ תרגילי המבחן לפי נושאים</h5><p>פותחים נושא, רואים את כל שאלות המבחן שלו, ואז לוחצים על שאלה כדי לפתוח עמוד מלא עם ענפים, תתי־ענפים, ניקוד, מושגים וקוד מוסבר.</p></div><b>" + esc(tree.totalSections || 0) + " שאלות · " + esc(sortedBranches.length) + " נושאים · " + esc(totalTechnicalTasks) + " משימות" + esc(study) + "</b></div>" +
-      ideRows +
-      "<p class=\"hxm-exam-task-policy\">manual_review נשאר חסום לציון אוטומטי עד עיון ידני במקור. אין fake data, אין אקראיות, ואין הסקת חומר מווידאו ללא תמלול.</p>" +
-    "</section>";
+    return "<section class=\"hxm-exam-task-tree compact\" data-exam-task-tree aria-label=\"פורטל IDE לעץ 73 סעיפי מבחן\">" + ideRows + "</section>";
   }
 
   function renderSolutionGuideDrills(drills, esc) {
@@ -1362,17 +1385,16 @@
       return "<article class=\"hxm-exam100-journey-step" + status + "\"" + aria + " data-exam100-map-step=\"" + esc(index) + "\"><b>" + esc(index + 1) + "</b><strong>" + esc(step.title) + "</strong><span>" + esc(step.routeLabel) + "</span><em>" + esc(step.reward) + "</em></article>";
     }).join("");
     var requiredRows = list(current.requiredActions || currentRoute.requiredActions || [], esc);
-    var scheduleRows = renderExam100Schedule(path, state, pathIndex, stages, esc);
-    var taskTreeRows = renderExam100TaskTreeBoard((mode || {}).masterPlan || {}, (mode || {}).basicDiagnosticTracks || [], esc);
-    var examTaskTreeRows = renderExamTaskTree((mode || {}).examTaskTree, esc);
     var fullTaskListRows = renderRemainingTimePlan((mode || {}).masterPlan || {}, (mode || {}).basicDiagnosticTracks || [], esc);
+    var examTaskTreeRows = renderExamTaskTree((mode || {}).examTaskTree, esc);
+    var entryGatewayRows = renderExam100EntryGateway(path, state, current, progressPercent, esc);
     return "<section class=\"hxm-exam100\" id=\"hxm-exam100-path\" aria-label=\"Exam 100 Path\">" +
-      taskTreeRows +
+      fullTaskListRows +
+      entryGatewayRows +
       "<div class=\"hxm-exam100-hero\"><div><p>SVCollege 100 במבחן</p><h4>" + esc(path.title || "Exam 100 Path") + "</h4><span>" + esc(path.summary || "") + "</span></div><b data-exam100-save-status>" + esc(exam100SavedText(state)) + "</b></div>" +
       "<div class=\"hxm-exam100-score\"><article><strong data-exam100-closed-percent>" + esc(progressPercent) + "%</strong><span>התקדמות במסלול</span></article><article><strong data-exam100-score>" + esc(score) + "/" + esc(total) + "</strong><span>אבחון שמור</span></article><article><strong data-exam100-level>" + esc(skipped ? "100 Track" : level.label) + "</strong><span>רמה משוערת</span></article><article><strong data-exam100-route-label>" + esc(current.routeLabel || "") + "</strong><span>התוכנית הפעילה</span></article></div>" +
       "<section class=\"hxm-exam100-journey locked\" aria-label=\"מפת מסלול עם פרסים\"><div><h5>מפת הדרך מהכניסה עד ציון 100</h5><p>אין תפריט בחירה בתוך המסלול. זזים רק עם חץ אחורה וחץ קדימה, וכל שלב מראה Gate ופרס.</p></div><div class=\"hxm-exam100-progress\"><i data-exam100-bar style=\"width:" + esc(progressPercent) + "%\"></i></div><div class=\"hxm-exam100-journey-track\">" + journeyRows + "</div></section>" +
       examTaskTreeRows +
-      scheduleRows +
       "<section class=\"hxm-exam100-plan-lanes\" aria-label=\"התוכניות הסגורות ללא בחירה\">" + planRows + "</section>" +
       "<article class=\"hxm-exam100-current-step\" data-exam100-current-step>" +
         "<div><span data-exam100-stage-counter>שלב " + esc(pathIndex + 1) + " מתוך " + esc(stages.length) + "</span><strong data-exam100-current-title>" + esc(current.title || "") + "</strong><p data-exam100-current-route>" + esc(current.routeLabel || "") + " · " + esc(current.routeLevel || "") + "</p></div>" +
@@ -1384,7 +1406,6 @@
           "<button class=\"hxm-arrow-btn primary\" type=\"button\" data-exam100-path-next" + (pathIndex >= stages.length - 1 ? " disabled" : "") + " aria-label=\"עבור לשלב הבא\">קדימה →</button>" +
         "</div>" +
       "</article>" +
-      fullTaskListRows +
       "<p class=\"hxm-exam100-save-source\" data-exam100-save-mode>" + esc(exam100RuntimeSaveMode()) + "</p>" +
     "</section>";
   }
@@ -1772,162 +1793,101 @@
     };
   }
 
-  function renderExam100FullReadinessBoard(masterPlan, tracks, esc) {
-    var state = timePlanState(masterPlan, tracks);
-    var plan = state.plan || {};
-    if (!plan.requiredMinutes) return "";
-    var siteMinutes = state.weekRows.reduce(function (sum, task) { return sum + Number(task.minutes || 0); }, 0);
-    var siteCompleted = state.weekRows.reduce(function (sum, task) { return sum + (task.completed ? Number(task.minutes || 0) : 0); }, 0);
-    var diagnosticMinutes = state.diagnosticRows.reduce(function (sum, task) { return sum + Number(task.minutes || 0); }, 0);
-    var diagnosticCompleted = state.diagnosticRows.reduce(function (sum, task) { return sum + Number(task.completedMinutes || 0); }, 0);
-    var videoDone = state.videoRows.filter(function (task) { return task.completed; }).length;
-    var presentationDone = state.presentationImageRows.filter(function (task) { return task.completed; }).length;
-    var examSectionDone = state.examSectionRows.filter(function (task) { return task.completed; }).length;
-    var manualReviewCount = state.examSectionRows.filter(function (task) { return task.manualReview; }).length;
-    var calcPercent = function (done, total) {
-      return total ? Math.round((Math.max(0, done) / total) * 100) : 0;
+  function hxmActionTarget(action) {
+    var targets = {
+      "scroll-hxm-basic-diagnostic": "#hxm-basic-diagnostic",
+      "scroll-hxm-exam-only": "#hxm-exam-only-mode",
+      "scroll-hxm-code-quality": "#hxm-code-quality",
+      "scroll-hxm-templates": "#hxm-template-list",
+      "scroll-hxm-js": "#hxm-js-bank",
+      "scroll-hxm-ts": "#hxm-ts-bank",
+      "scroll-hxm-exam-day": "#hxm-exam-day-mode",
+      "scroll-hxm-examples": "#hxm-examples",
+      "scroll-hxm-coverage": "#hxm-coverage-dashboard",
+      "scroll-hxm-solution-guide": "#hxm-solution-guide-drills",
+      "scroll-hxm-red-zone": "#hxm-red-zone",
+      "scroll-hxm-material-backlog": "#hxm-material-backlog",
+      "scroll-hxm-time-plan": "#hxm-time-plan",
     };
-    var cards = [
-      {
-        label: "1. המסלול באתר + העץ המלא",
-        value: minutesText(siteMinutes),
-        meta: state.weekRows.length + " משימות + " + state.examSectionRows.length + " סעיפי עץ · " + calcPercent(siteCompleted, siteMinutes) + "%",
-        note: examSectionDone + "/" + state.examSectionRows.length + " סעיפים סומנו. " + manualReviewCount + " manual_review נעולים ולא נספרים כ-auto-scorable.",
-      },
-      {
-        label: "אבחון בסיס",
-        value: minutesText(diagnosticMinutes),
-        meta: state.diagnosticRows.length + " בדיקות · " + calcPercent(diagnosticCompleted, diagnosticMinutes) + "%",
-        note: "בדיקת ידע התחלתית לפני קפיצה לפרויקט 70.",
-      },
-      {
-        label: "2. צפייה בכל הסרטונים",
-        value: minutesText(plan.videoWatchMinutes || 0),
-        meta: videoDone + "/" + state.videoRows.length + " סרטונים · " + esc(plan.videoWatchMinutesEach || 30) + " דק׳ לכל סרטון",
-        note: "סימון V ידני בלבד. וידאו ללא תמלול אינו מקור תוכן אוטומטי.",
-      },
-      {
-        label: "3. צפייה במצגות ותמונות",
-        value: minutesText(plan.presentationImageMinutes || 0),
-        meta: presentationDone + "/" + state.presentationImageRows.length + " פריטים · " + esc(plan.presentationImageMinutesEach || 20) + " דק׳ לפריט",
-        note: "מצגות ותמונות מהרשימה שחולצה מהתיקייה.",
-      },
-    ].map(function (card) {
-      return "<article class=\"hxm-exam100-full-card\"><strong>" + esc(card.label) + "</strong><b>" + esc(card.value) + "</b><span>" + esc(card.meta) + "</span><small>" + esc(card.note) + "</small></article>";
+    return targets[action] || "";
+  }
+
+  function timePlanTargetStatus(task, kind) {
+    var target = task && (task.href || task.url || task.path || task.target || "");
+    if (target && /^https?:\/\//.test(String(target))) return "external";
+    if (target && /^#/.test(String(target))) return "internal";
+    if (target) return "local";
+    if (kind === "diagnostic" || kind === "exam-section") return "internal";
+    if (kind === "site-tree") {
+      if (task && task.domain === "html") return "lesson";
+      return hxmActionTarget(actionForPlanTask(task)) ? "internal" : "unavailable";
+    }
+    if ((kind === "video" || kind === "presentation-image") && task && task.folder) return "local";
+    return "unavailable";
+  }
+
+  function renderTimePlanLinkAudit(state, esc) {
+    var rows = []
+      .concat((state.diagnosticRows || []).map(function (task) { return { task: task, kind: "diagnostic" }; }))
+      .concat((state.weekRows || []).map(function (task) { return { task: task, kind: "site-tree" }; }))
+      .concat((state.examSectionRows || []).map(function (task) { return { task: task, kind: "exam-section" }; }))
+      .concat((state.videoRows || []).map(function (task) { return { task: task, kind: "video" }; }))
+      .concat((state.presentationImageRows || []).map(function (task) { return { task: task, kind: "presentation-image" }; }))
+      .concat((state.optionalRows || []).map(function (task) { return { task: task, kind: "optional-backlog" }; }));
+    var counts = rows.reduce(function (acc, item) {
+      var status = timePlanTargetStatus(item.task, item.kind);
+      acc[status] = (acc[status] || 0) + 1;
+      acc.total += 1;
+      return acc;
+    }, { total: 0, external: 0, internal: 0, lesson: 0, local: 0, unavailable: 0 });
+    var available = counts.external + counts.internal + counts.lesson + counts.local;
+    var score = counts.total ? Math.round((available / counts.total) * 100) : 0;
+    var metrics = [
+      { label: "ציון יעדים", value: score + "%" },
+      { label: "יעדים פעילים", value: available + "/" + counts.total },
+      { label: "פורטל לימודים", value: counts.lesson },
+      { label: "עוגנים פנימיים", value: counts.internal },
+      { label: "קבצים מקומיים", value: counts.local },
+      { label: "לא זמין", value: counts.unavailable },
+    ].map(function (item) {
+      return "<article><strong>" + esc(item.value) + "</strong><span>" + esc(item.label) + "</span></article>";
     }).join("");
-    return "<section class=\"hxm-exam100-full-readiness\" data-exam100-full-readiness data-hxm-task-board-source=\"remainingTimePlan+exam_tasks_tree+media\" data-hxm-task-board-storage-key=\"" + esc(PROGRESS_KEY) + "\" aria-label=\"לוח משימות מלא ל-100 במבחן\">" +
-      "<div class=\"hxm-exam100-full-head\"><div><h5>לוח משימות מלא ל-100 במבחן</h5><p>זה כולל את המסלול באתר, עץ המבחן המלא, 114 סרטונים ו-40 מצגות/תמונות. סימון V מתעדכן בשמירה מקומית בלבד, לא כציון רשמי.</p></div><b data-exam100-total-left>" + esc(minutesText(state.requiredRemaining)) + " נותר</b></div>" +
-      "<div class=\"hxm-exam100-full-progress\"><i data-exam100-full-bar style=\"width:" + esc(state.requiredPercent) + "%\"></i></div>" +
-      "<div class=\"hxm-exam100-full-metrics\"><article><strong data-exam100-required-percent>" + esc(state.requiredPercent) + "%</strong><span>התקדמות כוללת</span></article><article><strong>" + esc(plan.requiredLabel || minutesText(plan.requiredMinutes)) + "</strong><span>זמן מלא לסיום הכל</span></article><article><strong>" + esc(state.videoRows.length) + " + " + esc(state.presentationImageRows.length) + " + " + esc(state.examSectionRows.length) + "</strong><span>סרטונים + מצגות/תמונות + סעיפי עץ</span></article></div>" +
-      "<div class=\"hxm-exam100-full-cards\">" + cards + "</div>" +
-      "<button class=\"km-btn-mini primary\" type=\"button\" data-hxm-action=\"scroll-hxm-time-plan\">פתח לוח מלא וסמן V</button>" +
+    return "<section class=\"hxm-link-audit\" data-hxm-link-audit aria-label=\"בדיקת יעדים וקישורים בלוח המשימות\">" +
+      "<div><strong>בדיקת יעדים לכל משימה</strong><span>כל שורה בלוח מקבלת יעד ביצוע אמיתי, פורטל לימודים, עוגן פנימי, קובץ מקומי, או סימון `unknown/unavailable` בלי להמציא לינק.</span></div>" +
+      "<div class=\"hxm-link-audit-grid\">" + metrics + "</div>" +
     "</section>";
   }
 
-  function taskTreeBoardTaskLink(task, category, esc) {
+  function renderTimePlanTarget(task, kind, esc) {
     var target = task && (task.href || task.url || task.path || task.target || "");
     if (target && /^https?:\/\//.test(String(target))) {
-      return "<a href=\"" + esc(target) + "\" target=\"_blank\" rel=\"noopener\">פתח יעד</a>";
+      return "<a class=\"hxm-time-task-link\" href=\"" + esc(target) + "\" target=\"_blank\" rel=\"noopener\" aria-label=\"" + esc("פתח יעד למשימה") + "\">פתח יעד</a>";
     }
-    if (target && /^#/.test(String(target))) return "<a href=\"" + esc(target) + "\">פתח באתר</a>";
-    if (target) return "<span class=\"hxm-tree-link local\"><b>local file</b><code dir=\"ltr\">" + esc(target) + "</code></span>";
-    if (category === "portal") return "<a href=\"#hxm-time-plan\">פתח בלוח הפורטל</a>";
-    if (category === "exam") return "<a href=\"#hxm-time-plan\">פתח בעץ המשימות</a>";
-    return "<span class=\"hxm-tree-link unavailable\">unknown/unavailable</span>";
-  }
-
-  function renderTaskTreeBoardTask(task, category, index, esc, approvalId) {
-    var id = task.progressId || task.id || (category + "-" + index);
-    var title = task.title || task.name || task.label || "unknown/unavailable";
-    var minutes = Number(task.minutes || 0);
-    var completed = !!task.completed;
-    var manualReview = !!task.manualReview;
-    var checked = completed ? " checked" : "";
-    var status = manualReview ? "נעול" : (completed ? "בוצע" : "0");
-    var source = task.source || task.folder || task.day || task.gate || "unknown/unavailable";
-    return "<label class=\"hxm-tree-task-row" + (completed ? " done" : "") + (manualReview ? " manual-review" : "") + "\" data-hxm-tree-task-row data-hxm-requires-approval=\"" + esc(approvalId) + "\" data-task-minutes=\"" + esc(minutes) + "\" data-task-category=\"" + esc(category) + "\">" +
-      "<input type=\"checkbox\" data-hxm-plan-task=\"" + esc(id) + "\" data-hxm-tree-task=\"" + esc(id) + "\" data-hxm-tree-category=\"" + esc(category) + "\" aria-label=\"" + esc("סמן V למשימה: " + title) + "\"" + checked + " disabled aria-disabled=\"true\">" +
-      "<span class=\"hxm-tree-task-main\"><b>" + esc(index + 1) + ". " + esc(title) + "</b><small>" + esc(source) + "</small></span>" +
-      "<span class=\"hxm-tree-task-time\">" + esc(minutesText(minutes)) + "</span>" +
-      "<span class=\"hxm-tree-task-status\" data-hxm-tree-task-status>" + esc(status) + "</span>" +
-      "<span class=\"hxm-tree-task-target\">" + taskTreeBoardTaskLink(task, category, esc) + "</span>" +
-    "</label>";
-  }
-
-  function renderTaskTreeCategory(category, esc) {
-    var approvalId = "approval-" + category.id;
-    var percent = category.minutes ? Math.round((category.completedMinutes || 0) / category.minutes * 100) : 0;
-    var left = Math.max(0, (category.minutes || 0) - (category.completedMinutes || 0));
-    var rows = (category.tasks || []).map(function (task, index) {
-      return renderTaskTreeBoardTask(task, category.id, index, esc, approvalId);
-    }).join("");
-    return "<details class=\"hxm-task-tree-category\" data-hxm-task-category=\"" + esc(category.id) + "\">" +
-      "<summary><div><strong>" + esc(category.title) + "</strong><span data-hxm-tree-category-count>" + esc(category.countLabel) + "</span></div><b data-hxm-tree-category-left>" + esc(minutesText(left)) + " לסיום</b><em data-hxm-tree-category-percent>" + esc(percent) + "%</em><i aria-hidden=\"true\"><span data-hxm-tree-category-bar style=\"width:" + esc(percent) + "%\"></span></i></summary>" +
-      "<div class=\"hxm-tree-approval\"><label><input type=\"checkbox\" data-hxm-plan-task=\"" + esc(approvalId) + "\" data-hxm-category-approval=\"" + esc(approvalId) + "\" data-hxm-approval-category=\"" + esc(category.id) + "\"> <span>אישור ידני שלך לפתיחת/סיום החלק הזה</span></label><small>בלי האישור הזה אי אפשר לסמן V במשימות הקטגוריה.</small></div>" +
-      "<div class=\"hxm-tree-task-list\" data-hxm-tree-task-list>" + rows + "</div>" +
-    "</details>";
-  }
-
-  function codexForwardTasks() {
-    return [
-      { id: "REM-009", priority: "P0", group: "REM", title: "בדיקת regression אחרי פירוק", hours: 3 },
-      { id: "FINAL-001", priority: "P0", group: "FINAL", title: "ריצת סגירה מלאה", hours: 1 },
-    ];
-  }
-
-  function formatCodexHours(hours) {
-    var whole = Math.floor(Number(hours || 0));
-    var minutes = Math.round((Number(hours || 0) - whole) * 60);
-    if (!minutes) return whole + " שעות";
-    return whole + " שעות " + minutes + " דק׳";
-  }
-
-  function renderCodexForwardTasksPanel(esc) {
-    var tasks = codexForwardTasks();
-    var totalHours = tasks.reduce(function (sum, task) { return sum + Number(task.hours || 0); }, 0);
-    var rows = tasks.map(function (task) {
-      return "<article class=\"hxm-codex-task-row\" data-codex-forward-task=\"" + esc(task.id) + "\">" +
-        "<span class=\"hxm-codex-task-id\">" + esc(task.id) + "</span>" +
-        "<strong>" + esc(task.title) + "</strong>" +
-        "<b>" + esc(task.hours) + " ש׳</b>" +
-        "<em>" + esc(task.priority) + "</em>" +
-      "</article>";
-    }).join("");
-    return "<aside class=\"hxm-codex-forward-panel\" data-codex-forward-panel aria-label=\"המשימות שלי קדימה\">" +
-      "<div class=\"hxm-codex-forward-head\"><div><strong>המשימות שלי קדימה</strong><span>יתרת עבודה אחרי שחרור ירוק</span></div><b>" + esc(formatCodexHours(totalHours)) + "</b></div>" +
-      "<p>נשארו " + esc(tasks.length) + " משימות. משימות IDE-001 עד IDE-013 נסגרו ברמת קוד; הבדיקות נוספו אך לא הורצו בלי בקשה מפורשת.</p>" +
-      "<div class=\"hxm-codex-forward-list\">" + rows + "</div>" +
-    "</aside>";
-  }
-
-  function renderExam100TaskTreeBoard(masterPlan, tracks, esc) {
-    var state = timePlanState(masterPlan, tracks);
-    var plan = state.plan || {};
-    if (!plan.requiredMinutes) return "";
-    var portalTasks = [].concat(state.diagnosticRows || []).concat(state.weekRows || []);
-    var categories = [
-      { id: "portal", title: "תוכנית פורטל", countLabel: (state.weekRows || []).length + " מסלול + " + (state.diagnosticRows || []).length + " אבחון", tasks: portalTasks },
-      { id: "exam", title: "עץ משימות מבחן", countLabel: (state.examSectionRows || []).length + " משימות מבחן", tasks: state.examSectionRows || [] },
-      { id: "videos", title: "סרטונים", countLabel: (state.videoRows || []).length + " סרטונים", tasks: state.videoRows || [] },
-      { id: "images", title: "תמונות/מצגות", countLabel: (state.presentationImageRows || []).length + " פריטים", tasks: state.presentationImageRows || [] },
-    ].map(function (category) {
-      category.minutes = (category.tasks || []).reduce(function (sum, task) { return sum + Number(task.minutes || 0); }, 0);
-      category.completedMinutes = (category.tasks || []).reduce(function (sum, task) { return sum + (task.completed ? Number(task.minutes || 0) : 0); }, 0);
-      return category;
-    });
-    var completedMinutes = categories.reduce(function (sum, category) { return sum + Number(category.completedMinutes || 0); }, 0);
-    var requiredMinutes = Number(plan.requiredMinutes || 0);
-    var remainingMinutes = Math.max(0, requiredMinutes - completedMinutes);
-    var percent = requiredMinutes ? Math.round(completedMinutes / requiredMinutes * 100) : 0;
-    return "<details class=\"hxm-task-tree-board\" data-hxm-task-tree-board>" +
-      "<summary><div><strong>לוח משימות</strong><span>עץ מלא: פורטל, עץ מבחן, סרטונים ותמונות</span></div><b data-hxm-tree-total-percent>" + esc(percent) + "%</b><em data-hxm-tree-total-left>" + esc(minutesText(remainingMinutes)) + " נותר</em><small>מתוך " + esc(plan.requiredLabel || minutesText(requiredMinutes)) + "</small></summary>" +
-      "<div class=\"hxm-task-tree-total-bar\" aria-hidden=\"true\"><i data-hxm-tree-total-bar style=\"width:" + esc(percent) + "%\"></i></div>" +
-      "<div class=\"hxm-task-tree-warning\" data-hxm-tree-warning>התקדמות מתחילה מ-0. סימון משימות נעול עד אישור ידני שלך לכל חלק.</div>" +
-      "<div class=\"hxm-task-tree-layout\">" +
-        renderCodexForwardTasksPanel(esc) +
-        "<div class=\"hxm-task-tree-categories\">" + categories.map(function (category) { return renderTaskTreeCategory(category, esc); }).join("") + "</div>" +
-      "</div>" +
-    "</details>";
+    if (target && /^#/.test(String(target))) {
+      return "<a class=\"hxm-time-task-link\" href=\"" + esc(target) + "\" aria-label=\"" + esc("פתח יעד פנימי למשימה") + "\">פתח יעד</a>";
+    }
+    if (target) {
+      return "<span class=\"hxm-time-task-target local\"><b>local file</b><code dir=\"ltr\">" + esc(target) + "</code></span>";
+    }
+    if (kind === "diagnostic") {
+      return "<a class=\"hxm-time-task-link\" href=\"#hxm-basic-diagnostic\" aria-label=\"" + esc("פתח אבחון בסיס") + "\">פתח יעד</a>";
+    }
+    if (kind === "site-tree") {
+      if (task && task.domain === "html") {
+        return "<button class=\"hxm-time-task-link\" type=\"button\" data-hxm-open-lesson=\"lesson_html_css_foundations\" aria-label=\"" + esc("פתח את פורטל הלימודים בעמוד HTML") + "\">פתח HTML</button>";
+      }
+      var actionTarget = hxmActionTarget(actionForPlanTask(task));
+      return actionTarget
+        ? "<a class=\"hxm-time-task-link\" href=\"" + esc(actionTarget) + "\" aria-label=\"" + esc("פתח אזור מתאים למשימת אתר") + "\">פתח יעד</a>"
+        : "<span class=\"hxm-time-task-target unavailable\">unknown/unavailable</span>";
+    }
+    if (kind === "exam-section") {
+      return "<a class=\"hxm-time-task-link\" href=\"#hxm-exam-task-ide-portal\" aria-label=\"" + esc("פתח פורטל משימות מבחן") + "\">פתח יעד</a>";
+    }
+    if ((kind === "video" || kind === "presentation-image") && task && task.folder) {
+      return "<span class=\"hxm-time-task-target local\"><b>local file</b><code dir=\"ltr\">" + esc(task.folder) + "</code></span>";
+    }
+    return "<span class=\"hxm-time-task-target unavailable\">unknown/unavailable</span>";
   }
 
   function renderRemainingTimePlan(masterPlan, tracks, esc) {
@@ -1943,6 +1903,7 @@
       return "<article class=\"hxm-time-task diagnostic heat-" + esc(task.heat || "") + "\" data-hxm-time-diagnostic=\"" + esc(task.id) + "\" data-task-kind=\"diagnostic\" data-task-source=\"basic-diagnostic\" data-task-minutes=\"" + esc(task.minutes || 0) + "\" data-task-status=\"" + esc(taskStatusText(done)) + "\">" +
         "<div><b>Heat " + esc(task.heat || "-") + "</b><strong>" + esc(task.title) + "</strong><span>" + esc(task.gate || "") + "</span></div>" +
         "<em>" + esc(task.minutes) + " דק׳</em><small>" + esc(task.percent) + "% · " + esc(minutesText(task.completedMinutes)) + " הושלם</small>" +
+        renderTimePlanTarget(task, "diagnostic", esc) +
       "</article>";
     }).join("");
     var weekRows = state.weekRows.map(function (task) {
@@ -1951,6 +1912,7 @@
       return "<label class=\"hxm-time-task required hxm-day-task" + doneClass + "\" data-hxm-time-task-row=\"" + esc(task.progressId) + "\" data-task-kind=\"site-tree\" data-task-source=\"remainingTimePlan.weekTasks\" data-task-minutes=\"" + esc(task.minutes || 0) + "\" data-task-status=\"" + esc(taskStatusText(task.completed)) + "\">" +
         "<input type=\"checkbox\" data-hxm-plan-task=\"" + esc(task.progressId) + "\" aria-label=\"" + esc("סמן V למשימת אתר ועץ: " + (task.day || "") + " - " + (task.title || "") + ", " + (task.minutes || 0) + " דקות") + "\"" + checked + ">" +
         "<span><b>" + esc(task.day || "") + " · " + esc(task.minutes) + " דק׳</b><strong>" + esc(task.title || "") + "</strong><small>" + esc(task.gate || "") + "</small></span>" +
+        renderTimePlanTarget(task, "site-tree", esc) +
       "</label>";
     }).join("");
     var examSectionRows = state.examSectionRows.map(function (task, index) {
@@ -1963,6 +1925,7 @@
       return "<label class=\"hxm-time-task required exam-section hxm-exam-section-task-row" + doneClass + manualClass + "\" data-hxm-time-task-row=\"" + esc(task.progressId) + "\" data-task-kind=\"exam-section\" data-task-source=\"" + esc(task.source || "unknown/unavailable") + "\" data-task-minutes=\"0\" data-task-status=\"" + esc(task.taskStatus || "open") + "\">" +
         "<input type=\"checkbox\" " + inputAttr + ">" +
         "<span><b>" + esc(index + 1) + "/" + esc(state.examSectionRows.length) + " · זמן כלול במסלול האתר/עץ</b><strong>" + esc(task.title || "") + "</strong><small>" + esc(task.manualReview ? "manual_review נעול - דורש עיון ידני במקור ולא נספר כ-auto-scorable" : "ready · מקור: " + (task.source || "unknown/unavailable")) + "</small></span>" +
+        renderTimePlanTarget(task, "exam-section", esc) +
       "</label>";
     }).join("");
     var videoRows = state.videoRows.map(function (task, index) {
@@ -1971,6 +1934,7 @@
       return "<label class=\"hxm-time-task required media video" + doneClass + "\" data-hxm-time-task-row=\"" + esc(task.progressId) + "\" data-task-kind=\"video\" data-task-source=\"" + esc(task.folder || "mediaAssetPlan.videos") + "\" data-task-minutes=\"" + esc(task.minutes || 30) + "\" data-task-status=\"" + esc(taskStatusText(task.completed)) + "\">" +
         "<input type=\"checkbox\" data-hxm-plan-task=\"" + esc(task.progressId) + "\" aria-label=\"" + esc("סמן V לצפייה בסרטון: " + (task.name || "") + ", " + (task.minutes || 30) + " דקות") + "\"" + checked + ">" +
         "<span><b>" + esc(index + 1) + "/114 · " + esc(task.minutes || 30) + " דק׳</b><strong>" + esc(task.name || "") + "</strong><small>" + esc(task.folder || "") + "</small></span>" +
+        renderTimePlanTarget(task, "video", esc) +
       "</label>";
     }).join("");
     var presentationImageRows = state.presentationImageRows.map(function (task, index) {
@@ -1979,6 +1943,7 @@
       return "<label class=\"hxm-time-task required media presentation-image" + doneClass + "\" data-hxm-time-task-row=\"" + esc(task.progressId) + "\" data-task-kind=\"presentation-image\" data-task-source=\"" + esc(task.folder || "mediaAssetPlan.presentationImages") + "\" data-task-minutes=\"" + esc(task.minutes || 20) + "\" data-task-status=\"" + esc(taskStatusText(task.completed)) + "\">" +
         "<input type=\"checkbox\" data-hxm-plan-task=\"" + esc(task.progressId) + "\" aria-label=\"" + esc("סמן V לצפייה במצגת או תמונה: " + (task.name || "") + ", " + (task.minutes || 20) + " דקות") + "\"" + checked + ">" +
         "<span><b>" + esc(index + 1) + "/40 · " + esc(task.minutes || 20) + " דק׳</b><strong>" + esc(task.name || "") + "</strong><small>" + esc(task.folder || "") + "</small></span>" +
+        renderTimePlanTarget(task, "presentation-image", esc) +
       "</label>";
     }).join("");
     var optionalRows = state.optionalRows.map(function (task) {
@@ -1987,6 +1952,7 @@
       return "<label class=\"hxm-time-task optional" + doneClass + "\" data-hxm-time-task-row=\"" + esc(task.progressId) + "\" data-task-kind=\"optional-backlog\" data-task-source=\"remainingTimePlan.optionalBacklog\" data-task-minutes=\"" + esc(task.minutes || 0) + "\" data-task-status=\"" + esc(taskStatusText(task.completed)) + "\">" +
         "<input type=\"checkbox\" data-hxm-plan-task=\"" + esc(task.progressId) + "\" aria-label=\"" + esc("סמן V למשימת backlog לא חוסמת: " + (task.title || "")) + "\"" + checked + ">" +
         "<span><b>" + esc(task.minutes) + " דק׳ · לא חוסם</b><strong>" + esc(task.title || "") + "</strong><small>" + esc(task.note || "") + "</small></span>" +
+        renderTimePlanTarget(task, "optional-backlog", esc) +
       "</label>";
     }).join("");
     var boardAudit = [
@@ -2007,13 +1973,14 @@
       "<div><strong>המשימה הבאה</strong><span data-hxm-time-next-title>" + esc(nextTimeTask.title) + "</span><small data-hxm-time-next-meta>" + esc(nextTimeTask.meta) + "</small></div>" +
       "<button class=\"km-btn-mini primary\" type=\"button\" data-hxm-action=\"focus-next-time-task\">קפוץ למשימה</button>" +
     "</div>";
-    return "<details class=\"hxm-sources hxm-time-plan\" id=\"hxm-time-plan\"><summary><div><strong>לוח משימות מלא</strong><span>לוח זמנים מדויק לכל המשימות שנותרו: פורטל, עץ מבחן, סרטונים, תמונות/מצגות ו-backlog</span></div><b data-hxm-time-summary-percent>" + esc(state.requiredPercent) + "%</b><em data-hxm-time-summary-left>" + esc(minutesText(state.requiredRemaining)) + " נותר</em><small>מתוך " + esc(plan.requiredLabel || minutesText(plan.requiredMinutes)) + "</small></summary>" +
+    return "<details class=\"hxm-sources hxm-time-plan hxm-time-plan-primary\" id=\"hxm-time-plan\" data-hxm-primary-task-board><summary><div class=\"hxm-time-summary-title\"><strong>לוח משימות</strong><span>לוח זמנים מדויק לכל המשימות שנותרו: פורטל, עץ מבחן, סרטונים, תמונות/מצגות ו-backlog</span><div class=\"hxm-time-summary-progress\" aria-hidden=\"true\"><i data-hxm-time-summary-bar style=\"width:" + esc(state.requiredPercent) + "%\"></i></div><mark data-hxm-time-next-inline>המשימה הבאה: " + esc(nextTimeTask.title) + "</mark></div><b data-hxm-time-summary-percent>" + esc(state.requiredPercent) + "%</b><em data-hxm-time-summary-left>" + esc(minutesText(state.requiredRemaining)) + " נותר</em><small>מתוך " + esc(plan.requiredLabel || minutesText(plan.requiredMinutes)) + "</small></summary>" +
       "<div class=\"hxm-time-head\"><div><strong>חובה להכנה מושלמת: " + esc(plan.requiredLabel || minutesText(plan.requiredMinutes)) + "</strong><span>" + esc(plan.note || "") + "</span></div><b data-hxm-time-required-percent aria-live=\"polite\">" + esc(state.requiredPercent) + "%</b></div>" +
       "<div class=\"hxm-progress-bar\" aria-hidden=\"true\"><i data-hxm-time-required-bar style=\"width:" + esc(state.requiredPercent) + "%\"></i></div>" +
       "<div class=\"hxm-time-metrics\"><article><strong data-hxm-time-required-left>" + esc(minutesText(state.requiredRemaining)) + "</strong><span>נותר חובה</span></article><article><strong>" + esc(plan.allPlansLabel || "") + "</strong><span>פורטל + עץ מלא + סרטונים + מצגות/תמונות</span></article><article><strong>" + esc(plan.withFutureVideoLabel || "") + "</strong><span>וידאו לצפייה בלבד, לא מקור תוכן בלי תמלול</span></article></div>" +
       storageBanner +
       nextTaskCard +
       "<div class=\"hxm-task-board-audit\" data-hxm-task-board-audit>" + boardAudit + "</div>" +
+      renderTimePlanLinkAudit(state, esc) +
       "<div class=\"hxm-time-summary\">" + summary + "</div>" +
       "<h5>אבחון בסיס סגור</h5><div class=\"hxm-time-task-list\">" + diagnosticRows + "</div>" +
       "<h5>1. המסלול עצמו באתר + העץ המלא</h5><div class=\"hxm-time-task-list\">" + weekRows + "</div>" +
@@ -2022,121 +1989,6 @@
       "<h5>3. צפייה במצגות ותמונות - " + esc(state.presentationImageRows.length) + " פריטים · " + esc(minutesText(plan.presentationImageMinutes || 0)) + "</h5><div class=\"hxm-time-task-list media-list\">" + presentationImageRows + "</div>" +
       "<h5>Backlog לא חוסם</h5><div class=\"hxm-time-task-list optional\">" + optionalRows + "</div>" +
     "</details>";
-  }
-
-  function readTaskTreeProgress() {
-    try {
-      var parsed = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}");
-      return parsed && typeof parsed === "object" ? parsed : {};
-    } catch (_) {
-      return {};
-    }
-  }
-
-  function writeTaskTreeProgress(progress) {
-    try {
-      localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress || {}));
-    } catch (_) {}
-  }
-
-  function setTaskTreeProgress(id, done) {
-    if (!id) return;
-    var progress = readTaskTreeProgress();
-    if (done) {
-      progress[id] = { status: "done", updatedAt: new Date().toISOString() };
-    } else {
-      delete progress[id];
-    }
-    writeTaskTreeProgress(progress);
-  }
-
-  function taskTreeDone(progress, id) {
-    return !!(id && progress && progress[id] && progress[id].status === "done");
-  }
-
-  function refreshTaskTreeBoard(container) {
-    var board = container ? container.querySelector("[data-hxm-task-tree-board]") : null;
-    if (!board) return;
-    var progress = readTaskTreeProgress();
-    board.querySelectorAll("[data-hxm-category-approval]").forEach(function (input) {
-      var id = input.getAttribute("data-hxm-category-approval") || "";
-      input.checked = taskTreeDone(progress, id);
-    });
-    board.querySelectorAll("[data-hxm-tree-task-row]").forEach(function (row) {
-      var input = row.querySelector("[data-hxm-tree-task]");
-      if (!input) return;
-      var approvalId = row.getAttribute("data-hxm-requires-approval") || "";
-      var isApproved = taskTreeDone(progress, approvalId);
-      var id = input.getAttribute("data-hxm-tree-task") || "";
-      var isDone = taskTreeDone(progress, id);
-      var isManualReview = row.classList.contains("manual-review");
-      input.checked = isDone;
-      input.disabled = !isApproved || isManualReview;
-      input.setAttribute("aria-disabled", input.disabled ? "true" : "false");
-      row.classList.toggle("locked", !isApproved || isManualReview);
-      row.classList.toggle("done", isDone);
-      var status = row.querySelector("[data-hxm-tree-task-status]");
-      if (status) status.textContent = isManualReview ? "נעול" : (isDone ? "בוצע" : "0");
-    });
-    var totalMinutes = 0;
-    var doneMinutes = 0;
-    board.querySelectorAll("[data-hxm-task-category]").forEach(function (category) {
-      var categoryMinutes = 0;
-      var categoryDoneMinutes = 0;
-      category.querySelectorAll("[data-hxm-tree-task-row]").forEach(function (row) {
-        var input = row.querySelector("[data-hxm-tree-task]");
-        var minutes = Number(row.getAttribute("data-task-minutes") || 0);
-        categoryMinutes += minutes;
-        if (input && input.checked) categoryDoneMinutes += minutes;
-      });
-      totalMinutes += categoryMinutes;
-      doneMinutes += categoryDoneMinutes;
-      var percent = categoryMinutes ? Math.round(categoryDoneMinutes / categoryMinutes * 100) : 0;
-      var left = Math.max(0, categoryMinutes - categoryDoneMinutes);
-      var percentEl = category.querySelector("[data-hxm-tree-category-percent]");
-      var leftEl = category.querySelector("[data-hxm-tree-category-left]");
-      var barEl = category.querySelector("[data-hxm-tree-category-bar]");
-      if (percentEl) percentEl.textContent = percent + "%";
-      if (leftEl) leftEl.textContent = minutesText(left) + " לסיום";
-      if (barEl) barEl.style.width = percent + "%";
-    });
-    var totalPercent = totalMinutes ? Math.round(doneMinutes / totalMinutes * 100) : 0;
-    var totalLeft = Math.max(0, totalMinutes - doneMinutes);
-    var totalPercentEl = board.querySelector("[data-hxm-tree-total-percent]");
-    var totalLeftEl = board.querySelector("[data-hxm-tree-total-left]");
-    var totalBarEl = board.querySelector("[data-hxm-tree-total-bar]");
-    if (totalPercentEl) totalPercentEl.textContent = totalPercent + "%";
-    if (totalLeftEl) totalLeftEl.textContent = minutesText(totalLeft) + " נותר";
-    if (totalBarEl) totalBarEl.style.width = totalPercent + "%";
-  }
-
-  function bindExam100TaskTreeBoard(container) {
-    if (!container || container.__hxmTaskTreeBoardBound) return;
-    container.__hxmTaskTreeBoardBound = true;
-    container.addEventListener("change", function (event) {
-      var input = event.target && event.target.closest ? event.target.closest("[data-hxm-category-approval], [data-hxm-tree-task]") : null;
-      if (!input || !container.contains(input)) return;
-      var board = input.closest("[data-hxm-task-tree-board]");
-      if (!board) return;
-      if (input.hasAttribute("data-hxm-category-approval")) {
-        setTaskTreeProgress(input.getAttribute("data-hxm-category-approval") || "", input.checked);
-        refreshTaskTreeBoard(container);
-        return;
-      }
-      var row = input.closest("[data-hxm-tree-task-row]");
-      var approvalId = row ? row.getAttribute("data-hxm-requires-approval") : "";
-      if (!taskTreeDone(readTaskTreeProgress(), approvalId)) {
-        input.checked = false;
-        event.preventDefault();
-        var warning = board.querySelector("[data-hxm-tree-warning]");
-        if (warning) warning.textContent = "אי אפשר לסמן V לפני אישור ידני שלך לפתיחת החלק הזה.";
-        refreshTaskTreeBoard(container);
-        return;
-      }
-      setTaskTreeProgress(input.getAttribute("data-hxm-tree-task") || "", input.checked);
-      refreshTaskTreeBoard(container);
-    }, true);
-    refreshTaskTreeBoard(container);
   }
 
   function renderClosedExamTracks(masterPlan, mode, esc) {
@@ -2454,17 +2306,21 @@
     var percentEl = container.querySelector("[data-hxm-time-required-percent]");
     var summaryPercentEl = container.querySelector("[data-hxm-time-summary-percent]");
     var barEl = container.querySelector("[data-hxm-time-required-bar]");
+    var summaryBarEl = container.querySelector("[data-hxm-time-summary-bar]");
     var leftEl = container.querySelector("[data-hxm-time-required-left]");
     var summaryLeftEl = container.querySelector("[data-hxm-time-summary-left]");
     var nextTitleEl = container.querySelector("[data-hxm-time-next-title]");
     var nextMetaEl = container.querySelector("[data-hxm-time-next-meta]");
+    var nextInlineEl = container.querySelector("[data-hxm-time-next-inline]");
     if (percentEl) percentEl.textContent = state.requiredPercent + "%";
     if (summaryPercentEl) summaryPercentEl.textContent = state.requiredPercent + "%";
     if (barEl) barEl.style.width = state.requiredPercent + "%";
+    if (summaryBarEl) summaryBarEl.style.width = state.requiredPercent + "%";
     if (leftEl) leftEl.textContent = minutesText(state.requiredRemaining);
     if (summaryLeftEl) summaryLeftEl.textContent = minutesText(state.requiredRemaining) + " נותר";
     if (nextTitleEl) nextTitleEl.textContent = nextTimeTask.title;
     if (nextMetaEl) nextMetaEl.textContent = nextTimeTask.meta;
+    if (nextInlineEl) nextInlineEl.textContent = "המשימה הבאה: " + nextTimeTask.title;
     var fullLeftEl = container.querySelector("[data-exam100-total-left]");
     var fullPercentEl = container.querySelector("[data-exam100-required-percent]");
     var fullBarEl = container.querySelector("[data-exam100-full-bar]");
@@ -2802,9 +2658,6 @@
     container.querySelector("[data-exam100-path-next]")?.addEventListener("click", function () {
       moveExam100ClosedPath(1);
     });
-    container.querySelector("[data-exam100-next-task]")?.addEventListener("click", function () {
-      moveExam100ClosedPath(1);
-    });
     container.querySelector("[data-exam-task-tree-open]")?.addEventListener("click", function () {
       var sectionHost = container.querySelector("[data-exam-section-exercises]");
       if (!sectionHost || sectionHost.getAttribute("data-loaded") === "true") return;
@@ -2834,7 +2687,7 @@
     }
     function cleanExamPortalClone(node) {
       var clone = node.cloneNode(true);
-      clone.querySelectorAll("input, button[data-exam-question-popout], button[data-exam-question-toggle], button[data-exam-question-open]").forEach(function (item) {
+      clone.querySelectorAll("input, button[data-exam-question-popout], button[data-exam-question-open]").forEach(function (item) {
         item.remove();
       });
       return clone;
@@ -2900,15 +2753,55 @@
       var portal = container.querySelector("[data-exam-task-ide-portal]");
       if (!portal) return;
       var titleEl = portal.querySelector("[data-exam-portal-code-title]");
+      var notesTitle = portal.querySelector("[data-exam-portal-code-notes-title]");
       var codeHost = portal.querySelector("[data-exam-portal-code]");
+      var notesHost = portal.querySelector("[data-exam-portal-code-notes]");
       var safePath = path || "unknown/unavailable";
       if (titleEl) titleEl.textContent = "קוד - " + safePath;
-      if (!codeHost) return;
+      if (notesTitle) notesTitle.textContent = "טבלת הערות קוד - " + safePath;
+      if (!codeHost && !notesHost) return;
       var matches = Array.from(container.querySelectorAll("[data-exam-portal-page-library] .hxm-exam-section-codes article, [data-exam-portal-page-library] .hxm-exam-section-codes details")).filter(function (node) {
         return safePath !== "unknown/unavailable" && node.textContent.indexOf(safePath) !== -1;
       });
       if (matches.length) {
-        codeHost.replaceChildren.apply(codeHost, matches.slice(0, 6).map(function (node) { return cleanExamPortalClone(node); }));
+        if (codeHost) {
+          codeHost.replaceChildren.apply(codeHost, matches.slice(0, 6).map(function (node) {
+            var section = document.createElement("section");
+            var h = document.createElement("h6");
+            h.textContent = safePath;
+            section.append(h);
+            var preNodes = Array.from(node.querySelectorAll("pre"));
+            if (preNodes.length) {
+              preNodes.forEach(function (pre) {
+                section.append(cleanExamPortalClone(pre));
+              });
+            } else {
+              var p = document.createElement("p");
+              p.textContent = "unknown/unavailable";
+              section.append(p);
+            }
+            return section;
+          }));
+        }
+        if (notesHost) {
+          notesHost.replaceChildren.apply(notesHost, matches.slice(0, 6).map(function (node) {
+            var section = document.createElement("section");
+            var h = document.createElement("h6");
+            h.textContent = safePath;
+            section.append(h);
+            var tables = Array.from(node.querySelectorAll(".hxm-exam-code-explain"));
+            if (tables.length) {
+              tables.forEach(function (table) {
+                section.append(cleanExamPortalClone(table));
+              });
+            } else {
+              var p = document.createElement("p");
+              p.textContent = "unknown/unavailable";
+              section.append(p);
+            }
+            return section;
+          }));
+        }
       } else {
         var section = document.createElement("section");
         var h = document.createElement("h6");
@@ -2919,7 +2812,16 @@
         code.dir = "ltr";
         code.textContent = safePath;
         section.append(h, p, code);
-        codeHost.replaceChildren(section);
+        if (codeHost) codeHost.replaceChildren(section);
+        if (notesHost) {
+          var notesSection = document.createElement("section");
+          var notesH = document.createElement("h6");
+          notesH.textContent = "unknown/unavailable";
+          var notesP = document.createElement("p");
+          notesP.textContent = "אין טבלת הערות קוד לקובץ הזה. לא ממציאים הסברים.";
+          notesSection.append(notesH, notesP);
+          notesHost.replaceChildren(notesSection);
+        }
       }
       setExamPortalActive(portal, "[data-exam-portal-file]", activeButton || portal.querySelector("[data-exam-portal-file=\"" + safePath + "\"]"));
     }
@@ -2951,7 +2853,7 @@
         "header{grid-area:head;background:#0d1b31;border:1px solid #254769;border-radius:16px;padding:16px 20px}" +
         "header h1{margin:.2rem 0;font-size:1.6rem}header p{margin:.3rem 0;color:#b8c7dd;font-weight:700}" +
         "aside,main{background:#0b1629;border:1px solid #223b5d;border-radius:16px;overflow:auto}" +
-        ".question-tree{grid-area:tree}.file-tree{grid-area:files}main{grid-area:center;display:grid;grid-template-rows:minmax(220px,.48fr) minmax(260px,.52fr);gap:12px;background:transparent;border:0;overflow:hidden}" +
+        ".question-tree{grid-area:tree}.file-tree{grid-area:files}main{grid-area:center;display:grid;grid-template-rows:minmax(190px,.34fr) minmax(220px,.33fr) minmax(180px,.33fr);gap:12px;background:transparent;border:0;overflow:hidden}" +
         ".ide-panel{background:#0b1629;border:1px solid #223b5d;border-radius:16px;overflow:auto}" +
         ".panel-title{position:sticky;top:0;background:#10213a;border-bottom:1px solid #254769;padding:12px 14px;font-weight:900;color:#dff9ff}" +
         ".content{padding:14px}.content section,.content article{background:#071225;border:1px solid #203857;border-radius:12px;margin:0 0 12px;padding:12px}" +
@@ -2961,10 +2863,11 @@
         ".hxm-exam-ide-file-tree button{display:block;width:100%;margin:.25rem 0}.hxm-exam-ide-file-tree .target button{border-color:#facc15;color:#fff2a3}" +
         ".hxm-exam-ide-file-tree ul{padding-inline-start:1.1rem}.hxm-exam-ide-code-line{display:grid;grid-template-columns:3rem minmax(0,1fr)}" +
         ".hxm-exam-ide-code-line b{color:#7b8ca5}.hxm-exam-ide-code-line code{white-space:pre;color:#dbeafe}" +
-        "@media(max-width:900px){.ide{height:auto;grid-template-columns:1fr;grid-template-areas:'head' 'tree' 'center' 'files'}main{grid-template-rows:auto}}" +
+        ".hxm-exam-code-explain{border-collapse:collapse;width:100%;font-size:.82rem;table-layout:fixed}.hxm-exam-code-explain th,.hxm-exam-code-explain td{border-top:1px solid #334155;vertical-align:top;padding:8px}.hxm-exam-code-explain th:first-child,.hxm-exam-code-explain td:first-child{width:5rem;text-align:center}.hxm-code-only{direction:ltr;text-align:left;unicode-bidi:isolate;background:#020817}.hxm-code-explain-text{direction:rtl;text-align:right;line-height:1.6}" +
+        "@media(max-width:900px){.ide{height:auto;grid-template-columns:1fr;grid-template-areas:'head' 'tree' 'center' 'files'}main{grid-template-rows:auto auto auto}}" +
         "</style></head><body><div class=\"ide\"><header><strong>Exam100 IDE</strong><h1>" + esc(title) + "</h1><p>" + esc(question) + "</p></header>" +
         "<aside class=\"file-tree\"><div class=\"panel-title\">עץ קבצי הקוד</div><div class=\"content\">" + (fileTree ? fileTree.outerHTML : "unknown/unavailable") + "</div></aside>" +
-        "<main><section class=\"ide-panel\"><div class=\"panel-title\" data-ide-explain-title>הסברים</div><div class=\"content\" data-ide-explain><section><h2>" + esc(title) + "</h2><p>" + esc(question) + "</p></section>" + (levels ? levels.outerHTML : "") + (rubric ? rubric.outerHTML : "") + (concepts ? concepts.outerHTML : "") + "</div></section><section class=\"ide-panel\"><div class=\"panel-title\" data-ide-code-title>קוד</div><div class=\"content\" data-ide-code-active><section><h2>בחר קובץ מעץ הקבצים משמאל</h2><p>הקוד מוצג כאן בלבד. הניווט הימני לא משנה את אזור הקוד.</p></section></div><div data-ide-code-library hidden>" + (codeCards ? codeCards.innerHTML : "unknown/unavailable") + "</div></section></main>" +
+        "<main><section class=\"ide-panel\"><div class=\"panel-title\" data-ide-explain-title>הסברים</div><div class=\"content\" data-ide-explain><section><h2>" + esc(title) + "</h2><p>" + esc(question) + "</p></section>" + (levels ? levels.outerHTML : "") + (rubric ? rubric.outerHTML : "") + (concepts ? concepts.outerHTML : "") + "</div></section><section class=\"ide-panel\"><div class=\"panel-title\" data-ide-code-title>קוד</div><div class=\"content\" data-ide-code-active><section><h2>בחר קובץ מעץ הקבצים משמאל</h2><p>הקוד מוצג כאן בלבד. הניווט הימני לא משנה את אזור הקוד.</p></section></div><div data-ide-code-library hidden>" + (codeCards ? codeCards.innerHTML : "unknown/unavailable") + "</div></section><section class=\"ide-panel\"><div class=\"panel-title\" data-ide-code-notes-title>טבלת הערות קוד</div><div class=\"content\" data-ide-code-notes-active><section><h2>בחר קובץ מעץ הקבצים משמאל</h2><p>טבלת הערות הקוד מוצגת כאן בנפרד מהקוד.</p></section></div></section></main>" +
         "<aside class=\"question-tree\"><div class=\"panel-title\">שאלות / סעיפים / משימות</div><div class=\"content\"><button class=\"root active\" type=\"button\" data-ide-show-question><b>השאלה הראשית</b><span>" + esc(question) + "</span></button>" + (subtaskItems || "<p>unknown/unavailable</p>") + "</div></aside>" +
         "</div></body></html>";
       popup.document.open();
@@ -2992,13 +2895,29 @@
       }
       function showCodeFile(path, button) {
         var titleEl = popup.document.querySelector("[data-ide-code-title]");
+        var notesTitleEl = popup.document.querySelector("[data-ide-code-notes-title]");
         var active = popup.document.querySelector("[data-ide-code-active]");
+        var notesActive = popup.document.querySelector("[data-ide-code-notes-active]");
         var library = popup.document.querySelector("[data-ide-code-library]");
         var matches = library ? Array.from(library.querySelectorAll("article, section")).filter(function (node) {
           return node.textContent.indexOf(path) !== -1;
         }) : [];
         if (titleEl) titleEl.textContent = "קוד - " + (path || "unknown/unavailable");
-        if (active) active.innerHTML = matches.length ? matches.map(function (node) { return node.outerHTML; }).join("") : "<section><h2>unknown/unavailable</h2><p>לא נמצא קטע קוד שממופה לקובץ <code dir=\"ltr\">" + esc(path || "unknown/unavailable") + "</code>. לא ממציאים קוד.</p></section>";
+        if (notesTitleEl) notesTitleEl.textContent = "טבלת הערות קוד - " + (path || "unknown/unavailable");
+        if (active) {
+          active.innerHTML = matches.length ? matches.map(function (node) {
+            var clone = node.cloneNode(true);
+            clone.querySelectorAll(".hxm-exam-code-explain").forEach(function (table) { table.remove(); });
+            return clone.outerHTML;
+          }).join("") : "<section><h2>unknown/unavailable</h2><p>לא נמצא קטע קוד שממופה לקובץ <code dir=\"ltr\">" + esc(path || "unknown/unavailable") + "</code>. לא ממציאים קוד.</p></section>";
+        }
+        if (notesActive) {
+          notesActive.innerHTML = matches.length ? matches.map(function (node) {
+            var tables = Array.from(node.querySelectorAll(".hxm-exam-code-explain"));
+            if (!tables.length) return "<section><h2>unknown/unavailable</h2><p>אין טבלת הערות קוד לקובץ הזה.</p></section>";
+            return "<section><h2>" + esc(path || "unknown/unavailable") + "</h2>" + tables.map(function (table) { return table.outerHTML; }).join("") + "</section>";
+          }).join("") : "<section><h2>unknown/unavailable</h2><p>אין טבלת הערות קוד לקובץ הזה. לא ממציאים הסברים.</p></section>";
+        }
         setActive("[data-exam-ide-file]", button);
       }
       popup.document.querySelectorAll("[data-ide-show-question]").forEach(function (button) {
@@ -3045,16 +2964,6 @@
     container.querySelectorAll("[data-exam-question-popout]").forEach(function (button) {
       button.addEventListener("click", function () {
         openExamQuestionIdeWindow(button.getAttribute("data-exam-question-popout") || "");
-      });
-    });
-    container.querySelectorAll("[data-exam-question-toggle]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        var sectionId = button.getAttribute("data-exam-question-toggle") || "";
-        var preview = container.querySelector("[data-exam-question-preview=\"" + sectionId + "\"]");
-        if (!preview) return;
-        preview.hidden = !preview.hidden;
-        button.textContent = preview.hidden ? "+" : "-";
-        button.setAttribute("aria-expanded", preview.hidden ? "false" : "true");
       });
     });
     container.querySelector("[data-hxm-basic-reset]")?.addEventListener("click", function () {
@@ -3116,6 +3025,7 @@
         if (action === "trainer" && ctx && typeof ctx.openTrainer === "function") return ctx.openTrainer();
         if (action === "trace" && ctx && typeof ctx.openTracePage === "function") return ctx.openTracePage();
         if (action === "codeblocks" && ctx && typeof ctx.openCodeblocks === "function") return ctx.openCodeblocks();
+        if (action === "open-html-portal" && ctx && typeof ctx.openLesson === "function") return ctx.openLesson("lesson_html_css_foundations");
         if (action === "scroll-hxm-basic-diagnostic") return scrollToExamSection("#hxm-basic-diagnostic");
         if (action === "scroll-hxm-exam-only") return scrollToExamSection("#hxm-exam-only-mode");
         if (action === "scroll-hxm-code-quality") return scrollToExamSection("#hxm-code-quality");
@@ -3158,7 +3068,6 @@
     updateProgress(container, masterPlan, tasks, esc);
     updateDiagnostic(container, mode.basicDiagnosticTracks || [], esc);
     updateExam100Path(container, mode.exam100Path, esc);
-    bindExam100TaskTreeBoard(container);
   }
 
   window.renderHomeworkExamModeView = renderHomeworkExamModeView;

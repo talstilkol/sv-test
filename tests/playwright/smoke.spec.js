@@ -18,9 +18,12 @@
 //   - Mobile viewport coverage (only 1280x800; can be added)
 
 const { test, expect } = require("@playwright/test");
+const fs = require("fs");
+const path = require("path");
 
 const PLAN_PROGRESS_KEY = "lumenportal:homeworkExamPlanProgress:v2";
 const SIMPLE_ROUTE_STORAGE_KEY = "lumenportal:simpleClosedRouteStep:v1";
+const ROOT_DIR = path.resolve(__dirname, "../..");
 
 const TOP_TAB_IDS = [
   "open-trainer",
@@ -86,6 +89,23 @@ async function openClosedExamRoute(page) {
 }
 
 test.describe("LumenPortal smoke", () => {
+  test("Exam100 source keeps removed duplicate task boards out", async () => {
+    const viewSource = fs.readFileSync(path.join(ROOT_DIR, "src/views/homework-exam-mode-view.js"), "utf8");
+    const styleSource = fs.readFileSync(path.join(ROOT_DIR, "style.css"), "utf8");
+
+    expect(viewSource).not.toContain("renderExam100TaskTreeBoard");
+    expect(viewSource).not.toContain("bindExam100TaskTreeBoard");
+    expect(viewSource).not.toContain("renderExam100Schedule");
+    expect(viewSource).not.toContain("data-hxm-task-tree-board");
+    expect(viewSource).not.toContain("data-exam100-day-board");
+    expect(viewSource).not.toContain("renderExam100FullReadinessBoard");
+    expect(viewSource).not.toContain("data-exam100-full-readiness");
+    expect(styleSource).not.toContain(".hxm-task-tree-board");
+    expect(styleSource).not.toContain(".hxm-tree-task-");
+    expect(styleSource).not.toContain(".hxm-codex-forward-");
+    expect(styleSource).not.toContain(".hxm-exam100-day-board");
+    expect(styleSource).not.toContain(".hxm-exam100-full-readiness");
+  });
   test("23 top tabs render without console errors", async ({ page }) => {
     const errors = [];
     page.on("pageerror", (err) => errors.push(`pageerror: ${err.message}`));
@@ -133,6 +153,10 @@ test.describe("LumenPortal smoke", () => {
     await expect(banner).toBeHidden();
     await expect(page.locator(".welcome-simple-route")).toBeVisible();
     await expect(page.locator(".welcome-arrow-btn")).toHaveCount(2);
+    await expect(page.locator("#simple-route-hours-left")).toContainText(/שעות|דק׳/);
+    await expect(page.locator("#simple-route-board-percent")).toContainText("%");
+    await expect(page.locator(".welcome-beginner-mode")).toBeVisible();
+    await expect(page.locator("#simple-route-blockers")).toContainText("חוסם מ-100 עכשיו");
   });
 
   test("mock exam launches without native dialog hang", async ({ page }) => {
@@ -166,9 +190,13 @@ test.describe("LumenPortal smoke", () => {
 
     await page.evaluate((key) => localStorage.removeItem(key), PLAN_PROGRESS_KEY);
     await openClosedExamRoute(page);
+    await expect(page.locator("[data-hxm-task-tree-board]")).toHaveCount(0);
+    await expect(page.locator("[data-hxm-primary-task-board]")).toHaveCount(1);
+    await expect(page.locator(".hxm-time-summary-progress")).toBeVisible({ timeout: 10000 });
     await page.locator("#hxm-time-plan").evaluate((node) => { node.open = true; });
 
     await expect(page.locator("[data-hxm-time-next-card]")).toBeVisible({ timeout: 10000 });
+    await expect(page.locator("#hxm-time-plan .hxm-time-task-link").first()).toBeVisible({ timeout: 10000 });
     await expect(page.locator("[data-hxm-action=\"focus-next-time-task\"]")).toBeVisible();
     const firstTask = page.locator('#hxm-time-plan [data-hxm-plan-task^="day-"]').first();
     await expect(firstTask).toBeVisible({ timeout: 10000 });
@@ -204,6 +232,7 @@ test.describe("LumenPortal smoke", () => {
 
     await page.evaluate((key) => localStorage.removeItem(key), PLAN_PROGRESS_KEY);
     await openClosedExamRoute(page);
+    await expect(page.locator("[data-hxm-task-tree-board]")).toHaveCount(0);
     await page.locator("#hxm-time-plan").evaluate((node) => { node.open = true; });
 
     const firstTask = page.locator('#hxm-time-plan [data-hxm-plan-task^="day-"]').first();
@@ -231,6 +260,28 @@ test.describe("LumenPortal smoke", () => {
     await expect(page.locator(`#hxm-time-plan [data-hxm-plan-task="${taskId}"]`)).toBeChecked({ timeout: 10000 });
   });
 
+  test("Exam100 UI has one primary task board and no focusable hidden library controls", async ({ page }) => {
+    await installClosedRouteStart(page);
+    await openClosedExamRoute(page);
+
+    await expect(page.locator("#hxm-time-plan")).toHaveCount(1);
+    await expect(page.locator("[data-hxm-entry-gateway]")).toHaveCount(1);
+    await expect(page.locator("[data-hxm-entry-gateway] [data-hxm-action=\"scroll-hxm-basic-diagnostic\"]")).toBeVisible();
+    await expect(page.locator("[data-hxm-entry-gateway] [data-hxm-open-lesson=\"lesson_html_css_foundations\"]")).toBeVisible();
+    await expect(page.locator("[data-hxm-start-wizard]")).toBeVisible();
+    await expect(page.locator("[data-hxm-primary-task-board]")).toHaveCount(1);
+    await expect(page.locator("[data-hxm-task-tree-board]")).toHaveCount(0);
+    await expect(page.locator("[data-exam100-day-board]")).toHaveCount(0);
+    await expect(page.locator("[data-exam-portal-page-library][hidden][inert][aria-hidden=\"true\"]")).toHaveCount(1);
+    await expect(page.locator("a[href=\"\"], button[aria-label=\"\"], [data-hxm-action=\"\"]")).toHaveCount(0);
+
+    await page.locator("#hxm-time-plan").evaluate((node) => { node.open = true; });
+    await expect(page.locator(".hxm-time-summary-progress")).toBeVisible();
+    await expect(page.locator("[data-hxm-link-audit]")).toBeVisible();
+    await expect(page.locator("#hxm-time-plan .hxm-time-task-link").first()).toBeVisible();
+    await expect(page.locator("#hxm-time-plan .hxm-time-task-target.unavailable").first()).toBeVisible();
+  });
+
   test("exam task topic tree opens full question pages on desktop and mobile", async ({ page }) => {
     await installClosedRouteStart(page);
     await openClosedExamRoute(page);
@@ -242,24 +293,30 @@ test.describe("LumenPortal smoke", () => {
     await expect(page.locator(".hxm-exam-ide-inspector")).toBeVisible();
     await expect(page.locator("[data-exam-portal-explain]")).toBeVisible();
     await expect(page.locator("[data-exam-portal-code]")).toBeVisible();
+    await expect(page.locator("[data-exam-portal-code-notes]")).toBeVisible();
     await expect(page.locator("[data-exam-topic]")).toHaveCount(7);
     expect(await page.locator("[data-exam-topic-question]").count()).toBeGreaterThanOrEqual(73);
     await expect(page.locator("[data-exam-question-page]")).toHaveCount(73);
     await expect(page.locator("[data-exam-question-page].manual_review")).toHaveCount(4);
 
-    await page.locator("[data-exam-question-toggle]").first().click();
-    await expect(page.locator("[data-exam-question-preview]").first()).toBeVisible();
+    const firstTaskCard = page.locator(".hxm-exam-topic[open] [data-exam-topic-task] .hxm-exam-topic-task-card").first();
+    await expect(firstTaskCard.locator("span")).toHaveCount(3);
     const firstOpenTopicQuestion = page.locator(".hxm-exam-topic[open] [data-exam-portal-question]").first();
     const targetSectionId = await firstOpenTopicQuestion.getAttribute("data-exam-question-open");
     const initialCode = await page.locator("[data-exam-portal-code]").textContent();
+    const initialNotes = await page.locator("[data-exam-portal-code-notes]").textContent();
     await firstOpenTopicQuestion.click();
     await expect(page.locator("[data-exam-portal-current-section]")).toContainText(targetSectionId || "");
     await page.locator(".hxm-exam-topic[open] [data-exam-portal-task]").first().click();
     await expect(page.locator("[data-exam-portal-explain-title]")).toContainText("הסבר משימה");
     await expect.poll(async () => page.locator("[data-exam-portal-code]").textContent()).toBe(initialCode);
+    await expect.poll(async () => page.locator("[data-exam-portal-code-notes]").textContent()).toBe(initialNotes);
     await page.locator("[data-exam-portal-file]").first().click();
     await expect(page.locator("[data-exam-portal-code-title]")).toContainText("קוד -");
+    await expect(page.locator("[data-exam-portal-code-notes-title]")).toContainText("טבלת הערות קוד -");
     await expect(page.locator("[data-exam-portal-explain-title]")).toContainText("הסבר משימה");
+    await expect(page.locator("[data-exam-portal-code] .hxm-exam-code-explain")).toHaveCount(0);
+    await expect(page.locator("[data-exam-portal-code-notes] .hxm-exam-code-explain").first()).toBeVisible();
 
     const manualSectionId = await page.locator("[data-exam-question-page].manual_review").first().getAttribute("data-exam-question-page");
     await page.locator(`[data-exam-topic-question="${manualSectionId}"]`).first().evaluate((node) => {
@@ -290,7 +347,9 @@ test.describe("LumenPortal exam question IDE", () => {
     await openClosedExamRoute(page);
 
     await expect(page.locator(".hxm-exam-task-ide")).toBeVisible({ timeout: 10000 });
-    const popoutButton = page.locator("[data-exam-question-popout]").first();
+    const moreMenu = page.locator(".hxm-exam-question-more").first();
+    await moreMenu.evaluate((node) => { node.open = true; });
+    const popoutButton = moreMenu.locator("[data-exam-question-popout]").first();
     await expect(popoutButton).toBeVisible();
 
     const [ide] = await Promise.all([
@@ -303,18 +362,24 @@ test.describe("LumenPortal exam question IDE", () => {
     await expect(ide.locator(".file-tree")).toBeVisible();
     await expect(ide.locator("[data-ide-explain]")).toBeVisible();
     await expect(ide.locator("[data-ide-code-active]")).toBeVisible();
+    await expect(ide.locator("[data-ide-code-notes-active]")).toBeVisible();
 
     await expect(ide.locator(".question-tree [data-exam-ide-file]")).toHaveCount(0);
     await expect(ide.locator(".file-tree [data-ide-explain-task]")).toHaveCount(0);
 
     const initialCode = await ide.locator("[data-ide-code-active]").textContent();
+    const initialNotes = await ide.locator("[data-ide-code-notes-active]").textContent();
     await ide.locator("[data-ide-explain-task]").first().click();
     await expect(ide.locator("[data-ide-explain-title]")).toContainText("הסבר משימה");
     await expect.poll(async () => ide.locator("[data-ide-code-active]").textContent()).toBe(initialCode);
+    await expect.poll(async () => ide.locator("[data-ide-code-notes-active]").textContent()).toBe(initialNotes);
 
     await ide.locator("[data-exam-ide-file]").first().click();
     await expect(ide.locator("[data-ide-code-title]")).toContainText("קוד -");
+    await expect(ide.locator("[data-ide-code-notes-title]")).toContainText("טבלת הערות קוד -");
     await expect(ide.locator("[data-ide-explain-title]")).toContainText("הסבר משימה");
+    await expect(ide.locator("[data-ide-code-active] .hxm-exam-code-explain")).toHaveCount(0);
+    await expect(ide.locator("[data-ide-code-notes-active] .hxm-exam-code-explain").first()).toBeVisible();
   });
 
   test("question IDE navigation targets are explicit or marked unavailable", async ({ page }) => {
@@ -323,7 +388,7 @@ test.describe("LumenPortal exam question IDE", () => {
 
     const [ide] = await Promise.all([
       page.waitForEvent("popup"),
-      page.locator("[data-exam-question-popout]").first().click(),
+      page.locator(".hxm-exam-question-more").first().evaluate((node) => { node.open = true; }).then(() => page.locator(".hxm-exam-question-more [data-exam-question-popout]").first().click()),
     ]);
     await ide.waitForSelector(".ide", { timeout: 10000 });
 

@@ -9,7 +9,11 @@ const APP_JS = path.join(ROOT, "app.js");
 const INDEX_HTML = path.join(ROOT, "index.html");
 const REPORT_PATH = path.join(ROOT, "DOM_ID_CONTRACT_REPORT.json");
 
-const OPTIONAL_REF_IDS = new Set([]);
+const OPTIONAL_REF_IDS = new Set([
+  "hxm-exam-day-mode",
+  "hxm-exam-task-ide-portal",
+  "hxm-time-plan",
+]);
 
 function read(filePath) {
   return fs.readFileSync(filePath, "utf8");

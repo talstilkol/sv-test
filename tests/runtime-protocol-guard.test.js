@@ -14,10 +14,15 @@ describe("runtime protocol guard", () => {
     const guard = read("src/boot/file-protocol-guard.js");
 
     expect(html).toContain('id="file-protocol-warning"');
-    expect(html).toContain("פתח דרך שרת מקומי");
-    expect(html).toContain("src/boot/file-protocol-guard.js?v=file-protocol-guard-v1");
+    expect(html).toContain("הרץ בטרמינל ואז פתח את השרת המקומי");
+    expect(html).toContain('cd "/Users/tal/Desktop/חומרים לשיעור" && npm run dev');
+    expect(html).toContain("data-copy-dev-command");
+    expect(html).toContain("http://127.0.0.1:5174/");
+    expect(html).toContain("src/boot/file-protocol-guard.js?v=file-protocol-guard-v2");
     expect(css).toContain(".file-protocol-warning");
+    expect(css).toContain(".file-protocol-warning button");
     expect(guard).toContain('window.location.protocol !== "file:"');
+    expect(guard).toContain("navigator.clipboard.writeText(command)");
     expect(guard).toContain('data-runtime-warning", "file-protocol"');
   });
 

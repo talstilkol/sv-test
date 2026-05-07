@@ -1,212 +1,7 @@
 [
   {
-    "section_idx": 19,
-    "score": 90,
-    "prompt": "פרק את תרגיל SVCollege הבא לעץ עבודה מלא.\nהחזר JSON תקין בלבד עם exercise_summary, task_ids, leaf_tasks.\nכל leaf חייב להיות ברמת משימה טכנית קטנה ביותר.\n\nקובץ: עותק של מבחן טיסות.docx\nשאלה/סעיף: Q3/1\nנוסח התרגיל:\n1. GET – מחזיר JSON עם כל הסטודנטים",
-    "answer": {
-      "requirement_scan": [
-        "להגדיר route GET",
-        "למשוך נתונים מהאחסון",
-        "להחזיר JSON + status 200"
-      ],
-      "task_mapping": [
-        {
-          "requirement": "להגדיר route GET",
-          "task_id": "api_get_all"
-        },
-        {
-          "requirement": "למשוך נתונים מהאחסון",
-          "task_id": "api_get_all"
-        },
-        {
-          "requirement": "להחזיר JSON + status 200",
-          "task_id": "api_get_all"
-        }
-      ],
-      "risk_check": [
-        "לא לרשת משימות מסעיפים שכנים אלא אם הסעיף הוא כותרת/מעטפת מפורשת",
-        "לוודא שכל task_id מופיע גם ב-task_ids וגם בתוך leaf_tasks",
-        "לפרק input/select/validation/alert/route/list/algorithm ל-leaves נפרדים"
-      ],
-      "final_json": {
-        "exercise_summary": "1. GET – מחזיר JSON עם כל הסטודנטים",
-        "task_ids": [
-          "api_get_all"
-        ],
-        "leaf_tasks": [
-          {
-            "id": "1.1.1.1",
-            "branch": "API",
-            "sub_branch": "GET all",
-            "task_id": "api_get_all",
-            "technical_task": "להגדיר route GET"
-          },
-          {
-            "id": "1.2.1.1",
-            "branch": "API",
-            "sub_branch": "GET all",
-            "task_id": "api_get_all",
-            "technical_task": "למשוך נתונים מהאחסון"
-          },
-          {
-            "id": "1.3.1.1",
-            "branch": "API",
-            "sub_branch": "GET all",
-            "task_id": "api_get_all",
-            "technical_task": "להחזיר JSON + status 200"
-          }
-        ]
-      }
-    }
-  },
-  {
-    "section_idx": 24,
-    "score": 89,
-    "prompt": "פרק את תרגיל SVCollege הבא לעץ עבודה מלא.\nהחזר JSON תקין בלבד עם exercise_summary, task_ids, leaf_tasks.\nכל leaf חייב להיות ברמת משימה טכנית קטנה ביותר.\n\nקובץ: עותק של מבחן מועד א פולסטאק (1).pdf\nשאלה/סעיף: Q2/ג\nנוסח התרגיל:\nג. סדרת פיבונאצי (כל איבר הינו סכום2 .)האיברים שבאים לפניו .ד. כל סדרה אחרת סדרה חשבונית תחזיר– A סדרה הנדסית תחזיר– B סדרת פיבונאצי תחזיר– C כל סדרה אחרת תחזיר– D ** במידה ואחד הערכים בסדרה אינו מספר או במידה והפונקציה קיבלה ערך שאינו מערך היא תזרוק שגיאה מתאימה. *את הפונקציה יש להכניס ל״חבילה חדשה״ בnode.js . .ולייצא אותה",
-    "answer": {
-      "requirement_scan": [
-        "לעטוף פעולות ב-try/catch",
-        "להחזיר/להציג הודעת שגיאה",
-        "לא להסתיר כשלונות",
-        "לזהות קלט/פלט",
-        "לממש אלגוריתם",
-        "להחזיר מבנה נתונים מדויק",
-        "ליצור קובץ",
-        "לכתוב/לקרוא תוכן",
-        "לטפל בשגיאות fs"
-      ],
-      "task_mapping": [
-        {
-          "requirement": "לעטוף פעולות ב-try/catch",
-          "task_id": "alerts_error_handling"
-        },
-        {
-          "requirement": "להחזיר/להציג הודעת שגיאה",
-          "task_id": "alerts_error_handling"
-        },
-        {
-          "requirement": "לא להסתיר כשלונות",
-          "task_id": "alerts_error_handling"
-        },
-        {
-          "requirement": "לזהות קלט/פלט",
-          "task_id": "alerts_error_handling"
-        },
-        {
-          "requirement": "לממש אלגוריתם",
-          "task_id": "alerts_error_handling"
-        },
-        {
-          "requirement": "להחזיר מבנה נתונים מדויק",
-          "task_id": "alerts_error_handling"
-        },
-        {
-          "requirement": "ליצור קובץ",
-          "task_id": "node_file_io"
-        },
-        {
-          "requirement": "לכתוב/לקרוא תוכן",
-          "task_id": "alerts_error_handling"
-        },
-        {
-          "requirement": "לטפל בשגיאות fs",
-          "task_id": "node_file_io"
-        },
-        {
-          "requirement": "לטפל במפורש במשימת js_algorithms לפי נוסח התרגיל",
-          "task_id": "js_algorithms"
-        }
-      ],
-      "risk_check": [
-        "לא לרשת משימות מסעיפים שכנים אלא אם הסעיף הוא כותרת/מעטפת מפורשת",
-        "לוודא שכל task_id מופיע גם ב-task_ids וגם בתוך leaf_tasks",
-        "לפרק input/select/validation/alert/route/list/algorithm ל-leaves נפרדים"
-      ],
-      "final_json": {
-        "exercise_summary": "ג. סדרת פיבונאצי (כל איבר הינו סכום2 .)האיברים שבאים לפניו .ד. כל סדרה אחרת סדרה חשבונית תחזיר– A סדרה הנדסית תחזיר– B סדרת פיבונאצי תחזיר– C כל סדרה אחרת תחזיר– D ** במידה ואחד הערכים בסדרה אינו מספר או במידה והפונקציה קיבלה ערך שאינו מערך היא תזרוק שגיאה מתאימה. *את הפונקציה יש להכניס ל״חבילה חדשה״ בnode.js . .ולייצא אותה",
-        "task_ids": [
-          "alerts_error_handling",
-          "js_algorithms",
-          "node_file_io"
-        ],
-        "leaf_tasks": [
-          {
-            "id": "1.1.1.1",
-            "branch": "Quality",
-            "sub_branch": "Errors and alerts",
-            "task_id": "alerts_error_handling",
-            "technical_task": "לעטוף פעולות ב-try/catch"
-          },
-          {
-            "id": "1.2.1.1",
-            "branch": "Quality",
-            "sub_branch": "Errors and alerts",
-            "task_id": "alerts_error_handling",
-            "technical_task": "להחזיר/להציג הודעת שגיאה"
-          },
-          {
-            "id": "1.3.1.1",
-            "branch": "Quality",
-            "sub_branch": "Errors and alerts",
-            "task_id": "alerts_error_handling",
-            "technical_task": "לא להסתיר כשלונות"
-          },
-          {
-            "id": "1.4.1.1",
-            "branch": "Quality",
-            "sub_branch": "Errors and alerts",
-            "task_id": "alerts_error_handling",
-            "technical_task": "לזהות קלט/פלט"
-          },
-          {
-            "id": "1.5.1.1",
-            "branch": "Quality",
-            "sub_branch": "Errors and alerts",
-            "task_id": "alerts_error_handling",
-            "technical_task": "לממש אלגוריתם"
-          },
-          {
-            "id": "1.6.1.1",
-            "branch": "Quality",
-            "sub_branch": "Errors and alerts",
-            "task_id": "alerts_error_handling",
-            "technical_task": "להחזיר מבנה נתונים מדויק"
-          },
-          {
-            "id": "1.7.1.1",
-            "branch": "Node",
-            "sub_branch": "File I/O",
-            "task_id": "node_file_io",
-            "technical_task": "ליצור קובץ"
-          },
-          {
-            "id": "1.8.1.1",
-            "branch": "Quality",
-            "sub_branch": "Errors and alerts",
-            "task_id": "alerts_error_handling",
-            "technical_task": "לכתוב/לקרוא תוכן"
-          },
-          {
-            "id": "1.9.1.1",
-            "branch": "Node",
-            "sub_branch": "File I/O",
-            "task_id": "node_file_io",
-            "technical_task": "לטפל בשגיאות fs"
-          },
-          {
-            "id": "1.10.1.1",
-            "branch": "Logic",
-            "sub_branch": "Algorithm",
-            "task_id": "js_algorithms",
-            "technical_task": "לטפל במפורש במשימת js_algorithms לפי נוסח התרגיל"
-          }
-        ]
-      }
-    }
-  },
-  {
     "section_idx": 67,
-    "score": 89,
+    "score": 99,
     "prompt": "פרק את תרגיל SVCollege הבא לעץ עבודה מלא.\nהחזר JSON תקין בלבד עם exercise_summary, task_ids, leaf_tasks.\nכל leaf חייב להיות ברמת משימה טכנית קטנה ביותר.\n\nקובץ: עותק של מבחן פולסטאק מועד ג.pdf\nשאלה/סעיף: Q1/1\nנוסח התרגיל:\n1. איזור יהיה בין 2-100 תווים )אותיות באנגלית בלבד(",
     "answer": {
       "requirement_scan": [
@@ -259,6 +54,225 @@
             "sub_branch": "Validation",
             "task_id": "client_validation_rules",
             "technical_task": "להציג שגיאה ברורה למשתמש"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "section_idx": 66,
+    "score": 98,
+    "prompt": "פרק את תרגיל SVCollege הבא לעץ עבודה מלא.\nהחזר JSON תקין בלבד עם exercise_summary, task_ids, leaf_tasks.\nכל leaf חייב להיות ברמת משימה טכנית קטנה ביותר.\n\nקובץ: עותק של מבחן פולסטאק מועד ב 2022.pdf\nשאלה/סעיף: Q3/5\nנוסח התרגיל:\n5. כפתור הצגת כל הקורסים – ימשוך את כל הקורסים הקיימים בDB ויציג אותם בHTML ממויין לפי הabc בסדר עולה לפי שם הקורס.",
+    "answer": {
+      "requirement_scan": [
+        "לחבר כפתור הצגת כל הקורסים",
+        "להגדיר GET שמחזיר את כל הקורסים מהDB",
+        "למפות מערך לרכיבים",
+        "להציג קורסים בHTML",
+        "למיין לפי שם הקורס בסדר abc עולה"
+      ],
+      "task_mapping": [
+        {
+          "requirement": "לחבר כפתור הצגת כל הקורסים",
+          "task_id": "api_get_all"
+        },
+        {
+          "requirement": "להגדיר GET שמחזיר את כל הקורסים מהDB",
+          "task_id": "api_get_all"
+        },
+        {
+          "requirement": "למפות מערך לרכיבים",
+          "task_id": "js_algorithms"
+        },
+        {
+          "requirement": "להציג קורסים בHTML",
+          "task_id": "client_list_render"
+        },
+        {
+          "requirement": "למיין לפי שם הקורס בסדר abc עולה",
+          "task_id": "api_get_all"
+        },
+        {
+          "requirement": "לטפל במפורש במשימת client_form_inputs לפי נוסח התרגיל",
+          "task_id": "client_form_inputs"
+        }
+      ],
+      "risk_check": [
+        "לא לרשת משימות מסעיפים שכנים אלא אם הסעיף הוא כותרת/מעטפת מפורשת",
+        "לוודא שכל task_id מופיע גם ב-task_ids וגם בתוך leaf_tasks",
+        "לפרק input/select/validation/alert/route/list/algorithm ל-leaves נפרדים"
+      ],
+      "final_json": {
+        "exercise_summary": "5. כפתור הצגת כל הקורסים – ימשוך את כל הקורסים הקיימים בDB ויציג אותם בHTML ממויין לפי הabc בסדר עולה לפי שם הקורס.",
+        "task_ids": [
+          "api_get_all",
+          "client_form_inputs",
+          "client_list_render",
+          "js_algorithms"
+        ],
+        "leaf_tasks": [
+          {
+            "id": "1.1.1.1",
+            "branch": "API",
+            "sub_branch": "GET all",
+            "task_id": "api_get_all",
+            "technical_task": "לחבר כפתור הצגת כל הקורסים"
+          },
+          {
+            "id": "1.2.1.1",
+            "branch": "API",
+            "sub_branch": "GET all",
+            "task_id": "api_get_all",
+            "technical_task": "להגדיר GET שמחזיר את כל הקורסים מהDB"
+          },
+          {
+            "id": "1.3.1.1",
+            "branch": "Logic",
+            "sub_branch": "Algorithm",
+            "task_id": "js_algorithms",
+            "technical_task": "למפות מערך לרכיבים"
+          },
+          {
+            "id": "1.4.1.1",
+            "branch": "Client",
+            "sub_branch": "List rendering",
+            "task_id": "client_list_render",
+            "technical_task": "להציג קורסים בHTML"
+          },
+          {
+            "id": "1.5.1.1",
+            "branch": "API",
+            "sub_branch": "GET all",
+            "task_id": "api_get_all",
+            "technical_task": "למיין לפי שם הקורס בסדר abc עולה"
+          },
+          {
+            "id": "1.6.1.1",
+            "branch": "Client",
+            "sub_branch": "Form inputs",
+            "task_id": "client_form_inputs",
+            "technical_task": "לטפל במפורש במשימת client_form_inputs לפי נוסח התרגיל"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "section_idx": 71,
+    "score": 98,
+    "prompt": "פרק את תרגיל SVCollege הבא לעץ עבודה מלא.\nהחזר JSON תקין בלבד עם exercise_summary, task_ids, leaf_tasks.\nכל leaf חייב להיות ברמת משימה טכנית קטנה ביותר.\n\nקובץ: עותק של מבחן פולסטאק מועד ג.pdf\nשאלה/סעיף: Q1/5\nנוסח התרגיל:\n5. כפתור \"אישור\" ישנה את שמו בהתאם לערוץ )update || add (. לחיצה עליו תבצע את הולידציה ותזרוק שגיאה בהתאם במידה והפעולה עברה בהצלחה יחזור המשתמש לעמוד home . כפתור logout ינתק את המשתמש ויחזור אותו לעמוד signin . *האתר חייב להיות רספונסיבי למובייל 6",
+    "answer": {
+      "requirement_scan": [
+        "להציג כפתור אישור עם טקסט משתנה לפי add/update",
+        "לבצע validation בלחיצה על אישור",
+        "להציג שגיאה מתאימה אם validation נכשל",
+        "להחזיר את המשתמש לעמוד home לאחר הצלחה",
+        "לממש logout שמחזיר לעמוד signin",
+        "לשמור UX רספונסיבי למובייל"
+      ],
+      "task_mapping": [
+        {
+          "requirement": "להציג כפתור אישור עם טקסט משתנה לפי add/update",
+          "task_id": "client_form_inputs"
+        },
+        {
+          "requirement": "לבצע validation בלחיצה על אישור",
+          "task_id": "client_form_inputs"
+        },
+        {
+          "requirement": "להציג שגיאה מתאימה אם validation נכשל",
+          "task_id": "alerts_error_handling"
+        },
+        {
+          "requirement": "להחזיר את המשתמש לעמוד home לאחר הצלחה",
+          "task_id": "client_form_inputs"
+        },
+        {
+          "requirement": "לממש logout שמחזיר לעמוד signin",
+          "task_id": "client_form_inputs"
+        },
+        {
+          "requirement": "לשמור UX רספונסיבי למובייל",
+          "task_id": "client_form_inputs"
+        },
+        {
+          "requirement": "לטפל במפורש במשימת client_validation_rules לפי נוסח התרגיל",
+          "task_id": "client_validation_rules"
+        },
+        {
+          "requirement": "לטפל במפורש במשימת client_navigation לפי נוסח התרגיל",
+          "task_id": "client_navigation"
+        }
+      ],
+      "risk_check": [
+        "לא לרשת משימות מסעיפים שכנים אלא אם הסעיף הוא כותרת/מעטפת מפורשת",
+        "לוודא שכל task_id מופיע גם ב-task_ids וגם בתוך leaf_tasks",
+        "לפרק input/select/validation/alert/route/list/algorithm ל-leaves נפרדים"
+      ],
+      "final_json": {
+        "exercise_summary": "5. כפתור \"אישור\" ישנה את שמו בהתאם לערוץ )update || add (. לחיצה עליו תבצע את הולידציה ותזרוק שגיאה בהתאם במידה והפעולה עברה בהצלחה יחזור המשתמש לעמוד home . כפתור logout ינתק את המשתמש ויחזור אותו לעמוד signin . *האתר חייב להיות רספונסיבי למובייל 6",
+        "task_ids": [
+          "client_form_inputs",
+          "client_validation_rules",
+          "client_navigation",
+          "alerts_error_handling"
+        ],
+        "leaf_tasks": [
+          {
+            "id": "1.1.1.1",
+            "branch": "Client",
+            "sub_branch": "Form inputs",
+            "task_id": "client_form_inputs",
+            "technical_task": "להציג כפתור אישור עם טקסט משתנה לפי add/update"
+          },
+          {
+            "id": "1.2.1.1",
+            "branch": "Client",
+            "sub_branch": "Form inputs",
+            "task_id": "client_form_inputs",
+            "technical_task": "לבצע validation בלחיצה על אישור"
+          },
+          {
+            "id": "1.3.1.1",
+            "branch": "Quality",
+            "sub_branch": "Errors and alerts",
+            "task_id": "alerts_error_handling",
+            "technical_task": "להציג שגיאה מתאימה אם validation נכשל"
+          },
+          {
+            "id": "1.4.1.1",
+            "branch": "Client",
+            "sub_branch": "Form inputs",
+            "task_id": "client_form_inputs",
+            "technical_task": "להחזיר את המשתמש לעמוד home לאחר הצלחה"
+          },
+          {
+            "id": "1.5.1.1",
+            "branch": "Client",
+            "sub_branch": "Form inputs",
+            "task_id": "client_form_inputs",
+            "technical_task": "לממש logout שמחזיר לעמוד signin"
+          },
+          {
+            "id": "1.6.1.1",
+            "branch": "Client",
+            "sub_branch": "Form inputs",
+            "task_id": "client_form_inputs",
+            "technical_task": "לשמור UX רספונסיבי למובייל"
+          },
+          {
+            "id": "1.7.1.1",
+            "branch": "Client",
+            "sub_branch": "Validation",
+            "task_id": "client_validation_rules",
+            "technical_task": "לטפל במפורש במשימת client_validation_rules לפי נוסח התרגיל"
+          },
+          {
+            "id": "1.8.1.1",
+            "branch": "Client",
+            "sub_branch": "Navigation",
+            "task_id": "client_navigation",
+            "technical_task": "לטפל במפורש במשימת client_navigation לפי נוסח התרגיל"
           }
         ]
       }

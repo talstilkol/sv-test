@@ -20,7 +20,7 @@ const SHELL_ASSETS = [
   "/src/main.js?v=core-bootstrap-v2",
   "/src/boot/standalone-museum.js",
   "/src/boot/file-protocol-guard.js",
-  "/src/boot/file-protocol-guard.js?v=file-protocol-guard-v1",
+  "/src/boot/file-protocol-guard.js?v=file-protocol-guard-v2",
   "/src/boot/module-bootstrap-loader.js",
   "/src/boot/module-bootstrap-loader.js?v=module-bootstrap-loader-v1",
   "/src/boot/legacy-bridge-registry.js",
