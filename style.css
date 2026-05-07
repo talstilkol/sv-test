@@ -3217,7 +3217,36 @@ body.learning-focus-mode .top-chrome-collapse-btn{right:7.65rem}
 .hxm-today-command-body p b{color:#fef3c7}
 .hxm-today-blocked{background:#7f1d1d1f;border:1px solid #f871713d;border-radius:8px;padding:.52rem .6rem;color:#fecaca!important}
 .hxm-today-command>button{white-space:nowrap;align-self:end}
-.hxm-time-plan{background:linear-gradient(135deg,#1e40af29,#0f172a57);border-color:#60a5fa47}
+.hxm-task-tree-board,.hxm-time-plan{background:linear-gradient(135deg,#1e40af29,#0f172a57);border-color:#60a5fa47}
+.hxm-task-tree-board{order:-20;margin:0 0 .35rem}
+.hxm-task-tree-board>summary,.hxm-time-plan>summary{cursor:pointer;background:#0206178c;border:1px solid #60a5fa52;border-radius:10px;grid-template-columns:minmax(0,1fr) auto auto auto;align-items:center;gap:.7rem;padding:.78rem .9rem;display:grid}
+.hxm-task-tree-board>summary strong,.hxm-time-plan>summary strong{color:#f8fafc;font-size:1.05rem;display:block}
+.hxm-task-tree-board>summary span,.hxm-time-plan>summary span{color:#cbd5e1;margin-top:.16rem;line-height:1.4;display:block}
+.hxm-task-tree-board>summary b,.hxm-time-plan>summary b{color:#cffafe;direction:ltr;background:#0891b23d;border:1px solid #22d3ee5c;border-radius:999px;padding:.28rem .72rem;font-weight:1000}
+.hxm-task-tree-board>summary em,.hxm-task-tree-board>summary small,.hxm-time-plan>summary em,.hxm-time-plan>summary small{color:#fef3c7;font-style:normal;white-space:nowrap}
+.hxm-task-tree-total-bar{background:#020617d1;border-radius:999px;height:.58rem;margin-top:.7rem;overflow:hidden}
+.hxm-task-tree-total-bar i{border-radius:inherit;background:linear-gradient(90deg,#22d3ee,#86efac,#fde047);height:100%;display:block}
+.hxm-task-tree-warning{color:#fde68a;background:#713f122e;border:1px solid #facc154a;border-radius:8px;margin-top:.7rem;padding:.58rem .7rem}
+.hxm-task-tree-layout{grid-template-columns:minmax(0,1fr);gap:.75rem;margin-top:.75rem;display:grid}
+.hxm-task-tree-categories{gap:.55rem;display:grid}
+.hxm-task-tree-category{background:#02061757;border:1px solid #94a3b829;border-radius:8px;padding:.45rem}
+.hxm-task-tree-category>summary{cursor:pointer;grid-template-columns:minmax(0,1fr) auto auto minmax(7rem,.25fr);align-items:center;gap:.55rem;display:grid}
+.hxm-task-tree-category>summary strong,.hxm-task-tree-category>summary span{display:block}
+.hxm-task-tree-category>summary strong{color:#e0f2fe}
+.hxm-task-tree-category>summary span{color:#94a3b8;font-size:.78rem}
+.hxm-task-tree-category>summary b,.hxm-task-tree-category>summary em{color:#fef3c7;font-style:normal;white-space:nowrap}
+.hxm-task-tree-category>summary i{background:#020617;border-radius:999px;height:.42rem;overflow:hidden}
+.hxm-task-tree-category>summary i span{background:linear-gradient(90deg,#22d3ee,#86efac);height:100%;display:block}
+.hxm-tree-approval{color:#dbeafe;background:#0f172a75;border:1px solid #60a5fa2e;border-radius:8px;margin:.55rem 0;padding:.55rem}
+.hxm-tree-task-list{max-height:22rem;gap:.42rem;padding-inline-end:.2rem;display:grid;overflow:auto}
+.hxm-tree-task-row{color:#cbd5e1;background:#0f172a57;border:1px solid #94a3b824;border-radius:8px;grid-template-columns:auto minmax(0,1fr) auto auto minmax(8rem,.28fr);align-items:center;gap:.55rem;padding:.55rem;display:grid}
+.hxm-tree-task-row input{accent-color:#60a5fa}
+.hxm-tree-task-main b,.hxm-tree-task-main small{display:block}
+.hxm-tree-task-main b{color:#f8fafc}
+.hxm-tree-task-main small,.hxm-tree-task-target,.hxm-tree-task-status{color:#94a3b8;font-size:.78rem}
+.hxm-tree-task-time{color:#bfdbfe;white-space:nowrap}
+.hxm-tree-task-row.manual-review{background:#7f1d1d24;border-color:#f8717142}
+@media (width<=780px){.hxm-task-tree-board>summary,.hxm-time-plan>summary,.hxm-task-tree-category>summary,.hxm-tree-task-row{grid-template-columns:minmax(0,1fr)}.hxm-task-tree-board>summary em,.hxm-task-tree-board>summary small,.hxm-time-plan>summary em,.hxm-time-plan>summary small,.hxm-task-tree-category>summary b,.hxm-task-tree-category>summary em{white-space:normal}.hxm-tree-task-list{max-height:18rem}}
 .hxm-time-head{background:#02061747;border:1px solid #60a5fa38;border-radius:8px;justify-content:space-between;align-items:flex-start;gap:.8rem;margin-top:.7rem;padding:.75rem;display:flex}
 .hxm-time-head strong,.hxm-time-head span{display:block}
 .hxm-time-head strong{color:#bfdbfe;font-size:1rem}

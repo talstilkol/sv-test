@@ -1322,10 +1322,10 @@
     var examTaskTreeRows = renderExamTaskTree((mode || {}).examTaskTree, esc);
     var fullTaskListRows = renderRemainingTimePlan((mode || {}).masterPlan || {}, (mode || {}).basicDiagnosticTracks || [], esc);
     return "<section class=\"hxm-exam100\" id=\"hxm-exam100-path\" aria-label=\"Exam 100 Path\">" +
+      taskTreeRows +
       "<div class=\"hxm-exam100-hero\"><div><p>SVCollege 100 במבחן</p><h4>" + esc(path.title || "Exam 100 Path") + "</h4><span>" + esc(path.summary || "") + "</span></div><b data-exam100-save-status>" + esc(exam100SavedText(state)) + "</b></div>" +
       "<div class=\"hxm-exam100-score\"><article><strong data-exam100-closed-percent>" + esc(progressPercent) + "%</strong><span>התקדמות במסלול</span></article><article><strong data-exam100-score>" + esc(score) + "/" + esc(total) + "</strong><span>אבחון שמור</span></article><article><strong data-exam100-level>" + esc(skipped ? "100 Track" : level.label) + "</strong><span>רמה משוערת</span></article><article><strong data-exam100-route-label>" + esc(current.routeLabel || "") + "</strong><span>התוכנית הפעילה</span></article></div>" +
       "<section class=\"hxm-exam100-journey locked\" aria-label=\"מפת מסלול עם פרסים\"><div><h5>מפת הדרך מהכניסה עד ציון 100</h5><p>אין תפריט בחירה בתוך המסלול. זזים רק עם חץ אחורה וחץ קדימה, וכל שלב מראה Gate ופרס.</p></div><div class=\"hxm-exam100-progress\"><i data-exam100-bar style=\"width:" + esc(progressPercent) + "%\"></i></div><div class=\"hxm-exam100-journey-track\">" + journeyRows + "</div></section>" +
-      taskTreeRows +
       examTaskTreeRows +
       scheduleRows +
       "<section class=\"hxm-exam100-plan-lanes\" aria-label=\"התוכניות הסגורות ללא בחירה\">" + planRows + "</section>" +
@@ -1962,7 +1962,7 @@
       "<div><strong>המשימה הבאה</strong><span data-hxm-time-next-title>" + esc(nextTimeTask.title) + "</span><small data-hxm-time-next-meta>" + esc(nextTimeTask.meta) + "</small></div>" +
       "<button class=\"km-btn-mini primary\" type=\"button\" data-hxm-action=\"focus-next-time-task\">קפוץ למשימה</button>" +
     "</div>";
-    return "<details class=\"hxm-sources hxm-time-plan\" id=\"hxm-time-plan\" open><summary>לוח זמנים מדויק לכל המשימות שנותרו</summary>" +
+    return "<details class=\"hxm-sources hxm-time-plan\" id=\"hxm-time-plan\"><summary><div><strong>לוח משימות מלא</strong><span>כל המשימות שנותרו: פורטל, עץ מבחן, סרטונים, תמונות/מצגות ו-backlog</span></div><b data-hxm-time-summary-percent>" + esc(state.requiredPercent) + "%</b><em data-hxm-time-summary-left>" + esc(minutesText(state.requiredRemaining)) + " נותר</em><small>מתוך " + esc(plan.requiredLabel || minutesText(plan.requiredMinutes)) + "</small></summary>" +
       "<div class=\"hxm-time-head\"><div><strong>חובה להכנה מושלמת: " + esc(plan.requiredLabel || minutesText(plan.requiredMinutes)) + "</strong><span>" + esc(plan.note || "") + "</span></div><b data-hxm-time-required-percent aria-live=\"polite\">" + esc(state.requiredPercent) + "%</b></div>" +
       "<div class=\"hxm-progress-bar\" aria-hidden=\"true\"><i data-hxm-time-required-bar style=\"width:" + esc(state.requiredPercent) + "%\"></i></div>" +
       "<div class=\"hxm-time-metrics\"><article><strong data-hxm-time-required-left>" + esc(minutesText(state.requiredRemaining)) + "</strong><span>נותר חובה</span></article><article><strong>" + esc(plan.allPlansLabel || "") + "</strong><span>פורטל + עץ מלא + סרטונים + מצגות/תמונות</span></article><article><strong>" + esc(plan.withFutureVideoLabel || "") + "</strong><span>וידאו לצפייה בלבד, לא מקור תוכן בלי תמלול</span></article></div>" +
@@ -2407,13 +2407,17 @@
     var state = timePlanState(masterPlan || {}, tracks || []);
     var nextTimeTask = nextTimePlanTask(state);
     var percentEl = container.querySelector("[data-hxm-time-required-percent]");
+    var summaryPercentEl = container.querySelector("[data-hxm-time-summary-percent]");
     var barEl = container.querySelector("[data-hxm-time-required-bar]");
     var leftEl = container.querySelector("[data-hxm-time-required-left]");
+    var summaryLeftEl = container.querySelector("[data-hxm-time-summary-left]");
     var nextTitleEl = container.querySelector("[data-hxm-time-next-title]");
     var nextMetaEl = container.querySelector("[data-hxm-time-next-meta]");
     if (percentEl) percentEl.textContent = state.requiredPercent + "%";
+    if (summaryPercentEl) summaryPercentEl.textContent = state.requiredPercent + "%";
     if (barEl) barEl.style.width = state.requiredPercent + "%";
     if (leftEl) leftEl.textContent = minutesText(state.requiredRemaining);
+    if (summaryLeftEl) summaryLeftEl.textContent = minutesText(state.requiredRemaining) + " נותר";
     if (nextTitleEl) nextTitleEl.textContent = nextTimeTask.title;
     if (nextMetaEl) nextMetaEl.textContent = nextTimeTask.meta;
     var fullLeftEl = container.querySelector("[data-exam100-total-left]");
