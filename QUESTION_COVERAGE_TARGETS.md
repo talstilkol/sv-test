@@ -1,12 +1,12 @@
 # Question Coverage Targets
 
 > **Historical / Superseded**: this artifact is older than the current source-of-truth run.
-> Captured on: 2026-05-03
-> Source-of-truth refresh date: 2026-05-04
+> Captured on: 2026-05-05
+> Source-of-truth refresh date: 2026-05-06
 > Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
 
 
-Date: 2026-05-03
+Date: 2026-05-05
 
 ## Summary
 

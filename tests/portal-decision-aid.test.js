@@ -11,6 +11,7 @@ describe("portal-wide one-line and comparison aid", () => {
   const app = read("app.js");
   const html = read("index.html");
   const css = read("style.css");
+  const data = read("data/portal_decision_aids.js");
 
   it("adds a reusable decision aid menu in the secondary top nav", () => {
     expect(html).toContain('id="portal-decision-menu"');
@@ -47,8 +48,10 @@ describe("portal-wide one-line and comparison aid", () => {
       '"programming-museum": {',
       '"language-tools": {',
       '"reward-store": {',
-    ].forEach((key) => expect(app).toContain(key));
-    expect(app).toContain("const PORTAL_DECISION_AIDS = {");
+    ].forEach((key) => expect(data).toContain(key));
+    expect(html).toContain("data/portal_decision_aids.js");
+    expect(data).toContain("window.PORTAL_DECISION_AIDS = {");
+    expect(app).toContain("const PORTAL_DECISION_AIDS = window.PORTAL_DECISION_AIDS");
     expect(app).toContain("function renderPortalDecisionRows");
     expect(app).toContain("function renderPortalDecisionComparisons");
     expect(app).toContain("function setPortalDecisionAid");
@@ -59,7 +62,7 @@ describe("portal-wide one-line and comparison aid", () => {
       'setPortalDecisionAid("home")',
       'setPortalDecisionAid("lesson")',
       'setPortalDecisionAid("guide")',
-      'setPortalDecisionAid("grandma")',
+      'setPortalDecisionAid("grandma-knowledge")',
       'setPortalDecisionAid("concept-sprint")',
       'setPortalDecisionAid("trainer")',
       'setPortalDecisionAid("study")',
@@ -69,8 +72,8 @@ describe("portal-wide one-line and comparison aid", () => {
       'setPortalDecisionAid("trace")',
       'setPortalDecisionAid("anatomy")',
       'setPortalDecisionAid("comparator")',
-      'setPortalDecisionAid("knowledge-map")',
-      'setPortalDecisionAid("gap")',
+      'setPortalDecisionAid("km")',
+      'setPortalDecisionAid("gap-matrix")',
       'setPortalDecisionAid("learning-evidence")',
       'setPortalDecisionAid("capstones")',
       'setPortalDecisionAid("blueprints")',

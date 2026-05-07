@@ -1,0 +1,36 @@
+version: 5
+topics:
+  js_variables_types:
+    keywords: ["let", "const", "boolean", "Data Types", "משתנים", "טיפוסים"]
+  js_arrays_loops:
+    keywords: ["array", "מערך", "forEach", "map", "filter", "find", "reduce", "spread", "splice", "sort"]
+  js_objects_dom_events:
+    keywords: ["object", "DOM", "event", "innerHTML", "addEventListener", "אובייקט", "אירוע"]
+  js_storage_errors:
+    keywords: ["localStorage", "sessionStorage", "try", "catch", "throw", "error"]
+  js_async_fetch_event_loop:
+    keywords: ["fetch", "async", "await", "Promise", "setTimeout", "Loading", "API"]
+  react_components_props_map:
+    keywords: ["React", "Component", "props", "map", "Vite", "JSX"]
+  react_state_immutable:
+    keywords: ["useState", "Immutable", "Mutable", "state", "setState", "אסור לדרוס"]
+  react_hooks_effect_ref_memo:
+    keywords: ["useEffect", "useRef", "useMemo", "side effects", "fetching"]
+  react_router_context:
+    keywords: ["Router", "Routes", "Route", "Link", "useNavigate", "useParams", "Context", "Provider"]
+  node_npm_fs_modules:
+    keywords: ["NodeJS", "npm", "module.exports", "require", "fs", "File System"]
+  express_crud_middleware_status:
+    keywords: ["Express", "middleware", "GET", "POST", "PUT", "DELETE", "status", "body-parser", "express.json"]
+  mongodb_mongoose_crud:
+    keywords: ["MongoDB", "Mongoose", "Schema", "Model", "Collection", "Document", "CRUD", "$set"]
+  mongoose_update_options:
+    keywords: ["findByIdAndUpdate", "runValidators", "new: true", "Mongoose validators", "PUT update", "עדכון", "ולידציה בסכמה"]
+  typescript_basics:
+    keywords: ["TypeScript", "type", "interface", "enum", "tuple", "void", "readonly"]
+  react_typescript_tailwind:
+    keywords: ["Typescript + React", "Typing React Props", "Typing State", "Tailwind", "utility classes"]
+  fullstack_project_patterns:
+    keywords: ["Smart House", "Budget", "Movie", "Products", "Dashboard", "פרוייקט"]
+  fullstack_books_edit_fetch:
+    keywords: ["/api/books/:id", "Book.findById", "EditBookPage", "BookForm", "CORS", "proxy", "borrow", "return", "localhost:5000"]

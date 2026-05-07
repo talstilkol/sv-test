@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-05-07T13:24:23.405Z",
+  "sourceFiles": [
+    "index.html",
+    "app.js"
+  ],
+  "declaredIds": 633,
+  "referencedIds": 462,
+  "missingRequiredCount": 0,
+  "missingOptionalCount": 3,
+  "missingRequired": [],
+  "missingOptional": [
+    "hxm-exam-day-mode",
+    "hxm-exam-task-ide-portal",
+    "hxm-time-plan"
+  ],
+  "optionalAllowlist": [
+    "hxm-exam-day-mode",
+    "hxm-exam-task-ide-portal",
+    "hxm-time-plan"
+  ],
+  "status": "pass"
+}

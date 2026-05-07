@@ -1,0 +1,137 @@
+{
+  "reportVersion": "quality-debt-progress-v1",
+  "generatedAt": "2026-05-06T16:45:13.767Z",
+  "ready": true,
+  "summary": {
+    "closedTasks": 9,
+    "totalTasks": 9,
+    "taskPercent": "100%",
+    "closedHours": 23,
+    "totalHours": 23,
+    "remainingHours": 0,
+    "timePercent": "100%",
+    "remainingLabel": "0 דק׳"
+  },
+  "metrics": {
+    "portalGates": "31/31",
+    "portalReady": true,
+    "weeklyRegressions": 0,
+    "questionNotes": 0,
+    "questionAdvisory": 0,
+    "questionDeferred": 534,
+    "examCoreNotes": 0,
+    "distractorActionablePct": 3.5,
+    "distractorActionable": 104,
+    "distractorRawPct": 3.5,
+    "distractorAdvisory": 0,
+    "distractorDeferred": 421,
+    "manualReviewLocked": 4,
+    "manualReviewReady": true,
+    "backlogRealOpen": 8,
+    "backlogNotDone": 263,
+    "backlogPartial": 10,
+    "backlogActiveNotDone": 5,
+    "backlogActivePartial": 3
+  },
+  "tasks": [
+    {
+      "id": "QD-001",
+      "priority": "P0",
+      "title": "להקים מדד חוב איכות אוטומטי ולוח המשך",
+      "estimatedHours": 0.5,
+      "done": true,
+      "status": "V",
+      "gate": "QUALITY_DEBT_PROGRESS_REPORT.md/json + QUALITY_DEBT_TASK_BOARD.md",
+      "current": "נוצר בדוח הנוכחי"
+    },
+    {
+      "id": "QD-002",
+      "priority": "P0",
+      "title": "לשמור regressions על 0 ו־portal gates ירוקים",
+      "estimatedHours": 0.5,
+      "done": true,
+      "status": "V",
+      "gate": "PORTAL_FULL_AUDIT_REPORT 31/31 + WEEKLY_PORTAL_STATUS regressions 0",
+      "current": "31/31, regressions 0"
+    },
+    {
+      "id": "QD-003",
+      "priority": "P1",
+      "title": "להוריד question notes מתחת 150 בלי שינוי exam-core",
+      "estimatedHours": 4,
+      "done": true,
+      "status": "V",
+      "gate": "QUESTION_QUALITY_REPORT noteIssues < 150, examCoreNoteIssues 0",
+      "current": "0 notes, exam-core 0"
+    },
+    {
+      "id": "QD-004",
+      "priority": "P1",
+      "title": "להוריד advisory question debt מתחת 250",
+      "estimatedHours": 3,
+      "done": true,
+      "status": "V",
+      "gate": "QUESTION_QUALITY_REPORT advisoryIssues < 250",
+      "current": "0 advisory, 534 deferred"
+    },
+    {
+      "id": "QD-005",
+      "priority": "P1",
+      "title": "להוריד distractor actionable מתחת 5%",
+      "estimatedHours": 3,
+      "done": true,
+      "status": "V",
+      "gate": "DISTRACTOR_EXAM_GATE_REPORT flaggedPercent < 5",
+      "current": "104 actionable, 3.5%"
+    },
+    {
+      "id": "QD-006",
+      "priority": "P2",
+      "title": "לסווג raw/advisory distractor debt ולהשאיר רק פריטים עם פעולה אמיתית",
+      "estimatedHours": 3,
+      "done": true,
+      "status": "V",
+      "gate": "rawFlaggedPercent < 12 and advisoryFlaggedQuestions < 250",
+      "current": "3.5% raw, 0 advisory, 421 deferred"
+    },
+    {
+      "id": "QD-007",
+      "priority": "P2",
+      "title": "לטפל ב־4 סעיפי manual_review עם מקור או נעילה מנומקת",
+      "estimatedHours": 2,
+      "done": true,
+      "status": "V",
+      "gate": "manualReviewLocked 0 OR EXAM_MANUAL_REVIEW_SECTIONS_REPORT ready with locked/no-invented-code/source-review",
+      "current": "4 locked, manualReviewReady true"
+    },
+    {
+      "id": "QD-008",
+      "priority": "P2",
+      "title": "להוריד backlog real-open מתחת 80 באמצעות owner/evidence/defer",
+      "estimatedHours": 4,
+      "done": true,
+      "status": "V",
+      "gate": "BRUTAL_MASTER_PLAN_AUDIT real-open < 80",
+      "current": "8 real-open"
+    },
+    {
+      "id": "QD-009",
+      "priority": "P3",
+      "title": "לנקות status drift במסמכי legacy",
+      "estimatedHours": 3,
+      "done": true,
+      "status": "V",
+      "gate": "active NOT DONE < 150 and active PARTIAL < 5",
+      "current": "5 active NOT DONE, 3 active PARTIAL; raw 263/10"
+    }
+  ],
+  "sources": {
+    "portal": "PORTAL_FULL_AUDIT_REPORT.json",
+    "weekly": "WEEKLY_PORTAL_STATUS.json",
+    "questions": "QUESTION_QUALITY_REPORT.json",
+    "distractors": "DISTRACTOR_EXAM_GATE_REPORT.json",
+    "backlog": "BRUTAL_MASTER_PLAN_AUDIT.json",
+    "taskBoard": "EXAM_TASK_BOARD_REPORT.json",
+    "manualReview": "EXAM_MANUAL_REVIEW_SECTIONS_REPORT.json"
+  }
+}

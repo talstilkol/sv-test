@@ -1,0 +1,40 @@
+{
+  "reportVersion": "svcollege-practical-guides-release-gate-v1",
+  "ready": true,
+  "checksCount": 3,
+  "passedCount": 3,
+  "checks": [
+    {
+      "id": "guides-verify",
+      "file": "verification_report.json",
+      "exists": true,
+      "ready": true,
+      "reason": null,
+      "reportVersion": "svcollege-practical-guides-verify-v1",
+      "checkedFiles": null,
+      "failuresCount": null
+    },
+    {
+      "id": "closed-route-smoke",
+      "file": "closed_route_smoke_report.json",
+      "exists": true,
+      "ready": true,
+      "reason": null,
+      "reportVersion": "svcollege-practical-guides-closed-route-smoke-v1",
+      "checkedFiles": 11,
+      "failuresCount": 0
+    },
+    {
+      "id": "closed-route-browser-runtime",
+      "file": "closed_route_browser_runtime_report.json",
+      "exists": true,
+      "ready": true,
+      "reason": null,
+      "reportVersion": "svcollege-practical-guides-closed-route-browser-runtime-v1",
+      "checkedFiles": 11,
+      "failuresCount": 0
+    }
+  ],
+  "failures": [],
+  "generatedAt": "2026-05-06T12:40:38.778Z"
+}

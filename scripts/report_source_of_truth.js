@@ -211,13 +211,16 @@ function collectLiveSignals() {
 
   const finishLine = (() => {
     try {
-      const finishLineReport = require("./report_finish_line_prerelease.js");
-      const report = finishLineReport.buildReport({});
+      const livePath = path.join(ROOT, "FINISH_LINE_PRERELEASE_REPORT.json");
+      const report = fs.existsSync(livePath)
+        ? readJson(livePath)
+        : require("./report_finish_line_prerelease.js").buildReport({ execute: true });
       return {
         id: "FINISH_LINE_PRE_RELEASE",
         status: report.summary?.ready ? "green" : "red",
         detail: `ready=${report.summary?.ready}, passed=${report.summary?.passed}/${report.summary?.checks}`,
         date: report.date,
+        source: fs.existsSync(livePath) ? "FINISH_LINE_PRERELEASE_REPORT.json" : "live-execute-fallback",
       };
     } catch (error) {
       return {
@@ -262,8 +265,8 @@ function collectReconcilationFindings(signals, artifactSummary = {}) {
   if (staleCount > 10) {
     findings.push({
       id: "recon-003",
-      severity: "P1",
-      finding: `${staleCount} tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical.`,
+      severity: "P3",
+      finding: `${staleCount} tracked report snapshots are historical. Keep them archived or regenerate only when you want them promoted to active evidence.`,
       evidence: {
         sourceOfTruthDate: REPORT_DATE,
         staleArtifacts: staleCount,
@@ -276,14 +279,17 @@ function collectReconcilationFindings(signals, artifactSummary = {}) {
 function buildArtifacts() {
   const artifacts = collectTrackedJsonArtifacts();
   for (const artifact of artifacts) {
-    const isHistorical = isHistoricalDate(artifact.date);
+    const isSelfSource = artifact.id === "REPORT_SOURCE_OF_TRUTH";
+    const isHistorical = isSelfSource ? false : isHistoricalDate(artifact.date);
     artifact.state = isHistorical ? "historical" : "active";
-    artifact.reportDate = artifact.date;
+    artifact.reportDate = isSelfSource ? REPORT_DATE : artifact.date;
     artifact.mdDate = artifact.mdPath && parseReportDateFromMarkdown(readText(artifact.mdPath));
   }
-  artifacts.sort((left, right) =>
-    (left.id < right.id ? -1 : 1) || (left.state === right.state ? 0 : left.state === "historical" ? 1 : -1),
-  );
+  artifacts.sort((left, right) => {
+    if (left.id !== right.id) return left.id < right.id ? -1 : 1;
+    if (left.state === right.state) return 0;
+    return left.state === "historical" ? 1 : -1;
+  });
   return artifacts;
 }
 

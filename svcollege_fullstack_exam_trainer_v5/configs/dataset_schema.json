@@ -1,0 +1,37 @@
+{
+  "sft_record": {
+    "messages": [
+      {"role": "system", "content": "string"},
+      {"role": "user", "content": "string"},
+      {"role": "assistant", "content": "string"}
+    ],
+    "meta": {
+      "topic": "string",
+      "difficulty": "easy|medium|hard",
+      "source_hashes": ["string"],
+      "exam_traps": ["string"]
+    }
+  },
+  "dpo_record": {
+    "prompt": "string",
+    "chosen": "string",
+    "rejected": "string",
+    "meta": {
+      "topic": "string",
+      "trap_type": "string",
+      "source_hashes": ["string"]
+    }
+  },
+  "eval_record": {
+    "id": "string",
+    "topic": "string",
+    "difficulty": "easy|medium|hard",
+    "question": "string",
+    "rubric": {
+      "must_include": ["string"],
+      "must_not_include": ["string"],
+      "points": 100
+    },
+    "locked": true
+  }
+}

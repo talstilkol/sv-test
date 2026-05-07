@@ -1,0 +1,154 @@
+{
+  "reportVersion": "solution-guide-coverage-v1",
+  "sourcePath": "/Users/tal/Downloads/svcollege_exams_solution_guide2.html",
+  "ready": true,
+  "summary": {
+    "bytes": 115446,
+    "lines": 3282,
+    "headings": 62,
+    "topHeadings": [
+      "מדריך פתרון מבחנים — 100/100 לסבתא 🎯",
+      "📖 תוכן עניינים",
+      "🎒 0. הכנה למבחן (מה מותר ומה אסור)",
+      "🧠 1. אסטרטגיית פתרון — חלוקת זמן ל-4 שעות",
+      "🚀 2. הקמת פרויקט בסיסי (מה לעשות לפני)",
+      "🧩 3. תבניות חוזרות — Snippets לעותק-הדבק",
+      "✈️ מבחן 1: מערכת בקרת טיסות",
+      "🏦 מבחן 2: ניהול חשבונות בנק",
+      "📦 מבחן 3: מחסן לוגיסטי",
+      "💱 מבחן 4: מחשבון המרת מטבעות",
+      "🧮 שאלות JS — פתרונות מלאים",
+      "⭐ טיפים לבונוס מהמרצה",
+      "⚠️ טעויות נפוצות שמורידות נקודות",
+      "📋 דף חזרה מהיר — Snippets"
+    ],
+    "codeBlocks": 96,
+    "detailsBlocks": 39,
+    "routes": 13,
+    "sectionsPresent": 11,
+    "sectionsTotal": 11,
+    "topicsPresent": 9,
+    "topicsTotal": 9
+  },
+  "sections": [
+    {
+      "id": "prep",
+      "label": "הכנה למבחן",
+      "present": true
+    },
+    {
+      "id": "strategy",
+      "label": "אסטרטגיית פתרון",
+      "present": true
+    },
+    {
+      "id": "setup",
+      "label": "הקמת פרויקט בסיסי",
+      "present": true
+    },
+    {
+      "id": "snippets",
+      "label": "תבניות חוזרות",
+      "present": true
+    },
+    {
+      "id": "exam_flights",
+      "label": "מבחן טיסות",
+      "present": true
+    },
+    {
+      "id": "exam_bank",
+      "label": "מבחן בנק",
+      "present": true
+    },
+    {
+      "id": "exam_logistics",
+      "label": "מבחן מחסן לוגיסטי",
+      "present": true
+    },
+    {
+      "id": "exam_currency",
+      "label": "מבחן מחשבון המרה",
+      "present": true
+    },
+    {
+      "id": "js_solutions",
+      "label": "פתרונות JS",
+      "present": true
+    },
+    {
+      "id": "mistakes",
+      "label": "טעויות נפוצות",
+      "present": true
+    },
+    {
+      "id": "quick_review",
+      "label": "דף חזרה מהיר",
+      "present": true
+    }
+  ],
+  "topics": [
+    {
+      "id": "react",
+      "label": "React",
+      "present": true
+    },
+    {
+      "id": "router",
+      "label": "React Router",
+      "present": true
+    },
+    {
+      "id": "context",
+      "label": "Context API",
+      "present": true
+    },
+    {
+      "id": "forms_validation",
+      "label": "Forms + validation",
+      "present": true
+    },
+    {
+      "id": "express",
+      "label": "Express",
+      "present": true
+    },
+    {
+      "id": "mongo",
+      "label": "Mongo/Mongoose",
+      "present": true
+    },
+    {
+      "id": "fetch_api",
+      "label": "fetch/API",
+      "present": true
+    },
+    {
+      "id": "deployment",
+      "label": "deployment",
+      "present": true
+    },
+    {
+      "id": "js_algorithms",
+      "label": "JS algorithms",
+      "present": true
+    }
+  ],
+  "routes": [
+    "/Admin",
+    "/controlpanel",
+    "/controlpanel/add",
+    "/controlpanel/delete",
+    "/controlpanel/sort",
+    "/Edit",
+    "/list",
+    "/login",
+    "/manager",
+    "/Name",
+    "/register",
+    "/signup",
+    "/update"
+  ],
+  "failures": [],
+  "coveragePolicy": "החוברת מסומנת כמקור פתרונות מכוסה רק אחרי audit; לא מוסיפים ממנה תוכן חדש בלי פירוק ידני ובדיקת מקור."
+}

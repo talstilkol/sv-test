@@ -59,6 +59,7 @@
   // Sprint 2 — Creative Methods (war stories + comparisons)
   const warStories = typeof WAR_STORIES !== "undefined" ? WAR_STORIES : {};
   const comparisons = typeof COMPARISONS !== "undefined" ? COMPARISONS : {};
+  const examPracticeExtras = typeof EXAM_PRACTICE_EXTRAS !== "undefined" ? EXAM_PRACTICE_EXTRAS : {};
   const svcollegeQuestionBanks = [
     typeof SVCOLLEGE_SQL_ORM_QUESTIONS !== "undefined" ? SVCOLLEGE_SQL_ORM_QUESTIONS : null,
     typeof SVCOLLEGE_AUTH_QUESTIONS !== "undefined" ? SVCOLLEGE_AUTH_QUESTIONS : null,
@@ -193,6 +194,18 @@
   let problemFirstCount = 0;
   let conceptVideosCount = 0;
   let bugsCount = 0;
+  let examPracticeExtrasCount = 0;
+  const mergeExamExtras = (existing, incoming) => {
+    const out = Object.assign({}, existing || {});
+    ["moreExamples", "pitfalls", "practiceQuestions"].forEach((field) => {
+      const base = Array.isArray(out[field]) ? out[field].slice() : [];
+      (Array.isArray(incoming?.[field]) ? incoming[field] : []).forEach((item) => {
+        if (base.indexOf(item) === -1) base.push(item);
+      });
+      if (base.length) out[field] = base;
+    });
+    return out;
+  };
   window.LESSONS_DATA.forEach((lesson) => {
     (lesson.concepts || []).forEach((c) => {
       const key = `${lesson.id}::${c.conceptName}`;
@@ -238,6 +251,10 @@
       );
       if (matchingComparisons.length > 0) {
         c.comparisons = matchingComparisons;
+      }
+      if (examPracticeExtras[key]) {
+        c.extras = mergeExamExtras(c.extras, examPracticeExtras[key]);
+        examPracticeExtrasCount++;
       }
       // P1.4.3 — Bug Hunts (one or more per concept)
       if (bugsByKey[key] && bugsByKey[key].length > 0) {
@@ -450,6 +467,7 @@
       `${antiPatternsCount} anti-patterns · ${mnemonicsCount} mnemonics · ` +
       `${conceptComicsCount} comics · ${stageZeroCount} stage-zero · ` +
       `${memoryPalacesCount} memory palaces · ${problemFirstCount} problem-first · ` +
-      `${conceptVideosCount} concept clips · ${lessonQuizKeyCount} lesson quiz key maps.`,
+      `${conceptVideosCount} concept clips · ${examPracticeExtrasCount} exam practice extras · ` +
+      `${lessonQuizKeyCount} lesson quiz key maps.`,
   );
 })();

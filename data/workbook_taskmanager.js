@@ -92,7 +92,7 @@ WORKBOOK_TASKMANAGER.concepts.push({
     "  task.done ? '✅' : '⬜'                 ← UI render\n" +
     "  if (tasks.length === 0) showEmpty()   ← empty state",
   codeExample:
-    "function addTask(title) {\n  if (!title || !title.trim()) {\n    alert('יש להזין כותרת למשימה');\n    return;\n  }\n  if (tasks.length >= 100) {\n    alert('הרשימה מלאה');\n    return;\n  }\n  tasks.push({ id: Date.now(), title: title.trim(), done: false });\n  render();\n}",
+    "function addTask(title) {\n  if (!title || !title.trim()) {\n    alert('יש להזין כותרת למשימה');\n    return;\n  }\n  if (tasks.length >= 100) {\n    alert('הרשימה מלאה');\n    return;\n  }\n  const cleanTitle = title.trim();\n  const id = 'task-' + tasks.length + '-' + cleanTitle.toLowerCase();\n  tasks.push({ id, title: cleanTitle, done: false });\n  render();\n}",
   codeExplanation:
     "התנאי הראשון פוסל קלט ריק (כולל רווחים). השני מגביל את כמות המשימות. רק אם שני התנאים עוברים — המשימה מתווספת. הגנת קלט בסיסית בכל אפליקציה.",
 });
@@ -149,7 +149,7 @@ WORKBOOK_TASKMANAGER.concepts.push({
     "  toggleDone(id)     → מהפך מצב, קורא ל-render\n" +
     "  render()           → מצייר ב-DOM",
   codeExample:
-    "function addTask(title) {\n  tasks.push({ id: Date.now(), title, done: false });\n  save(); render();\n}\n\nconst removeTask = (id) => {\n  tasks = tasks.filter(t => t.id !== id);\n  save(); render();\n};\n\nconst filterBy = (status) => (t) => t.done === status;\nconst completed = tasks.filter(filterBy(true));",
+    "function addTask(title) {\n  const id = 'task-' + tasks.length + '-' + title.trim().toLowerCase();\n  tasks.push({ id, title, done: false });\n  save(); render();\n}\n\nconst removeTask = (id) => {\n  tasks = tasks.filter(t => t.id !== id);\n  save(); render();\n};\n\nconst filterBy = (status) => (t) => t.done === status;\nconst completed = tasks.filter(filterBy(true));",
   codeExplanation:
     "שימו לב לדפוס: עדכן state → save → render. filterBy מדגים higher-order function — פונקציה שמחזירה פונקציה, מאוד שימושי ב-filter ו-sort.",
   extras: {
@@ -162,7 +162,7 @@ WORKBOOK_TASKMANAGER.concepts.push({
       },
       {
         code:
-          "function createTask(title, priority = 'normal', done = false) {\n  return { id: Date.now(), title, priority, done };\n}\ncreateTask('להוציא כלב');\ncreateTask('דחוף!', 'high');",
+          "function createTask(title, index, priority = 'normal', done = false) {\n  const id = 'task-' + index + '-' + title.trim().toLowerCase();\n  return { id, title, priority, done };\n}\ncreateTask('להוציא כלב', 0);\ncreateTask('דחוף!', 1, 'high');",
         explanation:
           "default parameters מאפשרים לקרוא לפונקציה בלי להעביר את כל הארגומנטים. מנקה את הקוד ומונע 'undefined'.",
       },
@@ -289,7 +289,7 @@ WORKBOOK_TASKMANAGER.concepts.push({
   illustration:
     "🎴 task object:\n\n  { id: 1, title: 'ללמוד JS', done: false, createdAt: 17e8 }\n  task.title  →  'ללמוד JS'\n  { ...task, done: true }  →  אובייקט חדש",
   codeExample:
-    "function createTask(title) {\n  return {\n    id: Date.now(),\n    title: title.trim(),\n    done: false,\n    createdAt: new Date().toISOString(),\n  };\n}\n\nfunction toggleDone(taskId) {\n  tasks = tasks.map(t =>\n    t.id === taskId ? { ...t, done: !t.done } : t\n  );\n}",
+    "function createTask(title, index) {\n  const cleanTitle = title.trim();\n  return {\n    id: 'task-' + index + '-' + cleanTitle.toLowerCase(),\n    title: cleanTitle,\n    done: false,\n    createdAt: new Date().toISOString(),\n  };\n}\n\nfunction toggleDone(taskId) {\n  tasks = tasks.map(t =>\n    t.id === taskId ? { ...t, done: !t.done } : t\n  );\n}",
   codeExplanation:
     "createTask מחזיר אובייקט חדש בכל קריאה. toggleDone משתמש ב-spread כדי ליצור אובייקט חדש עם done הפוך, ולהשאיר את שאר המשימות כפי שהן.",
 });

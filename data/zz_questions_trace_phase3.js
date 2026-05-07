@@ -91,7 +91,7 @@ var QUESTIONS_TRACE_PHASE3 = [
     conceptKey: "lesson_25::validation",
     level: 3,
     title: "form validation",
-    code: "function AddMovieForm({ onAdd }) {\n  const [title, setTitle] = useState('');\n  const submit = () => {\n    if (!title.trim()) return alert('שם חובה');\n    onAdd({ id: Date.now(), title });\n    setTitle('');\n  };\n}",
+    code: "function AddMovieForm({ onAdd, nextIndex }) {\n  const [title, setTitle] = useState('');\n  const submit = () => {\n    if (!title.trim()) return alert('שם חובה');\n    onAdd({ id: 'movie-' + nextIndex + '-' + title.trim().toLowerCase(), title });\n    setTitle('');\n  };\n}",
     steps: [
       { line: 4, prompt: "מתי alert מופעל?", answer: "אם title ריק או רווחים בלבד", acceptable: ["title.trim() ריק"], hint: "trim מסיר רווחים." },
     ],
@@ -381,18 +381,18 @@ var QUESTIONS_TRACE_PHASE3 = [
     conceptKey: "workbook_taskmanager::objects",
     level: 2,
     title: "task object structure",
-    code: "const task = {\n  id: Date.now(),\n  title: 'Learn React',\n  done: false,\n  priority: 'high',\n  createdAt: new Date().toISOString()\n};\nconsole.log(Object.keys(task).length);",
+    code: "const task = {\n  id: 'task-0-learn-react',\n  title: 'Learn React',\n  done: false,\n  priority: 'high',\n  createdAt: new Date().toISOString()\n};\nconsole.log(Object.keys(task).length);",
     steps: [
       { line: 8, prompt: "מה יודפס?", answer: "5", hint: "5 fields." },
     ],
-    explanation: "task object טיפוסי עם: id, title, done, priority, createdAt. Date.now() נותן ID יחודי לפיתוח.",
+    explanation: "task object טיפוסי עם: id, title, done, priority, createdAt. ה-id יציב ודטרמיניסטי.",
   },
   {
     id: "trace_workbook_functions_001",
     conceptKey: "workbook_taskmanager::functions",
     level: 2,
     title: "addTask + toggleDone",
-    code: "function addTask(tasks, title) {\n  return [...tasks, { id: Date.now(), title, done: false }];\n}\nfunction toggleDone(tasks, id) {\n  return tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);\n}\nlet tasks = [];\ntasks = addTask(tasks, 'A');\ntasks = toggleDone(tasks, tasks[0].id);\nconsole.log(tasks[0].done);",
+    code: "function addTask(tasks, title) {\n  const id = 'task-' + tasks.length + '-' + title.trim().toLowerCase();\n  return [...tasks, { id, title, done: false }];\n}\nfunction toggleDone(tasks, id) {\n  return tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);\n}\nlet tasks = [];\ntasks = addTask(tasks, 'A');\ntasks = toggleDone(tasks, tasks[0].id);\nconsole.log(tasks[0].done);",
     steps: [
       { line: 10, prompt: "מה יודפס?", answer: "true", hint: "טוגל מ-false ל-true." },
     ],

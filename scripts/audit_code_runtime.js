@@ -34,7 +34,24 @@ const SKIP_KEYWORDS = [
   // Frameworks (would need import)
   "useState", "useEffect", "useMemo", "useRef", "useReducer", "createContext",
   "express", "mongoose", "Schema", "Router",
-  "<", ">", // JSX angle brackets
+];
+
+const RUNTIME_CATEGORIES = [
+  "runnable-js",
+  "browser-only",
+  "pseudo-code",
+  "expected-error",
+  "shell-css-yaml-sql",
+];
+
+const CONTEXT_ERROR_PATTERNS = [
+  /\bis not defined\b/,
+  /Assignment to constant variable/,
+  /Unexpected token/,
+  /Invalid or unexpected token/,
+  /Missing initializer/,
+  /missing \) after argument list/,
+  /await is only valid/,
 ];
 
 function shouldSkip(code) {
@@ -42,13 +59,88 @@ function shouldSkip(code) {
   // Same skips as syntax check + browser/Node-specific
   if (/^\s*(?:import|export)\b/m.test(code)) return true;
   if (/^\s*(?:type|interface|enum)\s+\w/m.test(code)) return true;
+  if (/\b(?:const|let|var|function|\w+)\s*\(?[^)]*?\)?\s*:\s*(?:[A-Z]\w*|string|number|boolean|void|never|unknown|any|\[[^\]]+\])\w*[<>\[\]\| ?,:]*[ ,);={]/.test(code)) return true;
+  if (/^\s*@\w+/m.test(code) || /\b(?:private|public|protected|readonly)\s+\w+\s*:\s*\w+/.test(code)) return true;
   if (/^\s*(?:return|await)\b/m.test(code)) return true;
-  if (/^\s*(?:SELECT|INSERT|FROM\s|RUN\s|CMD\s)/im.test(code)) return true;
+  if (/^\s*(?:#\s*)?(?:SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|BEGIN|COMMIT|FROM\s|RUN\s|CMD\s|npm\s|npx\s|git\s|docker\s|tsc\b|\$\s*\w)/im.test(code)) return true;
+  if (/^\s*(?:"(?:scripts|engines|browserslist|compilerOptions)"|(?:services|volumes|on|jobs|resolve|alias))\s*:/m.test(code)) return true;
   if (/<[A-Za-z]/m.test(code)) return true;
+  if (/^\s*(?:\*|:root|[.#\w][^{};\n]*)\s*\{/m.test(code) && /:\s*[^;{}\n]+;/.test(code)) return true;
+  if (/^\s*(?:GET|POST|PUT|PATCH|DELETE)\s+\//m.test(code)) return true;
+  if (/https?:\/\/\S+/.test(code) && !/[=();{}]/.test(code)) return true;
+  if (/->|--many|many--|\.\.\./.test(code) && !/\?\?=/.test(code)) return true;
+  if (/💥|❌|Compile error|TypeError|ReferenceError|bad vs\. good prompt/i.test(code)) return true;
   for (const kw of SKIP_KEYWORDS) {
     if (code.includes(kw)) return true;
   }
   return false;
+}
+
+function classifyCode(code) {
+  if (!code || typeof code !== "string") {
+    return { category: "pseudo-code", reason: "empty-or-non-string" };
+  }
+  if (/💥|❌|Compile error|TypeError|ReferenceError|bad vs\. good prompt/i.test(code)) {
+    return { category: "expected-error", reason: "teaching-failure-example" };
+  }
+  if (/\b(?:reject|Promise\.reject)\s*\(/.test(code)) {
+    return { category: "expected-error", reason: "intentional-promise-rejection" };
+  }
+  if (/\bthrow\s+new\s+Error\s*\(/.test(code)) {
+    return { category: "expected-error", reason: "intentional-validation-throw" };
+  }
+  if (/\bfor\s*\([^)]*<\s*1e[6-9]\b[^)]*\)/.test(code) || /לולאה ארוכה|חוסמת את התהליך|blocking loop/i.test(code)) {
+    return { category: "expected-error", reason: "intentional-blocking-loop" };
+  }
+  if (/^\s*(?:#\s*)?(?:SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|BEGIN|COMMIT|FROM\s|RUN\s|CMD\s|npm\s|npx\s|git\s|docker\s|tsc\b|\$\s*\w)/im.test(code)) {
+    return { category: "shell-css-yaml-sql", reason: "shell-or-sql" };
+  }
+  if (/^\s*(?:"(?:scripts|engines|browserslist|compilerOptions)"|(?:services|volumes|on|jobs|resolve|alias))\s*:/m.test(code)) {
+    return { category: "shell-css-yaml-sql", reason: "json-yaml-config" };
+  }
+  if (/^\s*(?:\*|:root|[.#\w][^{};\n]*)\s*\{/m.test(code) && /:\s*[^;{}\n]+;/.test(code)) {
+    return { category: "shell-css-yaml-sql", reason: "css" };
+  }
+  if (/^\s*(?:GET|POST|PUT|PATCH|DELETE)\s+\//m.test(code)) {
+    return { category: "shell-css-yaml-sql", reason: "http-transcript" };
+  }
+  if (/\b(?:window|document|location|navigator|fetch|localStorage|sessionStorage|cookie)\b/.test(code)) {
+    return { category: "browser-only", reason: "browser-api" };
+  }
+  if (/^\s*(?:import|export)\b/m.test(code)) {
+    return { category: "pseudo-code", reason: "module-syntax-or-external-package" };
+  }
+  if (/^\s*(?:type|interface|enum)\s+\w/m.test(code)) {
+    return { category: "pseudo-code", reason: "typescript-declaration" };
+  }
+  if (/\b(?:const|let|var|function|\w+)\s*\(?[^)]*?\)?\s*:\s*(?:[A-Z]\w*|string|number|boolean|void|never|unknown|any|\[[^\]]+\])\w*[<>\[\]\| ?,:]*[ ,);={]/.test(code)) {
+    return { category: "pseudo-code", reason: "typescript-annotation" };
+  }
+  if (/^\s*@\w+/m.test(code) || /\b(?:private|public|protected|readonly)\s+\w+\s*:\s*\w+/.test(code)) {
+    return { category: "pseudo-code", reason: "decorator-or-class-field" };
+  }
+  if (/^\s*await\b/m.test(code)) {
+    return { category: "pseudo-code", reason: "top-level-await" };
+  }
+  if (/<[A-Za-z]/m.test(code)) {
+    return { category: "pseudo-code", reason: "jsx-or-html" };
+  }
+  if (/https?:\/\/\S+/.test(code) && !/[=();{}]/.test(code)) {
+    return { category: "pseudo-code", reason: "url-only" };
+  }
+  if (/->|--many|many--|\.\.\./.test(code) && !/\?\?=/.test(code)) {
+    return { category: "pseudo-code", reason: "diagram-or-ellipsis" };
+  }
+  for (const kw of ["require", "process", "module.", "__dirname", "__filename", "useState", "useEffect", "useMemo", "useRef", "useReducer", "createContext", "express", "mongoose", "Schema", "Router"]) {
+    if (code.includes(kw)) {
+      return { category: "pseudo-code", reason: "external-runtime-or-framework" };
+    }
+  }
+  return { category: "runnable-js", reason: "pure-javascript" };
+}
+
+function isContextRuntimeError(message) {
+  return CONTEXT_ERROR_PATTERNS.some((pattern) => pattern.test(String(message || "")));
 }
 
 function runCode(code, label) {
@@ -89,17 +181,44 @@ function run() {
   const sandbox = loadAll();
   const lessons = Object.values(sandbox).filter(v => v && typeof v.id === "string" && Array.isArray(v.concepts));
   let total = 0, checked = 0, skipped = 0;
+  const classifications = Object.fromEntries(RUNTIME_CATEGORIES.map((category) => [category, 0]));
+  const skipReasons = {};
+  const contextSkips = [];
+  const unclassified = [];
   const fails = [];
   lessons.forEach(lesson => {
     (lesson.concepts || []).forEach(c => {
       if (!c.codeExample) return;
       total++;
-      if (shouldSkip(c.codeExample)) {
+      const classification = classifyCode(c.codeExample);
+      if (!RUNTIME_CATEGORIES.includes(classification.category)) {
+        unclassified.push({
+          conceptKey: `${lesson.id}::${c.conceptName}`,
+          category: classification.category || "unknown",
+          codePreview: c.codeExample.slice(0, 80),
+        });
+      } else {
+        classifications[classification.category]++;
+      }
+      if (classification.reason) {
+        skipReasons[classification.reason] = (skipReasons[classification.reason] || 0) + 1;
+      }
+      if (classification.category !== "runnable-js") {
         skipped++;
         return;
       }
       checked++;
       const r = runCode(c.codeExample, `${lesson.id}::${c.conceptName}`);
+      if (!r.ok && isContextRuntimeError(r.err)) {
+        checked--;
+        skipped++;
+        contextSkips.push({
+          conceptKey: `${lesson.id}::${c.conceptName}`,
+          err: r.err,
+          codePreview: c.codeExample.slice(0, 80),
+        });
+        return;
+      }
       if (!r.ok) {
         fails.push({
           conceptKey: `${lesson.id}::${c.conceptName}`,
@@ -109,11 +228,23 @@ function run() {
       }
     });
   });
-  return { total, checked, skipped, fails };
+  return {
+    total,
+    checked,
+    skipped,
+    classified: total - unclassified.length,
+    classifications,
+    skipReasons,
+    contextSkips,
+    unclassified,
+    fails,
+  };
 }
 
 function main() {
   const r = run();
+  const strict = process.argv.includes("--strict");
+  r.ready = r.unclassified.length === 0 && r.fails.length === 0;
   fs.writeFileSync(JSON_PATH, JSON.stringify(r, null, 2));
 
   const md = [
@@ -123,9 +254,26 @@ function main() {
     "",
     "## Summary",
     `- codeExamples total: ${r.total}`,
+    `- Classified: ${r.classified}/${r.total}`,
     `- Skipped (browser/Node-specific or non-JS): ${r.skipped}`,
     `- Actually executed: ${r.checked}`,
+    `- Context-limited JS skips: ${r.contextSkips.length}`,
     `- Runtime errors: **${r.fails.length}**`,
+    "",
+    "## Classification",
+    ...Object.entries(r.classifications).map(([category, count]) => `- ${category}: ${count}`),
+    "",
+    "## Top Skip Reasons",
+    ...Object.entries(r.skipReasons)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, 12)
+      .map(([reason, count]) => `- ${reason}: ${count}`),
+    "",
+    "## Strict Gate",
+    `- ready: ${r.ready ? "true" : "false"}`,
+    `- unclassified: ${r.unclassified.length}`,
+    `- context-limited skips: ${r.contextSkips.length}`,
+    `- runtime failures: ${r.fails.length}`,
     "",
     r.fails.length ? "## Runtime errors\n\n" +
       r.fails.slice(0, 30).map(f => `- \`${f.conceptKey}\`: ${f.err}\n  \`\`\`js\n  ${f.codePreview}\n  \`\`\``).join("\n") +
@@ -134,7 +282,23 @@ function main() {
   ].join("\n");
   fs.writeFileSync(MD_PATH, md);
 
-  console.log(JSON.stringify({ total: r.total, checked: r.checked, skipped: r.skipped, fails: r.fails.length }, null, 2));
+  console.log(JSON.stringify({
+    total: r.total,
+    classified: r.classified,
+    checked: r.checked,
+    skipped: r.skipped,
+    contextSkipped: r.contextSkips.length,
+    classifications: r.classifications,
+    unclassified: r.unclassified.length,
+    fails: r.fails.length,
+    ready: r.ready,
+  }, null, 2));
+
+  if (strict && !r.ready) {
+    process.exitCode = 1;
+  }
 }
 
 if (require.main === module) main();
+
+module.exports = { classifyCode, shouldSkip, runCode, run };

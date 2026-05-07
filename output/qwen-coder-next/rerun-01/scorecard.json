@@ -1,0 +1,82 @@
+{
+  "reportVersion": "qwen-training-runner-v1",
+  "runs": [
+    {
+      "day": 6,
+      "outputDir": "output/qwen-coder-next/rerun-01/day-06",
+      "status": 0,
+      "durationMs": 179192,
+      "guard": {
+        "summary": {
+          "checks": 11,
+          "passed": 10,
+          "failed": 1,
+          "ready": false
+        },
+        "blockers": [
+          {
+            "id": "contract-required-js-tokens",
+            "label": "Required JavaScript assessment tokens are present",
+            "detail": "Missing: Array.isArray"
+          }
+        ],
+        "written": {
+          "jsonPath": "output/qwen-coder-next/rerun-01/day-06/qwen-output-guard-report.json",
+          "mdPath": "output/qwen-coder-next/rerun-01/day-06/qwen-output-guard-report.md"
+        }
+      },
+      "dryRun": false
+    },
+    {
+      "day": 7,
+      "outputDir": "output/qwen-coder-next/rerun-01/day-07",
+      "status": 0,
+      "durationMs": 28194,
+      "guard": {
+        "summary": {
+          "checks": 11,
+          "passed": 5,
+          "failed": 6,
+          "ready": false
+        },
+        "blockers": [
+          {
+            "id": "contract-required-endpoints",
+            "label": "All contract endpoints are implemented",
+            "detail": "Missing: GET /, GET /api/books, GET /api/books/:id, POST /api/books, PUT /api/books/:id, DELETE /api/books/:id, POST /api/books/borrow/:id"
+          },
+          {
+            "id": "contract-required-stack-tokens",
+            "label": "Required stack tokens are present",
+            "detail": "Missing: express.json, cors, mongoose.connect, BrowserRouter, Routes, Route, useNavigate, useParams, useEffect, VITE_API_URL"
+          },
+          {
+            "id": "contract-required-validation-terms",
+            "label": "Required validation terms are present",
+            "detail": "Missing: author, year, genre, isAvailable, borrowedBy, Fiction, Science, History, Biography"
+          },
+          {
+            "id": "contract-required-status-codes",
+            "label": "Required status codes are present",
+            "detail": "Missing: 404"
+          },
+          {
+            "id": "contract-required-js-tokens",
+            "label": "Required JavaScript assessment tokens are present",
+            "detail": "Missing: throw new Error, availableCount, borrowedCount, oldestYear, newestYear, mostCommonGenre"
+          },
+          {
+            "id": "contract-required-ts-tokens",
+            "label": "Required TypeScript assessment tokens are present",
+            "detail": "Missing: interface Book, Partial<Book>, filterBooks"
+          }
+        ],
+        "written": {
+          "jsonPath": "output/qwen-coder-next/rerun-01/day-07/qwen-output-guard-report.json",
+          "mdPath": "output/qwen-coder-next/rerun-01/day-07/qwen-output-guard-report.md"
+        }
+      },
+      "dryRun": false
+    }
+  ]
+}

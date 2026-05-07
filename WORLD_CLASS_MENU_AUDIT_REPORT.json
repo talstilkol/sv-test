@@ -1,0 +1,215 @@
+{
+  "reportVersion": "world-class-menu-audit-v1",
+  "date": "2026-05-07",
+  "score": 100,
+  "ready": true,
+  "target": "World-class closed-route student menu for SVCollege exam preparation",
+  "summary": {
+    "checks": 11,
+    "passed": 11,
+    "failed": 0,
+    "blockers": 0,
+    "score": 100,
+    "grade": "world-class-ready"
+  },
+  "checks": [
+    {
+      "id": "default-exam-focus-mode",
+      "label": "Exam100 is the first default surface",
+      "weight": 10,
+      "passed": true,
+      "status": "pass",
+      "severity": "P0",
+      "detail": "A new student should land in the closed exam flow without choosing from the legacy portal."
+    },
+    {
+      "id": "closed-mode-only-exam100",
+      "label": "Closed mode renders only Exam100 rows",
+      "weight": 12,
+      "passed": true,
+      "status": "pass",
+      "severity": "P0",
+      "detail": "The primary path must not render the advanced library when exam focus is active."
+    },
+    {
+      "id": "two-arrow-navigation",
+      "label": "Closed route exposes only previous and next arrows",
+      "weight": 10,
+      "passed": true,
+      "status": "pass",
+      "severity": "P0",
+      "detail": "The route should move through backward/forward only, not a menu of choices."
+    },
+    {
+      "id": "progress-map-visible",
+      "label": "Progress percent and graphical step map are visible",
+      "weight": 10,
+      "passed": true,
+      "status": "pass",
+      "severity": "P0",
+      "detail": "The student sees percent complete, a linear map and rewards."
+    },
+    {
+      "id": "primary-task-board-progress",
+      "label": "Primary task board, progress and next task are present",
+      "weight": 10,
+      "passed": true,
+      "status": "pass",
+      "severity": "P0",
+      "detail": "The student sees one official task board with percent, remaining time and a next-task card."
+    },
+    {
+      "id": "local-storage-not-authoritative",
+      "label": "Local progress is clearly marked as recovery only",
+      "weight": 8,
+      "passed": true,
+      "status": "pass",
+      "severity": "P1",
+      "detail": "The UI must not present localStorage as an official score proof."
+    },
+    {
+      "id": "advanced-library-hidden",
+      "label": "Legacy and advanced surfaces are hidden by default",
+      "weight": 10,
+      "passed": true,
+      "status": "pass",
+      "severity": "P0",
+      "detail": "Legacy remains available but not as the primary decision surface."
+    },
+    {
+      "id": "solution-guide-reference-only",
+      "label": "Solution guide is available only as extracted reference",
+      "weight": 6,
+      "passed": true,
+      "status": "pass",
+      "severity": "P1",
+      "detail": "The solution guide should support practice without becoming a shortcut menu."
+    },
+    {
+      "id": "start-here-single-command",
+      "label": "Start-here area keeps next action prominent",
+      "weight": 8,
+      "passed": true,
+      "status": "pass",
+      "severity": "P1",
+      "detail": "The beginner surface should tell the student what to do now."
+    },
+    {
+      "id": "mobile-responsive-route",
+      "label": "Closed route adapts to mobile width",
+      "weight": 8,
+      "passed": true,
+      "status": "pass",
+      "severity": "P1",
+      "detail": "The map, primary task board and arrows must not overflow on mobile."
+    },
+    {
+      "id": "release-gated-menu",
+      "label": "Menu and route are protected by release gates",
+      "weight": 8,
+      "passed": true,
+      "status": "pass",
+      "severity": "P1",
+      "detail": "Critical menu expectations must be in tests and pre-release checks."
+    }
+  ],
+  "blockers": [],
+  "advisoryTasks": [
+    {
+      "id": "ux-next-task-hero",
+      "priority": "P0",
+      "title": "להפוך את כרטיס המשימה הבאה לגדול יותר מכל שאר האלמנטים",
+      "minutes": 90,
+      "acceptance": "במסך ראשון יש CTA אחד בולט יותר מכל פעולה אחרת."
+    },
+    {
+      "id": "ux-gate-proof-inline",
+      "priority": "P0",
+      "title": "להוסיף הוכחת Gate קצרה בתוך כרטיס השלב הנוכחי",
+      "minutes": 120,
+      "acceptance": "אי אפשר ללחוץ קדימה בלי ראיה/ציון עצמי כששלב מוגדר כחובה."
+    },
+    {
+      "id": "ux-advanced-library-friction",
+      "priority": "P1",
+      "title": "להוסיף friction לפתיחת ספרייה מתקדמת",
+      "minutes": 60,
+      "acceptance": "פתיחה מציגה אזהרה: לא חלק מהמסלול הראשי למבחן."
+    },
+    {
+      "id": "ux-route-reward-polish",
+      "priority": "P1",
+      "title": "לחדד את מפת הפרסים הגרפית",
+      "minutes": 120,
+      "acceptance": "כל שלב מראה פרס, סטטוס, ותוצר סיום בלי טקסט צפוף."
+    },
+    {
+      "id": "ux-user-test-script",
+      "priority": "P1",
+      "title": "להוסיף smoke של משתמש חדש: פתיחה עד משימה ראשונה",
+      "minutes": 90,
+      "acceptance": "בדיקה מוכיחה שתוך 10 שניות נמצא CTA אחד ברור."
+    },
+    {
+      "id": "ux-legacy-tab-failsafe",
+      "priority": "P2",
+      "title": "להוסיף failsafe אם תלמיד פותח legacy tab בזמן Exam100",
+      "minutes": 75,
+      "acceptance": "מופיע באנר חזרה למסלול, בלי למחוק את בחירת המשתמש."
+    }
+  ],
+  "masterPlan": {
+    "waves": [
+      {
+        "id": "wave-a",
+        "title": "אפס החלטות במסך ראשון",
+        "minutes": 210,
+        "tasks": [
+          "CTA אחד",
+          "Gate proof",
+          "חצים בלבד"
+        ]
+      },
+      {
+        "id": "wave-b",
+        "title": "מפת מסלול מעוררת רצון לסיים",
+        "minutes": 180,
+        "tasks": [
+          "פרסים",
+          "סטטוס שלב",
+          "אחוז יומי"
+        ]
+      },
+      {
+        "id": "wave-c",
+        "title": "Legacy בשליטה",
+        "minutes": 135,
+        "tasks": [
+          "Advanced friction",
+          "return banner",
+          "no accidental tabs"
+        ]
+      },
+      {
+        "id": "wave-d",
+        "title": "בדיקות UX חוזרות",
+        "minutes": 90,
+        "tasks": [
+          "new-user smoke",
+          "mobile route smoke",
+          "regression gate"
+        ]
+      }
+    ],
+    "totalMinutes": 615,
+    "totalTime": "10 שעות 15 דק׳"
+  },
+  "sourceOfTruth": {
+    "status": "active",
+    "reportVersion": "report-source-of-truth-v1",
+    "evaluatedAt": "2026-05-07",
+    "sourceDate": "2026-05-07",
+    "source": "report-active",
+    "reason": "fresh-to-source-of-truth"
+  }
+}

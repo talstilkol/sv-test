@@ -1,0 +1,30 @@
+{
+  "reportVersion": "distractor-exam-gate-v1",
+  "generatedAt": "2026-05-07T12:44:20.938Z",
+  "thresholds": {
+    "globalWarnPercent": 10,
+    "examCriticalFailPercent": 15
+  },
+  "totals": {
+    "mcQuestions": 2998,
+    "flaggedQuestions": 7,
+    "flaggedPercent": 0.2,
+    "rawFlaggedQuestions": 7,
+    "rawFlaggedPercent": 0.2,
+    "advisoryFlaggedQuestions": 0,
+    "advisoryFlaggedPercent": 0,
+    "deferredFlaggedQuestions": 58,
+    "deferredFlaggedPercent": 1.9,
+    "historicalRawFlaggedQuestions": 65,
+    "historicalRawFlaggedPercent": 2.2,
+    "examCriticalQuestions": 1896,
+    "examCriticalFlaggedQuestions": 0,
+    "examCriticalFlaggedPercent": 0,
+    "examCriticalIssueEvents": 0,
+    "examCriticalQueueItems": 0
+  },
+  "examCriticalQueue": [],
+  "warnings": [],
+  "failures": [],
+  "ready": true
+}

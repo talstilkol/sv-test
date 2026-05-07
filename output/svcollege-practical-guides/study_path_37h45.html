@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מסלול למידה 100:20 - SVCollege Full Stack</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07111f; --panel:#101b2d; --ink:#f8fafc; --muted:#a8b3c7; --cyan:#22d3ee; --green:#86efac; --amber:#facc15; --red:#fb7185; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial, "Noto Sans Hebrew", sans-serif; color:var(--ink); background:linear-gradient(180deg,#0f172a,#07111f); line-height:1.65; }
+    main { max-width:1160px; margin:auto; padding:28px 18px 60px; }
+    .hero, .day, .gate, .summary { border:1px solid rgba(255,255,255,.12); border-radius:18px; background:rgba(16,27,45,.84); }
+    .hero, .summary { padding:24px; margin-bottom:16px; }
+    h1 { margin:0; color:var(--cyan); font-size:clamp(2rem,5vw,3.8rem); }
+    h2 { margin:0 0 8px; color:var(--green); }
+    h3 { margin:0 0 6px; color:var(--amber); }
+    p, li { color:var(--muted); }
+    nav { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+    a, button { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:8px 13px; border:0; border-radius:999px; color:#04111f; background:var(--cyan); text-decoration:none; font-weight:900; cursor:pointer; }
+    button { background:var(--green); }
+    .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:16px; }
+    .stats article, .gate { padding:14px; background:rgba(15,23,42,.7); border:1px solid rgba(255,255,255,.12); border-radius:14px; }
+    .stats strong { display:block; color:var(--ink); font-size:1.35rem; }
+    .timeline { display:grid; gap:14px; }
+    .day { padding:18px; display:grid; grid-template-columns:150px minmax(0,1fr) 260px; gap:14px; align-items:start; }
+    .heat { display:inline-flex; width:max-content; padding:4px 10px; border-radius:999px; color:#04111f; background:var(--amber); font-weight:900; }
+    .tasks { margin:0; padding-inline-start:22px; }
+    .gate { border-color:rgba(134,239,172,.35); }
+    .gate strong { color:var(--green); }
+    .blocked { border-color:rgba(251,113,133,.45); background:rgba(127,29,29,.2); }
+    @media (max-width:900px){ .stats{grid-template-columns:1fr 1fr;} .day{grid-template-columns:1fr;} }
+    @media print {
+      :root { color-scheme: light; }
+      body { background:#fff; color:#111827; }
+      main { max-width:none; padding:0; }
+      nav, button { display:none; }
+      .hero, .summary, .day, .gate, .stats article { background:#fff; border-color:#cbd5e1; break-inside:avoid; }
+      p, li { color:#374151; }
+      h1 { color:#0e7490; }
+      h2 { color:#047857; }
+      h3 { color:#92400e; }
+    }
+    /* Shared guide tree navigation */
+    .guide-tree-nav { display:grid; gap:12px; margin:18px 0; padding:16px; border:1px solid rgba(34,211,238,.28); border-radius:16px; background:rgba(2,6,23,.42); }
+    .guide-tree-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .guide-tree-head strong { color:var(--ink); font-size:1.08rem; }
+    .guide-tree-head span { color:var(--muted); font-weight:800; }
+    .guide-tree-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .guide-tree-branch { border:1px solid rgba(255,255,255,.1); border-radius:14px; background:rgba(15,23,42,.72); overflow:hidden; }
+    .guide-tree-branch > summary { cursor:pointer; list-style:none; padding:12px 14px; color:var(--amber); font-weight:900; }
+    .guide-tree-branch > summary::-webkit-details-marker { display:none; }
+    .guide-tree-links { display:grid; gap:8px; padding:0 12px 12px; }
+    .guide-tree-links a { display:inline-flex; align-items:center; justify-content:space-between; gap:10px; min-height:42px; padding:9px 14px; border-radius:10px; background:rgba(34,211,238,.12); color:#dff7ff; border:1px solid rgba(34,211,238,.2); text-decoration:none; font-weight:900; }
+    .guide-tree-links a.primary { background:var(--cyan); color:#03111f; }
+    .guide-tree-links a.warning { background:rgba(250,204,21,.16); color:#fef3c7; border-color:rgba(250,204,21,.28); }
+    .guide-tree-links a.low { background:rgba(148,163,184,.1); color:#cbd5e1; border-color:rgba(148,163,184,.18); }
+    .guide-tree-links a[aria-current="page"] { outline:3px solid var(--green); outline-offset:2px; background:var(--green); color:#03111f; }
+    .guide-tree-links a span { flex:0 0 auto; font-size:.78rem; opacity:.88; }
+    .guide-tree-actions { display:flex; flex-wrap:wrap; gap:10px; }
+    @media (max-width:780px){ .guide-tree-grid{grid-template-columns:1fr;} }
+  
+    /* Simple closed route: the only default navigation for the guide package. */
+
+    body.guide-simple-mode .guide-tree-nav,
+    body.guide-simple-mode .guide-tree-actions,
+    body.guide-simple-mode .grid,
+    body.guide-simple-mode .rule,
+    body.guide-simple-mode .sources,
+    body.guide-simple-mode .status-grid,
+    body.guide-simple-mode .tracker-shell,
+    body.guide-simple-mode .tracker-actions {
+      display:none !important;
+    }
+    body.guide-simple-mode a:not(.guide-arrow) {
+      pointer-events:none;
+      opacity:.45;
+      filter:grayscale(100%);
+      text-decoration:none;
+    }
+    body.guide-simple-mode .guide-tree-nav,
+    body.guide-simple-mode .grid[aria-label="שלושת המדריכים"] { display:none !important; }
+    .guide-simple-route { display:grid; gap:16px; margin:0 0 22px; padding:18px; border:1px solid rgba(34,211,238,.42); border-radius:18px; background:linear-gradient(135deg,rgba(8,47,73,.72),rgba(15,23,42,.9)); box-shadow:0 18px 50px rgba(0,0,0,.22); }
+    .guide-simple-top { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:14px; align-items:center; }
+    .guide-simple-kicker { color:var(--cyan); font-weight:900; letter-spacing:.02em; }
+    .guide-simple-title { margin:.1rem 0 0; color:var(--ink); font-size:clamp(1.35rem,3vw,2.15rem); line-height:1.18; }
+    .guide-simple-percent { display:grid; place-items:center; min-width:112px; min-height:92px; padding:10px; border:1px solid rgba(134,239,172,.42); border-radius:18px; background:rgba(20,83,45,.22); }
+    .guide-simple-percent strong { color:var(--green); font-size:2rem; line-height:1; }
+    .guide-simple-percent span { color:var(--muted); font-weight:800; font-size:.82rem; }
+    .guide-simple-bar { height:12px; overflow:hidden; border-radius:999px; background:rgba(2,6,23,.78); border:1px solid rgba(255,255,255,.09); }
+    .guide-simple-bar i { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--cyan),var(--green),var(--amber)); }
+    .guide-simple-map { display:grid; grid-template-columns:repeat(11,minmax(74px,1fr)); gap:8px; }
+    .guide-step { display:grid; gap:4px; min-height:74px; padding:9px 8px; border-radius:14px; border:1px solid rgba(148,163,184,.18); background:rgba(15,23,42,.72); color:var(--muted); text-align:center; align-content:center; }
+    .guide-step b { color:inherit; font-size:.82rem; }
+    .guide-step span { font-weight:900; font-size:.85rem; line-height:1.15; }
+    .guide-step.done { color:#bbf7d0; border-color:rgba(134,239,172,.42); background:rgba(20,83,45,.18); }
+    .guide-step.current { color:#03111f; border-color:rgba(134,239,172,.78); background:var(--green); box-shadow:0 0 0 3px rgba(134,239,172,.18); }
+    .guide-simple-current { display:grid; gap:5px; padding:12px 14px; border:1px solid rgba(34,211,238,.25); border-radius:14px; background:rgba(2,6,23,.42); }
+    .guide-simple-current strong { color:var(--ink); font-size:1.08rem; }
+    .guide-simple-current span { color:var(--muted); font-weight:800; }
+    .guide-simple-arrows { display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:center; }
+    .guide-arrow { min-height:54px; display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:16px; border:1px solid rgba(34,211,238,.36); background:rgba(34,211,238,.14); color:#dff7ff; text-decoration:none; font-weight:900; font-size:1.02rem; }
+    .guide-arrow.next { background:var(--cyan); color:#03111f; }
+    .guide-arrow.disabled { opacity:.42; cursor:not-allowed; background:rgba(148,163,184,.12); color:var(--muted); }
+    .guide-simple-arrows output { min-width:110px; text-align:center; color:var(--green); font-weight:900; font-size:1.2rem; }
+    @media (max-width:900px){ .guide-simple-map{grid-template-columns:repeat(4,minmax(0,1fr));} .guide-simple-top{grid-template-columns:1fr;} .guide-simple-percent{justify-items:start; place-items:start;} }
+    @media (max-width:560px){ .guide-simple-map{grid-template-columns:repeat(2,minmax(0,1fr));} .guide-simple-arrows{grid-template-columns:1fr;} .guide-simple-arrows output{order:-1; width:100%;} }
+    @media print { .guide-simple-route { display:none !important; } }
+
+</style>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='0f172a'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='30' fill='67e8f9' font-family='Arial,sans-serif'%3E100%3C/text%3E%3C/svg%3E">
+</head>
+<body class="guide-simple-mode">
+<main>
+<!-- simple-guide-route:start -->
+    <nav class="guide-simple-route" aria-label="מסלול פשוט עם שני חצים">
+      <div class="guide-simple-top">
+        <div>
+          <div class="guide-simple-kicker">תפריט פשוט - בלי בחירות באמצע</div>
+          <h2 class="guide-simple-title">מסלול 100:20 שעות</h2>
+        </div>
+        <div class="guide-simple-percent" aria-label="אחוז התקדמות במסלול">
+          <strong>73%</strong>
+          <span>שלב 8 מתוך 11 · כולל 114 סרטונים</span>
+        </div>
+      </div>
+      <div class="guide-simple-bar" aria-hidden="true"><i style="width:73%"></i></div>
+      <div class="guide-simple-map" aria-label="מפת כל השלבים עד הסיום"><span class="guide-step done"><b>1/11</b><span>בית</span></span><span class="guide-step done"><b>2/11</b><span>התחלה</span></span><span class="guide-step done"><b>3/11</b><span>חירום</span></span><span class="guide-step done"><b>4/11</b><span>תוכנית</span></span><span class="guide-step done"><b>5/11</b><span>הבנה</span></span><span class="guide-step done"><b>6/11</b><span>תרגול</span></span><span class="guide-step done"><b>7/11</b><span>מבחן</span></span><span class="guide-step current" aria-current="step"><b>8/11</b><span>מסלול</span></span><span class="guide-step"><b>9/11</b><span>מעקב</span></span><span class="guide-step"><b>10/11</b><span>סטטוס</span></span><span class="guide-step"><b>11/11</b><span>סיום</span></span></div>
+      <div class="guide-simple-current"><strong>עכשיו עושים רק את זה:</strong><span>מסלול 100:20 שעות: לימוד ותרגול מלא + 57:00 צפייה ב-114 סרטונים. כדי לזוז במסלול משתמשים רק בחצים למטה.</span></div>
+      <div class="guide-simple-arrows" aria-label="חצים למסלול הסגור">
+        <a class="guide-arrow prev" href="./guide_03_exam_day_runbook.html" aria-label="חזור לשלב הקודם">← אחורה</a>
+        <output>73%</output>
+        <a class="guide-arrow next" href="./progress_tracker.html" aria-label="עבור לשלב הבא">קדימה →</a>
+      </div>
+    </nav>
+<!-- simple-guide-route:end -->
+
+  <section class="hero">
+    <span class="heat">100 שעות 20 דק׳</span>
+    <h1>מסלול למידה סגור עד המבחן</h1>
+    <p>זה סדר העבודה. לא מדלגים קדימה לפני ש-Gate היום ירוק. בכל יום יש גם בלוק צפייה בסרטונים: 30 דקות לסרטון, 114 סרטונים בסך הכל. הצפייה היא משימת זמן; לא מסיקים חומר מבחן חדש מסרטון ללא תמלול.</p>
+    <nav class="guide-tree-nav" aria-label="עץ ניווט לכל מדריכי ההכנה">
+      <div class="guide-tree-head">
+        <strong>עץ המסמכים שנוצרו</strong>
+        <span>פתח לפי מצב, לא לפי שם קובץ</span>
+      </div>
+      <div class="guide-tree-grid">
+          <details class="guide-tree-branch" open>
+            <summary>1. התחלה עכשיו</summary>
+            <div class="guide-tree-links">
+              <a href="./index.html">אינדקס כל המדריכים <span>בית</span></a>
+              <a class="primary" href="./start_here.html">אני לא יודע מאיפה להתחיל <span>Heat 10</span></a>
+              <a class="warning" href="./one_page_exam_cheatsheet.html">כרטיס חירום למבחן <span>יום לפני/במבחן</span></a>
+              <a href="./forward_tasks_plan.html">תוכנית קדימה <span>54 משימות</span></a>
+            </div>
+          </details>
+          <details class="guide-tree-branch" open>
+            <summary>2. שלושת המדריכים המרכזיים</summary>
+            <div class="guide-tree-links">
+              <a href="./guide_01_ideas.html">מדריך 1 - הרעיון שמאחורי כל דבר <span>הבנה</span></a>
+              <a class="primary" href="./guide_02_homework_and_exam_drills.html">מדריך 2 - שיעורי בית ותרגילי מבחן <span>תרגול</span></a>
+              <a href="./guide_03_exam_day_runbook.html">מדריך 3 - מה עושים בזמן המבחן <span>Runbook</span></a>
+            </div>
+          </details>
+          <details class="guide-tree-branch" open>
+            <summary>3. מסלול ומעקב אישי</summary>
+            <div class="guide-tree-links">
+              <a href="./study_path_37h45.html" aria-current="page">מסלול 100:20 שעות <span>תוכנית למידה</span></a>
+              <a href="./progress_tracker.html">מעקב התקדמות <span>שמירה מקומית</span></a>
+            </div>
+          </details>
+          <details class="guide-tree-branch">
+            <summary>4. הדפסה, סטטוס ומקורות</summary>
+            <div class="guide-tree-links">
+              <a href="./print_pack.html">גרסת הדפסה מאוחדת <span>Print</span></a>
+              <a href="./status.html">סטטוס החבילה <span>בדיקות</span></a>
+              <a class="low" href="./source_map.md">מפת מקורות <span>בקרה</span></a>
+              <a class="low" href="./README.md">README <span>שימוש</span></a>
+            </div>
+          </details>
+      </div>
+      <div class="guide-tree-actions">
+        <button class="print" type="button" onclick="window.print()">הדפס דף זה</button>
+      </div>
+    </nav>
+    <div class="stats">
+      <article><strong>4:15</strong><span>אבחון בסיס סגור</span></article>
+      <article><strong>33:30</strong><span>תוכנית 7 ימים</span></article>
+      <article><strong>57:00</strong><span>צפייה ב-114 סרטונים</span></article>
+      <article><strong>70/20/10</strong><span>מבנה ניקוד</span></article>
+      <article><strong>0</strong><span>משימות מערכת שנותרו</span></article>
+    </div>
+  </section>
+
+  <section class="summary">
+    <h2>לפני יום 1: אבחון בסיס - 4:15 שעות</h2>
+    <ul>
+      <li>45 דק׳ - JavaScript arrays/object/error.</li>
+      <li>35 דק׳ - React state/forms.</li>
+      <li>35 דק׳ - Routing ו-navigation.</li>
+      <li>40 דק׳ - API/fetch/loading/error.</li>
+      <li>35 דק׳ - TypeScript type/union/narrowing.</li>
+      <li>45 דק׳ - Express/Mongo CRUD.</li>
+      <li>20 דק׳ - סיכום חולשות והחלטה איפה להתחיל.</li>
+    </ul>
+  </section>
+
+  <section class="timeline">
+    <article class="day">
+      <div><span class="heat">יום 1</span><h2>TypeScript + JS בסיס</h2><p>4-5 שעות</p></div>
+      <ul class="tasks">
+        <li>פתור Book/Genre, addBook, searchByGenre, updateAvailability.</li>
+        <li>פתור User union עם narrowing.</li>
+        <li>פתור 3 שאלות JS: digit length sum, unique even/odd, sort digits בלי sort.</li>
+        <li>צפה בסרטונים 1-16, 30 דק׳ לכל סרטון.</li>
+      </ul>
+      <div class="gate"><strong>Gate:</strong><p>TS ב-10 דקות, JS אחד ב-20 דקות, ו-16/16 סרטונים סומנו כנצפו.</p></div>
+    </article>
+
+    <article class="day">
+      <div><span class="heat">יום 2</span><h2>React Skeleton</h2><p>5-6 שעות</p></div>
+      <ul class="tasks">
+        <li>הקם routes: Login, Register, Home, Add, Edit, List, NotFound.</li>
+        <li>תרגל useNavigate, useParams, Link, props, map.</li>
+        <li>בנה skeleton בלי backend ובלי עיצוב מיותר.</li>
+        <li>צפה בסרטונים 17-32, 30 דק׳ לכל סרטון.</li>
+      </ul>
+      <div class="gate"><strong>Gate:</strong><p>פרויקט עם routes מלאים תוך 30 דקות, ו-16/16 סרטונים סומנו כנצפו.</p></div>
+    </article>
+
+    <article class="day">
+      <div><span class="heat">יום 3</span><h2>Forms + Validations</h2><p>5-6 שעות</p></div>
+      <ul class="tasks">
+        <li>Register עם confirm password.</li>
+        <li>Add/Edit form עם select ו-prefill.</li>
+        <li>בדיקות: שדות ריקים, סיסמה, גיל, מספרים, אורך טקסט, duplicate.</li>
+        <li>צפה בסרטונים 33-48, 30 דק׳ לכל סרטון.</li>
+      </ul>
+      <div class="gate"><strong>Gate:</strong><p>אף כפתור לא מבצע פעולה כשהקלט לא תקין, ו-16/16 סרטונים סומנו כנצפו.</p></div>
+    </article>
+
+    <article class="day">
+      <div><span class="heat">יום 4</span><h2>Project 70 מלא</h2><p>6 שעות</p></div>
+      <ul class="tasks">
+        <li>בחר תבנית: Football, Bank, Flights, Logistics, Travel או Parking.</li>
+        <li>בנה flow מלא: Login/Register/List/Add/Edit/Delete/Search/Filter.</li>
+        <li>בדוק layout, validations, API/CRUD ו-console.</li>
+        <li>צפה בסרטונים 49-64, 30 דק׳ לכל סרטון.</li>
+      </ul>
+      <div class="gate"><strong>Gate:</strong><p>ציון עצמי לפחות 55/70, ו-16/16 סרטונים סומנו כנצפו.</p></div>
+    </article>
+
+    <article class="day">
+      <div><span class="heat">יום 5</span><h2>Express/Mongo Integration</h2><p>4-5 שעות</p></div>
+      <ul class="tasks">
+        <li>שרת Express עם cors, json, env, mongoose.</li>
+        <li>Schema + Model + GET/POST/PUT/DELETE.</li>
+        <li>Frontend fetch עם loading/error.</li>
+        <li>צפה בסרטונים 65-80, 30 דק׳ לכל סרטון.</li>
+      </ul>
+      <div class="gate"><strong>Gate:</strong><p>React form שולח לשרת, Mongo נשמר, UI מציג נתונים שחזרו, ו-16/16 סרטונים סומנו כנצפו.</p></div>
+    </article>
+
+    <article class="day">
+      <div><span class="heat">יום 6</span><h2>Mock Exam מלא</h2><p>4 שעות</p></div>
+      <ul class="tasks">
+        <li>15 דק׳ קריאה ותכנון.</li>
+        <li>140 דק׳ פרויקט.</li>
+        <li>25 דק׳ JS, 15 דק׳ TS.</li>
+        <li>45 דק׳ תיקון והרצה.</li>
+        <li>צפה בסרטונים 81-97, 30 דק׳ לכל סרטון.</li>
+      </ul>
+      <div class="gate"><strong>Gate:</strong><p>ציון 80+ בסימולציה, ו-17/17 סרטונים סומנו כנצפו.</p></div>
+    </article>
+
+    <article class="day">
+      <div><span class="heat">יום 7</span><h2>תיקון חולשות בלבד</h2><p>3-4 שעות</p></div>
+      <ul class="tasks">
+        <li>חזור רק על מה שנכשל ב-Gate.</li>
+        <li>שפר template אישי.</li>
+        <li>תרגל הקמת פרויקט נקי.</li>
+        <li>צפה בסרטונים 98-114, 30 דק׳ לכל סרטון.</li>
+      </ul>
+      <div class="gate"><strong>Gate:</strong><p>בלי ספרייה חדשה, בלי stack חדש, בלי פיצ׳רים חדשים, ו-17/17 סרטונים סומנו כנצפו.</p></div>
+    </article>
+  </section>
+
+  <section class="summary blocked">
+    <h2>חסום השבוע</h2>
+    <ul>
+      <li>AI / DevOps / Nest לפני סיום 70/20/10.</li>
+      <li>הסקת חומר חדש מתוך וידאו ללא תמלול. צפייה עצמה כן נמצאת בלוח המשימות.</li>
+      <li>פיצ׳רים שלא הופיעו בשיעורי הבית או במבחני הדוגמה.</li>
+      <li>נתונים מומצאים במקום נתוני שאלה או קלט משתמש.</li>
+    </ul>
+  </section>
+</main>
+<script src="./guide_day_board.js"></script>
+</body>
+</html>

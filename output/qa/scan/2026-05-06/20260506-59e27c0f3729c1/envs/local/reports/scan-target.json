@@ -1,0 +1,261 @@
+{
+  "name": "local",
+  "requestedUrl": "http://127.0.0.1:5178",
+  "resolvedUrl": "http://127.0.0.1:5178",
+  "status": "ready",
+  "checks": [
+    {
+      "id": "portal-full-audit",
+      "label": "Portal full audit",
+      "domain": "core",
+      "severity": "critical",
+      "status": "FAIL",
+      "passed": false,
+      "totalChecks": 1,
+      "failedChecks": 1,
+      "issueIds": [
+        "issue-23833195bf7b"
+      ],
+      "artifacts": [
+        "../../../artifacts/commands/portal-full-audit.log"
+      ],
+      "durationMs": 60955,
+      "output": "{\n  \"ready\": false,\n  \"score\": 94,\n  \"passed\": 29,\n  \"total\": 31,\n  \"scores\": [\n    {\n      \"domain\": \"Core gates\",\n      \"score\": 67,\n      \"status\": \"red\",\n      \"passed\": 4,\n      \"total\": 6,\n      \"failures\": [\n        \"Vitest full\",\n        \"Finish line\"\n      ],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"Exam materials\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 8,\n      \"total\": 8,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"UI navigation\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 10,\n      \"total\": 10,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"Task board and media\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 1,\n      \"total\": 1,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"Content quality\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 4,\n      \"total\": 4,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"Management\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 1,\n      \"total\": 1,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"E2E\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 1,\n      \"total\": 1,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    }\n  ]\n}\n"
+    },
+    {
+      "id": "smoke-browser",
+      "label": "Playwright smoke",
+      "domain": "ux",
+      "severity": "high",
+      "status": "PASS",
+      "passed": true,
+      "totalChecks": 1,
+      "failedChecks": 0,
+      "issueIds": [],
+      "artifacts": [
+        "../../../artifacts/commands/smoke-browser.log"
+      ],
+      "durationMs": 27280,
+      "output": "\nRunning 6 tests using 1 worker\n\n  ✓  1 [chromium] › tests/playwright/smoke.spec.js:89:3 › LumenPortal smoke › 23 top tabs render without console errors (5.1s)\n  ✓  2 [chromium] › tests/playwright/smoke.spec.js:128:3 › LumenPortal smoke › closed Exam 100 home does not interrupt the route with consent choices (1.2s)\n  ✓  3 [chromium] › tests/playwright/smoke.spec.js:138:3 › LumenPortal smoke › mock exam launches without native dialog hang (2.8s)\n  ✓  4 [chromium] › tests/playwright/smoke.spec.js:163:3 › LumenPortal smoke › task board stores V locally and restores after reload (5.4s)\n  ✓  5 [chromium] › tests/playwright/smoke.spec.js:200:3 › LumenPortal smoke › profile export and import restores task board progress (6.2s)\n  ✓  6 [chromium] › tests/playwright/smoke.spec.js:232:3 › LumenPortal smoke › exam task topic tree opens full question pages on desktop and mobile (5.6s)\n\n  6 passed (26.7s)\n"
+    },
+    {
+      "id": "boot-consent-onboarding",
+      "label": "Boot, consent and onboarding stabilization",
+      "domain": "core",
+      "severity": "critical",
+      "status": "PASS",
+      "passed": true,
+      "totalChecks": 3,
+      "failedChecks": 0,
+      "issueIds": [],
+      "artifacts": []
+    },
+    {
+      "id": "top-tab-coverage",
+      "label": "Top-tab traversal and view rendering",
+      "domain": "core",
+      "severity": "critical",
+      "status": "PASS",
+      "passed": true,
+      "totalChecks": 23,
+      "failedChecks": 0,
+      "issueIds": [],
+      "artifacts": []
+    },
+    {
+      "id": "critical-learning-flows",
+      "label": "Critical learning and task flows",
+      "domain": "core",
+      "severity": "critical",
+      "status": "FAIL",
+      "passed": false,
+      "totalChecks": 7,
+      "failedChecks": 1,
+      "issueIds": [
+        "issue-5272bed31db8"
+      ],
+      "artifacts": []
+    },
+    {
+      "id": "mobile-flow",
+      "label": "Mobile viewport and responsive behavior",
+      "domain": "ux",
+      "severity": "high",
+      "status": "FAIL",
+      "passed": false,
+      "totalChecks": 2,
+      "failedChecks": 1,
+      "issueIds": [
+        "issue-03523e424138"
+      ],
+      "artifacts": []
+    },
+    {
+      "id": "offline-pwa",
+      "label": "Offline mode smoke",
+      "domain": "pwa",
+      "severity": "high",
+      "status": "PASS",
+      "passed": true,
+      "totalChecks": 1,
+      "failedChecks": 0,
+      "issueIds": [],
+      "artifacts": []
+    },
+    {
+      "id": "accessibility-basics",
+      "label": "Accessibility baseline checks",
+      "domain": "a11y",
+      "severity": "medium",
+      "status": "PASS",
+      "passed": true,
+      "totalChecks": 1,
+      "failedChecks": 0,
+      "issueIds": [],
+      "artifacts": []
+    },
+    {
+      "id": "console-noise",
+      "label": "Runtime console noise",
+      "domain": "runtime",
+      "severity": "high",
+      "status": "PASS",
+      "passed": true,
+      "totalChecks": 1,
+      "failedChecks": 0,
+      "issueIds": [],
+      "artifacts": []
+    }
+  ],
+  "issues": [
+    {
+      "id": "issue-23833195bf7b",
+      "env": "local",
+      "severity": "critical",
+      "domain": "core",
+      "step": "command-portal-full-audit",
+      "expected": "Portal full audit passes",
+      "observed": "exitCode=1",
+      "artifact": "../../../artifacts/commands/portal-full-audit.log",
+      "firstSeenAt": "2026-05-06T18:45:08.985Z",
+      "evidence": {
+        "message": "Command failed: node scripts/report_portal_full_audit.js --strict --summary",
+        "selector": "node scripts/report_portal_full_audit.js --strict --summary",
+        "artifacts": [
+          "../../../artifacts/commands/portal-full-audit.log"
+        ]
+      },
+      "count": 1,
+      "lastSeenAt": "2026-05-06T18:45:08.985Z"
+    },
+    {
+      "id": "issue-5272bed31db8",
+      "env": "local",
+      "severity": "medium",
+      "domain": "learning",
+      "step": "task-board",
+      "expected": "task board component visible",
+      "observed": "task board not visible",
+      "firstSeenAt": "2026-05-06T18:45:47.050Z",
+      "evidence": {
+        "message": "Task board is unavailable after exam flow actions",
+        "selector": "#hxm-time-plan",
+        "artifacts": []
+      },
+      "count": 1,
+      "lastSeenAt": "2026-05-06T18:45:47.050Z"
+    },
+    {
+      "id": "issue-03523e424138",
+      "env": "local",
+      "severity": "medium",
+      "domain": "ux",
+      "step": "mobile-toggle",
+      "expected": "mobile drawer toggle exists",
+      "observed": "mobile drawer toggle missing",
+      "firstSeenAt": "2026-05-06T18:45:47.203Z",
+      "evidence": {
+        "message": "Responsive mobile entry point missing",
+        "selector": "#mobile-toggle",
+        "artifacts": []
+      },
+      "count": 1,
+      "lastSeenAt": "2026-05-06T18:45:47.203Z"
+    }
+  ],
+  "warnings": [],
+  "startedAt": "2026-05-06T18:44:08.006Z",
+  "durationMs": 100344,
+  "severityPolicy": {
+    "critical": {
+      "mergeBlock": true,
+      "action": "block"
+    },
+    "high": {
+      "mergeBlock": true,
+      "action": "block"
+    },
+    "medium": {
+      "mergeBlock": false,
+      "action": "plan"
+    },
+    "low": {
+      "mergeBlock": false,
+      "action": "backlog"
+    }
+  },
+  "reportRoot": "/Users/tal/Desktop/חומרים לשיעור/output/qa/scan/2026-05-06/20260506-59e27c0f3729c1/envs/local/reports",
+  "commandResults": [
+    {
+      "id": "portal-full-audit",
+      "domain": "core",
+      "label": "Portal full audit",
+      "command": "node scripts/report_portal_full_audit.js --strict --summary",
+      "status": "FAIL",
+      "statusCode": 1,
+      "stdout": "{\n  \"ready\": false,\n  \"score\": 94,\n  \"passed\": 29,\n  \"total\": 31,\n  \"scores\": [\n    {\n      \"domain\": \"Core gates\",\n      \"score\": 67,\n      \"status\": \"red\",\n      \"passed\": 4,\n      \"total\": 6,\n      \"failures\": [\n        \"Vitest full\",\n        \"Finish line\"\n      ],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"Exam materials\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 8,\n      \"total\": 8,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"UI navigation\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 10,\n      \"total\": 10,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"Task board and media\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 1,\n      \"total\": 1,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"Content quality\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 4,\n      \"total\": 4,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"Management\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 1,\n      \"total\": 1,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    },\n    {\n      \"domain\": \"E2E\",\n      \"score\": 100,\n      \"status\": \"green\",\n      \"passed\": 1,\n      \"total\": 1,\n      \"failures\": [],\n      \"environmentWarnings\": []\n    }\n  ]\n}\n",
+      "stderr": "",
+      "artifact": "/Users/tal/Desktop/חומרים לשיעור/output/qa/scan/2026-05-06/20260506-59e27c0f3729c1/artifacts/commands/portal-full-audit.log",
+      "durationMs": 60955,
+      "environmentStatus": "ok",
+      "severity": "critical"
+    },
+    {
+      "id": "smoke-browser",
+      "domain": "ux",
+      "label": "Playwright smoke",
+      "command": "node scripts/run_smoke_browser.js",
+      "status": "PASS",
+      "statusCode": 0,
+      "stdout": "\nRunning 6 tests using 1 worker\n\n  ✓  1 [chromium] › tests/playwright/smoke.spec.js:89:3 › LumenPortal smoke › 23 top tabs render without console errors (5.1s)\n  ✓  2 [chromium] › tests/playwright/smoke.spec.js:128:3 › LumenPortal smoke › closed Exam 100 home does not interrupt the route with consent choices (1.2s)\n  ✓  3 [chromium] › tests/playwright/smoke.spec.js:138:3 › LumenPortal smoke › mock exam launches without native dialog hang (2.8s)\n  ✓  4 [chromium] › tests/playwright/smoke.spec.js:163:3 › LumenPortal smoke › task board stores V locally and restores after reload (5.4s)\n  ✓  5 [chromium] › tests/playwright/smoke.spec.js:200:3 › LumenPortal smoke › profile export and import restores task board progress (6.2s)\n  ✓  6 [chromium] › tests/playwright/smoke.spec.js:232:3 › LumenPortal smoke › exam task topic tree opens full question pages on desktop and mobile (5.6s)\n\n  6 passed (26.7s)\n",
+      "stderr": "(node:21519) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:21519) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "artifact": "/Users/tal/Desktop/חומרים לשיעור/output/qa/scan/2026-05-06/20260506-59e27c0f3729c1/artifacts/commands/smoke-browser.log",
+      "durationMs": 27280,
+      "environmentStatus": "ok",
+      "severity": "high"
+    }
+  ],
+  "summary": {
+    "totalChecks": 9,
+    "passedChecks": 6,
+    "failedChecks": 3,
+    "totalIssues": 3,
+    "blockerCount": 1,
+    "bySeverity": {
+      "critical": 1,
+      "medium": 2
+    },
+    "byDomain": {
+      "core": 1,
+      "learning": 1,
+      "ux": 1
+    },
+    "blockerPolicySeverities": [
+      "critical",
+      "high",
+      "medium",
+      "low"
+    ]
+  },
+  "ready": false
+}

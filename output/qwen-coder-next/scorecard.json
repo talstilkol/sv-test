@@ -1,0 +1,147 @@
+{
+  "reportVersion": "qwen-training-runner-v1",
+  "runs": [
+    {
+      "day": 1,
+      "outputDir": "output/qwen-coder-next/day-01",
+      "status": 0,
+      "durationMs": 111283,
+      "guard": null,
+      "dryRun": false
+    },
+    {
+      "day": 2,
+      "outputDir": "output/qwen-coder-next/day-02",
+      "status": 0,
+      "durationMs": 115944,
+      "guard": null,
+      "dryRun": false
+    },
+    {
+      "day": 3,
+      "outputDir": "output/qwen-coder-next/day-03",
+      "status": 0,
+      "durationMs": 156984,
+      "guard": null,
+      "dryRun": false
+    },
+    {
+      "day": 4,
+      "outputDir": "output/qwen-coder-next/day-04",
+      "status": 0,
+      "durationMs": 129226,
+      "guard": null,
+      "dryRun": false
+    },
+    {
+      "day": 5,
+      "outputDir": "output/qwen-coder-next/day-05",
+      "status": 0,
+      "durationMs": 104755,
+      "guard": null,
+      "dryRun": false
+    },
+    {
+      "day": 6,
+      "outputDir": "output/qwen-coder-next/day-06",
+      "status": 0,
+      "durationMs": 184634,
+      "guard": {
+        "summary": {
+          "checks": 11,
+          "passed": 7,
+          "failed": 4,
+          "ready": false
+        },
+        "blockers": [
+          {
+            "id": "no-native-random-api",
+            "label": "Generated output does not use native random API",
+            "detail": "output/qwen-coder-next/day-06/prompt.md:5, output/qwen-coder-next/day-06/qwen-response.md:881"
+          },
+          {
+            "id": "no-placeholder-or-fabricated-data",
+            "label": "Generated output does not contain placeholder or fabricated data markers",
+            "detail": "output/qwen-coder-next/day-06/prompt.md:18, output/qwen-coder-next/day-06/qwen-response.md:878, output/qwen-coder-next/day-06/prompt.md:19, output/qwen-coder-next/day-06/prompt.md:19, output/qwen-coder-next/day-06/prompt.md:19, output/qwen-coder-next/day-06/prompt.md:19"
+          },
+          {
+            "id": "contract-no-invented-endpoints",
+            "label": "No generated API endpoint exists outside the contract",
+            "detail": "Unexpected: GET /api/books/health"
+          },
+          {
+            "id": "contract-required-stack-tokens",
+            "label": "Required stack tokens are present",
+            "detail": "Missing: BrowserRouter"
+          }
+        ],
+        "written": {
+          "jsonPath": "output/qwen-coder-next/day-06/qwen-output-guard-report.json",
+          "mdPath": "output/qwen-coder-next/day-06/qwen-output-guard-report.md"
+        }
+      },
+      "dryRun": false
+    },
+    {
+      "day": 7,
+      "outputDir": "output/qwen-coder-next/day-07",
+      "status": 0,
+      "durationMs": 33555,
+      "guard": {
+        "summary": {
+          "checks": 11,
+          "passed": 3,
+          "failed": 8,
+          "ready": false
+        },
+        "blockers": [
+          {
+            "id": "no-native-random-api",
+            "label": "Generated output does not use native random API",
+            "detail": "output/qwen-coder-next/day-07/prompt.md:5, output/qwen-coder-next/day-07/qwen-response.md:3, output/qwen-coder-next/day-07/qwen-response.md:4, output/qwen-coder-next/day-07/qwen-response.md:5, output/qwen-coder-next/day-07/qwen-response.md:6, output/qwen-coder-next/day-07/qwen-response.md:65"
+          },
+          {
+            "id": "no-placeholder-or-fabricated-data",
+            "label": "Generated output does not contain placeholder or fabricated data markers",
+            "detail": "output/qwen-coder-next/day-07/prompt.md:18, output/qwen-coder-next/day-07/prompt.md:73, output/qwen-coder-next/day-07/qwen-response.md:10, output/qwen-coder-next/day-07/qwen-response.md:10, output/qwen-coder-next/day-07/prompt.md:19, output/qwen-coder-next/day-07/prompt.md:19, output/qwen-coder-next/day-07/qwen-response.md:11, output/qwen-coder-next/day-07/qwen-response.md:14, output/qwen-coder-next/day-07/prompt.md:19, output/qwen-coder-next/day-07/prompt.md:19, output/qwen-coder-next/day-07/qwen-response.md:14"
+          },
+          {
+            "id": "contract-required-endpoints",
+            "label": "All contract endpoints are implemented",
+            "detail": "Missing: GET /, GET /api/books, GET /api/books/:id, POST /api/books, PUT /api/books/:id, DELETE /api/books/:id, POST /api/books/borrow/:id"
+          },
+          {
+            "id": "contract-required-stack-tokens",
+            "label": "Required stack tokens are present",
+            "detail": "Missing: express.json, cors, mongoose.connect, Routes, useNavigate, useParams, useEffect"
+          },
+          {
+            "id": "contract-required-validation-terms",
+            "label": "Required validation terms are present",
+            "detail": "Missing: year, genre, isAvailable, borrowedBy, Fiction, Science, History, Biography"
+          },
+          {
+            "id": "contract-required-status-codes",
+            "label": "Required status codes are present",
+            "detail": "Missing: 400, 404, 500"
+          },
+          {
+            "id": "contract-required-js-tokens",
+            "label": "Required JavaScript assessment tokens are present",
+            "detail": "Missing: Array.isArray, throw new Error, availableCount, borrowedCount, oldestYear, newestYear, mostCommonGenre"
+          },
+          {
+            "id": "contract-required-ts-tokens",
+            "label": "Required TypeScript assessment tokens are present",
+            "detail": "Missing: interface Book, Partial<Book>, filterBooks"
+          }
+        ],
+        "written": {
+          "jsonPath": "output/qwen-coder-next/day-07/qwen-output-guard-report.json",
+          "mdPath": "output/qwen-coder-next/day-07/qwen-output-guard-report.md"
+        }
+      },
+      "dryRun": false
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "model": "qwen3-coder-next:latest",
+  "stage": "2.5",
+  "block": 2,
+  "startedAt": "2026-05-05T18:20:59.964Z",
+  "endedAt": "2026-05-05T18:23:54.907Z",
+  "durationMs": 174943,
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "responseBytes": 15595,
+  "stderrBytes": 64207
+}

@@ -31,6 +31,90 @@
     {
       "location": "mc_wb_vars_002::feedback[3]",
       "snippet": "❌ DOM-as-state מקשה לdebug + רינדור־מחדש לא־יעיל."
+    },
+    {
+      "location": "fill_l17_domain_aaa_001::hint",
+      "snippet": "החלק ב־URL שמזהה את השרת/host."
+    },
+    {
+      "location": "fill_l17_rest_api_aaa_001::hint",
+      "snippet": "ב־REST שם הנתיב הוא בדרך כלל resource ברבים."
+    },
+    {
+      "location": "fill_l19_const_aaa_001::hint",
+      "snippet": "מילת מפתח ל־binding שלא ניתן להקצות לו ערך חדש."
+    },
+    {
+      "location": "fill_l27_book_yy_001::hint",
+      "snippet": "מילת מפתח ב־TypeScript להגדרת shape של object."
+    },
+    {
+      "location": "fill_l27_transaction_yy_001::hint",
+      "snippet": "הערך השני ב־transaction: כסף שיוצא מהתקציב."
+    },
+    {
+      "location": "fill_l27_expense_yy_001::hint",
+      "snippet": "שם ה־type שמרכז את קטגוריות ההוצאה האפשריות."
+    },
+    {
+      "location": "fill_l27_category_vv_001::hint",
+      "snippet": "סימן שמחבר literal types ל־union."
+    },
+    {
+      "location": "fill_l17_request_uu_001::hint",
+      "snippet": "המקום שבו Express שם JSON שנשלח ב־POST אחרי express.json()."
+    },
+    {
+      "location": "fill_l17_response_uu_001::hint",
+      "snippet": "מתודת response ששולחת object כ־JSON ומגדירה Content-Type מתא"
+    },
+    {
+      "location": "fill_final_jsx_attr_nn_001::hint",
+      "snippet": "ב־JSX משתמשים בשם הזה במקום class רגיל של HTML."
+    },
+    {
+      "location": "fill_perf_observer_ee_001::hint",
+      "snippet": "שם ה־Browser API שבודק מתי אלמנט נכנס/יוצא מה־viewport."
+    },
+    {
+      "location": "fill_l19_switch_cc_001::hint",
+      "snippet": "ב־case שמחזיר כישלון צריך להחזיר ערך מפורש לפני ה־default."
+    },
+    {
+      "location": "fill_l20_findbyid_w_001::hint",
+      "snippet": "הערך שמזהה document יחיד לפי ה־_id שלו."
+    },
+    {
+      "location": "fill_l20_gt_w_001::hint",
+      "snippet": "אופרטור MongoDB לגדול מ־, בלי לכלול את הערך עצמו."
+    },
+    {
+      "location": "fill_l17_get_v_001::hint",
+      "snippet": "מתודת Express לקריאת רשומות, מקבילה ל־HTTP GET."
+    },
+    {
+      "location": "fill_l17_json_v_001::hint",
+      "snippet": "middleware שחייב להיות לפני routes כדי לקרוא req.body מ־JSON"
+    },
+    {
+      "location": "fill_l17_query_v_001::hint",
+      "snippet": "ב־Express כאן נמצאים הערכים שאחרי ? ב־URL."
+    },
+    {
+      "location": "fill_l17_jsonres_v_001::hint",
+      "snippet": "מתודת Express ששולחת object כ־JSON response."
+    },
+    {
+      "location": "fill_l26_union_t_001::hint",
+      "snippet": "האופרטור שמחבר אפשרויות ב־union type."
+    },
+    {
+      "location": "fill_l22_state_lift_q_001::hint",
+      "snippet": "שם setter מקובל שנוצר מ־state בשם value."
+    },
+    {
+      "location": "fill_l24_callback_p_001::hint",
+      "snippet": "Hook שמקביל ל־useMemo אבל מיועד לפונקציות."
     }
   ],
   "typos": {},

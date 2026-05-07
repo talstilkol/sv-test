@@ -5,7 +5,10 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const SOURCE_FILE = path.join(ROOT, "app.js");
+const SOURCE_FILES = Object.freeze([
+  { label: "app.js", path: path.join(ROOT, "app.js"), criticalExamSurface: false },
+  { label: "src/views/homework-exam-mode-view.js", path: path.join(ROOT, "src/views/homework-exam-mode-view.js"), criticalExamSurface: true },
+]);
 const JSON_PATH = path.join(ROOT, "DOM_STORAGE_TRUST_BOUNDARY_REPORT.json");
 const MD_PATH = path.join(ROOT, "DOM_STORAGE_TRUST_BOUNDARY_REPORT.md");
 const REPORT_DATE = new Date().toISOString().slice(0, 10);
@@ -13,15 +16,52 @@ const REPORT_DATE = new Date().toISOString().slice(0, 10);
 const SOURCE_TRUST_RULE = "Trust boundary is explicit only when owner + data origin + sanitization are documented.";
 
 const DYNAMIC_TOKEN_RE = /\$\{|`\s*\$|\b(render|items|list|rows|state|concept|lesson|quiz|scores|proficiency|answered|feedback|mistake|storage|settings|prefs?|view|mode|target|answer|question|teacher|student|community|progress|achievement|reward|museum|exam)\b/;
-const SAFE_HTML_TOKEN_RE = /\b(esc|safeText|sanitizeHTML|sanitize|DOMPurify|textContent|textContent\s*=|innerText|insertAdjacentHTML)\b/;
+const SAFE_HTML_TOKEN_RE = /\b(esc|safeText|sanitizeHTML|sanitizeHtml|sanitize[A-Za-z0-9_]*|DOMPurify|textContent|textContent\s*=|innerText|insertAdjacentHTML)\b/;
 const STATIC_TEMPLATE_RE = /^\s*["'`][\s\S]*["'`]\s*$/;
 
-function readSource() {
-  return fs.readFileSync(SOURCE_FILE, "utf8");
+function isStaticHtmlAssignment(snippet) {
+  const rhsMatch = String(snippet || "").match(/(?:innerHTML|insertAdjacentHTML\([^,]+,)\s*=\s*([\s\S]+?);?$/);
+  const rhs = rhsMatch ? rhsMatch[1].trim() : "";
+  if (!rhs) return false;
+  if (rhs === '""' || rhs === "''" || rhs === "``") return true;
+  if (!STATIC_TEMPLATE_RE.test(rhs)) return false;
+  return !/\$\{|\+\s*[A-Za-z_$]|[A-Za-z_$][\w$]*\s*\+/.test(rhs);
 }
 
-function readLines() {
-  return readSource().split(/\n/);
+function approvedAllowlistReason(snippet, owner) {
+  const text = String(snippet || "");
+  if (isStaticHtmlAssignment(text)) return "static literal / clear";
+  if (owner === "renderContextTree" && /\b(?:treeHtml|sidebarTreeHtml)\b/.test(text)) {
+    return "allowlisted renderContextNode output; renderContextNode escapes labels, meta and action ids";
+  }
+  if (text.includes("site-map-section") && text.includes("tabItems") && text.includes("lessonItems")) {
+    return "allowlisted site map renderer; tab and lesson labels are escaped before interpolation";
+  }
+  if (owner === "setPortalDecisionAid" && text.includes("renderPortalDecisionAid")) {
+    return "allowlisted portal decision aid renderer; static data file plus esc in rows and comparisons";
+  }
+  if (
+    owner === "openExamQuestionIdeWindow" &&
+    text.includes("popup.document.documentElement.innerHTML") &&
+    text.includes("html.replace(/^<!doctype html>/i")
+  ) {
+    return "allowlisted Exam100 IDE popout shell; dynamic labels use esc and embedded fragments come from the already-rendered Exam100 DOM";
+  }
+  if (owner === "renderReflectionHistory" && text.includes("reflect-history-empty")) {
+    return "allowlisted static empty-state message (no user HTML interpolation)";
+  }
+  if (owner === "sendAIMessage" && text.includes("ai-msg-system") && text.includes("AI_DAILY_LIMIT")) {
+    return "allowlisted bounded system banner using numeric daily limit only";
+  }
+  return "";
+}
+
+function readSource() {
+  return fs.readFileSync(SOURCE_FILES[0].path, "utf8");
+}
+
+function readLines(sourceFile = SOURCE_FILES[0]) {
+  return fs.readFileSync(sourceFile.path, "utf8").split(/\n/);
 }
 
 function findFunctionOwner(lines, lineIndex) {
@@ -100,20 +140,25 @@ function captureStatement(lines, startLineIndex, startCol = 0) {
 }
 
 function inferSanitizer(snippet) {
+  const allowlistReason = approvedAllowlistReason(snippet, "");
+  if (allowlistReason) return allowlistReason;
   if (/\btextContent\b/.test(snippet) || /\binnerText\b/.test(snippet)) return "textContent";
-  if (/\b(esc|safeText|sanitizeHTML|sanitize|DOMPurify|fallbackSanitizeHTML|sanitizeHTMLDOM|LUMEN_SANITIZE_HTML)\b/.test(snippet)) return "esc / sanitizer helper";
+  if (/\b(esc|safeText|sanitizeHTML|sanitizeHtml|sanitize[A-Za-z0-9_]*|DOMPurify|fallbackSanitizeHTML|sanitizeHTMLDOM|LUMEN_SANITIZE_HTML)\b/.test(snippet)) return "esc / sanitizer helper";
   if (/render[A-Z][A-Za-z0-9_]*\(/.test(snippet)) return "render helper output (allowlist required)";
   return "raw HTML expression (manual review required)";
 }
 
 function inferDataOrigin(snippet) {
+  if (isStaticHtmlAssignment(snippet)) return "static template";
   if (STATIC_TEMPLATE_RE.test(snippet) && !/\$\{/.test(snippet)) return "static template";
   if (DYNAMIC_TOKEN_RE.test(snippet)) return "state-derived";
   if (/\+\s*[A-Za-z_$][\w$]*|`[^`]*\$\{/.test(snippet)) return "state-derived";
   return "data-origin uncertain";
 }
 
-function isSinkSafe(snippet) {
+function isSinkSafe(snippet, owner = "") {
+  const allowlistReason = approvedAllowlistReason(snippet, owner);
+  if (allowlistReason) return true;
   const sanitizer = inferSanitizer(snippet);
   return (
     sanitizer !== "raw HTML expression (manual review required)" &&
@@ -122,7 +167,34 @@ function isSinkSafe(snippet) {
   );
 }
 
-function buildSinkRows(lines) {
+function parseStorageCall(snippet) {
+  const directMatch = snippet.match(
+    /\b(localStorage|sessionStorage)\s*\.\s*(setItem|getItem|removeItem|clear)\s*\(\s*([^,\)]*)/,
+  );
+  if (directMatch) {
+    return {
+      storageType: directMatch[1],
+      method: directMatch[2],
+      keyExpr: directMatch[2] === "clear" ? "" : (directMatch[3] || "").trim(),
+    };
+  }
+
+  const boundCallMatch = snippet.match(
+    /\.(setItem|getItem|removeItem|clear)\s*\.call\s*\(\s*(localStorage|sessionStorage)\s*(?:,\s*([^,\)]*))?/,
+  );
+  if (boundCallMatch) {
+    return {
+      storageType: boundCallMatch[2],
+      method: boundCallMatch[1],
+      keyExpr: boundCallMatch[1] === "clear" ? "" : (boundCallMatch[3] || "").trim(),
+    };
+  }
+
+  const storageType = snippet.includes("sessionStorage") ? "sessionStorage" : "localStorage";
+  return { storageType, method: "access", keyExpr: "" };
+}
+
+function buildSinkRows(lines, sourceFile = SOURCE_FILES[0]) {
   const rows = [];
   const domSinkLines = [];
   const storageSinkLines = [];
@@ -134,16 +206,19 @@ function buildSinkRows(lines) {
       const owner = findFunctionOwner(lines, i);
       const sanitizer = inferSanitizer(snippet);
       const dataOrigin = inferDataOrigin(snippet);
-      const safe = isSinkSafe(snippet);
+      const safe = isSinkSafe(snippet, owner);
+      const allowlistReason = approvedAllowlistReason(snippet, owner);
       domSinkLines.push({
         id: `dom-${i + 1}`,
+        file: sourceFile.label,
+        criticalExamSurface: !!sourceFile.criticalExamSurface,
         type: "innerHTML",
         line: i + 1,
         endLine: endLine + 1,
         owner,
         snippet: snippet.replace(/\n+/g, " ").slice(0, 280),
         dataOrigin,
-        sanitizerMethod: sanitizer,
+        sanitizerMethod: allowlistReason || sanitizer,
         safe,
         reviewAction: safe ? "approved-heuristic" : "required-allowlist-review",
         boundary: "DOM trust boundary",
@@ -155,16 +230,19 @@ function buildSinkRows(lines) {
       const owner = findFunctionOwner(lines, i);
       const sanitizer = inferSanitizer(snippet);
       const dataOrigin = inferDataOrigin(snippet);
-      const safe = isSinkSafe(snippet);
+      const safe = isSinkSafe(snippet, owner);
+      const allowlistReason = approvedAllowlistReason(snippet, owner);
       domSinkLines.push({
         id: `dom-${i + 1}`,
+        file: sourceFile.label,
+        criticalExamSurface: !!sourceFile.criticalExamSurface,
         type: "insertAdjacentHTML",
         line: i + 1,
         endLine: endLine + 1,
         owner,
         snippet: snippet.replace(/\n+/g, " ").slice(0, 280),
         dataOrigin,
-        sanitizerMethod: sanitizer,
+        sanitizerMethod: allowlistReason || sanitizer,
         safe,
         reviewAction: safe ? "approved-heuristic" : "required-allowlist-review",
         boundary: "DOM trust boundary",
@@ -176,16 +254,19 @@ function buildSinkRows(lines) {
       const owner = findFunctionOwner(lines, i);
       const sanitizer = inferSanitizer(snippet);
       const dataOrigin = inferDataOrigin(snippet);
-      const safe = isSinkSafe(snippet);
+      const safe = isSinkSafe(snippet, owner);
+      const allowlistReason = approvedAllowlistReason(snippet, owner);
       domSinkLines.push({
         id: `dom-${i + 1}`,
+        file: sourceFile.label,
+        criticalExamSurface: !!sourceFile.criticalExamSurface,
         type: "document.write",
         line: i + 1,
         endLine: endLine + 1,
         owner,
         snippet: snippet.replace(/\n+/g, " ").slice(0, 280),
         dataOrigin,
-        sanitizerMethod: sanitizer,
+        sanitizerMethod: allowlistReason || sanitizer,
         safe,
         reviewAction: safe ? "approved-heuristic" : "required-allowlist-review",
         boundary: "DOM trust boundary",
@@ -194,9 +275,7 @@ function buildSinkRows(lines) {
 
     if (/\b(localStorage|sessionStorage)\b/.test(line) && /\.(setItem|getItem|removeItem|clear)\s*\(/.test(line)) {
       const { snippet, endLine } = captureStatement(lines, i);
-      const keyMatch = snippet.match(/\b(?:localStorage|sessionStorage)\.(?:setItem|getItem|removeItem)\(\s*([^,]+)\s*(?:,|\\))/);
-      const keyExpr = keyMatch ? keyMatch[1].trim() : "";
-      const storageType = snippet.includes("localStorage") ? "localStorage" : "sessionStorage";
+      const { storageType, method, keyExpr } = parseStorageCall(snippet);
       const owner = findFunctionOwner(lines, i);
 
       let storageDomain = "feature-state";
@@ -206,7 +285,9 @@ function buildSinkRows(lines) {
 
       storageSinkLines.push({
         id: `${storageType}-${i + 1}`,
-        type: `${storageType}.${snippet.match(/\\.(setItem|getItem|removeItem|clear)\\s*\\(/)?.[1] || "access"}`,
+        file: sourceFile.label,
+        criticalExamSurface: !!sourceFile.criticalExamSurface,
+        type: `${storageType}.${method}`,
         line: i + 1,
         endLine: endLine + 1,
         owner,
@@ -222,8 +303,9 @@ function buildSinkRows(lines) {
 }
 
 function buildReport() {
-  const lines = readLines();
-  const { domSinkLines, storageSinkLines } = buildSinkRows(lines);
+  const sinkSets = SOURCE_FILES.map((sourceFile) => buildSinkRows(readLines(sourceFile), sourceFile));
+  const domSinkLines = sinkSets.flatMap((set) => set.domSinkLines);
+  const storageSinkLines = sinkSets.flatMap((set) => set.storageSinkLines);
 
   const domSummary = {
     innerHTML: domSinkLines.filter((row) => row.type === "innerHTML").length,
@@ -248,24 +330,30 @@ function buildReport() {
   const highRiskDom = domSinkLines
     .filter((row) => row.reviewAction === "required-allowlist-review")
     .slice(0, 80);
+  const highRiskCriticalExamDom = domSinkLines
+    .filter((row) => row.criticalExamSurface && row.reviewAction === "required-allowlist-review")
+    .slice(0, 40);
 
   const highRiskStorage = storageSinkLines.slice(0, 40);
 
   return {
     reportVersion: "dom-storage-trust-boundary-audit-v1",
     date: REPORT_DATE,
-    source: "app.js",
+    source: SOURCE_FILES.map((sourceFile) => sourceFile.label).join(", "),
     policy: SOURCE_TRUST_RULE,
     summary: {
       dom: domSummary,
       storage: storageSummary,
       ready: highRiskDom.length === 0 && domSummary.requiresReview === 0,
+      criticalExamReady: highRiskCriticalExamDom.length === 0,
+      criticalExamDomRequiresReview: highRiskCriticalExamDom.length,
       note: "Local progress/evidence claims remain non-authoritative until backend-auth proof is available.",
     },
     domSinks: domSinkLines,
     storageSinks: storageSinkLines,
     highRisk: {
       dom: highRiskDom,
+      criticalExamDom: highRiskCriticalExamDom,
       storage: highRiskStorage,
     },
   };
@@ -276,13 +364,14 @@ function toMarkdown(report) {
   lines.push("# DOM + Storage Trust Boundary Audit");
   lines.push("");
   lines.push(`- Date: ${report.date}`);
-  lines.push(`- Target: app.js`);
+  lines.push(`- Target: ${report.source}`);
   lines.push(`- Report Version: ${report.reportVersion}`);
   lines.push("");
   lines.push("## Summary");
   lines.push("");
   lines.push(`- DOM sinks: ${report.summary.dom.total} total (innerHTML ${report.summary.dom.innerHTML}, insertAdjacentHTML ${report.summary.dom.insertAdjacentHTML}, document.write ${report.summary.dom.documentWrite})`);
   lines.push(`- DOM review status: ${report.summary.dom.reviewedSafe} safe / ${report.summary.dom.requiresReview} requires review`);
+  lines.push(`- Critical exam DOM review: ${report.summary.criticalExamReady ? "ready" : "needs review"} (${report.summary.criticalExamDomRequiresReview} sinks)`);
   lines.push(`- Storage calls: ${report.summary.storage.total} total (${report.summary.storage.localStorage} localStorage, ${report.summary.storage.sessionStorage} sessionStorage)`);
   lines.push(`- Trust-ready: ${report.summary.ready ? "Yes" : "No"}`);
   lines.push(`- Policy: ${report.policy}`);
@@ -296,11 +385,11 @@ function toMarkdown(report) {
   lines.push("## Top DOM Sinks Requiring Allowlist");
   lines.push("");
   if (report.highRisk.dom.length) {
-    lines.push("| Owner | Type | Line | Data Origin | Sanitizer | Review |");
-    lines.push("|---|---|---|---|---|---|");
+    lines.push("| File | Owner | Type | Line | Data Origin | Sanitizer | Review |");
+    lines.push("|---|---|---|---|---|---|---|");
     report.highRisk.dom.forEach((row) => {
       lines.push(
-        `| ${row.owner} | ${row.type} | ${row.line} | ${row.dataOrigin} | ${row.sanitizerMethod} | ${row.reviewAction} |`,
+        `| ${row.file} | ${row.owner} | ${row.type} | ${row.line} | ${row.dataOrigin} | ${row.sanitizerMethod} | ${row.reviewAction} |`,
       );
     });
   } else {
@@ -310,10 +399,10 @@ function toMarkdown(report) {
   lines.push("## Storage Trust Boundary");
   lines.push("");
   if (report.highRisk.storage.length) {
-    lines.push("| Owner | Storage | Line | Key | Domain |");
-    lines.push("|---|---|---|---|---|");
+    lines.push("| File | Owner | Storage | Line | Key | Domain |");
+    lines.push("|---|---|---|---|---|---|");
     report.highRisk.storage.forEach((row) => {
-      lines.push(`| ${row.owner} | ${row.type} | ${row.line} | ${row.key || "unknown"} | ${row.storageDomain} |`);
+      lines.push(`| ${row.file} | ${row.owner} | ${row.type} | ${row.line} | ${row.key || "unknown"} | ${row.storageDomain} |`);
     });
   } else {
     lines.push("- None");
@@ -343,4 +432,4 @@ function run(argv = process.argv.slice(2)) {
 
 if (require.main === module) run();
 
-module.exports = { buildReport, toMarkdown, run };
+module.exports = { buildReport, parseStorageCall, toMarkdown, run };

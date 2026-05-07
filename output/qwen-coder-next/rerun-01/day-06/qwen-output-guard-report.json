@@ -1,0 +1,114 @@
+{
+  "reportVersion": "qwen-output-guard-v1",
+  "target": "output/qwen-coder-next/rerun-01/day-06",
+  "contract": "docs/qwen-coder-next-training/contracts/sv-library-contract.json",
+  "summary": {
+    "checks": 11,
+    "passed": 10,
+    "failed": 1,
+    "ready": false
+  },
+  "checks": [
+    {
+      "id": "target-exists",
+      "label": "Qwen output target exists",
+      "status": "pass",
+      "passed": true,
+      "detail": "Scanning output/qwen-coder-next/rerun-01/day-06.",
+      "evidence": [
+        "output/qwen-coder-next/rerun-01/day-06"
+      ]
+    },
+    {
+      "id": "scannable-files",
+      "label": "Qwen output has scannable files",
+      "status": "pass",
+      "passed": true,
+      "detail": "1 files scanned.",
+      "evidence": [
+        "output/qwen-coder-next/rerun-01/day-06/qwen-response.md"
+      ]
+    },
+    {
+      "id": "no-native-random-api",
+      "label": "Generated output does not use native random API",
+      "status": "pass",
+      "passed": true,
+      "detail": "No native random API token found.",
+      "evidence": []
+    },
+    {
+      "id": "no-placeholder-or-fabricated-data",
+      "label": "Generated output does not contain placeholder or fabricated data markers",
+      "status": "pass",
+      "passed": true,
+      "detail": "No placeholder/fabricated data markers found.",
+      "evidence": []
+    },
+    {
+      "id": "contract-required-endpoints",
+      "label": "All contract endpoints are implemented",
+      "status": "pass",
+      "passed": true,
+      "detail": "All contract endpoints found.",
+      "evidence": []
+    },
+    {
+      "id": "contract-no-invented-endpoints",
+      "label": "No generated API endpoint exists outside the contract",
+      "status": "pass",
+      "passed": true,
+      "detail": "No unexpected API endpoints found.",
+      "evidence": []
+    },
+    {
+      "id": "contract-required-stack-tokens",
+      "label": "Required stack tokens are present",
+      "status": "pass",
+      "passed": true,
+      "detail": "Required stack tokens found.",
+      "evidence": []
+    },
+    {
+      "id": "contract-required-validation-terms",
+      "label": "Required validation terms are present",
+      "status": "pass",
+      "passed": true,
+      "detail": "Required validation terms found.",
+      "evidence": []
+    },
+    {
+      "id": "contract-required-status-codes",
+      "label": "Required status codes are present",
+      "status": "pass",
+      "passed": true,
+      "detail": "Required status codes found.",
+      "evidence": []
+    },
+    {
+      "id": "contract-required-js-tokens",
+      "label": "Required JavaScript assessment tokens are present",
+      "status": "fail",
+      "passed": false,
+      "detail": "Missing: Array.isArray",
+      "evidence": [
+        "Array.isArray"
+      ]
+    },
+    {
+      "id": "contract-required-ts-tokens",
+      "label": "Required TypeScript assessment tokens are present",
+      "status": "pass",
+      "passed": true,
+      "detail": "Required TypeScript assessment tokens found.",
+      "evidence": []
+    }
+  ],
+  "blockers": [
+    {
+      "id": "contract-required-js-tokens",
+      "label": "Required JavaScript assessment tokens are present",
+      "detail": "Missing: Array.isArray"
+    }
+  ]
+}

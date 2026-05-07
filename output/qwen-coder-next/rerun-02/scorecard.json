@@ -1,0 +1,25 @@
+{
+  "reportVersion": "qwen-training-runner-v1",
+  "runs": [
+    {
+      "day": 7,
+      "outputDir": "output/qwen-coder-next/rerun-02/day-07",
+      "status": 0,
+      "durationMs": 561518,
+      "guard": {
+        "summary": {
+          "checks": 5,
+          "passed": 5,
+          "failed": 0,
+          "ready": true
+        },
+        "blockers": [],
+        "written": {
+          "jsonPath": "output/qwen-coder-next/rerun-02/day-07/qwen-output-guard-report.json",
+          "mdPath": "output/qwen-coder-next/rerun-02/day-07/qwen-output-guard-report.md"
+        }
+      },
+      "dryRun": false
+    }
+  ]
+}

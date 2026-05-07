@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { cssIncludes } = require("./css-evidence.js");
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -99,7 +100,7 @@ describe("lesson compact views", () => {
     expect(css).toContain(".concept-step-panel");
     expect(css).toContain(".concept-step-tabs");
     expect(css).toContain(".concept-step-tab.active");
-    expect(css).toContain(".concept-step-panel > header");
+    expect(cssIncludes(css, ".concept-step-panel > header")).toBe(true);
     expect(css).toContain(".vm-concept-parts");
     expect(css).toContain(".vm-concept-parts .concept-step-tabs");
   });
@@ -151,7 +152,7 @@ describe("lesson compact views", () => {
     expect(app).not.toContain('<h3 class="lesson-body-title">${esc(lesson.title)}</h3>');
     expect(css).toContain(".lesson-menu-stack");
     expect(css).toContain(".lesson-tree-row");
-    expect(css).toContain("grid-template-columns: minmax(5.4rem, 7rem) minmax(0, 1fr)");
+    expect(cssIncludes(css, "grid-template-columns: minmax(5.4rem, 7rem) minmax(0, 1fr)")).toBe(true);
     expect(css).toContain(".lesson-tree-label");
     expect(css).toContain(".lesson-tree-scroll");
     expect(css).toContain(".lesson-path-chip");

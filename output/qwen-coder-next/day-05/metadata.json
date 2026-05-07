@@ -1,0 +1,15 @@
+{
+  "reportVersion": "qwen-training-runner-v1",
+  "model": "qwen3-coder-next:latest",
+  "day": 5,
+  "promptFile": "docs/qwen-coder-next-training/prompts/day-05-js-ts.md",
+  "outputDir": "output/qwen-coder-next/day-05",
+  "startedAt": "2026-05-05T07:53:30.427Z",
+  "endedAt": "2026-05-05T07:55:15.182Z",
+  "durationMs": 104755,
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "responseBytes": 12922,
+  "stderrBytes": 41260
+}

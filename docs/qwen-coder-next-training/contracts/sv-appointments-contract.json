@@ -1,0 +1,52 @@
+{
+  "contractVersion": "qwen-output-contract-v1",
+  "name": "SV Appointments Simulation",
+  "allowedEndpoints": [
+    "GET /",
+    "GET /api/appointments",
+    "GET /api/appointments/:id",
+    "GET /api/appointments/status/:status",
+    "POST /api/appointments",
+    "PUT /api/appointments/:id",
+    "DELETE /api/appointments/:id",
+    "PATCH /api/appointments/toggle/:id"
+  ],
+  "requiredTokens": [
+    "express.json",
+    "cors",
+    "mongoose.connect",
+    "BrowserRouter",
+    "Routes",
+    "Route",
+    "useNavigate",
+    "useParams",
+    "useEffect",
+    "VITE_API_URL"
+  ],
+  "requiredValidationTerms": [
+    "patientName",
+    "doctorName",
+    "date",
+    "time",
+    "reason",
+    "status",
+    "Scheduled",
+    "Completed",
+    "Cancelled"
+  ],
+  "requiredStatusCodes": [400, 404, 500],
+  "requiredJsTokens": [
+    "Array.isArray",
+    "throw new Error",
+    "totalAppointments",
+    "scheduledCount",
+    "completedCount",
+    "cancelledCount",
+    "byDoctor"
+  ],
+  "requiredTsTokens": [
+    "interface Appointment",
+    "Partial<Appointment>",
+    "filterAppointments"
+  ]
+}

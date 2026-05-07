@@ -39,6 +39,10 @@
   }
 
   function showConsent() {
+    if (document.body && document.body.classList.contains("exam-focus-mode") && !document.body.classList.contains("show-advanced-tabs")) {
+      window.__lumenConsentDeclined = false;
+      return;
+    }
     let stored;
     try { stored = localStorage.getItem("lumen-consent"); } catch (_) { stored = "decline"; }
     if (stored === "accept") {

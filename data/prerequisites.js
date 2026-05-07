@@ -6,7 +6,7 @@
 var CONCEPT_PREREQUISITES = {
   "lesson_11::Array": [],
   "lesson_11::Index": ["lesson_11::Array"],
-  "lesson_11::By Value": ["lesson_11::number", "lesson_11::string", "lesson_11::boolean"],
+  "lesson_11::By Value": ["lesson_11::number", "lesson_11::string", "lesson_11::boolean", "lesson_11::undefined"],
   "lesson_11::By Reference": ["lesson_11::Array", "lesson_11::object"],
   "lesson_11::Pointer": ["lesson_11::By Reference"],
   "lesson_11::undefined": [],

@@ -1,0 +1,58 @@
+{
+  "reportVersion": "qwen-output-guard-v1",
+  "target": "output/qwen-coder-next/rerun-02/day-07",
+  "contract": null,
+  "summary": {
+    "checks": 5,
+    "passed": 5,
+    "failed": 0,
+    "ready": true
+  },
+  "checks": [
+    {
+      "id": "target-exists",
+      "label": "Qwen output target exists",
+      "status": "pass",
+      "passed": true,
+      "detail": "Scanning output/qwen-coder-next/rerun-02/day-07.",
+      "evidence": [
+        "output/qwen-coder-next/rerun-02/day-07"
+      ]
+    },
+    {
+      "id": "scannable-files",
+      "label": "Qwen output has scannable files",
+      "status": "pass",
+      "passed": true,
+      "detail": "1 files scanned.",
+      "evidence": [
+        "output/qwen-coder-next/rerun-02/day-07/qwen-response.md"
+      ]
+    },
+    {
+      "id": "no-native-random-api",
+      "label": "Generated output does not use native random API",
+      "status": "pass",
+      "passed": true,
+      "detail": "No native random API token found.",
+      "evidence": []
+    },
+    {
+      "id": "no-placeholder-or-fabricated-data",
+      "label": "Generated output does not contain placeholder or fabricated data markers",
+      "status": "pass",
+      "passed": true,
+      "detail": "No placeholder/fabricated data markers found.",
+      "evidence": []
+    },
+    {
+      "id": "contract-loaded",
+      "label": "Optional contract loaded",
+      "status": "pass",
+      "passed": true,
+      "detail": "No contract supplied; contract checks skipped.",
+      "evidence": []
+    }
+  ],
+  "blockers": []
+}

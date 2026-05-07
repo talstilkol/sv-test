@@ -1,0 +1,310 @@
+{
+  "reportVersion": "system-weakness-closure-v1",
+  "generatedAt": "2026-05-06T16:45:13.838Z",
+  "ready": true,
+  "strictReady": true,
+  "summary": {
+    "closedTasks": 8,
+    "totalTasks": 8,
+    "taskPercent": "100%",
+    "closedHours": 18.5,
+    "totalHours": 18.5,
+    "remainingHours": 0,
+    "timePercent": "100%",
+    "remainingLabel": "0 דק׳"
+  },
+  "question": {
+    "total": 534,
+    "notes": 0,
+    "deferred": 534,
+    "batches": 22,
+    "byAction": {
+      "add-fill-hint": 120,
+      "balance-option-lengths": 414
+    },
+    "examCoreIssues": 0,
+    "topActions": [
+      {
+        "key": "balance-option-lengths",
+        "count": 414
+      },
+      {
+        "key": "add-fill-hint",
+        "count": 120
+      }
+    ],
+    "topConcepts": [
+      {
+        "key": "lesson_13::DOM",
+        "count": 14
+      },
+      {
+        "key": "lesson_html_css_foundations::box model",
+        "count": 14
+      },
+      {
+        "key": "lesson_auth_security::password hashing",
+        "count": 12
+      },
+      {
+        "key": "lesson_sql_orm::SQL",
+        "count": 12
+      },
+      {
+        "key": "lesson_auth_security::JWT",
+        "count": 11
+      },
+      {
+        "key": "lesson_15::Asynchronous",
+        "count": 10
+      },
+      {
+        "key": "lesson_closures::closure",
+        "count": 10
+      },
+      {
+        "key": "lesson_ai_engineering::streaming response",
+        "count": 8
+      },
+      {
+        "key": "lesson_auth_security::CORS",
+        "count": 8
+      },
+      {
+        "key": "lesson_auth_security::XSS boundary",
+        "count": 8
+      }
+    ]
+  },
+  "distractor": {
+    "actionable": 203,
+    "deferred": 421,
+    "advisory": 0,
+    "examCritical": 0,
+    "flaggedPercent": 3.5,
+    "deferredPercent": 14,
+    "topDeferredIssues": [
+      {
+        "key": "correct-much-longer",
+        "count": 421
+      }
+    ],
+    "topDeferredConcepts": [
+      {
+        "key": "lesson_html_css_foundations::box model",
+        "count": 10
+      },
+      {
+        "key": "lesson_auth_security::password hashing",
+        "count": 9
+      },
+      {
+        "key": "lesson_closures::closure",
+        "count": 9
+      },
+      {
+        "key": "lesson_auth_security::XSS boundary",
+        "count": 8
+      },
+      {
+        "key": "lesson_auth_security::CORS",
+        "count": 7
+      },
+      {
+        "key": "lesson_auth_security::CSRF",
+        "count": 7
+      },
+      {
+        "key": "lesson_auth_security::JWT",
+        "count": 7
+      },
+      {
+        "key": "lesson_devops_deploy::production readiness",
+        "count": 7
+      },
+      {
+        "key": "lesson_ai_engineering::streaming response",
+        "count": 6
+      },
+      {
+        "key": "lesson_ai_engineering::token budget",
+        "count": 6
+      }
+    ]
+  },
+  "backlog": {
+    "realOpen": 8,
+    "activeNotDone": 5,
+    "activePartial": 3,
+    "topItems": [
+      {
+        "id": "BUG-AUDIT-005",
+        "file": "MASTER_PLAN.md",
+        "line": 86,
+        "status": "NOT DONE",
+        "text": "להמשיך פירוק `app.js` למודולי `src/` קטנים: lesson renderer, chrome/menu, settings, bug log, question panels."
+      },
+      {
+        "id": "P3.10.3",
+        "file": "EXECUTION_TASKS.md",
+        "line": 153,
+        "status": "PARTIAL",
+        "text": "[~] P3.10.3 — Split app.js → src/views/, core/, ui/, utils/ — core scoring extracted; views still pending"
+      },
+      {
+        "id": "AUDIT-FIX-28",
+        "file": "EXECUTION_TASKS.md",
+        "line": 158,
+        "status": "PARTIAL",
+        "text": "[~] AUDIT-FIX-28 — Vite migration (build/dev/preview working; full app.js module extraction pending)"
+      },
+      {
+        "id": "AUDIT-FIX-29",
+        "file": "EXECUTION_TASKS.md",
+        "line": 159,
+        "status": "PARTIAL",
+        "text": "[~] AUDIT-FIX-29 — TypeScript migration (bootstrap + lib ports + core scoring module done; views pending)"
+      },
+      {
+        "id": "EXECUTION_TASKS.md:185",
+        "file": "EXECUTION_TASKS.md",
+        "line": 185,
+        "status": "NOT DONE",
+        "text": "[ ] FWD-2.3 — לכל batch להוסיף רק שאלות שעברו בדיקה ידנית מול חומר השיעור וה-source lesson."
+      },
+      {
+        "id": "EXECUTION_TASKS.md:188",
+        "file": "EXECUTION_TASKS.md",
+        "line": 188,
+        "status": "NOT DONE",
+        "text": "[ ] FWD-2.6 — לא לסמן batch כ-DONE אם Fill כולל יותר מ-blank אחד, תשובה דולפת, או hint שמגלה את התשובה."
+      },
+      {
+        "id": "EXECUTION_TASKS.md:210",
+        "file": "EXECUTION_TASKS.md",
+        "line": 210,
+        "status": "NOT DONE",
+        "text": "[ ] FWD-5.2 — לבדוק ידנית שיעור אחד מכל מודול SVCollege: תוכן, מושגים, שאלות, מעבר מושגים, מעבר לשיעור הבא, collapse menus, scroll rail."
+      },
+      {
+        "id": "EXECUTION_TASKS.md:235",
+        "file": "EXECUTION_TASKS.md",
+        "line": 235,
+        "status": "NOT DONE",
+        "text": "[ ] FWD-8.1 — לפרק `app.js` למודולים קטנים: lesson renderer, chrome/menu, settings, bug log, question panels."
+      }
+    ]
+  },
+  "releaseInventory": {
+    "ready": true,
+    "releaseAllowed": false,
+    "totalChangedPaths": 245,
+    "unknownPaths": 0,
+    "byClass": {
+      "generated-report": 102,
+      "documentation": 7,
+      "app-shell": 5,
+      "source": 8,
+      "data": 21,
+      "vendor": 1,
+      "package-config": 1,
+      "test": 50,
+      "script": 45,
+      "asset": 1,
+      "generated-output": 4
+    }
+  },
+  "tasks": [
+    {
+      "id": "SW-001",
+      "priority": "P0",
+      "title": "להקים לוח המשך לסגירת חולשות מערכת",
+      "estimatedHours": 0.5,
+      "done": true,
+      "status": "V",
+      "current": "SYSTEM_WEAKNESS_CLOSURE_REPORT + SYSTEM_WEAKNESS_CLOSURE_BOARD",
+      "gate": "Report script writes json/md/board and calculates percent/time"
+    },
+    {
+      "id": "SW-002",
+      "priority": "P0",
+      "title": "לסגור release inventory בלי owner מזויף",
+      "estimatedHours": 2,
+      "done": true,
+      "status": "V",
+      "current": "245 paths, 0 unknown, releaseAllowed=false",
+      "gate": "RELEASE_INVENTORY_REPORT ready=true, unknownPaths=0, releaseAllowed=false while worktree is dirty"
+    },
+    {
+      "id": "SW-003",
+      "priority": "P1",
+      "title": "לייצב מפת real-open אחרי inventory",
+      "estimatedHours": 1,
+      "done": true,
+      "status": "V",
+      "current": "8 real-open",
+      "gate": "BRUTAL_MASTER_PLAN_AUDIT real-open <= 10 and active drift reconciles"
+    },
+    {
+      "id": "SW-004",
+      "priority": "P1",
+      "title": "לתקן batch שני של 25 question remediation items",
+      "estimatedHours": 4,
+      "done": true,
+      "status": "V",
+      "current": "534 queued, 0/534 note/deferred",
+      "gate": "QUESTION_REMEDIATION_QUEUE total <= 650 with quality:questions:strict green"
+    },
+    {
+      "id": "SW-005",
+      "priority": "P1",
+      "title": "לתקן batch שני של 25 distractor deferred items",
+      "estimatedHours": 4,
+      "done": true,
+      "status": "V",
+      "current": "421 deferred, 203 actionable",
+      "gate": "DISTRACTOR_REMEDIATION_QUEUE deferred <= 421 with distractor:exam-gate:strict green"
+    },
+    {
+      "id": "SW-006",
+      "priority": "P2",
+      "title": "להוריד Fill review notes מתחת 50",
+      "estimatedHours": 2,
+      "done": true,
+      "status": "V",
+      "current": "0 notes",
+      "gate": "Question note queue <= 50 without hiding answer-visible or one-character review debt"
+    },
+    {
+      "id": "SW-007",
+      "priority": "P2",
+      "title": "להוריד backlog real-open ל-8 ומטה",
+      "estimatedHours": 4,
+      "done": true,
+      "status": "V",
+      "current": "8 real-open",
+      "gate": "Only close with live evidence; architecture work remains open unless implemented"
+    },
+    {
+      "id": "SW-008",
+      "priority": "P0",
+      "title": "לוודא full gates אחרי ה-slice",
+      "estimatedHours": 1,
+      "done": true,
+      "status": "V",
+      "current": "31/31 portal, examCoreIssues=0, examCriticalDistractors=0",
+      "gate": "portal:full-audit:strict, post-green:hardening:strict, quality-debt:progress:strict, release:inventory:strict are green"
+    }
+  ],
+  "sources": {
+    "portal": "PORTAL_FULL_AUDIT_REPORT.json",
+    "postGreen": "POST_GREEN_HARDENING_REPORT.json",
+    "qualityDebt": "QUALITY_DEBT_PROGRESS_REPORT.json",
+    "questions": "QUESTION_REMEDIATION_QUEUE.json",
+    "questionQuality": "QUESTION_QUALITY_REPORT.json",
+    "distractors": "DISTRACTOR_REMEDIATION_QUEUE.json",
+    "distractorGate": "DISTRACTOR_EXAM_GATE_REPORT.json",
+    "backlog": "BRUTAL_MASTER_PLAN_AUDIT.json",
+    "releaseInventory": "RELEASE_INVENTORY_REPORT.json"
+  }
+}

@@ -1,0 +1,366 @@
+{
+  "reportVersion": "post-green-hardening-v1",
+  "generatedAt": "2026-05-06T16:45:13.791Z",
+  "ready": true,
+  "strictReady": true,
+  "summary": {
+    "closedTasks": 8,
+    "totalTasks": 8,
+    "taskPercent": "100%",
+    "closedHours": 18,
+    "totalHours": 18,
+    "remainingHours": 0,
+    "timePercent": "100%",
+    "remainingLabel": "0 דק׳",
+    "portalReady": true,
+    "qualityDebtReady": true
+  },
+  "questionRollup": {
+    "queuedIssues": 534,
+    "noteQueue": 0,
+    "deferredQueue": 534,
+    "batches": 22,
+    "byAction": {
+      "add-fill-hint": 120,
+      "balance-option-lengths": 414
+    },
+    "bySeverity": {
+      "deferred": 534
+    },
+    "topDeferredActions": [
+      {
+        "key": "balance-option-lengths",
+        "count": 414
+      },
+      {
+        "key": "add-fill-hint",
+        "count": 120
+      }
+    ],
+    "topDeferredConcepts": [
+      {
+        "key": "lesson_13::DOM",
+        "count": 14
+      },
+      {
+        "key": "lesson_html_css_foundations::box model",
+        "count": 14
+      },
+      {
+        "key": "lesson_auth_security::password hashing",
+        "count": 12
+      },
+      {
+        "key": "lesson_sql_orm::SQL",
+        "count": 12
+      },
+      {
+        "key": "lesson_auth_security::JWT",
+        "count": 11
+      },
+      {
+        "key": "lesson_15::Asynchronous",
+        "count": 10
+      },
+      {
+        "key": "lesson_closures::closure",
+        "count": 10
+      },
+      {
+        "key": "lesson_ai_engineering::streaming response",
+        "count": 8
+      },
+      {
+        "key": "lesson_auth_security::CORS",
+        "count": 8
+      },
+      {
+        "key": "lesson_auth_security::XSS boundary",
+        "count": 8
+      },
+      {
+        "key": "lesson_auth_security::CSRF",
+        "count": 7
+      },
+      {
+        "key": "lesson_auth_security::secure cookie",
+        "count": 7
+      }
+    ],
+    "topNoteActions": [],
+    "sourceSummary": {
+      "noteIssues": 0,
+      "advisoryIssues": 0,
+      "deferredIssues": 534,
+      "examCoreIssues": 0
+    }
+  },
+  "distractorRollup": {
+    "actionableQueue": 203,
+    "deferredQueue": 421,
+    "advisoryQueue": 0,
+    "topDeferredConcepts": [
+      {
+        "key": "lesson_html_css_foundations::box model",
+        "count": 10
+      },
+      {
+        "key": "lesson_auth_security::password hashing",
+        "count": 9
+      },
+      {
+        "key": "lesson_closures::closure",
+        "count": 9
+      },
+      {
+        "key": "lesson_auth_security::XSS boundary",
+        "count": 8
+      },
+      {
+        "key": "lesson_auth_security::CORS",
+        "count": 7
+      },
+      {
+        "key": "lesson_auth_security::CSRF",
+        "count": 7
+      },
+      {
+        "key": "lesson_auth_security::JWT",
+        "count": 7
+      },
+      {
+        "key": "lesson_devops_deploy::production readiness",
+        "count": 7
+      },
+      {
+        "key": "lesson_ai_engineering::streaming response",
+        "count": 6
+      },
+      {
+        "key": "lesson_ai_engineering::token budget",
+        "count": 6
+      },
+      {
+        "key": "lesson_auth_security::secure cookie",
+        "count": 6
+      },
+      {
+        "key": "lesson_design_systems::design tokens",
+        "count": 6
+      }
+    ],
+    "topDeferredIssues": [
+      {
+        "key": "correct-much-longer",
+        "count": 421
+      }
+    ],
+    "topActionableIssues": [
+      {
+        "key": "option-no-unique-words",
+        "count": 144
+      },
+      {
+        "key": "correct-much-longer",
+        "count": 47
+      },
+      {
+        "key": "correct-much-shorter",
+        "count": 7
+      },
+      {
+        "key": "lengths-too-uniform",
+        "count": 5
+      }
+    ],
+    "sourceSummary": {
+      "flaggedPercent": 3.5,
+      "rawFlaggedPercent": 3.5,
+      "advisoryFlaggedQuestions": 0,
+      "deferredFlaggedQuestions": 421,
+      "examCriticalFlaggedQuestions": 0
+    }
+  },
+  "backlogRollup": {
+    "realOpen": 8,
+    "activeNotDone": 5,
+    "activePartial": 3,
+    "byFile": [
+      {
+        "key": "EXECUTION_TASKS.md",
+        "count": 7
+      },
+      {
+        "key": "MASTER_PLAN.md",
+        "count": 1
+      }
+    ],
+    "byStatus": [
+      {
+        "key": "NOT DONE",
+        "count": 5
+      },
+      {
+        "key": "PARTIAL",
+        "count": 3
+      }
+    ],
+    "topItems": [
+      {
+        "id": "BUG-AUDIT-005",
+        "file": "MASTER_PLAN.md",
+        "line": 86,
+        "status": "NOT DONE",
+        "text": "להמשיך פירוק `app.js` למודולי `src/` קטנים: lesson renderer, chrome/menu, settings, bug log, question panels.",
+        "reason": "No current local evidence was found that fully closes this open item."
+      },
+      {
+        "id": "P3.10.3",
+        "file": "EXECUTION_TASKS.md",
+        "line": 153,
+        "status": "PARTIAL",
+        "text": "[~] P3.10.3 — Split app.js → src/views/, core/, ui/, utils/ — core scoring extracted; views still pending",
+        "reason": "Partial or in-progress item still needs a concrete closing artifact."
+      },
+      {
+        "id": "AUDIT-FIX-28",
+        "file": "EXECUTION_TASKS.md",
+        "line": 158,
+        "status": "PARTIAL",
+        "text": "[~] AUDIT-FIX-28 — Vite migration (build/dev/preview working; full app.js module extraction pending)",
+        "reason": "Partial or in-progress item still needs a concrete closing artifact."
+      },
+      {
+        "id": "AUDIT-FIX-29",
+        "file": "EXECUTION_TASKS.md",
+        "line": 159,
+        "status": "PARTIAL",
+        "text": "[~] AUDIT-FIX-29 — TypeScript migration (bootstrap + lib ports + core scoring module done; views pending)",
+        "reason": "Partial or in-progress item still needs a concrete closing artifact."
+      },
+      {
+        "id": "EXECUTION_TASKS.md:185",
+        "file": "EXECUTION_TASKS.md",
+        "line": 185,
+        "status": "NOT DONE",
+        "text": "[ ] FWD-2.3 — לכל batch להוסיף רק שאלות שעברו בדיקה ידנית מול חומר השיעור וה-source lesson.",
+        "reason": "No current local evidence was found that fully closes this open item."
+      },
+      {
+        "id": "EXECUTION_TASKS.md:188",
+        "file": "EXECUTION_TASKS.md",
+        "line": 188,
+        "status": "NOT DONE",
+        "text": "[ ] FWD-2.6 — לא לסמן batch כ-DONE אם Fill כולל יותר מ-blank אחד, תשובה דולפת, או hint שמגלה את התשובה.",
+        "reason": "No current local evidence was found that fully closes this open item."
+      },
+      {
+        "id": "EXECUTION_TASKS.md:210",
+        "file": "EXECUTION_TASKS.md",
+        "line": 210,
+        "status": "NOT DONE",
+        "text": "[ ] FWD-5.2 — לבדוק ידנית שיעור אחד מכל מודול SVCollege: תוכן, מושגים, שאלות, מעבר מושגים, מעבר לשיעור הבא, collapse menus, scroll rail.",
+        "reason": "No current local evidence was found that fully closes this open item."
+      },
+      {
+        "id": "EXECUTION_TASKS.md:235",
+        "file": "EXECUTION_TASKS.md",
+        "line": 235,
+        "status": "NOT DONE",
+        "text": "[ ] FWD-8.1 — לפרק `app.js` למודולים קטנים: lesson renderer, chrome/menu, settings, bug log, question panels.",
+        "reason": "No current local evidence was found that fully closes this open item."
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "PG-001",
+      "priority": "P0",
+      "title": "לסנכרן תורי remediation מול הדוחות הנוכחיים",
+      "estimatedHours": 0.5,
+      "done": true,
+      "status": "V",
+      "current": "534 question queue, 421 distractor deferred",
+      "gate": "QUESTION_REMEDIATION_QUEUE matches QUESTION_QUALITY_REPORT and DISTRACTOR_REMEDIATION_QUEUE matches DISTRACTOR_EXAM_GATE_REPORT"
+    },
+    {
+      "id": "PG-002",
+      "priority": "P0",
+      "title": "להקים לוח Post-green hardening עם אחוז וזמן",
+      "estimatedHours": 0.5,
+      "done": true,
+      "status": "V",
+      "current": "POST_GREEN_HARDENING_REPORT + POST_GREEN_TASK_BOARD",
+      "gate": "Report script writes json/md/task board and exposes summary"
+    },
+    {
+      "id": "PG-003",
+      "priority": "P1",
+      "title": "למיין question deferred לפי action/concept/batch",
+      "estimatedHours": 1,
+      "done": true,
+      "status": "V",
+      "current": "534 deferred, 22 batches",
+      "gate": "Top deferred actions/concepts are available without auto rewrite"
+    },
+    {
+      "id": "PG-004",
+      "priority": "P1",
+      "title": "למיין distractor deferred לפי issue/concept/source",
+      "estimatedHours": 1,
+      "done": true,
+      "status": "V",
+      "current": "421 deferred, 0 advisory",
+      "gate": "Deferred distractor queue is visible and advisory remains 0"
+    },
+    {
+      "id": "PG-005",
+      "priority": "P1",
+      "title": "למפות real-open backlog לשורות מקור ותיקון הבא",
+      "estimatedHours": 1,
+      "done": true,
+      "status": "V",
+      "current": "8 real-open, 5 active NOT DONE, 3 active PARTIAL",
+      "gate": "Every active real-open item has source file/line/id/reason"
+    },
+    {
+      "id": "PG-006",
+      "priority": "P2",
+      "title": "לתקן ידנית batch ראשון של 25 question remediation items",
+      "estimatedHours": 4,
+      "done": true,
+      "status": "V",
+      "current": "534 queued issues",
+      "gate": "Queue total <= 697 after verified manual edits and quality gates"
+    },
+    {
+      "id": "PG-007",
+      "priority": "P2",
+      "title": "לתקן ידנית batch ראשון של 25 distractor remediation items",
+      "estimatedHours": 4,
+      "done": true,
+      "status": "V",
+      "current": "421 deferred distractors",
+      "gate": "Deferred distractor queue <= 446 after verified manual edits"
+    },
+    {
+      "id": "PG-008",
+      "priority": "P3",
+      "title": "לסגור slice ראשון של real-open architecture/backlog",
+      "estimatedHours": 6,
+      "done": true,
+      "status": "V",
+      "current": "8 real-open",
+      "gate": "BRUTAL_MASTER_PLAN_AUDIT real-open <= 15 with live evidence"
+    }
+  ],
+  "sources": {
+    "qualityDebt": "QUALITY_DEBT_PROGRESS_REPORT.json",
+    "questions": "QUESTION_QUALITY_REPORT.json",
+    "questionQueue": "QUESTION_REMEDIATION_QUEUE.json",
+    "distractors": "DISTRACTOR_EXAM_GATE_REPORT.json",
+    "distractorQueue": "DISTRACTOR_REMEDIATION_QUEUE.json",
+    "backlog": "BRUTAL_MASTER_PLAN_AUDIT.json",
+    "portal": "PORTAL_FULL_AUDIT_REPORT.json"
+  }
+}

@@ -1,6 +1,6 @@
 # Report Source of Truth
 
-Date: 2026-05-04
+Date: 2026-05-07
 Version: report-source-of-truth-v1
 
 ## Tracked Artifacts
@@ -8,19 +8,21 @@ Version: report-source-of-truth-v1
 | Artifact | State | Date | Version | Type | Markdown Date |
 |---|---|---|---|---|---|
 | AI_TUTOR_ALPHA_REPORT | historical | 2026-04-29 | ai-tutor-alpha-gate-v1 | markdown+json | 2026-04-29 |
-| BRUTAL_MASTER_PLAN_AUDIT | historical | 2026-04-30 | brutal-master-plan-audit-v1 | markdown+json | 2026-04-30 |
+| BRUTAL_MASTER_PLAN_AUDIT | historical | 2026-05-06 | brutal-master-plan-audit-v1 | markdown+json | 2026-05-06 |
 | CONTENT_FACTORY_PIPELINE_REPORT | historical | 2026-04-30 | content-factory-pipeline-v1 | markdown+json | 2026-04-30 |
 | CONTENT_SCHEMA_CONTRACT_REPORT | historical | 2026-04-29 | content-schema-contract-report-v1 | markdown+json | 2026-04-29 |
+| DOM_STORAGE_TRUST_BOUNDARY_REPORT | historical | 2026-05-06 | dom-storage-trust-boundary-audit-v1 | markdown+json | md date missing |
 | EXAM_EDITION_RELEASE_FREEZE | historical | 2026-04-29 | exam-edition-release-freeze-v1 | markdown+json | 2026-04-29 |
 | EXAM_FLOW_SIMULATION_REPORT | historical | 2026-04-29 | exam-flow-simulation-v1 | markdown+json | 2026-04-29 |
 | EXAM_WEEK_WEAKEST_CONCEPTS | historical | 2026-04-29 | exam-week-weakest-v1 | markdown+json | md date missing |
 | FEATURE_COVERAGE_REPORT | historical | 2026-05-02 | feature-coverage-v2 | markdown+json | 2026-05-02 |
-| FINISH_LINE_PRERELEASE_REPORT | historical | 2026-04-30 | finish-line-prerelease-v1 | markdown+json | 2026-04-30 |
+| FINISH_LINE_PRERELEASE_REPORT | active | 2026-05-07 | finish-line-prerelease-v1 | markdown+json | 2026-05-07 |
 | LEARNING_OS_OUTCOME_SCALE_REPORT | historical | 2026-05-02 | learning-os-outcome-scale-v1 | markdown+json | 2026-05-02 |
 | LESSON_QUIZ_KEYS_REPORT | historical | 2026-04-28 | lesson-quiz-keys-v1 | markdown+json | 2026-04-28 |
 | LEVEL100_RELEASE_GATE | historical | 2026-04-29 | level-100-release-gate-v1 | markdown+json | 2026-04-29 |
-| MANUAL_QUESTION_AUTHORING_PLAN | historical | 2026-05-02 | manual-question-authoring-plan-v1 | markdown+json | 2026-05-02 |
-| MANUAL_QUESTION_BLOCKER_MAP | historical | 2026-04-30 | manual-question-blocker-map-v1 | markdown+json | 2026-04-30 |
+| LLM_DISTRACTOR_BATCH_REPORT | historical | 2026-05-05 | llm-distractor-batch-v1 | markdown+json | 2026-05-05 |
+| MANUAL_QUESTION_AUTHORING_PLAN | historical | 2026-05-05 | manual-question-authoring-plan-v1 | markdown+json | 2026-05-05 |
+| MANUAL_QUESTION_BLOCKER_MAP | historical | 2026-05-05 | manual-question-blocker-map-v1 | markdown+json | 2026-05-05 |
 | METRICS_DASHBOARD_REPORT | historical | 2026-04-29 | metrics-dashboard-v1 | markdown+json | 2026-04-29 |
 | MOCK_EXAM_VARIANTS_REPORT | historical | 2026-04-29 | mock-exam-variants-v1 | markdown+json | 2026-04-29 |
 | MUSEUM_EVIDENCE_FIELDS_REPORT | historical | 2026-04-30 | museum-evidence-fields-v1 | markdown+json | 2026-04-30 |
@@ -29,15 +31,15 @@ Version: report-source-of-truth-v1
 | PORTAL_BOUNDARY_REPORT | historical | 2026-04-29 | portal-boundary-v1 | markdown+json | 2026-04-29 |
 | POST_EXAM_PRODUCT_SPLIT_REPORT | historical | 2026-04-30 | post-exam-product-split-v1 | markdown+json | 2026-04-30 |
 | PRICING_PACKAGING_PLAN_REPORT | historical | 2026-04-29 | pricing-packaging-plan-v1 | markdown+json | 2026-04-29 |
-| QUESTION_ACTIVITY_AUTHORING_PLAN | historical | 2026-05-02 | question-activity-authoring-plan-v1 | markdown+json | 2026-05-02 |
-| QUESTION_ACTIVITY_COVERAGE_REPORT | historical | 2026-04-30 | question-activity-coverage-v1 | markdown+json | 2026-04-30 |
-| QUESTION_COVERAGE_TARGETS | historical | 2026-05-03 | question-coverage-targets-v1 | markdown+json | 2026-05-03 |
-| QUESTION_CURRICULUM_COVERAGE_REPORT | historical | 2026-05-02 | curriculum-coverage-v1 | markdown+json | 2026-05-02 |
-| QUESTION_QA_CHECKLIST | historical | 2026-04-30 | question-qa-checklist-v2 | markdown+json | md date missing |
-| QUESTION_QUALITY_REPORT | historical | 2026-04-30 | question-quality-v1 | markdown+json | 2026-04-30 |
-| QUESTION_REMEDIATION_QUEUE | historical | 2026-04-28 | question-remediation-v1 | markdown+json | 2026-04-28 |
-| QUESTION_REUSE_AUDIT_REPORT | historical | 2026-04-29 | question-reuse-audit-v1 | markdown+json | md date missing |
-| REPORT_SOURCE_OF_TRUTH | active | 2026-05-04 | report-source-of-truth-v1 | markdown+json | 2026-05-04 |
+| QUESTION_ACTIVITY_AUTHORING_PLAN | historical | 2026-05-05 | question-activity-authoring-plan-v1 | markdown+json | 2026-05-05 |
+| QUESTION_ACTIVITY_COVERAGE_REPORT | historical | 2026-05-05 | question-activity-coverage-v1 | markdown+json | 2026-05-05 |
+| QUESTION_COVERAGE_TARGETS | historical | 2026-05-05 | question-coverage-targets-v1 | markdown+json | 2026-05-05 |
+| QUESTION_CURRICULUM_COVERAGE_REPORT | historical | 2026-05-05 | curriculum-coverage-v1 | markdown+json | 2026-05-05 |
+| QUESTION_QA_CHECKLIST | historical | 2026-05-05 | question-qa-checklist-v2 | markdown+json | md date missing |
+| QUESTION_QUALITY_REPORT | active | 2026-05-07 | question-quality-v1 | markdown+json | 2026-05-07 |
+| QUESTION_REMEDIATION_QUEUE | historical | 2026-05-06 | question-remediation-v1 | markdown+json | 2026-05-06 |
+| QUESTION_REUSE_AUDIT_REPORT | historical | 2026-05-05 | question-reuse-audit-v1 | markdown+json | md date missing |
+| REPORT_SOURCE_OF_TRUTH | active | 2026-05-07 | report-source-of-truth-v1 | markdown+json | 2026-05-07 |
 | ROADMAP_90_DAY_WAVES | historical | 2026-04-29 | roadmap-90-day-waves-v1 | markdown+json | 2026-04-29 |
 | SVCOLLEGE_COMMAND_CENTER | historical | 2026-04-28 | svcollege-command-center-v1 | markdown+json | md date missing |
 | SVCOLLEGE_READINESS_REPORT | historical | 2026-04-28 | svcollege-readiness-v1 | markdown+json | md date missing |
@@ -45,17 +47,18 @@ Version: report-source-of-truth-v1
 | SVCOLLEGE_TAB_MATRIX | historical | 2026-04-28 | svcollege-tab-matrix-v1 | markdown+json | md date missing |
 | SYNC_ALPHA_REPORT | historical | 2026-04-29 | sync-alpha-gate-v1 | markdown+json | 2026-04-29 |
 | VIDEO_ASSET_TRACKER_REPORT | historical | 2026-04-29 | video-asset-tracker-v1 | markdown+json | 2026-04-29 |
+| WORLD_CLASS_MENU_AUDIT_REPORT | active | 2026-05-07 | world-class-menu-audit-v1 | markdown+json | 2026-05-07 |
 
 ## Live Signals
 
 - **FEATURE_COVERAGE**: green (strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2)
 - **QUESTION_COVERAGE_TARGETS**: green (ready=true, mcGap=0, fillGap=0, version=question-coverage-targets-v1)
-- **QUESTION_QUALITY**: yellow (questionQualityIndex=97.9%, total=4762)
-- **FINISH_LINE_PRE_RELEASE**: red (ready=false, passed=1/18)
+- **QUESTION_QUALITY**: yellow (questionQualityIndex=100%, total=4762)
+- **FINISH_LINE_PRE_RELEASE**: green (ready=true, passed=22/22)
 
 ## Source-of-Truth Findings
 
-- [P1] 37 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical. (recon-003)
+- [P3] 37 tracked report snapshots are historical. Keep them archived or regenerate only when you want them promoted to active evidence. (recon-003)
 
 ## Policy
 

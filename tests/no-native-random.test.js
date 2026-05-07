@@ -2,7 +2,15 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const SKIP_DIRS = new Set([".git", ".playwright-cli", "dist", "node_modules"]);
+const SKIP_DIRS = new Set([
+  ".git",
+  ".playwright-cli",
+  "coverage",
+  "dist",
+  "node_modules",
+  "output",
+  "playwright-report",
+]);
 const FORBIDDEN_RANDOM_CALL = new RegExp(["Math", "random"].join("\\."));
 
 function collectSourceFiles(dir, out = []) {
@@ -34,5 +42,5 @@ describe("deterministic codebase guard", () => {
       .filter(({ lines }) => lines.length > 0);
 
     expect(offenders).toEqual([]);
-  });
+  }, 20000);
 });

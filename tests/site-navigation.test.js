@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { cssIncludes } = require("./css-evidence.js");
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -47,6 +48,6 @@ describe("global site navigation", () => {
     expect(css).toContain(".site-map-menu-body");
     expect(css).toContain("body.learning-focus-mode .site-trail-nav");
     expect(css).toContain("body.learning-focus-mode.learning-focus-top-collapsed .content-wrapper");
-    expect(css).toContain("height: 100vh");
+    expect(cssIncludes(css, "height: 100vh")).toBe(true);
   });
 });

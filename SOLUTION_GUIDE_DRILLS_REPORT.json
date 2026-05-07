@@ -1,0 +1,511 @@
+{
+  "reportVersion": "solution-guide-drills-v1",
+  "sourcePath": "/Users/tal/Downloads/svcollege_exams_solution_guide2.html",
+  "ready": true,
+  "summary": {
+    "exams": 4,
+    "jsSolutions": 4,
+    "setupSections": 6,
+    "routes": 13,
+    "stages": 24,
+    "scoreParts": 14,
+    "codeBlocks": 34
+  },
+  "exams": [
+    {
+      "id": "flights",
+      "sourceSectionId": "exam1",
+      "title": "✈️ מבחן 1: מערכת בקרת טיסות",
+      "tags": [
+        "React",
+        "React Router",
+        "Responsive"
+      ],
+      "scoreParts": [
+        {
+          "value": "50",
+          "label": "שאלה 1 (React)"
+        },
+        {
+          "value": "25",
+          "label": "שאלה 2 (JS)"
+        },
+        {
+          "value": "25",
+          "label": "שאלה 3 (Backend)"
+        },
+        {
+          "value": "4 שעות",
+          "label": "זמן מבחן"
+        }
+      ],
+      "routes": [
+        "/controlpanel",
+        "/controlpanel/add",
+        "/controlpanel/delete",
+        "/controlpanel/sort"
+      ],
+      "stages": [
+        {
+          "id": "level_01",
+          "className": "level level-basic",
+          "summary": "🟢 שלב 1: מבנה תיקיות + Routes (15 דק')",
+          "estimatedMinutes": 15
+        },
+        {
+          "id": "level_02",
+          "className": "level level-basic",
+          "summary": "🟢 שלב 2: Context — ניהול טיסות גלובלי",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_03",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 3: דף Login (10 דק')",
+          "estimatedMinutes": 10
+        },
+        {
+          "id": "level_04",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 4: ControlLayout + Sidebar (15 דק')",
+          "estimatedMinutes": 15
+        },
+        {
+          "id": "level_05",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 5: Home — כל הטיסות (10 דק')",
+          "estimatedMinutes": 10
+        },
+        {
+          "id": "level_06",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 6: Sort — חיפוש + מיון (20 דק')",
+          "estimatedMinutes": 20
+        },
+        {
+          "id": "level_07",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 7: Add — הוספת טיסה (20 דק')",
+          "estimatedMinutes": 20
+        },
+        {
+          "id": "level_08",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 8: Delete — מחיקה + סיכום",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_09",
+          "className": "level level-pro",
+          "summary": "🟣 שאלה 3: Backend — סטודנטים (Express + Mongo) — 25 דק'",
+          "estimatedMinutes": 25
+        }
+      ],
+      "headings": [
+        "✈️ מבחן 1: מערכת בקרת טיסות",
+        "📋 דרישות מסך-אחר-מסך",
+        "בדיקה ב-Postman / Thunder Client:"
+      ],
+      "codeBlockCount": 15,
+      "codePreviews": [
+        {
+          "id": "code_01",
+          "preview": "frontend/src/ ├── App.jsx ├── main.jsx ├── context/ │ └── FlightsContext.jsx ├── pages/ │ ├── Login.jsx │ ├── Home.jsx // /controlpanel │ ├── Sort.jsx // /controlpanel/sort │ ├── A"
+        },
+        {
+          "id": "code_02",
+          "preview": "// App.jsx import { Routes, Route } from \"react-router-dom\"; import Login from \"./pages/Login\"; import ControlLayout from \"./pages/ControlLayout\"; import Home from \"./pages/Home\"; "
+        },
+        {
+          "id": "code_03",
+          "preview": "// context/FlightsContext.jsx import { createContext, useContext, useState } from \"react\"; const FlightsContext = createContext(); export function FlightsProvider({ children }) { c"
+        },
+        {
+          "id": "code_04",
+          "preview": "// main.jsx import { BrowserRouter } from \"react-router-dom\"; import { FlightsProvider } from \"./context/FlightsContext\"; ReactDOM.createRoot(document.getElementById(\"root\")).rende"
+        },
+        {
+          "id": "code_05",
+          "preview": "// pages/Login.jsx import { useState } from \"react\"; import { useNavigate } from \"react-router-dom\"; export default function Login() { const [password, setPassword] = useState(\"\");"
+        },
+        {
+          "id": "code_06",
+          "preview": "// pages/ControlLayout.jsx import { Outlet } from \"react-router-dom\"; import Sidebar from \"../components/Sidebar\"; export default function ControlLayout() { return ( <div className"
+        }
+      ],
+      "drillPolicy": "חולץ מתוך חוברת הפתרונות בלבד; אין השלמת דרישות שאינן מופיעות במקור."
+    },
+    {
+      "id": "bank",
+      "sourceSectionId": "exam2",
+      "title": "🏦 מבחן 2: ניהול חשבונות בנק",
+      "tags": [
+        "React",
+        "Responsive",
+        "Validation"
+      ],
+      "scoreParts": [
+        {
+          "value": "65",
+          "label": "שאלה 1 (React)"
+        },
+        {
+          "value": "20",
+          "label": "שאלה 2 (JS - מיון ספרות)"
+        },
+        {
+          "value": "15",
+          "label": "שאלה 3 (Express + קובץ)"
+        },
+        {
+          "value": "4 שעות",
+          "label": "זמן"
+        }
+      ],
+      "routes": [
+        "/Admin",
+        "/Edit",
+        "/Name",
+        "/register"
+      ],
+      "stages": [
+        {
+          "id": "level_01",
+          "className": "level level-basic",
+          "summary": "🟢 שלב 1: Context — ניהול לקוחות",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_02",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 2: Login + Routes",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_03",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 3: Register + Validation מלא",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_04",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 4: Customer Page — 4 פעולות",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_05",
+          "className": "level level-pro",
+          "summary": "🟣 שלב 5: Admin — רשימת לקוחות + פעולות",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_06",
+          "className": "level level-pro",
+          "summary": "🟣 שאלה 3: Express + שמירה לקובץ",
+          "estimatedMinutes": null
+        }
+      ],
+      "headings": [
+        "🏦 מבחן 2: ניהול חשבונות בנק",
+        "📋 דרישות מסך-אחר-מסך"
+      ],
+      "codeBlockCount": 8,
+      "codePreviews": [
+        {
+          "id": "code_01",
+          "preview": "// context/UsersContext.jsx import { createContext, useContext, useState } from \"react\"; const UsersContext = createContext(); export function UsersProvider({ children }) { const ["
+        },
+        {
+          "id": "code_02",
+          "preview": "// App.jsx import { Routes, Route } from \"react-router-dom\"; import Login from \"./pages/Login\"; import Register from \"./pages/Register\"; import Customer from \"./pages/Customer\"; im"
+        },
+        {
+          "id": "code_03",
+          "preview": "// pages/Login.jsx import { useState } from \"react\"; import { useNavigate } from \"react-router-dom\"; import { useUsers } from \"../context/UsersContext\"; export default function Log"
+        },
+        {
+          "id": "code_04",
+          "preview": "// pages/Register.jsx import { useState } from \"react\"; import { useNavigate, useLocation } from \"react-router-dom\"; import { useUsers } from \"../context/UsersContext\"; export defa"
+        },
+        {
+          "id": "code_05",
+          "preview": "// pages/Customer.jsx import { useState } from \"react\"; import { useNavigate } from \"react-router-dom\"; import { useUsers } from \"../context/UsersContext\"; export default function "
+        },
+        {
+          "id": "code_06",
+          "preview": "// pages/Admin.jsx import { useState } from \"react\"; import { useNavigate } from \"react-router-dom\"; import { useUsers } from \"../context/UsersContext\"; export default function Adm"
+        }
+      ],
+      "drillPolicy": "חולץ מתוך חוברת הפתרונות בלבד; אין השלמת דרישות שאינן מופיעות במקור."
+    },
+    {
+      "id": "warehouse",
+      "sourceSectionId": "exam3",
+      "title": "📦 מבחן 3: מחסן לוגיסטי",
+      "tags": [
+        "React",
+        "React Router"
+      ],
+      "scoreParts": [
+        {
+          "value": "75",
+          "label": "שאלה 1 (React)"
+        },
+        {
+          "value": "25",
+          "label": "שאלה 2 (JS - בינארי)"
+        },
+        {
+          "value": "4 שעות",
+          "label": "זמן"
+        }
+      ],
+      "routes": [
+        "/login",
+        "/manager",
+        "/signup"
+      ],
+      "stages": [
+        {
+          "id": "level_01",
+          "className": "level level-basic",
+          "summary": "🟢 שלב 1: Context — Workers + Products",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_02",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 2: Sign Up עם Validation מתחת לשדות",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_03",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 3: Log In + מעבר ל-Manager",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_04",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 4: Worker Dashboard — רשימת מוצרים",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_05",
+          "className": "level level-pro",
+          "summary": "🟣 שלב 5: Manager — טבלת עובדים",
+          "estimatedMinutes": null
+        }
+      ],
+      "headings": [
+        "📦 מבחן 3: מחסן לוגיסטי",
+        "📋 מחלקות + נתונים ראשוניים",
+        "👷 מחלקת עובד",
+        "📦 מחלקת מוצר",
+        "🗂️ מערך מוצרים ראשוני (חובה!)",
+        "📋 דרישות Routes"
+      ],
+      "codeBlockCount": 6,
+      "codePreviews": [
+        {
+          "id": "code_01",
+          "preview": "const initialProducts = [ { id: \"11122\", name: \"Green Box\", forklift: false, inPlace: false }, { id: \"22554\", name: \"Green Box\", forklift: false, inPlace: false }, { id: \"66698\", n"
+        },
+        {
+          "id": "code_02",
+          "preview": "// context/WarehouseContext.jsx import { createContext, useContext, useState } from \"react\"; const WarehouseContext = createContext(); const INITIAL_PRODUCTS = [ { id: \"11122\", nam"
+        },
+        {
+          "id": "code_03",
+          "preview": "// pages/SignUp.jsx import { useState } from \"react\"; import { useNavigate } from \"react-router-dom\"; import { useWarehouse } from \"../context/WarehouseContext\"; export default fun"
+        },
+        {
+          "id": "code_04",
+          "preview": "// pages/Login.jsx import { useState } from \"react\"; import { useNavigate } from \"react-router-dom\"; import { useWarehouse } from \"../context/WarehouseContext\"; export default func"
+        },
+        {
+          "id": "code_05",
+          "preview": "// pages/Dashboard.jsx import { useNavigate } from \"react-router-dom\"; import { useWarehouse } from \"../context/WarehouseContext\"; export default function Dashboard() { const { cur"
+        },
+        {
+          "id": "code_06",
+          "preview": "// pages/Manager.jsx import { useNavigate } from \"react-router-dom\"; import { useWarehouse } from \"../context/WarehouseContext\"; export default function Manager() { const { workers"
+        }
+      ],
+      "drillPolicy": "חולץ מתוך חוברת הפתרונות בלבד; אין השלמת דרישות שאינן מופיעות במקור."
+    },
+    {
+      "id": "currency",
+      "sourceSectionId": "exam4",
+      "title": "💱 מבחן 4: מחשבון המרת מטבעות",
+      "tags": [],
+      "scoreParts": [
+        {
+          "value": "80",
+          "label": "שאלה 1 (React)"
+        },
+        {
+          "value": "20",
+          "label": "שאלה 2 (Fibonacci)"
+        },
+        {
+          "value": "4 שעות",
+          "label": "זמן"
+        }
+      ],
+      "routes": [
+        "/list",
+        "/update"
+      ],
+      "stages": [
+        {
+          "id": "level_01",
+          "className": "level level-basic",
+          "summary": "🟢 שלב 1: Context — מטבעות + היסטוריה",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_02",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 2: Calculator — דף ראשי",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_03",
+          "className": "level level-mid",
+          "summary": "🔵 שלב 3: List — רשימת המרות",
+          "estimatedMinutes": null
+        },
+        {
+          "id": "level_04",
+          "className": "level level-pro",
+          "summary": "🟣 שלב 4: Update — טבלה + טופס עדכון",
+          "estimatedMinutes": null
+        }
+      ],
+      "headings": [
+        "💱 מבחן 4: מחשבון המרת מטבעות",
+        "📋 Routes ודרישות",
+        "🪙 מטבעות ראשוניים"
+      ],
+      "codeBlockCount": 5,
+      "codePreviews": [
+        {
+          "id": "code_01",
+          "preview": "const initialCurrencies = [ { type: \"DOLLAR\", value: 4 }, { type: \"EURO\", value: 5 }, { type: \"SHEKEL\", value: 1 }, ];"
+        },
+        {
+          "id": "code_02",
+          "preview": "// context/CurrencyContext.jsx import { createContext, useContext, useState } from \"react\"; const CurrencyContext = createContext(); const INITIAL = [ { type: \"DOLLAR\", value: 4 },"
+        },
+        {
+          "id": "code_03",
+          "preview": "// pages/Calculator.jsx import { useState } from \"react\"; import { useNavigate } from \"react-router-dom\"; import { useCurrency } from \"../context/CurrencyContext\"; export default f"
+        },
+        {
+          "id": "code_04",
+          "preview": "// pages/List.jsx import { useNavigate } from \"react-router-dom\"; import { useCurrency } from \"../context/CurrencyContext\"; export default function List() { const { history, remove"
+        },
+        {
+          "id": "code_05",
+          "preview": "// pages/Update.jsx import { useState } from \"react\"; import { useNavigate } from \"react-router-dom\"; import { useCurrency } from \"../context/CurrencyContext\"; export default funct"
+        }
+      ],
+      "drillPolicy": "חולץ מתוך חוברת הפתרונות בלבד; אין השלמת דרישות שאינן מופיעות במקור."
+    }
+  ],
+  "jsSolutions": [
+    {
+      "id": "js_solution_01",
+      "title": "1️⃣ ספירת מספרים במטריצה (מבחן טיסות)"
+    },
+    {
+      "id": "js_solution_02",
+      "title": "2️⃣ מיון ספרות (מבחן בנק)"
+    },
+    {
+      "id": "js_solution_03",
+      "title": "3️⃣ פלינדרום בינארי (מבחן מחסן)"
+    },
+    {
+      "id": "js_solution_04",
+      "title": "4️⃣ מיקום בפיבונאצ'י (מבחן מחשבון)"
+    }
+  ],
+  "setupSections": [
+    {
+      "id": "prep",
+      "title": "🎒 0. הכנה למבחן (מה מותר ומה אסור)",
+      "headings": [
+        "✅ מותר לעשות לפני המבחן",
+        "❌ אסור לעשות לפני המבחן",
+        "📁 מבנה התיקיות הנכון",
+        "🎯 חומרים שכדאי להביא"
+      ],
+      "codeBlockCount": 1,
+      "detailsCount": 0
+    },
+    {
+      "id": "strategy",
+      "title": "🧠 1. אסטרטגיית פתרון — חלוקת זמן ל-4 שעות",
+      "headings": [
+        "📋 שלבי פתרון מסודרים",
+        "🎯 חוקי הזהב לציון 100"
+      ],
+      "codeBlockCount": 0,
+      "detailsCount": 0
+    },
+    {
+      "id": "setup",
+      "title": "🚀 2. הקמת פרויקט בסיסי (מה לעשות לפני)",
+      "headings": [
+        "שלב 1: יצירת פרויקט React",
+        "שלב 2: התקנת Tailwind",
+        "שלב 3: ניקוי App.jsx",
+        "שלב 4: ENV + .gitignore + GitHub",
+        "שלב 5: פריסה ל-Vercel",
+        "שלב 1: יצירת פרויקט Express",
+        "שלב 2: package.json — scripts",
+        "שלב 3: server.js בסיסי",
+        "שלב 4: .env",
+        "שלב 5: .gitignore",
+        "שלב 6: GitHub (repo נפרד!)",
+        "שלב 7: פריסה ל-Render / Railway",
+        "חיבור הפרונט לבק (CORS + fetch)",
+        "MongoDB Atlas (cloud)",
+        "בדיקה מהירה ש-DB עובד"
+      ],
+      "codeBlockCount": 16,
+      "detailsCount": 3
+    },
+    {
+      "id": "patterns",
+      "title": "🧩 3. תבניות חוזרות — Snippets לעותק-הדבק",
+      "headings": [],
+      "codeBlockCount": 11,
+      "detailsCount": 5
+    },
+    {
+      "id": "mistakes",
+      "title": "⚠️ טעויות נפוצות שמורידות נקודות",
+      "headings": [],
+      "codeBlockCount": 19,
+      "detailsCount": 0
+    },
+    {
+      "id": "cheatsheet",
+      "title": "📋 דף חזרה מהיר — Snippets",
+      "headings": [
+        "🔥 קוד עזר ב-Frontend",
+        "⚡ קוד עזר ב-Backend",
+        "🎨 Tailwind cheatsheet",
+        "📦 פקודות RAR + Git"
+      ],
+      "codeBlockCount": 4,
+      "detailsCount": 0
+    }
+  ],
+  "failures": [],
+  "extractionPolicy": "הנתונים נשלפים מה-HTML המקורי בלבד. אם שדה חסר, הדוח נכשל או מסמן unknown/unavailable במקום להמציא."
+}

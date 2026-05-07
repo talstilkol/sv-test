@@ -15,6 +15,12 @@ const BUDGETS = Object.freeze({
   "service-worker.js": 30000,
 });
 
+const MARGIN_TARGETS = Object.freeze({
+  "index.html": 105000,
+  "app.js": 1650000,
+  "style.css": 650000,
+});
+
 function read(file) {
   return fs.readFileSync(path.join(ROOT, file), "utf8");
 }
@@ -44,6 +50,19 @@ function buildReport() {
       `${actual}/${budget} bytes`,
       { actualBytes: actual, budgetBytes: budget },
     );
+  });
+  const marginChecks = Object.entries(MARGIN_TARGETS).map(([file, budget]) => {
+    const actual = size(file);
+    return {
+      id: `margin-${file.replace(/[^a-z0-9]/gi, "-").toLowerCase()}`,
+      label: `${file} performance margin target`,
+      passed: actual <= budget,
+      status: actual <= budget ? "pass" : "advisory",
+      detail: `${actual}/${budget} bytes`,
+      actualBytes: actual,
+      budgetBytes: budget,
+      deltaBytes: actual - budget,
+    };
   });
   addCheck(
     checks,
@@ -82,6 +101,7 @@ function buildReport() {
   );
 
   const failed = checks.filter((check) => !check.passed);
+  const marginFailed = marginChecks.filter((check) => !check.passed);
   return {
     reportVersion: REPORT_VERSION,
     date: REPORT_DATE,
@@ -91,14 +111,32 @@ function buildReport() {
       passed: checks.length - failed.length,
       failed: failed.length,
       ready: failed.length === 0,
+      marginChecks: marginChecks.length,
+      marginPassed: marginChecks.length - marginFailed.length,
+      marginFailed: marginFailed.length,
+      marginReady: marginFailed.length === 0,
     },
     checks,
+    marginChecks,
     blockers: failed.map((check) => ({ id: check.id, label: check.label, detail: check.detail })),
+    marginBacklog: marginFailed.map((check) => ({
+      id: check.id,
+      label: check.label,
+      detail: check.detail,
+      deltaBytes: check.deltaBytes,
+    })),
   };
 }
 
 function cssSafeIncludes(file, needle) {
-  return read(file).includes(needle);
+  return normalizeCssText(read(file)).includes(normalizeCssText(needle));
+}
+
+function normalizeCssText(value) {
+  return String(value || "")
+    .replace(/\s*([{}:;,>!])\s*/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function run(argv = process.argv.slice(2)) {
@@ -111,4 +149,4 @@ function run(argv = process.argv.slice(2)) {
 
 if (require.main === module) run();
 
-module.exports = { BUDGETS, buildReport, run };
+module.exports = { BUDGETS, MARGIN_TARGETS, buildReport, run };

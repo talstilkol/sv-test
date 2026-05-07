@@ -1,0 +1,140 @@
+{
+  "reportVersion": "qa-portal-scan-v1",
+  "runId": "20260506-59e27c0f3729c1",
+  "generatedAt": "2026-05-06T18:44:08.006Z",
+  "runPath": "/Users/tal/Desktop/חומרים לשיעור/output/qa/scan/2026-05-06/20260506-59e27c0f3729c1",
+  "strictMode": false,
+  "scanConfig": "/Users/tal/Desktop/חומרים לשיעור/scripts/qa-scan.config.json",
+  "targets": [
+    {
+      "name": "local",
+      "requestedUrl": "http://127.0.0.1:5178",
+      "status": "ready",
+      "summary": {
+        "totalChecks": 9,
+        "passedChecks": 6,
+        "failedChecks": 3,
+        "totalIssues": 3,
+        "blockerCount": 1,
+        "bySeverity": {
+          "critical": 1,
+          "medium": 2
+        },
+        "byDomain": {
+          "core": 1,
+          "learning": 1,
+          "ux": 1
+        },
+        "blockerPolicySeverities": [
+          "critical",
+          "high",
+          "medium",
+          "low"
+        ]
+      },
+      "warningCount": 0
+    }
+  ],
+  "severityPolicy": {
+    "critical": {
+      "mergeBlock": true,
+      "action": "block"
+    },
+    "high": {
+      "mergeBlock": true,
+      "action": "block"
+    },
+    "medium": {
+      "mergeBlock": false,
+      "action": "plan"
+    },
+    "low": {
+      "mergeBlock": false,
+      "action": "backlog"
+    }
+  },
+  "totals": {
+    "targets": 1,
+    "checks": 9,
+    "passed": 6,
+    "failed": 3,
+    "issues": 3,
+    "bySeverity": {
+      "critical": 1,
+      "medium": 2
+    },
+    "byDomain": {
+      "core": 1,
+      "learning": 1,
+      "ux": 1
+    }
+  },
+  "blockerCount": 1,
+  "blockers": [
+    {
+      "report": "local",
+      "issueId": "issue-23833195bf7b",
+      "severity": "critical",
+      "domain": "core",
+      "step": "command-portal-full-audit"
+    }
+  ],
+  "issues": [
+    {
+      "id": "issue-23833195bf7b",
+      "env": "local",
+      "severity": "critical",
+      "domain": "core",
+      "step": "command-portal-full-audit",
+      "expected": "Portal full audit passes",
+      "observed": "exitCode=1",
+      "artifact": "../../../artifacts/commands/portal-full-audit.log",
+      "firstSeenAt": "2026-05-06T18:45:08.985Z",
+      "evidence": {
+        "message": "Command failed: node scripts/report_portal_full_audit.js --strict --summary",
+        "selector": "node scripts/report_portal_full_audit.js --strict --summary",
+        "artifacts": [
+          "../../../artifacts/commands/portal-full-audit.log"
+        ]
+      },
+      "count": 1,
+      "lastSeenAt": "2026-05-06T18:45:08.985Z"
+    },
+    {
+      "id": "issue-5272bed31db8",
+      "env": "local",
+      "severity": "medium",
+      "domain": "learning",
+      "step": "task-board",
+      "expected": "task board component visible",
+      "observed": "task board not visible",
+      "firstSeenAt": "2026-05-06T18:45:47.050Z",
+      "evidence": {
+        "message": "Task board is unavailable after exam flow actions",
+        "selector": "#hxm-time-plan",
+        "artifacts": []
+      },
+      "count": 1,
+      "lastSeenAt": "2026-05-06T18:45:47.050Z"
+    },
+    {
+      "id": "issue-03523e424138",
+      "env": "local",
+      "severity": "medium",
+      "domain": "ux",
+      "step": "mobile-toggle",
+      "expected": "mobile drawer toggle exists",
+      "observed": "mobile drawer toggle missing",
+      "firstSeenAt": "2026-05-06T18:45:47.203Z",
+      "evidence": {
+        "message": "Responsive mobile entry point missing",
+        "selector": "#mobile-toggle",
+        "artifacts": []
+      },
+      "count": 1,
+      "lastSeenAt": "2026-05-06T18:45:47.203Z"
+    }
+  ],
+  "ready": false,
+  "unavailableTargets": 0
+}

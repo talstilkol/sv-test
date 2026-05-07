@@ -1,0 +1,141 @@
+{
+  "reportVersion": "svcollege-practical-guides-closed-route-smoke-v1",
+  "ready": true,
+  "checkedFiles": 11,
+  "failuresCount": 0,
+  "checks": [
+    {
+      "file": "index.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    },
+    {
+      "file": "guide_01_ideas.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    },
+    {
+      "file": "guide_02_homework_and_exam_drills.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    },
+    {
+      "file": "guide_03_exam_day_runbook.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    },
+    {
+      "file": "one_page_exam_cheatsheet.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    },
+    {
+      "file": "forward_tasks_plan.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    },
+    {
+      "file": "start_here.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    },
+    {
+      "file": "print_pack.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    },
+    {
+      "file": "study_path_37h45.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    },
+    {
+      "file": "progress_tracker.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    },
+    {
+      "file": "status.html",
+      "ready": true,
+      "prevArrows": 1,
+      "nextArrows": 1,
+      "stepMap": true,
+      "progressOutput": true,
+      "dayBoardScript": true,
+      "noInlineLagMarkup": true,
+      "noInlineDayList": true,
+      "failures": []
+    }
+  ],
+  "failures": []
+}

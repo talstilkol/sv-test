@@ -1,0 +1,12 @@
+{
+  "reportVersion": "qwen-training-runner-v1",
+  "model": "qwen3-coder-next:latest",
+  "mode": "smoke",
+  "status": 1,
+  "signal": null,
+  "error": null,
+  "infrastructureUnavailable": true,
+  "durationMs": 11,
+  "responseBytes": 0,
+  "stderr": "Error: Head \"http://127.0.0.1:11434/\": dial tcp 127.0.0.1:11434: connect: operation not permitted\n"
+}

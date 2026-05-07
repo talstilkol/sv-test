@@ -1,0 +1,52 @@
+{
+  "contractVersion": "qwen-output-contract-v1",
+  "name": "SV Library Simulation",
+  "allowedEndpoints": [
+    "GET /",
+    "GET /api/books",
+    "GET /api/books/:id",
+    "POST /api/books",
+    "PUT /api/books/:id",
+    "DELETE /api/books/:id",
+    "POST /api/books/borrow/:id"
+  ],
+  "requiredTokens": [
+    "express.json",
+    "cors",
+    "mongoose.connect",
+    "BrowserRouter",
+    "Routes",
+    "Route",
+    "useNavigate",
+    "useParams",
+    "useEffect",
+    "VITE_API_URL"
+  ],
+  "requiredValidationTerms": [
+    "title",
+    "author",
+    "year",
+    "genre",
+    "isAvailable",
+    "borrowedBy",
+    "Fiction",
+    "Science",
+    "History",
+    "Biography"
+  ],
+  "requiredStatusCodes": [400, 404, 500],
+  "requiredJsTokens": [
+    "Array.isArray",
+    "throw new Error",
+    "availableCount",
+    "borrowedCount",
+    "oldestYear",
+    "newestYear",
+    "mostCommonGenre"
+  ],
+  "requiredTsTokens": [
+    "interface Book",
+    "Partial<Book>",
+    "filterBooks"
+  ]
+}

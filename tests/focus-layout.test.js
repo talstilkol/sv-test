@@ -1,16 +1,11 @@
 const fs = require("fs");
 const path = require("path");
+const { cssBlock, cssHasMinWidthMedia, cssIncludes } = require("./css-evidence.js");
 
 const ROOT = path.resolve(__dirname, "..");
 
 function read(file) {
   return fs.readFileSync(path.join(ROOT, file), "utf8");
-}
-
-function cssBlock(css, selector) {
-  const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = css.match(new RegExp(`${escaped}\\s*\\{([\\s\\S]*?)\\}`));
-  return match ? match[1] : "";
 }
 
 describe("focus learning layout", () => {
@@ -57,16 +52,16 @@ describe("focus learning layout", () => {
     expect(app).toContain('const utilityBar = document.getElementById("w12-top-bar")');
     expect(app).toContain('const sidebarHeader = document.querySelector(".sidebar-header")');
     expect(app).toContain("sidebarHeader.appendChild(utilityBar)");
-    expect(cssBlock(css, ".w12-top-bar")).toContain("position: static");
-    expect(cssBlock(css, ".sidebar-header .w12-top-bar")).toContain("justify-content: center");
+    expect(cssIncludes(cssBlock(css, ".w12-top-bar"), "position: static")).toBe(true);
+    expect(cssIncludes(cssBlock(css, ".sidebar-header .w12-top-bar"), "justify-content: center")).toBe(true);
     expect(cssBlock(css, ".top-tabs-bar")).not.toContain("13.25rem");
   });
 
   it("keeps top navigation compact as one scrollable row", () => {
     const block = cssBlock(css, ".top-tabs-bar");
-    expect(block).toContain("flex-wrap: nowrap");
-    expect(block).toContain("overflow-x: auto");
-    expect(cssBlock(css, ".top-tab.top-tab-home")).toContain("margin-right: 0");
+    expect(cssIncludes(block, "flex-wrap: nowrap")).toBe(true);
+    expect(cssIncludes(block, "overflow-x: auto") || cssIncludes(block, "overflow: auto hidden")).toBe(true);
+    expect(cssIncludes(cssBlock(css, ".top-tab.top-tab-home"), "margin-right: 0")).toBe(true);
   });
 
   it("provides full-screen focus mode with a slide-in context tree", () => {
@@ -82,16 +77,16 @@ describe("focus learning layout", () => {
     expect(css).toContain("body.learning-focus-mode .context-tree-panel");
     expect(css).toContain("body.learning-focus-mode .context-tree-head");
     expect(css).toContain("body.learning-focus-mode .focus-side-toggle");
-    expect(css).toContain("transform: translateX(105%)");
-    expect(css).toContain("right: 1rem");
-    expect(css).toContain("left: auto");
+    expect(cssIncludes(css, "transform: translateX(105%)") || cssIncludes(css, "transform: translate(105%)")).toBe(true);
+    expect(cssIncludes(css, "right: 1rem")).toBe(true);
+    expect(cssIncludes(css, "left: auto")).toBe(true);
     expect(css).toContain("body.learning-focus-mode.focus-menu-open .context-tree-panel");
     expect(css).toContain("body.learning-focus-mode.learning-focus-top-collapsed .top-nav");
     expect(css).toContain("body.learning-focus-mode.learning-focus-top-collapsed .site-trail-nav");
     expect(css).toContain("body.learning-focus-mode.learning-focus-top-collapsed .portal-decision-aid");
     expect(css).toContain("body.learning-focus-mode.learning-focus-top-collapsed .content-wrapper");
-    expect(css).toContain("height: 100vh");
-    expect(css).toContain("transform: translateX(0)");
+    expect(cssIncludes(css, "height: 100vh")).toBe(true);
+    expect(cssIncludes(css, "transform: translateX(0)") || cssIncludes(css, "transform: translate(0)")).toBe(true);
   });
 
   it("exposes the context tree as a separate mobile drawer without overlapping the lesson drawer", () => {
@@ -101,8 +96,8 @@ describe("focus learning layout", () => {
     expect(app).toContain('document.body.classList.toggle(className, open)');
     expect(app).toContain('focusSideToggle.setAttribute("aria-label", open ? "קפל תוכן עניינים" : "פתח תוכן עניינים")');
     expect(css).toContain("body.mobile-context-open .context-tree-panel");
-    expect(css).toContain("width: min(390px, 88vw)");
-    expect(css).toContain("max-width: 88vw");
-    expect(css).toContain("@media (min-width: 901px)");
+    expect(cssIncludes(css, "width: min(390px, 88vw)")).toBe(true);
+    expect(cssIncludes(css, "max-width: 88vw")).toBe(true);
+    expect(cssHasMinWidthMedia(css, 901)).toBe(true);
   });
 });

@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { cssIncludes } = require("./css-evidence.js");
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -41,13 +42,13 @@ describe("unified sidebar navigation", () => {
 
   it("hides the standalone context panel by default and uses it only as a drawer mode", () => {
     expect(css).toContain(".sidebar-collapse-btn");
-    expect(css).toContain("body.right-sidebar-collapsed .sidebar");
-    expect(css).toContain("body.right-sidebar-collapsed .sidebar > :not(.sidebar-collapse-btn)");
+    expect(cssIncludes(css, "body.right-sidebar-collapsed .sidebar")).toBe(true);
+    expect(cssIncludes(css, "body.right-sidebar-collapsed .sidebar > :not(.sidebar-collapse-btn)")).toBe(true);
     expect(css).toContain(".sidebar-context-tree");
     expect(css).toContain(".sidebar-context-body");
     expect(css).toContain(".sidebar-lessons-tree");
-    expect(css).toContain("display: none");
-    expect(css).toContain("body.learning-focus-mode .context-tree-panel");
-    expect(css).toContain("body.lesson-reading-mode:not(.learning-focus-mode) .context-tree-panel");
+    expect(cssIncludes(css, "display: none")).toBe(true);
+    expect(cssIncludes(css, "body.learning-focus-mode .context-tree-panel")).toBe(true);
+    expect(cssIncludes(css, "body.lesson-reading-mode:not(.learning-focus-mode) .context-tree-panel")).toBe(true);
   });
 });

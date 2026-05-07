@@ -1,0 +1,69 @@
+{
+  "scanVersion": "qa-portal-scan-v1",
+  "artifactsDir": "output/qa/scan",
+  "targets": [
+    {
+      "name": "local",
+      "url": "http://127.0.0.1:5178",
+      "enabled": true,
+      "metadata": {
+        "purpose": "local-dev",
+        "environment": "development"
+      }
+    },
+    {
+      "name": "stage",
+      "url": "${SCAN_STAGE_BASE_URL}",
+      "enabled": true,
+      "metadata": {
+        "purpose": "stage",
+        "environment": "staging"
+      }
+    }
+  ],
+  "commands": [
+    {
+      "id": "portal-full-audit",
+      "label": "Portal full audit",
+      "command": "node",
+      "args": ["scripts/report_portal_full_audit.js", "--strict", "--summary"],
+      "domain": "core",
+      "severity": "critical"
+    },
+    {
+      "id": "smoke-browser",
+      "label": "Playwright smoke",
+      "command": "node",
+      "args": ["scripts/run_smoke_browser.js"],
+      "domain": "ux",
+      "severity": "high"
+    }
+  ],
+  "browserUseFlows": [
+    "boot-consent-onboarding",
+    "top-tab-coverage",
+    "critical-learning-flows",
+    "mobile-flow",
+    "offline-pwa",
+    "accessibility-basics",
+    "console-noise"
+  ],
+  "severityPolicy": {
+    "critical": {
+      "mergeBlock": true,
+      "action": "block"
+    },
+    "high": {
+      "mergeBlock": true,
+      "action": "block"
+    },
+    "medium": {
+      "mergeBlock": false,
+      "action": "plan"
+    },
+    "low": {
+      "mergeBlock": false,
+      "action": "backlog"
+    }
+  }
+}

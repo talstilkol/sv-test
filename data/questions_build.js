@@ -193,7 +193,7 @@ var QUESTIONS_BUILD = [
         flags: "",
       },
       { regex: "text", description: "השתמש ב-text הנכנס", flags: "" },
-      { regex: "id", description: "תן id (Date.now() או דומה)", flags: "i" },
+      { regex: "id", description: "תן id יציב ודטרמיניסטי", flags: "i" },
       {
         regex: "\\.push",
         description: "אסור: .push משנה את המערך הקיים — הסר!",
@@ -204,7 +204,8 @@ var QUESTIONS_BUILD = [
     reference: `function App() {
   const [todos, setTodos] = useState([]);
   function addTodo(text) {
-    setTodos([...todos, { id: Date.now(), text }]);
+    const id = "todo-" + todos.length + "-" + text.trim().toLowerCase();
+    setTodos([...todos, { id, text }]);
   }
   return null;
 }`,
@@ -518,7 +519,7 @@ app.get('/users', (req, res) => {
     level: 4,
     title: "Express POST /users עם validation",
     prompt:
-      "כתוב route POST /users. קרא name מ-req.body. אם חסר — החזר 400. אחרת הוסף {id: Date.now(), name} ל-users והחזר 201 עם האובייקט החדש.",
+      "כתוב route POST /users. קרא name מ-req.body. אם חסר — החזר 400. אחרת הוסף user עם id דטרמיניסטי ל-users והחזר 201 עם האובייקט החדש.",
     starter: `app.post('/users', (req, res) => {
   // הקוד שלך כאן
 });`,
@@ -526,8 +527,8 @@ app.get('/users', (req, res) => {
       { regex: "req\\.body", description: "קרא מ-req.body", flags: "" },
       { regex: "400", description: "החזר 400 אם name חסר", flags: "" },
       {
-        regex: "Date\\.now\\(\\)",
-        description: "צור id עם Date.now()",
+        regex: "id",
+        description: "צור id יציב",
         flags: "",
       },
       { regex: "201", description: "החזר status 201", flags: "" },
@@ -540,7 +541,7 @@ app.get('/users', (req, res) => {
     reference: `app.post('/users', (req, res) => {
   const { name } = req.body;
   if (!name) return res.status(400).json({ error: 'name required' });
-  const user = { id: Date.now(), name };
+  const user = { id: "user-" + users.length + "-" + name.trim().toLowerCase(), name };
   users.push(user);
   res.status(201).json(user);
 });`,
@@ -1641,7 +1642,7 @@ export async function POST(request) {
     reference: `function TodoApp() {
   function reducer(state, action) {
     switch (action.type) {
-      case 'ADD': return [...state, { id: Date.now(), text: action.text, done: false }];
+      case 'ADD': return [...state, { id: "todo-" + state.length + "-" + action.text.trim().toLowerCase(), text: action.text, done: false }];
       case 'TOGGLE': return state.map(t => t.id === action.id ? { ...t, done: !t.done } : t);
       case 'REMOVE': return state.filter(t => t.id !== action.id);
       default: return state;

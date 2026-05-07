@@ -11,18 +11,29 @@ describe("service worker cache freshness", () => {
   const sw = read("service-worker.js");
   const html = read("index.html");
 
-  it("uses a fresh cache version for concept sprint assets", () => {
-    expect(sw).toContain('const CACHE_VERSION = "lumen-v2.4.141-cluster-engine"');
-    expect(html).toContain("style.css?v=concept-sprint-v69");
-    expect(html).toContain("app.js?v=cleanup-shards-v105");
-    expect(html).toContain("/src/main.js?v=core-bootstrap-v2");
+  it("uses a fresh cache version for homework exam mode assets", () => {
+    expect(sw).toMatch(/const CACHE_VERSION = "lumen-v2\.4\.[^"]+"/);
+    expect(html).toContain("style.css?v=homework-exam-mode-v19");
+    expect(html).toContain("app.js?v=homework-exam-mode-v6");
+    expect(html).toContain('data-module-path="/src/main.js?v=core-bootstrap-v2"');
+    expect(html).toContain("src/boot/file-protocol-guard.js?v=file-protocol-guard-v2");
+    expect(html).toContain("src/boot/module-bootstrap-loader.js?v=module-bootstrap-loader-v1");
+    expect(html).toContain("src/views/exam100-path-core.js?v=exam100-path-core-v1");
     expect(html).toContain("content-loader.js?v=content-validation-v1");
-    expect(sw).toContain("/style.css?v=concept-sprint-v69");
-    expect(sw).toContain("/app.js?v=cleanup-shards-v105");
+    expect(sw).toContain("/style.css?v=homework-exam-mode-v19");
+    expect(sw).toContain("/app.js?v=homework-exam-mode-v6");
     expect(sw).toContain("/content-loader.js?v=content-validation-v1");
     expect(sw).toContain("/src/main.js?v=core-bootstrap-v2");
+    expect(sw).toContain("/src/boot/file-protocol-guard.js?v=file-protocol-guard-v2");
+    expect(sw).toContain("/src/boot/module-bootstrap-loader.js?v=module-bootstrap-loader-v1");
+    expect(sw).toContain("/src/views/exam100-path-core.js?v=exam100-path-core-v1");
+    expect(sw).toContain("/src/core/cluster-engine.js");
+    expect(sw).toContain("/src/core/cluster-engine.js?v=cluster-engine-v1");
     expect(sw).toContain("/src/core/question-prerequisites.js?v=question-prereq-v2");
     expect(sw).toContain("/data/level100_release_gates.js?v=level100-gate-v1");
+    expect(html).toContain("data/exam_tasks_tree.js?v=exam-tasks-tree-v1");
+    expect(sw).toContain("/data/exam_tasks_tree.js?v=exam-tasks-tree-v1");
+    expect(sw).toContain("/data/homework_exam_mode.js?v=homework-exam-mode-v6");
     expect(sw).toContain("/src/core/content-studio.js");
     expect(sw).toContain("/src/core/outcome-loop.js");
     expect(sw).toContain("/src/core/support-report.js");
@@ -40,8 +51,10 @@ describe("service worker cache freshness", () => {
     expect(sw).toContain("/src/core/peer-review.js");
     expect(sw).toContain("/src/core/mentor-matching.js");
     expect(sw).not.toContain("/data/questions_bank_seeded.js");
+    expect(sw).toContain("/src/views/homework-exam-mode-view.js?v=homework-exam-mode-view-v18");
     expect(sw).toContain("/data/war_stories.js");
     expect(sw).toContain("/data/comparisons.js");
+    expect(sw).toContain("/data/exam_practice_extras.js?v=exam-practice-extras-v1");
     expect(sw).toContain("/data/prerequisites.js");
     expect(sw).toContain("/data/metaphors.js");
     expect(sw).toContain("/data/pathways.js");

@@ -165,6 +165,8 @@ function buildReport(argv) {
   const selectedBatchSize = Number(argv.batchSize || DEFAULT_BATCH_SIZE);
   const selected = selectedTarget > 0 ? candidates.slice(0, selectedTarget) : candidates;
   const batches = buildBatches(selected, selectedBatchSize, selectedTarget);
+  const hasPendingCandidates = candidates.length > 0;
+  const ready = hasPendingCandidates ? selected.length > 0 : true;
 
   return {
     reportVersion: "llm-distractor-batch-v1",
@@ -178,11 +180,12 @@ function buildReport(argv) {
     },
     summary: {
       totalMcQuestions: candidates.length,
+      pendingMcQuestions: candidates.length,
       targetRequested: selectedTarget || selected.length,
       selectedForBatch: selected.length,
       batchSize: selectedBatchSize,
       batches: batches.length,
-      ready: selected.length > 0,
+      ready,
     },
     batches,
     nextStep: "Run with --write to export LLM prompts for review pipeline + manual commit.",

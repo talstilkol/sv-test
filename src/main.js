@@ -28,6 +28,7 @@ import * as conceptTags from "./core/concept-tags.js";
 import * as contextTree from "./views/context-tree.js";
 import * as themeToggle from "./views/theme-toggle/theme-toggle.js";
 import * as pocketState from "./views/pocket-concept-card/pocket-state.js";
+import { findMissingLegacyBridgeGlobals, legacyBridgeScriptCount } from "./boot/legacy-bridge-registry.js";
 import { legacyScriptCount } from "./ui/legacy-script-registry.js";
 import { findMountedLegacyViews } from "./views/legacy-views.js";
 import { afterDomReady } from "./utils/dom-ready.js";
@@ -76,6 +77,8 @@ afterDomReady(() => {
   document.documentElement.dataset.viteBootstrap = "ready";
   window.LUMEN_BOOTSTRAP_STATE = Object.freeze({
     legacyScripts: legacyScriptCount(),
+    legacyBridgeScripts: legacyBridgeScriptCount(),
+    missingLegacyBridgeGlobals: findMissingLegacyBridgeGlobals(window),
     mountedViews: findMountedLegacyViews().length,
   });
 });

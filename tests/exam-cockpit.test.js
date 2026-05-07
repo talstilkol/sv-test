@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { cssHasMaxWidthMedia, cssIncludes } = require("./css-evidence.js");
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -192,9 +193,12 @@ describe("Exam Cockpit dashboard", () => {
     expect(css).toContain(".exam-final-24-list");
     expect(css).toContain(".exam-final-weak-list");
     expect(css).toContain(".exam-module-heatmap");
-    expect(css).toContain("linear-gradient(90deg, rgba(34,211,238,0.18) var(--module-ready)");
-    expect(css).toContain("grid-template-columns: repeat(auto-fit, minmax(190px, 1fr))");
-    expect(css).toContain("@media (max-width: 780px)");
+    expect(
+      cssIncludes(css, "linear-gradient(90deg, rgba(34,211,238,0.18) var(--module-ready)") ||
+        cssIncludes(css, "linear-gradient(90deg, #22d3ee2e var(--module-ready)"),
+    ).toBe(true);
+    expect(cssIncludes(css, "grid-template-columns: repeat(auto-fit, minmax(190px, 1fr))")).toBe(true);
+    expect(cssHasMaxWidthMedia(css, 780)).toBe(true);
     expect(css).toContain(".exam-readiness-meter");
   });
 });

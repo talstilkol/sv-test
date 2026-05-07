@@ -1,0 +1,30 @@
+{
+  "reportVersion": "llm-distractor-batch-v1",
+  "date": "2026-05-05",
+  "policy": {
+    "manualReviewRequired": true,
+    "deterministic": true,
+    "noFakeData": true,
+    "reviewScope": "optionFeedback only",
+    "noAutoWrite": true
+  },
+  "summary": {
+    "totalMcQuestions": 0,
+    "targetRequested": 1316,
+    "selectedForBatch": 0,
+    "batchSize": 25,
+    "batches": 0,
+    "ready": false
+  },
+  "batches": [],
+  "nextStep": "Run with --write to export LLM prompts for review pipeline + manual commit.",
+  "candidates": [],
+  "sourceOfTruth": {
+    "status": "historical",
+    "reportVersion": "report-source-of-truth-v1",
+    "evaluatedAt": "2026-05-07",
+    "sourceDate": "2026-05-05",
+    "source": "report-archive",
+    "reason": "date-mismatch-with-source-of-truth"
+  }
+}
