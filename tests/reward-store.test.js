@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { cssIncludes } = require("./css-evidence.js");
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -109,7 +110,7 @@ describe("reward store MVP", () => {
     expect(app).toContain('aria-controls="${esc(wing.target || "programming-museum-access-gate")}"');
     expect(app).toContain('aria-disabled="${status.unlocked || !status.canUnlock ? "true" : "false"}"');
     expect(app).toContain('aria-label="${esc(`${actionLabel}: ${status.title}`)}"');
-    expect(css).toContain("@media (prefers-reduced-motion: reduce)");
+    expect(cssIncludes(css, "@media (prefers-reduced-motion: reduce)")).toBe(true);
     expect(css).toContain("body.museum-reduced-motion .museum-wing-nav button");
     expect(css).toContain("body.museum-reduced-motion .xp-access-panel button");
   });

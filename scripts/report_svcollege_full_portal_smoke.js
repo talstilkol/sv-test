@@ -26,6 +26,17 @@ function addCheck(checks, id, label, passed, detail) {
   });
 }
 
+function normalizeCssText(value) {
+  return String(value || "")
+    .replace(/\s*([{}:;,>!])\s*/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function cssIncludes(source, snippet) {
+  return normalizeCssText(source).includes(normalizeCssText(snippet));
+}
+
 function sourceEvidence() {
   const html = read("index.html");
   const app = read("app.js");
@@ -106,29 +117,29 @@ function buildReport() {
     mobileChecks,
     "mobile-drawer",
     "Mobile drawer and context tree are mutually wired",
-    sources.html.includes('id="mobile-toggle"') &&
+      sources.html.includes('id="mobile-toggle"') &&
       sources.app.includes('document.body.classList.remove("mobile-context-open")') &&
       sources.app.includes('const className = focusEnabled ? "focus-menu-open" : "mobile-context-open"') &&
-      sources.css.includes("body.mobile-context-open .context-tree-panel"),
+      cssIncludes(sources.css, "body.mobile-context-open .context-tree-panel"),
     "Mobile lesson drawer and context drawer do not share one open state.",
   );
   addCheck(
     mobileChecks,
     "mobile-right-tree",
     "Mobile keeps the right tree active while switching tabs",
-    sources.browserSmoke.includes("Mobile 390×844: context tree remains active while switching tabs | Pass") &&
+      sources.browserSmoke.includes("Mobile 390×844: context tree remains active while switching tabs | Pass") &&
       sources.app.includes("syncContextTreeToggleVisibility") &&
-      sources.css.includes("width: min(390px, 88vw)"),
+      cssIncludes(sources.css, "width: min(390px, 88vw)"),
     "Context drawer remains bounded and switchable on mobile.",
   );
   addCheck(
     mobileChecks,
     "mobile-focus-mode",
     "Mobile focus mode hides top chrome and exposes content tree",
-    sources.browserSmoke.includes("Mobile 390×844: focus mode hides top tabs and uses side context tree | Pass") &&
+      sources.browserSmoke.includes("Mobile 390×844: focus mode hides top tabs and uses side context tree | Pass") &&
       sources.browserSmoke.includes("Focus mode | `body.learning-focus-mode`; top tabs hidden") &&
       sources.app.includes("function setLearningFocusMode") &&
-      sources.css.includes("body.learning-focus-mode .top-tabs-bar"),
+      cssIncludes(sources.css, "body.learning-focus-mode .top-tabs-bar"),
     "Focus mode evidence and source wiring are present.",
   );
   addCheck(

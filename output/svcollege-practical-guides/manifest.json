@@ -1,0 +1,127 @@
+{
+  "name": "SVCollege Practical Exam Guides",
+  "createdAt": "2026-05-05",
+  "language": "he",
+  "direction": "rtl",
+  "goal": "Three practical, colorful, easy guides for the SVCollege Full Stack exam",
+  "examShape": {
+    "project": 70,
+    "javascript": 20,
+    "typescript": 10
+  },
+  "outputs": [
+    {
+      "id": "index",
+      "file": "index.html",
+      "purpose": "Entry page for the guide package"
+    },
+    {
+      "id": "ideas",
+      "file": "guide_01_ideas.html",
+      "purpose": "Explain the idea behind each major topic"
+    },
+    {
+      "id": "homework_and_drills",
+      "file": "guide_02_homework_and_exam_drills.html",
+      "purpose": "Solve homework and exam practice tasks"
+    },
+    {
+      "id": "exam_day",
+      "file": "guide_03_exam_day_runbook.html",
+      "purpose": "Runbook for what to do during the exam"
+    },
+    {
+      "id": "one_page_exam_cheatsheet",
+      "file": "one_page_exam_cheatsheet.html",
+      "purpose": "One page emergency cheat sheet for the day before the exam and exam day"
+    },
+    {
+      "id": "forward_tasks_plan",
+      "file": "forward_tasks_plan.html",
+      "purpose": "Detailed forward task list with timing table, gates, and 114-video watching plan for the remaining 100 hours 20 minutes"
+    },
+    {
+      "id": "start_here",
+      "file": "start_here.html",
+      "purpose": "Choose which guide to open first based on the student's current situation"
+    },
+    {
+      "id": "print_pack",
+      "file": "print_pack.html",
+      "purpose": "One printable condensed pack for all three guides"
+    },
+    {
+      "id": "study_path",
+      "file": "study_path_37h45.html",
+      "purpose": "Closed 100 hours 20 minutes study path with daily gates and 114-video watching plan"
+    },
+    {
+      "id": "progress_tracker",
+      "file": "progress_tracker.html",
+      "purpose": "Local progress tracker for the 100 hours 20 minutes study path"
+    },
+    {
+      "id": "status",
+      "file": "status.html",
+      "purpose": "Status page that explains what to open first and which files are ready"
+    },
+    {
+      "id": "source_map",
+      "file": "source_map.md",
+      "purpose": "Map source materials to the three guides"
+    },
+    {
+      "id": "readme",
+      "file": "README.md",
+      "purpose": "How to use and print the guide package"
+    },
+    {
+      "id": "verifier",
+      "file": "verify_guides.js",
+      "purpose": "Local integrity check for files, internal links, print support, and forbidden patterns"
+    },
+    {
+      "id": "day_board_component",
+      "file": "guide_day_board.js",
+      "purpose": "Shared day-by-day board with lag alert and next task action for all guide pages"
+    },
+    {
+      "id": "closed_route_smoke",
+      "file": "report_closed_route_smoke.js",
+      "purpose": "Strict smoke audit for the closed route UX (two arrows, map, progress, day board)"
+    },
+    {
+      "id": "closed_route_browser_runtime",
+      "file": "report_closed_route_browser_runtime.js",
+      "purpose": "Runtime browser smoke for the closed route UX across all guide pages"
+    },
+    {
+      "id": "release_gate",
+      "file": "report_guides_release_gate.js",
+      "purpose": "Aggregate release gate for verify + closed route static smoke + browser runtime smoke"
+    },
+    {
+      "id": "strict_all_runner",
+      "file": "run_guides_strict_all.js",
+      "purpose": "One-command strict runner for all practical guides gates"
+    }
+  ],
+  "qualityRules": [
+    "No native randomness",
+    "No fake data",
+    "No video changes",
+    "Focus on project 70, JavaScript 20, TypeScript 10"
+  ],
+  "recommendedOrder": [
+    "start_here.html",
+    "one_page_exam_cheatsheet.html",
+    "forward_tasks_plan.html",
+    "guide_01_ideas.html",
+    "guide_02_homework_and_exam_drills.html",
+    "guide_03_exam_day_runbook.html",
+    "study_path_37h45.html",
+    "progress_tracker.html",
+    "status.html",
+    "print_pack.html"
+  ]
+}

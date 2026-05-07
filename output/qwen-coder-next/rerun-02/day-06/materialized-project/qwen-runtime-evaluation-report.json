@@ -1,0 +1,143 @@
+{
+  "reportVersion": "qwen-runtime-evaluator-v1",
+  "target": "output/qwen-coder-next/rerun-02/day-06/materialized-project",
+  "contract": "docs/qwen-coder-next-training/contracts/sv-library-contract.json",
+  "summary": {
+    "score": 65,
+    "maxScore": 100,
+    "ready": false,
+    "checks": 6,
+    "passed": 4,
+    "failed": 2
+  },
+  "checks": [
+    {
+      "id": "target-files",
+      "label": "Materialized project has files",
+      "status": "pass",
+      "passed": true,
+      "points": 10,
+      "earned": 10,
+      "detail": "19 files found.",
+      "evidence": [
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/index.html",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/package-lock.json",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/package.json",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/App.jsx",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/components/BookForm.jsx",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/components/BooksList.jsx",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/components/LoginForm.jsx",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/main.jsx",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/pages/AddBookPage.jsx",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/pages/BooksPage.jsx",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/pages/EditBookPage.jsx",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/pages/LoginPage.jsx",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/services/api.js",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/utils/stats.js",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/src/utils/stats.ts",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/client/vite.config.js",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/server/models/Book.js",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/server/routes/books.js",
+        "output/qwen-coder-next/rerun-02/day-06/materialized-project/server/server.js"
+      ]
+    },
+    {
+      "id": "static-forbidden-scan",
+      "label": "No native random API or fabricated data markers",
+      "status": "pass",
+      "passed": true,
+      "points": 15,
+      "earned": 15,
+      "detail": "No forbidden markers found.",
+      "evidence": []
+    },
+    {
+      "id": "contract-guard",
+      "label": "Static contract guard passes",
+      "status": "pass",
+      "passed": true,
+      "points": 25,
+      "earned": 25,
+      "detail": "11/11 guard checks passed.",
+      "evidence": []
+    },
+    {
+      "id": "node-syntax",
+      "label": "Backend/script JavaScript passes node --check",
+      "status": "pass",
+      "passed": true,
+      "points": 15,
+      "earned": 15,
+      "detail": "3 files checked.",
+      "evidence": []
+    },
+    {
+      "id": "package-build",
+      "label": "Package install/build checks pass when requested",
+      "status": "fail",
+      "passed": false,
+      "points": 20,
+      "earned": 0,
+      "detail": "1/2 package commands passed.",
+      "evidence": [
+        {
+          "command": "npm run build",
+          "cwd": "output/qwen-coder-next/rerun-02/day-06/materialized-project/client",
+          "status": 1,
+          "signal": null,
+          "error": null,
+          "stdout": "\n> sv-library-client@0.0.0 build\n> vite build\n\nvite v5.4.21 building for production...\ntransforming...\n✓ 2 modules transformed.\n",
+          "stderr": "x Build failed in 20ms\nerror during build:\n[vite]: Rollup failed to resolve import \"/src/main.js\" from \"/Users/tal/Desktop/חומרים לשיעור/output/qwen-coder-next/rerun-02/day-06/materialized-project/client/index.html\".\nThis is most likely unintended because it can break your application at runtime.\nIf you do want to externalize this module explicitly add it to\n`build.rollupOptions.external`\n    at viteWarn (file:///Users/tal/Desktop/%D7%97%D7%95%D7%9E%D7%A8%D7%99%D7%9D%20%D7%9C%D7%A9%D7%99%D7%A2%D7%95%D7%A8/output/qwen-coder-next/rerun-02/day-06/materialized-project/client/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:65855:17)\n    at onwarn (file:///Users/tal/Desktop/%D7%97%D7%95%D7%9E%D7%A8%D7%99%D7%9D%20%D7%9C%D7%A9%D7%99%D7%A2%D7%95%D7%A8/output/qwen-coder-next/rerun-02/day-06/materialized-project/client/node_modules/@vitejs/plugin-react/dist/index.js:90:7)\n    at onRollupWarning (file:///Users/tal/Desktop/%D7%97%D7%95%D7%9E%D7%A8%D7%99%D7%9D%20%D7%9C%D7%A9%D7%99%D7%A2%D7%95%D7%A8/output/qwen-coder-next/rerun-02/day-06/materialized-project/client/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:65885:5)\n    at onwarn (file:///Users/tal/Desktop/%D7%97%D7%95%D7%9E%D7%A8%D7%99%D7%9D%20%D7%9C%D7%A9%D7%99%D7%A2%D7%95%D7%A8/output/qwen-coder-next/rerun-02/day-06/materialized-project/client/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:65550:7)\n    at file:///Users/tal/Desktop/%D7%97%D7%95%D7%9E%D7%A8%D7%99%D7%9D%20%D7%9C%D7%A9%D7%99%D7%A2%D7%95%D7%A8/output/qwen-coder-next/rerun-02/day-06/materialized-project/client/node_modules/rollup/dist/es/shared/node-entry.js:21403:13\n    at Object.logger [as onLog] (file:///Users/tal/Desktop/%D7%97%D7%95%D7%9E%D7%A8%D7%99%D7%9D%20%D7%9C%D7%A9%D7%99%D7%A2%D7%95%D7%A8/output/qwen-coder-next/rerun-02/day-06/materialized-project/client/node_modules/rollup/dist/es/shared/node-entry.js:23384:9)\n    at ModuleLoader.handleInvalidResolvedId (file:///Users/tal/Desktop/%D7%97%D7%95%D7%9E%D7%A8%D7%99%D7%9D%20%D7%9C%D7%A9%D7%99%D7%A2%D7%95%D7%A8/output/qwen-coder-next/rerun-02/day-06/materialized-project/client/node_modules/rollup/dist/es/shared/node-entry.js:22128:26)\n    at file:///Users/tal/Desktop/%D7%97%D7%95%D7%9E%D7%A8%D7%99%D7%9D%20%D7%9C%D7%A9%D7%99%D7%A2%D7%95%D7%A8/output/qwen-coder-next/rerun-02/day-06/materialized-project/client/node_modules/rollup/dist/es/shared/node-entry.js:22086:26\n",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "id": "backend-smoke",
+      "label": "Backend GET smoke checks pass when requested",
+      "status": "fail",
+      "passed": false,
+      "points": 15,
+      "earned": 0,
+      "detail": "GET /: fetch failed; GET /api/books: fetch failed; GET /api/books/:id: fetch failed",
+      "evidence": {
+        "skipped": false,
+        "status": 1,
+        "checks": [
+          {
+            "endpoint": "GET /",
+            "ok": false,
+            "status": null,
+            "error": "fetch failed"
+          },
+          {
+            "endpoint": "GET /api/books",
+            "ok": false,
+            "status": null,
+            "error": "fetch failed"
+          },
+          {
+            "endpoint": "GET /api/books/:id",
+            "ok": false,
+            "status": null,
+            "error": "fetch failed"
+          }
+        ],
+        "stdout": "",
+        "stderr": "node:internal/modules/cjs/loader:1478\n  throw err;\n  ^\n\nError: Cannot find module 'express'\nRequire stack:\n- /Users/tal/Desktop/חומרים לשיעור/output/qwen-coder-next/rerun-02/day-06/materialized-project/server/server.js\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1475:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1048:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1072:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1093:12)\n    at Module._load (node:internal/modules/cjs/loader:1261:25)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.require (node:internal/modules/cjs/loader:1575:12)\n    at require (node:internal/modules/helpers:191:16)\n    at Object.<anonymous> (/Users/tal/Desktop/חומרים לשיעור/output/qwen-coder-next/rerun-02/day-06/materialized-project/server/server.js:2:17)\n    at Module._compile (node:internal/modules/cjs/loader:1829:14) {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: [\n    '/Users/tal/Desktop/חומרים לשיעור/output/qwen-coder-next/rerun-02/day-06/materialized-project/server/server.js'\n  ]\n}\n\nNode.js v25.9.0\n"
+      }
+    }
+  ],
+  "blockers": [
+    {
+      "id": "package-build",
+      "label": "Package install/build checks pass when requested",
+      "detail": "1/2 package commands passed."
+    },
+    {
+      "id": "backend-smoke",
+      "label": "Backend GET smoke checks pass when requested",
+      "detail": "GET /: fetch failed; GET /api/books: fetch failed; GET /api/books/:id: fetch failed"
+    }
+  ]
+}

@@ -39,10 +39,12 @@ function looksLikeJsx(code) {
 
 function looksLikeTs(code) {
   // Type annotations: `: number`, `: string[]`, `: Foo<T>`
-  if (/\b(?:const|let|var|function|\w+)\s*\(?[^)]*?\)?\s*:\s*[A-Z]\w*[<>\[\]\| ?]*[ ,);=]/.test(code)) return true;
+  if (/\b(?:const|let|var|function|\w+)\s*\(?[^)]*?\)?\s*:\s*(?:[A-Z]\w*|string|number|boolean|void|never|unknown|any|\[[^\]]+\])\w*[<>\[\]\| ?,:]*[ ,);={]/.test(code)) return true;
+  if (/\b(?:private|public|protected|readonly)\s+\w+\s*:\s*\w+/.test(code)) return true;
   if (/^\s*(?:type|interface)\s+\w/m.test(code)) return true;
   if (/\bas\s+(?:[A-Z]\w*|const|any|unknown|never)\b/.test(code)) return true;
   if (/^\s*enum\s+\w/m.test(code)) return true;
+  if (/^\s*@\w+/m.test(code)) return true;
   if (/<[A-Z]\w*[,> ]/.test(code) && !/=>\s*[<]/.test(code)) return true; // generics
   return false;
 }
@@ -60,18 +62,18 @@ function looksLikeSql(code) {
 }
 
 function looksLikeShell(code) {
-  return /^\s*(?:\$\s*\w|npm\s|npx\s|git\s|cd\s|ls\s|echo\s|brew\s|apt\s|yarn\s|pnpm\s|node\s+--?\w)/m.test(code);
+  return /^\s*(?:#\s*)?(?:\$\s*\w|npm\s|npx\s|git\s|cd\s|ls\s|echo\s|brew\s|apt\s|yarn\s|pnpm\s|node\s+--?\w|node\s+\w|tsc\b|docker\s|kubectl\s|curl\s)/m.test(code);
 }
 
 function looksLikeYamlOrJson(code) {
-  if (/^\s*(?:version|name|on|jobs|runs-on|steps|with|services|volumes|networks|build):/m.test(code)) return true;
+  if (/^\s*(?:"(?:scripts|engines|browserslist|compilerOptions)"|(?:version|name|on|jobs|runs-on|steps|with|services|volumes|networks|build|resolve|alias|compilerOptions|engine|browserslist))\s*:/m.test(code)) return true;
   if (/^\s*\{[\s\S]+\}\s*$/.test(code) && !/[=();]/.test(code)) return true;
   return false;
 }
 
 function looksLikeCss(code) {
   // CSS selector + brace block
-  if (/^\s*[.#\w][^{};\n]*\{/m.test(code) && /:\s*[^;{}\n]+;/.test(code)) return true;
+  if (/^\s*(?:\*|:root|[.#\w][^{};\n]*)\s*\{/m.test(code) && /:\s*[^;{}\n]+;/.test(code)) return true;
   // CSS at-rules
   if (/^\s*@(?:media|keyframes|supports|import|font-face)\b/m.test(code)) return true;
   return false;
@@ -85,9 +87,31 @@ function looksLikeHtml(code) {
   return /^<!DOCTYPE|^<html|^<head|^<body|^<div|^<form/im.test(code) || /<\/[a-z]+>/.test(code);
 }
 
+function looksLikeMarkdownOrPlainText(code) {
+  const trimmed = code.trim();
+  if (/^#{1,6}\s/m.test(trimmed)) return true;
+  if (/^\s*[-*]\s+\S/m.test(trimmed) && !/[=();{}]/.test(trimmed)) return true;
+  if (/^\s*(?:GET|POST|PUT|PATCH|DELETE)\s+\//m.test(trimmed)) return true;
+  if (/https?:\/\/\S+/.test(trimmed) && !/[=();{}]/.test(trimmed)) return true;
+  if (/^\s*[\w./-]+\.(?:tsx?|jsx?|css|html|md|json)\s*(?:->|$)/m.test(trimmed)) return true;
+  if (/->|--many|many--/.test(trimmed)) return true;
+  if (/^\s*(?:\/\/[^\n]*\n?)+\s*$/.test(trimmed)) return true;
+  if (/^Go only if:/m.test(trimmed)) return true;
+  return false;
+}
+
+function looksLikeFrameworkOrConfigFragment(code) {
+  if (/^\s*(?:constructor\(|services:|volumes:|components\/|CONTAINER ID\b)/m.test(code)) return true;
+  if (/\b(?:Accept-Encoding|MONGO_URI|package-lock\.json|mongodb\+srv|mkdir -p|schema\.prisma|vercel --prod)\b/.test(code)) return true;
+  if (/^\s*"(?:lint|format|format:verify|messages)"\s*:/m.test(code)) return true;
+  if (/\.\.\./.test(code)) return true;
+  return false;
+}
+
 function shouldSkip(code) {
   if (!code || typeof code !== "string") return true;
   return (
+    looksLikeMarkdownOrPlainText(code) ||
     looksLikeJsx(code) ||
     looksLikeTs(code) ||
     looksLikeEsm(code) ||
@@ -97,7 +121,8 @@ function shouldSkip(code) {
     looksLikeYamlOrJson(code) ||
     looksLikeCss(code) ||
     looksLikeDockerfile(code) ||
-    looksLikeHtml(code)
+    looksLikeHtml(code) ||
+    looksLikeFrameworkOrConfigFragment(code)
   );
 }
 

@@ -22,6 +22,23 @@ function addCheck(checks, id, label, passed, detail) {
   });
 }
 
+function normalizeCssText(value) {
+  return String(value || "")
+    .replace(/\s*([{}:;,>!])\s*/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function cssIncludes(source, snippet) {
+  return normalizeCssText(source).includes(normalizeCssText(snippet));
+}
+
+function cssHasMaxWidthMedia(source, px) {
+  const normalized = normalizeCssText(source);
+  return normalized.includes(normalizeCssText(`@media (max-width: ${px}px)`)) ||
+    normalized.includes(`@media (width<=${px}px)`);
+}
+
 function buildReport() {
   const html = read("index.html");
   const app = read("app.js");
@@ -55,24 +72,24 @@ function buildReport() {
     checks,
     "desktop-layout",
     "Desktop store layout has bounded width and responsive card grid",
-    css.includes(".reward-store-view") &&
-      css.includes("max-width: 1280px") &&
-      css.includes(".reward-store-head") &&
-      css.includes("justify-content: space-between") &&
-      css.includes(".store-grid") &&
-      css.includes("grid-template-columns: repeat(auto-fill, minmax(230px, 1fr))"),
+    cssIncludes(css, ".reward-store-view") &&
+      cssIncludes(css, "max-width: 1280px") &&
+      cssIncludes(css, ".reward-store-head") &&
+      cssIncludes(css, "justify-content: space-between") &&
+      cssIncludes(css, ".store-grid") &&
+      cssIncludes(css, "grid-template-columns: repeat(auto-fill, minmax(230px, 1fr))"),
     "Desktop layout should keep the store readable with a bounded shell and card grid.",
   );
   addCheck(
     checks,
     "mobile-layout",
     "Mobile store layout avoids horizontal crowding",
-    css.includes("@media (max-width: 900px)") &&
-      css.includes(".reward-store-head,") &&
-      css.includes("flex-direction: column") &&
-      css.includes(".reward-store-filters") &&
-      css.includes("overflow-x: auto") &&
-      css.includes("white-space: nowrap"),
+    cssHasMaxWidthMedia(css, 900) &&
+      cssIncludes(css, ".reward-store-head") &&
+      cssIncludes(css, "flex-direction: column") &&
+      cssIncludes(css, ".reward-store-filters") &&
+      cssIncludes(css, "overflow-x: auto") &&
+      cssIncludes(css, "white-space: nowrap"),
     "Mobile layout must stack the head area and make filters horizontally scrollable.",
   );
   addCheck(

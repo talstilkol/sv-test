@@ -22,6 +22,9 @@ const GATES = Object.freeze([
   { id: "quality-questions-strict", label: "Question quality strict", command: "npm", args: ["run", "quality:questions:strict"] },
   { id: "questions-blocker-map-strict", label: "Manual blocker map strict", command: "npm", args: ["run", "questions:blocker-map:strict"] },
   { id: "questions-coverage-targets-strict", label: "Manual question coverage target strict", command: "npm", args: ["run", "questions:coverage-targets:strict"] },
+  { id: "exam-solution-guide-coverage-strict", label: "Solution guide coverage strict", command: "npm", args: ["run", "exam:solution-guide:coverage:strict"] },
+  { id: "exam-solution-guide-drills-strict", label: "Solution guide drills strict", command: "npm", args: ["run", "exam:solution-guide:drills:strict"] },
+  { id: "exam-task-tree-strict", label: "Exam task tree 73-section strict", command: "npm", args: ["run", "exam:task-tree:strict"] },
   { id: "questions-reuse-audit-strict", label: "Question reuse audit strict", command: "npm", args: ["run", "questions:reuse-audit:strict"] },
   { id: "svcollege-readiness-release", label: "SVCollege release readiness", command: "npm", args: ["run", "svcollege:readiness:release"] },
   { id: "svcollege-tab-matrix-strict", label: "SVCollege tab matrix strict", command: "npm", args: ["run", "svcollege:tab-matrix:strict"] },
@@ -31,6 +34,7 @@ const GATES = Object.freeze([
   { id: "exam-mock-variants-strict", label: "SVCollege mock variants strict", command: "npm", args: ["run", "exam:mock-variants:strict"] },
   { id: "svcollege-console-gate-strict", label: "SVCollege console gate strict", command: "npm", args: ["run", "svcollege:console-gate:strict"] },
   { id: "svcollege-pwa-offline-strict", label: "SVCollege PWA offline strict", command: "npm", args: ["run", "svcollege:pwa-offline:strict"] },
+  { id: "ux-world-class-menu-strict", label: "World-class menu strict", command: "npm", args: ["run", "ux:world-class-menu:strict"] },
   { id: "vitest-run", label: "Vitest full suite", command: "npm", args: ["test", "--", "--run"] },
   { id: "vite-build", label: "Production build", command: "npm", args: ["run", "build"] },
 ]);
@@ -196,7 +200,7 @@ function writeReport(report) {
 function run(argv = process.argv.slice(2)) {
   const execute = argv.includes("--strict") || argv.includes("--execute") || argv.includes("--write");
   const report = buildReport({ execute });
-  if (argv.includes("--write")) writeReport(report);
+  if (argv.includes("--write") || argv.includes("--strict")) writeReport(report);
   if (argv.includes("--json")) process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
   else if (argv.includes("--summary")) process.stdout.write(`${JSON.stringify(report.summary, null, 2)}\n`);
   else process.stdout.write(toMarkdown(report));

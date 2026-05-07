@@ -1,12 +1,12 @@
 {
   "reportVersion": "report-source-of-truth-v1",
-  "date": "2026-05-04",
+  "date": "2026-05-07",
   "source": "scripts/report_source_of_truth.js",
   "scope": "generated report freshness + contradiction reconciliation",
   "artifactSummary": {
-    "total": 38,
+    "total": 41,
     "historical": 37,
-    "active": 1
+    "active": 4
   },
   "policy": "Reconciliation uses live rebuilds of feature and question coverage reports. Any report older than today's source-of-truth date is marked historical/superseded. Live decisions must be driven by active reports in this file.",
   "signals": [
@@ -14,35 +14,36 @@
       "id": "FEATURE_COVERAGE",
       "status": "green",
       "detail": "strictFailures=0, evidenceGateFailures=0, version=feature-coverage-v2",
-      "date": "2026-05-04"
+      "date": "2026-05-07"
     },
     {
       "id": "QUESTION_COVERAGE_TARGETS",
       "status": "green",
       "detail": "ready=true, mcGap=0, fillGap=0, version=question-coverage-targets-v1",
-      "date": "2026-05-04",
+      "date": "2026-05-07",
       "source": "questionCoverage"
     },
     {
       "id": "QUESTION_QUALITY",
       "status": "yellow",
-      "detail": "questionQualityIndex=97.9%, total=4762",
-      "date": "2026-05-04"
+      "detail": "questionQualityIndex=100%, total=4762",
+      "date": "2026-05-07"
     },
     {
       "id": "FINISH_LINE_PRE_RELEASE",
-      "status": "red",
-      "detail": "ready=false, passed=1/18",
-      "date": "2026-05-04"
+      "status": "green",
+      "detail": "ready=true, passed=22/22",
+      "date": "2026-05-07",
+      "source": "FINISH_LINE_PRERELEASE_REPORT.json"
     }
   ],
   "findings": [
     {
       "id": "recon-003",
-      "severity": "P1",
-      "finding": "37 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical.",
+      "severity": "P3",
+      "finding": "37 tracked report snapshots are historical. Keep them archived or regenerate only when you want them promoted to active evidence.",
       "evidence": {
-        "sourceOfTruthDate": "2026-05-04",
+        "sourceOfTruthDate": "2026-05-07",
         "staleArtifacts": 37
       }
     }
@@ -60,8 +61,8 @@
     {
       "id": "BRUTAL_MASTER_PLAN_AUDIT",
       "state": "historical",
-      "date": "2026-04-30",
-      "mdDate": "2026-04-30",
+      "date": "2026-05-06",
+      "mdDate": "2026-05-06",
       "reportVersion": "brutal-master-plan-audit-v1",
       "type": "markdown+json",
       "title": "BRUTAL_MASTER_PLAN_AUDIT"
@@ -83,6 +84,15 @@
       "reportVersion": "content-schema-contract-report-v1",
       "type": "markdown+json",
       "title": "CONTENT_SCHEMA_CONTRACT_REPORT"
+    },
+    {
+      "id": "DOM_STORAGE_TRUST_BOUNDARY_REPORT",
+      "state": "historical",
+      "date": "2026-05-06",
+      "mdDate": "unknown",
+      "reportVersion": "dom-storage-trust-boundary-audit-v1",
+      "type": "markdown+json",
+      "title": "app.js, src/views/homework-exam-mode-view.js"
     },
     {
       "id": "EXAM_EDITION_RELEASE_FREEZE",
@@ -122,9 +132,9 @@
     },
     {
       "id": "FINISH_LINE_PRERELEASE_REPORT",
-      "state": "historical",
-      "date": "2026-04-30",
-      "mdDate": "2026-04-30",
+      "state": "active",
+      "date": "2026-05-07",
+      "mdDate": "2026-05-07",
       "reportVersion": "finish-line-prerelease-v1",
       "type": "markdown+json",
       "title": "FINISH_LINE_PRERELEASE_REPORT"
@@ -157,10 +167,19 @@
       "title": "LEVEL100_RELEASE_GATE"
     },
     {
+      "id": "LLM_DISTRACTOR_BATCH_REPORT",
+      "state": "historical",
+      "date": "2026-05-05",
+      "mdDate": "2026-05-05",
+      "reportVersion": "llm-distractor-batch-v1",
+      "type": "markdown+json",
+      "title": "LLM_DISTRACTOR_BATCH_REPORT"
+    },
+    {
       "id": "MANUAL_QUESTION_AUTHORING_PLAN",
       "state": "historical",
-      "date": "2026-05-02",
-      "mdDate": "2026-05-02",
+      "date": "2026-05-05",
+      "mdDate": "2026-05-05",
       "reportVersion": "manual-question-authoring-plan-v1",
       "type": "markdown+json",
       "title": "MANUAL_QUESTION_AUTHORING_PLAN"
@@ -168,8 +187,8 @@
     {
       "id": "MANUAL_QUESTION_BLOCKER_MAP",
       "state": "historical",
-      "date": "2026-04-30",
-      "mdDate": "2026-04-30",
+      "date": "2026-05-05",
+      "mdDate": "2026-05-05",
       "reportVersion": "manual-question-blocker-map-v1",
       "type": "markdown+json",
       "title": "MANUAL_QUESTION_BLOCKER_MAP"
@@ -249,8 +268,8 @@
     {
       "id": "QUESTION_ACTIVITY_AUTHORING_PLAN",
       "state": "historical",
-      "date": "2026-05-02",
-      "mdDate": "2026-05-02",
+      "date": "2026-05-05",
+      "mdDate": "2026-05-05",
       "reportVersion": "question-activity-authoring-plan-v1",
       "type": "markdown+json",
       "title": "QUESTION_ACTIVITY_AUTHORING_PLAN"
@@ -258,8 +277,8 @@
     {
       "id": "QUESTION_ACTIVITY_COVERAGE_REPORT",
       "state": "historical",
-      "date": "2026-04-30",
-      "mdDate": "2026-04-30",
+      "date": "2026-05-05",
+      "mdDate": "2026-05-05",
       "reportVersion": "question-activity-coverage-v1",
       "type": "markdown+json",
       "title": "QUESTION_ACTIVITY_COVERAGE_REPORT"
@@ -267,8 +286,8 @@
     {
       "id": "QUESTION_COVERAGE_TARGETS",
       "state": "historical",
-      "date": "2026-05-03",
-      "mdDate": "2026-05-03",
+      "date": "2026-05-05",
+      "mdDate": "2026-05-05",
       "reportVersion": "question-coverage-targets-v1",
       "type": "markdown+json",
       "title": "QUESTION_COVERAGE_TARGETS"
@@ -276,30 +295,30 @@
     {
       "id": "QUESTION_CURRICULUM_COVERAGE_REPORT",
       "state": "historical",
-      "date": "2026-05-02",
-      "mdDate": "2026-05-02",
+      "date": "2026-05-05",
+      "mdDate": "2026-05-05",
       "reportVersion": "curriculum-coverage-v1",
       "type": "markdown+json",
       "title": {
         "mc": {
-          "curatedMC": 635,
+          "curatedMC": 2998,
           "ignoredGeneratedMC": 0,
-          "curatedFill": 469,
+          "curatedFill": 1764,
           "ignoredGeneratedFill": 0
         },
         "activity": {
-          "trace": 335,
-          "build": 43,
-          "bug": 33
+          "trace": 578,
+          "build": 100,
+          "bug": 90
         },
-        "generatedAt": "2026-05-02",
-        "activityReportDate": "2026-05-02"
+        "generatedAt": "2026-05-05",
+        "activityReportDate": "2026-05-05"
       }
     },
     {
       "id": "QUESTION_QA_CHECKLIST",
       "state": "historical",
-      "date": "2026-04-30",
+      "date": "2026-05-05",
       "mdDate": "unknown",
       "reportVersion": "question-qa-checklist-v2",
       "type": "markdown+json",
@@ -307,9 +326,9 @@
     },
     {
       "id": "QUESTION_QUALITY_REPORT",
-      "state": "historical",
-      "date": "2026-04-30",
-      "mdDate": "2026-04-30",
+      "state": "active",
+      "date": "2026-05-07",
+      "mdDate": "2026-05-07",
       "reportVersion": "question-quality-v1",
       "type": "markdown+json",
       "title": "repo"
@@ -317,8 +336,8 @@
     {
       "id": "QUESTION_REMEDIATION_QUEUE",
       "state": "historical",
-      "date": "2026-04-28",
-      "mdDate": "2026-04-28",
+      "date": "2026-05-06",
+      "mdDate": "2026-05-06",
       "reportVersion": "question-remediation-v1",
       "type": "markdown+json",
       "title": "QUESTION_QUALITY_REPORT"
@@ -326,7 +345,7 @@
     {
       "id": "QUESTION_REUSE_AUDIT_REPORT",
       "state": "historical",
-      "date": "2026-04-29",
+      "date": "2026-05-05",
       "mdDate": "unknown",
       "reportVersion": "question-reuse-audit-v1",
       "type": "markdown+json",
@@ -335,8 +354,8 @@
     {
       "id": "REPORT_SOURCE_OF_TRUTH",
       "state": "active",
-      "date": "2026-05-04",
-      "mdDate": "2026-05-04",
+      "date": "2026-05-07",
+      "mdDate": "2026-05-07",
       "reportVersion": "report-source-of-truth-v1",
       "type": "markdown+json",
       "title": "scripts/report_source_of_truth.js"
@@ -406,6 +425,15 @@
         "data": "data/concept_videos.js",
         "scriptDoc": "NOTEBOOKLM_CONCEPT_CLIPS.md"
       }
+    },
+    {
+      "id": "WORLD_CLASS_MENU_AUDIT_REPORT",
+      "state": "active",
+      "date": "2026-05-07",
+      "mdDate": "2026-05-07",
+      "reportVersion": "world-class-menu-audit-v1",
+      "type": "markdown+json",
+      "title": "WORLD_CLASS_MENU_AUDIT_REPORT"
     }
   ]
 }

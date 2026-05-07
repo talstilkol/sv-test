@@ -1,13 +1,11 @@
 {
   "nodes": 450,
-  "edges": 565,
+  "edges": 566,
   "cycles": 0,
   "sampleCycles": [],
   "entries": 15,
-  "orphans": 1,
-  "sampleOrphans": [
-    "lesson_11::undefined"
-  ],
+  "orphans": 0,
+  "sampleOrphans": [],
   "unreachable": 0,
   "sampleUnreachable": [],
   "crossLessonForward": 0,

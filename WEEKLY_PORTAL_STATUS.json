@@ -1,0 +1,116 @@
+{
+  "reportVersion": "weekly-portal-status-v1",
+  "generatedAt": "2026-05-06T16:47:50.024Z",
+  "ready": true,
+  "summary": {
+    "portalScore": 100,
+    "portalGates": "31/31",
+    "systemHealthScore": 99.9,
+    "regressions": 0,
+    "qualityDebtItems": 8,
+    "remainingTime": "0 דק׳",
+    "taskPercent": "100%",
+    "timePercent": "100%",
+    "activeTask": "אין"
+  },
+  "remaining": {
+    "closedTasks": "11/11",
+    "taskPercent": "100%",
+    "timePercent": "100%",
+    "closedTime": "26 שעות 30 דק׳",
+    "remainingTime": "0 דק׳",
+    "totalTime": "26 שעות 30 דק׳",
+    "activeTask": "אין"
+  },
+  "regressions": [],
+  "qualityDebt": [
+    {
+      "area": "Master plan operational backlog",
+      "current": "8 real-open",
+      "target": "0 real-open items or explicit deferral evidence",
+      "source": "BRUTAL_MASTER_PLAN_AUDIT.json",
+      "nextAction": "Close or defer the 130 real-open items with evidence."
+    },
+    {
+      "area": "Legacy plan status drift",
+      "current": "5 active NOT DONE, 3 active PARTIAL; raw legacy 263 NOT DONE, 10 PARTIAL",
+      "target": "Active drift only; raw legacy marks remain traceable but not release-blocking after evidence classification",
+      "source": "BRUTAL_MASTER_PLAN_AUDIT.json",
+      "nextAction": "Work the 21 real-open items; preserve raw legacy counts for traceability until the old documents are manually rewritten."
+    },
+    {
+      "area": "Question quality notes",
+      "current": "0 notes, 0 active advisory, 534 deferred",
+      "target": "<250 active advisory now, deferred remains visible outside the Exam100 release path",
+      "source": "QUESTION_QUALITY_REPORT.json",
+      "nextAction": "Keep active advisory at zero and handle deferred non-exam-core hints/length balancing after the release-critical gates."
+    },
+    {
+      "area": "Exam-core question quality",
+      "current": "0 notes, 0 warnings",
+      "target": "0 exam-core notes/warnings/blockers",
+      "source": "QUESTION_QUALITY_REPORT.json",
+      "nextAction": "Keep exam-core at zero while editing non-core questions."
+    },
+    {
+      "area": "Distractor actionable quality",
+      "current": "104 / 2998 (3.5%)",
+      "target": "<10% actionable, then <5%",
+      "source": "DISTRACTOR_EXAM_GATE_REPORT.json",
+      "nextAction": "Reduce the remaining actionable distractor queue without changing verified exam-core answers."
+    },
+    {
+      "area": "Distractor advisory/raw debt",
+      "current": "0 advisory, 104 active raw (3.5%), 421 deferred",
+      "target": "Active raw <12%, advisory <250; deferred remains visible outside the Exam100 release path",
+      "source": "DISTRACTOR_EXAM_GATE_REPORT.json",
+      "nextAction": "Keep deferred non-exam length-only items visible and only promote them when they become exam-critical or user-facing blockers."
+    },
+    {
+      "area": "Manual review locked sections",
+      "current": "4 sections locked",
+      "target": "Manual source review completed, no invented code",
+      "source": "EXAM_TASK_BOARD_REPORT.json",
+      "nextAction": "Review the original source for the locked sections and only then unlock or keep locked."
+    },
+    {
+      "area": "Optional backlog in task board",
+      "current": "4 optional items",
+      "target": "Optional backlog reviewed after Exam100 release",
+      "source": "EXAM_TASK_BOARD_REPORT.json",
+      "nextAction": "Keep optional items non-blocking unless they become visible exam requirements."
+    }
+  ],
+  "sources": {
+    "portal": {
+      "path": "PORTAL_FULL_AUDIT_REPORT.json",
+      "available": true,
+      "error": null
+    },
+    "systemHealth": {
+      "path": "SYSTEM_HEALTH_REPORT.json",
+      "available": true,
+      "error": null
+    },
+    "questions": {
+      "path": "QUESTION_QUALITY_REPORT.json",
+      "available": true,
+      "error": null
+    },
+    "distractors": {
+      "path": "DISTRACTOR_EXAM_GATE_REPORT.json",
+      "available": true,
+      "error": null
+    },
+    "backlog": {
+      "path": "BRUTAL_MASTER_PLAN_AUDIT.json",
+      "available": true,
+      "error": null
+    },
+    "taskBoard": {
+      "path": "EXAM_TASK_BOARD_REPORT.json",
+      "available": true,
+      "error": null
+    }
+  }
+}

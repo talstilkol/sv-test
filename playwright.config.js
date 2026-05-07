@@ -14,6 +14,8 @@
 // and clicks every top tab, asserting no console errors.
 
 const { defineConfig } = require("@playwright/test");
+const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:8765";
+const useExistingServer = process.env.PLAYWRIGHT_USE_EXISTING_SERVER === "1";
 
 module.exports = defineConfig({
   testDir: "./tests/playwright",
@@ -24,17 +26,19 @@ module.exports = defineConfig({
   reporter: process.env.CI ? "github" : "list",
   timeout: 60000,
   use: {
-    baseURL: "http://localhost:8765",
+    baseURL,
     headless: true,
     viewport: { width: 1280, height: 800 },
     actionTimeout: 10000,
   },
-  webServer: {
-    command: "node server.js",
-    port: 8765,
-    timeout: 60000,
-    reuseExistingServer: !process.env.CI,
-  },
+  webServer: useExistingServer
+    ? undefined
+    : {
+        command: "node server.js",
+        port: 8765,
+        timeout: 60000,
+        reuseExistingServer: !process.env.CI,
+      },
   projects: [
     {
       name: "chromium",

@@ -1,0 +1,241 @@
+{
+  "successful_ge85": {
+    "count": 19,
+    "avg_final": 88.16,
+    "avg_text_length": 131.84,
+    "avg_task_ids": 1.42,
+    "avg_leaf_average": 94.79,
+    "top_keywords": [
+      [
+        "מערך",
+        5
+      ],
+      [
+        "פונקציה",
+        5
+      ],
+      [
+        "אינפוט",
+        3
+      ],
+      [
+        "GET",
+        2
+      ],
+      [
+        "שגיאה",
+        2
+      ],
+      [
+        "מטריצה",
+        1
+      ],
+      [
+        "כפתור",
+        1
+      ],
+      [
+        "POST",
+        1
+      ]
+    ],
+    "top_task_ids": [
+      [
+        "client_validation_rules",
+        8
+      ],
+      [
+        "js_algorithms",
+        5
+      ],
+      [
+        "client_form_inputs",
+        5
+      ],
+      [
+        "theory_explanation",
+        3
+      ],
+      [
+        "api_get_all",
+        2
+      ],
+      [
+        "alerts_error_handling",
+        2
+      ],
+      [
+        "node_file_io",
+        1
+      ],
+      [
+        "api_post_create",
+        1
+      ]
+    ],
+    "top_issues": []
+  },
+  "weak_lt85": {
+    "count": 54,
+    "avg_final": 57.98,
+    "avg_text_length": 187.72,
+    "avg_task_ids": 4.61,
+    "avg_leaf_average": 95.67,
+    "top_keywords": [
+      [
+        "כפתור",
+        13
+      ],
+      [
+        "שגיאה",
+        7
+      ],
+      [
+        "ערוץ",
+        7
+      ],
+      [
+        "POST",
+        6
+      ],
+      [
+        "alert",
+        6
+      ],
+      [
+        "DB",
+        5
+      ],
+      [
+        "מערך",
+        5
+      ],
+      [
+        "אינפוט",
+        5
+      ],
+      [
+        "select",
+        4
+      ],
+      [
+        "פונקציה",
+        4
+      ],
+      [
+        "GET",
+        4
+      ],
+      [
+        "PUT",
+        3
+      ]
+    ],
+    "top_task_ids": [
+      [
+        "client_form_inputs",
+        29
+      ],
+      [
+        "alerts_error_handling",
+        26
+      ],
+      [
+        "client_validation_rules",
+        26
+      ],
+      [
+        "client_navigation",
+        23
+      ],
+      [
+        "api_get_filtered",
+        21
+      ],
+      [
+        "server_html_route",
+        21
+      ],
+      [
+        "client_list_render",
+        19
+      ],
+      [
+        "api_post_create",
+        18
+      ],
+      [
+        "js_algorithms",
+        18
+      ],
+      [
+        "db_uniqueness",
+        16
+      ],
+      [
+        "question_scope_inherited",
+        14
+      ],
+      [
+        "api_get_all",
+        4
+      ]
+    ],
+    "top_issues": [
+      [
+        "missing expected task_ids: api_get_filtered",
+        6
+      ],
+      [
+        "missing expected task_ids: client_form_inputs",
+        4
+      ],
+      [
+        "missing expected task_ids: client_navigation",
+        3
+      ],
+      [
+        "missing expected task_ids: alerts_error_handling, api_get_filtered, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, js_algorithms, question_scope_inherited, server_html_route",
+        3
+      ],
+      [
+        "missing expected task_ids: question_scope_inherited",
+        2
+      ],
+      [
+        "missing expected task_ids: alerts_error_handling",
+        2
+      ],
+      [
+        "missing expected task_ids: alerts_error_handling, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, db_uniqueness, js_algorithms, question_scope_inherited, server_html_route",
+        2
+      ],
+      [
+        "missing expected task_ids: alerts_error_handling, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, js_algorithms, question_scope_inherited, server_html_route",
+        2
+      ],
+      [
+        "missing expected task_ids: client_navigation, server_html_route",
+        1
+      ],
+      [
+        "missing expected task_ids: api_get_all",
+        1
+      ],
+      [
+        "missing expected task_ids: oop_design",
+        1
+      ],
+      [
+        "model did not return parseable JSON",
+        1
+      ]
+    ]
+  },
+  "recommendations": [
+    "Use few-shot examples from successful_ge85 with similar text length and task count.",
+    "For weak sections with many expected task_ids, run two-stage decomposition before scoring.",
+    "For short weak sections, avoid inherited parent tasks unless the text is an explicit heading.",
+    "Add rejection sampling for sections with missing task_ids or invalid JSON."
+  ]
+}

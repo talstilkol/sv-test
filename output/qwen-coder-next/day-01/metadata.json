@@ -1,0 +1,15 @@
+{
+  "reportVersion": "qwen-training-runner-v1",
+  "model": "qwen3-coder-next:latest",
+  "day": 1,
+  "promptFile": "docs/qwen-coder-next-training/prompts/day-01-setup-login-register.md",
+  "outputDir": "output/qwen-coder-next/day-01",
+  "startedAt": "2026-05-05T07:44:56.983Z",
+  "endedAt": "2026-05-05T07:46:48.266Z",
+  "durationMs": 111283,
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "responseBytes": 16266,
+  "stderrBytes": 43384
+}

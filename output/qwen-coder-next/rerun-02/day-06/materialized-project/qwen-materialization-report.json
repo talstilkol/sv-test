@@ -1,0 +1,31 @@
+{
+  "reportVersion": "qwen-materializer-v1",
+  "response": "output/qwen-coder-next/rerun-02/day-07/qwen-response.md",
+  "outputDir": "output/qwen-coder-next/rerun-02/day-06/materialized-project",
+  "summary": {
+    "blocks": 3,
+    "written": 1,
+    "skipped": 2,
+    "uniqueFiles": 1,
+    "ready": true
+  },
+  "written": [
+    {
+      "index": 0,
+      "filePath": "client/index.html",
+      "bytes": 304
+    }
+  ],
+  "skipped": [
+    {
+      "index": 1,
+      "info": "bash",
+      "reason": "no-file-path"
+    },
+    {
+      "index": 2,
+      "info": "bash",
+      "reason": "no-file-path"
+    }
+  ]
+}

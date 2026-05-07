@@ -21,7 +21,7 @@ describe("settings tab consolidation", () => {
     expect(html).toContain('class="teacher-class-panel"');
     const welcomeBlock = html.slice(
       html.indexOf('id="welcome-screen"'),
-      html.indexOf("<!-- Settings View"),
+      html.indexOf('id="settings-view"'),
     );
     expect(welcomeBlock).not.toContain('id="btn-sync-config"');
     expect(welcomeBlock).not.toContain('class="teacher-class-panel"');

@@ -1,0 +1,15 @@
+{
+  "reportVersion": "qwen-training-runner-v1",
+  "model": "qwen3-coder-next:latest",
+  "day": 6,
+  "promptFile": "docs/qwen-coder-next-training/prompts/day-06-sv-library-simulation.md",
+  "outputDir": "output/qwen-coder-next/rerun-01/day-06",
+  "startedAt": "2026-05-05T08:01:24.074Z",
+  "endedAt": "2026-05-05T08:04:23.266Z",
+  "durationMs": 179192,
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "responseBytes": 23877,
+  "stderrBytes": 65188
+}

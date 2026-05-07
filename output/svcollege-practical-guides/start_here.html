@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>התחל כאן - בחירת מדריך SVCollege</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07111f; --panel:#101b2d; --ink:#f8fafc; --muted:#a8b3c7; --cyan:#22d3ee; --green:#86efac; --amber:#facc15; --red:#fb7185; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial, "Noto Sans Hebrew", sans-serif; color:var(--ink); background:radial-gradient(circle at top,#1e3a8a,var(--bg) 58%); line-height:1.65; }
+    main { max-width:1080px; margin:auto; padding:28px 18px 56px; }
+    .hero, .card, .rule { border:1px solid rgba(255,255,255,.12); border-radius:18px; background:rgba(16,27,45,.84); }
+    .hero { padding:28px; }
+    h1 { margin:0; font-size:clamp(2rem,5vw,4rem); color:var(--cyan); }
+    h2 { margin:0 0 8px; color:var(--green); }
+    h3 { margin:0 0 8px; color:var(--amber); }
+    p, li { color:var(--muted); }
+    nav { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+    a, button { display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:8px 13px; border:0; border-radius:999px; color:#04111f; background:var(--cyan); text-decoration:none; font-weight:900; cursor:pointer; }
+    button { background:var(--green); }
+    .guide-tree-nav { display:grid; gap:12px; margin-top:18px; padding:16px; border:1px solid rgba(34,211,238,.28); border-radius:16px; background:rgba(2,6,23,.44); }
+    .guide-tree-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .guide-tree-head strong { color:var(--ink); font-size:1.08rem; }
+    .guide-tree-head span { color:var(--muted); font-weight:800; }
+    .guide-tree-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .guide-tree-branch { border:1px solid rgba(255,255,255,.1); border-radius:14px; background:rgba(15,23,42,.72); overflow:hidden; }
+    .guide-tree-branch > summary { cursor:pointer; list-style:none; padding:12px 14px; color:var(--amber); font-weight:900; }
+    .guide-tree-branch > summary::-webkit-details-marker { display:none; }
+    .guide-tree-links { display:grid; gap:8px; padding:0 12px 12px; }
+    .guide-tree-links a { justify-content:space-between; border-radius:10px; background:rgba(34,211,238,.12); color:#dff7ff; border:1px solid rgba(34,211,238,.2); }
+    .guide-tree-links a.primary { background:var(--cyan); color:#03111f; }
+    .guide-tree-links a.warning { background:rgba(250,204,21,.16); color:#fef3c7; border-color:rgba(250,204,21,.28); }
+    .guide-tree-links a.low { background:rgba(148,163,184,.1); color:#cbd5e1; border-color:rgba(148,163,184,.18); }
+    .guide-tree-actions { display:flex; flex-wrap:wrap; gap:10px; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:18px; }
+    .card { padding:18px; display:grid; gap:10px; align-content:start; }
+    .heat { display:inline-flex; width:max-content; padding:4px 10px; border-radius:999px; background:rgba(250,204,21,.16); color:var(--amber); font-weight:900; }
+    .rule { margin-top:18px; padding:18px; border-color:rgba(251,113,133,.42); background:rgba(127,29,29,.22); }
+    @media (max-width:780px){ .grid,.guide-tree-grid{grid-template-columns:1fr;} }
+    @media print {
+      :root { color-scheme: light; }
+      body { background:#fff; color:#111827; }
+      main { max-width:none; padding:0; }
+      nav, button { display:none; }
+      .hero, .card, .rule { background:#fff; border-color:#cbd5e1; break-inside:avoid; }
+      p, li { color:#374151; }
+      h1 { color:#0e7490; }
+    }
+      .guide-tree-links a[aria-current="page"] { outline:3px solid var(--green); outline-offset:2px; background:var(--green); color:#03111f; }
+
+    /* Simple closed route: the only default navigation for the guide package. */
+
+    body.guide-simple-mode .guide-tree-nav,
+    body.guide-simple-mode .guide-tree-actions,
+    body.guide-simple-mode .grid,
+    body.guide-simple-mode .rule,
+    body.guide-simple-mode .sources,
+    body.guide-simple-mode .status-grid,
+    body.guide-simple-mode .tracker-shell,
+    body.guide-simple-mode .tracker-actions {
+      display:none !important;
+    }
+    body.guide-simple-mode a:not(.guide-arrow) {
+      pointer-events:none;
+      opacity:.45;
+      filter:grayscale(100%);
+      text-decoration:none;
+    }
+    body.guide-simple-mode .guide-tree-nav,
+    body.guide-simple-mode .grid[aria-label="שלושת המדריכים"] { display:none !important; }
+    .guide-simple-route { display:grid; gap:16px; margin:0 0 22px; padding:18px; border:1px solid rgba(34,211,238,.42); border-radius:18px; background:linear-gradient(135deg,rgba(8,47,73,.72),rgba(15,23,42,.9)); box-shadow:0 18px 50px rgba(0,0,0,.22); }
+    .guide-simple-top { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:14px; align-items:center; }
+    .guide-simple-kicker { color:var(--cyan); font-weight:900; letter-spacing:.02em; }
+    .guide-simple-title { margin:.1rem 0 0; color:var(--ink); font-size:clamp(1.35rem,3vw,2.15rem); line-height:1.18; }
+    .guide-simple-percent { display:grid; place-items:center; min-width:112px; min-height:92px; padding:10px; border:1px solid rgba(134,239,172,.42); border-radius:18px; background:rgba(20,83,45,.22); }
+    .guide-simple-percent strong { color:var(--green); font-size:2rem; line-height:1; }
+    .guide-simple-percent span { color:var(--muted); font-weight:800; font-size:.82rem; }
+    .guide-simple-bar { height:12px; overflow:hidden; border-radius:999px; background:rgba(2,6,23,.78); border:1px solid rgba(255,255,255,.09); }
+    .guide-simple-bar i { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--cyan),var(--green),var(--amber)); }
+    .guide-simple-map { display:grid; grid-template-columns:repeat(11,minmax(74px,1fr)); gap:8px; }
+    .guide-step { display:grid; gap:4px; min-height:74px; padding:9px 8px; border-radius:14px; border:1px solid rgba(148,163,184,.18); background:rgba(15,23,42,.72); color:var(--muted); text-align:center; align-content:center; }
+    .guide-step b { color:inherit; font-size:.82rem; }
+    .guide-step span { font-weight:900; font-size:.85rem; line-height:1.15; }
+    .guide-step.done { color:#bbf7d0; border-color:rgba(134,239,172,.42); background:rgba(20,83,45,.18); }
+    .guide-step.current { color:#03111f; border-color:rgba(134,239,172,.78); background:var(--green); box-shadow:0 0 0 3px rgba(134,239,172,.18); }
+    .guide-simple-current { display:grid; gap:5px; padding:12px 14px; border:1px solid rgba(34,211,238,.25); border-radius:14px; background:rgba(2,6,23,.42); }
+    .guide-simple-current strong { color:var(--ink); font-size:1.08rem; }
+    .guide-simple-current span { color:var(--muted); font-weight:800; }
+    .guide-simple-arrows { display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:center; }
+    .guide-arrow { min-height:54px; display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:16px; border:1px solid rgba(34,211,238,.36); background:rgba(34,211,238,.14); color:#dff7ff; text-decoration:none; font-weight:900; font-size:1.02rem; }
+    .guide-arrow.next { background:var(--cyan); color:#03111f; }
+    .guide-arrow.disabled { opacity:.42; cursor:not-allowed; background:rgba(148,163,184,.12); color:var(--muted); }
+    .guide-simple-arrows output { min-width:110px; text-align:center; color:var(--green); font-weight:900; font-size:1.2rem; }
+    @media (max-width:900px){ .guide-simple-map{grid-template-columns:repeat(4,minmax(0,1fr));} .guide-simple-top{grid-template-columns:1fr;} .guide-simple-percent{justify-items:start; place-items:start;} }
+    @media (max-width:560px){ .guide-simple-map{grid-template-columns:repeat(2,minmax(0,1fr));} .guide-simple-arrows{grid-template-columns:1fr;} .guide-simple-arrows output{order:-1; width:100%;} }
+    @media print { .guide-simple-route { display:none !important; } }
+
+</style>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='0f172a'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='30' fill='67e8f9' font-family='Arial,sans-serif'%3E100%3C/text%3E%3C/svg%3E">
+</head>
+<body class="guide-simple-mode">
+<main>
+<!-- simple-guide-route:start -->
+    <nav class="guide-simple-route" aria-label="מסלול פשוט עם שני חצים">
+      <div class="guide-simple-top">
+        <div>
+          <div class="guide-simple-kicker">תפריט פשוט - בלי בחירות באמצע</div>
+          <h2 class="guide-simple-title">אני לא יודע מאיפה להתחיל</h2>
+        </div>
+        <div class="guide-simple-percent" aria-label="אחוז התקדמות במסלול">
+          <strong data-route-percent>18%</strong>
+          <span data-route-step>שלב 2 מתוך 11</span>
+        </div>
+      </div>
+      <div class="guide-simple-bar" aria-hidden="true"><i data-route-bar style="width:18%"></i></div>
+      <div class="guide-simple-map" aria-label="מפת כל השלבים עד הסיום"><span class="guide-step done"><b>1/11</b><span>בית</span></span><span class="guide-step current" aria-current="step"><b>2/11</b><span>התחלה</span></span><span class="guide-step"><b>3/11</b><span>חירום</span></span><span class="guide-step"><b>4/11</b><span>תוכנית</span></span><span class="guide-step"><b>5/11</b><span>הבנה</span></span><span class="guide-step"><b>6/11</b><span>תרגול</span></span><span class="guide-step"><b>7/11</b><span>מבחן</span></span><span class="guide-step"><b>8/11</b><span>מסלול</span></span><span class="guide-step"><b>9/11</b><span>מעקב</span></span><span class="guide-step"><b>10/11</b><span>סטטוס</span></span><span class="guide-step"><b>11/11</b><span>סיום</span></span></div>
+      <div class="guide-simple-current"><strong>עכשיו עושים רק את זה:</strong><span>אני לא יודע מאיפה להתחיל. כדי לזוז במסלול משתמשים רק בחצים למטה.</span></div>
+      <div class="guide-simple-arrows" aria-label="חצים למסלול הסגור">
+        <a class="guide-arrow prev" href="./index.html" aria-label="חזור לשלב הקודם">← אחורה</a>
+        <output data-route-output>18%</output>
+        <a class="guide-arrow next" href="./one_page_exam_cheatsheet.html" aria-label="עבור לשלב הבא">קדימה →</a>
+      </div>
+    </nav>
+<!-- simple-guide-route:end -->
+
+  <section class="hero">
+    <span class="heat">התחל כאן</span>
+    <h1>איזה מדריך לפתוח עכשיו?</h1>
+    <p>אל תתחיל מכל החומר יחד. בחר מצב אחד, פתח מדריך אחד, וסגור Gate אחד לפני מעבר הלאה.</p>
+    <nav class="guide-tree-nav" aria-label="עץ ניווט לכל מדריכי ההכנה">
+      <div class="guide-tree-head">
+        <strong>עץ המסמכים שנוצרו</strong>
+        <span>פתח לפי מצב, לא לפי שם קובץ</span>
+      </div>
+      <div class="guide-tree-grid">
+          <details class="guide-tree-branch" open>
+            <summary>1. התחלה עכשיו</summary>
+            <div class="guide-tree-links">
+              <a href="./index.html">אינדקס כל המדריכים <span>בית</span></a>
+              <a class="primary" href="./start_here.html" aria-current="page">אני לא יודע מאיפה להתחיל <span>Heat 10</span></a>
+              <a class="warning" href="./one_page_exam_cheatsheet.html">כרטיס חירום למבחן <span>יום לפני/במבחן</span></a>
+              <a href="./forward_tasks_plan.html">תוכנית קדימה <span>54 משימות</span></a>
+            </div>
+          </details>
+          <details class="guide-tree-branch" open>
+            <summary>2. שלושת המדריכים המרכזיים</summary>
+            <div class="guide-tree-links">
+              <a href="./guide_01_ideas.html">מדריך 1 - הרעיון שמאחורי כל דבר <span>הבנה</span></a>
+              <a class="primary" href="./guide_02_homework_and_exam_drills.html">מדריך 2 - שיעורי בית ותרגילי מבחן <span>תרגול</span></a>
+              <a href="./guide_03_exam_day_runbook.html">מדריך 3 - מה עושים בזמן המבחן <span>Runbook</span></a>
+            </div>
+          </details>
+          <details class="guide-tree-branch" open>
+            <summary>3. מסלול ומעקב אישי</summary>
+            <div class="guide-tree-links">
+              <a href="./study_path_37h45.html">מסלול 100:20 שעות <span>תוכנית למידה</span></a>
+              <a href="./progress_tracker.html">מעקב התקדמות <span>שמירה מקומית</span></a>
+            </div>
+          </details>
+          <details class="guide-tree-branch">
+            <summary>4. הדפסה, סטטוס ומקורות</summary>
+            <div class="guide-tree-links">
+              <a href="./print_pack.html">גרסת הדפסה מאוחדת <span>Print</span></a>
+              <a href="./status.html">סטטוס החבילה <span>בדיקות</span></a>
+              <a class="low" href="./source_map.md">מפת מקורות <span>בקרה</span></a>
+              <a class="low" href="./README.md">README <span>שימוש</span></a>
+            </div>
+          </details>
+      </div>
+      <div class="guide-tree-actions">
+        <button class="print" type="button" onclick="window.print()">הדפס דף זה</button>
+      </div>
+    </nav>
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <span class="heat">Heat 10</span>
+      <h2>אני לא מבין את התמונה הגדולה</h2>
+      <p>פתח את מדריך 1. קרא רק: Full Stack, JavaScript Core, React, Backend/Mongo, TypeScript.</p>
+      <a href="./guide_01_ideas.html">פתח מדריך 1</a>
+    </article>
+    <article class="card">
+      <span class="heat">Heat 10</span>
+      <h2>אני צריך לדעת לפתור שיעורי בית</h2>
+      <p>פתח את מדריך 2. התחל ב-React Basics ואז עבור ל-Hooks/API, Budget TS, Express/Mongo ו-Next.js.</p>
+      <a href="./guide_02_homework_and_exam_drills.html">פתח מדריך 2</a>
+    </article>
+    <article class="card">
+      <span class="heat">Heat 9</span>
+      <h2>המבחן קרוב ואני צריך סדר</h2>
+      <p>פתח את מדריך 3. למד את חלוקת 4 השעות, סדר בניית פרויקט, ו-checklists להגשה.</p>
+      <a href="./guide_03_exam_day_runbook.html">פתח מדריך 3</a>
+    </article>
+    <article class="card">
+      <span class="heat">Heat 10</span>
+      <h2>המבחן היום או מחר</h2>
+      <p>פתח את כרטיס החירום. הוא נותן עמוד אחד עם מה לעשות עכשיו, איך לחלק זמן, ומה לא לשכוח בהגשה.</p>
+      <a href="./one_page_exam_cheatsheet.html">פתח כרטיס חירום</a>
+    </article>
+    <article class="card">
+      <span class="heat">Heat 8</span>
+      <h2>אני רוצה תוכנית יומית סגורה</h2>
+      <p>פתח את מסלול 100:20. הוא מפרק את הלמידה לאבחון בסיס, 7 ימים, Gate לכל יום, וצפייה ב-114 סרטונים לפי 30 דק׳ לסרטון.</p>
+      <a href="./study_path_37h45.html">פתח מסלול למידה</a>
+    </article>
+    <article class="card">
+      <span class="heat">Heat 9</span>
+      <h2>אני רוצה את כל המשימות שנשארו</h2>
+      <p>פתח את תוכנית קדימה. היא מציגה את כל 54 משימות הלמידה, זמני ביצוע ו-Gate מעבר לכל שלב.</p>
+      <a href="./forward_tasks_plan.html">פתח תוכנית קדימה</a>
+    </article>
+    <article class="card">
+      <span class="heat">Heat 7</span>
+      <h2>אני רוצה לסמן התקדמות</h2>
+      <p>פתח את דף המעקב. הוא שומר סימונים מקומית ומראה כמה זמן למידה נשאר.</p>
+      <a href="./progress_tracker.html">פתח מעקב</a>
+    </article>
+    <article class="card">
+      <span class="heat">Heat 6</span>
+      <h2>אני רוצה להדפיס הכול</h2>
+      <p>פתח את גרסת ההדפסה המאוחדת. היא מסדרת את שלושת המדריכים כרשימת עבודה קצרה.</p>
+      <a href="./print_pack.html">פתח Print Pack</a>
+    </article>
+  </section>
+
+  <section class="rule">
+    <h2>כלל מעבר</h2>
+    <ul>
+      <li>לא עוברים מדריך לפני שסיימת פעולה אחת מעשית.</li>
+      <li>לא לומדים AI/DevOps/Nest לפני Project 70, JS 20 ו-TS 10.</li>
+      <li>לא משתמשים בנתונים מומצאים.</li>
+      <li>צופים ב-114 הסרטונים לפי הלוח, אבל לא משתמשים בווידאו כמקור תוכן חדש בלי תמלול.</li>
+    </ul>
+  </section>
+</main>
+<script src="./guide_day_board.js"></script>
+</body>
+</html>

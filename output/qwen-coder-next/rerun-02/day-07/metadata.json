@@ -1,0 +1,15 @@
+{
+  "reportVersion": "qwen-training-runner-v1",
+  "model": "qwen3-coder-next:latest",
+  "day": 7,
+  "promptFile": "docs/qwen-coder-next-training/prompts/day-07-failure-repair.md",
+  "outputDir": "output/qwen-coder-next/rerun-02/day-07",
+  "startedAt": "2026-05-05T08:28:40.164Z",
+  "endedAt": "2026-05-05T08:38:01.682Z",
+  "durationMs": 561518,
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "responseBytes": 2011,
+  "stderrBytes": 219220
+}

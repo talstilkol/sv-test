@@ -1,0 +1,72 @@
+version: 5
+name: SVCollege Full-Stack Exam Rubric
+language:
+  explanation: Hebrew
+  code: English
+score_total: 100
+criteria:
+  correctness:
+    points: 45
+    description: The answer solves the requested task and the code can run with minimal fixes.
+  exam_standard:
+    points: 25
+    description: The answer follows SVCollege-specific traps and constraints.
+  explanation:
+    points: 15
+    description: Hebrew explanation is clear enough for a student to reproduce.
+  code_quality:
+    points: 10
+    description: Clean structure, meaningful names, no unnecessary complexity.
+  self_check:
+    points: 5
+    description: Includes a short sanity check or test idea.
+forbidden_patterns:
+  react:
+    - direct state mutation
+    - push/splice/sort on state array
+    - fetch in component body
+    - missing dependency array for one-time fetch
+    - missing cleanup for timer/subscription/event/SSE
+  javascript:
+    - var usage
+    - async forEach when awaiting work
+    - confusing reference and value
+    - ignoring thrown errors in required error-handling tasks
+  express:
+    - missing express.json when using req.body
+    - mixing req.params req.query req.body
+    - wrong status code for auth/errors
+    - no try/catch around async controller where needed
+  mongodb:
+    - confusing database collection document
+    - using id instead of _id without mapping
+    - missing schema/model when Mongoose is requested
+    - findByIdAndUpdate without runValidators true
+    - findByIdAndUpdate without new true when returning the updated document
+    - replacing Mongoose update options with route-only manual validation
+  typescript:
+    - unnecessary any
+    - missing prop/state types in React TS task
+    - missing return type where exam asks for it
+critical_failures:
+  mongodb:
+    - Any answer that analyzes or writes findByIdAndUpdate must mention runValidators true to enforce schema validators.
+    - Any answer that returns the updated document from findByIdAndUpdate must include new true.
+    - If the answer only says "add backend validation" but misses runValidators true, cap the Mongoose bypass score at 70.
+    - If the answer misses new true, it cannot receive 100 for PUT/Mongoose update.
+answer_template:
+  - הבנת הדרישה
+  - פתרון / קוד
+  - למה זה נכון למבחן
+  - מלכודת נפוצה
+  - בדיקת תקינות קצרה
+topic_weights:
+  js_basics: 10
+  js_arrays_objects_dom: 15
+  js_async_errors: 10
+  react_basics_state: 20
+  react_hooks_router_context: 15
+  express_backend: 15
+  mongodb_mongoose: 10
+  typescript_tailwind: 10
+  fullstack_projects: 20

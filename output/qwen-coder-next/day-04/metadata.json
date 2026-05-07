@@ -1,0 +1,15 @@
+{
+  "reportVersion": "qwen-training-runner-v1",
+  "model": "qwen3-coder-next:latest",
+  "day": 4,
+  "promptFile": "docs/qwen-coder-next-training/prompts/day-04-validation-stress.md",
+  "outputDir": "output/qwen-coder-next/day-04",
+  "startedAt": "2026-05-05T07:51:21.200Z",
+  "endedAt": "2026-05-05T07:53:30.426Z",
+  "durationMs": 129226,
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "responseBytes": 19113,
+  "stderrBytes": 53281
+}

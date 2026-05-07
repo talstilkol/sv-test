@@ -695,7 +695,7 @@ var EXTENDED_EXPLANATIONS = {
         "addPost היא פונקציה אופיינית באפליקציות בלוג/פוסטים — היא מקבלת תוכן (טקסט, תמונה) ומוסיפה אותו למערך הפוסטים ב-state. היא חייבת ליצור מערך חדש (immutable update) כדי ש-React יזהה את השינוי.",
       thinkingMethod: [
         "1. מאיפה הנתונים מגיעים? (טופס? API?)",
-        "2. איזה id ייחודי ייצור הפוסט החדש? (Date.now / crypto.randomUUID)",
+        "2. איזה id יציב ייצור הפוסט החדש? למשל hash/slug דטרמיניסטי מהטקסט והאינדקס",
         "3. איפה ה-state? (ב-App, או ב-Context)",
         "4. האם להוסיף בהתחלה (unshift) או בסוף (push)?",
         "5. האם לאפס את הטופס אחרי הוספה?",
@@ -705,8 +705,8 @@ var EXTENDED_EXPLANATIONS = {
       codeSnippets: [
         {
           title: "addPost בסיסי",
-          code: "function addPost(text) {\n  const newPost = { id: Date.now(), text };\n  setPosts([newPost, ...posts]);  // חדש בהתחלה\n}",
-          explanation: "יוצר פוסט עם id ייחודי ומוסיף אותו בראש המערך.",
+          code: "function addPost(text) {\n  const id = `post-${posts.length}-${text.trim().toLowerCase()}`;\n  const newPost = { id, text };\n  setPosts([newPost, ...posts]);  // חדש בהתחלה\n}",
+          explanation: "יוצר פוסט עם id יציב ודטרמיניסטי ומוסיף אותו בראש המערך.",
         },
       ],
       codeBreakdowns: [
@@ -1499,7 +1499,7 @@ var EXTENDED_EXPLANATIONS = {
       codeSnippets: [
         {
           title: "AddPost בסיסי",
-          code: "function AddPost({ onAdd }) {\n  const [text, setText] = useState('');\n  return (\n    <form onSubmit={e => { e.preventDefault(); onAdd({ id: Date.now(), text }); setText(''); }}>\n      <input value={text} onChange={e => setText(e.target.value)} />\n      <button>הוסף</button>\n    </form>\n  );\n}",
+          code: "function AddPost({ onAdd, nextIndex }) {\n  const [text, setText] = useState('');\n  return (\n    <form onSubmit={e => { e.preventDefault(); onAdd({ id: `post-${nextIndex}-${text.trim().toLowerCase()}`, text }); setText(''); }}>\n      <input value={text} onChange={e => setText(e.target.value)} />\n      <button>הוסף</button>\n    </form>\n  );\n}",
           explanation: "טופס controlled. בשליחה — קורא ל-onAdd עם פוסט חדש ומאפס.",
         },
       ],
@@ -2596,19 +2596,19 @@ var EXTENDED_EXPLANATIONS = {
       codeSnippets: [
         {
           title: "add + delete",
-          code: "function add(movie) { setMovies([...movies, { id: Date.now(), ...movie }]); }\nfunction del(id) { setMovies(movies.filter(m => m.id !== id)); }",
+          code: "function add(movie) { setMovies(prev => [...prev, { id: `movie-${prev.length}-${movie.title.trim().toLowerCase()}`, ...movie }]); }\nfunction del(id) { setMovies(movies.filter(m => m.id !== id)); }",
           explanation: "שתי פונקציות מינימליות, immutable.",
         },
       ],
       codeBreakdowns: [
         {
-          code: "setMovies([...movies, { id: Date.now(), ...movie }])",
+          code: "setMovies(prev => [...prev, { id: `movie-${prev.length}-${movie.title.trim().toLowerCase()}`, ...movie }])",
           parts: [
             { piece: "[...movies, ...]", role: "מערך חדש עם הקיימים + פריט נוסף." },
-            { piece: "id: Date.now()", role: "id ייחודי — timestamp." },
+            { piece: "id: `movie-${prev.length}-${movie.title.trim().toLowerCase()}`", role: "id יציב ודטרמיניסטי מהתוכן והאינדקס." },
             { piece: "...movie", role: "spread של שאר השדות מהאובייקט שנשלח." },
           ],
-          summary: "מוסיף פריט חדש עם id אוטומטי, שומר על immutability.",
+          summary: "מוסיף פריט חדש עם id יציב, שומר על immutability.",
         },
       ],
     },

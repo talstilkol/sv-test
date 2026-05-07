@@ -26,6 +26,10 @@ function addCheck(checks, id, label, passed, detail) {
   });
 }
 
+function hasCurrentCacheVersion(sw) {
+  return /const CACHE_VERSION = "lumen-v2\.4\.[^"]+"/.test(sw);
+}
+
 function buildReport() {
   const html = read("index.html");
   const app = read("app.js");
@@ -128,9 +132,10 @@ function buildReport() {
     checks,
     "offline-shell-updated",
     "Current app/cache shell includes the latest museum access assets",
-    html.includes("app.js?v=cleanup-shards-v105") &&
-      html.includes("style.css?v=concept-sprint-v69") &&
-      read("service-worker.js").includes('const CACHE_VERSION = "lumen-v2.4.141-cluster-engine"') &&
+    html.includes("app.js?v=homework-exam-mode-v6") &&
+      html.includes("style.css?v=homework-exam-mode-v19") &&
+      html.includes("src/views/homework-exam-mode-view.js?v=homework-exam-mode-view-v18") &&
+      hasCurrentCacheVersion(read("service-worker.js")) &&
       css.includes(".museum-access-gate") &&
       css.includes(".xp-access-panel"),
     "The offline shell must reference the current app/css versions and access-gate styles.",

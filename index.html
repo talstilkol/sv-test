@@ -1,1648 +1,1515 @@
 <!doctype html>
 <html lang="he" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LumenPortal — סיכום חומרי הלימוד המלא ב-6 רמות</title>
-    <meta name="description" content="פורטל לימוד Full-Stack מלא: כל שיעור מוסבר ב-6 רמות — מסבתא ועד פרופסור, עם בלוקי קוד, הסברי עומק ושאלונים." />
-    <!-- Content Security Policy. script-src is strict 'self' — no inline JS
-         allowed. style-src keeps 'unsafe-inline' for legacy inline style="..."
-         attributes (z-index, display:none) used throughout the SPA; converting
-         those to classes is on the tech-debt backlog. No third-party scripts
-         permitted. Google Fonts is the only external origin.
-
-         NOTE: `frame-ancestors` is intentionally NOT in this meta tag because
-         browsers ignore it when delivered via <meta>. Production deployment
-         should set the equivalent header at the host:
-            Content-Security-Policy: frame-ancestors 'none'
-            X-Frame-Options: DENY
-         Either prevents clickjacking via iframe embedding. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; form-action 'self'; base-uri 'self';" />
-    <script src="src/boot/standalone-museum.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css?v=concept-sprint-v69" />
-    <!-- P1.3 — PWA -->
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236366f1'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' fill='white' font-family='Arial,sans-serif'%3EL%3C/text%3E%3C/svg%3E" />
-    <meta name="theme-color" content="#6366f1" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="LumenPortal" />
-  </head>
-  <body>
-    <div class="app-container">
-      <!-- UX 2026-05-02: Thin always-visible achievements rail above the menu, collapsible. -->
-      <details id="achievements-rail-wrap" class="achievements-rail-wrap" open>
-        <summary class="achievements-rail-summary" aria-label="סרגל הישגים — לחץ לקיפול">
-          <span class="ach-rail-toggle" aria-hidden="true">▾</span>
-          <span class="ach-rail-mini" id="ach-rail-mini" aria-hidden="true">📊</span>
-        </summary>
-        <div id="achievements-rail" class="achievements-rail" role="status" aria-live="polite" aria-label="סרגל הישגים">
-          <!-- 2026-05-04: Removed duplicate Back/Home nav buttons. The site-trail-nav
-               below has the same buttons but with smarter in-app history (siteNavigationStack
-               vs naïve window.history.back). Achievements rail now focuses on stats only. -->
-          <!-- UX 2026-05-02: Student name + XP + performance summary -->
-          <span class="ach-rail-item ach-student" title="הפרופיל הפעיל">
-            <span class="ach-icon">👤</span>
-            <span class="ach-value" id="ach-student-name">תלמיד</span>
-          </span>
-          <span class="ach-rail-item ach-xp" title="נקודות ניסיון שצברת">
-            <span class="ach-icon">⚡</span>
-            <span class="ach-label">XP</span>
-            <span class="ach-value" id="ach-xp-value">0</span>
-          </span>
-          <span class="ach-rail-item ach-perf" title="ביצועים כלליים — ממוצע רמת מושגים">
-            <span class="ach-icon">📈</span>
-            <span class="ach-label">ביצועים</span>
-            <span class="ach-value" id="ach-perf-value">0%</span>
-          </span>
-          <span class="ach-rail-divider" aria-hidden="true"></span>
-          <span class="ach-rail-item ach-passed" title="כמה מושגים עברת (רמה 5+) מתוך כל המושגים">
-            <span class="ach-icon">✅</span>
-            <span class="ach-label">עברתי</span>
-            <span class="ach-value" id="ach-passed-value">0/0</span>
-          </span>
-          <span class="ach-rail-item ach-mastered" title="כמה מושגים בקיא (רמה 7) מתוך כל המושגים">
-            <span class="ach-icon">🏆</span>
-            <span class="ach-label">בקיא</span>
-            <span class="ach-value" id="ach-mastered-value">0/0</span>
-          </span>
-          <span class="ach-rail-item ach-pocket" title="כמה מושגים שמורים בכיס שלך">
-            <span class="ach-icon">📌</span>
-            <span class="ach-label">בכיס</span>
-            <span class="ach-value" id="ach-pocket-value">0</span>
-          </span>
-        </div>
-      </details>
-      <!-- UX 2026-05-02: Left-side action bar — 3 buttons (settings/view/pocket).
-           Replaces top control menu and scattered left-side buttons. -->
-      <div class="left-action-bar" id="left-action-bar" role="toolbar" aria-label="פעולות מהירות">
-        <details class="lab-menu" id="lab-settings">
-          <summary class="lab-summary" aria-label="הגדרות"><span class="lab-icon" aria-hidden="true">⚙️</span><span class="lab-label">הגדרות</span></summary>
-          <div class="lab-popup">
-            <button class="lab-action" data-lab-trigger="pwa-install-btn"><span aria-hidden="true">⬇️</span> התקן את האפליקציה</button>
-            <button class="lab-action" data-lab-trigger="theme-toggle"><span aria-hidden="true">🌗</span> החלף תצוגה (כהה/בהיר)</button>
-          </div>
-        </details>
-        <details class="lab-menu" id="lab-view">
-          <summary class="lab-summary" aria-label="תצוגה"><span class="lab-icon" aria-hidden="true">👁️</span><span class="lab-label">תצוגה</span></summary>
-          <div class="lab-popup">
-            <button class="lab-action" data-lab-trigger="global-print-btn"><span aria-hidden="true">📄</span> ייצוא ל-PDF</button>
-            <button class="lab-action" data-lab-trigger="sidebar-collapse-btn"><span aria-hidden="true">⇥</span> קפל תפריט ימני</button>
-            <button class="lab-action" data-lab-trigger="top-chrome-collapse-btn"><span aria-hidden="true">⇧</span> קפל אזור עליון</button>
-            <button class="lab-action" data-lab-trigger="chrome-collapse-both-btn"><span aria-hidden="true">⇲</span> קפל שניהם</button>
-          </div>
-        </details>
-        <button class="lab-direct" id="lab-pocket-btn" data-lab-trigger="pocket-fab" aria-label="פתח את הכיס שלי">
-          <span class="lab-icon" aria-hidden="true">📌</span>
-          <span class="lab-label">הכיס שלי</span>
-        </button>
-      </div>
-      <details class="chrome-control-menu" id="chrome-control-menu" hidden>
-        <summary aria-label="פתח תפריט שליטה בתצוגה">שליטה</summary>
-        <div class="chrome-control-panel" role="group" aria-label="שליטה בתצוגה ובתפריטים">
-          <!-- UX 2026-05-02: 3 buttons only — collapse right, collapse top, collapse both -->
-          <button class="sidebar-collapse-btn" id="sidebar-collapse-btn" type="button" aria-label="קפל תפריט ימני" aria-pressed="false" title="קפל תפריט ימני">
-            <span class="sidebar-collapse-icon" aria-hidden="true">⇥</span>
-            <span class="sidebar-collapse-label">קפל ימין</span>
-          </button>
-          <button class="top-chrome-collapse-btn" id="top-chrome-collapse-btn" type="button" aria-label="קפל תפריט עליון" aria-pressed="false" title="קפל תפריט עליון">
-            <span class="top-chrome-collapse-icon" aria-hidden="true">⇧</span>
-            <span class="top-chrome-collapse-label">קפל עליון</span>
-          </button>
-          <button class="chrome-collapse-both-btn" id="chrome-collapse-both-btn" type="button" aria-label="קפל את שני התפריטים ביחד" aria-pressed="false" title="קפל את שני התפריטים ביחד (ימין + עליון)">
-            <span aria-hidden="true">⇲</span>
-            <span>קפל שניהם</span>
-          </button>
-          <!-- Hidden focus-mode buttons preserved so keyboard shortcuts still work -->
-          <button class="focus-mode-toggle" id="focus-mode-toggle" type="button" aria-label="הפעל מצב פוקוס ללמידה במסך מלא" aria-pressed="false" hidden>פוקוס</button>
-          <button class="focus-top-toggle" id="focus-top-toggle" type="button" aria-label="קפל את כל האזור העליון במצב פוקוס" aria-pressed="false" hidden>עליון</button>
-          <button class="focus-side-toggle" id="focus-side-toggle" type="button" aria-label="פתח עץ ניווט במצב פוקוס" aria-expanded="false" hidden>תוכן</button>
-          <button class="support-report-menu-btn" id="support-report-btn" type="button" aria-label="פתח דיווח באג עם הקשר מסך" hidden>דווח באג</button>
-        </div>
-      </details>
-
-      <!-- Sidebar Navigation -->
-      <nav class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-          <button class="sidebar-brand-home" id="brand-home-btn" type="button" aria-label="חזרה לעמוד הבית">
-            <span class="brand-main">Lumen</span><span class="brand-sub">Portal</span>
-          </button>
-          <p>מאסטר בפיתוח Full-Stack</p>
-          <section class="local-profile-panel" aria-label="פרופיל תלמיד מקומי">
-            <div class="local-profile-row">
-              <label for="local-profile-select">תלמיד</label>
-              <select id="local-profile-select" aria-label="בחר תלמיד מקומי"></select>
-            </div>
-            <div class="local-profile-create">
-              <input id="local-profile-name" type="text" autocomplete="off" placeholder="שם תלמיד חדש" aria-label="שם תלמיד חדש" />
-              <button id="local-profile-create" type="button" aria-label="צור תלמיד מקומי ללא סיסמה">צור</button>
-            </div>
-            <div class="local-profile-status" id="local-profile-status">שמירה מקומית ללא סיסמה</div>
-          </section>
-        </div>
-
-        <div class="sidebar-search">
-          <input type="text" id="search-input" aria-label="חיפוש מושג או שיעור" placeholder="🔍 חיפוש מושג או שיעור..." />
-        </div>
-
-        <div class="sidebar-scroll">
-          <!-- UX 2026-05-02: side menu = simple tree only. Search/header/footer removed. -->
-          <section class="sidebar-context-tree" id="sidebar-context-tree" aria-label="עץ תוכן">
-            <div id="sidebar-context-body" class="sidebar-context-body"></div>
-          </section>
-
-          <details class="sidebar-lessons-tree" open>
-            <summary>כל השיעורים</summary>
-            <div class="lessons-list" id="lessons-nav">
-              <!-- Lessons will be dynamically injected here -->
-            </div>
-          </details>
-        </div>
-
-        <!-- Hidden but kept for compatibility: header/count/search/progress refs -->
-        <strong id="sidebar-context-title" hidden>תוכן עניינים</strong>
-        <span id="sidebar-context-count" hidden></span>
-        <input type="text" id="sidebar-context-search" aria-label="חיפוש בעץ ההקשר" hidden />
-        <div id="global-progress" hidden></div>
-        <div id="progress-text" hidden></div>
-      </nav>
-
-      <!-- Context tree — changes per tab / lesson (simple tree, no extras) -->
-      <aside class="context-tree-panel" id="context-tree-panel" aria-label="תת תפריט עץ">
-        <div id="context-tree-body" class="context-tree-body"></div>
-        <!-- Hidden header/search refs preserved for code compatibility -->
-        <strong id="context-tree-title" hidden>עץ ניווט</strong>
-        <span id="context-tree-count" hidden></span>
-        <input type="text" id="context-tree-search" hidden aria-label="חיפוש בעץ הניווט" placeholder="🔎 חיפוש בענף..." />
-      </aside>
-
-      <!-- Mobile Menu Toggle -->
-      <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="פתח/סגור תפריט שיעורים" aria-expanded="false">☰</button>
-
-      <!-- P1.2.4 — Theme toggle (Light/Dark/Auto) -->
-      <button class="theme-toggle-btn" id="theme-toggle" aria-label="החלף בין מצב כהה לבהיר" title="החלף תצוגה (כהה/בהיר/אוטומטי)">
-        <span aria-hidden="true">🌗</span>
-      </button>
-
-      <button class="pwa-install-btn" id="pwa-install-btn" type="button" aria-label="התקן את האפליקציה" title="התקנת האפליקציה (PWA)" hidden>
-        <span class="emoji" aria-hidden="true">⬇️</span>
-        <span class="lbl">התקן</span>
-      </button>
-
-      <!-- Global Print-to-PDF (works in every view) -->
-      <button class="global-print-btn" id="global-print-btn" aria-label="שמור את הדף כ-PDF" title="שמור את הדף הנוכחי כ-PDF צבעוני (Ctrl+P) — כל יחידת תוכן בעמוד נפרד">
-        <span class="emoji" aria-hidden="true">📄</span><span class="lbl">PDF</span>
-      </button>
-
-      <!-- 📖 Glossary modal -->
-      <div class="modal-overlay" id="glossary-modal" hidden>
-        <div class="modal-card">
-          <div class="modal-head">
-            <strong>📖 מילון מונחים</strong>
-            <button class="modal-close" id="glossary-close" aria-label="סגור">✕</button>
-          </div>
-          <input type="text" class="modal-search" id="glossary-search" aria-label="חיפוש במילון" placeholder="🔍 חפש מונח (use, async, JSX, סטייט...)" />
-          <div class="modal-body" id="glossary-list"></div>
-        </div>
-      </div>
-
-      <!-- 📅 Daily Reflection modal -->
-      <div class="modal-overlay" id="reflection-modal" hidden>
-        <div class="modal-card">
-          <div class="modal-head">
-            <strong>📅 רפלקציה יומית</strong>
-            <button class="modal-close" id="reflection-close" aria-label="סגור">✕</button>
-          </div>
-          <div class="modal-body">
-            <p>סכם את הלמידה שלך היום בכמה שורות. זה עוזר לזיכרון ארוך-טווח.</p>
-            <label class="reflect-label">📚 מה למדתי היום?</label>
-            <textarea id="reflect-learned" aria-label="מה למדתי היום" rows="3" placeholder="לדוגמה: הבנתי איך useEffect עובד עם deps array..."></textarea>
-            <label class="reflect-label">🤔 מה היה קשה?</label>
-            <textarea id="reflect-stuck" aria-label="במה נתקעתי" rows="2" placeholder="באיזה מושג נתקעת הכי הרבה?"></textarea>
-            <label class="reflect-label">📊 רמת ביטחון (0-100%)</label>
-            <input type="range" id="reflect-confidence" aria-label="רמת ביטחון בלמידה (0-100)" min="0" max="100" value="50" />
-            <div class="reflect-confidence-out" id="reflect-confidence-out">50%</div>
-            <button class="km-btn-mini primary" id="reflect-save">💾 שמור</button>
-            <div class="reflect-history" id="reflect-history"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pocket Concept Card — floating saved concepts panel -->
-      <button class="pocket-fab" id="pocket-fab" aria-label="פתח/סגור Pocket Concept Card" aria-expanded="false" title="📌 הכיס שלך — מושגים שסימנת לחזרה מהירה">
-        <span aria-hidden="true">📌</span>
-        <span class="pocket-count" id="pocket-count">0</span>
-      </button>
-      <div class="pocket-panel" id="pocket-panel" hidden>
-        <div class="pocket-head">
-          <strong>📌 הכיס שלך</strong>
-          <button class="pocket-close" id="pocket-close" aria-label="סגור">✕</button>
-        </div>
-        <p class="pocket-empty" id="pocket-empty">עוד לא שמרת מושגים. לחץ 📌 על כל מושג כדי לשמור לכיס.</p>
-        <div class="pocket-list" id="pocket-list"></div>
-      </div>
-
-      <!-- P1.5.0 — View Mode (toggles + concept jumper + presets) -->
-      <button class="view-mode-fab" id="view-mode-fab" aria-label="פתח/סגור תפריט תצוגה" aria-expanded="false" title="מצב תצוגה — הצג/הסתר חלקים + קפוץ למושג">
-        <span aria-hidden="true">👁️</span>
-      </button>
-      <div class="view-mode-panel" id="view-mode-panel" hidden>
-        <div class="vm-head">
-          <strong>👁️ מצב תצוגה</strong>
-          <button class="vm-close" id="vm-close" aria-label="סגור">✕</button>
-        </div>
-        <div class="vm-section">
-          <div class="vm-label">📍 קפוץ למושג</div>
-          <select class="vm-jumper" id="vm-concept-jumper" aria-label="קפוץ למושג בשיעור הנוכחי">
-            <option value="">בחר מושג...</option>
-          </select>
-        </div>
-        <div class="vm-section" id="vm-concept-parts-section" hidden>
-          <div class="vm-label">🧩 חלקי המושג</div>
-          <div class="vm-concept-parts" id="vm-concept-parts" aria-label="חלקי המושג הנוכחי"></div>
-        </div>
-        <div class="vm-section">
-          <div class="vm-label">🎬 מצבים מהירים</div>
-          <div class="vm-presets">
-            <button class="vm-preset" data-preset="all">🔍 הכל</button>
-            <button class="vm-preset" data-preset="concepts-only">📚 רק מושגים</button>
-            <button class="vm-preset" data-preset="quiz-only">📝 רק שאלות</button>
-            <button class="vm-preset" data-preset="exam-prep">🎯 חזרה לבחינה</button>
-            <button class="vm-preset" data-preset="bug-hunt-only">🐛 רק ציד באגים</button>
-          </div>
-        </div>
-        <div class="vm-section">
-          <div class="vm-label">⚙️ הצג / הסתר חלקים</div>
-          <div class="vm-toggles">
-            <button class="vm-toggle" data-vm="quiz" aria-pressed="true">📝 שאלון בסוף שיעור</button>
-            <button class="vm-toggle" data-vm="code" aria-pressed="true">💻 קוד</button>
-            <button class="vm-toggle" data-vm="code-explanation" aria-pressed="true">📝 הערות לקוד</button>
-            <button class="vm-toggle" data-vm="explanation" aria-pressed="true">📖 הסבר רגיל</button>
-            <button class="vm-toggle" data-vm="deep-dive" aria-pressed="true">🌊 Deep Dive</button>
-            <button class="vm-toggle" data-vm="extended" aria-pressed="true">📚 הסבר מורחב</button>
-            <button class="vm-toggle" data-vm="extras" aria-pressed="true">🎁 Extras / אנלוגיות</button>
-            <button class="vm-toggle" data-vm="anti-patterns" aria-pressed="true">🔁 דפוסי-נגד</button>
-            <button class="vm-toggle" data-vm="bug-hunt" aria-pressed="true">🐛 ציד באגים</button>
-            <button class="vm-toggle" data-vm="war-stories" aria-pressed="true">📚 סיפורי שטח</button>
-            <button class="vm-toggle" data-vm="mnemonic" aria-pressed="true">🧠 מנמוניקה</button>
-            <button class="vm-toggle" data-vm="comparisons" aria-pressed="true">⚖️ השוואות</button>
-            <button class="vm-toggle" data-vm="concept-comic" aria-pressed="true">🎞️ קומיקס מושג</button>
-            <button class="vm-toggle" data-vm="concept-video" aria-pressed="true">🎥 קליפ מושג</button>
-            <button class="vm-toggle" data-vm="stage-zero" aria-pressed="true">🧯 שבור ואז תקן</button>
-            <button class="vm-toggle" data-vm="memory-palace" aria-pressed="true">🏛️ ארמון זיכרון</button>
-            <button class="vm-toggle" data-vm="problem-first" aria-pressed="true">🧩 בעיה קודם</button>
-            <button class="vm-toggle" data-vm="actions" aria-pressed="true">✓ כפתורי פעולה</button>
-          </div>
-        </div>
-        <div class="vm-section">
-          <div class="vm-label">📖 כלים נוספים</div>
-          <div class="vm-toggles">
-            <button class="vm-tool-btn" id="vm-open-glossary">📖 מילון מונחים (Hebrew/English)</button>
-            <button class="vm-tool-btn" id="vm-open-reflection">📅 רפלקציה יומית</button>
-            <button class="vm-tool-btn" id="vm-open-history">⏰ מכונת זמן — סקירת התקדמות</button>
-            <button class="vm-tool-btn" id="vm-open-reverse">🔀 שאלה הפוכה — תזהה מושג מההגדרה</button>
-          </div>
-        </div>
-
-      <nav class="page-scroll-rail" id="page-scroll-rail" aria-label="ניווט מהיר בתוך הדף" hidden></nav>
-
-        <!-- Reverse Q&A modal -->
-        <div class="modal-overlay" id="reverse-modal" hidden style="z-index:701">
-          <div class="modal-card">
-            <div class="modal-head">
-              <strong>🔀 שאלה הפוכה</strong>
-              <button class="modal-close" id="reverse-close" aria-label="סגור">✕</button>
-            </div>
-            <div class="modal-body" id="reverse-body"></div>
-          </div>
-        </div>
-
-        <!-- Time Machine modal -->
-        <div class="modal-overlay" id="time-machine-modal" hidden style="z-index:702">
-          <div class="modal-card time-machine-card">
-            <div class="modal-head">
-              <strong>⏰ מכונת זמן — סקירת התקדמות</strong>
-              <button class="modal-close" id="time-machine-close" aria-label="סגור">✕</button>
-            </div>
-            <div class="modal-body" id="time-machine-body"></div>
-          </div>
-        </div>
-        <div class="vm-section">
-          <div class="vm-label">♿ נגישות</div>
-          <div class="vm-toggles">
-            <button class="vm-a11y-toggle" data-a11y="dyslexia-font" aria-pressed="false">🔠 גופן לדיסלקטיים (OpenDyslexic)</button>
-            <button class="vm-a11y-toggle" data-a11y="reduce-motion" aria-pressed="false">🎚️ הפחת אנימציות</button>
-            <button class="vm-a11y-toggle" data-a11y="high-contrast" aria-pressed="false">🌗 ניגודיות גבוהה</button>
-            <button class="vm-a11y-toggle" data-a11y="large-text" aria-pressed="false">🔍 טקסט גדול (+15%)</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main Content Area -->
-      <main class="main-content">
-        <nav class="top-tabs-bar" id="top-tabs-bar">
-          <!-- W12 — Streak + XP widgets, compact in the existing top toolbar -->
-          <div class="w12-top-bar" id="w12-top-bar" aria-label="רצף, XP והישגים">
-            <span id="streak-widget" class="streak-widget" title="רצף לימוד" hidden>🔥 0</span>
-            <span id="xp-widget" class="xp-widget" title="נקודות ניסיון">⭐ 0 XP</span>
-            <button id="open-achievements" class="w12-btn" title="הישגים" aria-label="פתח הישגים">🏆</button>
-            <button id="btn-open-reflection" class="w12-btn" title="רפלקציה יומית" aria-label="פתח רפלקציה יומית">📝</button>
-          </div>
-          <button class="top-tab" id="open-guide" data-tab="guide" aria-label="פתח מדריך מקוצר">
-            <span class="emoji" aria-hidden="true">📖</span><span>מדריך מקוצר</span>
-          </button>
-          <button class="top-tab" id="open-grandma-knowledge" data-tab="grandma-knowledge" aria-label="פתח ידע מורחב ברמת סבתא">
-            <span class="emoji" aria-hidden="true">👵</span><span>ידע מורחב ברמת סבתא</span>
-          </button>
-          <button class="top-tab" id="open-programming-basics" data-tab="programming-basics" aria-label="פתח אבני בסיס של התכנות">
-            <span class="emoji" aria-hidden="true">🧱</span><span>אבני בסיס</span>
-          </button>
-          <button class="top-tab" id="open-programming-principles" data-tab="programming-principles" aria-label="פתח עקרונות יסוד לתכנות טוב">
-            <span class="emoji" aria-hidden="true">🧭</span><span>עקרונות יסוד</span>
-          </button>
-          <button class="top-tab" id="open-programming-museum" data-tab="programming-museum" aria-label="פתח מוזיאון היסטורי לשפות התכנות">
-            <span class="emoji" aria-hidden="true">🏛️</span><span>מוזיאון</span>
-          </button>
-          <button class="top-tab" id="open-language-tools" data-tab="language-tools" aria-label="פתח השוואת שפות וכלי פיתוח">
-            <span class="emoji" aria-hidden="true">🧮</span><span>שפות וכלים</span>
-          </button>
-          <button class="top-tab" id="open-reward-store" data-tab="reward-store" aria-label="פתח חנות חוויות עם מטבעות למידה">
-            <span class="emoji" aria-hidden="true">🛒</span><span>חנות</span>
-          </button>
-          <button class="top-tab" id="open-flashcards" data-tab="flashcards" aria-label="פתח כרטיסיות חזרה לפי SRS">
-            <span class="emoji" aria-hidden="true">🃏</span><span>כרטיסיות</span>
-          </button>
-          <button class="top-tab" id="open-codeblocks" data-tab="codeblocks" aria-label="פתח בלוקי קוד">
-            <span class="emoji" aria-hidden="true">💻</span><span>בלוקי קוד</span>
-          </button>
-          <button class="top-tab" id="open-trace" data-tab="trace" aria-label="פתח Code Trace — חיזוי פלט קוד">
-            <span class="emoji" aria-hidden="true">🔬</span><span>Code Trace</span>
-          </button>
-          <button class="top-tab" id="open-mock-exam" data-tab="mock-exam" aria-label="פתח מבחן מדומה — Mock Exam עם טיימר">
-            <span class="emoji" aria-hidden="true">📝</span><span>מבחן מדומה</span>
-          </button>
-          <button class="top-tab" id="open-gap-matrix" data-tab="gap-matrix" aria-label="פתח מטריצת פערים — ראה היכן יש חולשות">
-            <span class="emoji" aria-hidden="true">📊</span><span>פערים</span>
-          </button>
-          <button class="top-tab" id="open-learning-evidence" data-tab="learning-evidence" aria-label="פתח ראיות למידה — מדדי שיפור ותיקון טעויות">
-            <span class="emoji" aria-hidden="true">📈</span><span>ראיות למידה</span>
-          </button>
-          <button class="top-tab" id="open-capstones" data-tab="capstones" aria-label="פתח מסלול פרויקטי גמר">
-            <span class="emoji" aria-hidden="true">🏗️</span><span>פרויקטים</span>
-          </button>
-          <button class="top-tab" id="open-blueprints" data-tab="blueprints" aria-label="פתח יישור SVCollege">
-            <span class="emoji" aria-hidden="true">🧾</span><span>יישור SVCollege</span>
-          </button>
-          <button class="top-tab" id="open-comparator" data-tab="comparator" aria-label="פתח השוואות — Side-by-Side">
-            <span class="emoji" aria-hidden="true">⚖️</span><span>השוואות</span>
-          </button>
-          <button class="top-tab" id="open-trainer" data-tab="trainer" aria-label="פתח מאמן ידע + דוח">
-            <span class="emoji" aria-hidden="true">🧠</span><span>מאמן ידע + דוח</span>
-          </button>
-          <button class="top-tab" id="open-concept-sprint" data-tab="concept-sprint" aria-label="פתח מושגים נטו — אבחון מהיר לפי מושג">
-            <span class="emoji" aria-hidden="true">⚡</span><span>מושגים נטו</span>
-          </button>
-          <button class="top-tab" id="open-study-mode" data-tab="study" aria-label="פתח מצב לימוד מותאם">
-            <span class="emoji" aria-hidden="true">🎯</span><span>לימוד מותאם</span>
-          </button>
-          <button class="top-tab" id="open-knowledge-map" data-tab="km" aria-label="פתח מפת ידע">
-            <span class="emoji" aria-hidden="true">🗺️</span><span>מפת ידע</span>
-          </button>
-          <button class="top-tab" id="open-code-anatomy" data-tab="anatomy" aria-label="פתח פירוק קוד">
-            <span class="emoji" aria-hidden="true">📐</span><span>פירוק קוד</span>
-          </button>
-          <button class="top-tab" id="open-settings" data-tab="settings" aria-label="פתח הגדרות מערכת">
-            <span class="emoji" aria-hidden="true">⚙️</span><span>הגדרות</span>
-          </button>
-          <button class="top-tab top-tab-home" id="open-home" data-tab="home" aria-label="חזרה לעמוד הבית — רשימת שיעורים">
-            <span class="emoji" aria-hidden="true">🏠</span><span>שיעורים</span>
-          </button>
-        </nav>
-
-        <nav class="site-trail-nav" id="site-trail-nav" aria-label="עץ אתר, חזרה ובית">
-          <button class="site-nav-btn" id="site-back-btn" type="button" aria-label="חזור אחורה במסלול הלמידה">
-            <span aria-hidden="true">←</span><span>חזרה</span>
-          </button>
-          <button class="site-nav-btn" id="site-home-btn" type="button" aria-label="חזרה לעמוד הבית">
-            <span aria-hidden="true">⌂</span><span>בית</span>
-          </button>
-          <details class="site-map-menu" id="site-map-menu">
-            <summary aria-label="פתח עץ אתר">עץ אתר</summary>
-            <div class="site-map-menu-body" id="site-map-menu-body" role="group" aria-label="עץ אתר"></div>
-          </details>
-          <details class="site-when-menu" id="portal-decision-menu">
-            <summary aria-label="פתח מתי להשתמש">מתי להשתמש</summary>
-            <section
-              class="portal-decision-aid glass-panel"
-              id="portal-decision-aid"
-              aria-label="מבט מהיר והשוואות לפי טאב"
-              hidden
-            ></section>
-          </details>
-          <div class="site-breadcrumb" id="site-breadcrumb" aria-live="polite">בית</div>
-        </nav>
-
-        <header class="top-nav">
-          <div class="lesson-title-area">
-            <h1 id="current-lesson-title">ברוכים הבאים לפורטל המומחים</h1>
-            <p id="current-lesson-desc">
-              בחרו שיעור מהתפריט כדי להתחיל ללמוד. כל מושג מוסבר ב-6 רמות שונות — מסבתא ועד פרופסור!
-            </p>
-          </div>
-        </header>
-
-        <div class="content-wrapper" id="content-container">
-          <!-- Welcome Screen -->
-          <div class="welcome-screen welcome-screen-clean" id="welcome-screen">
-            <!-- UX 2026-05-02: Clean focused home — resume CTA is the primary action -->
-            <div class="welcome-hero glass-panel">
-              <div class="welcome-icon">📚</div>
-              <h3>ברוך שובך</h3>
-              <p class="welcome-subtitle">המשך בדיוק מהמקום שעצרת. השמירה האוטומטית פועלת ברקע.</p>
-
-              <button class="welcome-resume-btn" id="welcome-resume-btn" type="button" hidden>
-                <span class="welcome-resume-icon" aria-hidden="true">▶</span>
-                <span class="welcome-resume-label">המשך מהשיעור האחרון</span>
-                <span class="welcome-resume-target" id="welcome-resume-target"></span>
-              </button>
-
-              <div class="welcome-stats">
-                <div class="stat-item">
-                  <span class="stat-num" id="stat-lessons">0</span>
-                  <span class="stat-label">שיעורים</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-num" id="stat-concepts">0</span>
-                  <span class="stat-label">מושגים</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-num" id="stat-bank">0</span>
-                  <span class="stat-label">שאלות במאגר</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Quick-action grid: 4 main entry points only -->
-            <div class="welcome-quick-actions">
-              <button class="wqa-card" data-tour-action="open-trainer">
-                <span class="wqa-icon" aria-hidden="true">🧠</span>
-                <span class="wqa-title">מאמן הידע</span>
-                <span class="wqa-desc">שאלות אדפטיביות לפי הרמה שלי</span>
-              </button>
-              <button class="wqa-card" data-tour-action="open-study">
-                <span class="wqa-icon" aria-hidden="true">🎯</span>
-                <span class="wqa-title">לימוד מותאם</span>
-                <span class="wqa-desc">תור מושגים חלשים — חיזוק ממוקד</span>
-              </button>
-              <button class="wqa-card" data-tour-action="open-map">
-                <span class="wqa-icon" aria-hidden="true">🗺️</span>
-                <span class="wqa-title">מפת ידע</span>
-                <span class="wqa-desc">כל המושגים בעין אחת</span>
-              </button>
-              <button class="wqa-card" data-tour-action="open-mock-exam">
-                <span class="wqa-icon" aria-hidden="true">📝</span>
-                <span class="wqa-title">מבחן מדומה</span>
-                <span class="wqa-desc">סימולציה עם טיימר</span>
-              </button>
-            </div>
-
-            <!-- Compact exam cockpit — collapsed by default -->
-            <details class="welcome-cockpit-wrap">
-              <summary class="welcome-cockpit-summary">📊 סטטוס מבחן — לחץ להרחבה</summary>
-              <section class="exam-cockpit glass-panel" id="exam-cockpit" aria-label="Exam Cockpit">
-                <div class="exam-cockpit-empty">טוען תמונת מצב למבחן...</div>
-              </section>
-            </details>
-          </div>
-
-          <!-- Settings View — default display, sync, export/import and advanced ops -->
-          <div class="settings-view" id="settings-view" hidden>
-            <div class="settings-shell glass-panel">
-              <div class="settings-head">
-                <div>
-                  <h2>⚙️ הגדרות</h2>
-                  <p>מרכז אחד להגדרות תצוגה, נגישות, סנכרון, ייבוא/ייצוא וכלי ניהול. ברירות המחדל נשמרות לפתיחה הבאה של המערכת.</p>
-                </div>
-                <div class="settings-status" id="settings-save-status" aria-live="polite">הגדרות מקומיות נשמרות בדפדפן.</div>
-              </div>
-
-              <div class="settings-grid">
-                <section class="settings-card" aria-label="ברירות מחדל לתצוגה">
-                  <h3>תצוגה וברירת מחדל</h3>
-                  <label for="settings-theme-default">ערכת צבע</label>
-                  <select id="settings-theme-default" data-settings-select="theme">
-                    <option value="auto">אוטומטי לפי המערכת</option>
-                    <option value="dark">כהה</option>
-                    <option value="light">בהיר</option>
-                  </select>
-                  <label for="settings-lesson-mode-default">מצב שיעור ברירת מחדל</label>
-                  <select id="settings-lesson-mode-default" data-settings-select="lesson-mode">
-                    <option value="one-line">שורה אחת</option>
-                    <option value="full">מלא</option>
-                    <option value="comparisons">השוואות</option>
-                  </select>
-                  <div class="settings-toggle-list">
-                    <button type="button" class="settings-toggle" data-settings-toggle="learning-focus">מצב פוקוס כברירת מחדל</button>
-                    <button type="button" class="settings-toggle" data-settings-toggle="top-chrome-collapsed">תפריט עליון מקופל בפתיחה</button>
-                    <button type="button" class="settings-toggle" data-settings-toggle="right-sidebar-collapsed">תפריט ימני מקופל בפתיחה</button>
-                    <button type="button" class="settings-toggle" data-settings-toggle="focus-top-collapsed">עליון מקופל בתוך פוקוס</button>
-                  </div>
-                </section>
-
-                <section class="settings-card" aria-label="הגדרות נגישות">
-                  <h3>נגישות</h3>
-                  <div class="settings-toggle-list">
-                    <button type="button" class="settings-toggle" data-settings-a11y="dyslexia-font">גופן לדיסלקטיים</button>
-                    <button type="button" class="settings-toggle" data-settings-a11y="reduce-motion">הפחת אנימציות</button>
-                    <button type="button" class="settings-toggle" data-settings-a11y="high-contrast">ניגודיות גבוהה</button>
-                    <button type="button" class="settings-toggle" data-settings-a11y="large-text">טקסט גדול</button>
-                  </div>
-                </section>
-
-                <section class="settings-card settings-card-wide" aria-label="חלקים גלויים בשיעור">
-                  <h3>חלקים גלויים בשיעור</h3>
-                  <div class="settings-toggle-list dense">
-                    <button type="button" class="settings-toggle" data-settings-vm="quiz">שאלון</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="code">קוד</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="code-explanation">הערות לקוד</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="explanation">הסבר רגיל</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="deep-dive">Deep Dive</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="extended">הסבר מורחב</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="extras">Extras / אנלוגיות</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="anti-patterns">דפוסי נגד</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="bug-hunt">ציד באגים</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="war-stories">סיפורי שטח</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="mnemonic">מנמוניקה</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="comparisons">השוואות</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="concept-comic">קומיקס מושג</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="concept-video">קליפ מושג</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="stage-zero">שבור ואז תקן</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="memory-palace">ארמון זיכרון</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="problem-first">בעיה קודם</button>
-                    <button type="button" class="settings-toggle" data-settings-vm="actions">כפתורי פעולה</button>
-                  </div>
-                </section>
-
-                <section class="settings-card settings-card-wide" aria-label="סנכרון וייצוא">
-                  <h3>סנכרון, ייבוא וייצוא</h3>
-                  <div class="progress-sync-row">
-                    <button class="km-btn-mini" id="btn-export-progress" title="ייצא את כל ההתקדמות שלך לקובץ JSON">⬇️ ייצוא התקדמות</button>
-                    <button class="km-btn-mini" id="btn-import-progress" title="ייבא קובץ התקדמות JSON שייצאת בעבר">⬆️ ייבוא התקדמות</button>
-                    <button class="km-btn-mini" id="btn-sync-config" title="הגדר Supabase URL, anon key ו-access token אמיתיים">הגדר Sync</button>
-                    <button class="km-btn-mini" id="btn-sync-now" title="סנכרן לפי last-write-wins בין הדפדפן ל-Supabase">סנכרן עכשיו</button>
-                    <button class="km-btn-mini" id="btn-sync-pull" title="משוך את snapshot ההתקדמות האחרון מ-Supabase">משוך</button>
-                    <button class="km-btn-mini" id="btn-sync-push" title="העלה את snapshot ההתקדמות המקומי ל-Supabase">העלה</button>
-                  </div>
-                  <div class="progress-sync-status" id="progress-sync-status" aria-live="polite">Sync לא מוגדר</div>
-                  <div class="progress-sync-privacy-note">
-                    Sync הוא אופציונלי: access token נשמר רק ב-sessionStorage, אין credentials מוטמעים, וקונפליקט מוכרע לפי last-write-wins.
-                  </div>
-                </section>
-
-                <section class="settings-card settings-card-wide" aria-label="ניהול מתקדם">
-                  <h3>ניהול מתקדם</h3>
-                  <details class="teacher-class-panel">
-                    <summary>ניהול כיתה למורה</summary>
-                    <div class="teacher-class-form">
-                      <label for="teacher-class-name">שם כיתה</label>
-                      <input id="teacher-class-name" type="text" autocomplete="off" />
-                      <label for="teacher-course-key">קורס</label>
-                      <input id="teacher-course-key" type="text" value="svcollege_fullstack_ai" autocomplete="off" />
-                      <button class="km-btn-mini" id="btn-create-class" type="button">צור כיתה</button>
-                    </div>
-                    <div class="teacher-class-status" id="teacher-class-status" aria-live="polite">נדרשים credentials אמיתיים של Supabase.</div>
-                    <div class="teacher-student-list">
-                      <label for="teacher-class-id">Class ID</label>
-                      <input id="teacher-class-id" type="text" autocomplete="off" />
-                      <button class="km-btn-mini" id="btn-load-class-students" type="button">טען תלמידים</button>
-                      <div class="teacher-student-status" id="teacher-student-status" aria-live="polite">לא נטענו תלמידים.</div>
-                      <label for="teacher-student-csv">CSV תלמידים</label>
-                      <input id="teacher-student-csv" type="file" accept=".csv,text/csv" />
-                      <button class="km-btn-mini" id="btn-import-class-students" type="button">ייבא CSV</button>
-                      <div class="teacher-bulk-status" id="teacher-bulk-status" aria-live="polite">לא בוצע ייבוא CSV.</div>
-                      <div class="teacher-student-table-wrap">
-                        <table class="teacher-student-table" aria-label="תלמידי כיתה">
-                          <thead><tr><th>תלמיד</th><th>סטטוס</th><th>הצטרפות</th><th>פעילות אחרונה</th></tr></thead>
-                          <tbody id="teacher-student-table-body"><tr><td colspan="4">אין נתונים טעונים.</td></tr></tbody>
-                        </table>
-                      </div>
-                      <button class="km-btn-mini" id="btn-load-concept-heatmap" type="button">טען Heatmap</button>
-                      <div class="teacher-heatmap-status" id="teacher-heatmap-status" aria-live="polite">לא נטען heatmap.</div>
-                      <div class="teacher-heatmap-wrap">
-                        <table class="teacher-heatmap-table" aria-label="Heatmap שליטה לפי מושג ותלמיד">
-                          <thead id="teacher-heatmap-head"><tr><th>מושג</th></tr></thead>
-                          <tbody id="teacher-heatmap-body"><tr><td>אין נתוני mastery טעונים.</td></tr></tbody>
-                        </table>
-                      </div>
-                      <button class="km-btn-mini" id="btn-export-teacher-lite" type="button">ייצא Teacher Lite</button>
-                      <div class="teacher-export-status" id="teacher-export-status" aria-live="polite">אין ייצוא כיתה מוכן.</div>
-                      <button class="km-btn-mini" id="btn-load-risk-alerts" type="button">טען סיכונים</button>
-                      <div class="teacher-risk-status" id="teacher-risk-status" aria-live="polite">לא נטענו סיכונים.</div>
-                      <div class="teacher-risk-list" id="teacher-risk-list" aria-label="התראות סיכון לכיתה"><div class="teacher-risk-empty">אין נתוני סיכון טעונים.</div></div>
-                      <div class="teacher-assignment-form">
-                        <label for="teacher-assignment-title">משימה</label>
-                        <input id="teacher-assignment-title" type="text" autocomplete="off" />
-                        <label for="teacher-assignment-type">סוג</label>
-                        <select id="teacher-assignment-type">
-                          <option value="concept_practice">תרגול מושג</option>
-                          <option value="mock_exam">מבחן מדומה</option>
-                          <option value="code_task">משימת קוד</option>
-                          <option value="reading">קריאה</option>
-                        </select>
-                        <label for="teacher-assignment-concept">מושג יעד</label>
-                        <input id="teacher-assignment-concept" type="text" autocomplete="off" />
-                        <label for="teacher-assignment-due">תאריך יעד</label>
-                        <input id="teacher-assignment-due" type="datetime-local" />
-                        <button class="km-btn-mini" id="btn-create-assignment" type="button">צור משימה</button>
-                        <button class="km-btn-mini" id="btn-load-assignments" type="button">טען משימות</button>
-                      </div>
-                      <div class="teacher-assignment-status" id="teacher-assignment-status" aria-live="polite">לא נטענו משימות.</div>
-                      <div class="teacher-assignment-list" id="teacher-assignment-list" aria-label="משימות כיתה"><div class="teacher-assignment-empty">אין משימות טעונות.</div></div>
-                    </div>
-                  </details>
-
-                  <details class="community-discussion-panel">
-                    <summary>דיונים לפי מושג</summary>
-                    <div class="community-discussion-form">
-                      <label for="community-concept-key">Concept key</label>
-                      <input id="community-concept-key" type="text" autocomplete="off" />
-                      <label for="community-thread-title">כותרת</label>
-                      <input id="community-thread-title" type="text" autocomplete="off" />
-                      <label for="community-thread-body">הודעה ראשונה</label>
-                      <textarea id="community-thread-body" rows="3"></textarea>
-                      <button class="km-btn-mini" id="btn-create-concept-thread" type="button">צור דיון</button>
-                      <button class="km-btn-mini" id="btn-load-concept-threads" type="button">טען דיונים</button>
-                    </div>
-                    <div class="community-discussion-status" id="community-discussion-status" aria-live="polite">לא נטענו דיונים.</div>
-                    <div class="community-thread-list" id="community-thread-list" aria-label="דיונים לפי מושג"><div class="community-thread-empty">אין דיונים טעונים.</div></div>
-                    <div class="community-reputation-panel" aria-label="Community reputation">
-                      <button class="km-btn-mini" id="btn-load-community-reputation" type="button">טען מוניטין</button>
-                      <div class="community-reputation-status" id="community-reputation-status" aria-live="polite">לא נטען מוניטין.</div>
-                      <div class="community-reputation-list" id="community-reputation-list" aria-label="טבלת מוניטין"><div class="community-reputation-empty">אין נתוני מוניטין טעונים.</div></div>
-                    </div>
-                    <div class="community-moderation-panel" aria-label="Community moderation">
-                      <button class="km-btn-mini" id="btn-load-moderation-reports" type="button">טען דיווחים</button>
-                      <div class="community-moderation-status" id="community-moderation-status" aria-live="polite">לא נטענו דיווחי moderation.</div>
-                      <div class="community-moderation-list" id="community-moderation-list" aria-label="דיווחי קהילה"><div class="community-moderation-empty">אין דיווחים טעונים.</div></div>
-                    </div>
-                  </details>
-
-                  <details class="peer-review-panel">
-                    <summary>Peer Code Review</summary>
-                    <div class="peer-review-form">
-                      <label for="peer-review-concept-key">Concept key</label>
-                      <input id="peer-review-concept-key" type="text" autocomplete="off" />
-                      <label for="peer-review-level">רמה</label>
-                      <select id="peer-review-level">
-                        <option value="beginner">beginner</option>
-                        <option value="intermediate">intermediate</option>
-                        <option value="advanced">advanced</option>
-                      </select>
-                      <label for="peer-review-solution">פתרון</label>
-                      <textarea id="peer-review-solution" rows="4"></textarea>
-                      <button class="km-btn-mini" id="btn-submit-peer-solution" type="button">שלח פתרון</button>
-                      <button class="km-btn-mini" id="btn-claim-peer-review" type="button">קבל Review</button>
-                    </div>
-                    <div class="peer-review-status" id="peer-review-status" aria-live="polite">לא נטען peer review.</div>
-                    <div class="peer-review-match" id="peer-review-match" aria-label="Peer review match"><div class="peer-review-empty">אין match פעיל.</div></div>
-                    <div class="peer-review-template">
-                      <label for="peer-review-match-id">Match ID</label>
-                      <input id="peer-review-match-id" type="text" autocomplete="off" />
-                      <label for="peer-review-correctness">Correctness</label>
-                      <select id="peer-review-correctness"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
-                      <label for="peer-review-clarity">Clarity</label>
-                      <select id="peer-review-clarity"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
-                      <label for="peer-review-strengths">מה עובד</label>
-                      <textarea id="peer-review-strengths" rows="2"></textarea>
-                      <label for="peer-review-improvements">מה לשפר</label>
-                      <textarea id="peer-review-improvements" rows="2"></textarea>
-                      <button class="km-btn-mini" id="btn-submit-peer-review" type="button">שלח Review</button>
-                    </div>
-                  </details>
-
-                  <details class="mentor-matching-panel">
-                    <summary>Mentor Matching</summary>
-                    <div class="mentor-matching-form">
-                      <label for="mentor-concept-key">Concept key</label>
-                      <input id="mentor-concept-key" type="text" autocomplete="off" />
-                      <button class="km-btn-mini" id="btn-load-mentor-eligibility" type="button">בדוק Eligibility</button>
-                      <button class="km-btn-mini" id="btn-register-mentor" type="button">הירשם כמנטור</button>
-                      <button class="km-btn-mini" id="btn-request-mentor" type="button">בקש מנטור</button>
-                      <label for="mentor-match-id">Match ID</label>
-                      <input id="mentor-match-id" type="text" autocomplete="off" />
-                      <label for="mentor-message-body">הודעה</label>
-                      <textarea id="mentor-message-body" rows="2"></textarea>
-                      <button class="km-btn-mini" id="btn-send-mentor-message" type="button">שלח הודעה</button>
-                      <button class="km-btn-mini" id="btn-load-mentor-messages" type="button">טען Chat</button>
-                      <label for="mentor-rating-score">Rating</label>
-                      <select id="mentor-rating-score"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
-                      <label for="mentor-rating-feedback">Feedback</label>
-                      <textarea id="mentor-rating-feedback" rows="2"></textarea>
-                      <button class="km-btn-mini" id="btn-rate-mentor" type="button">דרג מנטור</button>
-                    </div>
-                    <div class="mentor-matching-status" id="mentor-matching-status" aria-live="polite">לא נטען mentor matching.</div>
-                    <div class="mentor-match-summary" id="mentor-match-summary" aria-label="Mentor match summary"><div class="mentor-match-empty">אין match פעיל.</div></div>
-                    <div class="mentor-message-list" id="mentor-message-list" aria-label="Mentor messages"><div class="mentor-message-empty">אין הודעות טעונות.</div></div>
-                  </details>
-                </section>
-              </div>
-            </div>
-          </div>
-
-          <!-- Programming Basics View -->
-          <div class="programming-basics-view" id="programming-basics-view" hidden>
-            <div class="pb-hero glass-panel">
-              <div>
-                <h2>🧱 אבני הבסיס של התכנות</h2>
-                <p>
-                  מסלול קצר שמראה איך כמעט כל דבר בקוד נבנה מערכים פשוטים:
-                  ערך, משתנה, תנאי, מערך ופונקציה. המטרה היא להבין את ההבדלים
-                  ולא רק לזכור מילים.
-                </p>
-              </div>
-              <div class="pb-hero-badge">0 → value → variable → if → function → app</div>
-            </div>
-            <div id="programming-basics-content"></div>
-          </div>
-
-          <!-- Programming Principles View -->
-          <div class="programming-principles-view" id="programming-principles-view" hidden>
-            <div class="pb-hero glass-panel">
-              <div>
-                <h2>🧭 עקרונות היסוד של תכנות טוב</h2>
-                <p>
-                  השכבה שמחברת בין ידיעת syntax לבין כתיבת קוד שאפשר להבין,
-                  לבדוק, לשנות ולהריץ שוב באותה תוצאה.
-                </p>
-              </div>
-              <div class="pb-hero-badge">same input → same output → predictable software</div>
-            </div>
-            <div id="programming-principles-content"></div>
-          </div>
-
-          <!-- Standalone Programming Language Museum View -->
-          <div class="programming-museum-view" id="programming-museum-view" hidden>
-            <div id="programming-museum-content"></div>
-          </div>
-
-          <!-- Language & Development Tools Comparison View -->
-          <div class="language-tools-view" id="language-tools-view" hidden>
-            <div class="lt-hero glass-panel">
-              <div>
-                <h2>🧮 השוואת שפות וכלי פיתוח</h2>
-                <p>
-                  טבלה ממוקדת לבחירת שפה, framework, runtime וכלי עבודה לפי תחום:
-                  Frontend, Full-Stack, Backend, מערכות, מובייל וכלי פיתוח.
-                </p>
-              </div>
-              <div class="lt-hero-badge">language → runtime → framework → tooling → product</div>
-            </div>
-            <div id="language-tools-content"></div>
-          </div>
-
-          <!-- Knowledge Map View -->
-          <div class="knowledge-map" id="knowledge-map-view" hidden>
-            <div class="km-header glass-panel">
-              <div class="km-title">
-                <h2>🗺️ מפת הידע האישית שלך</h2>
-                <p>🔒 <strong>הרמות נעולות</strong> — לכל מושג ציון מ-1 עד 7. <strong>👵 רמה 1</strong> = ברירת מחדל, <strong>🧒 2</strong> = השלמת רמת סבתא, <strong>🪖 3</strong> = ילד, <strong>🎓 4</strong> = חייל, <strong>💻 5</strong> = סטודנט, <strong>🔬 6</strong> = ג'וניור, <strong class="km-v">🏆 7</strong> = פרופסור (מאסטר). כדי לעלות רמה — חובה לענות נכון על <strong>שאלה אמריקנית</strong> וגם על <strong>השלמת קוד</strong> ברמה הנוכחית.</p>
-              </div>
-              <div class="km-stats">
-                <div class="km-stat km-stat-total"><span class="n" id="km-total">0</span><span>סה"כ מושגים</span></div>
-                <div class="km-stat km-stat-v"><span class="n" id="km-known">0</span><span>🏆 מאסטר (רמה 7)</span></div>
-                <div class="km-stat km-stat-x"><span class="n" id="km-unknown">0</span><span>⚠️ חלשים (רמה 1-2)</span></div>
-                <div class="km-stat km-stat-pending"><span class="n" id="km-pending">0</span><span>❓ לא נבחנו</span></div>
-              </div>
-              <div class="km-mastery-bar">
-                <div class="km-mastery-track">
-                  <div class="km-mastery-fill" id="km-mastery-fill"></div>
-                </div>
-                <div class="km-mastery-text" id="km-mastery-text">רמת שליטה: 0%</div>
-              </div>
-              <div class="km-toolbar">
-                <input type="text" id="km-search" aria-label="חיפוש מושג במפת ידע" placeholder="🔍 חיפוש מושג..." />
-                <select id="km-filter" aria-label="סינון מפת ידע">
-                  <option value="all">הצג הכל</option>
-                  <option value="unknown">רק חלשים (רמה 1-2)</option>
-                  <option value="known">רק מאסטר (רמה 7)</option>
-                  <option value="pending">רק לא נבחנו</option>
-                </select>
-                <select id="km-groupby" title="קבץ את המפה לפי שיעור או נושא">
-                  <option value="topic">📂 קבץ לפי נושא</option>
-                  <option value="lesson">📚 קבץ לפי שיעור</option>
-                </select>
-                <button class="km-btn-mini" id="km-go-trainer">🧠 לאימון במאמן הידע</button>
-                <button class="km-btn-mini danger" id="km-reset">🔄 איפוס מלא (ציונים + סטטוסים)</button>
-              </div>
-              <div class="km-graph-panel" id="km-graph-panel">
-                <div class="km-graph-head">
-                  <div>
-                    <strong>🕸️ גרף תלות מושגים</strong>
-                    <span id="km-graph-summary" class="km-graph-summary"></span>
-                  </div>
-                  <div class="km-graph-tools">
-                    <select id="km-graph-focus" aria-label="בחר מושג להתמקדות בגרף">
-                      <option value="">כל הגרף</option>
-                    </select>
-                    <button class="km-btn-mini" id="km-graph-reset">איפוס גרף</button>
-                  </div>
-                </div>
-                <div class="km-graph-canvas" id="km-graph-canvas" role="img" aria-label="גרף תלות בין מושגים"></div>
-              </div>
-            </div>
-            <div class="km-lessons" id="km-lessons-container"></div>
-          </div>
-
-          <!-- Study Mode View (Adaptive) -->
-          <div class="study-mode" id="study-mode-view" hidden>
-            <div class="study-header glass-panel">
-              <h2>🎯 לימוד מותאם — חיזוק החולשות שלך</h2>
-              <p id="study-subtitle">המערכת תעביר אותך על המושגים שסימנת כחלשים, אחד אחרי השני.</p>
-              <div class="study-progress-line">
-                <span id="study-progress-text">0 / 0</span>
-                <div class="study-progress-track"><div class="study-progress-fill" id="study-progress-fill"></div></div>
-              </div>
-            </div>
-            <div class="study-card-container glass-panel" id="study-card-container">
-              <!-- Active study card injected here -->
-            </div>
-          </div>
-
-          <!-- Trainer View (Adaptive Quiz + Live Scorecard) -->
-          <div class="trainer-view" id="trainer-view" hidden>
-            <div class="trainer-dashboard glass-panel">
-              <div class="trainer-dash-head">
-                <h2>🧠 מאמן הידע — דוח רמות חי</h2>
-                <p>לכל מושג רמה בין 1 ל-7. כדי לעלות רמה: ענה נכון על <strong>🅰️ שאלה אמריקנית</strong> וגם על <strong>✍️ השלמת קוד</strong> ברמה הנוכחית. רמות: 👵 1 → 🧒 2 → 🪖 3 → 🎓 4 → 💻 5 → 🔬 6 → 🏆 7.</p>
-              </div>
-              <div class="trainer-summary">
-                <div class="t-stat t-stat-asked"><span class="n" id="t-asked">0</span><span>שאלות שנענו</span></div>
-                <div class="t-stat t-stat-correct"><span class="n" id="t-correct">0</span><span>נכונות</span></div>
-                <div class="t-stat t-stat-wrong"><span class="n" id="t-wrong">0</span><span>שגויות</span></div>
-                <div class="t-stat t-stat-acc"><span class="n" id="t-accuracy">0%</span><span>דיוק</span></div>
-                <div class="t-stat t-stat-mastered"><span class="n" id="t-mastered">0</span><span>🏆 מאסטר (7)</span></div>
-                <div class="t-stat t-stat-weak"><span class="n" id="t-weak">0</span><span>⚠️ חלשים (1-2)</span></div>
-              </div>
-              <div class="trainer-mastery-bar">
-                <div class="km-mastery-track"><div class="km-mastery-fill" id="t-mastery-fill"></div></div>
-                <div class="km-mastery-text" id="t-mastery-text">שליטה כללית: 0%</div>
-              </div>
-              <div class="trainer-toolbar">
-                <button class="km-btn-mini" id="t-toggle-report">📊 הצג/הסתר דוח מלא</button>
-                <button class="km-btn-mini" id="t-focus-weak">🎯 הסתערות: רק חלשים</button>
-                <button class="km-btn-mini" id="t-mode-mixed">🔀 מצב מעורב</button>
-                <button class="km-btn-mini" id="t-export-csv">📥 ייצוא CSV</button>
-                <button class="km-btn-mini danger" id="t-reset-scores">🔄 איפוס ציונים</button>
-                <button class="km-btn-mini" id="t-open-pair-match">🎯 התאמות</button>
-                <button class="km-btn-mini" id="t-open-bug-quests">🕵️ קווסטים</button>
-              </div>
-            </div>
-
-            <!-- W8 Bug Quest modal (overlay) -->
-            <div class="bug-quest-overlay" id="bug-quest-overlay" hidden role="dialog" aria-modal="true">
-              <div class="bug-quest-modal glass-panel">
-                <div class="bq-header">
-                  <div>
-                    <h3 id="bq-title">🕵️ קווסטים</h3>
-                    <div class="bq-progress" id="bq-progress"></div>
-                  </div>
-                  <button class="bq-close" id="bq-close" aria-label="סגור">✕</button>
-                </div>
-                <div id="bq-body"><!-- content injected by JS --></div>
-              </div>
-            </div>
-
-            <!-- W8 Pair-Match game panel -->
-            <div class="pair-match-panel glass-panel" id="pair-match-panel" hidden>
-              <div class="pm-header">
-                <h3 id="pm-title">🎯 התאמות</h3>
-                <button class="pm-close-btn" id="pm-close">✕ סגור</button>
-              </div>
-              <div class="pm-game-select" id="pm-game-select">
-                <!-- Game buttons injected by JS -->
-              </div>
-              <div class="pm-board" id="pm-board">
-                <!-- Columns injected by JS -->
-              </div>
-              <div class="pm-status" id="pm-status"></div>
-            </div>
-
-            <div class="trainer-quiz-card glass-panel" id="trainer-quiz-card">
-              <!-- Active question injected here -->
-            </div>
-
-            <div class="trainer-report glass-panel" id="trainer-report" hidden>
-              <h3>📊 דוח ציונים מלא — לפי שיעור</h3>
-              <div class="trainer-report-body" id="trainer-report-body"></div>
-            </div>
-          </div>
-
-          <!-- Concept Sprint View — pure concept checks that feed the Knowledge Trainer -->
-          <div class="concept-sprint-view" id="concept-sprint-view" hidden>
-            <div class="concept-sprint-shell glass-panel">
-              <div class="concept-sprint-head">
-                <div>
-                  <h2>⚡ מושגים נטו</h2>
-                  <p>בחינה ממוקדת על מושגים בלבד. כל תשובה נכנסת מיד למאמן הידע ומעדכנת את רמת השליטה שלך.</p>
-                </div>
-                <div class="concept-sprint-xp" id="concept-sprint-xp">XP נוכחי: 0</div>
-              </div>
-              <div id="concept-sprint-content"></div>
-            </div>
-          </div>
-
-          <!-- Reward Store View — spend earned learning coins on experiences, not grades -->
-          <div class="reward-store-view" id="reward-store-view" hidden>
-            <div class="reward-store-shell glass-panel">
-              <div class="reward-store-head">
-                <div>
-                  <h2>🛒 חנות חוויות</h2>
-                  <p>כאן משתמשים במטבעות שקיבלת מלמידה כדי לפתוח חוויות, עיצובים ואתגרי בונוס. אי אפשר לקנות ציון או מאסטר.</p>
-                </div>
-                <div class="reward-store-balance" id="reward-store-balance">🪙 0</div>
-              </div>
-              <div class="reward-store-filters" id="reward-store-filters" aria-label="סינון חנות"></div>
-              <div id="reward-store-content"></div>
-            </div>
-          </div>
-
-          <!-- Quick Guide View -->
-          <div class="guide-view" id="guide-view" hidden>
-            <div class="guide-header glass-panel">
-              <h2 id="guide-title">📖 מדריך מקוצר — מפת החומר</h2>
-              <p id="guide-subtitle"></p>
-              <div class="guide-toolbar">
-                <input type="text" id="guide-search" aria-label="חיפוש בנושאי המדריך" placeholder="🔍 חיפוש בנושאים..." />
-                <button class="km-btn-mini" id="guide-expand-all">📂 פתח הכל</button>
-                <button class="km-btn-mini" id="guide-collapse-all">📁 כווץ הכל</button>
-              </div>
-            </div>
-            <div class="guide-topics" id="guide-topics-container"></div>
-          </div>
-
-          <!-- Grandma Knowledge View -->
-          <div class="guide-view grandma-knowledge-view" id="grandma-knowledge-view" hidden>
-            <div class="guide-header glass-panel">
-              <h2 id="grandma-knowledge-title">👵 ידע מורחב ברמת סבתא</h2>
-              <p id="grandma-knowledge-subtitle"></p>
-              <div class="guide-toolbar grandma-toolbar">
-                <input type="text" id="grandma-knowledge-search" aria-label="חיפוש בעץ הידע" placeholder="🔍 חיפוש בענפי העץ או במושגים..." />
-                <button class="km-btn-mini" id="grandma-knowledge-expand-all">📂 פתח את כל העץ</button>
-                <button class="km-btn-mini" id="grandma-knowledge-collapse-all">📁 כווץ לעץ ראשי</button>
-              </div>
-              <div class="grandma-knowledge-stats" id="grandma-knowledge-stats"></div>
-            </div>
-            <div class="guide-topics grandma-knowledge-sections" id="grandma-knowledge-container"></div>
-          </div>
-
-          <!-- SRS Flashcards View -->
-          <div class="flashcards-view" id="flashcards-view" hidden>
-            <div class="fc-header glass-panel">
-              <div class="fc-title">
-                <h2>🃏 כרטיסיות חזרה</h2>
-                <p>חזרה ממוקדת לפי מצב SRS, רמת שליטה וחולשות שסומנו. כל דירוג מעדכן את אותו ציון מושג שמשמש את מפת הידע והמאמן.</p>
-              </div>
-              <div class="fc-stats">
-                <div class="fc-stat"><span class="n" id="fc-total">0</span><span>כרטיסים בתור</span></div>
-                <div class="fc-stat due"><span class="n" id="fc-due">0</span><span>חזרה היום</span></div>
-                <div class="fc-stat weak"><span class="n" id="fc-weak">0</span><span>חלשים</span></div>
-                <div class="fc-stat done"><span class="n" id="fc-reviewed">0</span><span>נסקרו בסשן</span></div>
-              </div>
-              <div class="fc-toolbar">
-                <input type="text" id="fc-search" aria-label="חיפוש בכרטיסיות לימוד" placeholder="🔍 חיפוש מושג, שיעור או הסבר..." />
-                <select id="fc-filter" aria-label="סינון כרטיסיות">
-                  <option value="due">🔁 חזרה מומלצת + חדשים</option>
-                  <option value="weak">⚠️ חלשים</option>
-                  <option value="new">✨ לא נלמדו</option>
-                  <option value="mastered">🏆 מאסטר</option>
-                  <option value="all">📚 הכל</option>
-                </select>
-                <select id="fc-level" aria-label="רמת ההסבר בגב הכרטיס">
-                  <option value="student">🎓 סטודנט</option>
-                  <option value="grandma">👵 סבתא</option>
-                  <option value="child">🧒 ילד</option>
-                  <option value="soldier">🪖 חייל</option>
-                  <option value="junior">💻 ג׳וניור</option>
-                  <option value="professor">🔬 פרופסור</option>
-                </select>
-                <button class="km-btn-mini" id="fc-mix-order">🔀 סדר מעורב קבוע</button>
-                <button class="km-btn-mini" id="fc-reset-session">↺ אפס סשן</button>
-              </div>
-            </div>
-
-            <div class="fc-session glass-panel" id="fc-session">
-              <div class="fc-progress-line">
-                <span id="fc-progress-text">0 / 0</span>
-                <div class="study-progress-track"><div class="study-progress-fill" id="fc-progress-fill"></div></div>
-              </div>
-              <div class="fc-card-shell" id="fc-card-shell"></div>
-            </div>
-          </div>
-
-          <!-- Active Lesson Content (Hidden until selected) -->
-          <div class="active-lesson" id="active-lesson" hidden>
-            <div class="lesson-banner glass-panel" id="lesson-banner">
-              <span class="lesson-banner-icon">🎯</span>
-              <div class="lesson-banner-text">
-                <strong>מצב למידה אדפטיבי:</strong>
-                כל מושג מוצג ברמה שלך עבורו. אם לא ברור — בקש רמה פשוטה יותר.
-                אם הבנת — לחץ "🎯 בחן אותי" כדי להתקדם רמה.
-              </div>
-            </div>
-
-            <!-- Article Body -->
-            <article class="lesson-article glass-panel">
-              <div class="article-inner" id="lesson-body">
-                <!-- Injected dynamically based on selected level -->
-              </div>
-            </article>
-
-            <!-- Quiz Section -->
-            <section class="quiz-section glass-panel" id="quiz-section" hidden>
-              <div class="quiz-header">
-                <h3>📝 שאלון — בדוק את הידע שלך!</h3>
-                <p class="quiz-subtitle">ענה על כל השאלות כדי לוודא שהבנת את החומר לעומקו</p>
-              </div>
-              <div class="quiz-body" id="quiz-body">
-                <!-- Quiz questions injected here -->
-              </div>
-              <div class="quiz-actions">
-                <button class="quiz-submit-btn" id="quiz-submit">✅ בדוק תשובות</button>
-                <button class="quiz-reset-btn" id="quiz-reset" hidden>🔄 נסה שוב</button>
-              </div>
-              <div class="quiz-results" id="quiz-results" hidden>
-                <div class="quiz-score" id="quiz-score"></div>
-                <div class="quiz-feedback" id="quiz-feedback"></div>
-              </div>
-            </section>
-          </div>
-
-          <!-- Code Anatomy View -->
-          <div class="anatomy-page glass-panel" id="code-anatomy-view" hidden>
-            <h2>📐 פירוק קוד — מה התפקיד של כל רכיב?</h2>
-            <p class="anatomy-page-intro">
-              קטעי קוד מהשיעורים עם הסבר על תפקיד כל מילה / סימן / משתנה. <strong>בחר מה להציג</strong> — אל תיכשל בעומס.
-            </p>
-            <!-- P1.5.0c — Filters toolbar -->
-            <div class="anatomy-toolbar">
-              <input type="text" id="anatomy-search" aria-label="חיפוש בניתוח קוד" placeholder="🔍 חיפוש מושג / קוד..." />
-              <select id="anatomy-lesson-filter" aria-label="סנן לפי שיעור">
-                <option value="">📚 כל השיעורים</option>
-              </select>
-              <select id="anatomy-topic-filter" aria-label="סנן לפי נושא">
-                <option value="">📂 כל הנושאים</option>
-              </select>
-              <select id="anatomy-concept-filter" aria-label="סנן לפי מושג">
-                <option value="">🎯 כל המושגים</option>
-              </select>
-              <button class="km-btn-mini" id="anatomy-expand-all">⬇️ פתח הכל</button>
-              <button class="km-btn-mini" id="anatomy-collapse-all">⬆️ סגור הכל</button>
-              <span class="anatomy-stats" id="anatomy-stats" aria-live="polite"></span>
-            </div>
-            <div id="code-anatomy-content"></div>
-          </div>
-
-          <!-- Code Trace View -->
-          <div class="trace-view" id="trace-view" hidden>
-            <div class="trace-header glass-panel">
-              <h2>🔬 Code Trace — חיזוי פלט שורה אחר שורה</h2>
-              <p>קרא את הקוד, חזה את הפלט בכל שלב. כל תשובה נכונה מעלה את הניקוד למושג המקושר.</p>
-              <div class="trace-toolbar">
-                <select id="trace-filter-lesson" class="cb-select" aria-label="סינון Code Trace לפי שיעור">
-                  <option value="all">כל השיעורים</option>
-                </select>
-                <select id="trace-filter-level" class="cb-select" aria-label="סינון Code Trace לפי רמה">
-                  <option value="all">כל הרמות</option>
-                  <option value="1">רמה 1-2 (קל)</option>
-                  <option value="3">רמה 3-4 (בינוני)</option>
-                  <option value="5">רמה 5-6 (מתקדם)</option>
-                </select>
-                <button class="km-btn-mini" id="trace-random">🎲 Trace אקראי</button>
-              </div>
-            </div>
-            <!-- List of traces (when no active session) -->
-            <div class="trace-list" id="trace-list"></div>
-            <!-- Active trace player (hidden until user picks one) -->
-            <div class="trace-player glass-panel" id="trace-player" hidden></div>
-          </div>
-
-          <!-- P2.2 — Gap Matrix View -->
-          <div class="gap-matrix-view" id="gap-matrix-view" hidden>
-            <div class="gm-header glass-panel">
-              <h2>📊 מטריצת פערים — היכן צריך לחזק?</h2>
-              <p>סקירה של כל נושאי הלימוד לפי מצב שליטה. לחץ על שורה לפרטי המושגים.</p>
-              <div class="gm-toolbar">
-                <button class="gm-filter-btn active" data-filter="all">הכל</button>
-                <button class="gm-filter-btn" data-filter="gap">🔴 פערים</button>
-                <button class="gm-filter-btn" data-filter="learning">🟡 בעבודה</button>
-                <button class="gm-filter-btn" data-filter="strong">✅ חזק</button>
-                <button class="gm-filter-btn" data-filter="untouched">⏳ לא נגעת 7 ימים</button>
-                <button class="gm-filter-btn" data-filter="always-wrong">🎯 תמיד טועה</button>
-              </div>
-            </div>
-            <div id="gm-matrix-container"></div>
-          </div>
-
-          <!-- P6.1 — Learning Evidence View -->
-          <div class="learning-evidence-view" id="learning-evidence-view" hidden>
-            <div class="le-header glass-panel">
-              <div>
-                <h2>📈 ראיות למידה — האם באמת משתפרים?</h2>
-                <p>מדדים מקומיים מתוך שימוש אמיתי: תשובות, תיקוני טעות, חזרות, מבחנים ו-funnel לפי מושג. אין כאן מידע מזהה ואין נתונים מומצאים.</p>
-              </div>
-              <div class="le-actions" aria-label="פעולות ראיות למידה">
-                <button class="km-btn-mini" id="le-refresh">🔄 רענן</button>
-                <button class="km-btn-mini" id="le-export-json">⬇️ ייצוא אנונימי</button>
-                <button class="km-btn-mini" id="le-report-md">📝 דוח שבועי</button>
-              </div>
-            </div>
-            <div id="learning-evidence-content"></div>
-          </div>
-
-          <!-- P6.3 — Capstone Project Track -->
-          <div class="capstones-view" id="capstones-view" hidden>
-            <div class="capstones-header glass-panel">
-              <div>
-                <h2>🏗️ פרויקטי גמר — Capstones</h2>
-                <p>חמישה פרויקטים שמחברים את החומר למוצר אמיתי: דרישות, מקרי קצה, בדיקות ו-code review checklist.</p>
-              </div>
-              <div class="capstones-header-stats" id="capstones-header-stats"></div>
-            </div>
-            <div class="capstones-container" id="capstones-container"></div>
-          </div>
-
-          <!-- W24 — Course Blueprint + Exam Alignment -->
-          <div class="blueprints-view" id="blueprints-view" hidden>
-            <div class="blueprints-header glass-panel">
-              <div>
-                <h2>🧾 יישור SVCollege — AI & Full Stack</h2>
-                <p>מיפוי לא רשמי לפי מקורות ציבוריים: אילו חלקים בפורטל מכסים כל מסלול, איפה יש פערים, ומה לתרגל במבחן או בפרויקט.</p>
-              </div>
-              <div class="blueprints-header-stats" id="blueprints-header-stats"></div>
-            </div>
-            <div class="blueprints-container" id="blueprints-container"></div>
-          </div>
-
-          <!-- Side-by-Side Comparator View -->
-          <div class="comparator-view" id="comparator-view" hidden>
-            <div class="cmp-header glass-panel">
-              <h2>⚖️ השוואות זוגות — מתי להשתמש במה</h2>
-              <p>טבלאות השוואה לזוגות מושגים שמתבלבלים. לחץ על זוג כדי לראות פירוט שורה-שורה.</p>
-              <div class="cmp-toolbar">
-                <input type="text" id="cmp-search" aria-label="חיפוש בהשוואת מושגים" placeholder="🔍 חיפוש (useState / props / Tailwind)..." />
-                <button class="km-btn-mini" id="cmp-expand-all">⬇️ פתח הכל</button>
-                <button class="km-btn-mini" id="cmp-collapse-all">⬆️ סגור הכל</button>
-              </div>
-            </div>
-            <div id="cmp-list"></div>
-          </div>
-
-          <!-- P1.5.1 — Mock Exam View -->
-          <div class="mock-exam-view" id="mock-exam-view" hidden>
-            <!-- Settings (template picker) -->
-            <div class="mx-settings glass-panel" id="mx-settings">
-              <h2>📝 מבחן מדומה</h2>
-              <p>בחר תבנית מבחן. במהלך המבחן — אין רמזים, אין AI, יש טיימר. בסוף — ציון + פירוק חולשות.</p>
-              <div class="mx-templates" id="mx-templates"></div>
-              <div class="mx-history-block">
-                <h3>📊 היסטוריית מבחנים</h3>
-                <div id="mx-history"></div>
-              </div>
-            </div>
-
-            <!-- Active exam runner -->
-            <div class="mx-runner glass-panel" id="mx-runner" hidden>
-              <div class="mx-runner-head">
-                <div class="mx-progress" id="mx-progress" aria-live="polite"></div>
-                <div class="mx-timer" id="mx-timer" aria-live="polite">⏱️ 00:00</div>
-                <button class="km-btn-mini danger" id="mx-quit" aria-label="עצור מבחן מדומה">❌ עצור</button>
-              </div>
-              <div class="mx-question" id="mx-question" role="region" aria-label="שאלת מבחן נוכחית"></div>
-              <div class="mx-runner-foot">
-                <button class="km-btn-mini" id="mx-prev" aria-label="עבור לשאלה הקודמת">▶ הקודמת</button>
-                <button class="km-btn-mini" id="mx-skip" aria-label="דלג על השאלה הנוכחית">⏭ דלג</button>
-                <button class="km-btn-mini" id="mx-next" aria-label="עבור לשאלה הבאה">הבאה ◀</button>
-                <button class="km-btn-mini primary" id="mx-submit" aria-label="הגש מבחן מדומה">📤 הגש מבחן</button>
-              </div>
-              <div class="mx-question-nav" id="mx-question-nav" aria-label="ניווט בין שאלות המבחן"></div>
-            </div>
-
-            <!-- Result screen -->
-            <div class="mx-result glass-panel" id="mx-result" hidden></div>
-          </div>
-
-          <!-- Code Blocks View -->
-          <div class="codeblocks-view" id="codeblocks-view" hidden>
-            <div class="cb-header glass-panel">
-              <h2 id="cb-title">💻 למד בלוקי קוד</h2>
-              <p id="cb-subtitle">בלוקי קוד אמיתיים עם הסבר עברי לכל שורה. ענה על השאלות והעלה את הניקוד שלך לכל מושג.</p>
-              <div class="cb-stats" id="cb-stats">
-                <div class="cb-stat"><span class="n" id="cb-stat-total">0</span><span>בלוקים</span></div>
-                <div class="cb-stat"><span class="n" id="cb-stat-completed">0</span><span>הושלמו</span></div>
-                <div class="cb-stat"><span class="n" id="cb-stat-correct">0</span><span>תשובות נכונות</span></div>
-                <div class="cb-stat"><span class="n" id="cb-stat-mastered">0</span><span>🏆 מאסטר</span></div>
-                <div class="cb-stat"><span class="n" id="cb-stat-progress">0%</span><span>שליטה כללית</span></div>
-              </div>
-              <div class="cb-toolbar">
-                <input type="text" id="cb-search" aria-label="חיפוש בבלוקי קוד" placeholder="🔍 חיפוש בבלוקים..." />
-                <select id="cb-filter-lesson" class="cb-select" aria-label="סינון בלוקים לפי שיעור">
-                  <option value="all">כל השיעורים</option>
-                </select>
-                <select id="cb-filter-difficulty" class="cb-select" aria-label="סינון בלוקים לפי קושי">
-                  <option value="all">כל הרמות</option>
-                  <option value="1">🟢 בסיסי</option>
-                  <option value="2">🟡 בינוני</option>
-                  <option value="3">🔴 מתקדם</option>
-                </select>
-                <button class="km-btn-mini" id="cb-expand-all">📂 פתח הכל</button>
-                <button class="km-btn-mini" id="cb-collapse-all">📁 כווץ הכל</button>
-                <button class="km-btn-mini" id="cb-random-block" title="פתח בלוק אקראי לתרגול מהיר">🎲 בלוק אקראי</button>
-                <button class="km-btn-mini" id="cb-export-pdf" title="ייצוא כל הבלוקים הנראים ל-PDF צבעוני, בלוק לכל עמוד">📄 PDF צבעוני</button>
-                <button class="km-btn-mini" id="cb-keys-help" title="הצג קיצורי מקלדת">⌨️ קיצורים</button>
-              </div>
-            </div>
-            <div class="cb-blocks" id="cb-blocks-container"></div>
-          </div>
-        </div>
-      </main>
-    </div>
-
-    <div class="support-report-modal" id="support-report-modal" role="dialog" aria-modal="true" aria-labelledby="support-report-title" hidden>
-      <div class="support-report-backdrop" data-support-report-close></div>
-      <article class="support-report-card glass-panel" tabindex="-1">
-        <header class="support-report-head">
-          <div>
-            <span>Support payload</span>
-            <h2 id="support-report-title">דיווח באג</h2>
-          </div>
-          <button class="km-btn-mini" type="button" data-support-report-close aria-label="סגור דיווח באג">סגור</button>
-        </header>
-        <div class="support-report-grid">
-          <label>
-            סוג
-            <select id="support-report-type" aria-label="סוג דיווח תמיכה">
-              <option value="bug">באג</option>
-              <option value="content">תוכן</option>
-              <option value="ui">ממשק</option>
-              <option value="performance">ביצועים</option>
-              <option value="accessibility">נגישות</option>
-              <option value="support">תמיכה</option>
-            </select>
-          </label>
-          <label>
-            חומרה
-            <select id="support-report-severity" aria-label="חומרת הדיווח">
-              <option value="medium">בינוני</option>
-              <option value="low">נמוך</option>
-              <option value="high">גבוה</option>
-              <option value="blocking">חוסם למידה</option>
-            </select>
-          </label>
-        </div>
-        <label class="support-report-field">
-          כותרת
-          <input id="support-report-title-input" aria-label="כותרת הדיווח" type="text" autocomplete="off" />
-        </label>
-        <label class="support-report-field">
-          תיאור
-          <textarea id="support-report-description" aria-label="תיאור הדיווח" rows="4"></textarea>
-        </label>
-        <label class="support-report-field">
-          צילום מסך
-          <input id="support-report-screenshot" aria-label="קובץ צילום מסך לדיווח" type="file" accept="image/png,image/jpeg,image/webp" />
-        </label>
-        <div class="support-report-context" id="support-report-context"></div>
-        <div class="support-report-actions">
-          <button class="km-btn-mini primary" id="support-report-generate" type="button">צור payload</button>
-          <button class="km-btn-mini" id="support-report-copy" type="button">העתק JSON</button>
-        </div>
-        <textarea class="support-report-output" id="support-report-output" readonly aria-label="פלט JSON של דיווח באג"></textarea>
-      </article>
-    </div>
-
-    <!-- Data Files -->
-    <script src="data/lesson11.js"></script>
-    <script src="data/lesson12.js"></script>
-    <script src="data/lesson13.js"></script>
-    <script src="data/lesson_html_css_foundations.js"></script>
-    <script src="data/lesson_tooling_git.js"></script>
-    <script src="data/lesson15.js"></script>
-    <script src="data/lesson16.js"></script>
-    <script src="data/lesson17.js"></script>
-    <script src="data/lesson18.js"></script>
-    <script src="data/lesson19.js"></script>
-    <script src="data/lesson20.js"></script>
-    <script src="data/lesson_sql_orm.js?v=svcollege-sql-orm-v1"></script>
-    <script src="data/lesson_auth_security.js?v=svcollege-auth-v1"></script>
-    <script src="data/lesson_nextjs.js?v=svcollege-nextjs-v1"></script>
-    <script src="data/lesson_nestjs.js?v=svcollege-nestjs-v1"></script>
-    <script src="data/lesson_devops_deploy.js?v=svcollege-devops-v1"></script>
-    <script src="data/lesson_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
-    <script src="data/lesson_design_systems.js?v=svcollege-design-systems-v1"></script>
-    <script src="data/lesson21.js"></script>
-    <script src="data/lesson22.js"></script>
-    <script src="data/lesson23.js"></script>
-    <script src="data/lesson24.js"></script>
-    <script src="data/lesson25.js"></script>
-    <script src="data/lesson26.js"></script>
-    <script src="data/lesson27.js"></script>
-    <script src="data/lesson_closures.js"></script>
-    <script src="data/cluster_index.js?v=cluster-v1"></script>
-    <script src="src/core/cluster-engine.js?v=cluster-engine-v1"></script>
-    <script src="data/workbook_taskmanager.js"></script>
-    <script src="data/ai_development.js"></script>
-    <script src="data/react_blueprint.js"></script>
-    <script src="data/questions_bank.js"></script>
-    <script src="data/concept_enrichment.js"></script>
-    <script src="data/extended_explanations.js"></script>
-    <script src="data/questions_trace.js"></script>
-    <script src="data/zz_questions_trace_phase2.js?v=phase2-v1"></script>
-    <script src="data/zz_questions_trace_phase3.js?v=phase3-v1"></script>
-    <script src="data/svcollege_traces_sql_orm.js?v=svcollege-sql-orm-v2"></script>
-    <script src="data/svcollege_traces_auth.js?v=svcollege-auth-v2"></script>
-    <script src="data/svcollege_traces_nextjs.js?v=svcollege-nextjs-v2"></script>
-    <script src="data/svcollege_traces_nestjs.js?v=svcollege-nestjs-v2"></script>
-    <script src="data/svcollege_traces_devops.js?v=svcollege-devops-v2"></script>
-    <script src="data/svcollege_traces_ai_engineering.js?v=svcollege-ai-engineering-v2"></script>
-    <script src="data/svcollege_traces_design_systems.js?v=svcollege-design-systems-v1"></script>
-    <script src="data/svcollege_traces_bridge.js?v=svcollege-bridge-v1"></script>
-    <script src="data/svcollege_traces_lesson11_activity.js?v=lesson11-activity-v1"></script>
-    <script src="data/svcollege_traces_lesson12_activity.js?v=lesson12-activity-v1"></script>
-    <script src="data/svcollege_traces_lesson13_activity.js?v=lesson13-activity-v2"></script>
-    <script src="data/svcollege_traces_foundation_tooling_activity.js?v=foundation-tooling-activity-v1"></script>
-    <script src="data/svcollege_traces_lesson15_activity.js?v=lesson15-activity-v1"></script>
-    <script src="data/svcollege_traces_lesson16_activity.js?v=lesson16-activity-v1"></script>
-    <script src="data/svcollege_traces_lesson17_activity.js?v=lesson17-activity-v1"></script>
-    <!-- P1.4.3 — Bug Hunt questions -->
-    <script src="data/questions_bug.js"></script>
-    <script src="data/zz_questions_bug_phase2.js?v=phase2-v1"></script>
-    <script src="data/svcollege_questions_sql_orm.js?v=svcollege-sql-orm-v1"></script>
-    <script src="data/svcollege_questions_auth.js?v=svcollege-auth-v1"></script>
-    <script src="data/svcollege_questions_nextjs.js?v=svcollege-nextjs-v1"></script>
-    <script src="data/svcollege_questions_nestjs.js?v=svcollege-nestjs-v1"></script>
-    <script src="data/svcollege_questions_devops.js?v=svcollege-devops-v1"></script>
-    <script src="data/svcollege_questions_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
-    <script src="data/svcollege_questions_design_systems.js?v=svcollege-design-systems-v1"></script>
-    <script src="data/svcollege_questions_bridge.js?v=svcollege-bridge-v1"></script>
-    <!-- P1.4.4 — Mini Build questions -->
-    <script src="data/questions_build.js"></script>
-    <script src="data/zz_questions_build_phase2.js?v=phase2-v1"></script>
-    <script src="data/svcollege_builds_sql_orm.js?v=svcollege-sql-orm-v1"></script>
-    <script src="data/svcollege_builds_auth.js?v=svcollege-auth-v1"></script>
-    <script src="data/svcollege_builds_nextjs.js?v=svcollege-nextjs-v1"></script>
-    <script src="data/svcollege_builds_nestjs.js?v=svcollege-nestjs-v1"></script>
-    <script src="data/svcollege_builds_devops.js?v=svcollege-devops-v1"></script>
-    <script src="data/svcollege_builds_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
-    <script src="data/svcollege_builds_design_systems.js?v=svcollege-design-systems-v1"></script>
-    <script src="data/svcollege_builds_bridge.js?v=svcollege-bridge-v1"></script>
-    <!-- Sprint 2 — Mental Model Animator -->
-    <script src="data/animations.js"></script>
-    <!-- Sprint 3 — What-If Simulator -->
-    <script src="data/what_if.js"></script>
-    <!-- AUDIT-FIX — Visual/diagnostic creative learning layers -->
-    <script src="data/concept_comics.js"></script>
-    <script src="data/stage_zero.js"></script>
-    <script src="data/memory_palaces.js"></script>
-    <script src="data/problem_first.js"></script>
-    <script src="data/concept_videos.js"></script>
-    <!-- P1.5.2 — Per-Distractor Feedback -->
-    <script src="data/option_feedback.js"></script>
-    <script src="data/quick_guide.js"></script>
-    <script src="data/interview_prep.js?v=interview-prep-v1"></script>
-    <script src="data/grandma_knowledge.js"></script>
-    <script src="data/grandma_visuals.js"></script>
-    <script src="data/code_blocks.js"></script>
-    <script src="data/svcollege_code_blocks.js?v=svcollege-code-blocks-v1"></script>
-    <script src="data/glossary.js?v=track-d-v2"></script>
-    <script src="data/concise_definitions.js?v=concise-v1"></script>
-    <!-- Sprint 1 — Creative Methods (P2.S1) -->
-    <script src="data/anti_patterns.js"></script>
-    <script src="data/mnemonics.js"></script>
-    <script src="data/flashcards.js"></script>
-    <!-- Sprint 2 — Creative Methods (war stories + side-by-side comparator) -->
-    <script src="data/war_stories.js"></script>
-    <script src="data/comparisons.js"></script>
-    <!-- W14 — Prerequisite graph -->
-    <script src="data/prerequisites.js"></script>
-    <script src="data/svcollege_prerequisites_sql_orm.js?v=svcollege-sql-orm-v1"></script>
-    <script src="data/svcollege_prerequisites_auth.js?v=svcollege-auth-v1"></script>
-    <script src="data/svcollege_prerequisites_nextjs.js?v=svcollege-nextjs-v1"></script>
-    <script src="data/svcollege_prerequisites_nestjs.js?v=svcollege-nestjs-v1"></script>
-    <script src="data/svcollege_prerequisites_devops.js?v=svcollege-devops-v1"></script>
-    <script src="data/svcollege_prerequisites_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
-    <script src="data/svcollege_prerequisites_design_systems.js?v=svcollege-design-systems-v1"></script>
-    <!-- W7 — Metaphor Library + Learning Pathways -->
-    <script src="data/metaphors.js"></script>
-    <script src="data/pathways.js"></script>
-    <!-- W11 — Themed Scenarios + Counterfactuals -->
-    <script src="data/scenarios.js"></script>
-    <script src="data/counterfactuals.js"></script>
-    <!-- W8 — Pair-Match games + Bug Hunt Quests -->
-    <script src="data/pair_match.js"></script>
-    <script src="data/bug_quests.js"></script>
-    <!-- W24 — Capstone project track -->
-    <script src="data/capstones.js?v=capstones-v2"></script>
-    <script src="data/guided_builds.js?v=guided-builds-v1"></script>
-    <script src="data/course_blueprints.js?v=svcollege-only-v1"></script>
-    <!-- P5.3.2 — Explicit lesson quiz concept routing -->
-    <script src="data/lesson_quiz_keys.js"></script>
-    <script src="data/level100_release_gates.js?v=level100-gate-v1"></script>
-    <!-- W9 — AI Tutor FAB + modal -->
-    <script src="content-loader.js?v=content-validation-v1"></script>
-    <!-- Track A — Foundation libs (must load before app.js) -->
-    <!-- W9 — AI Tutor FAB and Modal (injected before app.js) -->
-    <script src="lib/rng.js"></script>
-    <script src="lib/srs.js"></script>
-    <!-- P1.4.1 — Sandboxed code runner -->
-    <script src="lib/code-runner.js"></script>
-    <!-- P4.6.4 — HTML sanitization must patch legacy rendering before app.js -->
-    <script src="lib/vendor/dompurify.min.js"></script>
-    <script src="src/core/sanitize-early.js"></script>
-    <script src="app.js?v=cleanup-shards-v105"></script>
-    <script type="module" src="/src/main.js?v=core-bootstrap-v2"></script>
-
-    <!-- W12 — Achievements overlay -->
-    <div id="achievements-overlay" class="achievements-overlay" hidden role="dialog" aria-modal="true">
-      <div class="achievements-modal glass-panel">
-        <div class="ach-modal-head">
-          <h3>🏆 הישגים</h3>
-          <button id="ach-close" class="ach-close-btn" aria-label="סגור">✕</button>
-        </div>
-        <div id="achievements-body" class="achievements-grid"></div>
-      </div>
-    </div>
-
-    <!-- W12 — XP detail panel -->
-    <div id="xp-detail-overlay" class="xp-detail-overlay" hidden role="dialog" aria-modal="true">
-      <div class="xp-detail-modal glass-panel">
-        <div class="xp-detail-head">
-          <h3>⭐ מצב XP ומטבעות</h3>
-          <button id="xp-detail-close" class="ach-close-btn" aria-label="סגור">✕</button>
-        </div>
-        <div id="xp-detail-body" class="xp-detail-body"></div>
-      </div>
-    </div>
-
-    <!-- W12 — Daily Reflection modal -->
-    <div id="reflection-overlay" class="reflection-overlay" hidden role="dialog" aria-modal="true">
-      <div class="reflection-modal glass-panel">
-        <div class="refl-head">
-          <div>
-            <h3>📝 רפלקציה יומית</h3>
-            <div id="reflection-date" class="refl-date"></div>
-          </div>
-          <button id="reflection-close-w12" class="refl-close" aria-label="סגור">✕</button>
-        </div>
-        <p class="refl-prompt">מה למדת היום? מה היה קשה? מה רצית לחזק?</p>
-        <textarea id="reflection-text" class="refl-textarea" aria-label="טקסט רפלקציה" rows="4" placeholder="כתוב כאן את המחשבות שלך..."></textarea>
-        <div class="refl-rating">
-          <span>איך הרגשת היום?</span>
-          <div class="refl-stars">
-            <button class="refl-star" data-star="1">😕</button>
-            <button class="refl-star" data-star="2">😐</button>
-            <button class="refl-star" data-star="3" >😊</button>
-            <button class="refl-star" data-star="4">😄</button>
-            <button class="refl-star" data-star="5">🤩</button>
-          </div>
-        </div>
-        <div class="refl-history-section">
-          <h4>📅 רפלקציות קודמות</h4>
-          <div id="reflection-history"></div>
-        </div>
-        <button id="reflection-save" class="refl-save-btn">שמור רפלקציה (+15 XP)</button>
-      </div>
-    </div>
-
-    <!-- W12 — Lesson-end 60-second wrap-up -->
-    <div id="lesson-wrap-overlay" class="lesson-wrap-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="lesson-wrap-title">
-      <div class="lesson-wrap-modal glass-panel">
-        <div class="lw-head">
-          <div>
-            <h3 id="lesson-wrap-title">⏱️ סיכום 60 שניות</h3>
-            <div id="lesson-wrap-meta" class="lw-meta"></div>
-          </div>
-          <button id="lesson-wrap-close" class="lw-close" aria-label="סגור">✕</button>
-        </div>
-        <div class="lw-timer-row">
-          <div class="lw-timer" id="lesson-wrap-timer" aria-live="polite">60</div>
-          <div class="lw-timer-track" aria-hidden="true">
-            <div class="lw-timer-fill" id="lesson-wrap-timer-fill"></div>
-          </div>
-        </div>
-        <div id="lesson-wrap-body" class="lw-body"></div>
-        <div class="lw-confidence-block">
-          <div class="lw-label">רמת ביטחון אחרי השיעור</div>
-          <div class="lw-confidence" role="radiogroup" aria-label="רמת ביטחון אחרי השיעור">
-            <button class="lw-confidence-btn" data-confidence="1" aria-pressed="false">1</button>
-            <button class="lw-confidence-btn" data-confidence="2" aria-pressed="false">2</button>
-            <button class="lw-confidence-btn" data-confidence="3" aria-pressed="false">3</button>
-            <button class="lw-confidence-btn" data-confidence="4" aria-pressed="false">4</button>
-            <button class="lw-confidence-btn" data-confidence="5" aria-pressed="false">5</button>
-          </div>
-          <div id="lesson-wrap-calibration" class="lw-calibration">בחר מספר כדי לשמור כיול ביטחון מול הציון.</div>
-        </div>
-        <label class="lw-label" for="lesson-wrap-note">הערה קצרה לעצמך</label>
-        <textarea id="lesson-wrap-note" class="lw-note" rows="3" placeholder="מה לחזק לפני המעבר לשיעור הבא?"></textarea>
-        <div class="lw-actions">
-          <button id="lesson-wrap-save" class="lw-action primary">שמור סיכום (+10 XP)</button>
-          <button id="lesson-wrap-flashcards" class="lw-action">שמור ופתח כרטיסיות</button>
-          <button id="lesson-wrap-map" class="lw-action">שמור ופתח מפת ידע</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- W9 — AI Tutor: FAB button + modal (rendered before closing body) -->
-    <button id="ai-tutor-fab" class="ai-tutor-fab" aria-label="פתח מאמן AI" title="💬 מאמן AI — שאל שאלה, קבל הסבר, בדוק ידע">💬 מאמן</button>
-    <div id="ai-tutor-modal" class="ai-tutor-modal hidden" role="dialog" aria-modal="true" aria-labelledby="ai-tutor-modal-title">
-      <div class="ai-tutor-modal-inner glass-panel">
-        <div class="ai-head">
-          <div>
-            <h3 id="ai-tutor-modal-title">💬 מאמן AI</h3>
-            <div class="ai-usage" id="ai-usage-display"></div>
-          </div>
-          <button class="ai-close" id="ai-tutor-close" aria-label="סגור">✕</button>
-        </div>
-        <div class="ai-mode-tabs" role="tablist">
-          <button class="ai-mode-tab active" data-mode="coach" role="tab" aria-selected="true">🧭 מאמן</button>
-          <button class="ai-mode-tab" data-mode="explain" role="tab" aria-selected="false">💡 הסבר</button>
-          <button class="ai-mode-tab" data-mode="check" role="tab" aria-selected="false">✔️ בדיקה</button>
-        </div>
-        <div class="ai-context-bar" id="ai-context-bar"></div>
-        <div class="ai-response-area" id="ai-response" aria-live="polite"></div>
-        <div class="ai-production-note">
-          Alpha production משתמש ב-Supabase Edge Function רק עם credentials אמיתיים. אין מפתחות AI בדפדפן; אם אין חיבור, המאמן נשאר במענה מקומי.
-        </div>
-        <div class="ai-input-row">
-          <textarea class="ai-textarea" id="ai-input" placeholder="שאל שאלה על המושג הנוכחי..." rows="2" aria-label="שאלה למאמן AI"></textarea>
-          <button class="ai-send-btn" id="ai-send" aria-label="שלח שאלה">שלח ↑</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- GDPR/CCPA consent banner — gates whether we're allowed to use
-         localStorage at all. Must run BEFORE the onboarding overlay so the
-         user makes the storage decision before we save anything. -->
-    <div id="consent-banner" hidden role="dialog" aria-labelledby="consent-title" aria-describedby="consent-body">
-      <div class="consent-inner">
-        <div class="consent-text">
-          <h2 id="consent-title">🍪 אחסון מקומי בלבד</h2>
-          <p id="consent-body">
-            LumenPortal שומר את ההתקדמות שלך (ציונים, רפלקציות, מבחנים) ב-<code>localStorage</code> של הדפדפן שלך בלבד.
-            <strong>שום נתון לא נשלח לשרת חיצוני.</strong> ראה <a href="PRIVACY.md" target="_blank" rel="noopener">הצהרת פרטיות</a> ו-<a href="TERMS.md" target="_blank" rel="noopener">תנאי שימוש</a>.
-          </p>
-        </div>
-        <div class="consent-actions">
-          <button id="consent-accept" class="consent-btn consent-btn-primary">מאשר/ת — לשמור התקדמות</button>
-          <button id="consent-decline" class="consent-btn consent-btn-secondary">לא מאשר/ת — בלי שמירה</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Generic non-blocking confirm dialog — replaces native confirm() so we
-         don't ship jarring browser dialogs and so programmatic flows aren't
-         blocked. Promise-based API exposed as window.lumenConfirm(message, opts). -->
-    <div id="lumen-confirm" hidden role="dialog" aria-modal="true" aria-labelledby="lumen-confirm-title">
-      <div class="lumen-confirm-panel">
-        <h2 id="lumen-confirm-title" class="lumen-confirm-title">לאשר?</h2>
-        <p id="lumen-confirm-body" class="lumen-confirm-body"></p>
-        <div class="lumen-confirm-actions">
-          <button id="lumen-confirm-yes" class="lumen-confirm-btn lumen-confirm-btn-primary">אישור</button>
-          <button id="lumen-confirm-no" class="lumen-confirm-btn lumen-confirm-btn-secondary">ביטול</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- First-run onboarding overlay — gated by localStorage["lumen-onboarded"]. -->
-    <div id="onboarding-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
-      <div class="onboarding-panel">
-        <h1 id="onboarding-title">👋 ברוכים הבאים ל-LumenPortal</h1>
-        <p class="onboarding-sub">פורטל לימוד Full-Stack JavaScript · 29 שיעורים · 568 מושגים · 4,762 שאלות · 727 פעילויות מעשיות</p>
-        <p class="onboarding-q">איך הכי נוח להתחיל?</p>
-        <div class="onboarding-choices">
-          <button class="onboarding-choice" data-onboarding="open-trainer">
-            <span class="onboarding-icon" aria-hidden="true">🎯</span>
-            <span class="onboarding-label">התחל מאימון אדפטיבי</span>
-            <span class="onboarding-hint">המאמן יבחר את המושג הבא לפי החוזקות שלך</span>
-          </button>
-          <button class="onboarding-choice" data-onboarding="open-study-mode">
-            <span class="onboarding-icon" aria-hidden="true">📚</span>
-            <span class="onboarding-label">תקרא קודם, תתרגל אחר כך</span>
-            <span class="onboarding-hint">ללמוד את חומר השיעור בסדר רגיל</span>
-          </button>
-          <button class="onboarding-choice" data-onboarding="open-mock-exam">
-            <span class="onboarding-icon" aria-hidden="true">📝</span>
-            <span class="onboarding-label">תעבור בחינת רמה</span>
-            <span class="onboarding-hint">מבחן 15 שאלות שמשקף את היכולת הנוכחית</span>
-          </button>
-        </div>
-        <button class="onboarding-skip" id="onboarding-skip">דלג, אני מכיר/ה את הפלטפורמה</button>
-      </div>
-    </div>
-    <script src="src/boot/lumen-confirm.js"></script>
-    <script src="src/boot/consent-onboarding.js"></script>
-  </body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LumenPortal — סיכום חומרי הלימוד המלא ב-6 רמות</title>
+<meta name="description" content="פורטל לימוד Full-Stack מלא: כל שיעור מוסבר ב-6 רמות — מסבתא ועד פרופסור, עם בלוקי קוד, הסברי עומק ושאלונים." />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; form-action 'self'; base-uri 'self';" />
+<script src="src/boot/standalone-museum.js"></script>
+<script src="src/boot/file-protocol-guard.js?v=file-protocol-guard-v1"></script>
+<link rel="stylesheet" href="style.css?v=homework-exam-mode-v19" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236366f1'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' fill='white' font-family='Arial,sans-serif'%3EL%3C/text%3E%3C/svg%3E" />
+<meta name="theme-color" content="#6366f1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="LumenPortal" />
+</head>
+<body class="exam-focus-mode">
+<div id="file-protocol-warning" class="file-protocol-warning" hidden role="alert" aria-live="assertive">
+<strong>פתחת את הפורטל כקובץ מקומי.</strong>
+כדי לקבל שמירה מלאה, Service Worker וטעינת מודולים בלי שגיאות, פתח דרך שרת מקומי:
+<code>npm run dev</code>
+</div>
+<div class="app-container">
+<details id="achievements-rail-wrap" class="achievements-rail-wrap" open>
+<summary class="achievements-rail-summary" aria-label="סרגל הישגים — לחץ לקיפול">
+<span class="ach-rail-toggle" aria-hidden="true">▾</span>
+<span class="ach-rail-mini" id="ach-rail-mini" aria-hidden="true">📊</span>
+</summary>
+<div id="achievements-rail" class="achievements-rail" role="status" aria-live="polite" aria-label="סרגל הישגים">
+<span class="ach-rail-item ach-student" title="הפרופיל הפעיל">
+<span class="ach-icon">👤</span>
+<span class="ach-value" id="ach-student-name">תלמיד</span>
+</span>
+<span class="ach-rail-item ach-xp" title="נקודות ניסיון שצברת">
+<span class="ach-icon">⚡</span>
+<span class="ach-label">XP</span>
+<span class="ach-value" id="ach-xp-value">0</span>
+</span>
+<span class="ach-rail-item ach-perf" title="ביצועים כלליים — ממוצע רמת מושגים">
+<span class="ach-icon">📈</span>
+<span class="ach-label">ביצועים</span>
+<span class="ach-value" id="ach-perf-value">0%</span>
+</span>
+<span class="ach-rail-divider" aria-hidden="true"></span>
+<span class="ach-rail-item ach-passed" title="כמה מושגים עברת (רמה 5+) מתוך כל המושגים">
+<span class="ach-icon">✅</span>
+<span class="ach-label">עברתי</span>
+<span class="ach-value" id="ach-passed-value">0/0</span>
+</span>
+<span class="ach-rail-item ach-mastered" title="כמה מושגים בקיא (רמה 7) מתוך כל המושגים">
+<span class="ach-icon">🏆</span>
+<span class="ach-label">בקיא</span>
+<span class="ach-value" id="ach-mastered-value">0/0</span>
+</span>
+<span class="ach-rail-item ach-pocket" title="כמה מושגים שמורים בכיס שלך">
+<span class="ach-icon">📌</span>
+<span class="ach-label">בכיס</span>
+<span class="ach-value" id="ach-pocket-value">0</span>
+</span>
+</div>
+</details>
+<div class="left-action-bar" id="left-action-bar" role="toolbar" aria-label="פעולות מהירות">
+<details class="lab-menu" id="lab-settings">
+<summary class="lab-summary" aria-label="הגדרות"><span class="lab-icon" aria-hidden="true">⚙️</span><span class="lab-label">הגדרות</span></summary>
+<div class="lab-popup">
+<button class="lab-action" data-lab-trigger="pwa-install-btn"><span aria-hidden="true">⬇️</span> התקן את האפליקציה</button>
+<button class="lab-action" data-lab-trigger="theme-toggle"><span aria-hidden="true">🌗</span> החלף תצוגה (כהה/בהיר)</button>
+</div>
+</details>
+<details class="lab-menu" id="lab-view">
+<summary class="lab-summary" aria-label="תצוגה"><span class="lab-icon" aria-hidden="true">👁️</span><span class="lab-label">תצוגה</span></summary>
+<div class="lab-popup">
+<button class="lab-action" data-lab-trigger="global-print-btn"><span aria-hidden="true">📄</span> ייצוא ל-PDF</button>
+<button class="lab-action" data-lab-trigger="sidebar-collapse-btn"><span aria-hidden="true">⇥</span> קפל תפריט ימני</button>
+<button class="lab-action" data-lab-trigger="top-chrome-collapse-btn"><span aria-hidden="true">⇧</span> קפל אזור עליון</button>
+<button class="lab-action" data-lab-trigger="chrome-collapse-both-btn"><span aria-hidden="true">⇲</span> קפל שניהם</button>
+</div>
+</details>
+<button class="lab-direct" id="lab-pocket-btn" data-lab-trigger="pocket-fab" aria-label="פתח את הכיס שלי">
+<span class="lab-icon" aria-hidden="true">📌</span>
+<span class="lab-label">הכיס שלי</span>
+</button>
+</div>
+<details class="chrome-control-menu" id="chrome-control-menu" hidden>
+<summary aria-label="פתח תפריט שליטה בתצוגה">שליטה</summary>
+<div class="chrome-control-panel" role="group" aria-label="שליטה בתצוגה ובתפריטים">
+<button class="sidebar-collapse-btn" id="sidebar-collapse-btn" type="button" aria-label="קפל תפריט ימני" aria-pressed="false" title="קפל תפריט ימני">
+<span class="sidebar-collapse-icon" aria-hidden="true">⇥</span>
+<span class="sidebar-collapse-label">קפל ימין</span>
+</button>
+<button class="top-chrome-collapse-btn" id="top-chrome-collapse-btn" type="button" aria-label="קפל תפריט עליון" aria-pressed="false" title="קפל תפריט עליון">
+<span class="top-chrome-collapse-icon" aria-hidden="true">⇧</span>
+<span class="top-chrome-collapse-label">קפל עליון</span>
+</button>
+<button class="chrome-collapse-both-btn" id="chrome-collapse-both-btn" type="button" aria-label="קפל את שני התפריטים ביחד" aria-pressed="false" title="קפל את שני התפריטים ביחד (ימין + עליון)">
+<span aria-hidden="true">⇲</span>
+<span>קפל שניהם</span>
+</button>
+<button class="focus-mode-toggle" id="focus-mode-toggle" type="button" aria-label="הפעל מצב פוקוס ללמידה במסך מלא" aria-pressed="false" hidden>פוקוס</button>
+<button class="focus-top-toggle" id="focus-top-toggle" type="button" aria-label="קפל את כל האזור העליון במצב פוקוס" aria-pressed="false" hidden>עליון</button>
+<button class="focus-side-toggle" id="focus-side-toggle" type="button" aria-label="פתח עץ ניווט במצב פוקוס" aria-expanded="false" hidden>תוכן</button>
+<button class="support-report-menu-btn" id="support-report-btn" type="button" aria-label="פתח דיווח באג עם הקשר מסך" hidden>דווח באג</button>
+</div>
+</details>
+<nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<button class="sidebar-brand-home" id="brand-home-btn" type="button" aria-label="חזרה לעמוד הבית">
+<span class="brand-main">Lumen</span><span class="brand-sub">Portal</span>
+</button>
+<p>מאסטר בפיתוח Full-Stack</p>
+<section class="local-profile-panel" aria-label="פרופיל תלמיד מקומי">
+<div class="local-profile-row">
+<label for="local-profile-select">תלמיד</label>
+<select id="local-profile-select" aria-label="בחר תלמיד מקומי"></select>
+</div>
+<div class="local-profile-create">
+<input id="local-profile-name" type="text" autocomplete="off" placeholder="שם תלמיד חדש" aria-label="שם תלמיד חדש" />
+<button id="local-profile-create" type="button" aria-label="צור תלמיד מקומי ללא סיסמה">צור</button>
+</div>
+<div class="local-profile-status" id="local-profile-status">שמירה מקומית ללא סיסמה</div>
+</section>
+</div>
+<div class="sidebar-search">
+<input type="text" id="search-input" aria-label="חיפוש מושג או שיעור" placeholder="🔍 חיפוש מושג או שיעור..." />
+</div>
+<div class="sidebar-scroll">
+<section class="sidebar-context-tree" id="sidebar-context-tree" aria-label="עץ תוכן">
+<div id="sidebar-context-body" class="sidebar-context-body"></div>
+</section>
+<details class="sidebar-lessons-tree" open>
+<summary>כל השיעורים</summary>
+<div class="lessons-list" id="lessons-nav">
+</div>
+</details>
+</div>
+<strong id="sidebar-context-title" hidden>תוכן עניינים</strong>
+<span id="sidebar-context-count" hidden></span>
+<input type="text" id="sidebar-context-search" aria-label="חיפוש בעץ ההקשר" hidden />
+<div id="global-progress" hidden></div>
+<div id="progress-text" hidden></div>
+</nav>
+<aside class="context-tree-panel" id="context-tree-panel" aria-label="תת תפריט עץ">
+<div id="context-tree-body" class="context-tree-body"></div>
+<strong id="context-tree-title" hidden>עץ ניווט</strong>
+<span id="context-tree-count" hidden></span>
+<input type="text" id="context-tree-search" hidden aria-label="חיפוש בעץ הניווט" placeholder="🔎 חיפוש בענף..." />
+</aside>
+<button class="mobile-menu-toggle" id="mobile-toggle" aria-label="פתח/סגור תפריט שיעורים" aria-expanded="false">☰</button>
+<button class="theme-toggle-btn" id="theme-toggle" aria-label="החלף בין מצב כהה לבהיר" title="החלף תצוגה (כהה/בהיר/אוטומטי)">
+<span aria-hidden="true">🌗</span>
+</button>
+<button class="pwa-install-btn" id="pwa-install-btn" type="button" aria-label="התקן את האפליקציה" title="התקנת האפליקציה (PWA)" hidden>
+<span class="emoji" aria-hidden="true">⬇️</span>
+<span class="lbl">התקן</span>
+</button>
+<button class="global-print-btn" id="global-print-btn" aria-label="שמור את הדף כ-PDF" title="שמור את הדף הנוכחי כ-PDF צבעוני (Ctrl+P) — כל יחידת תוכן בעמוד נפרד">
+<span class="emoji" aria-hidden="true">📄</span><span class="lbl">PDF</span>
+</button>
+<div class="modal-overlay" id="glossary-modal" hidden>
+<div class="modal-card">
+<div class="modal-head">
+<strong>📖 מילון מונחים</strong>
+<button class="modal-close" id="glossary-close" aria-label="סגור">✕</button>
+</div>
+<input type="text" class="modal-search" id="glossary-search" aria-label="חיפוש במילון" placeholder="🔍 חפש מונח (use, async, JSX, סטייט...)" />
+<div class="modal-body" id="glossary-list"></div>
+</div>
+</div>
+<div class="modal-overlay" id="reflection-modal" hidden>
+<div class="modal-card">
+<div class="modal-head">
+<strong>📅 רפלקציה יומית</strong>
+<button class="modal-close" id="reflection-close" aria-label="סגור">✕</button>
+</div>
+<div class="modal-body">
+<p>סכם את הלמידה שלך היום בכמה שורות. זה עוזר לזיכרון ארוך-טווח.</p>
+<label class="reflect-label">📚 מה למדתי היום?</label>
+<textarea id="reflect-learned" aria-label="מה למדתי היום" rows="3" placeholder="לדוגמה: הבנתי איך useEffect עובד עם deps array..."></textarea>
+<label class="reflect-label">🤔 מה היה קשה?</label>
+<textarea id="reflect-stuck" aria-label="במה נתקעתי" rows="2" placeholder="באיזה מושג נתקעת הכי הרבה?"></textarea>
+<label class="reflect-label">📊 רמת ביטחון (0-100%)</label>
+<input type="range" id="reflect-confidence" aria-label="רמת ביטחון בלמידה (0-100)" min="0" max="100" value="50" />
+<div class="reflect-confidence-out" id="reflect-confidence-out">50%</div>
+<button class="km-btn-mini primary" id="reflect-save">💾 שמור</button>
+<div class="reflect-history" id="reflect-history"></div>
+</div>
+</div>
+</div>
+<button class="pocket-fab" id="pocket-fab" aria-label="פתח/סגור Pocket Concept Card" aria-expanded="false" title="📌 הכיס שלך — מושגים שסימנת לחזרה מהירה">
+<span aria-hidden="true">📌</span>
+<span class="pocket-count" id="pocket-count">0</span>
+</button>
+<div class="pocket-panel" id="pocket-panel" hidden>
+<div class="pocket-head">
+<strong>📌 הכיס שלך</strong>
+<button class="pocket-close" id="pocket-close" aria-label="סגור">✕</button>
+</div>
+<p class="pocket-empty" id="pocket-empty">עוד לא שמרת מושגים. לחץ 📌 על כל מושג כדי לשמור לכיס.</p>
+<div class="pocket-list" id="pocket-list"></div>
+</div>
+<button class="view-mode-fab" id="view-mode-fab" aria-label="פתח/סגור תפריט תצוגה" aria-expanded="false" title="מצב תצוגה — הצג/הסתר חלקים + קפוץ למושג">
+<span aria-hidden="true">👁️</span>
+</button>
+<div class="view-mode-panel" id="view-mode-panel" hidden>
+<div class="vm-head">
+<strong>👁️ מצב תצוגה</strong>
+<button class="vm-close" id="vm-close" aria-label="סגור">✕</button>
+</div>
+<div class="vm-section">
+<div class="vm-label">📍 קפוץ למושג</div>
+<select class="vm-jumper" id="vm-concept-jumper" aria-label="קפוץ למושג בשיעור הנוכחי">
+<option value="">בחר מושג...</option>
+</select>
+</div>
+<div class="vm-section" id="vm-concept-parts-section" hidden>
+<div class="vm-label">🧩 חלקי המושג</div>
+<div class="vm-concept-parts" id="vm-concept-parts" aria-label="חלקי המושג הנוכחי"></div>
+</div>
+<div class="vm-section">
+<div class="vm-label">🎬 מצבים מהירים</div>
+<div class="vm-presets">
+<button class="vm-preset" data-preset="all">🔍 הכל</button>
+<button class="vm-preset" data-preset="concepts-only">📚 רק מושגים</button>
+<button class="vm-preset" data-preset="quiz-only">📝 רק שאלות</button>
+<button class="vm-preset" data-preset="exam-prep">🎯 חזרה לבחינה</button>
+<button class="vm-preset" data-preset="bug-hunt-only">🐛 רק ציד באגים</button>
+</div>
+</div>
+<div class="vm-section">
+<div class="vm-label">⚙️ הצג / הסתר חלקים</div>
+<div class="vm-toggles">
+<button class="vm-toggle" data-vm="quiz" aria-pressed="true">📝 שאלון בסוף שיעור</button>
+<button class="vm-toggle" data-vm="code" aria-pressed="true">💻 קוד</button>
+<button class="vm-toggle" data-vm="code-explanation" aria-pressed="true">📝 הערות לקוד</button>
+<button class="vm-toggle" data-vm="explanation" aria-pressed="true">📖 הסבר רגיל</button>
+<button class="vm-toggle" data-vm="deep-dive" aria-pressed="true">🌊 Deep Dive</button>
+<button class="vm-toggle" data-vm="extended" aria-pressed="true">📚 הסבר מורחב</button>
+<button class="vm-toggle" data-vm="extras" aria-pressed="true">🎁 Extras / אנלוגיות</button>
+<button class="vm-toggle" data-vm="anti-patterns" aria-pressed="true">🔁 דפוסי-נגד</button>
+<button class="vm-toggle" data-vm="bug-hunt" aria-pressed="true">🐛 ציד באגים</button>
+<button class="vm-toggle" data-vm="war-stories" aria-pressed="true">📚 סיפורי שטח</button>
+<button class="vm-toggle" data-vm="mnemonic" aria-pressed="true">🧠 מנמוניקה</button>
+<button class="vm-toggle" data-vm="comparisons" aria-pressed="true">⚖️ השוואות</button>
+<button class="vm-toggle" data-vm="concept-comic" aria-pressed="true">🎞️ קומיקס מושג</button>
+<button class="vm-toggle" data-vm="concept-video" aria-pressed="true">🎥 קליפ מושג</button>
+<button class="vm-toggle" data-vm="stage-zero" aria-pressed="true">🧯 שבור ואז תקן</button>
+<button class="vm-toggle" data-vm="memory-palace" aria-pressed="true">🏛️ ארמון זיכרון</button>
+<button class="vm-toggle" data-vm="problem-first" aria-pressed="true">🧩 בעיה קודם</button>
+<button class="vm-toggle" data-vm="actions" aria-pressed="true">✓ כפתורי פעולה</button>
+</div>
+</div>
+<div class="vm-section">
+<div class="vm-label">📖 כלים נוספים</div>
+<div class="vm-toggles">
+<button class="vm-tool-btn" id="vm-open-glossary">📖 מילון מונחים (Hebrew/English)</button>
+<button class="vm-tool-btn" id="vm-open-reflection">📅 רפלקציה יומית</button>
+<button class="vm-tool-btn" id="vm-open-history">⏰ מכונת זמן — סקירת התקדמות</button>
+<button class="vm-tool-btn" id="vm-open-reverse">🔀 שאלה הפוכה — תזהה מושג מההגדרה</button>
+</div>
+</div>
+<nav class="page-scroll-rail" id="page-scroll-rail" aria-label="ניווט מהיר בתוך הדף" hidden></nav>
+<div class="modal-overlay" id="reverse-modal" hidden style="z-index:701">
+<div class="modal-card">
+<div class="modal-head">
+<strong>🔀 שאלה הפוכה</strong>
+<button class="modal-close" id="reverse-close" aria-label="סגור">✕</button>
+</div>
+<div class="modal-body" id="reverse-body"></div>
+</div>
+</div>
+<div class="modal-overlay" id="time-machine-modal" hidden style="z-index:702">
+<div class="modal-card time-machine-card">
+<div class="modal-head">
+<strong>⏰ מכונת זמן — סקירת התקדמות</strong>
+<button class="modal-close" id="time-machine-close" aria-label="סגור">✕</button>
+</div>
+<div class="modal-body" id="time-machine-body"></div>
+</div>
+</div>
+<div class="vm-section">
+<div class="vm-label">♿ נגישות</div>
+<div class="vm-toggles">
+<button class="vm-a11y-toggle" data-a11y="dyslexia-font" aria-pressed="false">🔠 גופן לדיסלקטיים (OpenDyslexic)</button>
+<button class="vm-a11y-toggle" data-a11y="reduce-motion" aria-pressed="false">🎚️ הפחת אנימציות</button>
+<button class="vm-a11y-toggle" data-a11y="high-contrast" aria-pressed="false">🌗 ניגודיות גבוהה</button>
+<button class="vm-a11y-toggle" data-a11y="large-text" aria-pressed="false">🔍 טקסט גדול (+15%)</button>
+</div>
+</div>
+</div>
+<main class="main-content">
+<nav class="top-tabs-bar" id="top-tabs-bar">
+<div class="w12-top-bar" id="w12-top-bar" aria-label="רצף, XP והישגים">
+<span id="streak-widget" class="streak-widget" title="רצף לימוד" hidden>🔥 0</span>
+<span id="xp-widget" class="xp-widget" title="נקודות ניסיון">⭐ 0 XP</span>
+<button id="open-achievements" class="w12-btn" title="הישגים" aria-label="פתח הישגים">🏆</button>
+<button id="btn-open-reflection" class="w12-btn" title="רפלקציה יומית" aria-label="פתח רפלקציה יומית">📝</button>
+</div>
+<button class="top-tab" id="open-guide" data-tab="guide" aria-label="פתח מדריך מקוצר">
+<span class="emoji" aria-hidden="true">📖</span><span>מדריך מקוצר</span>
+</button>
+<button class="top-tab" id="open-grandma-knowledge" data-tab="grandma-knowledge" aria-label="פתח ידע מורחב ברמת סבתא">
+<span class="emoji" aria-hidden="true">👵</span><span>ידע מורחב ברמת סבתא</span>
+</button>
+<button class="top-tab" id="open-programming-basics" data-tab="programming-basics" aria-label="פתח אבני בסיס של התכנות">
+<span class="emoji" aria-hidden="true">🧱</span><span>אבני בסיס</span>
+</button>
+<button class="top-tab" id="open-programming-principles" data-tab="programming-principles" aria-label="פתח עקרונות יסוד לתכנות טוב">
+<span class="emoji" aria-hidden="true">🧭</span><span>עקרונות יסוד</span>
+</button>
+<button class="top-tab" id="open-programming-museum" data-tab="programming-museum" aria-label="פתח מוזיאון היסטורי לשפות התכנות">
+<span class="emoji" aria-hidden="true">🏛️</span><span>מוזיאון</span>
+</button>
+<button class="top-tab" id="open-language-tools" data-tab="language-tools" aria-label="פתח השוואת שפות וכלי פיתוח">
+<span class="emoji" aria-hidden="true">🧮</span><span>שפות וכלים</span>
+</button>
+<button class="top-tab" id="open-reward-store" data-tab="reward-store" aria-label="פתח חנות חוויות עם מטבעות למידה">
+<span class="emoji" aria-hidden="true">🛒</span><span>חנות</span>
+</button>
+<button class="top-tab" id="open-flashcards" data-tab="flashcards" aria-label="פתח כרטיסיות חזרה לפי SRS">
+<span class="emoji" aria-hidden="true">🃏</span><span>כרטיסיות</span>
+</button>
+<button class="top-tab" id="open-codeblocks" data-tab="codeblocks" aria-label="פתח בלוקי קוד">
+<span class="emoji" aria-hidden="true">💻</span><span>בלוקי קוד</span>
+</button>
+<button class="top-tab" id="open-trace" data-tab="trace" aria-label="פתח Code Trace — חיזוי פלט קוד">
+<span class="emoji" aria-hidden="true">🔬</span><span>Code Trace</span>
+</button>
+<button class="top-tab" id="open-mock-exam" data-tab="mock-exam" aria-label="פתח מבחן מדומה — Mock Exam עם טיימר">
+<span class="emoji" aria-hidden="true">📝</span><span>מבחן מדומה</span>
+</button>
+<button class="top-tab" id="open-gap-matrix" data-tab="gap-matrix" aria-label="פתח מטריצת פערים — ראה היכן יש חולשות">
+<span class="emoji" aria-hidden="true">📊</span><span>פערים</span>
+</button>
+<button class="top-tab" id="open-learning-evidence" data-tab="learning-evidence" aria-label="פתח ראיות למידה — מדדי שיפור ותיקון טעויות">
+<span class="emoji" aria-hidden="true">📈</span><span>ראיות למידה</span>
+</button>
+<button class="top-tab" id="open-capstones" data-tab="capstones" aria-label="פתח מסלול פרויקטי גמר">
+<span class="emoji" aria-hidden="true">🏗️</span><span>פרויקטים</span>
+</button>
+<button class="top-tab" id="open-blueprints" data-tab="blueprints" aria-label="פתח יישור SVCollege">
+<span class="emoji" aria-hidden="true">🧾</span><span>יישור SVCollege</span>
+</button>
+<button class="top-tab" id="open-comparator" data-tab="comparator" aria-label="פתח השוואות — Side-by-Side">
+<span class="emoji" aria-hidden="true">⚖️</span><span>השוואות</span>
+</button>
+<button class="top-tab" id="open-trainer" data-tab="trainer" aria-label="פתח מאמן ידע + דוח">
+<span class="emoji" aria-hidden="true">🧠</span><span>מאמן ידע + דוח</span>
+</button>
+<button class="top-tab" id="open-concept-sprint" data-tab="concept-sprint" aria-label="פתח מושגים נטו — אבחון מהיר לפי מושג">
+<span class="emoji" aria-hidden="true">⚡</span><span>מושגים נטו</span>
+</button>
+<button class="top-tab" id="open-study-mode" data-tab="study" aria-label="פתח מצב לימוד מותאם">
+<span class="emoji" aria-hidden="true">🎯</span><span>לימוד מותאם</span>
+</button>
+<button class="top-tab" id="open-knowledge-map" data-tab="km" aria-label="פתח מפת ידע">
+<span class="emoji" aria-hidden="true">🗺️</span><span>מפת ידע</span>
+</button>
+<button class="top-tab" id="open-code-anatomy" data-tab="anatomy" aria-label="פתח פירוק קוד">
+<span class="emoji" aria-hidden="true">📐</span><span>פירוק קוד</span>
+</button>
+<button class="top-tab" id="open-settings" data-tab="settings" aria-label="פתח הגדרות מערכת">
+<span class="emoji" aria-hidden="true">⚙️</span><span>הגדרות</span>
+</button>
+<button class="top-tab top-tab-home" id="open-home" data-tab="home" aria-label="חזרה לעמוד הבית — רשימת שיעורים">
+<span class="emoji" aria-hidden="true">🏠</span><span>שיעורים</span>
+</button>
+</nav>
+<nav class="site-trail-nav" id="site-trail-nav" aria-label="עץ אתר, חזרה ובית">
+<button class="site-nav-btn" id="site-back-btn" type="button" aria-label="חזור אחורה במסלול הלמידה">
+<span aria-hidden="true">←</span><span>חזרה</span>
+</button>
+<button class="site-nav-btn" id="site-home-btn" type="button" aria-label="חזרה לעמוד הבית">
+<span aria-hidden="true">⌂</span><span>בית</span>
+</button>
+<details class="site-map-menu" id="site-map-menu">
+<summary aria-label="פתח עץ אתר">עץ אתר</summary>
+<div class="site-map-menu-body" id="site-map-menu-body" role="group" aria-label="עץ אתר"></div>
+</details>
+<details class="site-when-menu" id="portal-decision-menu">
+<summary aria-label="פתח מתי להשתמש">מתי להשתמש</summary>
+<section
+class="portal-decision-aid glass-panel"
+id="portal-decision-aid"
+aria-label="מבט מהיר והשוואות לפי טאב"
+hidden
+></section>
+</details>
+<div class="site-breadcrumb" id="site-breadcrumb" aria-live="polite">בית</div>
+</nav>
+<header class="top-nav">
+<div class="lesson-title-area">
+<h1 id="current-lesson-title">ברוכים הבאים לפורטל המומחים</h1>
+<p id="current-lesson-desc">
+בחרו שיעור מהתפריט כדי להתחיל ללמוד. כל מושג מוסבר ב-6 רמות שונות — מסבתא ועד פרופסור!
+</p>
+</div>
+</header>
+<div class="content-wrapper" id="content-container">
+<div class="welcome-screen welcome-screen-clean simple-closed-mode" id="welcome-screen">
+<section class="welcome-simple-route glass-panel" aria-label="תפריט פשוט למסלול Exam 100">
+<div class="welcome-simple-head">
+<span class="welcome-kicker">תפריט פשוט</span>
+<strong id="simple-route-progress-text">0% התקדמות</strong>
+<small id="simple-route-step-text">שלב 1 מתוך 10</small>
+</div>
+<div class="welcome-simple-progress" aria-hidden="true">
+<span id="simple-route-progress-fill" style="--home-progress: 0%"></span>
+</div>
+<div class="welcome-mini-map" id="simple-route-mini-map" aria-label="מפת כל השלבים עד סיום המבחן"></div>
+<div class="welcome-current-step">
+<span aria-hidden="true">🎯</span>
+<div>
+<h3 id="simple-route-current-title">עכשיו עושים רק דבר אחד: מתחילים את Exam 100 Path</h3>
+<p id="simple-route-current-desc">אין תפריט בחירה בתוך המסלול. זזים קדימה או אחורה, עוברים Gate, וממשיכים לשלב הבא.</p>
+</div>
+</div>
+<div class="welcome-arrow-controls" aria-label="ניווט פשוט במסלול">
+<button class="welcome-arrow-btn" id="simple-route-back-btn" type="button" disabled>← אחורה</button>
+<button class="welcome-arrow-btn primary" id="simple-route-next-btn" type="button" data-portal-tab="mock-exam">קדימה →</button>
+</div>
+</section>
+<section class="welcome-tree-shell glass-panel" aria-label="קישורים לכל מדריכי ההכנה שנוצרו">
+<div class="welcome-section-head">
+<div>
+<span class="welcome-kicker">מסמכים אחרונים שנוצרו</span>
+<h3>עץ המדריכים הפרקטיים</h3>
+<p>פתח לפי המצב שלך עכשיו. כל קישור מוביל לקובץ מדריך אמיתי.</p>
+</div>
+<a class="welcome-secondary-link" href="./output/svcollege-practical-guides/index.html" target="_blank" rel="noopener">פתח אינדקס מלא</a>
+</div>
+<div class="welcome-tree-grid">
+<details class="welcome-tree-branch critical" open>
+<summary>1. התחלה עכשיו</summary>
+<div class="welcome-tree-links">
+<a href="./output/svcollege-practical-guides/start_here.html" target="_blank" rel="noopener">לא יודע מאיפה להתחיל <span>Heat 10</span></a>
+<a href="./output/svcollege-practical-guides/one_page_exam_cheatsheet.html" target="_blank" rel="noopener">כרטיס חירום <span>יום מבחן</span></a>
+<a href="./output/svcollege-practical-guides/forward_tasks_plan.html" target="_blank" rel="noopener">תוכנית קדימה <span>54 משימות</span></a>
+</div>
+</details>
+<details class="welcome-tree-branch" open>
+<summary>2. שלושת מדריכי הליבה</summary>
+<div class="welcome-tree-links">
+<a href="./output/svcollege-practical-guides/guide_01_ideas.html" target="_blank" rel="noopener">מדריך 1 - רעיונות <span>הבנה</span></a>
+<a href="./output/svcollege-practical-guides/guide_02_homework_and_exam_drills.html" target="_blank" rel="noopener">מדריך 2 - תרגול <span>פתרון</span></a>
+<a href="./output/svcollege-practical-guides/guide_03_exam_day_runbook.html" target="_blank" rel="noopener">מדריך 3 - יום מבחן <span>ביצוע</span></a>
+</div>
+</details>
+<details class="welcome-tree-branch" open>
+<summary>3. מסלול אישי ומעקב</summary>
+<div class="welcome-tree-links">
+<a href="./output/svcollege-practical-guides/study_path_37h45.html" target="_blank" rel="noopener">מסלול 100:20 שעות <span>תוכנית למידה + צפייה ב-114 סרטונים</span></a>
+<a href="./output/svcollege-practical-guides/progress_tracker.html" target="_blank" rel="noopener">מעקב התקדמות <span>שמירה מקומית</span></a>
+</div>
+</details>
+<details class="welcome-tree-branch low-priority">
+<summary>4. הדפסה, סטטוס ומקורות</summary>
+<div class="welcome-tree-links">
+<a href="./output/svcollege-practical-guides/print_pack.html" target="_blank" rel="noopener">גרסת הדפסה מאוחדת <span>Print</span></a>
+<a href="./output/svcollege-practical-guides/status.html" target="_blank" rel="noopener">סטטוס החבילה <span>בדיקות</span></a>
+<a href="./output/svcollege-practical-guides/source_map.md" target="_blank" rel="noopener">מפת מקורות <span>בקרה</span></a>
+<a href="./output/svcollege-practical-guides/README.md" target="_blank" rel="noopener">README <span>שימוש</span></a>
+</div>
+</details>
+</div>
+</section>
+<section class="welcome-tree-shell welcome-portal-tree glass-panel" aria-label="עץ ניווט לפורטל לפי חשיבות למבחן">
+<div class="welcome-section-head">
+<div>
+<span class="welcome-kicker">ניווט פורטל לפי 70/20/10</span>
+<h3>עץ הפורטל</h3>
+<p>אותם טאבים, מסודרים לפי ניקוד מבחן.</p>
+</div>
+</div>
+<div class="welcome-tree-grid portal" id="welcome-portal-tree-body" data-site-tree-root></div>
+</section>
+<details class="welcome-cockpit-wrap">
+<summary class="welcome-cockpit-summary">📊 סטטוס מבחן — לחץ להרחבה</summary>
+<section class="exam-cockpit glass-panel" id="exam-cockpit" aria-label="Exam Cockpit">
+<div class="exam-cockpit-empty">טוען תמונת מצב למבחן...</div>
+</section>
+</details>
+</div>
+<div class="settings-view" id="settings-view" hidden>
+<div class="settings-shell glass-panel">
+<div class="settings-head">
+<div>
+<h2>⚙️ הגדרות</h2>
+<p>מרכז אחד להגדרות תצוגה, נגישות, סנכרון, ייבוא/ייצוא וכלי ניהול. ברירות המחדל נשמרות לפתיחה הבאה של המערכת.</p>
+</div>
+<div class="settings-status" id="settings-save-status" aria-live="polite">הגדרות מקומיות נשמרות בדפדפן.</div>
+</div>
+<div class="settings-grid">
+<section class="settings-card" aria-label="ברירות מחדל לתצוגה">
+<h3>תצוגה וברירת מחדל</h3>
+<label for="settings-theme-default">ערכת צבע</label>
+<select id="settings-theme-default" data-settings-select="theme">
+<option value="auto">אוטומטי לפי המערכת</option>
+<option value="dark">כהה</option>
+<option value="light">בהיר</option>
+</select>
+<label for="settings-lesson-mode-default">מצב שיעור ברירת מחדל</label>
+<select id="settings-lesson-mode-default" data-settings-select="lesson-mode">
+<option value="one-line">שורה אחת</option>
+<option value="full">מלא</option>
+<option value="comparisons">השוואות</option>
+</select>
+<div class="settings-toggle-list">
+<button type="button" class="settings-toggle" data-settings-toggle="learning-focus">מצב פוקוס כברירת מחדל</button>
+<button type="button" class="settings-toggle" data-settings-toggle="top-chrome-collapsed">תפריט עליון מקופל בפתיחה</button>
+<button type="button" class="settings-toggle" data-settings-toggle="right-sidebar-collapsed">תפריט ימני מקופל בפתיחה</button>
+<button type="button" class="settings-toggle" data-settings-toggle="focus-top-collapsed">עליון מקופל בתוך פוקוס</button>
+</div>
+</section>
+<section class="settings-card" aria-label="הגדרות נגישות">
+<h3>נגישות</h3>
+<div class="settings-toggle-list">
+<button type="button" class="settings-toggle" data-settings-a11y="dyslexia-font">גופן לדיסלקטיים</button>
+<button type="button" class="settings-toggle" data-settings-a11y="reduce-motion">הפחת אנימציות</button>
+<button type="button" class="settings-toggle" data-settings-a11y="high-contrast">ניגודיות גבוהה</button>
+<button type="button" class="settings-toggle" data-settings-a11y="large-text">טקסט גדול</button>
+</div>
+</section>
+<section class="settings-card settings-card-wide" aria-label="חלקים גלויים בשיעור">
+<h3>חלקים גלויים בשיעור</h3>
+<div class="settings-toggle-list dense">
+<button type="button" class="settings-toggle" data-settings-vm="quiz">שאלון</button>
+<button type="button" class="settings-toggle" data-settings-vm="code">קוד</button>
+<button type="button" class="settings-toggle" data-settings-vm="code-explanation">הערות לקוד</button>
+<button type="button" class="settings-toggle" data-settings-vm="explanation">הסבר רגיל</button>
+<button type="button" class="settings-toggle" data-settings-vm="deep-dive">Deep Dive</button>
+<button type="button" class="settings-toggle" data-settings-vm="extended">הסבר מורחב</button>
+<button type="button" class="settings-toggle" data-settings-vm="extras">Extras / אנלוגיות</button>
+<button type="button" class="settings-toggle" data-settings-vm="anti-patterns">דפוסי נגד</button>
+<button type="button" class="settings-toggle" data-settings-vm="bug-hunt">ציד באגים</button>
+<button type="button" class="settings-toggle" data-settings-vm="war-stories">סיפורי שטח</button>
+<button type="button" class="settings-toggle" data-settings-vm="mnemonic">מנמוניקה</button>
+<button type="button" class="settings-toggle" data-settings-vm="comparisons">השוואות</button>
+<button type="button" class="settings-toggle" data-settings-vm="concept-comic">קומיקס מושג</button>
+<button type="button" class="settings-toggle" data-settings-vm="concept-video">קליפ מושג</button>
+<button type="button" class="settings-toggle" data-settings-vm="stage-zero">שבור ואז תקן</button>
+<button type="button" class="settings-toggle" data-settings-vm="memory-palace">ארמון זיכרון</button>
+<button type="button" class="settings-toggle" data-settings-vm="problem-first">בעיה קודם</button>
+<button type="button" class="settings-toggle" data-settings-vm="actions">כפתורי פעולה</button>
+</div>
+</section>
+<section class="settings-card settings-card-wide" aria-label="סנכרון וייצוא">
+<h3>סנכרון, ייבוא וייצוא</h3>
+<div class="progress-sync-row">
+<button class="km-btn-mini" id="btn-export-progress" title="ייצא את כל ההתקדמות שלך לקובץ JSON">⬇️ ייצוא התקדמות</button>
+<button class="km-btn-mini" id="btn-import-progress" title="ייבא קובץ התקדמות JSON שייצאת בעבר">⬆️ ייבוא התקדמות</button>
+<button class="km-btn-mini" id="btn-sync-config" title="הגדר Supabase URL, anon key ו-access token אמיתיים">הגדר Sync</button>
+<button class="km-btn-mini" id="btn-sync-now" title="סנכרן לפי last-write-wins בין הדפדפן ל-Supabase">סנכרן עכשיו</button>
+<button class="km-btn-mini" id="btn-sync-pull" title="משוך את snapshot ההתקדמות האחרון מ-Supabase">משוך</button>
+<button class="km-btn-mini" id="btn-sync-push" title="העלה את snapshot ההתקדמות המקומי ל-Supabase">העלה</button>
+</div>
+<div class="progress-sync-status" id="progress-sync-status" aria-live="polite">Sync לא מוגדר</div>
+<div class="progress-sync-privacy-note">
+Sync הוא אופציונלי: access token נשמר רק ב-sessionStorage, אין credentials מוטמעים, וקונפליקט מוכרע לפי last-write-wins.
+</div>
+</section>
+<section class="settings-card settings-card-wide" aria-label="ניהול מתקדם">
+<h3>ניהול מתקדם</h3>
+<details class="teacher-class-panel">
+<summary>ניהול כיתה למורה</summary>
+<div class="teacher-class-form">
+<label for="teacher-class-name">שם כיתה</label>
+<input id="teacher-class-name" type="text" autocomplete="off" />
+<label for="teacher-course-key">קורס</label>
+<input id="teacher-course-key" type="text" value="svcollege_fullstack_ai" autocomplete="off" />
+<button class="km-btn-mini" id="btn-create-class" type="button">צור כיתה</button>
+</div>
+<div class="teacher-class-status" id="teacher-class-status" aria-live="polite">נדרשים credentials אמיתיים של Supabase.</div>
+<div class="teacher-student-list">
+<label for="teacher-class-id">Class ID</label>
+<input id="teacher-class-id" type="text" autocomplete="off" />
+<button class="km-btn-mini" id="btn-load-class-students" type="button">טען תלמידים</button>
+<div class="teacher-student-status" id="teacher-student-status" aria-live="polite">לא נטענו תלמידים.</div>
+<label for="teacher-student-csv">CSV תלמידים</label>
+<input id="teacher-student-csv" type="file" accept=".csv,text/csv" />
+<button class="km-btn-mini" id="btn-import-class-students" type="button">ייבא CSV</button>
+<div class="teacher-bulk-status" id="teacher-bulk-status" aria-live="polite">לא בוצע ייבוא CSV.</div>
+<div class="teacher-student-table-wrap">
+<table class="teacher-student-table" aria-label="תלמידי כיתה">
+<thead><tr><th>תלמיד</th><th>סטטוס</th><th>הצטרפות</th><th>פעילות אחרונה</th></tr></thead>
+<tbody id="teacher-student-table-body"><tr><td colspan="4">אין נתונים טעונים.</td></tr></tbody>
+</table>
+</div>
+<button class="km-btn-mini" id="btn-load-concept-heatmap" type="button">טען Heatmap</button>
+<div class="teacher-heatmap-status" id="teacher-heatmap-status" aria-live="polite">לא נטען heatmap.</div>
+<div class="teacher-heatmap-wrap">
+<table class="teacher-heatmap-table" aria-label="Heatmap שליטה לפי מושג ותלמיד">
+<thead id="teacher-heatmap-head"><tr><th>מושג</th></tr></thead>
+<tbody id="teacher-heatmap-body"><tr><td>אין נתוני mastery טעונים.</td></tr></tbody>
+</table>
+</div>
+<button class="km-btn-mini" id="btn-export-teacher-lite" type="button">ייצא Teacher Lite</button>
+<div class="teacher-export-status" id="teacher-export-status" aria-live="polite">אין ייצוא כיתה מוכן.</div>
+<button class="km-btn-mini" id="btn-load-risk-alerts" type="button">טען סיכונים</button>
+<div class="teacher-risk-status" id="teacher-risk-status" aria-live="polite">לא נטענו סיכונים.</div>
+<div class="teacher-risk-list" id="teacher-risk-list" aria-label="התראות סיכון לכיתה"><div class="teacher-risk-empty">אין נתוני סיכון טעונים.</div></div>
+<div class="teacher-assignment-form">
+<label for="teacher-assignment-title">משימה</label>
+<input id="teacher-assignment-title" type="text" autocomplete="off" />
+<label for="teacher-assignment-type">סוג</label>
+<select id="teacher-assignment-type">
+<option value="concept_practice">תרגול מושג</option>
+<option value="mock_exam">מבחן מדומה</option>
+<option value="code_task">משימת קוד</option>
+<option value="reading">קריאה</option>
+</select>
+<label for="teacher-assignment-concept">מושג יעד</label>
+<input id="teacher-assignment-concept" type="text" autocomplete="off" />
+<label for="teacher-assignment-due">תאריך יעד</label>
+<input id="teacher-assignment-due" type="datetime-local" />
+<button class="km-btn-mini" id="btn-create-assignment" type="button">צור משימה</button>
+<button class="km-btn-mini" id="btn-load-assignments" type="button">טען משימות</button>
+</div>
+<div class="teacher-assignment-status" id="teacher-assignment-status" aria-live="polite">לא נטענו משימות.</div>
+<div class="teacher-assignment-list" id="teacher-assignment-list" aria-label="משימות כיתה"><div class="teacher-assignment-empty">אין משימות טעונות.</div></div>
+</div>
+</details>
+<details class="community-discussion-panel">
+<summary>דיונים לפי מושג</summary>
+<div class="community-discussion-form">
+<label for="community-concept-key">Concept key</label>
+<input id="community-concept-key" type="text" autocomplete="off" />
+<label for="community-thread-title">כותרת</label>
+<input id="community-thread-title" type="text" autocomplete="off" />
+<label for="community-thread-body">הודעה ראשונה</label>
+<textarea id="community-thread-body" rows="3"></textarea>
+<button class="km-btn-mini" id="btn-create-concept-thread" type="button">צור דיון</button>
+<button class="km-btn-mini" id="btn-load-concept-threads" type="button">טען דיונים</button>
+</div>
+<div class="community-discussion-status" id="community-discussion-status" aria-live="polite">לא נטענו דיונים.</div>
+<div class="community-thread-list" id="community-thread-list" aria-label="דיונים לפי מושג"><div class="community-thread-empty">אין דיונים טעונים.</div></div>
+<div class="community-reputation-panel" aria-label="Community reputation">
+<button class="km-btn-mini" id="btn-load-community-reputation" type="button">טען מוניטין</button>
+<div class="community-reputation-status" id="community-reputation-status" aria-live="polite">לא נטען מוניטין.</div>
+<div class="community-reputation-list" id="community-reputation-list" aria-label="טבלת מוניטין"><div class="community-reputation-empty">אין נתוני מוניטין טעונים.</div></div>
+</div>
+<div class="community-moderation-panel" aria-label="Community moderation">
+<button class="km-btn-mini" id="btn-load-moderation-reports" type="button">טען דיווחים</button>
+<div class="community-moderation-status" id="community-moderation-status" aria-live="polite">לא נטענו דיווחי moderation.</div>
+<div class="community-moderation-list" id="community-moderation-list" aria-label="דיווחי קהילה"><div class="community-moderation-empty">אין דיווחים טעונים.</div></div>
+</div>
+</details>
+<details class="peer-review-panel">
+<summary>Peer Code Review</summary>
+<div class="peer-review-form">
+<label for="peer-review-concept-key">Concept key</label>
+<input id="peer-review-concept-key" type="text" autocomplete="off" />
+<label for="peer-review-level">רמה</label>
+<select id="peer-review-level">
+<option value="beginner">beginner</option>
+<option value="intermediate">intermediate</option>
+<option value="advanced">advanced</option>
+</select>
+<label for="peer-review-solution">פתרון</label>
+<textarea id="peer-review-solution" rows="4"></textarea>
+<button class="km-btn-mini" id="btn-submit-peer-solution" type="button">שלח פתרון</button>
+<button class="km-btn-mini" id="btn-claim-peer-review" type="button">קבל Review</button>
+</div>
+<div class="peer-review-status" id="peer-review-status" aria-live="polite">לא נטען peer review.</div>
+<div class="peer-review-match" id="peer-review-match" aria-label="Peer review match"><div class="peer-review-empty">אין match פעיל.</div></div>
+<div class="peer-review-template">
+<label for="peer-review-match-id">Match ID</label>
+<input id="peer-review-match-id" type="text" autocomplete="off" />
+<label for="peer-review-correctness">Correctness</label>
+<select id="peer-review-correctness"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+<label for="peer-review-clarity">Clarity</label>
+<select id="peer-review-clarity"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+<label for="peer-review-strengths">מה עובד</label>
+<textarea id="peer-review-strengths" rows="2"></textarea>
+<label for="peer-review-improvements">מה לשפר</label>
+<textarea id="peer-review-improvements" rows="2"></textarea>
+<button class="km-btn-mini" id="btn-submit-peer-review" type="button">שלח Review</button>
+</div>
+</details>
+<details class="mentor-matching-panel">
+<summary>Mentor Matching</summary>
+<div class="mentor-matching-form">
+<label for="mentor-concept-key">Concept key</label>
+<input id="mentor-concept-key" type="text" autocomplete="off" />
+<button class="km-btn-mini" id="btn-load-mentor-eligibility" type="button">בדוק Eligibility</button>
+<button class="km-btn-mini" id="btn-register-mentor" type="button">הירשם כמנטור</button>
+<button class="km-btn-mini" id="btn-request-mentor" type="button">בקש מנטור</button>
+<label for="mentor-match-id">Match ID</label>
+<input id="mentor-match-id" type="text" autocomplete="off" />
+<label for="mentor-message-body">הודעה</label>
+<textarea id="mentor-message-body" rows="2"></textarea>
+<button class="km-btn-mini" id="btn-send-mentor-message" type="button">שלח הודעה</button>
+<button class="km-btn-mini" id="btn-load-mentor-messages" type="button">טען Chat</button>
+<label for="mentor-rating-score">Rating</label>
+<select id="mentor-rating-score"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+<label for="mentor-rating-feedback">Feedback</label>
+<textarea id="mentor-rating-feedback" rows="2"></textarea>
+<button class="km-btn-mini" id="btn-rate-mentor" type="button">דרג מנטור</button>
+</div>
+<div class="mentor-matching-status" id="mentor-matching-status" aria-live="polite">לא נטען mentor matching.</div>
+<div class="mentor-match-summary" id="mentor-match-summary" aria-label="Mentor match summary"><div class="mentor-match-empty">אין match פעיל.</div></div>
+<div class="mentor-message-list" id="mentor-message-list" aria-label="Mentor messages"><div class="mentor-message-empty">אין הודעות טעונות.</div></div>
+</details>
+</section>
+</div>
+</div>
+</div>
+<div class="programming-basics-view" id="programming-basics-view" hidden>
+<div class="pb-hero glass-panel">
+<div>
+<h2>🧱 אבני הבסיס של התכנות</h2>
+<p>
+מסלול קצר שמראה איך כמעט כל דבר בקוד נבנה מערכים פשוטים:
+ערך, משתנה, תנאי, מערך ופונקציה. המטרה היא להבין את ההבדלים
+ולא רק לזכור מילים.
+</p>
+</div>
+<div class="pb-hero-badge">0 → value → variable → if → function → app</div>
+</div>
+<div id="programming-basics-content"></div>
+</div>
+<div class="programming-principles-view" id="programming-principles-view" hidden>
+<div class="pb-hero glass-panel">
+<div>
+<h2>🧭 עקרונות היסוד של תכנות טוב</h2>
+<p>
+השכבה שמחברת בין ידיעת syntax לבין כתיבת קוד שאפשר להבין,
+לבדוק, לשנות ולהריץ שוב באותה תוצאה.
+</p>
+</div>
+<div class="pb-hero-badge">same input → same output → predictable software</div>
+</div>
+<div id="programming-principles-content"></div>
+</div>
+<div class="programming-museum-view" id="programming-museum-view" hidden>
+<div id="programming-museum-content"></div>
+</div>
+<div class="language-tools-view" id="language-tools-view" hidden>
+<div class="lt-hero glass-panel">
+<div>
+<h2>🧮 השוואת שפות וכלי פיתוח</h2>
+<p>
+טבלה ממוקדת לבחירת שפה, framework, runtime וכלי עבודה לפי תחום:
+Frontend, Full-Stack, Backend, מערכות, מובייל וכלי פיתוח.
+</p>
+</div>
+<div class="lt-hero-badge">language → runtime → framework → tooling → product</div>
+</div>
+<div id="language-tools-content"></div>
+</div>
+<div class="knowledge-map" id="knowledge-map-view" hidden>
+<div class="km-header glass-panel">
+<div class="km-title">
+<h2>🗺️ מפת הידע האישית שלך</h2>
+<p>🔒 <strong>הרמות נעולות</strong> — לכל מושג ציון מ-1 עד 7. <strong>👵 רמה 1</strong> = ברירת מחדל, <strong>🧒 2</strong> = השלמת רמת סבתא, <strong>🪖 3</strong> = ילד, <strong>🎓 4</strong> = חייל, <strong>💻 5</strong> = סטודנט, <strong>🔬 6</strong> = ג'וניור, <strong class="km-v">🏆 7</strong> = פרופסור (מאסטר). כדי לעלות רמה — חובה לענות נכון על <strong>שאלה אמריקנית</strong> וגם על <strong>השלמת קוד</strong> ברמה הנוכחית.</p>
+</div>
+<div class="km-stats">
+<div class="km-stat km-stat-total"><span class="n" id="km-total">0</span><span>סה"כ מושגים</span></div>
+<div class="km-stat km-stat-v"><span class="n" id="km-known">0</span><span>🏆 מאסטר (רמה 7)</span></div>
+<div class="km-stat km-stat-x"><span class="n" id="km-unknown">0</span><span>⚠️ חלשים (רמה 1-2)</span></div>
+<div class="km-stat km-stat-pending"><span class="n" id="km-pending">0</span><span>❓ לא נבחנו</span></div>
+</div>
+<div class="km-mastery-bar">
+<div class="km-mastery-track">
+<div class="km-mastery-fill" id="km-mastery-fill"></div>
+</div>
+<div class="km-mastery-text" id="km-mastery-text">רמת שליטה: 0%</div>
+</div>
+<div class="km-toolbar">
+<input type="text" id="km-search" aria-label="חיפוש מושג במפת ידע" placeholder="🔍 חיפוש מושג..." />
+<select id="km-filter" aria-label="סינון מפת ידע">
+<option value="all">הצג הכל</option>
+<option value="unknown">רק חלשים (רמה 1-2)</option>
+<option value="known">רק מאסטר (רמה 7)</option>
+<option value="pending">רק לא נבחנו</option>
+</select>
+<select id="km-groupby" title="קבץ את המפה לפי שיעור או נושא">
+<option value="topic">📂 קבץ לפי נושא</option>
+<option value="lesson">📚 קבץ לפי שיעור</option>
+</select>
+<button class="km-btn-mini" id="km-go-trainer">🧠 לאימון במאמן הידע</button>
+<button class="km-btn-mini danger" id="km-reset">🔄 איפוס מלא (ציונים + סטטוסים)</button>
+</div>
+<div class="km-graph-panel" id="km-graph-panel">
+<div class="km-graph-head">
+<div>
+<strong>🕸️ גרף תלות מושגים</strong>
+<span id="km-graph-summary" class="km-graph-summary"></span>
+</div>
+<div class="km-graph-tools">
+<select id="km-graph-focus" aria-label="בחר מושג להתמקדות בגרף">
+<option value="">כל הגרף</option>
+</select>
+<button class="km-btn-mini" id="km-graph-reset">איפוס גרף</button>
+</div>
+</div>
+<div class="km-graph-canvas" id="km-graph-canvas" role="img" aria-label="גרף תלות בין מושגים"></div>
+</div>
+</div>
+<div class="km-lessons" id="km-lessons-container"></div>
+</div>
+<div class="study-mode" id="study-mode-view" hidden>
+<div class="study-header glass-panel">
+<h2>🎯 לימוד מותאם — חיזוק החולשות שלך</h2>
+<p id="study-subtitle">המערכת תעביר אותך על המושגים שסימנת כחלשים, אחד אחרי השני.</p>
+<div class="study-progress-line">
+<span id="study-progress-text">0 / 0</span>
+<div class="study-progress-track"><div class="study-progress-fill" id="study-progress-fill"></div></div>
+</div>
+</div>
+<div class="study-card-container glass-panel" id="study-card-container">
+</div>
+</div>
+<div class="trainer-view" id="trainer-view" hidden>
+<div class="trainer-dashboard glass-panel">
+<div class="trainer-dash-head">
+<h2>🧠 מאמן הידע — דוח רמות חי</h2>
+<p>לכל מושג רמה בין 1 ל-7. כדי לעלות רמה: ענה נכון על <strong>🅰️ שאלה אמריקנית</strong> וגם על <strong>✍️ השלמת קוד</strong> ברמה הנוכחית. רמות: 👵 1 → 🧒 2 → 🪖 3 → 🎓 4 → 💻 5 → 🔬 6 → 🏆 7.</p>
+</div>
+<div class="trainer-summary">
+<div class="t-stat t-stat-asked"><span class="n" id="t-asked">0</span><span>שאלות שנענו</span></div>
+<div class="t-stat t-stat-correct"><span class="n" id="t-correct">0</span><span>נכונות</span></div>
+<div class="t-stat t-stat-wrong"><span class="n" id="t-wrong">0</span><span>שגויות</span></div>
+<div class="t-stat t-stat-acc"><span class="n" id="t-accuracy">0%</span><span>דיוק</span></div>
+<div class="t-stat t-stat-mastered"><span class="n" id="t-mastered">0</span><span>🏆 מאסטר (7)</span></div>
+<div class="t-stat t-stat-weak"><span class="n" id="t-weak">0</span><span>⚠️ חלשים (1-2)</span></div>
+</div>
+<div class="trainer-mastery-bar">
+<div class="km-mastery-track"><div class="km-mastery-fill" id="t-mastery-fill"></div></div>
+<div class="km-mastery-text" id="t-mastery-text">שליטה כללית: 0%</div>
+</div>
+<div class="trainer-toolbar">
+<button class="km-btn-mini" id="t-toggle-report">📊 הצג/הסתר דוח מלא</button>
+<button class="km-btn-mini" id="t-focus-weak">🎯 הסתערות: רק חלשים</button>
+<button class="km-btn-mini" id="t-mode-mixed">🔀 מצב מעורב</button>
+<button class="km-btn-mini" id="t-export-csv">📥 ייצוא CSV</button>
+<button class="km-btn-mini danger" id="t-reset-scores">🔄 איפוס ציונים</button>
+<button class="km-btn-mini" id="t-open-pair-match">🎯 התאמות</button>
+<button class="km-btn-mini" id="t-open-bug-quests">🕵️ קווסטים</button>
+</div>
+</div>
+<div class="bug-quest-overlay" id="bug-quest-overlay" hidden role="dialog" aria-modal="true">
+<div class="bug-quest-modal glass-panel">
+<div class="bq-header">
+<div>
+<h3 id="bq-title">🕵️ קווסטים</h3>
+<div class="bq-progress" id="bq-progress"></div>
+</div>
+<button class="bq-close" id="bq-close" aria-label="סגור">✕</button>
+</div>
+<div id="bq-body"></div>
+</div>
+</div>
+<div class="pair-match-panel glass-panel" id="pair-match-panel" hidden>
+<div class="pm-header">
+<h3 id="pm-title">🎯 התאמות</h3>
+<button class="pm-close-btn" id="pm-close">✕ סגור</button>
+</div>
+<div class="pm-game-select" id="pm-game-select">
+</div>
+<div class="pm-board" id="pm-board">
+</div>
+<div class="pm-status" id="pm-status"></div>
+</div>
+<div class="trainer-quiz-card glass-panel" id="trainer-quiz-card">
+</div>
+<div class="trainer-report glass-panel" id="trainer-report" hidden>
+<h3>📊 דוח ציונים מלא — לפי שיעור</h3>
+<div class="trainer-report-body" id="trainer-report-body"></div>
+</div>
+</div>
+<div class="concept-sprint-view" id="concept-sprint-view" hidden>
+<div class="concept-sprint-shell glass-panel">
+<div class="concept-sprint-head">
+<div>
+<h2>⚡ מושגים נטו</h2>
+<p>בחינה ממוקדת על מושגים בלבד. כל תשובה נכנסת מיד למאמן הידע ומעדכנת את רמת השליטה שלך.</p>
+</div>
+<div class="concept-sprint-xp" id="concept-sprint-xp">XP נוכחי: 0</div>
+</div>
+<div id="concept-sprint-content"></div>
+</div>
+</div>
+<div class="reward-store-view" id="reward-store-view" hidden>
+<div class="reward-store-shell glass-panel">
+<div class="reward-store-head">
+<div>
+<h2>🛒 חנות חוויות</h2>
+<p>כאן משתמשים במטבעות שקיבלת מלמידה כדי לפתוח חוויות, עיצובים ואתגרי בונוס. אי אפשר לקנות ציון או מאסטר.</p>
+</div>
+<div class="reward-store-balance" id="reward-store-balance">🪙 0</div>
+</div>
+<div class="reward-store-filters" id="reward-store-filters" aria-label="סינון חנות"></div>
+<div id="reward-store-content"></div>
+</div>
+</div>
+<div class="guide-view" id="guide-view" hidden>
+<div class="guide-header glass-panel">
+<h2 id="guide-title">📖 מדריך מקוצר — מפת החומר</h2>
+<p id="guide-subtitle"></p>
+<div class="guide-toolbar">
+<input type="text" id="guide-search" aria-label="חיפוש בנושאי המדריך" placeholder="🔍 חיפוש בנושאים..." />
+<button class="km-btn-mini" id="guide-expand-all">📂 פתח הכל</button>
+<button class="km-btn-mini" id="guide-collapse-all">📁 כווץ הכל</button>
+</div>
+</div>
+<div class="guide-topics" id="guide-topics-container"></div>
+</div>
+<div class="guide-view grandma-knowledge-view" id="grandma-knowledge-view" hidden>
+<div class="guide-header glass-panel">
+<h2 id="grandma-knowledge-title">👵 ידע מורחב ברמת סבתא</h2>
+<p id="grandma-knowledge-subtitle"></p>
+<div class="guide-toolbar grandma-toolbar">
+<input type="text" id="grandma-knowledge-search" aria-label="חיפוש בעץ הידע" placeholder="🔍 חיפוש בענפי העץ או במושגים..." />
+<button class="km-btn-mini" id="grandma-knowledge-expand-all">📂 פתח את כל העץ</button>
+<button class="km-btn-mini" id="grandma-knowledge-collapse-all">📁 כווץ לעץ ראשי</button>
+</div>
+<div class="grandma-knowledge-stats" id="grandma-knowledge-stats"></div>
+</div>
+<div class="guide-topics grandma-knowledge-sections" id="grandma-knowledge-container"></div>
+</div>
+<div class="flashcards-view" id="flashcards-view" hidden>
+<div class="fc-header glass-panel">
+<div class="fc-title">
+<h2>🃏 כרטיסיות חזרה</h2>
+<p>חזרה ממוקדת לפי מצב SRS, רמת שליטה וחולשות שסומנו. כל דירוג מעדכן את אותו ציון מושג שמשמש את מפת הידע והמאמן.</p>
+</div>
+<div class="fc-stats">
+<div class="fc-stat"><span class="n" id="fc-total">0</span><span>כרטיסים בתור</span></div>
+<div class="fc-stat due"><span class="n" id="fc-due">0</span><span>חזרה היום</span></div>
+<div class="fc-stat weak"><span class="n" id="fc-weak">0</span><span>חלשים</span></div>
+<div class="fc-stat done"><span class="n" id="fc-reviewed">0</span><span>נסקרו בסשן</span></div>
+</div>
+<div class="fc-toolbar">
+<input type="text" id="fc-search" aria-label="חיפוש בכרטיסיות לימוד" placeholder="🔍 חיפוש מושג, שיעור או הסבר..." />
+<select id="fc-filter" aria-label="סינון כרטיסיות">
+<option value="due">🔁 חזרה מומלצת + חדשים</option>
+<option value="weak">⚠️ חלשים</option>
+<option value="new">✨ לא נלמדו</option>
+<option value="mastered">🏆 מאסטר</option>
+<option value="all">📚 הכל</option>
+</select>
+<select id="fc-level" aria-label="רמת ההסבר בגב הכרטיס">
+<option value="student">🎓 סטודנט</option>
+<option value="grandma">👵 סבתא</option>
+<option value="child">🧒 ילד</option>
+<option value="soldier">🪖 חייל</option>
+<option value="junior">💻 ג׳וניור</option>
+<option value="professor">🔬 פרופסור</option>
+</select>
+<button class="km-btn-mini" id="fc-mix-order">🔀 סדר מעורב קבוע</button>
+<button class="km-btn-mini" id="fc-reset-session">↺ אפס סשן</button>
+</div>
+</div>
+<div class="fc-session glass-panel" id="fc-session">
+<div class="fc-progress-line">
+<span id="fc-progress-text">0 / 0</span>
+<div class="study-progress-track"><div class="study-progress-fill" id="fc-progress-fill"></div></div>
+</div>
+<div class="fc-card-shell" id="fc-card-shell"></div>
+</div>
+</div>
+<div class="active-lesson" id="active-lesson" hidden>
+<div class="lesson-banner glass-panel" id="lesson-banner">
+<span class="lesson-banner-icon">🎯</span>
+<div class="lesson-banner-text">
+<strong>מצב למידה אדפטיבי:</strong>
+כל מושג מוצג ברמה שלך עבורו. אם לא ברור — בקש רמה פשוטה יותר.
+אם הבנת — לחץ "🎯 בחן אותי" כדי להתקדם רמה.
+</div>
+</div>
+<article class="lesson-article glass-panel">
+<div class="article-inner" id="lesson-body">
+</div>
+</article>
+<section class="quiz-section glass-panel" id="quiz-section" hidden>
+<div class="quiz-header">
+<h3>📝 שאלון — בדוק את הידע שלך!</h3>
+<p class="quiz-subtitle">ענה על כל השאלות כדי לוודא שהבנת את החומר לעומקו</p>
+</div>
+<div class="quiz-body" id="quiz-body">
+</div>
+<div class="quiz-actions">
+<button class="quiz-submit-btn" id="quiz-submit">✅ בדוק תשובות</button>
+<button class="quiz-reset-btn" id="quiz-reset" hidden>🔄 נסה שוב</button>
+</div>
+<div class="quiz-results" id="quiz-results" hidden>
+<div class="quiz-score" id="quiz-score"></div>
+<div class="quiz-feedback" id="quiz-feedback"></div>
+</div>
+</section>
+</div>
+<div class="anatomy-page glass-panel" id="code-anatomy-view" hidden>
+<h2>📐 פירוק קוד — מה התפקיד של כל רכיב?</h2>
+<p class="anatomy-page-intro">
+קטעי קוד מהשיעורים עם הסבר על תפקיד כל מילה / סימן / משתנה. <strong>בחר מה להציג</strong> — אל תיכשל בעומס.
+</p>
+<div class="anatomy-toolbar">
+<input type="text" id="anatomy-search" aria-label="חיפוש בניתוח קוד" placeholder="🔍 חיפוש מושג / קוד..." />
+<select id="anatomy-lesson-filter" aria-label="סנן לפי שיעור">
+<option value="">📚 כל השיעורים</option>
+</select>
+<select id="anatomy-topic-filter" aria-label="סנן לפי נושא">
+<option value="">📂 כל הנושאים</option>
+</select>
+<select id="anatomy-concept-filter" aria-label="סנן לפי מושג">
+<option value="">🎯 כל המושגים</option>
+</select>
+<button class="km-btn-mini" id="anatomy-expand-all">⬇️ פתח הכל</button>
+<button class="km-btn-mini" id="anatomy-collapse-all">⬆️ סגור הכל</button>
+<span class="anatomy-stats" id="anatomy-stats" aria-live="polite"></span>
+</div>
+<div id="code-anatomy-content"></div>
+</div>
+<div class="trace-view" id="trace-view" hidden>
+<div class="trace-header glass-panel">
+<h2>🔬 Code Trace — חיזוי פלט שורה אחר שורה</h2>
+<p>קרא את הקוד, חזה את הפלט בכל שלב. כל תשובה נכונה מעלה את הניקוד למושג המקושר.</p>
+<div class="trace-toolbar">
+<select id="trace-filter-lesson" class="cb-select" aria-label="סינון Code Trace לפי שיעור">
+<option value="all">כל השיעורים</option>
+</select>
+<select id="trace-filter-level" class="cb-select" aria-label="סינון Code Trace לפי רמה">
+<option value="all">כל הרמות</option>
+<option value="1">רמה 1-2 (קל)</option>
+<option value="3">רמה 3-4 (בינוני)</option>
+<option value="5">רמה 5-6 (מתקדם)</option>
+</select>
+<button class="km-btn-mini" id="trace-random">🎲 Trace אקראי</button>
+</div>
+</div>
+<div class="trace-list" id="trace-list"></div>
+<div class="trace-player glass-panel" id="trace-player" hidden></div>
+</div>
+<div class="gap-matrix-view" id="gap-matrix-view" hidden>
+<div class="gm-header glass-panel">
+<h2>📊 מטריצת פערים — היכן צריך לחזק?</h2>
+<p>סקירה של כל נושאי הלימוד לפי מצב שליטה. לחץ על שורה לפרטי המושגים.</p>
+<div class="gm-toolbar">
+<button class="gm-filter-btn active" data-filter="all">הכל</button>
+<button class="gm-filter-btn" data-filter="gap">🔴 פערים</button>
+<button class="gm-filter-btn" data-filter="learning">🟡 בעבודה</button>
+<button class="gm-filter-btn" data-filter="strong">✅ חזק</button>
+<button class="gm-filter-btn" data-filter="untouched">⏳ לא נגעת 7 ימים</button>
+<button class="gm-filter-btn" data-filter="always-wrong">🎯 תמיד טועה</button>
+</div>
+</div>
+<div id="gm-matrix-container"></div>
+</div>
+<div class="learning-evidence-view" id="learning-evidence-view" hidden>
+<div class="le-header glass-panel">
+<div>
+<h2>📈 ראיות למידה — האם באמת משתפרים?</h2>
+<p>מדדים מקומיים מתוך שימוש אמיתי: תשובות, תיקוני טעות, חזרות, מבחנים ו-funnel לפי מושג. אין כאן מידע מזהה ואין נתונים מומצאים.</p>
+</div>
+<div class="le-actions" aria-label="פעולות ראיות למידה">
+<button class="km-btn-mini" id="le-refresh">🔄 רענן</button>
+<button class="km-btn-mini" id="le-export-json">⬇️ ייצוא אנונימי</button>
+<button class="km-btn-mini" id="le-report-md">📝 דוח שבועי</button>
+</div>
+</div>
+<div id="learning-evidence-content"></div>
+</div>
+<div class="capstones-view" id="capstones-view" hidden>
+<div class="capstones-header glass-panel">
+<div>
+<h2>🏗️ פרויקטי גמר — Capstones</h2>
+<p>חמישה פרויקטים שמחברים את החומר למוצר אמיתי: דרישות, מקרי קצה, בדיקות ו-code review checklist.</p>
+</div>
+<div class="capstones-header-stats" id="capstones-header-stats"></div>
+</div>
+<div class="capstones-container" id="capstones-container"></div>
+</div>
+<div class="blueprints-view" id="blueprints-view" hidden>
+<div class="blueprints-header glass-panel">
+<div>
+<h2>🧾 יישור SVCollege — AI & Full Stack</h2>
+<p>מיפוי לא רשמי לפי מקורות ציבוריים: אילו חלקים בפורטל מכסים כל מסלול, איפה יש פערים, ומה לתרגל במבחן או בפרויקט.</p>
+</div>
+<div class="blueprints-header-stats" id="blueprints-header-stats"></div>
+</div>
+<div class="blueprints-container" id="blueprints-container"></div>
+</div>
+<div class="comparator-view" id="comparator-view" hidden>
+<div class="cmp-header glass-panel">
+<h2>⚖️ השוואות זוגות — מתי להשתמש במה</h2>
+<p>טבלאות השוואה לזוגות מושגים שמתבלבלים. לחץ על זוג כדי לראות פירוט שורה-שורה.</p>
+<div class="cmp-toolbar">
+<input type="text" id="cmp-search" aria-label="חיפוש בהשוואת מושגים" placeholder="🔍 חיפוש (useState / props / Tailwind)..." />
+<button class="km-btn-mini" id="cmp-expand-all">⬇️ פתח הכל</button>
+<button class="km-btn-mini" id="cmp-collapse-all">⬆️ סגור הכל</button>
+</div>
+</div>
+<div id="cmp-list"></div>
+</div>
+<div class="mock-exam-view" id="mock-exam-view" hidden>
+<div class="mx-settings glass-panel" id="mx-settings">
+<h2>📝 מבחן מדומה</h2>
+<p>בחר תבנית מבחן. במהלך המבחן — אין רמזים, אין AI, יש טיימר. בסוף — ציון + פירוק חולשות.</p>
+<section class="homework-exam-mode" id="homework-exam-mode" aria-labelledby="homework-exam-mode-title">
+<div class="homework-exam-mode-head">
+<div>
+<h3 id="homework-exam-mode-title">Homework Exam Mode — לפי שיעורי הבית</h3>
+<p>מבחני 60-90 דקות מתוך שיעורי הבית ומבחני העבר: מבנה פעיל פרויקט 70 נק׳, JavaScript 20 נק׳, TypeScript 10 נק׳, בלי לפצל Express כניקוד עצמאי.</p>
+</div>
+<div class="homework-exam-mode-badge">SVCollege Full Stack</div>
+</div>
+<div class="homework-exam-mode-body" id="homework-exam-mode-body"></div>
+</section>
+<div class="mx-templates" id="mx-templates"></div>
+<div class="mx-history-block">
+<h3>📊 היסטוריית מבחנים</h3>
+<div id="mx-history"></div>
+</div>
+</div>
+<div class="mx-runner glass-panel" id="mx-runner" hidden>
+<div class="mx-runner-head">
+<div class="mx-progress" id="mx-progress" aria-live="polite"></div>
+<div class="mx-timer" id="mx-timer" aria-live="polite">⏱️ 00:00</div>
+<button class="km-btn-mini danger" id="mx-quit" aria-label="עצור מבחן מדומה">❌ עצור</button>
+</div>
+<div class="mx-question" id="mx-question" role="region" aria-label="שאלת מבחן נוכחית"></div>
+<div class="mx-runner-foot">
+<button class="km-btn-mini" id="mx-prev" aria-label="עבור לשאלה הקודמת">▶ הקודמת</button>
+<button class="km-btn-mini" id="mx-skip" aria-label="דלג על השאלה הנוכחית">⏭ דלג</button>
+<button class="km-btn-mini" id="mx-next" aria-label="עבור לשאלה הבאה">הבאה ◀</button>
+<button class="km-btn-mini primary" id="mx-submit" aria-label="הגש מבחן מדומה">📤 הגש מבחן</button>
+</div>
+<div class="mx-question-nav" id="mx-question-nav" aria-label="ניווט בין שאלות המבחן"></div>
+</div>
+<div class="mx-result glass-panel" id="mx-result" hidden></div>
+</div>
+<div class="codeblocks-view" id="codeblocks-view" hidden>
+<div class="cb-header glass-panel">
+<h2 id="cb-title">💻 למד בלוקי קוד</h2>
+<p id="cb-subtitle">בלוקי קוד אמיתיים עם הסבר עברי לכל שורה. ענה על השאלות והעלה את הניקוד שלך לכל מושג.</p>
+<div class="cb-stats" id="cb-stats">
+<div class="cb-stat"><span class="n" id="cb-stat-total">0</span><span>בלוקים</span></div>
+<div class="cb-stat"><span class="n" id="cb-stat-completed">0</span><span>הושלמו</span></div>
+<div class="cb-stat"><span class="n" id="cb-stat-correct">0</span><span>תשובות נכונות</span></div>
+<div class="cb-stat"><span class="n" id="cb-stat-mastered">0</span><span>🏆 מאסטר</span></div>
+<div class="cb-stat"><span class="n" id="cb-stat-progress">0%</span><span>שליטה כללית</span></div>
+</div>
+<div class="cb-toolbar">
+<input type="text" id="cb-search" aria-label="חיפוש בבלוקי קוד" placeholder="🔍 חיפוש בבלוקים..." />
+<select id="cb-filter-lesson" class="cb-select" aria-label="סינון בלוקים לפי שיעור">
+<option value="all">כל השיעורים</option>
+</select>
+<select id="cb-filter-difficulty" class="cb-select" aria-label="סינון בלוקים לפי קושי">
+<option value="all">כל הרמות</option>
+<option value="1">🟢 בסיסי</option>
+<option value="2">🟡 בינוני</option>
+<option value="3">🔴 מתקדם</option>
+</select>
+<button class="km-btn-mini" id="cb-expand-all">📂 פתח הכל</button>
+<button class="km-btn-mini" id="cb-collapse-all">📁 כווץ הכל</button>
+<button class="km-btn-mini" id="cb-random-block" title="פתח בלוק אקראי לתרגול מהיר">🎲 בלוק אקראי</button>
+<button class="km-btn-mini" id="cb-export-pdf" title="ייצוא כל הבלוקים הנראים ל-PDF צבעוני, בלוק לכל עמוד">📄 PDF צבעוני</button>
+<button class="km-btn-mini" id="cb-keys-help" title="הצג קיצורי מקלדת">⌨️ קיצורים</button>
+</div>
+</div>
+<div class="cb-blocks" id="cb-blocks-container"></div>
+</div>
+</div>
+</main>
+</div>
+<div class="support-report-modal" id="support-report-modal" role="dialog" aria-modal="true" aria-labelledby="support-report-title" hidden>
+<div class="support-report-backdrop" data-support-report-close></div>
+<article class="support-report-card glass-panel" tabindex="-1">
+<header class="support-report-head">
+<div>
+<span>Support payload</span>
+<h2 id="support-report-title">דיווח באג</h2>
+</div>
+<button class="km-btn-mini" type="button" data-support-report-close aria-label="סגור דיווח באג">סגור</button>
+</header>
+<div class="support-report-grid">
+<label>
+סוג
+<select id="support-report-type" aria-label="סוג דיווח תמיכה">
+<option value="bug">באג</option>
+<option value="content">תוכן</option>
+<option value="ui">ממשק</option>
+<option value="performance">ביצועים</option>
+<option value="accessibility">נגישות</option>
+<option value="support">תמיכה</option>
+</select>
+</label>
+<label>
+חומרה
+<select id="support-report-severity" aria-label="חומרת הדיווח">
+<option value="medium">בינוני</option>
+<option value="low">נמוך</option>
+<option value="high">גבוה</option>
+<option value="blocking">חוסם למידה</option>
+</select>
+</label>
+</div>
+<label class="support-report-field">
+כותרת
+<input id="support-report-title-input" aria-label="כותרת הדיווח" type="text" autocomplete="off" />
+</label>
+<label class="support-report-field">
+תיאור
+<textarea id="support-report-description" aria-label="תיאור הדיווח" rows="4"></textarea>
+</label>
+<label class="support-report-field">
+צילום מסך
+<input id="support-report-screenshot" aria-label="קובץ צילום מסך לדיווח" type="file" accept="image/png,image/jpeg,image/webp" />
+</label>
+<div class="support-report-context" id="support-report-context"></div>
+<div class="support-report-actions">
+<button class="km-btn-mini primary" id="support-report-generate" type="button">צור payload</button>
+<button class="km-btn-mini" id="support-report-copy" type="button">העתק JSON</button>
+</div>
+<textarea class="support-report-output" id="support-report-output" readonly aria-label="פלט JSON של דיווח באג"></textarea>
+</article>
+</div>
+<script src="data/lesson11.js"></script>
+<script src="data/lesson12.js"></script>
+<script src="data/lesson13.js"></script>
+<script src="data/lesson_html_css_foundations.js"></script>
+<script src="data/lesson_tooling_git.js"></script>
+<script src="data/lesson15.js"></script>
+<script src="data/lesson16.js"></script>
+<script src="data/lesson17.js"></script>
+<script src="data/lesson18.js"></script>
+<script src="data/lesson19.js"></script>
+<script src="data/lesson20.js"></script>
+<script src="data/lesson_sql_orm.js?v=svcollege-sql-orm-v1"></script>
+<script src="data/lesson_auth_security.js?v=svcollege-auth-v1"></script>
+<script src="data/lesson_nextjs.js?v=svcollege-nextjs-v1"></script>
+<script src="data/lesson_nestjs.js?v=svcollege-nestjs-v1"></script>
+<script src="data/lesson_devops_deploy.js?v=svcollege-devops-v1"></script>
+<script src="data/lesson_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
+<script src="data/lesson_design_systems.js?v=svcollege-design-systems-v1"></script>
+<script src="data/lesson21.js"></script>
+<script src="data/lesson22.js"></script>
+<script src="data/lesson23.js"></script>
+<script src="data/lesson24.js"></script>
+<script src="data/lesson25.js"></script>
+<script src="data/lesson26.js"></script>
+<script src="data/lesson27.js"></script>
+<script src="data/lesson_closures.js"></script>
+<script src="data/cluster_index.js?v=cluster-v1"></script>
+<script src="src/core/cluster-engine.js?v=cluster-engine-v1"></script>
+<script src="data/workbook_taskmanager.js"></script>
+<script src="data/ai_development.js"></script>
+<script src="data/react_blueprint.js"></script>
+<script src="data/questions_bank.js"></script>
+<script src="data/concept_enrichment.js"></script>
+<script src="data/extended_explanations.js"></script>
+<script src="data/questions_trace.js"></script>
+<script src="data/zz_questions_trace_phase2.js?v=phase2-v1"></script>
+<script src="data/zz_questions_trace_phase3.js?v=phase3-v1"></script>
+<script src="data/svcollege_traces_sql_orm.js?v=svcollege-sql-orm-v2"></script>
+<script src="data/svcollege_traces_auth.js?v=svcollege-auth-v2"></script>
+<script src="data/svcollege_traces_nextjs.js?v=svcollege-nextjs-v2"></script>
+<script src="data/svcollege_traces_nestjs.js?v=svcollege-nestjs-v2"></script>
+<script src="data/svcollege_traces_devops.js?v=svcollege-devops-v2"></script>
+<script src="data/svcollege_traces_ai_engineering.js?v=svcollege-ai-engineering-v2"></script>
+<script src="data/svcollege_traces_design_systems.js?v=svcollege-design-systems-v1"></script>
+<script src="data/svcollege_traces_bridge.js?v=svcollege-bridge-v1"></script>
+<script src="data/svcollege_traces_lesson11_activity.js?v=lesson11-activity-v1"></script>
+<script src="data/svcollege_traces_lesson12_activity.js?v=lesson12-activity-v1"></script>
+<script src="data/svcollege_traces_lesson13_activity.js?v=lesson13-activity-v2"></script>
+<script src="data/svcollege_traces_foundation_tooling_activity.js?v=foundation-tooling-activity-v1"></script>
+<script src="data/svcollege_traces_lesson15_activity.js?v=lesson15-activity-v1"></script>
+<script src="data/svcollege_traces_lesson16_activity.js?v=lesson16-activity-v1"></script>
+<script src="data/svcollege_traces_lesson17_activity.js?v=lesson17-activity-v1"></script>
+<script src="data/questions_bug.js"></script>
+<script src="data/zz_questions_bug_phase2.js?v=phase2-v1"></script>
+<script src="data/svcollege_questions_sql_orm.js?v=svcollege-sql-orm-v1"></script>
+<script src="data/svcollege_questions_auth.js?v=svcollege-auth-v1"></script>
+<script src="data/svcollege_questions_nextjs.js?v=svcollege-nextjs-v1"></script>
+<script src="data/svcollege_questions_nestjs.js?v=svcollege-nestjs-v1"></script>
+<script src="data/svcollege_questions_devops.js?v=svcollege-devops-v1"></script>
+<script src="data/svcollege_questions_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
+<script src="data/svcollege_questions_design_systems.js?v=svcollege-design-systems-v1"></script>
+<script src="data/svcollege_questions_bridge.js?v=svcollege-bridge-v1"></script>
+<script src="data/questions_build.js"></script>
+<script src="data/zz_questions_build_phase2.js?v=phase2-v1"></script>
+<script src="data/svcollege_builds_sql_orm.js?v=svcollege-sql-orm-v1"></script>
+<script src="data/svcollege_builds_auth.js?v=svcollege-auth-v1"></script>
+<script src="data/svcollege_builds_nextjs.js?v=svcollege-nextjs-v1"></script>
+<script src="data/svcollege_builds_nestjs.js?v=svcollege-nestjs-v1"></script>
+<script src="data/svcollege_builds_devops.js?v=svcollege-devops-v1"></script>
+<script src="data/svcollege_builds_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
+<script src="data/svcollege_builds_design_systems.js?v=svcollege-design-systems-v1"></script>
+<script src="data/svcollege_builds_bridge.js?v=svcollege-bridge-v1"></script>
+<script src="data/exam_tasks_tree.js?v=exam-tasks-tree-v1"></script>
+<script src="data/exam_manual_review_promotions.js?v=exam-manual-review-promotions-v1"></script>
+<script src="data/solution_guide_drills.js?v=solution-guide-drills-v1"></script>
+<script src="data/homework_exam_mode.js?v=homework-exam-mode-v6"></script>
+<script src="data/animations.js"></script>
+<script src="data/what_if.js"></script>
+<script src="data/concept_comics.js"></script>
+<script src="data/stage_zero.js"></script>
+<script src="data/memory_palaces.js"></script>
+<script src="data/problem_first.js"></script>
+<script src="data/concept_videos.js"></script>
+<script src="data/option_feedback.js"></script>
+<script src="data/quick_guide.js"></script>
+<script src="data/interview_prep.js?v=interview-prep-v1"></script>
+<script src="data/grandma_knowledge.js"></script>
+<script src="data/grandma_visuals.js"></script>
+<script src="data/code_blocks.js"></script>
+<script src="data/svcollege_code_blocks.js?v=svcollege-code-blocks-v1"></script>
+<script src="data/glossary.js?v=track-d-v2"></script>
+<script src="data/concise_definitions.js?v=concise-v1"></script>
+<script src="data/anti_patterns.js"></script>
+<script src="data/mnemonics.js"></script>
+<script src="data/flashcards.js"></script>
+<script src="data/war_stories.js"></script>
+<script src="data/comparisons.js?v=exam-comparisons-v1"></script>
+<script src="data/exam_practice_extras.js?v=exam-practice-extras-v1"></script>
+<script src="data/prerequisites.js"></script>
+<script src="data/svcollege_prerequisites_sql_orm.js?v=svcollege-sql-orm-v1"></script>
+<script src="data/svcollege_prerequisites_auth.js?v=svcollege-auth-v1"></script>
+<script src="data/svcollege_prerequisites_nextjs.js?v=svcollege-nextjs-v1"></script>
+<script src="data/svcollege_prerequisites_nestjs.js?v=svcollege-nestjs-v1"></script>
+<script src="data/svcollege_prerequisites_devops.js?v=svcollege-devops-v1"></script>
+<script src="data/svcollege_prerequisites_ai_engineering.js?v=svcollege-ai-engineering-v1"></script>
+<script src="data/svcollege_prerequisites_design_systems.js?v=svcollege-design-systems-v1"></script>
+<script src="data/metaphors.js"></script>
+<script src="data/pathways.js"></script>
+<script src="data/scenarios.js"></script>
+<script src="data/counterfactuals.js"></script>
+<script src="data/pair_match.js"></script>
+<script src="data/bug_quests.js"></script>
+<script src="data/capstones.js?v=capstones-v2"></script>
+<script src="data/guided_builds.js?v=guided-builds-v1"></script>
+<script src="data/course_blueprints.js?v=svcollege-only-v1"></script>
+<script src="data/lesson_quiz_keys.js"></script>
+<script src="data/level100_release_gates.js?v=level100-gate-v1"></script>
+<script src="content-loader.js?v=content-validation-v1"></script>
+<script src="lib/rng.js"></script>
+<script src="lib/srs.js"></script>
+<script src="lib/code-runner.js"></script>
+<script src="lib/vendor/dompurify.min.js"></script>
+<script src="src/core/sanitize-early.js"></script>
+<script src="data/portal_decision_aids.js?v=portal-decision-aids-v1"></script>
+<script src="data/site_navigation_tree.js?v=site-tree-v1"></script>
+<script src="src/views/exam100-path-core.js?v=exam100-path-core-v1"></script>
+<script src="src/views/homework-exam-mode-view.js?v=homework-exam-mode-view-v18"></script>
+<script src="src/views/lesson-renderer/lesson-renderer.js?v=lesson-renderer-v1"></script>
+<script src="src/views/chrome-menu/chrome-menu.js?v=chrome-menu-v1"></script>
+<script src="src/views/settings-preferences/settings-preferences.js?v=settings-preferences-v1"></script>
+<script src="src/views/bug-agent/bug-agent-ui.js?v=bug-agent-ui-v1"></script>
+<script src="src/views/question-panels/question-panels.js?v=question-panels-v1"></script>
+<script src="app.js?v=homework-exam-mode-v6"></script>
+<script src="src/boot/module-bootstrap-loader.js?v=module-bootstrap-loader-v1" data-module-path="/src/main.js?v=core-bootstrap-v2"></script>
+<div id="achievements-overlay" class="achievements-overlay" hidden role="dialog" aria-modal="true">
+<div class="achievements-modal glass-panel">
+<div class="ach-modal-head">
+<h3>🏆 הישגים</h3>
+<button id="ach-close" class="ach-close-btn" aria-label="סגור">✕</button>
+</div>
+<div id="achievements-body" class="achievements-grid"></div>
+</div>
+</div>
+<div id="xp-detail-overlay" class="xp-detail-overlay" hidden role="dialog" aria-modal="true">
+<div class="xp-detail-modal glass-panel">
+<div class="xp-detail-head">
+<h3>⭐ מצב XP ומטבעות</h3>
+<button id="xp-detail-close" class="ach-close-btn" aria-label="סגור">✕</button>
+</div>
+<div id="xp-detail-body" class="xp-detail-body"></div>
+</div>
+</div>
+<div id="reflection-overlay" class="reflection-overlay" hidden role="dialog" aria-modal="true">
+<div class="reflection-modal glass-panel">
+<div class="refl-head">
+<div>
+<h3>📝 רפלקציה יומית</h3>
+<div id="reflection-date" class="refl-date"></div>
+</div>
+<button id="reflection-close-w12" class="refl-close" aria-label="סגור">✕</button>
+</div>
+<p class="refl-prompt">מה למדת היום? מה היה קשה? מה רצית לחזק?</p>
+<textarea id="reflection-text" class="refl-textarea" aria-label="טקסט רפלקציה" rows="4" placeholder="כתוב כאן את המחשבות שלך..."></textarea>
+<div class="refl-rating">
+<span>איך הרגשת היום?</span>
+<div class="refl-stars">
+<button class="refl-star" data-star="1">😕</button>
+<button class="refl-star" data-star="2">😐</button>
+<button class="refl-star" data-star="3" >😊</button>
+<button class="refl-star" data-star="4">😄</button>
+<button class="refl-star" data-star="5">🤩</button>
+</div>
+</div>
+<div class="refl-history-section">
+<h4>📅 רפלקציות קודמות</h4>
+<div id="reflection-history"></div>
+</div>
+<button id="reflection-save" class="refl-save-btn">שמור רפלקציה (+15 XP)</button>
+</div>
+</div>
+<div id="lesson-wrap-overlay" class="lesson-wrap-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="lesson-wrap-title">
+<div class="lesson-wrap-modal glass-panel">
+<div class="lw-head">
+<div>
+<h3 id="lesson-wrap-title">⏱️ סיכום 60 שניות</h3>
+<div id="lesson-wrap-meta" class="lw-meta"></div>
+</div>
+<button id="lesson-wrap-close" class="lw-close" aria-label="סגור">✕</button>
+</div>
+<div class="lw-timer-row">
+<div class="lw-timer" id="lesson-wrap-timer" aria-live="polite">60</div>
+<div class="lw-timer-track" aria-hidden="true">
+<div class="lw-timer-fill" id="lesson-wrap-timer-fill"></div>
+</div>
+</div>
+<div id="lesson-wrap-body" class="lw-body"></div>
+<div class="lw-confidence-block">
+<div class="lw-label">רמת ביטחון אחרי השיעור</div>
+<div class="lw-confidence" role="radiogroup" aria-label="רמת ביטחון אחרי השיעור">
+<button class="lw-confidence-btn" data-confidence="1" aria-pressed="false">1</button>
+<button class="lw-confidence-btn" data-confidence="2" aria-pressed="false">2</button>
+<button class="lw-confidence-btn" data-confidence="3" aria-pressed="false">3</button>
+<button class="lw-confidence-btn" data-confidence="4" aria-pressed="false">4</button>
+<button class="lw-confidence-btn" data-confidence="5" aria-pressed="false">5</button>
+</div>
+<div id="lesson-wrap-calibration" class="lw-calibration">בחר מספר כדי לשמור כיול ביטחון מול הציון.</div>
+</div>
+<label class="lw-label" for="lesson-wrap-note">הערה קצרה לעצמך</label>
+<textarea id="lesson-wrap-note" class="lw-note" rows="3" placeholder="מה לחזק לפני המעבר לשיעור הבא?"></textarea>
+<div class="lw-actions">
+<button id="lesson-wrap-save" class="lw-action primary">שמור סיכום (+10 XP)</button>
+<button id="lesson-wrap-flashcards" class="lw-action">שמור ופתח כרטיסיות</button>
+<button id="lesson-wrap-map" class="lw-action">שמור ופתח מפת ידע</button>
+</div>
+</div>
+</div>
+<button id="ai-tutor-fab" class="ai-tutor-fab" aria-label="פתח מאמן AI" title="💬 מאמן AI — שאל שאלה, קבל הסבר, בדוק ידע">💬 מאמן</button>
+<div id="ai-tutor-modal" class="ai-tutor-modal hidden" role="dialog" aria-modal="true" aria-labelledby="ai-tutor-modal-title">
+<div class="ai-tutor-modal-inner glass-panel">
+<div class="ai-head">
+<div>
+<h3 id="ai-tutor-modal-title">💬 מאמן AI</h3>
+<div class="ai-usage" id="ai-usage-display"></div>
+</div>
+<button class="ai-close" id="ai-tutor-close" aria-label="סגור">✕</button>
+</div>
+<div class="ai-mode-tabs" role="tablist">
+<button class="ai-mode-tab active" data-mode="coach" role="tab" aria-selected="true">🧭 מאמן</button>
+<button class="ai-mode-tab" data-mode="explain" role="tab" aria-selected="false">💡 הסבר</button>
+<button class="ai-mode-tab" data-mode="check" role="tab" aria-selected="false">✔️ בדיקה</button>
+</div>
+<div class="ai-context-bar" id="ai-context-bar"></div>
+<div class="ai-response-area" id="ai-response" aria-live="polite"></div>
+<div class="ai-production-note">
+Alpha production משתמש ב-Supabase Edge Function רק עם credentials אמיתיים. אין מפתחות AI בדפדפן; אם אין חיבור, המאמן נשאר במענה מקומי.
+</div>
+<div class="ai-input-row">
+<textarea class="ai-textarea" id="ai-input" placeholder="שאל שאלה על המושג הנוכחי..." rows="2" aria-label="שאלה למאמן AI"></textarea>
+<button class="ai-send-btn" id="ai-send" aria-label="שלח שאלה">שלח ↑</button>
+</div>
+</div>
+</div>
+<div id="consent-banner" hidden role="dialog" aria-labelledby="consent-title" aria-describedby="consent-body">
+<div class="consent-inner">
+<div class="consent-text">
+<h2 id="consent-title">🍪 אחסון מקומי בלבד</h2>
+<p id="consent-body">
+LumenPortal שומר את ההתקדמות שלך (ציונים, רפלקציות, מבחנים) ב-<code>localStorage</code> של הדפדפן שלך בלבד.
+<strong>שום נתון לא נשלח לשרת חיצוני.</strong> ראה <a href="PRIVACY.md" target="_blank" rel="noopener">הצהרת פרטיות</a> ו-<a href="TERMS.md" target="_blank" rel="noopener">תנאי שימוש</a>.
+</p>
+</div>
+<div class="consent-actions">
+<button id="consent-accept" class="consent-btn consent-btn-primary">מאשר/ת — לשמור התקדמות</button>
+<button id="consent-decline" class="consent-btn consent-btn-secondary">לא מאשר/ת — בלי שמירה</button>
+</div>
+</div>
+</div>
+<div id="lumen-confirm" hidden role="dialog" aria-modal="true" aria-labelledby="lumen-confirm-title">
+<div class="lumen-confirm-panel">
+<h2 id="lumen-confirm-title" class="lumen-confirm-title">לאשר?</h2>
+<p id="lumen-confirm-body" class="lumen-confirm-body"></p>
+<div class="lumen-confirm-actions">
+<button id="lumen-confirm-yes" class="lumen-confirm-btn lumen-confirm-btn-primary">אישור</button>
+<button id="lumen-confirm-no" class="lumen-confirm-btn lumen-confirm-btn-secondary">ביטול</button>
+</div>
+</div>
+</div>
+<div id="onboarding-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
+<div class="onboarding-panel">
+<h1 id="onboarding-title">👋 ברוכים הבאים ל-LumenPortal</h1>
+<p class="onboarding-sub">פורטל לימוד Full-Stack JavaScript · 29 שיעורים · 568 מושגים · 4,762 שאלות · 727 פעילויות מעשיות</p>
+<p class="onboarding-q">איך הכי נוח להתחיל?</p>
+<div class="onboarding-choices">
+<button class="onboarding-choice" data-onboarding="open-trainer">
+<span class="onboarding-icon" aria-hidden="true">🎯</span>
+<span class="onboarding-label">התחל מאימון אדפטיבי</span>
+<span class="onboarding-hint">המאמן יבחר את המושג הבא לפי החוזקות שלך</span>
+</button>
+<button class="onboarding-choice" data-onboarding="open-study-mode">
+<span class="onboarding-icon" aria-hidden="true">📚</span>
+<span class="onboarding-label">תקרא קודם, תתרגל אחר כך</span>
+<span class="onboarding-hint">ללמוד את חומר השיעור בסדר רגיל</span>
+</button>
+<button class="onboarding-choice" data-onboarding="open-mock-exam">
+<span class="onboarding-icon" aria-hidden="true">📝</span>
+<span class="onboarding-label">תעבור בחינת רמה</span>
+<span class="onboarding-hint">מבחן 15 שאלות שמשקף את היכולת הנוכחית</span>
+</button>
+</div>
+<button class="onboarding-skip" id="onboarding-skip">דלג, אני מכיר/ה את הפלטפורמה</button>
+</div>
+</div>
+<script src="src/boot/lumen-confirm.js"></script>
+<script src="src/boot/consent-onboarding.js"></script>
+</body>
 </html>

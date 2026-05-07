@@ -1,12 +1,12 @@
 # Manual Question Blocker Map
 
 > **Historical / Superseded**: this artifact is older than the current source-of-truth run.
-> Captured on: 2026-04-30
-> Source-of-truth refresh date: 2026-05-02
+> Captured on: 2026-05-05
+> Source-of-truth refresh date: 2026-05-06
 > Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
 
 
-Date: 2026-04-30
+Date: 2026-05-05
 
 ## Summary
 
@@ -36,11 +36,11 @@ Date: 2026-04-30
 
 | Concept key | Manual MC | Manual Fill | Needs Fill | MC deficit | Fill deficit |
 |---|---:|---:|---:|---:|---:|
-| `lesson_25::Tailwind CSS` | 3/3 | 2/2 | yes | 0 | 0 |
-| `lesson_25::utility classes` | 3/3 | 2/2 | yes | 0 | 0 |
-| `lesson_25::responsive design` | 3/3 | 2/2 | yes | 0 | 0 |
-| `lesson_25::grid` | 3/3 | 2/2 | yes | 0 | 0 |
-| `lesson_25::flex` | 3/3 | 2/2 | yes | 0 | 0 |
+| `lesson_25::Tailwind CSS` | 5/3 | 2/2 | yes | 0 | 0 |
+| `lesson_25::utility classes` | 5/3 | 2/2 | yes | 0 | 0 |
+| `lesson_25::responsive design` | 7/3 | 4/2 | yes | 0 | 0 |
+| `lesson_25::grid` | 6/3 | 4/2 | yes | 0 | 0 |
+| `lesson_25::flex` | 7/3 | 4/2 | yes | 0 | 0 |
 ### AI למפתחים — Cursor, Windsurf, Bolt, תיעוד וטסטים עם AI
 
 - Readiness: 100%
@@ -54,5 +54,5 @@ Date: 2026-04-30
 | `ai_development::Cursor` | 3/3 | 2/2 | yes | 0 | 0 |
 | `ai_development::Windsurf` | 3/3 | 2/2 | yes | 0 | 0 |
 | `ai_development::Prompt Engineering` | 3/3 | 2/2 | yes | 0 | 0 |
-| `ai_development::AI Code Review` | 3/3 | 2/2 | yes | 0 | 0 |
+| `ai_development::AI Code Review` | 4/3 | 2/2 | yes | 0 | 0 |
 

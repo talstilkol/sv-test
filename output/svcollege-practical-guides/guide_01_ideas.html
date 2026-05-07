@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>מדריך 1 - הרעיון שמאחורי כל דבר</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07111f; --panel:#101b2d; --soft:#17233a; --ink:#f8fafc; --muted:#a8b3c7; --cyan:#22d3ee; --green:#86efac; --amber:#facc15; --red:#fb7185; --purple:#c4b5fd; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: Arial, "Noto Sans Hebrew", sans-serif; color:var(--ink); background:linear-gradient(180deg,#07111f,#0f172a); line-height:1.7; }
+    main { max-width:1180px; margin:auto; padding:28px 18px 60px; }
+    nav { display:flex; gap:10px; flex-wrap:wrap; margin:18px 0; }
+    a { color:#04111f; background:var(--cyan); padding:8px 12px; border-radius:999px; text-decoration:none; font-weight:900; }
+    .print { color:#04111f; background:var(--green); padding:8px 12px; border:0; border-radius:999px; font-weight:900; cursor:pointer; }
+    h1 { font-size:clamp(2rem,5vw,4rem); margin:0; color:var(--cyan); }
+    h2 { margin:0 0 10px; color:var(--green); }
+    h3 { margin:0 0 8px; color:var(--amber); }
+    p, li { color:var(--muted); }
+    .hero, .section, .cluster, .rule { border:1px solid rgba(255,255,255,.12); border-radius:18px; background:rgba(16,27,45,.78); }
+    .hero { padding:28px; background:radial-gradient(circle at top right,rgba(34,211,238,.22),rgba(16,27,45,.86)); }
+    .section { padding:22px; margin-top:18px; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .two { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    .cluster { padding:16px; }
+    .tag { display:inline-flex; padding:4px 9px; border-radius:999px; background:rgba(34,211,238,.14); color:var(--cyan); font-weight:900; }
+    table { width:100%; border-collapse:collapse; overflow:hidden; border-radius:14px; margin-top:10px; }
+    th, td { padding:10px; border:1px solid rgba(255,255,255,.12); text-align:right; vertical-align:top; }
+    th { background:rgba(34,211,238,.14); color:var(--ink); }
+    td { color:var(--muted); background:rgba(15,23,42,.62); }
+    code, pre { direction:ltr; text-align:left; unicode-bidi:embed; }
+    pre { overflow:auto; padding:14px; border-radius:14px; background:#020617; border:1px solid rgba(34,211,238,.25); color:#d1fae5; }
+    .red { border-color:rgba(251,113,133,.45); background:rgba(127,29,29,.22); }
+    .green { border-color:rgba(134,239,172,.45); background:rgba(20,83,45,.18); }
+    @media (max-width:850px){ .grid,.two{grid-template-columns:1fr;} }
+    @media print {
+      :root { color-scheme: light; }
+      body { background:#fff; color:#111827; }
+      main { max-width:none; padding:0; }
+      nav, .print { display:none; }
+      .hero, .section, .cluster { background:#fff; border-color:#cbd5e1; break-inside:avoid; }
+      p, li, td { color:#374151; }
+      h1 { color:#0e7490; }
+      h2 { color:#047857; }
+      h3 { color:#92400e; }
+      pre { white-space:pre-wrap; background:#f8fafc; color:#111827; border-color:#cbd5e1; }
+    }
+    /* Shared guide tree navigation */
+    .guide-tree-nav { display:grid; gap:12px; margin:18px 0; padding:16px; border:1px solid rgba(34,211,238,.28); border-radius:16px; background:rgba(2,6,23,.42); }
+    .guide-tree-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .guide-tree-head strong { color:var(--ink); font-size:1.08rem; }
+    .guide-tree-head span { color:var(--muted); font-weight:800; }
+    .guide-tree-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .guide-tree-branch { border:1px solid rgba(255,255,255,.1); border-radius:14px; background:rgba(15,23,42,.72); overflow:hidden; }
+    .guide-tree-branch > summary { cursor:pointer; list-style:none; padding:12px 14px; color:var(--amber); font-weight:900; }
+    .guide-tree-branch > summary::-webkit-details-marker { display:none; }
+    .guide-tree-links { display:grid; gap:8px; padding:0 12px 12px; }
+    .guide-tree-links a { display:inline-flex; align-items:center; justify-content:space-between; gap:10px; min-height:42px; padding:9px 14px; border-radius:10px; background:rgba(34,211,238,.12); color:#dff7ff; border:1px solid rgba(34,211,238,.2); text-decoration:none; font-weight:900; }
+    .guide-tree-links a.primary { background:var(--cyan); color:#03111f; }
+    .guide-tree-links a.warning { background:rgba(250,204,21,.16); color:#fef3c7; border-color:rgba(250,204,21,.28); }
+    .guide-tree-links a.low { background:rgba(148,163,184,.1); color:#cbd5e1; border-color:rgba(148,163,184,.18); }
+    .guide-tree-links a[aria-current="page"] { outline:3px solid var(--green); outline-offset:2px; background:var(--green); color:#03111f; }
+    .guide-tree-links a span { flex:0 0 auto; font-size:.78rem; opacity:.88; }
+    .guide-tree-actions { display:flex; flex-wrap:wrap; gap:10px; }
+    @media (max-width:780px){ .guide-tree-grid{grid-template-columns:1fr;} }
+  
+    /* Simple closed route: the only default navigation for the guide package. */
+
+    body.guide-simple-mode .guide-tree-nav,
+    body.guide-simple-mode .guide-tree-actions,
+    body.guide-simple-mode .grid,
+    body.guide-simple-mode .rule,
+    body.guide-simple-mode .sources,
+    body.guide-simple-mode .status-grid,
+    body.guide-simple-mode .tracker-shell,
+    body.guide-simple-mode .tracker-actions {
+      display:none !important;
+    }
+    body.guide-simple-mode a:not(.guide-arrow) {
+      pointer-events:none;
+      opacity:.45;
+      filter:grayscale(100%);
+      text-decoration:none;
+    }
+    body.guide-simple-mode .guide-tree-nav,
+    body.guide-simple-mode .grid[aria-label="שלושת המדריכים"] { display:none !important; }
+    .guide-simple-route { display:grid; gap:16px; margin:0 0 22px; padding:18px; border:1px solid rgba(34,211,238,.42); border-radius:18px; background:linear-gradient(135deg,rgba(8,47,73,.72),rgba(15,23,42,.9)); box-shadow:0 18px 50px rgba(0,0,0,.22); }
+    .guide-simple-top { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:14px; align-items:center; }
+    .guide-simple-kicker { color:var(--cyan); font-weight:900; letter-spacing:.02em; }
+    .guide-simple-title { margin:.1rem 0 0; color:var(--ink); font-size:clamp(1.35rem,3vw,2.15rem); line-height:1.18; }
+    .guide-simple-percent { display:grid; place-items:center; min-width:112px; min-height:92px; padding:10px; border:1px solid rgba(134,239,172,.42); border-radius:18px; background:rgba(20,83,45,.22); }
+    .guide-simple-percent strong { color:var(--green); font-size:2rem; line-height:1; }
+    .guide-simple-percent span { color:var(--muted); font-weight:800; font-size:.82rem; }
+    .guide-simple-bar { height:12px; overflow:hidden; border-radius:999px; background:rgba(2,6,23,.78); border:1px solid rgba(255,255,255,.09); }
+    .guide-simple-bar i { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--cyan),var(--green),var(--amber)); }
+    .guide-simple-map { display:grid; grid-template-columns:repeat(11,minmax(74px,1fr)); gap:8px; }
+    .guide-step { display:grid; gap:4px; min-height:74px; padding:9px 8px; border-radius:14px; border:1px solid rgba(148,163,184,.18); background:rgba(15,23,42,.72); color:var(--muted); text-align:center; align-content:center; }
+    .guide-step b { color:inherit; font-size:.82rem; }
+    .guide-step span { font-weight:900; font-size:.85rem; line-height:1.15; }
+    .guide-step.done { color:#bbf7d0; border-color:rgba(134,239,172,.42); background:rgba(20,83,45,.18); }
+    .guide-step.current { color:#03111f; border-color:rgba(134,239,172,.78); background:var(--green); box-shadow:0 0 0 3px rgba(134,239,172,.18); }
+    .guide-simple-current { display:grid; gap:5px; padding:12px 14px; border:1px solid rgba(34,211,238,.25); border-radius:14px; background:rgba(2,6,23,.42); }
+    .guide-simple-current strong { color:var(--ink); font-size:1.08rem; }
+    .guide-simple-current span { color:var(--muted); font-weight:800; }
+    .guide-simple-arrows { display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:center; }
+    .guide-arrow { min-height:54px; display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:16px; border:1px solid rgba(34,211,238,.36); background:rgba(34,211,238,.14); color:#dff7ff; text-decoration:none; font-weight:900; font-size:1.02rem; }
+    .guide-arrow.next { background:var(--cyan); color:#03111f; }
+    .guide-arrow.disabled { opacity:.42; cursor:not-allowed; background:rgba(148,163,184,.12); color:var(--muted); }
+    .guide-simple-arrows output { min-width:110px; text-align:center; color:var(--green); font-weight:900; font-size:1.2rem; }
+    @media (max-width:900px){ .guide-simple-map{grid-template-columns:repeat(4,minmax(0,1fr));} .guide-simple-top{grid-template-columns:1fr;} .guide-simple-percent{justify-items:start; place-items:start;} }
+    @media (max-width:560px){ .guide-simple-map{grid-template-columns:repeat(2,minmax(0,1fr));} .guide-simple-arrows{grid-template-columns:1fr;} .guide-simple-arrows output{order:-1; width:100%;} }
+    @media print { .guide-simple-route { display:none !important; } }
+
+</style>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='0f172a'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='30' fill='67e8f9' font-family='Arial,sans-serif'%3E100%3C/text%3E%3C/svg%3E">
+</head>
+<body class="guide-simple-mode">
+<main>
+<!-- simple-guide-route:start -->
+    <nav class="guide-simple-route" aria-label="מסלול פשוט עם שני חצים">
+      <div class="guide-simple-top">
+        <div>
+          <div class="guide-simple-kicker">תפריט פשוט - בלי בחירות באמצע</div>
+          <h2 class="guide-simple-title">מדריך 1 - הרעיון</h2>
+        </div>
+        <div class="guide-simple-percent" aria-label="אחוז התקדמות במסלול">
+          <strong>45%</strong>
+          <span>שלב 5 מתוך 11</span>
+        </div>
+      </div>
+      <div class="guide-simple-bar" aria-hidden="true"><i style="width:45%"></i></div>
+      <div class="guide-simple-map" aria-label="מפת כל השלבים עד הסיום"><span class="guide-step done"><b>1/11</b><span>בית</span></span><span class="guide-step done"><b>2/11</b><span>התחלה</span></span><span class="guide-step done"><b>3/11</b><span>חירום</span></span><span class="guide-step done"><b>4/11</b><span>תוכנית</span></span><span class="guide-step current" aria-current="step"><b>5/11</b><span>הבנה</span></span><span class="guide-step"><b>6/11</b><span>תרגול</span></span><span class="guide-step"><b>7/11</b><span>מבחן</span></span><span class="guide-step"><b>8/11</b><span>מסלול</span></span><span class="guide-step"><b>9/11</b><span>מעקב</span></span><span class="guide-step"><b>10/11</b><span>סטטוס</span></span><span class="guide-step"><b>11/11</b><span>סיום</span></span></div>
+      <div class="guide-simple-current"><strong>עכשיו עושים רק את זה:</strong><span>מדריך 1 - הרעיון. כדי לזוז במסלול משתמשים רק בחצים למטה.</span></div>
+      <div class="guide-simple-arrows" aria-label="חצים למסלול הסגור">
+        <a class="guide-arrow prev" href="./forward_tasks_plan.html" aria-label="חזור לשלב הקודם">← אחורה</a>
+        <output>45%</output>
+        <a class="guide-arrow next" href="./guide_02_homework_and_exam_drills.html" aria-label="עבור לשלב הבא">קדימה →</a>
+      </div>
+    </nav>
+<!-- simple-guide-route:end -->
+
+  <section class="hero">
+    <span class="tag">מדריך 1 מתוך 3</span>
+    <h1>הרעיון שמאחורי כל דבר</h1>
+    <p>המדריך הזה מסביר את התמונה הגדולה לפני קוד. אם אתה מבין מי אחראי על מה, רוב השאלות במבחן הופכות למשימות בנייה ולא לבלגן.</p>
+    <nav class="guide-tree-nav" aria-label="עץ ניווט לכל מדריכי ההכנה">
+      <div class="guide-tree-head">
+        <strong>עץ המסמכים שנוצרו</strong>
+        <span>פתח לפי מצב, לא לפי שם קובץ</span>
+      </div>
+      <div class="guide-tree-grid">
+          <details class="guide-tree-branch" open>
+            <summary>1. התחלה עכשיו</summary>
+            <div class="guide-tree-links">
+              <a href="./index.html">אינדקס כל המדריכים <span>בית</span></a>
+              <a class="primary" href="./start_here.html">אני לא יודע מאיפה להתחיל <span>Heat 10</span></a>
+              <a class="warning" href="./one_page_exam_cheatsheet.html">כרטיס חירום למבחן <span>יום לפני/במבחן</span></a>
+              <a href="./forward_tasks_plan.html">תוכנית קדימה <span>54 משימות</span></a>
+            </div>
+          </details>
+          <details class="guide-tree-branch" open>
+            <summary>2. שלושת המדריכים המרכזיים</summary>
+            <div class="guide-tree-links">
+              <a href="./guide_01_ideas.html" aria-current="page">מדריך 1 - הרעיון שמאחורי כל דבר <span>הבנה</span></a>
+              <a class="primary" href="./guide_02_homework_and_exam_drills.html">מדריך 2 - שיעורי בית ותרגילי מבחן <span>תרגול</span></a>
+              <a href="./guide_03_exam_day_runbook.html">מדריך 3 - מה עושים בזמן המבחן <span>Runbook</span></a>
+            </div>
+          </details>
+          <details class="guide-tree-branch" open>
+            <summary>3. מסלול ומעקב אישי</summary>
+            <div class="guide-tree-links">
+              <a href="./study_path_37h45.html">מסלול 100:20 שעות <span>תוכנית למידה</span></a>
+              <a href="./progress_tracker.html">מעקב התקדמות <span>שמירה מקומית</span></a>
+            </div>
+          </details>
+          <details class="guide-tree-branch">
+            <summary>4. הדפסה, סטטוס ומקורות</summary>
+            <div class="guide-tree-links">
+              <a href="./print_pack.html">גרסת הדפסה מאוחדת <span>Print</span></a>
+              <a href="./status.html">סטטוס החבילה <span>בדיקות</span></a>
+              <a class="low" href="./source_map.md">מפת מקורות <span>בקרה</span></a>
+              <a class="low" href="./README.md">README <span>שימוש</span></a>
+            </div>
+          </details>
+      </div>
+      <div class="guide-tree-actions">
+        <button class="print" type="button" onclick="window.print()">הדפס דף זה</button>
+      </div>
+    </nav>
+  </section>
+
+  <section class="section">
+    <h2>0. מפת רעיונות בלי כפילויות</h2>
+    <p>מתוך דף המאסטר ללא כפילויות ומדריך הסבתא: הרבה נושאים במבחן הם אותו רעיון בלבוש אחר. אם מבינים את הקשר ביניהם, צריך לזכור פחות ולפתור מהר יותר.</p>
+    <div class="grid">
+      <article class="cluster">
+        <span class="tag">אותו סיפור</span>
+        <h3>Reference, מערכים ו־React State</h3>
+        <p><b>Reference</b>, שינוי מערך במקום, <b>React immutable state</b> ו־<b>spread shallow copy</b> הם אותו עיקרון: אם משנים את אותה קופסה, React עלול לא לזהות שינוי. יוצרים קופסה חדשה.</p>
+      </article>
+      <article class="cluster">
+        <span class="tag">דימוי פשוט</span>
+        <h3>האפליקציה כמו מסעדה</h3>
+        <p>React הוא הדלפק שהמשתמש רואה. Express הוא הפקיד שמקבל בקשות. MongoDB הוא הארון שבו שומרים דפים. Mongoose הוא הטופס שמוודא שהדף כתוב נכון.</p>
+      </article>
+      <article class="cluster">
+        <span class="tag">איך לחשוב במבחן</span>
+        <h3>מסך → בקשה → שרת → מסד → מסך</h3>
+        <p>כמעט כל פרויקט 70 נקודות חוזר על אותה זרימה: טופס ב־React, שליחה ב־fetch, route ב־Express, פעולה ב־Mongo, ואז עדכון state ורינדור מחדש.</p>
+      </article>
+    </div>
+    <table>
+      <thead><tr><th>חשיבות</th><th>אשכולות שחוזרים במבחן</th><th>מה לזכור כרעיון</th></tr></thead>
+      <tbody>
+        <tr><td>10/10</td><td>By Value/Reference, arrays, async/event loop, useEffect, immutable state, Full Stack CRUD</td><td>שינוי נתונים, סדר הרצה, side effects וזרימת פרויקט מקצה לקצה.</td></tr>
+        <tr><td>9/10</td><td>Functions, Promises/fetch/async-await, React data flow, project templates</td><td>פונקציה מקבלת קלט ומחזירה פלט; React מצייר לפי props/state; API מחזיר הצלחה או שגיאה.</td></tr>
+        <tr><td>8/10</td><td>Express routes, HTTP/REST/status codes, Mongo/Mongoose, DOM events, debugging, OOP, TS basics</td><td>לכל פעולה יש כתובת, סטטוס, מודל נתונים, טיפול שגיאות והסבר קצר.</td></tr>
+      </tbody>
+    </table>
+    <pre><code>// זרימת מחשבה לפרויקט מבחן:
+// 1. React שומר את מה שהמשתמש הקליד בתוך state.
+// 2. submit בודק validation לפני שליחה.
+// 3. fetch שולח בקשה לשרת עם method/body/headers.
+// 4. Express בודק req.body ומחזיר status code ברור.
+// 5. Mongoose שומר או קורא מהמסד.
+// 6. React מקבל JSON ומעדכן state בלי mutation.</code></pre>
+  </section>
+
+  <section class="section">
+    <h2>0.5 דימויים קצרים שחוסכים בלבול</h2>
+    <div class="grid">
+      <article class="cluster green"><h3>HTML / CSS / JavaScript</h3><p>HTML הוא השלד, CSS הוא הצבע והריהוט, JavaScript הוא החשמל והכפתורים שגורמים למסך להגיב.</p></article>
+      <article class="cluster green"><h3>TypeScript</h3><p>כמו מורה שבודק לפני ההגשה: אם אמרת שזה מספר ושלחת טקסט, הוא עוצר אותך בזמן כתיבת הקוד. הוא לא מחליף validation ל־JSON שמגיע מבחוץ.</p></article>
+      <article class="cluster green"><h3>useEffect</h3><p>“אחרי שהמסך צויר, תעשה פעולה חיצונית”: fetch, timer או event listener. אם יוצרים listener או timer, צריך cleanup.</p></article>
+      <article class="cluster green"><h3>Router ו־Context</h3><p>Router הוא שלטים בבית: כל כתובת מובילה לחדר. Context הוא מגפון להעברת מידע בלי להעביר אותו ידנית דרך כל קומפוננטה.</p></article>
+    </div>
+    <ul>
+      <li>React לא מתחבר ישירות ל־MongoDB. הוא מדבר עם API.</li>
+      <li>Validation חשוב גם בצד הלקוח וגם בצד השרת.</li>
+      <li>Status codes הם חלק מהפתרון: 400 לקלט לא תקין, 404 לא נמצא, 500 תקלה.</li>
+      <li>State ב־React לא משנים עם mutation ישיר; יוצרים מערך או אובייקט חדש.</li>
+      <li>TypeScript לא מוכיח שנתונים חיצוניים תקינים בזמן ריצה; עדיין בודקים אותם.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>0.6 אותו רעיון בשמות שונים</h2>
+    <table>
+      <thead><tr><th>במבחן זה יכול להיקרא</th><th>הרעיון האמיתי</th><th>איך פותרים מהר</th></tr></thead>
+      <tbody>
+        <tr><td>Reference, mutation, spread, immutable state</td><td>אובייקט/מערך הם קופסה משותפת, לא צילום נפרד.</td><td>ב־React יוצרים מערך/אובייקט חדש עם spread, map, filter או slice.</td></tr>
+        <tr><td>Promise, async/await, event loop, setTimeout</td><td>יש תורים: קוד רגיל, microtasks, ואז macrotasks.</td><td>כותבים קודם sync, אחר כך Promise/await, ורק בסוף timer/events.</td></tr>
+        <tr><td>Route, API, endpoint, status code, CRUD</td><td>השרת מקבל בקשה אחת ברורה ומחזיר תשובה אחת ברורה.</td><td>מגדירים method, path, validation, פעולה במסד, ו־status מתאים.</td></tr>
+        <tr><td>Props, state, render, map, key</td><td>React מצייר UI לפי נתונים. שינוי state מצייר מחדש.</td><td>שומרים נתונים ב־state, מעבירים props למטה, ומציגים רשימות עם key יציב.</td></tr>
+        <tr><td>Schema, Model, Document, Collection</td><td>Mongo שומר דפים במגירות; Mongoose מגדיר את צורת הדף.</td><td>מגדירים Schema לפי הדרישה, יוצרים Model, ואז CRUD דרך ה־Model.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section red">
+    <h2>0.7 נפילות מבחן ותיקון מהיר</h2>
+    <table>
+      <thead><tr><th>נפילה</th><th>למה זה מסוכן</th><th>התיקון במבחן</th></tr></thead>
+      <tbody>
+        <tr><td><code>items.push(x); setItems(items)</code></td><td>אותו reference, React עלול לא לזהות שינוי.</td><td><code>setItems(prev => [...prev, x])</code></td></tr>
+        <tr><td><code>items.sort()</code> על state</td><td><code>sort</code> משנה את המערך המקורי.</td><td><code>setItems(prev => [...prev].sort(...))</code></td></tr>
+        <tr><td><code>useEffect</code> בלי cleanup ל־timer/listener</td><td>נוצרות דליפות או פעולות כפולות.</td><td>מחזירים פונקציית cleanup מה־effect.</td></tr>
+        <tr><td>להניח ש־<code>setTimeout(0)</code> רץ מיד</td><td>Promise/microtask ירוץ לפני timer.</td><td>זוכרים: sync → Promise/await → timeout.</td></tr>
+        <tr><td>להחזיר תמיד 200 גם כשיש שגיאה</td><td>ה־Frontend לא יודע אם הבקשה באמת נכשלה.</td><td>400 לקלט לא תקין, 404 לא נמצא, 500 תקלה כללית.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>0.8 בדיקת עצמי לפני שמתחילים לתרגל</h2>
+    <p>אם אתה לא יודע לענות בקול על רוב הסעיפים כאן, אל תקפוץ לתרגילים. חזור קודם לרעיון המתאים במדריך הזה.</p>
+    <div class="grid">
+      <article class="cluster">
+        <span class="tag">שאלת פלט קוד</span>
+        <h3>JS / Event Loop / Reference</h3>
+        <p>שאל את עצמך: מה רץ סינכרונית, מה נכנס ל־Promise/microtask, מה מחכה ל־timer, והאם יש אובייקט או מערך שעובר by reference.</p>
+      </article>
+      <article class="cluster">
+        <span class="tag">שאלת React</span>
+        <h3>State / Props / Effects</h3>
+        <p>בדוק: האם state השתנה ישירות, האם חסר key ברשימה, האם <code>useEffect</code> תלוי בערך שלא נמצא ב־deps, והאם צריך cleanup.</p>
+      </article>
+      <article class="cluster">
+        <span class="tag">שאלת Server</span>
+        <h3>API / Validation / Status</h3>
+        <p>בדוק: method, path, <code>req.params</code>, <code>req.query</code>, <code>req.body</code>, validation, status code וטיפול בשגיאות.</p>
+      </article>
+    </div>
+    <table>
+      <thead><tr><th>אני מוכן אם אני יודע...</th><th>אם לא</th></tr></thead>
+      <tbody>
+        <tr><td>להסביר <code>const</code> מול immutability ו־by reference.</td><td>חזור ל־JavaScript Core ול־0.6.</td></tr>
+        <tr><td>לנבא פלט של קוד עם <code>Promise</code>, <code>await</code> ו־<code>setTimeout</code>.</td><td>חזור ל־Async ול־0.7.</td></tr>
+        <tr><td>לתקן mutation ב־React state בלי לשבור render.</td><td>חזור ל־React State ול־נפילות מבחן.</td></tr>
+        <tr><td>לבנות טופס controlled עם validation ברור.</td><td>עבור למדריך 2 אחרי חזרה קצרה על Forms.</td></tr>
+        <tr><td>להבדיל בין <code>req.params</code>, <code>req.query</code>, <code>req.body</code> ו־status codes.</td><td>חזור ל־Backend ו־Mongo.</td></tr>
+        <tr><td>להסביר <code>type</code>, <code>interface</code>, <code>unknown</code>, <code>any</code> ו־<code>never</code>.</td><td>חזור ל־TypeScript בקיצור.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>1. התמונה הגדולה: מה קורה כשמשתמש לוחץ?</h2>
+    <div class="grid">
+      <article class="cluster"><span class="tag">Frontend</span><h3>React</h3><p>המסך: כפתורים, טפסים, רשימות, ניווט והצגת נתונים. React לא “שומר במסד”; הוא מנהל UI ומדבר עם API.</p></article>
+      <article class="cluster"><span class="tag">Backend</span><h3>Node / Express</h3><p>השרת: מקבל בקשות, בודק נתונים, מחזיר תשובות, ומדבר עם מסד הנתונים.</p></article>
+      <article class="cluster"><span class="tag">Database</span><h3>Mongo / Mongoose</h3><p>הזיכרון הקבוע: שומר רשומות. Mongoose מוסיף Schema/Model כדי לעבוד מסודר.</p></article>
+    </div>
+    <table>
+      <thead><tr><th>שלב</th><th>מה קורה</th><th>מה כותבים במבחן</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>משתמש ממלא טופס</td><td><code>useState</code>, controlled inputs, validation</td></tr>
+        <tr><td>2</td><td>React שולח בקשה</td><td><code>fetch</code> עם method, headers, body</td></tr>
+        <tr><td>3</td><td>Express מקבל</td><td><code>app.post</code>, <code>express.json()</code>, status codes</td></tr>
+        <tr><td>4</td><td>Mongo שומר/מחזיר</td><td>Schema, Model, <code>find</code>, <code>save</code>, update/delete</td></tr>
+        <tr><td>5</td><td>React מרנדר מחדש</td><td>state חדש, map, empty/loading/error states</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>2. JavaScript Core: הבסיס של כל המבחן</h2>
+    <div class="grid">
+      <article class="cluster green"><h3>משתנים</h3><p><code>const</code> כברירת מחדל. <code>let</code> כשמחליפים ערך. <code>var</code> ישן ומבלבל בגלל scope ו-hoisting.</p></article>
+      <article class="cluster green"><h3>Reference מול Value</h3><p>Primitive מועתק כערך. Object/Array/Function מועתקים כהפניה. שינוי פנימי יכול להשפיע דרך כמה משתנים.</p></article>
+      <article class="cluster green"><h3>Async</h3><p>סדר הרצה: קוד רגיל, microtasks של Promise/await, ואז macrotasks כמו timeout ואירועים.</p></article>
+    </div>
+    <pre><code>console.log(1);
+Promise.resolve().then(() => console.log(2));
+setTimeout(() => console.log(3), 0);
+console.log(4);
+// סדר: 1, 4, 2, 3</code></pre>
+  </section>
+
+  <section class="section">
+    <h2>3. React: לחשוב בקומפוננטות</h2>
+    <div class="two">
+      <article class="cluster">
+        <h3>State הוא זיכרון מקומי</h3>
+        <p>כל input מחובר ל-state. כשמשנים state, React מרנדר מחדש. אם הערך הבא תלוי בערך הקודם, משתמשים ב-functional update.</p>
+        <pre><code>setItems(prev => [...prev, newItem]);</code></pre>
+      </article>
+      <article class="cluster">
+        <h3>לא עושים mutation ישיר</h3>
+        <p>מערך/אובייקט ב-state הוא reference. שינוי במקום עלול לא להפעיל רינדור נכון. יוצרים reference חדש.</p>
+        <pre><code>// נכון:
+setForm(prev => ({ ...prev, title: value }));</code></pre>
+      </article>
+    </div>
+    <table>
+      <thead><tr><th>Hook</th><th>מתי משתמשים</th><th>נפילה נפוצה</th></tr></thead>
+      <tbody>
+        <tr><td><code>useState</code></td><td>טפסים, רשימות, loading/error, toggle</td><td>לעדכן אובייקט בלי spread</td></tr>
+        <tr><td><code>useEffect</code></td><td>API, timer, event listener, משהו חיצוני ל-render</td><td>deps לא נכונים או loop אינסופי</td></tr>
+        <tr><td><code>useRef</code></td><td>focus, DOM ref, ערך שלא צריך לגרום render</td><td>לצפות ש-ref ירנדר מחדש</td></tr>
+        <tr><td><code>useMemo</code></td><td>חישוב יקר או רשימה מסוננת/ממוינת</td><td>להשתמש במקום לפתור state פשוט</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>4. Routing, Forms, Validation: איפה רוב הנקודות בפרויקט</h2>
+    <div class="grid">
+      <article class="cluster"><h3>Routing</h3><p><code>BrowserRouter</code>, <code>Routes</code>, <code>Route</code>, <code>Link</code>, <code>useNavigate</code>, <code>useParams</code>. כל מסך צריך path ברור.</p></article>
+      <article class="cluster"><h3>Forms</h3><p>כל input עם value ו-onChange. אחרי submit: validate, fetch, update state, reset או navigate לפי הדרישה.</p></article>
+      <article class="cluster red"><h3>Validation</h3><p>זה אזור ציון קריטי: שדות לא ריקים, סיסמה, מספרים, גיל, אורך טקסט, duplicate, הודעת שגיאה ברורה.</p></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>5. Backend ו־Mongo: לחשוב Endpoint → Model → Status</h2>
+    <table>
+      <thead><tr><th>מושג</th><th>רעיון פשוט</th><th>מה לא לשכוח</th></tr></thead>
+      <tbody>
+        <tr><td>Express</td><td>מגדיר כתובות שה-Frontend יכול לקרוא להן</td><td><code>cors()</code> ו-<code>express.json()</code> לפני routes</td></tr>
+        <tr><td>Schema</td><td>צורת הרשומה במסד</td><td>שדות חובה וטיפוסים לפי הדרישה</td></tr>
+        <tr><td>Model</td><td>האובייקט שדרכו שואלים את Mongo</td><td>שם ברור ופעולות CRUD</td></tr>
+        <tr><td>Status code</td><td>הודעה מקצועית אם הצליח או נכשל</td><td>400 לקלט לא תקין, 404 לא נמצא, 500 תקלה</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>6. TypeScript ו־Next.js בקיצור</h2>
+    <div class="two">
+      <article class="cluster">
+        <h3>TypeScript</h3>
+        <p>המטרה אינה “עוד קוד”, אלא חוזה: מה הצורה של המידע. למבחן חשובים <code>type</code>, <code>interface</code>, <code>enum</code>, union ו-type narrowing.</p>
+      </article>
+      <article class="cluster">
+        <h3>Next.js</h3>
+        <p>React עם מבנה אפליקציה: App Router, תיקיות routes, layout משותף, dashboard/pages, Tailwind ו-deploy readiness.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section red">
+    <h2>7. מה לא ללמוד עכשיו</h2>
+    <ul>
+      <li>לא להחליף Stack שבוע לפני מבחן.</li>
+      <li>לא להיכנס ל-AI/DevOps/Nest לפני שסיימת Project 70, JS 20 ו-TS 10.</li>
+      <li>לא להשתמש בנתונים מומצאים. אם השאלה נותנת נתונים, משתמשים בהם; אם לא, המשתמש מזין.</li>
+      <li>לא להשתמש באקראיות Native כדי “לבחור” נתונים במבחן.</li>
+    </ul>
+  </section>
+</main>
+<script src="./guide_day_board.js"></script>
+</body>
+</html>

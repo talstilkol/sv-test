@@ -1,0 +1,1612 @@
+{
+  "summary": {
+    "total": 73,
+    "mastered_100": 0,
+    "good": 19,
+    "weak": 54,
+    "blocked_manual_review": 0
+  },
+  "sections": [
+    {
+      "section_key": "1",
+      "idx": 1,
+      "file": "עותק של מבחן חדש 2023.pdf",
+      "question": "Q1",
+      "section": "1",
+      "section_text": "1 . GET – מחזיר את כל המורים.",
+      "task_ids": [
+        "api_get_all"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 92,
+      "final_score": 87,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות API שמחזיר את כל המורים דרך route GET\",\n  \"task_ids\": [\"api_get_all\"],\n  \"leaf_tasks\": [\n    {\n      \"id\": \"1.1.1.1\",\n      \"branch\": \"API\",\n      \"sub_branch\": \"GET all teachers\",\n      \"task_id\": \"api_get_all\",\n      \"technical_task\": \"להגדיר router.get('/teachers', ...) שמחזיר מערך JSON של כל המורים\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "2",
+      "idx": 2,
+      "file": "עותק של מבחן חדש 2023.pdf",
+      "question": "Q1",
+      "section": "2",
+      "section_text": "2 . POST – רק את המורים שהשכר שלהם נמוך ממה שהמשתמש הזין .",
+      "task_ids": [
+        "api_get_filtered",
+        "alerts_error_handling"
+      ],
+      "exercise_understanding_score": 40,
+      "decomposition_score": 50,
+      "leaf_average_score": 94,
+      "final_score": 59,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_get_filtered"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות API שמחזיר מורים ששכרם נמוך מערך שהוזן ב-body, עם בדיקת תקינות קלט ו-manual validation\",\n  \"task_ids\": [\"api_post_create\", \"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\", \"js_algorithms\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"POST filtered teachers\", \"task_id\": \"api_post_create\", \"technical_task\": \"להגדיר router.post('/teachers/filtered') שמקבל salaryLimit ב-body ומחזיר מורים ששכרם נמוך ממנו\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input type=number להזנת גבול שכר\"},\n    {\"id\": \"1.2.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Form input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות כפתור שליחה (button type=submit) לשליחת הבקשה\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שהערך הוא מספר (typeof === 'number' או !isNaN(parseFloat(value)))\"},\n    {\"id\": \"1.3.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שהערך הוא חיובי (value > 0)\"},\n    {\"id\": \"1.3.1.3\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שהשדה לא ריק (value !== '')\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert/הודעת שגיאה אם הערך לא תקין (למשל: 'יש להזין מספר חיובי תקין')\"},\n    {\"id\": \"1.4.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert/הודעת שגיאה אם הבקשה ל-API נכשלה (למשל: שגיאת רשת או status !== 200)\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"Logic\", \"sub_branch\": \"Filtering\", \"task_id\": \"js_algorithms\", \"technical_task\": \"לסנן מערך מורים לפי התנאי: teacher.salary < salaryLimit\"},\n    {\"id\": \"1.5.1.2\", \"branch\": \"Logic\", \"sub_branch\": \"Filtering\", \"task_id\": \"js_algorithms\", \"technical_task\": \"להחזיר את התוצאה כמערך ממוין לפי שכר עולה (אם לא נאמר, לא להניח — רק סינון)\"},\n    {\"id\": \"1.5.1.3\", \"branch\": \"Logic\", \"sub_branch\": \"Filtering\", \"task_id\": \"js_algorithms\", \"technical_task\": \"להתמודד עם מקרים של salary=null או undefined בנתוני המורים (למשל: להשמיט אותם)\"},\n    {\"id\": \"1.5.1.4\", \"branch\": \"Logic\", \"sub_branch\": \"Filtering\", \"task_id\": \"js_algorithms\", \"technical_task\": \"להתמודד עם מקרים של salaryLimit=null או undefined ב-body (למשל: להחזיר שגיאה)\"},\n    {\"id\": \"1.6.1.1\", \"branch\": \"API\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק בצד השרת שה-body מכיל salaryLimit ושהוא מספר חיובי\"},\n    {\"id\": \"1.6.1.2\", \"branch\": \"API\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להחזיר status 400 והודעת שגיאה אם salaryLimit חסר או לא תקין\"},\n    {\"id\": \"1.7.1.1\", \"branch\": \"API\", \"sub_branch\": \"Response\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להחזיר status 200 ומערך מורים תקינים כ-body של התגובה\"},\n    {\"id\": \"1.7.1.2\", \"branch\": \"API\", \"sub_branch\": \"Response\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להחזיר status 200 ומערך ריק אם אין מורים שמתאימים לתנאי\"},\n    {\"id\": \"1.8.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לאפשר שליחה גם עם Enter (event.key === 'Enter')\"},\n    {\"id\": \"1.8.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Form input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לנקות את ה-input לאחר שליחה מוצלחת\"},\n    {\"id\": \"1.9.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"למנוע שליחה כפולה של הבקשה בזמן שהבקשה הקודמת עדיין בתהליך\"},\n    {\"id\": \"1.10.1.1\", \"branch\": \"Logic\", \"sub_branch\": \"Filtering\", \"task_id\": \"js_algorithms\", \"technical_task\": \"להתמודד עם ערכים לא מספריים ב-salary של מורים (למשל: להשמיט אותם או להתייחס כ-0)\"},\n    {\"id\": \"1.11.1.1\", \"branch\": \"API\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שה-body הוא JSON תקין (במקרים של parse error, להחזיר 400)\"},\n    {\"id\": \"1.12.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"להגדיר name='salaryLimit' ל-input כדי לקלות גישה ב-form submission\"},\n    {\"id\": \"1.13.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"להגדיר min='0' ל-input type=number כדי להגביל ערכים שליליים בדפדפן\"}\n  ]\n}"
+    },
+    {
+      "section_key": "3",
+      "idx": 3,
+      "file": "עותק של מבחן חדש 2023.pdf",
+      "question": "Q1",
+      "section": "3",
+      "section_text": "3 . POST – מקבל מאפיינים של מורה, במידה וקיים מורה עם אותו שם ואותו מקצוע תוחזר הודעה רלוונטית , אחרת יוכנס ל dB ותוחזר הודעה על כך שנרשם בהצלחה. יש להתאים את כלל המתודות לממשק המשתמש, על כן המשתמש צריך לראות את הנתונים החוזרים מהשרת כמו גם היכולת ליצירת מורה ב db .",
+      "task_ids": [
+        "api_post_create",
+        "db_persistence",
+        "alerts_error_handling"
+      ],
+      "exercise_understanding_score": 43,
+      "decomposition_score": 57,
+      "leaf_average_score": 96,
+      "final_score": 63,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"בניית API ליצירת מורים עם בדיקת ייחודיות שם+מקצוע, ומנגנון צד-לקוח להצגת תוצאות ויצירת רשומה חדשה\",\n  \"task_ids\": [\"api_post_create\", \"db_uniqueness\", \"db_persistence\", \"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\", \"client_list_render\", \"client_navigation\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"POST create\", \"task_id\": \"api_post_create\", \"technical_task\": \"להגדיר router.post שמקבל req.body עם שם ומקצוע, ומבצע בדיקת ייחודיות\"},\n    {\"id\": \"1.1.1.2\", \"branch\": \"API\", \"sub_branch\": \"Uniqueness check\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק אם קיים מורה עם שם ומקצוע זהים, אם כן להחזיר 409 עם הודעה\"},\n    {\"id\": \"1.1.1.3\", \"branch\": \"API\", \"sub_branch\": \"DB persistence\", \"task_id\": \"db_persistence\", \"technical_task\": \"לשמור את המורה החדש ב-MongoDB אם לא קיים, ולהחזיר 201 עם הודעה\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form inputs\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות טופס עם שדות שם ומקצוע, כפתור שליחה ותגובה ל-POST\"},\n    {\"id\": \"1.2.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Validation rules\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבחון ששם ומקצוע לא ריקים, ושהשם состоит מאותיות בלבד\"},\n    {\"id\": \"1.2.1.3\", \"branch\": \"Client\", \"sub_branch\": \"Error alerts\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג הודעות שגיאה למשתמש על כפילות או שגיאות תקינות\"},\n    {\"id\": \"1.2.1.4\", \"branch\": \"Client\", \"sub_branch\": \"List render\", \"task_id\": \"client_list_render\", \"technical_task\": \"לרנדר את רשימת המורים מהשרת כרשימה/טבלה עם שם ומקצוע\"},\n    {\"id\": \"1.2.1.5\", \"branch\": \"Client\", \"sub_branch\": \"Navigation\", \"task_id\": \"client_navigation\", \"technical_task\": \"לאפשר מעבר בין מסך הרשימה לטופס היצירה אם יש צורך\"}\n  ]\n}"
+    },
+    {
+      "section_key": "4",
+      "idx": 4,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q1",
+      "section": "main",
+      "section_text": "שאלה 1 - מערכת לניהול בקרות טיסה ב-React, בצד לקוח בלבד ללא שרת. יש עמוד כניסה תחת / עם סיסמה אחת בלבד 12345 והודעת שגיאה לכל קוד אחר. לאחר כניסה עוברים ל-/controlpanel. בעמוד הבקרה יש תפריט אפשרויות בצד שמאל, ובמובייל מתחת ל-500px הרשימה מוצגת בשורה בחלק העליון. ברירת מחדל כל הטיסות: הצגת כל הטיסות בריבועים עם מספר טיסה, חברת תעופה ומספר נוסעים. /controlpanel/sort כולל חיפוש לפי שם חברה לפי ערך חלקי ו-select למיון לפי מספר מושבים נמוך/גבוה. /controlpanel/add כולל שלושה inputs וכפתור: מספר טיסה מספרי עד 5 תווים וייחודי, חברת תעופה עם לפחות אות אחת, מספר נוסעים בין 1 ל-450. אם תקין מוסיפים למערך וחוזרים לכל הטיסות, אחרת מציגים alert. /controlpanel/delete כולל input מספר טיסה עד 5 תווים וכפתור מחק. אם הטיסה לא קיימת מציגים שגיאה; אם קיימת מוחקים ומציגים הודעה עם כמות כל הטיסות וכמות כל הנוסעים כרגע באוויר.",
+      "task_ids": [
+        "question_scope_inherited",
+        "client_navigation",
+        "client_form_inputs",
+        "client_validation_rules",
+        "alerts_error_handling",
+        "client_list_render",
+        "js_algorithms"
+      ],
+      "exercise_understanding_score": 73,
+      "decomposition_score": 82,
+      "leaf_average_score": 97,
+      "final_score": 83,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: question_scope_inherited"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"מערכת React בצד לקוח בלבד לניהול בקרות טיסה: כניסה עם סיסמה, עמוד בקרה עם תפריט, הצגת טיסות, חיפוש, מיון, הוספה ומחיקה – כל הפעולות ב-React עם בדיקות קלט, ייחודיות ותגובה למשתמש\",\n  \"task_ids\": [\"client_navigation\", \"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\", \"client_list_render\", \"js_algorithms\", \"server_html_route\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Login route\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגדיר route / שמחזיר HTML עם input סיסמה וכפתור התחברות\"},\n    {\"id\": \"1.1.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Password validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק אם הסיסמה שווה ל-12345, להחזיר alert אם לא\"},\n    {\"id\": \"1.1.1.3\", \"branch\": \"Client\", \"sub_branch\": \"Navigation to control panel\", \"task_id\": \"client_navigation\", \"technical_task\": \"לעבור ל-/controlpanel לאחר התחברות מוצלחת\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Control panel layout\", \"task_id\": \"client_list_render\", \"technical_task\": \"לרנדר תפריט בצד שמאל, ובמובייל (מתחת 500px) תפריט בשורה עליונה\"},\n    {\"id\": \"1.2.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Display all flights\", \"task_id\": \"client_list_render\", \"technical_task\": \"לרנדר טיסות כריבועים עם מספר טיסה, חברת תעופה ומספר נוסעים\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Search input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לספק input לחיפוש לפי שם חברה (חלקית)\"},\n    {\"id\": \"1.3.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Sort select\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לספק select עם אפשרויות מיון לפי מושבים: נמוך-גבוה\"},\n    {\"id\": \"1.3.1.3\", \"branch\": \"Client\", \"sub_branch\": \"Filter/sort logic\", \"task_id\": \"js_algorithms\", \"technical_task\": \"לסנן לפי שם חברה חלקית ולמיין לפי מושבים (asc/desc) במערך הטיסות\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Add form inputs\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לספק 3 inputs: מספר טיסה (עד 5 ספרות), חברת תעופה (לפחות אות), מספר נוסעים (1-450)\"},\n    {\"id\": \"1.4.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Add validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק תקינות כל השדות: אורך, טווח, חובה, ותבנית\"},\n    {\"id\": \"1.4.1.3\", \"branch\": \"Client\", \"sub_branch\": \"Uniqueness check\", \"task_id\": \"js_algorithms\", \"technical_task\": \"לבדוק אם מספר הטיסה כבר קיים במערך, להחזיר alert אם כן\"},\n    {\"id\": \"1.4.1.4\", \"branch\": \"Client\", \"sub_branch\": \"Add flight logic\", \"task_id\": \"js_algorithms\", \"technical_task\": \"להוסיף טיסה חדשה למערך אם כל הבדיקות מוצלחות, ולשנות מסך חזרה ל-/controlpanel\"},\n    {\"id\": \"1.4.1.5\", \"branch\": \"Client\", \"sub_branch\": \"Add error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert עם הודעה שגיאה אם איזה מהבדיקות נכשל\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Delete input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לספק input למספר טיסה (עד 5 תווים)\"},\n    {\"id\": \"1.5.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Delete validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שהקלט הוא מספרי וברange 1-5 תווים\"},\n    {\"id\": \"1.5.1.3\", \"branch\": \"Client\", \"sub_branch\": \"Flight existence check\", \"task_id\": \"js_algorithms\", \"technical_task\": \"לבדוק אם הטיסה קיימת במערך, להחזיר alert אם לא\"},\n    {\"id\": \"1.5.1.4\", \"branch\": \"Client\", \"sub_branch\": \"Delete logic\", \"task_id\": \"js_algorithms\", \"technical_task\": \"למחוק את הטיסה ממערך, לחשב סכום טיסות ונוסעים, להציג הודעה ולחזור ל-/controlpanel\"},\n    {\"id\": \"1.5.1.5\", \"branch\": \"Client\", \"sub_branch\": \"Delete error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert אם הטיסה לא נמצאה\"}\n  ]\n}"
+    },
+    {
+      "section_key": "5",
+      "idx": 5,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q2",
+      "section": "main",
+      "section_text": "שאלה 2 - JavaScript. כתבו פונקציה ב-JS אשר מקבלת מטריצה של מספרים. הפונקציה צריכה להחזיר מערך של אובייקטים, כאשר כל אובייקט מייצג את המספר עצמו וכמה פעמים הוא מופיע במטריצה. יש לזרוק שגיאה אם אחד הערכים במטריצה אינו מספר. לדוגמה מטריצה עם השורות 1,1,2,4,1,1,7 / 1,1,1,2,1,1,7 / 7,7,1,1,1,1,1 תחזיר [{num:1,count:14},{num:2,count:2},{num:4,count:1},{num:7,count:4}].",
+      "task_ids": [
+        "js_algorithms",
+        "alerts_error_handling"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 96,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות פונקציה ב-JS שמקבלת מטריצה של מספרים, סופרת את המופעים של כל מספר, ומחזירה מערך של אובייקטים עם num ו-count. יש לזרוק שגיאה אם ערך אינו מספר.\",\n  \"task_ids\": [\"js_algorithms\", \"alerts_error_handling\"],\n  \"leaf_tasks\": [\n    {\n      \"id\": \"1.1.1.1\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Flatten matrix\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"לפצל את המטריצה למערך יחיד של ערכים\"\n    },\n    {\n      \"id\": \"1.1.1.2\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Validate all elements\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"לבדוק שכל איבר במערך הוא מספר, אם לא – לזרוק שגיאה\"\n    },\n    {\n      \"id\": \"1.1.1.3\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Count occurrences\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"לספור את מופעי כל מספר במערך\"\n    },\n    {\n      \"id\": \"1.1.1.4\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Build result array\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"לבנות מערך אובייקטים עם num ו-count לפי הסדר המופיע\"\n    },\n    {\n      \"id\": \"1.2.1.1\",\n      \"branch\": \"Error Handling\",\n      \"sub_branch\": \"Type validation\",\n      \"task_id\": \"alerts_error_handling\",\n      \"technical_task\": \"לזרוק שגיאה (Error) אם אחד הערכים אינו מספר\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "6",
+      "idx": 6,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "1",
+      "section_text": "1. \"כל הטיסות\" – ברירת מחדל. מציג בריבועים במרכז העמוד את כל הטיסות. בכל ריבוע ניתן לראות את מספר הטיסה, חברת התעופה ומתחת את מספר הנוסעים בטיסה.",
+      "task_ids": [
+        "client_navigation",
+        "client_list_render"
+      ],
+      "exercise_understanding_score": 24,
+      "decomposition_score": 40,
+      "leaf_average_score": 97,
+      "final_score": 51,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_navigation"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"הצגת כל הטיסות בריבועים במרכז העמוד, עם מספר טיסה, חברת תעופה ומספר נוסעים.\",\n  \"task_ids\": [\"server_html_route\", \"api_get_all\", \"client_list_render\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Server\", \"sub_branch\": \"Routing\", \"task_id\": \"server_html_route\", \"technical_task\": \"הגשת דף HTML עם ממשק ריבועים ליצירת תצוגת טיסות\"},\n    {\"id\": \"1.1.2.1\", \"branch\": \"API\", \"sub_branch\": \"Data Retrieval\", \"task_id\": \"api_get_all\", \"technical_task\": \"יצירת API שמחזיר את כל הטיסות מהמסד\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Rendering\", \"task_id\": \"client_list_render\", \"technical_task\": \"רינדור ריבועים בצד הלקוח על בסיס רשימת הטיסות (מספר טיסה, חברת תעופה, מספר נוסעים)\"}\n  ]\n}"
+    },
+    {
+      "section_key": "7",
+      "idx": 7,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "2",
+      "section_text": "2. \"מיון טיסות\" – מעביר את הלקוח לעמוד חדש. \"/controlpanel/sort\" בעמוד זה מעבר לאפשרויות השונות מצד שמאל יופיעו 2 אלמנטים.",
+      "task_ids": [
+        "api_get_filtered",
+        "server_html_route",
+        "client_navigation"
+      ],
+      "exercise_understanding_score": 47,
+      "decomposition_score": 63,
+      "leaf_average_score": 98,
+      "final_score": 67,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_get_filtered"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות דף controlpanel/sort עם 2 אלמנטים משמאל שמעבירים למסכי מיון טיסות לפי קריטריונים שונים\",\n  \"task_ids\": [\"client_navigation\", \"server_html_route\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Navigation\", \"task_id\": \"client_navigation\", \"technical_task\": \"להגדיר כפתורים/לינקים משמאל שמעבירים ל-'/controlpanel/sort' ו-'/controlpanel/sort/...'\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Server\", \"sub_branch\": \"HTML Route\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגדיר router.get('/controlpanel/sort', ...) שמשתף דף HTML עם 2 אלמנטים משמאל\"}\n  ]\n}"
+    },
+    {
+      "section_key": "8",
+      "idx": 8,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "א",
+      "section_text": "א. מיון לפי שם חברה- אינפוט שיציג את שמות הטיסות בהתאם לערך שנכנס. ** הערך לא צריך להירשם בשלמותו.",
+      "task_ids": [
+        "api_get_filtered",
+        "client_form_inputs"
+      ],
+      "exercise_understanding_score": 24,
+      "decomposition_score": 41,
+      "leaf_average_score": 94,
+      "final_score": 50,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_get_filtered"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"למיין טיסות לפי שם החברה לפי קלט חלקי מהמשתמש, ללא רישום של הערך בשלמותו\",\n  \"task_ids\": [\"js_algorithms\", \"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Logic\", \"sub_branch\": \"Sort by company name\", \"task_id\": \"js_algorithms\", \"technical_task\": \"למיין מערך טיסות לפי שם החברה (case-insensitive) לפי קלט חלקי\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Input field\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"ליצור input שמקבל שם חלקי של חברת תעופה\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לא לאפשר קלט ריק, לא לדרוש התאמה מלאה\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג הודעה אם אין תוצאות או קלט לא תקין\"}\n  ]\n}"
+    },
+    {
+      "section_key": "9",
+      "idx": 9,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "ב",
+      "section_text": "ב. אלמנט select שיאפשר למיין לפי המטוס עם מספר מושבים הנמוך או הגבוה ביותר. ** הצגת הטיסות תהיה כמו בעמוד הקודם, בריבועים עם כל המאפיינים.",
+      "task_ids": [
+        "api_get_filtered",
+        "client_form_inputs",
+        "client_list_render"
+      ],
+      "exercise_understanding_score": 44,
+      "decomposition_score": 60,
+      "leaf_average_score": 95,
+      "final_score": 64,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_get_filtered"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבחור מטוס לפי מספר מושבים (升/降) וליישר טיסות בריבועים\",\n  \"task_ids\": [\"client_form_inputs\", \"js_algorithms\", \"client_list_render\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Sort select\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות select עם אפשרויות '升' ו'降' לפי מספר מושבים\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Sorting logic\", \"task_id\": \"js_algorithms\", \"technical_task\": \"למיין את מערך הטיסות לפי number_of_seats לפי הבחירה (升/降)\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Render flights\", \"task_id\": \"client_list_render\", \"technical_task\": \"לרנדר טיסות בריבועים עם כל המאפיינים\"}\n  ]\n}"
+    },
+    {
+      "section_key": "10",
+      "idx": 10,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "3",
+      "section_text": "3. הוסף טיסה - עמוד המאפשר להוסיף טיסה חדשה, נמצא תחת הערוץ \"/controlpanel/add\" בערוץ זה בנוסף לכל האפשרויות מצד שמאל, יש 3 אינפוטים להזנת שדה + כפתור הוספה",
+      "task_ids": [
+        "server_html_route",
+        "client_form_inputs",
+        "client_navigation"
+      ],
+      "exercise_understanding_score": 38,
+      "decomposition_score": 52,
+      "leaf_average_score": 96,
+      "final_score": 60,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_navigation"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות עמוד הוספת טיסה תחת /controlpanel/add עם 3 שדות קלט וכפתור, כולל בדיקת ייחודיות של שדה מזוהה (כגון מספר טיסה) בשרת\",\n  \"task_ids\": [\"server_html_route\", \"client_form_inputs\", \"client_validation_rules\", \"db_uniqueness\", \"api_post_create\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Server\", \"sub_branch\": \"Route\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגדיר router.get('/controlpanel/add', sendFile של דף HTML)\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form Inputs\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות 3 input fields (למשל: origin, destination, flightNumber) ו-kafat add\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק ש-3 השדות לא ריקים, flightNumber הוא מחרוזת לא ריקה\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Server\", \"sub_branch\": \"Uniqueness\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק שמספר הטיסה (flightNumber) לא קיים כבר ב-DB לפני היצירה\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"API\", \"sub_branch\": \"POST create\", \"task_id\": \"api_post_create\", \"technical_task\": \"לקרוא req.body, לוודא ייחודיות, ולשמור טיסה חדשה ב-DB עם 201/400\"}\n  ]\n}"
+    },
+    {
+      "section_key": "11",
+      "idx": 11,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "א",
+      "section_text": "א. שדה מספר טיסה – מקבל ערך מספרי עד 5 תווים (לא ניתן ליצור 2 טיסות עם אותו מספר).",
+      "task_ids": [
+        "db_uniqueness",
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 44,
+      "decomposition_score": 59,
+      "leaf_average_score": 94,
+      "final_score": 64,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות שדה מספר טיסה בקלט לקוח עם בדיקת אורך עד 5 תווים ובדיקה בשרת לאי-ייחודיות\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\", \"db_uniqueness\", \"api_post_create\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"להגדיר input type='number' או text עם pattern ל-5 תווים מקסימום\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק באורך הערך (<=5 תווים) ב-onChange או onSubmit\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Server\", \"sub_branch\": \"Uniqueness\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק אם מספר טיסה קיים כבר ב-DB לפני היצירה\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"API\", \"sub_branch\": \"POST create\", \"task_id\": \"api_post_create\", \"technical_task\": \"לקרוא req.body, לאמת את מספר הטיסה, ולשמור עם בדיקת ייחודיות\"}\n  ]\n}"
+    },
+    {
+      "section_key": "12",
+      "idx": 12,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "ב",
+      "section_text": "ב. שדה חברת תעופה – מקבל כל סוג של ערך (חייב לפחות אות אחת)",
+      "task_ids": [
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבדוק תקינות שדה חברת תעופה בטופס – חייב להכיל לפחות אות אחת (לא ריק, לא רק רווחים)\",\n  \"task_ids\": [\"client_validation_rules\"],\n  \"leaf_tasks\": [\n    {\n      \"id\": \"1.1.1.1\",\n      \"branch\": \"Client\",\n      \"sub_branch\": \"Validation\",\n      \"task_id\": \"client_validation_rules\",\n      \"technical_task\": \"לכתוב regex או בדיקה שמוודאת שהערך לא ריק/רק רווחים ומכיל לפחות אות אחת (למשל: /^\\\\s*\\\\S.*$/)\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "13",
+      "idx": 13,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "ג",
+      "section_text": "ג. מספר נוסעים – בין 1 – 450.",
+      "task_ids": [
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לאמת תקינות ערך מספר נוסעים בקלט (1-450) בצד הלקוח\",\n  \"task_ids\": [\"client_validation_rules\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שערך מספרי הוא בין 1 ל-450 כולל, להחזיר שגיאה אם לא\"}\n  ]\n}"
+    },
+    {
+      "section_key": "14",
+      "idx": 14,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "ד",
+      "section_text": "ד. כפתור צור – לחיצה על כפתור זה תוסיף טיסה חדשה רק במידה וכל השדות היו תקינים, במידה ולא תופיע הודעת שגיאה על כך בALERT. במידה והכל תקין,תוסיף את הטיסה למערך הטיסות ותחזיר את הלקוח לעמוד \"כל הטיסות\".",
+      "task_ids": [
+        "client_form_inputs",
+        "alerts_error_handling"
+      ],
+      "exercise_understanding_score": 41,
+      "decomposition_score": 55,
+      "leaf_average_score": 94,
+      "final_score": 61,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות כפתור צור שמוסיף טיסה רק אם כל השדות תקינים, עם alert לשגיאות ומעבר לעמוד כל הטיסות בהצלחה\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\", \"client_navigation\", \"api_post_create\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form inputs\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input fields לנתוני טיסה (יעד, שעה, מטוס) עם value/onChange\"},\n    {\"id\": \"1.1.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שجميع השדות מלאים, שעה תקינה, ושם מטוס תקין\"},\n    {\"id\": \"1.1.1.3\", \"branch\": \"Client\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert עם הודעה שגיאה אם איזה שדה לא תקין\"},\n    {\"id\": \"1.1.1.4\", \"branch\": \"Client\", \"sub_branch\": \"Navigation\", \"task_id\": \"client_navigation\", \"technical_task\": \"לאפשר מעבר לעמוד 'כל הטיסות' לאחר הוספה מוצלחת\"},\n    {\"id\": \"1.1.1.5\", \"branch\": \"API\", \"sub_branch\": \"POST create\", \"task_id\": \"api_post_create\", \"technical_task\": \"לקרוא req.body, לוודא שדות חובה, ולשמור טיסה חדשה\"}\n  ]\n}"
+    },
+    {
+      "section_key": "15",
+      "idx": 15,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "4",
+      "section_text": "4. מחק טיסה - עמוד המאפשר למחוק טיסה קיימת, תחת הערוץ \"/controlpanel/delete\" בערוץ זה בנוסף לכל האפשרויות מצד שמאל, יש אינפוט וכפתור",
+      "task_ids": [
+        "api_delete",
+        "server_html_route",
+        "client_form_inputs",
+        "client_navigation"
+      ],
+      "exercise_understanding_score": 36,
+      "decomposition_score": 50,
+      "leaf_average_score": 95,
+      "final_score": 58,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_navigation, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות דף למחיקת טיסה קיימת תחת /controlpanel/delete עם שדה קלט וכפתור, כולל בדיקת ייחודיות ושמירת מחיקה ב-DB\",\n  \"task_ids\": [\"api_delete\", \"client_form_inputs\", \"alerts_error_handling\", \"db_persistence\", \"db_uniqueness\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"DELETE flight\", \"task_id\": \"api_delete\", \"technical_task\": \"להגדיר router.delete שמקבל id ומחיק את הטיסה, מחזיר 200/404\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Delete form\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input ל-id וכפתור למחיקה תחת /controlpanel/delete\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert/Toast על שגיאה או הצלחה לאחר מחיקה\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"DB\", \"sub_branch\": \"Persistence\", \"task_id\": \"db_persistence\", \"technical_task\": \"לשמור את מחיקת הטיסה ב-Mongo/Mongoose\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"DB\", \"sub_branch\": \"Uniqueness check\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק שה-ID קיים ב-DB לפני מחיקה\"}\n  ]\n}"
+    },
+    {
+      "section_key": "16",
+      "idx": 16,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "א",
+      "section_text": "א. אינפוט אשר מקבל ערך מספרי עד 5 תווים (מייצג מספר טיסה)",
+      "task_ids": [
+        "client_form_inputs",
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 95,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות input שמקבל מספר טיסה (עד 5 תווים, ערך מספרי) ומאפשר קלט תקין בלבד\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form Input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input type='text' או 'number' עם name='flightNumber'\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שערך הוא מספרי, אורך עד 5 תווים, ושהוא לא ריק\"}\n  ]\n}"
+    },
+    {
+      "section_key": "17",
+      "idx": 17,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "ב",
+      "section_text": "ב. כפתור מחק – הכפתור בודק האם קיימת טיסה בהתאם לערך שהוכנס במידה ולא תזרק שגיאה שלא קיימת טיסה כזאת. במידה וכן קיימת, תקפוץ למשתמש הודעה שהטיסה נמחקה ובנוסף יופיע באותה הודעה כמות כל הטיסות וכמות כל הנוסעים שנמצאים כרגע באוויר.",
+      "task_ids": [
+        "api_delete",
+        "client_form_inputs",
+        "alerts_error_handling"
+      ],
+      "exercise_understanding_score": 38,
+      "decomposition_score": 54,
+      "leaf_average_score": 94,
+      "final_score": 60,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_form_inputs"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות כפתור מחק טיסה עם בדיקת קיומן, שליחת בקשת DELETE, וعرض הודעה עם ספירת טיסות ונוסעים באוויר\",\n  \"task_ids\": [\"api_delete\", \"alerts_error_handling\", \"client_navigation\", \"api_get_filtered\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"DELETE flight\", \"task_id\": \"api_delete\", \"technical_task\": \"לקרוא id מה-route/req.params, למחוק את הטיסה ב-DB, להחזיר 200/404\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert על שגיאה אם הטיסה לא נמצאה, או הודעה מוצלחת אם נמחקה\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Navigation/Refresh\", \"task_id\": \"client_navigation\", \"technical_task\": \"לאפס את מסך הרשימה או לעדכן את הרשימה לאחר מחיקה\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"API\", \"sub_branch\": \"GET filtered counts\", \"task_id\": \"api_get_filtered\", \"technical_task\": \"להחזיר סכום טיסות וספירת נוסעים באוויר (למשל via countDocuments/aggregate)\"}\n  ]\n}"
+    },
+    {
+      "section_key": "18",
+      "idx": 18,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q2",
+      "section": "main",
+      "section_text": "שאלה 2- כתבו פונקציה בJS אשר מקבלת מטריצה של מספרים. הפונקציה צריכה להחזיר מערך של אובייקטים אשר כל אובייקט מייצג את המספר עצמו וכמה פעמים הוא מופיע במערך. יש לזרוק שגיאה במידה ואחד הערכים במטריצה אינו מספר. דוגמא: התקבלה המטריצה 1,1,2,4,1,1,7 1,1,1,2,1,1,7 7,7,1,1,1,1,1 הפונקציה תחזיר במקרה זה - [{num:1,count:14},{num:2,counter:2},{num:4,counter:1},{num:7,counter:4}]",
+      "task_ids": [
+        "alerts_error_handling",
+        "js_algorithms"
+      ],
+      "exercise_understanding_score": 43,
+      "decomposition_score": 57,
+      "leaf_average_score": 94,
+      "final_score": 62,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות פונקציה שמקבלת מטריצה של מספרים, סופרת את המופעים של כל מספר, מחזירה מערך של אובייקטים עם num ו-counter, וזורקת שגיאה אם יש ערך שאינו מספר\",\n  \"task_ids\": [\"js_algorithms\"],\n  \"leaf_tasks\": [\n    {\n      \"id\": \"1.1.1.1\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Flatten & Count\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"לפצל את המטריצה למערך אחד, לספור מופעים של כל מספר, להחזיר מערך של אובייקטים עם num ו-counter, ולזרוק שגיאה אם ערך אינו מספר\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "19",
+      "idx": 19,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "1",
+      "section_text": "1. GET – מחזיר JSON עם כל הסטודנטים",
+      "task_ids": [
+        "api_get_all"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 100,
+      "final_score": 90,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות API שמחזיר את כל הסטודנטים כ-JSON\",\n  \"task_ids\": [\"api_get_all\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"GET all students\", \"task_id\": \"api_get_all\", \"technical_task\": \"להגדיר router.get שמחזיר מערך JSON של כל הסטודנטים\"}\n  ]\n}"
+    },
+    {
+      "section_key": "20",
+      "idx": 20,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "2",
+      "section_text": "2. GET – מחזיר JSON רק עם הסטודנטים שהממוצע שלהם גבוה מ74",
+      "task_ids": [
+        "api_get_all",
+        "api_get_filtered"
+      ],
+      "exercise_understanding_score": 45,
+      "decomposition_score": 60,
+      "leaf_average_score": 96,
+      "final_score": 65,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_get_all"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות API שמחזיר סטודנטים ב-JSON רק אם הממוצע שלהם גבוה מ-74\",\n  \"task_ids\": [\"api_get_filtered\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"GET filtered\", \"task_id\": \"api_get_filtered\", \"technical_task\": \"להגדיר router.get שמחזיר רק סטודנטים עם ממוצע > 74\"}\n  ]\n}"
+    },
+    {
+      "section_key": "21",
+      "idx": 21,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "3",
+      "section_text": "3. POST – מקבל פרטים של סטודנט, במידה והנתונים תקינים ולא קיים סטודנט עם אותו ID המתודה תיצור סטודנט חדש ותחזיר הודעה שהתקבל בהצלחה, אחרת תחזיר ERROR",
+      "task_ids": [
+        "api_post_create",
+        "db_uniqueness",
+        "alerts_error_handling",
+        "oop_design"
+      ],
+      "exercise_understanding_score": 46,
+      "decomposition_score": 60,
+      "leaf_average_score": 97,
+      "final_score": 66,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: oop_design"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות API שמקבל פרטי סטודנט, מאמת את ה-ID כייחודי, ויוצר סטודנט חדש אם הנתונים תקינים\",\n  \"task_ids\": [\"api_post_create\", \"db_uniqueness\", \"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"POST create\", \"task_id\": \"api_post_create\", \"technical_task\": \"לקרוא req.body, לשלוח ל验证, ולקרוא db_uniqueness לפני היצירה\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"DB\", \"sub_branch\": \"Uniqueness\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק אם סטודנט עם אותו ID כבר קיים ב-DB\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input fields ל-ID, שם, ונתונים נוספים של הסטודנט\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק ש-ID הוא מספר חיובי, שם הוא מחרוזת לא ריקה, ונתונים חובה קיימים\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error Handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert/Toast על שגיאה אם ה-ID כבר קיים או אם ה-inputים לא תקינים\"}\n  ]\n}"
+    },
+    {
+      "section_key": "22",
+      "idx": 22,
+      "file": "עותק של מבחן טיסות.docx",
+      "question": "Q3",
+      "section": "4",
+      "section_text": "4. PUT – מקבל ת\"ז וממוצע ציונים חדש, במידה והסטודנט קיים הוא מעדכן לו את הממוצע ומחזיר תשובה שהעדכון עבר בהצלחה אחרת מחזיר ERROR.",
+      "task_ids": [
+        "api_put_update",
+        "alerts_error_handling"
+      ],
+      "exercise_understanding_score": 61,
+      "decomposition_score": 67,
+      "leaf_average_score": 94,
+      "final_score": 73,
+      "status": "WEAK",
+      "issues": [
+        "missing 1.1.1.1 leaf hierarchy"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"הפעלת PUT לעדכון ממוצע ציונים של סטודנט קיים לפי ת\\\"ז. מחייב אימות תקפות ת\\\"ז (10 ספרות), תקפות ממוצע (0-100), בדיקת קיומם של הסטודנט במאגר, עדכון הממוצע, והחזרת תשובת הצלחה או שגיאה.\",\n  \"task_ids\": [\n    \"Q3/4-PUT.api_validation\",\n    \"Q3/4-PUT.input_validation_id\",\n    \"Q3/4-PUT.input_validation_average\",\n    \"Q3/4-PUT.db_check_exists\",\n    \"Q3/4-PUT.db_update\",\n    \"Q3/4-PUT.response_success\",\n    \"Q3/4-PUT.response_error_not_found\",\n    \"Q3/4-PUT.response_error_validation\"\n  ],\n  \"leaf_tasks\": [\n    {\n      \"task_id\": \"Q3/4-PUT.api_validation\",\n      \"description\": \"הפעלת PUT ב-API מקבלת ת\\\"ז כפרמטר בנתיב ו ממוצע ציונים כגוף הבקשה\",\n      \"technical_details\": \"Endpoint: PUT /students/:id, request body: {\\\"average\\\": number}\"\n    },\n    {\n      \"task_id\": \"Q3/4-PUT.input_validation_id\",\n      \"description\": \"אימות תקפות ת\\\"ז: חייב להיות מחרוזת של 10 ספרות\",\n      \"technical_details\": \"Validate student_id matches regex ^\\\\d{10}$\"\n    },\n    {\n      \"task_id\": \"Q3/4-PUT.input_validation_average\",\n      \"description\": \"אימות תקפות ממוצע ציונים: חייב להיות מספר בטווח 0-100\",\n      \"technical_details\": \"Validate average is a number, integer or float, and 0 ≤ average ≤ 100\"\n    },\n    {\n      \"task_id\": \"Q3/4-PUT.db_check_exists\",\n      \"description\": \"בדיקה האם סטודנט עם הת\\\"ז הנתון קיים במאגר\",\n      \"technical_details\": \"SELECT 1 FROM students WHERE id = ? LIMIT 1\"\n    },\n    {\n      \"task_id\": \"Q3/4-PUT.db_update\",\n      \"description\": \"עדכון הממוצע של הסטודנט במאגר אם הוא קיים\",\n      \"technical_details\": \"UPDATE students SET average = ? WHERE id = ?\"\n    },\n    {\n      \"task_id\": \"Q3/4-PUT.response_success\",\n      \"description\": \"החזרת תשובה מוצלחת אם העדכון בוצע\",\n      \"technical_details\": \"Return HTTP 200 with {\\\"status\\\": \\\"success\\\", \\\"message\\\": \\\"Average updated\\\"}\"\n    },\n    {\n      \"task_id\": \"Q3/4-PUT.response_error_not_found\",\n      \"description\": \"החזרת ERROR אם הסטודנט לא קיים\",\n      \"technical_details\": \"Return HTTP 404 with {\\\"status\\\": \\\"ERROR\\\", \\\"message\\\": \\\"Student not found\\\"}\"\n    },\n    {\n      \"task_id\": \"Q3/4-PUT.response_error_validation\",\n      \"description\": \"החזרת ERROR אם האימות של входים נכשל\",\n      \"technical_details\": \"Return HTTP 400 with {\\\"status\\\": \\\"ERROR\\\", \\\"message\\\": \\\"Invalid input\\\"}\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "23",
+      "idx": 23,
+      "file": "עותק של מבחן מועד א פולסטאק (1).pdf",
+      "question": "Q2",
+      "section": "א",
+      "section_text": "א. סדרה .)חשבונית ( ההפרש בין כל שני איברים עוקבים הוא מספר קבוע .)ב. סדרה הנדסית (כך שהיחס בין כל שני איברים סמוכים הוא קבוע",
+      "task_ids": [
+        "client_validation_rules",
+        "js_algorithms"
+      ],
+      "exercise_understanding_score": 37,
+      "decomposition_score": 54,
+      "leaf_average_score": 98,
+      "final_score": 60,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_validation_rules"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות פונקציה שמקבלת מערך ובודקת אם הוא סדרה חשבונית או הנדסית\",\"task_ids\":[\"js_algorithms\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"Logic\",\"sub_branch\":\"Arithmetic/Geometric check\",\"task_id\":\"js_algorithms\",\"technical_task\":\"לבדוק אם המערך הוא סדרה חשבונית (הפרש קבוע) או הנדסית (יחס קבוע) ולמחזר מחרוזת תיאורית\"}]}"
+    },
+    {
+      "section_key": "24",
+      "idx": 24,
+      "file": "עותק של מבחן מועד א פולסטאק (1).pdf",
+      "question": "Q2",
+      "section": "ג",
+      "section_text": "ג. סדרת פיבונאצי (כל איבר הינו סכום2 .)האיברים שבאים לפניו .ד. כל סדרה אחרת סדרה חשבונית תחזיר– A סדרה הנדסית תחזיר– B סדרת פיבונאצי תחזיר– C כל סדרה אחרת תחזיר– D ** במידה ואחד הערכים בסדרה אינו מספר או במידה והפונקציה קיבלה ערך שאינו מערך היא תזרוק שגיאה מתאימה. *את הפונקציה יש להכניס ל״חבילה חדשה״ בnode.js . .ולייצא אותה",
+      "task_ids": [
+        "alerts_error_handling",
+        "js_algorithms",
+        "node_file_io"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 97,
+      "final_score": 89,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות פונקציה ב-Node.js שמקבלת מערך ומזהה את סוג הסדרה (חשבונית, הנדסית, פיבונאצי או אחרת), ומחזירה A/B/C/D; אם האלמנטים לא מספריים או שהקלט לא מערך – מזרקת שגיאה\",\n  \"task_ids\": [\"js_algorithms\", \"node_file_io\", \"alerts_error_handling\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Logic\", \"sub_branch\": \"Sequence detection\", \"task_id\": \"js_algorithms\", \"technical_task\": \"לכתוב פונקציה שבודקת אם הסדרה חשבונית/הנדסית/פיבונאצי/אחרת, עם לולאות ותנאים\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Node\", \"sub_branch\": \"Module export\", \"task_id\": \"node_file_io\", \"technical_task\": \"לכתוב את הפונקציה בקובץ נפרד, ולהחזיר אותה via module.exports\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Error\", \"sub_branch\": \"Validation\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"לזרוק שגיאה אם הקלט לא מערך או אם אחד האלמנטים אינו מספר\"}\n  ]\n}"
+    },
+    {
+      "section_key": "25",
+      "idx": 25,
+      "file": "עותק של מבחן מועד א פולסטאק (1).pdf",
+      "question": "Q3",
+      "section": "א",
+      "section_text": "א . יש להסביר במילים שלך, מה ההבדל ביןPOST GET PUT DELETE",
+      "task_ids": [
+        "api_get_all",
+        "api_put_update",
+        "api_delete",
+        "theory_explanation"
+      ],
+      "exercise_understanding_score": 27,
+      "decomposition_score": 43,
+      "leaf_average_score": 96,
+      "final_score": 52,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_delete, api_get_all, api_put_update"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"להסביר את ההבדלים בין שיטות ה-HTTP POST, GET, PUT, DELETE\",\n  \"task_ids\": [\"theory_explanation\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Theory\", \"sub_branch\": \"HTTP Methods\", \"task_id\": \"theory_explanation\", \"technical_task\": \"להסביר במילים פשוטות את היעוד של כל אחת מהשיטות: GET (קריאת נתונים), POST (יצירת רשומה חדשה), PUT (עדכון רשומה קיימת), DELETE (מחיקת רשומה)\"}\n  ]\n}"
+    },
+    {
+      "section_key": "26",
+      "idx": 26,
+      "file": "עותק של מבחן מועד א פולסטאק (1).pdf",
+      "question": "Q3",
+      "section": "ב",
+      "section_text": "ב. יש לציין3 יתרונות ו2 חסרונות בשימוש בMongoDB על פני מאגרי מידע .אחרים",
+      "task_ids": [
+        "db_persistence",
+        "theory_explanation"
+      ],
+      "exercise_understanding_score": 42,
+      "decomposition_score": 58,
+      "leaf_average_score": 96,
+      "final_score": 63,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: db_persistence"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לרשום 3 יתרונות ו2 חסרונות של MongoDB לעומת מאגרי נתונים אחרים\",\n  \"task_ids\": [\"theory_explanation\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Theory\", \"sub_branch\": \"MongoDB advantages\", \"task_id\": \"theory_explanation\", \"technical_task\": \"לרשום 3 יתרונות: schema-less, scalability, document model\"},\n    {\"id\": \"1.1.1.2\", \"branch\": \"Theory\", \"sub_branch\": \"MongoDB disadvantages\", \"task_id\": \"theory_explanation\", \"technical_task\": \"לרשום 2 חסרונות: memory usage, lack of joins\"}\n  ]\n}"
+    },
+    {
+      "section_key": "27",
+      "idx": 27,
+      "file": "עותק של מבחן מועד א פולסטאק (1).pdf",
+      "question": "Q3",
+      "section": "ג",
+      "section_text": "ג . אתם מגיעים לחברה חדשה, המראיין שואל אותכם מדוע שאבחר להשתמש דווקא בריאקט ולא להמשיך להשתמש בCSS JS HTML ? יש לציין לפחות3 .יתרונות של ריאקט וחסרון אחד",
+      "task_ids": [
+        "theory_explanation"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"להסביר יתרונות וחסרון של React vs HTML/CSS/JS ידניים, עם דגש על תכונות טכנולוגיות\",\n  \"task_ids\": [\"theory_explanation\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Theory\", \"sub_branch\": \"React advantages\", \"task_id\": \"theory_explanation\", \"technical_task\": \"לפרט 3 יתרונות של React (למשל: Virtual DOM, מكونים מודולריים, אסינכרוניות/State management) וחסרון אחד (למשל: עקביות עם SEO, גודל קובץ ראשוני, למידה מתקדמת)\"}\n  ]\n}"
+    },
+    {
+      "section_key": "28",
+      "idx": 28,
+      "file": "עותק של מבחן מועד א פולסטאק (1).pdf",
+      "question": "Q3",
+      "section": "ד",
+      "section_text": "ד. מה ההבדל ביןfunction לarrow function",
+      "task_ids": [
+        "theory_explanation"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"להסביר את ההבדלים בין function ל-arrow function ב-JavaScript\",\n  \"task_ids\": [\"theory_explanation\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Theory\", \"sub_branch\": \"Function vs Arrow Function\", \"task_id\": \"theory_explanation\", \"technical_task\": \"להסביר את ההבדלים המרכזיים: this binding, syntax, hoisting, use cases\"}\n  ]\n}"
+    },
+    {
+      "section_key": "29",
+      "idx": 29,
+      "file": "עותק של מבחן מועד א פולסטאק (1).pdf",
+      "question": "Q3",
+      "section": "ה",
+      "section_text": "ה. ?הסבר במילים מה הפונקציה עושה const func = (num) => { if(num === 1 ) { return 1; } else { return (num * func(num-1)); } }",
+      "task_ids": [
+        "theory_explanation"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"הסבר על פונקציה רקורסיבית לחישוב עצרת\",\n  \"task_ids\": [\"theory_explanation\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Theory\", \"sub_branch\": \"Recursion explanation\", \"task_id\": \"theory_explanation\", \"technical_task\": \"להסביר שהפונקציה מחשבת את עצרת המספר n (n!) באמצעות רקורסיה, עם מקרי קצה n=1 ו slu n>1, ומחזירה n * (n-1)!\"}\n  ]\n}"
+    },
+    {
+      "section_key": "30",
+      "idx": 30,
+      "file": "עותק של מבחן מועד ב פולסטאק.docx",
+      "question": "Q2",
+      "section": "main",
+      "section_text": "שאלה 2: יש לכתוב פונקציה ב JS אשר מקבלת מספר בודד וממיינת את הספרות שלו מהקטן לגדול. לדוגמא : הפונקציה קיבלה 642531, הפונקציה החזירה 123456 * אסור להשתמש בפעולת sort()",
+      "task_ids": [
+        "api_get_filtered",
+        "js_algorithms"
+      ],
+      "exercise_understanding_score": 39,
+      "decomposition_score": 55,
+      "leaf_average_score": 94,
+      "final_score": 60,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_get_filtered"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות פונקציה JS שמקבלת מספר ומחזירה מספר עם ספרות ממוינות מהקטן לגדול ללא שימוש ב-sort()\",\n  \"task_ids\": [\"js_algorithms\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"JS\", \"sub_branch\": \"Digit sorting\", \"task_id\": \"js_algorithms\", \"technical_task\": \"להפוך את המספר למחרוזת, לפרק לספרות, למיין ידנית (למשל bubble/selection sort) ולחזיר מספר חדש\"}\n  ]\n}"
+    },
+    {
+      "section_key": "31",
+      "idx": 31,
+      "file": "עותק של מבחן מועד ב פולסטאק.docx",
+      "question": "Q3",
+      "section": "main",
+      "section_text": "שאלה 3: יש ליצור שרת Express שמקבל מידע מעמוד HTML ושומר אותו בקובץ נפרד. המערכת בנויה מעמוד HTML שנראה כך העמוד מכיל כותרת, תיבת טקסט (עם הגבלה ל10 תווים) וכפתור לחיצה על הכפתור תוודא שיש טקסט בתוך תיבת הטקסט. במידה ויש היא תעביר אותו לשרת. תפקידו של השרת לקבל את המידע מהעמוד הסטטי באמצעות POST ולהוסיף אותו לקובץ טקסט חדש שישמר על המחשב. את המלל יש להוסיף לקובץ ולא לדרוס את החומר הישן.",
+      "task_ids": [
+        "api_post_create",
+        "server_html_route",
+        "client_form_inputs",
+        "client_validation_rules",
+        "node_file_io"
+      ],
+      "exercise_understanding_score": 61,
+      "decomposition_score": 75,
+      "leaf_average_score": 95,
+      "final_score": 75,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות שרת Express שמקבל טקסט מטופס HTML (מוגבל ל-10 תווים), ומוסיף אותו לקובץ טקסט קיים ללא דריסה\",\n  \"task_ids\": [\"server_html_route\", \"client_form_inputs\", \"client_validation_rules\", \"api_post_create\", \"node_file_io\", \"alerts_error_handling\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Server\", \"sub_branch\": \"HTML route\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגדיר route שמשתף את קובץ ה-HTML הסטטי\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form inputs\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input טקסט עם max-length=10 וכפתור submit\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שטקסט לא ריק ומכיל עד 10 תווים לפני שליחה\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"API\", \"sub_branch\": \"POST create\", \"task_id\": \"api_post_create\", \"technical_task\": \"לקרוא req.body, לאמת טקסט, ולשלוח את התוכן לקובץ\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"Server\", \"sub_branch\": \"File I/O\", \"task_id\": \"node_file_io\", \"technical_task\": \"לכתוב את הטקסט לסוף קובץ קיים (append mode)\"},\n    {\"id\": \"1.6.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert על שגיאות תקינות או תקשורת\"}\n  ]\n}"
+    },
+    {
+      "section_key": "32",
+      "idx": 32,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "main",
+      "section_text": "שאלה 1 – 75 נקודות.",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 48,
+      "decomposition_score": 64,
+      "leaf_average_score": 96,
+      "final_score": 67,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_navigation, js_algorithms, question_scope_inherited"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות ממשק לוגיסטי לניהול מחסן: הצגת פריטים, חיפוש לפי שם/קטגוריה, הוספה/עדכון/מחיקה עם בדיקת ייחודיות, קלט ותגובה שגיאה\",\n  \"task_ids\": [\"api_get_filtered\", \"api_post_create\", \"api_put_update\", \"api_delete\", \"db_uniqueness\", \"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\", \"client_list_render\", \"server_html_route\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"GET filtered\", \"task_id\": \"api_get_filtered\", \"technical_task\": \"להגדיר router.get שמקבל query params ומחזיר פריטים מסוננים לפי שם/קטגוריה\"},\n    {\"id\": \"1.1.2.1\", \"branch\": \"API\", \"sub_branch\": \"POST create\", \"task_id\": \"api_post_create\", \"technical_task\": \"לקרוא req.body, לוודא ייחודיות, ולשמור ב-DB עם החזרת 201/400\"},\n    {\"id\": \"1.1.3.1\", \"branch\": \"API\", \"sub_branch\": \"PUT update\", \"task_id\": \"api_put_update\", \"technical_task\": \"לעדכן פריט קיים לפי ID, עם בדיקת קיום ו手动 ייחודיות\"},\n    {\"id\": \"1.1.4.1\", \"branch\": \"API\", \"sub_branch\": \"DELETE\", \"task_id\": \"api_delete\", \"technical_task\": \"למחוק פריט לפי ID עם החזרת 204/404\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"DB\", \"sub_branch\": \"Uniqueness\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק אם שם הפריט כבר קיים ב-DB לפני הוספה/עדכון\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form inputs\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות טופס עם input/textarea/submit ליצירת/עדכון פריט\"},\n    {\"id\": \"1.3.2.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק אורך, חובה, ותבנית תקינה של שדות בקלט\"},\n    {\"id\": \"1.3.3.1\", \"branch\": \"Client\", \"sub_branch\": \"Error alerts\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג הודעות שגיאה ב-UI או alert על שגיאות API\"},\n    {\"id\": \"1.3.4.1\", \"branch\": \"Client\", \"sub_branch\": \"List render\", \"task_id\": \"client_list_render\", \"technical_task\": \"לרנדר טבלה/רשימה של פריטים עם כפתורי עריכה/מחיקה\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Server\", \"sub_branch\": \"HTML route\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגיש את דף ה-HTML הראשי דרך Express\"}\n  ]\n}"
+    },
+    {
+      "section_key": "33",
+      "idx": 33,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q2",
+      "section": "main",
+      "section_text": "שאלה 2 - JavaScript. כתוב פונקציה שמקבלת מערך של אחדות ואפסים המייצג מספר בינארי. הפונקציה תמיר את הערך למספר דצימלי רגיל, ולאחר מכן תחזיר אמת אם הערך הדצימלי הוא פלינדרום ושקר אם הוא לא. מספר בינארי מיוצג בספרות 0 או 1, וכל ספרה במקומה מציינת ערך כפול 2 בחזקת המיקום שלה. לדוגמה 101101 מייצג 45 כי המקומות עם 1 הם 1 + 4 + 8 + 32.",
+      "task_ids": [
+        "js_algorithms"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"פונקציה שמקבלת מערך של 0/1, מתרגם למספר דצימלי, ובודק אם הוא פלינדרום\",\n  \"task_ids\": [\"js_algorithms\"],\n  \"leaf_tasks\": [\n    {\n      \"id\": \"1.1.1.1\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Binary to decimal conversion\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"לחשב ערך דצימלי ממערך של ספרות בינאריות (0/1) לפי סכום 2^i עבור כל מקום עם 1\"\n    },\n    {\n      \"id\": \"1.1.1.2\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Palindrome check\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"לבדוק אם המספר הדצימלי שהתקבל הוא פלינדרום (שווה לעצמו הפוך)\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "34",
+      "idx": 34,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "1",
+      "section_text": "1. מחלקת עובד: מאפייני העובד:",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 11,
+      "decomposition_score": 29,
+      "leaf_average_score": 95,
+      "final_score": 42,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling, api_get_filtered, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, js_algorithms, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות מחלקת עובד עם מאפיינים ופונקציונליות בסיסית, כולל בדיקת ייחודיות של שם משתמש ושמירת נתונים ב-DB\",\n  \"task_ids\": [\"oop_design\", \"db_uniqueness\", \"db_persistence\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"OOP\", \"sub_branch\": \"Class definition\", \"task_id\": \"oop_design\", \"technical_task\": \"להגדיר מחלקת Employee עם שדות: id, name, username, role, ופונקציה getDetails()\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"DB\", \"sub_branch\": \"Uniqueness\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק ש-username ייחודי לפני שמירת עובד\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"DB\", \"sub_branch\": \"Persistence\", \"task_id\": \"db_persistence\", \"technical_task\": \"לשמור את פרטי העובד ב-MongoDB via Mongoose\"}\n  ]\n}"
+    },
+    {
+      "section_key": "35",
+      "idx": 35,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "1",
+      "section_text": "1. מספר עובד (חד-חד ערכי). מספר בעל 5 ספרות.",
+      "task_ids": [
+        "db_uniqueness"
+      ],
+      "exercise_understanding_score": 42,
+      "decomposition_score": 54,
+      "leaf_average_score": 100,
+      "final_score": 63,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות שדה קלט למספר עובד ב-5 ספרות, עם בדיקת ייחודיות ותוקף אורך/ספרות\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\", \"db_uniqueness\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form Input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input type='text' עם label 'מספר עובד' ו-5 ספרות מקסימום\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק באורך 5 ספרות, רק ספרות, ולחסום ריק\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Server\", \"sub_branch\": \"Uniqueness\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק ב-DB שהמספר כבר קיים, להחזיר 409 אם כן\"}\n  ]\n}"
+    },
+    {
+      "section_key": "36",
+      "idx": 36,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "2",
+      "section_text": "2. שם מלא.",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 1,
+      "decomposition_score": 13,
+      "leaf_average_score": 96,
+      "final_score": 33,
+      "status": "WEAK",
+      "issues": [
+        "missing task_ids",
+        "missing 1.1.1.1 leaf hierarchy",
+        "missing expected task_ids: alerts_error_handling, api_get_filtered, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, db_uniqueness, js_algorithms, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לא ידוע - התרגיל חסר תוכן, רק כותרת 'שם מלא' ללא פרטים על הדרישות\",\"task_ids\":[],\"leaf_tasks\":[]}"
+    },
+    {
+      "section_key": "37",
+      "idx": 37,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "3",
+      "section_text": "3. רישיון למלגזה . ערך בוליאני.",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 11,
+      "decomposition_score": 29,
+      "leaf_average_score": 95,
+      "final_score": 42,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling, api_get_filtered, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, js_algorithms, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות API שמעדכן רישיון למלגזה (ערך בוליאני) ומאפשר קריאה של כל הרשומות, עם בדיקת ייחודיות ושמירת נתונים ב-DB\",\"task_ids\":[\"api_put_update\",\"api_get_all\",\"db_uniqueness\",\"db_persistence\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"API\",\"sub_branch\":\"PUT update\",\"task_id\":\"api_put_update\",\"technical_task\":\"לעדכן שדה licenseActive (boolean) לפי ID, לאמת שה-ID קיים, ולשמור ב-DB\"},{\"id\":\"1.1.1.2\",\"branch\":\"API\",\"sub_branch\":\"GET all\",\"task_id\":\"api_get_all\",\"technical_task\":\"להחזיר את כל הרשומות מ-DB כ-JSON\"},{\"id\":\"1.2.1.1\",\"branch\":\"DB\",\"sub_branch\":\"Uniqueness\",\"task_id\":\"db_uniqueness\",\"technical_task\":\"לבדוק שה-ID קיים ב-DB לפני עדכון\"},{\"id\":\"1.3.1.1\",\"branch\":\"DB\",\"sub_branch\":\"Persistence\",\"task_id\":\"db_persistence\",\"technical_task\":\"לשמור את הרשומה המעודכנת ב-Mongo/Mongoose\"}]}"
+    },
+    {
+      "section_key": "38",
+      "idx": 38,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "4",
+      "section_text": "4. כמה פעמים ביקר במחסן.",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 11,
+      "decomposition_score": 29,
+      "leaf_average_score": 96,
+      "final_score": 42,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling, api_get_filtered, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, db_uniqueness, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"למצוא כמה פעמים ביקר כל עובד במחסן, בהינתן מערך רישומים עם שמות עובדים ותאריכי ביקור. יש לספור את מספר הביקורים לכל עובד.\",\"task_ids\":[\"js_algorithms\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"Logic\",\"sub_branch\":\"Count visits\",\"task_id\":\"js_algorithms\",\"technical_task\":\"לספור את מספר הביקורים לכל עובד במערך, להחזיר אובייקט עם שם עובד כמפתח ומספר הביקורים כערך\"}]}"
+    },
+    {
+      "section_key": "39",
+      "idx": 39,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "2",
+      "section_text": "2. מחלקת מוצר: מאפייני המוצר:",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 11,
+      "decomposition_score": 29,
+      "leaf_average_score": 95,
+      "final_score": 42,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling, api_get_filtered, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, js_algorithms, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות מחלקת מוצר עם מאפיינים, בדיקת ייחודיות של שם המוצר, ושמירתו ב-DB\",\n  \"task_ids\": [\"oop_design\", \"db_uniqueness\", \"db_persistence\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"OOP\", \"sub_branch\": \"Product class\", \"task_id\": \"oop_design\", \"technical_task\": \"להגדיר מחלקה Product עם שדות: שם, מחיר, סוכן, סטטוס, ומתודת בדיקת ייחודיות\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"DB\", \"sub_branch\": \"Uniqueness\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק אם שם המוצר כבר קיים ב-DB לפני היצירה\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"DB\", \"sub_branch\": \"Persistence\", \"task_id\": \"db_persistence\", \"technical_task\": \"לשמור את המוצר ב-DB עם save() או create()\"}\n  ]\n}"
+    },
+    {
+      "section_key": "40",
+      "idx": 40,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "1",
+      "section_text": "1. מספר מוצר (חד-חד ערכי). מספר בעל 5 ספרות.",
+      "task_ids": [
+        "db_uniqueness"
+      ],
+      "exercise_understanding_score": 42,
+      "decomposition_score": 54,
+      "leaf_average_score": 94,
+      "final_score": 61,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות שדה קלט למספר מוצר (5 ספרות, ייחודי) בצד הלקוח עם בדיקת תקינות ותבנית\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\", \"db_uniqueness\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form Input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input type='text' עם label 'מספר מוצר' ו-5 ספרות כ-placeholder\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק באורך 5 ספרות, רק ספרות, ולבצע בדיקת ייחודיות מול ה-DB\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"DB\", \"sub_branch\": \"Uniqueness\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"להגדיר index unique על שדה מספר המוצר ב-Mongoose\"}\n  ]\n}"
+    },
+    {
+      "section_key": "41",
+      "idx": 41,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "2",
+      "section_text": "2. שם המוצר.",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 31,
+      "decomposition_score": 49,
+      "leaf_average_score": 96,
+      "final_score": 56,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling, api_get_filtered, client_list_render, client_navigation, js_algorithms, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות API שמאפשר יצירת מוצר חדש עם שם המוצר כקלט, כולל בדיקת ייחודיות ושמירה בDB\",\"task_ids\":[\"api_post_create\",\"db_uniqueness\",\"db_persistence\",\"client_form_inputs\",\"client_validation_rules\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"API\",\"sub_branch\":\"POST create\",\"task_id\":\"api_post_create\",\"technical_task\":\"לקרוא req.body.name, לוודא ייחודיות, ולשמור בDB\"},{\"id\":\"1.2.1.1\",\"branch\":\"DB\",\"sub_branch\":\"Uniqueness\",\"task_id\":\"db_uniqueness\",\"technical_task\":\"לבצע בדיקה אם שם המוצר כבר קיים בDB לפני היצירה\"},{\"id\":\"1.3.1.1\",\"branch\":\"DB\",\"sub_branch\":\"Persistence\",\"task_id\":\"db_persistence\",\"technical_task\":\"לשמור את המוצר החדש בMongoDB עם שם המוצר\"},{\"id\":\"1.4.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Form\",\"task_id\":\"client_form_inputs\",\"technical_task\":\"לבנות input ל שם המוצר עם value/onChange\"},{\"id\":\"1.5.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Validation\",\"task_id\":\"client_validation_rules\",\"technical_task\":\"לבדוק ששם המוצר לא ריק, אורך מינימלי 2, ותבנית תקינה\"}]}"
+    },
+    {
+      "section_key": "42",
+      "idx": 42,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "3",
+      "section_text": "3. האם צריך מלגזה. בוליאני.",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 11,
+      "decomposition_score": 30,
+      "leaf_average_score": 96,
+      "final_score": 42,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, db_uniqueness, js_algorithms, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות API שמאפשר קבלת כל המלגזים עם אפשרות סינון לפי בוליאני 'האם צריך melgaza'\",\"task_ids\":[\"api_get_filtered\",\"db_persistence\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"API\",\"sub_branch\":\"GET filtered\",\"task_id\":\"api_get_filtered\",\"technical_task\":\"להגדיר router.get שמקבל query parameter melgaza (boolean) ומחזיר רק את המלגזים שמתאימים\"},{\"id\":\"1.2.1.1\",\"branch\":\"DB\",\"sub_branch\":\"Persistence\",\"task_id\":\"db_persistence\",\"technical_task\":\"לקרוא מטבלת Melgazim ב-MongoDB ולסנן לפי שדה melgaza (boolean)\"}]}"
+    },
+    {
+      "section_key": "43",
+      "idx": 43,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "4",
+      "section_text": "4. האם נמצא במקום. בוליאני. יש ליצור 2 מערכים מטיפוס עובד ומוצר אשר יכילו את האובייקטים. מערך העובדים צריך להיות ריק בהתחלה. מערך המוצרים: יהיה מלא ב5 מוצרים שונים פירוט המוצרים:",
+      "task_ids": [
+        "js_algorithms"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות 2 מערכים: עובדים (ריקים בהתחלה) ומוצרים (5 מוצרים), עם בדיקת קיום של מוצר/עובד במערך (בוליאני)\",\n  \"task_ids\": [\"js_algorithms\"],\n  \"leaf_tasks\": [\n    {\n      \"id\": \"1.1.1.1\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Initialize arrays\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"ליצור מערך עובדים ריק ומערך מוצרים עם 5 אובייקטים\"\n    },\n    {\n      \"id\": \"1.1.1.2\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Check existence\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"לכתוב פונקציה בוליאנית שבודקת אם מוצר/עובד קיים במערך\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "44",
+      "idx": 44,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "1",
+      "section_text": "1. 11122 , קופסא ירוקה , אינו צריך מלגזה.",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 18,
+      "decomposition_score": 37,
+      "leaf_average_score": 97,
+      "final_score": 47,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, js_algorithms, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות API שמעביר מידע על מוצרי מחסן לוגיסטי לפי מס' זיהוי, עם בדיקת ייחודיות ושמירת נתונים ב-DB\",\"task_ids\":[\"api_get_filtered\",\"db_uniqueness\",\"db_persistence\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"API\",\"sub_branch\":\"GET filtered\",\"task_id\":\"api_get_filtered\",\"technical_task\":\"להגדיר router.get שמקבל id ומחזיר את המוצר המתאים או 404\"},{\"id\":\"1.2.1.1\",\"branch\":\"DB\",\"sub_branch\":\"Uniqueness\",\"task_id\":\"db_uniqueness\",\"technical_task\":\"לבדוק שה-ID ייחודי לפני שמירה (אם יש create)\"},{\"id\":\"1.3.1.1\",\"branch\":\"DB\",\"sub_branch\":\"Persistence\",\"task_id\":\"db_persistence\",\"technical_task\":\"לשמור/לקרוא נתונים מ-Mongo/Mongoose (id, name, needs_melgaza)\"}]}"
+    },
+    {
+      "section_key": "45",
+      "idx": 45,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "2",
+      "section_text": "2. 22554 , קופסא ירוקה , אינו צריך מלגזה.",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 19,
+      "decomposition_score": 37,
+      "leaf_average_score": 96,
+      "final_score": 48,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, js_algorithms, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות API שמחזיר את כל הקופסאות במחסן, כולל סינון לפי צבע ותנאי (למשל: רק קופסאות שדורשות מלגזה), עם בדיקת ייחודיות של ID\",\"task_ids\":[\"api_get_filtered\",\"db_uniqueness\",\"db_persistence\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"API\",\"sub_branch\":\"GET filtered\",\"task_id\":\"api_get_filtered\",\"technical_task\":\"להגדיר router.get שמקבל query params (צבע, needs_melgaza) ומחזיר את הקופסאות המתאימות\"},{\"id\":\"1.2.1.1\",\"branch\":\"DB\",\"sub_branch\":\"uniqueness\",\"task_id\":\"db_uniqueness\",\"technical_task\":\"לבדוק ש-ID של קופסה ייחודי ב-DB לפני שמירה\"},{\"id\":\"1.3.1.1\",\"branch\":\"DB\",\"sub_branch\":\"persistence\",\"task_id\":\"db_persistence\",\"technical_task\":\"לשמור/לקרוא את כל הקופסאות מ-MongoDB\"}]}"
+    },
+    {
+      "section_key": "46",
+      "idx": 46,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "3",
+      "section_text": "3. 66698 , קופסא כחולה , צריך מלגזה.",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 12,
+      "decomposition_score": 30,
+      "leaf_average_score": 97,
+      "final_score": 43,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling, api_post_create, client_form_inputs, client_list_render, client_navigation, client_validation_rules, db_uniqueness, js_algorithms, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבדוק אם קיימת קופסא כחולה עם המזהה 66698 וצריכה משלוח למלגזה, על בסיס נתונים קיימים במערכת\",\"task_ids\":[\"api_get_filtered\",\"db_persistence\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"API\",\"sub_branch\":\"GET filtered\",\"task_id\":\"api_get_filtered\",\"technical_task\":\"להגדיר router.get שסינון לפי id=66698 וסטטוס=needs_dispatch\"},{\"id\":\"1.1.1.2\",\"branch\":\"DB\",\"sub_branch\":\"Persistence\",\"task_id\":\"db_persistence\",\"technical_task\":\"לקרוא את הקופסאות מהמסד ולסנן לפי קריטריונים\"}]}"
+    },
+    {
+      "section_key": "47",
+      "idx": 47,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "4",
+      "section_text": "4. 78544 , קופסא אדומה , אינו צריך מלגזה.",
+      "task_ids": [
+        "question_scope_inherited",
+        "alerts_error_handling",
+        "api_get_filtered",
+        "api_post_create",
+        "client_form_inputs",
+        "client_list_render",
+        "client_navigation",
+        "client_validation_rules",
+        "db_uniqueness",
+        "js_algorithms",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 33,
+      "decomposition_score": 49,
+      "leaf_average_score": 98,
+      "final_score": 57,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling, api_post_create, client_list_render, client_navigation, js_algorithms, question_scope_inherited, server_html_route"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות API שמחזיר את כל המוצרים במחסן, כולל סינון לפי שם (קופסא אדומה) או סינון לפי חוסר בקופסא (אינו צריך מלגזה), עם בדיקת ייחודיות של שם המוצר\",\"task_ids\":[\"api_get_filtered\",\"db_uniqueness\",\"db_persistence\",\"client_form_inputs\",\"client_validation_rules\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"API\",\"sub_branch\":\"GET filtered\",\"task_id\":\"api_get_filtered\",\"technical_task\":\"להגדיר router.get שמקבל query params ומחזיר מערך מוצרים לפי שם/האם צריך מלגזה\"},{\"id\":\"1.1.2.1\",\"branch\":\"DB\",\"sub_branch\":\"Uniqueness\",\"task_id\":\"db_uniqueness\",\"technical_task\":\"לבדוק ששם המוצר ייחודי לפני הוספה למחסן\"},{\"id\":\"1.2.1.1\",\"branch\":\"DB\",\"sub_branch\":\"Persistence\",\"task_id\":\"db_persistence\",\"technical_task\":\"לשמור את המוצר ב-MongoDB עם שדות: שם, צבע, צריך_מלגזה\"},{\"id\":\"1.3.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Form\",\"task_id\":\"client_form_inputs\",\"technical_task\":\"לבנות טופס קלט עם שדות: שם, צבע, checkbox האם צריך מלגזה\"},{\"id\":\"1.4.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Validation\",\"task_id\":\"client_validation_rules\",\"technical_task\":\"לבדוק ששם המוצר לא ריק, צבע תקין, ושם ייחודי\"}]}"
+    },
+    {
+      "section_key": "48",
+      "idx": 48,
+      "file": "עותק של מבחן מחסן לוגיסטי.docx",
+      "question": "Q1",
+      "section": "5",
+      "section_text": "5. 69875 , קופסא אדומה , אינו צריך מלגזה. *הערכים יכנסו באנגלית בלבד! *אף מוצר כברירת מחדל לא נמצא במקום. *האתר לא מאפשר יצירה של מוצרים חדשים. אפיון עמוד הכניסה של האתר: ערוץ (\"/\") לאתר יש 2 כפתורים וכותרת. רקע העמוד \"אפור בהיר\". .H2כותרת : במרכז בגודל 2 כפתורים: רקע כחול , במרכז , אחד מתחת לשני עם פינות עגולות. את הכתב יהיה בלבן כפי שנראה בתיאור למעלה. לחיצה על כל אחד מהכפתורים יאפשר מעבר לעמוד הבא לפי הכפתור שנבחר. דף הרשמה – בדף זה העובד ירשם במידה ואינו קיים במערכת.:Sign up ערוץ (“/signup”) קוד: על העובד למלא בשדה הראשון מספרים בלבד. המספר צריך להיות בעל 5 ספרות בלבד. במידה והוזן מספר אשר קטן או גדול מ5 ספרות תופיע הודעת שגיאה מתחת לשדה באדום עם הפירוט הבא: the number must be with 5 digits. שדה שני – שם מלא. אותיות בלבד עם רווח אחד לפחות. במידה והשדה לא יכיל רק אותיות או פחות מ4 תווים (לא כולל הרווח) תופיע השגיאה הבאה מתחת לשדה. the name must contain minimum 4 characters. 2 כפתורי רדיו: הכפתורים מציינים אם יש לעובד רישיון למלגזה. צריך להיות לחוץ.NOבתור ברירת מחדל הכפתור כפתור \"צור\": לאחר לחיצה על כפתור היצירה המערכת תבדוק שהנתונים אכן תקינים ותוודא שהעובד לא נמצא כבר מערכת. מציאת העובד במערכת מתבצעת ע\"י מספר העובד בלבד. (ניתן לצרף 2 עובדים עם אותו שם). במידה ויצירת העובד תקינה יש לעדכן זאת במערך אשר מכיל את כל העובדים בחברה. דף כניסה – בדף זה העובד יוכל להיכנס למשתמש שלו.:Log In ערוץ (“/login”) קוד: העובד יזין בתוך תיבת הטקסט את מספר העובד ורק לאחר לחיצה על כפתור הכניסה המערכת תבדוק באיזה עובד מדובר. .alertבמידה והעובד לא נמצא יקפוץ לא קיים\".Xבתוכו תיכתב ההודעה \"העובד במידה והעובד קיים תפתח בפניו הדף הבא: (הערוץ לא משתנה) קוד: יש לציין רק את שמו המלא של העובד בכותרת העמוד לאחר המילה . WELCOME לאחר מכן את כל הפרטים מצד שמאל. במידה ויש לעובד רישיון על מלגזה (ערך אמת) יש לכתוב \"כן\" אחרת \"לא\". לאחר מכן יש להציג רשימה של כל המוצרים אשר נכתבו כ\"לא במקום\". (משתנה : האם נמ",
+      "task_ids": [
+        "api_get_filtered",
+        "api_post_create",
+        "server_html_route",
+        "client_form_inputs",
+        "client_validation_rules",
+        "client_navigation",
+        "client_list_render",
+        "alerts_error_handling"
+      ],
+      "exercise_understanding_score": 52,
+      "decomposition_score": 69,
+      "leaf_average_score": 96,
+      "final_score": 70,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_post_create"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות אתר לוגיסטי עם דפי כניסה/הרשמה, בדיקת ייחודיות עובד, רינדור דף משתמש עם רשימת מוצרים חסרים, וסינון לפי 'not in place'\",\n  \"task_ids\": [\"server_html_route\", \"client_form_inputs\", \"client_validation_rules\", \"db_uniqueness\", \"api_get_filtered\", \"client_list_render\", \"alerts_error_handling\", \"client_navigation\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Server\", \"sub_branch\": \"Root route\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגיש HTML עם כותרת H2, רקע אפור בהיר, וכפתורים כחולים עם טקסט לבן ב-Express\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Sign up form\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input למספר עובד (5 ספרות) ושם מלא, ו-2 radio buttons לרישיון melgaza\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation rules\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שמספר עובד הוא בדיוק 5 ספרות, ושם מלא состоит מאותיות ורווחים עם לפחות 4 תווים (ללא רווחים)\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Server\", \"sub_branch\": \"Uniqueness check\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק אם עובד עם אותו מספר כבר קיים ב-DB לפני היצירה\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"API\", \"sub_branch\": \"GET filtered products\", \"task_id\": \"api_get_filtered\", \"technical_task\": \"להחזיר רק מוצרים ש-`in_place: false`\"},\n    {\"id\": \"1.6.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Render list\", \"task_id\": \"client_list_render\", \"technical_task\": \"לרנדר את רשימת המוצרים החסרים כרשימה (למשל ul/li) בצד הלקוח\"},\n    {\"id\": \"1.7.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error alerts\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert עם 'העובד לא קיים' בכניסה או הודעות שגיאה תקינות תחת שדות\"},\n    {\"id\": \"1.8.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Navigation\", \"task_id\": \"client_navigation\", \"technical_task\": \"לאפשר מעבר בין /, /signup, /login ו/או דף משתמש לפי לחיצות כפתורים\"}\n  ]\n}"
+    },
+    {
+      "section_key": "49",
+      "idx": 49,
+      "file": "עותק של מבחן מחשבון המרה.docx",
+      "question": "Q2",
+      "section": "main",
+      "section_text": "שאלה 2. יש לכתוב פונקציה בJS. הפונקציה צריכה לקבל 3 ערכים. – ערך סופי ו2 ערכים התחלתיים. הפונקציה צריכה להחזיר את מיקום הסדרה של הערך הסופי לפי סדרת פיבונצ'י. סדרת פיבונצ'י הינה סדרת מספרים שהחוקיות שלה שכל איבר הינו סכום של 2 האיברים שקודמים לו. לדוגמא: 0,1,1,2,3,5,8,13… דוגמא לפונקציה זו. אם הפונקציה קיבלה 2 , 5 , 19 הפונקציה תחזיר 5 מכיוון שהסדרה הינה 2,5,7,12,19 = 5",
+      "task_ids": [
+        "api_get_filtered",
+        "js_algorithms"
+      ],
+      "exercise_understanding_score": 39,
+      "decomposition_score": 55,
+      "leaf_average_score": 96,
+      "final_score": 61,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_get_filtered"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות פונקציה ב-JS שמקבלת שלושה ערכים (ערך התחלתי ראשון, ערך התחלתי שני, ערך סופי) ומחזירה את מיקום האיבר הסופי בסדרת פיבונצ'י המותאמת (המתחילה מהשני הערכים התחלתיים), או -1 אם הוא לא מופיע\",\n  \"task_ids\": [\"js_algorithms\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Logic\", \"sub_branch\": \"Fibonacci sequence generator\", \"task_id\": \"js_algorithms\", \"technical_task\": \"לכתוב פונקציה שמייצרת סדרת פיבונצ'י מותאמת לפי שני ערכים התחלתיים ומחזירה את מיקום האיבר שווה לערך הסופי, או -1 אם לא נמצא\"}\n  ]\n}"
+    },
+    {
+      "section_key": "50",
+      "idx": 50,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q1",
+      "section": "main",
+      "section_text": "שאלה 1 - WILLING APP. לבנות אתר React להתנדבויות. העמוד הראשי תחת / כולל שני כפתורים: הוספת התנדבות ומצא התנדבות. לחיצה על הוספת התנדבות מעבירה ל-/add. עמוד /add כולל כותרת להתנדבות עד 20 תווים, מיקום התנדבות שהוא שם עיר באנגלית בלבד ללא מספרים/רווחים/סימנים, תיאור עד 200 תווים, וכפתור יצירת התנדבות חדשה. יש לוודא תקינות שדות; אם הכל תקין מחזירים לעמוד הראשי, ואם ערך לא תקין מציגים alert עם התקלה. עמוד /find כולל תיבת טקסט לשם מתנדב באורך גדול מ-2, select של כל ערי ההתנדבויות ללא כפילויות, וכפתור חפש. אם השם לא תקין מציגים alert. אם תקין עוברים ל-/all ושם מציגים את כל ההתנדבויות בעיר שנבחרה, כל אחת לפי כותרת בלבד. לחיצה על התנדבות מסמנת רקע ירוק בהיר ומציגה תיאור; לחיצה נוספת מבטלת ומחזירה רקע לבן. כפתור אישור מוחק מהרשימה כל התנדבות שנבחרה ומחזיר לעמוד הראשי.",
+      "task_ids": [
+        "question_scope_inherited",
+        "client_navigation",
+        "client_form_inputs",
+        "client_validation_rules",
+        "alerts_error_handling",
+        "client_list_render"
+      ],
+      "exercise_understanding_score": 53,
+      "decomposition_score": 67,
+      "leaf_average_score": 96,
+      "final_score": 70,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: question_scope_inherited"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות אתר React להתנדבויות עם דפי ניווט, טופס הוספה עם אימות, ורשימה מفلترة לפי עיר עם סימון ומחיקה\",\n  \"task_ids\": [\"client_navigation\", \"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\", \"server_html_route\", \"api_get_filtered\", \"client_list_render\", \"api_delete\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Navigation\", \"task_id\": \"client_navigation\", \"technical_task\": \"להגדיר כפתורים/לינקים מעבירים בין /, /add, /find, /all\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form inputs\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input/select/button ב-/add עם שדות כותרת, מיקום, תיאור\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק כותרת עד 20 תווים, מיקום באנגלית בלבד, תיאור עד 200 תווים\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Alerts\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert עם שגיאה אם אימות נכשל, אחרת לעבר /all\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"Server\", \"sub_branch\": \"HTML routes\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגיש את דף ה-React main.html דרך Express ב-/\"},\n    {\"id\": \"1.6.1.1\", \"branch\": \"API\", \"sub_branch\": \"GET filtered\", \"task_id\": \"api_get_filtered\", \"technical_task\": \"להחזיר את כל ההתנדבויות בעיר שנבחרה\"},\n    {\"id\": \"1.7.1.1\", \"branch\": \"Client\", \"sub_branch\": \"List render\", \"task_id\": \"client_list_render\", \"technical_task\": \"לרנדר את רשימת ההתנדבויות כרשימה עם כותרת, עם סימון רקע/תיאור\"},\n    {\"id\": \"1.8.1.1\", \"branch\": \"API\", \"sub_branch\": \"DELETE\", \"task_id\": \"api_delete\", \"technical_task\": \"למחוק את ההתנדבויות המסומנות ולמחזר את ה-IDs שנותרו\"}\n  ]\n}"
+    },
+    {
+      "section_key": "51",
+      "idx": 51,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q2",
+      "section": "main",
+      "section_text": "שאלה 2 - JavaScript. צרו פונקציה שמקבלת מערך של מספרים שלמים. הפונקציה בודקת אילו ערכים זוגיים ואי-זוגיים ואת כמות האיברים במערך. אם אחד האיברים אינו מספר יש לזרוק שגיאה. אם מספר קיים כמה פעמים במערך, בודקים אותו פעם אחת בלבד לצורך even/odd ומכניסים למאפיין המתאים באובייקט. הפונקציה מחזירה אובייקט עם even, odd, total. even הוא כמות המספרים הזוגיים הייחודיים שנמצאו, odd הוא כמות המספרים האי-זוגיים הייחודיים שנמצאו, total הוא כמות כלל האיברים במערך. לדוגמה עבור [6,3,3,4,13,6,7,18,7,11] הפונקציה מחזירה { even: 3, odd: 4, total: 10 }.",
+      "task_ids": [
+        "js_algorithms",
+        "alerts_error_handling"
+      ],
+      "exercise_understanding_score": 54,
+      "decomposition_score": 68,
+      "leaf_average_score": 94,
+      "final_score": 70,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: alerts_error_handling"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות פונקציה שמקבלת מערך של מספרים, סופרת ערכים זוגיים/אי-זוגיים ייחודיים ומספר כולל של איברים, וזרקת שגיאה אם יש ערך שאינו מספר\",\n  \"task_ids\": [\"js_algorithms\"],\n  \"leaf_tasks\": [\n    {\n      \"id\": \"1.1.1.1\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Unique even/odd count\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"לכתוב פונקציה שמקבלת מערך, בודקת אם כל איבר הוא מספר, זורקת שגיאה אם לא, מוסיפה ערכים ייחודיים לקבוצות זוגיות/אי-זוגיות, ומחזירה אובייקט עם even/odd/total\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "52",
+      "idx": 52,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "1",
+      "section_text": "1. כותרת להתנדבות – אינפוט טקסט אשר מכיל עד 20 תווים. מטרתו לתאר את ההתנדבות",
+      "task_ids": [
+        "client_form_inputs",
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות שדה קלט טקסט להזנת כותרת להתנדבות, עם הגבלה ל-20 תווים ותבנית בדיקה\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\"],\n  \"leaf_tasks\": [\n    {\n      \"id\": \"1.1.1.1\",\n      \"branch\": \"Client\",\n      \"sub_branch\": \"Form Input\",\n      \"task_id\": \"client_form_inputs\",\n      \"technical_task\": \"לבנות input type='text' עם name='title' ו-maxlength='20'\"\n    },\n    {\n      \"id\": \"1.2.1.1\",\n      \"branch\": \"Client\",\n      \"sub_branch\": \"Validation\",\n      \"task_id\": \"client_validation_rules\",\n      \"technical_task\": \"לבדוק שאורך הטקסט לא עולה על 20 תווים ולחזיר שגיאה אם כן\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "53",
+      "idx": 53,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "2",
+      "section_text": "2. מיקום ההתנדבות – שם של עיר, חייב לכלול אותיות באנגלית בלבד ללא מספרים רווחים או כל סימן",
+      "task_ids": [
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבדוק תקינות שדה מיקום התנדבות: שם עיר, חייב להכיל אותיות אנגלית בלבד, ללא מספרים, רווחים או סימנים\",\"task_ids\":[\"client_validation_rules\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Validation\",\"task_id\":\"client_validation_rules\",\"technical_task\":\"לבדוק עם regex /^[a-zA-Z]+$/ ששם העיר מכיל רק אותיות אנגלית, ללא רווחים או סימנים\"}]}"
+    },
+    {
+      "section_key": "54",
+      "idx": 54,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "3",
+      "section_text": "3. תיאור ההתנדבות – מכיל עד 200 תווים, תיאור של ההתנדבות",
+      "task_ids": [
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 29,
+      "decomposition_score": 43,
+      "leaf_average_score": 94,
+      "final_score": 53,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות API שמאפשר יצירת התנדבות עם תיאור עד 200 תווים, כולל בדיקת אורך תיאור\",\"task_ids\":[\"api_post_create\",\"client_form_inputs\",\"client_validation_rules\",\"alerts_error_handling\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"API\",\"sub_branch\":\"POST create\",\"task_id\":\"api_post_create\",\"technical_task\":\"לקרוא req.body, לוודא שדה description, ולשמור ל-DB\"},{\"id\":\"1.2.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Form\",\"task_id\":\"client_form_inputs\",\"technical_task\":\"לבנות textarea/input עם value/onChange לתיאור ההתנדבות\"},{\"id\":\"1.3.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Validation\",\"task_id\":\"client_validation_rules\",\"technical_task\":\"לבדוק שאורך description ≤ 200 תווים\"},{\"id\":\"1.4.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Error Handling\",\"task_id\":\"alerts_error_handling\",\"technical_task\":\"להציג alert על שגיאת אורך תיאור\"}]}"
+    },
+    {
+      "section_key": "55",
+      "idx": 55,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "4",
+      "section_text": "4. כפתור יצירת התנדבות חדשה מוודא את תקינות השדות, במידה והכל תקין מחזיר את הלקוח לעמוד הראשי, במידה ואחד הערכים לא תקין שולח ALERT עם התקלה. עמוד \"מצא התנדבות\" - תחת הערוץ ,/find , עמוד זה פותח 3 אלמנטים",
+      "task_ids": [
+        "server_html_route",
+        "client_form_inputs",
+        "client_navigation",
+        "alerts_error_handling"
+      ],
+      "exercise_understanding_score": 58,
+      "decomposition_score": 71,
+      "leaf_average_score": 96,
+      "final_score": 73,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות כפתור יצירת התנדבות עם בדיקת תקינות קלט בצד הלקוח, חזרה לעמוד ראשי או alert שגיאה, ועמוד '/find' שפותח 3 אלמנטים (ככל הנראה שדות חיפוש/סינון)\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\", \"client_navigation\", \"server_html_route\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form inputs\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input fields לשדות התנדבות (שם, תאריך, תיאור) עם value/onChange\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק regex/אורך/חובה של שדות בלחיצת כפתור\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert עם תיאור השגיאה אם בדיקה נכשלת\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Navigation\", \"task_id\": \"client_navigation\", \"technical_task\": \"לעבור לעמוד הראשי (('/') או '/home') אם הבדיקה מוצלחת\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"Server\", \"sub_branch\": \"Route /find\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגדיר router.get('/find') שמשתף HTML עם 3 אלמנטים (כגון input fields או select)\"}\n  ]\n}"
+    },
+    {
+      "section_key": "56",
+      "idx": 56,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "1",
+      "section_text": "1. תיבת טקסט לקבלת שם המתנדב. השדה מקבל כל ערך שאורכו גדול מ-2.",
+      "task_ids": [
+        "client_form_inputs",
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות שדה קלט בצד הלקוח לשם מתנדב עם בדיקת אורך מינימלי של 3 תווים\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form Input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input type='text' עם id='volunteerName' ו-label\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שطول הערך גדול מ-2 (length > 2) לפני שליחה\"}\n  ]\n}"
+    },
+    {
+      "section_key": "57",
+      "idx": 57,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "2",
+      "section_text": "2. רשימת ערים )select ( עם כל הערים של ההתנדבויות )אין להציג עיר יותר מפעם אחת(",
+      "task_ids": [
+        "client_form_inputs"
+      ],
+      "exercise_understanding_score": 17,
+      "decomposition_score": 30,
+      "leaf_average_score": 94,
+      "final_score": 44,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_form_inputs"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"להציג select עם ערים ייחודיות מרשימת התנדבויות, ללא כפילויות\",\n  \"task_ids\": [\"api_get_filtered\", \"db_uniqueness\", \"client_list_render\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"GET filtered cities\", \"task_id\": \"api_get_filtered\", \"technical_task\": \"להגדיר router.get שמחזיר את כל הערים הייחודיות מרשימת התנדבויות\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"DB\", \"sub_branch\": \"Uniqueness\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"להשתמש ב-distinct או ב-groupBy כדי להחזיר רק ערים ייחודיות\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"List render\", \"task_id\": \"client_list_render\", \"technical_task\": \"לרנדר את הערים כ-options בתוך select\"}\n  ]\n}"
+    },
+    {
+      "section_key": "58",
+      "idx": 58,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "3",
+      "section_text": "3. כפתור חפש מציג רשימה של כל ההתנדבויות באותו אזור. אם לא נבחר שם תקין יש להציג alert מתאים. אם הכל תקין הדפדפן מעביר את הלקוח לערוץ /all. בערוץ /all מוצגות כל אפשרויות ההתנדבות בהתאם לעיר שנבחרה, וכל התנדבות מוצגת בהתחלה רק על ידי כותרת. לחיצה על התנדבות מסמנת רקע ירוק בהיר ומציגה את התיאור שלה; לחיצה נוספת מבטלת ומחזירה רקע לבן. בסוף העמוד יש כפתור אישור; כל התנדבות שנבחרה נמחקת מרשימת ההתנדבויות והלקוח חוזר לעמוד הראשי.",
+      "task_ids": [
+        "client_validation_rules",
+        "alerts_error_handling",
+        "client_navigation",
+        "client_list_render"
+      ],
+      "exercise_understanding_score": 60,
+      "decomposition_score": 74,
+      "leaf_average_score": 98,
+      "final_score": 76,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"ליצור דף חיפוש ערים לתנדבות, דף /all עם רשימת התנדבויות לפי עיר, אפשרויות בחירה עם סימון רקע, ומחיקת נבחרות עם חזרה לעמוד הראשי\",\n  \"task_ids\": [\"client_navigation\", \"api_get_filtered\", \"client_list_render\", \"alerts_error_handling\", \"client_validation_rules\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Search button\", \"task_id\": \"client_navigation\", \"technical_task\": \"לאפשר לחיצה על כפתור חיפוש שמעבירה ל- /all רק אם עיר תקינה\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שהעיר לא ריקה ותואמת תבנית תקינה, להחזיר alert אם לא\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"API\", \"sub_branch\": \"GET filtered\", \"task_id\": \"api_get_filtered\", \"technical_task\": \"להחזיר את כל התנדבויות בעיר שנקבעה ב-req.query.city\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Client\", \"sub_branch\": \"List render\", \"task_id\": \"client_list_render\", \"technical_task\": \"לרנדר רשימת התנדבויות כ-kart/element עם כותרת בלבד, עם onClick שמשנה רקע ומציג תיאור\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Confirm button\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"לאשר לחיצה על כפתור אישור, למחוק את הנבחרות מהרשימה ולשנות location ל- /\"}\n  ]\n}"
+    },
+    {
+      "section_key": "59",
+      "idx": 59,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "1",
+      "section_text": "1. GET , addnewcourse /, שולח את עמוד הHTML להזנת קורסים חדשים",
+      "task_ids": [
+        "api_get_all",
+        "api_post_create",
+        "server_html_route"
+      ],
+      "exercise_understanding_score": 36,
+      "decomposition_score": 51,
+      "leaf_average_score": 99,
+      "final_score": 59,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_get_all, api_post_create"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות endpoint GET ליצירת קורס חדש שמחזיר עמוד HTML להזנת פרטים\",\n  \"task_ids\": [\"server_html_route\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Server\", \"sub_branch\": \"GET route\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגדיר router.get('/addnewcourse', שמחזיר את קובץ ה-HTML המכיל את הטופס להזנת קורס חדש)\"}\n  ]\n}"
+    },
+    {
+      "section_key": "60",
+      "idx": 60,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "2",
+      "section_text": "2. POST ,/ add , מקבל את הפרטים מעמוד הHTML , מוודא שכל הנתונים התקבלו, ומוודא שכולם התקבלו בהצלחה, מוסיף את הקורס החדש לDB לאחר בדיקה שלא קיים בDB , במידה וכבר קיים, צריך להציג למשתמש בצד לקוח הודעה מתאימה ולשלוח סטאטוס מתאים! במידה ולא קיים להציג הודעת הצלחה למשתמש.",
+      "task_ids": [
+        "api_post_create"
+      ],
+      "exercise_understanding_score": 44,
+      "decomposition_score": 57,
+      "leaf_average_score": 100,
+      "final_score": 65,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות API שמוסיף קורס חדש עם בדיקת ייחודיות בDB, ומציג הודעות שגיאה/הצלחה בצד הלקוח\",\n  \"task_ids\": [\"api_post_create\", \"db_uniqueness\", \"client_form_inputs\", \"alerts_error_handling\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"POST create\", \"task_id\": \"api_post_create\", \"technical_task\": \"לקרוא req.body, לוודא שדות חובה, ולשלוח 201/400\"},\n    {\"id\": \"1.1.1.2\", \"branch\": \"API\", \"sub_branch\": \"Uniqueness check\", \"task_id\": \"db_uniqueness\", \"technical_task\": \"לבדוק אם הקורס כבר קיים בDB לפני הוספה\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input fields לנתוני הקורס בHTML\"},\n    {\"id\": \"1.2.1.2\", \"branch\": \"Client\", \"sub_branch\": \"Alerts\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert למשתמש על כישלון/הצלחה של הוספת הקורס\"}\n  ]\n}"
+    },
+    {
+      "section_key": "61",
+      "idx": 61,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "3",
+      "section_text": "3. GET ערוץ ,all /, שולח לצד לקוח את כל הקורסים הקיימים בDB . צד לקוח: עמוד HTML אשר מכיל את האלמנטים הבאים:",
+      "task_ids": [
+        "api_get_all",
+        "server_html_route",
+        "client_navigation"
+      ],
+      "exercise_understanding_score": 46,
+      "decomposition_score": 60,
+      "leaf_average_score": 93,
+      "final_score": 64,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_navigation"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות API שמחזיר את כל הקורסים מהDB וצד לקוח שמציג אותם ברשימה\",\n  \"task_ids\": [\"api_get_all\", \"client_list_render\", \"server_html_route\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"GET all\", \"task_id\": \"api_get_all\", \"technical_task\": \"להגדיר router.get('/all', שמחזיר את כל הקורסים מהDB כ-JSON)\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"List render\", \"task_id\": \"client_list_render\", \"technical_task\": \"לקרוא את ה-API וברינדור ל-<ul>/<li> או טבלה\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Server\", \"sub_branch\": \"HTML route\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגיש את עמוד ה-HTML דרך Express (sendFile או static)\"}\n  ]\n}"
+    },
+    {
+      "section_key": "62",
+      "idx": 62,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "1",
+      "section_text": "1. אינפוט שם הקורס – תווים באנגלית בלבד, מקסימום של 15 תווים.",
+      "task_ids": [
+        "client_form_inputs",
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 38,
+      "decomposition_score": 55,
+      "leaf_average_score": 94,
+      "final_score": 60,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_form_inputs"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות בדיקת קלט לשם קורס בצד הלקוח: רק תווים אנגלים, מקסימום 15 תווים\",\n  \"task_ids\": [\"client_validation_rules\"],\n  \"leaf_tasks\": [\n    {\n      \"id\": \"1.1.1.1\",\n      \"branch\": \"Client\",\n      \"sub_branch\": \"Validation\",\n      \"task_id\": \"client_validation_rules\",\n      \"technical_task\": \"לבדוק ששם הקורס состоит רק מתווים a-z/A-Z וארוכו ≤15 תווים\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "63",
+      "idx": 63,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "2",
+      "section_text": "2. אינפוט מספר תלמידים – מספרים בלבד – עד 20 .",
+      "task_ids": [
+        "client_form_inputs",
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות קלט מספר תלמידים (מספרים בלבד, עד 20) בצד הלקוח עם בדיקת תקינות\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form Input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input type='number' עם label 'מספר תלמידים'\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שהערך הוא מספר שלם, בין 1 ל-20 כולל, ושהוא לא ריק\"}\n  ]\n}"
+    },
+    {
+      "section_key": "64",
+      "idx": 64,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "3",
+      "section_text": "3. אינפוט שנת ההתחלה – שנה תקינה ) 4 ספרות(",
+      "task_ids": [
+        "client_form_inputs"
+      ],
+      "exercise_understanding_score": 9,
+      "decomposition_score": 23,
+      "leaf_average_score": 94,
+      "final_score": 39,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_form_inputs"
+      ],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות פונקציה שמקבלת שנה ומחזירה את השנה הבאה שמכילה 4 ספרות שונות\",\"task_ids\":[\"js_algorithms\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"Logic\",\"sub_branch\":\"Next distinct-year\",\"task_id\":\"js_algorithms\",\"technical_task\":\"למצוא את השנה הבאה אחרי שנת התחלה שמכילה 4 ספרות שונות, עם לולאה ובדיקה של אורך Set של הספרות\"}]}"
+    },
+    {
+      "section_key": "65",
+      "idx": 65,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "4",
+      "section_text": "4. כפתור יצירה ששולח את הפרטים בPost לשרת.",
+      "task_ids": [
+        "api_post_create",
+        "client_form_inputs"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות כפתור יצירה בצד לקוח ששולח datos ב-POST לשרת, כולל שליחת נתונים מטופס ל-API\",\n  \"task_ids\": [\"client_form_inputs\", \"api_post_create\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form inputs\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input fields עם value/onChange לנתונים הנדרשים\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Create button\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות כפתור submit ששולח POST לשרת עם req.body\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"API\", \"sub_branch\": \"POST create\", \"task_id\": \"api_post_create\", \"technical_task\": \"להגדיר router.post שמקבל req.body ומעביר ל-db_persistence\"}\n  ]\n}"
+    },
+    {
+      "section_key": "66",
+      "idx": 66,
+      "file": "עותק של מבחן פולסטאק מועד ב 2022.pdf",
+      "question": "Q3",
+      "section": "5",
+      "section_text": "5. כפתור הצגת כל הקורסים – ימשוך את כל הקורסים הקיימים בDB ויציג אותם בHTML ממויין לפי הabc בסדר עולה לפי שם הקורס.",
+      "task_ids": [
+        "api_get_filtered",
+        "client_form_inputs",
+        "client_list_render"
+      ],
+      "exercise_understanding_score": 26,
+      "decomposition_score": 40,
+      "leaf_average_score": 96,
+      "final_score": 51,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_get_filtered, client_form_inputs"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"להציג את כל הקורסים מהDB בHTML, ממויינים לפי שם בסדר עולה\",\n  \"task_ids\": [\"api_get_all\", \"js_algorithms\", \"server_html_route\", \"client_list_render\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"API\", \"sub_branch\": \"GET all\", \"task_id\": \"api_get_all\", \"technical_task\": \"להגדיר router.get שמחזיר את כל הקורסים מהDB\"},\n    {\"id\": \"1.1.1.2\", \"branch\": \"API\", \"sub_branch\": \"Sort\", \"task_id\": \"js_algorithms\", \"technical_task\": \"למיין את המערך לפי שם הקורס בסדר עולה\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Server\", \"sub_branch\": \"Route\", \"task_id\": \"server_html_route\", \"technical_task\": \"להחזיר HTML עם טבלה/רשימה של הקורסים\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Render\", \"task_id\": \"client_list_render\", \"technical_task\": \"לרנדר את הרשימה/טבלה של הקורסים בHTML\"}\n  ]\n}"
+    },
+    {
+      "section_key": "67",
+      "idx": 67,
+      "file": "עותק של מבחן פולסטאק מועד ג.pdf",
+      "question": "Q1",
+      "section": "1",
+      "section_text": "1. איזור יהיה בין 2-100 תווים )אותיות באנגלית בלבד(",
+      "task_ids": [
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 99,
+      "final_score": 89,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות בדיקת תקינות לקלט טקסט שאמור להיות איזור, עם דרישות: אורך בין 2-100 תווים, אותיות אנגליות בלבד\",\"task_ids\":[\"client_validation_rules\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Validation\",\"task_id\":\"client_validation_rules\",\"technical_task\":\"לבדוק שطول המחרוזת בין 2 ל-100 ושהיא מכילה אותיות אנגליות בלבד\"}]}"
+    },
+    {
+      "section_key": "68",
+      "idx": 68,
+      "file": "עותק של מבחן פולסטאק מועד ג.pdf",
+      "question": "Q1",
+      "section": "2",
+      "section_text": "2. תיאור יהיה כל מחרוזת עד 200 תווים",
+      "task_ids": [
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 41,
+      "decomposition_score": 53,
+      "leaf_average_score": 95,
+      "final_score": 61,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\"exercise_summary\":\"לבנות API שמקבל תיאור (עד 200 תווים) ובודק את האורך בצד הלקוח\",\"task_ids\":[\"client_form_inputs\",\"client_validation_rules\",\"alerts_error_handling\"],\"leaf_tasks\":[{\"id\":\"1.1.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Form\",\"task_id\":\"client_form_inputs\",\"technical_task\":\"לבנות textarea/textarea עם value/onChange לתיאור\"},{\"id\":\"1.2.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Validation\",\"task_id\":\"client_validation_rules\",\"technical_task\":\"לבדוק regex/אורך ≤200 ותנאי חובה ב-input\"},{\"id\":\"1.3.1.1\",\"branch\":\"Client\",\"sub_branch\":\"Error Handling\",\"task_id\":\"alerts_error_handling\",\"technical_task\":\"להציג alert/הודעת שגיאה אם האורך >200 או ריק\"}]}"
+    },
+    {
+      "section_key": "69",
+      "idx": 69,
+      "file": "עותק של מבחן פולסטאק מועד ג.pdf",
+      "question": "Q1",
+      "section": "3",
+      "section_text": "3. ימים יאפשר להזין רק מספרים בין 1-100",
+      "task_ids": [
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 40,
+      "decomposition_score": 56,
+      "leaf_average_score": 94,
+      "final_score": 61,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות שדה קלט שמאפשר הזנת מספרים בין 1-100 בלבד, עם בדיקת תקינות בצד הלקוח\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form Input\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input type='number' עם min=1 ו-max=100\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שהערך הוא מספר שלם, בין 1 ל-100 כולל, ולחזיר שגיאה אם לא\"}\n  ]\n}"
+    },
+    {
+      "section_key": "70",
+      "idx": 70,
+      "file": "עותק של מבחן פולסטאק מועד ג.pdf",
+      "question": "Q1",
+      "section": "4",
+      "section_text": "4. שמות, כל שם יהיה באורך של עד 15 תווים, ללא תוים מיוחדים, יהיה ניתן להוסיף כמה אנשים באמצעות כפתור ה+",
+      "task_ids": [
+        "client_form_inputs",
+        "client_validation_rules"
+      ],
+      "exercise_understanding_score": 51,
+      "decomposition_score": 66,
+      "leaf_average_score": 94,
+      "final_score": 68,
+      "status": "WEAK",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות טופס הוספת שמות עם כפתור +, עם אורך מקסימלי 15 תווים, ללא תווים מיוחדים, ותגובה על שגיאות\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form inputs\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input type=text עם כפתור + להוספת שם\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק אורך ≤15 ותווים רק ascii letters/numbers/spaces\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert/הודעה על שגיאה בקלט (אורך/תווים לא תקינים)\"}\n  ]\n}"
+    },
+    {
+      "section_key": "71",
+      "idx": 71,
+      "file": "עותק של מבחן פולסטאק מועד ג.pdf",
+      "question": "Q1",
+      "section": "5",
+      "section_text": "5. כפתור \"אישור\" ישנה את שמו בהתאם לערוץ )update || add (. לחיצה עליו תבצע את הולידציה ותזרוק שגיאה בהתאם במידה והפעולה עברה בהצלחה יחזור המשתמש לעמוד home . כפתור logout ינתק את המשתמש ויחזור אותו לעמוד signin . *האתר חייב להיות רספונסיבי למובייל 6",
+      "task_ids": [
+        "api_put_update",
+        "server_html_route",
+        "client_form_inputs",
+        "client_validation_rules",
+        "client_navigation",
+        "alerts_error_handling"
+      ],
+      "exercise_understanding_score": 54,
+      "decomposition_score": 70,
+      "leaf_average_score": 96,
+      "final_score": 71,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: api_put_update"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"בניית דף עריכת/הוספת משתמש עם כפתור דינמי (אישור/עדכון), וידוא קלט, שגיאות, וניווט ל-home או signin\",\n  \"task_ids\": [\"client_form_inputs\", \"client_validation_rules\", \"alerts_error_handling\", \"client_navigation\", \"server_html_route\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Form\", \"task_id\": \"client_form_inputs\", \"technical_task\": \"לבנות input שדות עם ערכים דינמיים לפי update/add\"},\n    {\"id\": \"1.2.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Validation\", \"task_id\": \"client_validation_rules\", \"technical_task\": \"לבדוק שדות חובה, אורך ותבנית תקינה\"},\n    {\"id\": \"1.3.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Error Handling\", \"task_id\": \"alerts_error_handling\", \"technical_task\": \"להציג alert/toast על שגיאות וידוא\"},\n    {\"id\": \"1.4.1.1\", \"branch\": \"Client\", \"sub_branch\": \"Navigation\", \"task_id\": \"client_navigation\", \"technical_task\": \"לעבור ל-home לאחר הצלחה ול-signin עם logout\"},\n    {\"id\": \"1.5.1.1\", \"branch\": \"Server\", \"sub_branch\": \"HTML Route\", \"task_id\": \"server_html_route\", \"technical_task\": \"להגיש את דף ה-edit/add דרך Express route\"}\n  ]\n}"
+    },
+    {
+      "section_key": "72",
+      "idx": 72,
+      "file": "עותק של מבחן פולסטאק מועד ג.pdf",
+      "question": "Q2",
+      "section": "main",
+      "section_text": "שאלה 2: יש לכתוב פונקציה אשר מקבלת 2 מערכים של מספרים, מערך שלם ומערך חלקי )קטן יותר(. הפונקציה תוודא שכל ערכי המערך החלקי נמצאים במערך השלם, גם המיקומים שלהם קריטים. במידה וכן תחזיר true במידה ולא תחזיר false * * אין צורך לבדוק חריגות דוגמאות: מערך שלם 1,2,3,4 דוגמאות למערכים חלקיים אפשריים 1,3,4 2,4 1,4 דוגמא למערכים חלקיי לא תקינים 1,2,5 – הספרה 5 לא מופיעה במערך השלם 4,2 – המספרים מופיעים אבל לא בסדר הנכון",
+      "task_ids": [
+        "js_algorithms"
+      ],
+      "exercise_understanding_score": 85,
+      "decomposition_score": 85,
+      "leaf_average_score": 94,
+      "final_score": 88,
+      "status": "GOOD",
+      "issues": [],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות פונקציה שבודקת אם מערך חלקי מופיע במערך שלם بنفس הסדר (לא בהכרח רציף), ומחזירה true/false\",\n  \"task_ids\": [\"js_algorithms\"],\n  \"leaf_tasks\": [\n    {\n      \"id\": \"1.1.1.1\",\n      \"branch\": \"Logic\",\n      \"sub_branch\": \"Subsequence check\",\n      \"task_id\": \"js_algorithms\",\n      \"technical_task\": \"לכתוב פונקציה שמקבלת 2 מערכים, ובודקת אם כל האלמנטים של המערך החלקי מופיעים במערך השלם بنفس הסדר (לא בהכרח רציף), ומחזירה true/false\"\n    }\n  ]\n}"
+    },
+    {
+      "section_key": "73",
+      "idx": 73,
+      "file": "עותק של מבחן פולסטאק מועד ג.pdf",
+      "question": "Q3",
+      "section": "main",
+      "section_text": "שאלה 3: יש לכתוב \"חבילה\" בnode . החבילה כוללת מחלקה בעלת המתודות הבאות: בנאי: מקבל שם קובץ – יוצר קובץ txt עם השם שהתקבל. מתודה מקבלת תוכן של קובץ ומוסיפה אותו לקובץ הקיים. מתודה שמקבלת מילה, מחפשת את המילה בתוך הקובץ, במידה והמילה קיימת מחזירה true , אחרת מחזירה false . מתודה לשינוי שם הקובץ, מקבלת שם של קובץ ומשנה אותו. מתודת העתקה, לא מקבלת דבר רק מעתיקה את הקובץ עם אותו שם + המילה copy חייב להיות בפנים אותו תוכן בדיוק.",
+      "task_ids": [
+        "client_validation_rules",
+        "oop_design",
+        "node_file_io"
+      ],
+      "exercise_understanding_score": 37,
+      "decomposition_score": 52,
+      "leaf_average_score": 96,
+      "final_score": 59,
+      "status": "WEAK",
+      "issues": [
+        "missing expected task_ids: client_validation_rules, oop_design"
+      ],
+      "raw_decomposition_answer": "{\n  \"exercise_summary\": \"לבנות מחלקה ב-Node ש/manage קובץ txt: יוצר, מוסיף תוכן, מחפש מילה, משנה שם ומעתיקה את הקובץ\",\n  \"task_ids\": [\"node_file_io\"],\n  \"leaf_tasks\": [\n    {\"id\": \"1.1.1.1\", \"branch\": \"Node\", \"sub_branch\": \"Constructor\", \"task_id\": \"node_file_io\", \"technical_task\": \"בבנאי:接收 שם קובץ, createFileSync עם סיומת .txt\"},\n    {\"id\": \"1.1.1.2\", \"branch\": \"Node\", \"sub_branch\": \"Append content\", \"task_id\": \"node_file_io\", \"technical_task\": \"לכתוב תוכן חדש לסוף הקובץ existing using appendFileSync\"},\n    {\"id\": \"1.1.1.3\", \"branch\": \"Node\", \"sub_branch\": \"Search word\", \"task_id\": \"node_file_io\", \"technical_task\": \"לקרוא את הקובץ, לחפש את המילה ב-text, להחזיר true/false\"},\n    {\"id\": \"1.1.1.4\", \"branch\": \"Node\", \"sub_branch\": \"Rename file\", \"task_id\": \"node_file_io\", \"technical_task\": \"לשנות שם הקובץ using renameSync\"},\n    {\"id\": \"1.1.1.5\", \"branch\": \"Node\", \"sub_branch\": \"Copy file\", \"task_id\": \"node_file_io\", \"technical_task\": \"לעתיק את הקובץ ל-<original>copy.txt עם אותו תוכן using readFileSync + writeFileSync\"}\n  ]\n}"
+    }
+  ]
+}

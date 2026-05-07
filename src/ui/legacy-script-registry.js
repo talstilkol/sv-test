@@ -79,6 +79,18 @@ export const LEGACY_SCRIPT_GROUPS = Object.freeze([
       "app.js",
     ],
   },
+  {
+    name: "extracted-view-bridges",
+    ownership: "src/views",
+    paths: [
+      "src/views/homework-exam-mode-view.js",
+      "src/views/lesson-renderer/lesson-renderer.js",
+      "src/views/chrome-menu/chrome-menu.js",
+      "src/views/settings-preferences/settings-preferences.js",
+      "src/views/bug-agent/bug-agent-ui.js",
+      "src/views/question-panels/question-panels.js",
+    ],
+  },
 ]);
 
 export function legacyScriptCount() {

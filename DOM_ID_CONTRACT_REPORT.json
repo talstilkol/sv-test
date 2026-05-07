@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-05-07T09:31:02.487Z",
+  "sourceFiles": [
+    "index.html",
+    "app.js"
+  ],
+  "declaredIds": 628,
+  "referencedIds": 454,
+  "missingRequiredCount": 0,
+  "missingOptionalCount": 0,
+  "missingRequired": [],
+  "missingOptional": [],
+  "optionalAllowlist": [],
+  "status": "pass"
+}

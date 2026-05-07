@@ -1,20 +1,14 @@
 # Finish Line 1 Pre-Release Report
 
-> **Historical / Superseded**: this artifact is older than the current source-of-truth run.
-> Captured on: 2026-04-30
-> Source-of-truth refresh date: 2026-05-01
-> Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
-
-
-Date: 2026-04-30
+Date: 2026-05-07
 Version: finish-line-prerelease-v1
 
 ## Summary
 
 - Executed: yes
-- Ready: no
-- Passed: 17/18
-- Failed: 1
+- Ready: yes
+- Passed: 22/22
+- Failed: 0
 - Not run: 0
 
 ## Policy
@@ -33,7 +27,10 @@ Version: finish-line-prerelease-v1
 | Question QA strict | pass | `npm run qa:questions:strict` | passed |
 | Question quality strict | pass | `npm run quality:questions:strict` | passed |
 | Manual blocker map strict | pass | `npm run questions:blocker-map:strict` | passed |
-| Manual question coverage target strict | fail | `npm run questions:coverage-targets:strict` |   "handCuratedMcPromotionBacklog": 471, /   "handCuratedFillPromotionBacklog": 466 / } |
+| Manual question coverage target strict | pass | `npm run questions:coverage-targets:strict` | passed |
+| Solution guide coverage strict | pass | `npm run exam:solution-guide:coverage:strict` | passed |
+| Solution guide drills strict | pass | `npm run exam:solution-guide:drills:strict` | passed |
+| Exam task tree 73-section strict | pass | `npm run exam:task-tree:strict` | passed |
 | Question reuse audit strict | pass | `npm run questions:reuse-audit:strict` | passed |
 | SVCollege release readiness | pass | `npm run svcollege:readiness:release` | passed |
 | SVCollege tab matrix strict | pass | `npm run svcollege:tab-matrix:strict` | passed |
@@ -43,10 +40,11 @@ Version: finish-line-prerelease-v1
 | SVCollege mock variants strict | pass | `npm run exam:mock-variants:strict` | passed |
 | SVCollege console gate strict | pass | `npm run svcollege:console-gate:strict` | passed |
 | SVCollege PWA offline strict | pass | `npm run svcollege:pwa-offline:strict` | passed |
+| World-class menu strict | pass | `npm run ux:world-class-menu:strict` | passed |
 | Vitest full suite | pass | `npm test -- --run` | passed |
 | Production build | pass | `npm run build` | passed |
 
 ## Blockers
 
-- questions-coverage-targets-strict:   "handCuratedMcPromotionBacklog": 471, |   "handCuratedFillPromotionBacklog": 466 | }
+- None
 

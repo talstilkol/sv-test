@@ -38,6 +38,16 @@ const PARTS = [
 ];
 
 const LEVEL_KEYS = ["grandma", "child", "soldier", "student", "junior", "professor"];
+const EXAM_CORE_PART_KEYS = new Set([
+  "levels.grandma",
+  "levels.child",
+  "levels.soldier",
+  "levels.student",
+  "levels.junior",
+  "levels.professor",
+  "codeExample",
+  "codeExplanation",
+]);
 
 // =============================================================================
 // CLUSTERS — מושגים שמלמדים יחד (כלל פדגוגי 2026-05-02)
@@ -831,11 +841,23 @@ function main() {
   summary.push("");
   summary.push("| חלק | מלא | סה״כ | % |");
   summary.push("|---|---:|---:|---:|");
+  let examCoreFilled = 0;
+  let examCoreTotal = 0;
   PARTS.forEach((p) => {
     const ps = partStats[p.key];
     const pct = ps.total ? Math.round((ps.filled / ps.total) * 100) : 0;
     summary.push(`| ${p.label} | ${ps.filled} | ${ps.total} | ${pct}% |`);
+    if (EXAM_CORE_PART_KEYS.has(p.key)) {
+      examCoreFilled += ps.filled;
+      examCoreTotal += ps.total;
+    }
   });
+  summary.push("");
+  const examCorePct = examCoreTotal ? Math.round((examCoreFilled / examCoreTotal) * 100) : 0;
+  summary.push("### 🎯 מדד חומר ליבה למבחן (בלי שכבות העשרה)");
+  summary.push("");
+  summary.push(`- ליבה = 6 רמות + קוד + הערות`);
+  summary.push(`- כיסוי ליבה: **${examCoreFilled}/${examCoreTotal} (${examCorePct}%)**`);
   summary.push("");
 
   // To-do list ranked by gap size

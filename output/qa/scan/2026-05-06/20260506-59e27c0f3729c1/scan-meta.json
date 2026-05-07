@@ -1,0 +1,10 @@
+{
+  "generatedAt": "2026-05-06T18:44:08.006Z",
+  "runId": "20260506-59e27c0f3729c1",
+  "configPath": "/Users/tal/Desktop/חומרים לשיעור/scripts/qa-scan.config.json",
+  "scanJsonPath": "/Users/tal/Desktop/חומרים לשיעור/output/qa/scan/2026-05-06/20260506-59e27c0f3729c1/scan-combined.json",
+  "scanMdPath": "/Users/tal/Desktop/חומרים לשיעור/output/qa/scan/2026-05-06/20260506-59e27c0f3729c1/scan-combined.md",
+  "targets": [
+    "local"
+  ]
+}

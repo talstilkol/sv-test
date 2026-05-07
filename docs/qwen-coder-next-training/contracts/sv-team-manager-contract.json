@@ -1,0 +1,54 @@
+{
+  "contractVersion": "qwen-output-contract-v1",
+  "name": "SV Team Manager Simulation",
+  "allowedEndpoints": [
+    "GET /",
+    "GET /api/members",
+    "GET /api/members/:id",
+    "GET /api/members/status/:status",
+    "POST /api/members",
+    "PUT /api/members/:id",
+    "DELETE /api/members/:id"
+  ],
+  "requiredTokens": [
+    "express.json",
+    "cors",
+    "mongoose.connect",
+    "BrowserRouter",
+    "Routes",
+    "Route",
+    "useNavigate",
+    "useParams",
+    "useEffect",
+    "VITE_API_URL"
+  ],
+  "requiredValidationTerms": [
+    "fullName",
+    "email",
+    "role",
+    "seniority",
+    "status",
+    "skills",
+    "Developer",
+    "QA",
+    "Designer",
+    "Manager",
+    "Active",
+    "Inactive"
+  ],
+  "requiredStatusCodes": [400, 404, 500],
+  "requiredJsTokens": [
+    "Array.isArray",
+    "throw new Error",
+    "totalMembers",
+    "activeCount",
+    "inactiveCount",
+    "averageSeniority",
+    "roleBreakdown"
+  ],
+  "requiredTsTokens": [
+    "interface Member",
+    "Partial<Member>",
+    "filterMembers"
+  ]
+}

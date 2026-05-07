@@ -16,6 +16,19 @@ function missingSnippets(text, snippets) {
   return snippets.filter((snippet) => !text.includes(snippet));
 }
 
+function normalizeCssText(value) {
+  return String(value || "")
+    .replace(/\s*([{}:;,>!])\s*/g, "$1")
+    .replace(/#ffffff\b/gi, "#fff")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function missingCssSnippets(text, snippets) {
+  const normalized = normalizeCssText(text);
+  return snippets.filter((snippet) => !normalized.includes(normalizeCssText(snippet)));
+}
+
 function topTabButtons(html) {
   const matches = html.match(/<button class="top-tab[\s\S]*?<\/button>/g) || [];
   return matches.map((button) => ({
@@ -119,7 +132,10 @@ function buildReport() {
     "style.css": read("style.css"),
   };
   const checks = STATIC_CHECKS.map((check) => {
-    const failures = missingSnippets(files[check.file], check.snippets).map((snippet) => `missing ${check.file}: ${snippet}`);
+    const missing = check.file === "style.css"
+      ? missingCssSnippets(files[check.file], check.snippets)
+      : missingSnippets(files[check.file], check.snippets);
+    const failures = missing.map((snippet) => `missing ${check.file}: ${snippet}`);
     return {
       id: check.id,
       label: check.label,

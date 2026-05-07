@@ -1,0 +1,846 @@
+{
+  "total_sections": 73,
+  "branches": [
+    {
+      "branch_id": "frontend_ui_validation",
+      "branch_label": "Frontend UI + Validation",
+      "sections_count": 46,
+      "probability": 63.0,
+      "section_ids": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        23,
+        31,
+        32,
+        34,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        48,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        73
+      ],
+      "subbranches": [
+        {
+          "task_id": "client_form_inputs",
+          "appearances": 33,
+          "probability": 45.2,
+          "section_ids": [
+            8,
+            9,
+            10,
+            14,
+            15,
+            16,
+            17,
+            31,
+            32,
+            34,
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47,
+            48,
+            52,
+            55,
+            56,
+            57,
+            58,
+            62,
+            63,
+            64,
+            65,
+            66,
+            70,
+            71
+          ],
+          "what_to_know": [
+            "Controlled components ב-React (value + onChange).",
+            "בחירת input types נכונים (text/number/select).",
+            "ניהול state לטופס אחד או useReducer בטפסים גדולים.",
+            "Submit flow: preventDefault + validation + async call.",
+            "סנכרון UI אחרי הצלחה/כישלון."
+          ],
+          "how_to_build_code": [
+            "להגדיר state התחלתי לכל שדה.",
+            "לכתוב handler אחד לעדכון שדות.",
+            "לחבר submit שמפעיל validate ואז API.",
+            "ב-success לנקות/להפנות לפי הדרישה."
+          ]
+        },
+        {
+          "task_id": "client_validation_rules",
+          "appearances": 31,
+          "probability": 42.5,
+          "section_ids": [
+            11,
+            12,
+            13,
+            16,
+            23,
+            31,
+            32,
+            34,
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47,
+            48,
+            52,
+            53,
+            54,
+            56,
+            62,
+            63,
+            67,
+            68,
+            69,
+            70,
+            71,
+            73
+          ],
+          "what_to_know": [
+            "בניית שכבת validation פונקציונלית ודטרמיניסטית.",
+            "Regex לאנגלית/מספרים/אורכים לפי דרישה.",
+            "טווחים מספריים וגבולות כולל edge cases.",
+            "הפרדת הודעות שגיאה per-field.",
+            "יישור validation frontend עם backend."
+          ],
+          "how_to_build_code": [
+            "לכתוב פונקציית validate(data)->errors.",
+            "להגדיר לכל שדה checks קבועים.",
+            "להציג errors ליד השדות + חסימת submit.",
+            "לשחזר את אותם חוקים בצד שרת."
+          ]
+        },
+        {
+          "task_id": "client_navigation",
+          "appearances": 22,
+          "probability": 30.1,
+          "section_ids": [
+            6,
+            7,
+            10,
+            15,
+            32,
+            34,
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47,
+            48,
+            55,
+            56,
+            58,
+            61,
+            71
+          ],
+          "what_to_know": [
+            "ראוטינג בסיסי והפניות לאחר פעולות CRUD.",
+            "שמירת state/params בין עמודים.",
+            "Default route + NotFound route.",
+            "מניעת ניווט שגוי כשהנתון חסר."
+          ],
+          "how_to_build_code": [
+            "להגדיר routes מפורשים לכל מסך.",
+            "לנווט עם navigate אחרי create/delete/update.",
+            "להוסיף fallback route לעמוד שגיאה/בית."
+          ]
+        },
+        {
+          "task_id": "client_list_render",
+          "appearances": 18,
+          "probability": 24.7,
+          "section_ids": [
+            6,
+            9,
+            32,
+            34,
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47,
+            48,
+            56,
+            58,
+            66
+          ],
+          "what_to_know": [
+            "מיפוי מערכים לרכיבים עם key יציב.",
+            "מיון/סינון תצוגה ללא mutation.",
+            "מצב empty-state ברור.",
+            "רענון רשימה אחרי יצירה/מחיקה/עדכון."
+          ],
+          "how_to_build_code": [
+            "למשוך נתונים מהשרת בטעינה/אקשן.",
+            "למפות לרכיב כרטיס עם כל השדות הנדרשים.",
+            "להחיל sort/filter לפני render.",
+            "להציג empty-state אם הרשימה ריקה."
+          ]
+        }
+      ]
+    },
+    {
+      "branch_id": "backend_api_routes",
+      "branch_label": "Backend API + Routes + Status Codes",
+      "sections_count": 43,
+      "probability": 58.9,
+      "section_ids": [
+        1,
+        2,
+        3,
+        5,
+        7,
+        8,
+        9,
+        10,
+        14,
+        15,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        24,
+        25,
+        30,
+        31,
+        32,
+        34,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        55,
+        56,
+        58,
+        59,
+        60,
+        61,
+        65,
+        66,
+        71
+      ],
+      "subbranches": [
+        {
+          "task_id": "alerts_error_handling",
+          "appearances": 25,
+          "probability": 34.2,
+          "section_ids": [
+            3,
+            5,
+            14,
+            17,
+            18,
+            21,
+            22,
+            24,
+            32,
+            34,
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47,
+            48,
+            55,
+            56,
+            58,
+            71
+          ],
+          "what_to_know": [
+            "חלוקה בין 400/404/409/500.",
+            "try/catch ב-client וב-server.",
+            "הודעות Alert/inline מדויקות.",
+            "לא לבלוע שגיאות ולוג בסיסי לכשל."
+          ],
+          "how_to_build_code": [
+            "לעטוף כל async ב-try/catch.",
+            "להמיר שגיאות שרת להודעות ברורות.",
+            "להציג alert רק איפה שנדרש במבחן.",
+            "להחזיר status code מדויק בכל branch."
+          ]
+        },
+        {
+          "task_id": "server_html_route",
+          "appearances": 23,
+          "probability": 31.5,
+          "section_ids": [
+            7,
+            10,
+            15,
+            31,
+            32,
+            34,
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47,
+            48,
+            55,
+            56,
+            58,
+            59,
+            61,
+            71
+          ],
+          "what_to_know": [
+            "Express routes לדפי HTML ו-static files.",
+            "הפרדת API routes מול page routes.",
+            "קונבנציה אחידה לנתיבים.",
+            "404 למסלול לא קיים."
+          ],
+          "how_to_build_code": [
+            "להגדיר express static לתיקיית public.",
+            "להגדיר GET לכל עמוד נדרש במבחן.",
+            "להשאיר API תחת prefix קבוע (למשל /api).",
+            "להחזיר 404 לנתיב לא ידוע."
+          ]
+        },
+        {
+          "task_id": "api_get_filtered",
+          "appearances": 22,
+          "probability": 30.1,
+          "section_ids": [
+            2,
+            7,
+            8,
+            9,
+            20,
+            30,
+            32,
+            34,
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            56,
+            66
+          ],
+          "what_to_know": [
+            "קבלת פרמטר סינון (query/body) לפי הדרישה.",
+            "סינון ומיון לוגיים בצורה טהורה.",
+            "החזרת תוצאה ריקה בצורה חוקית."
+          ],
+          "how_to_build_code": [
+            "לקרוא את ערך הסינון מהבקשה.",
+            "להריץ filter/sort ולשמור אימות סוג.",
+            "להחזיר רשימה מסוננת עם 200."
+          ]
+        },
+        {
+          "task_id": "api_post_create",
+          "appearances": 21,
+          "probability": 28.8,
+          "section_ids": [
+            2,
+            3,
+            21,
+            31,
+            32,
+            34,
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47,
+            48,
+            56,
+            59,
+            60,
+            65
+          ],
+          "what_to_know": [
+            "קבלת payload וולידציה בצד שרת.",
+            "בדיקת כפילות לפני יצירה.",
+            "יצירה והחזרת 201/409/400."
+          ],
+          "how_to_build_code": [
+            "לבדוק שדות חובה וכפילויות.",
+            "ליצור רשומה חדשה.",
+            "להחזיר 201 בהצלחה, 4xx בכשל קלט, 5xx בכשל שרת."
+          ]
+        },
+        {
+          "task_id": "api_get_all",
+          "appearances": 8,
+          "probability": 11.0,
+          "section_ids": [
+            1,
+            19,
+            20,
+            25,
+            56,
+            58,
+            59,
+            61
+          ],
+          "what_to_know": [
+            "GET בסיסי שמחזיר collection מלאה.",
+            "תשובת JSON עקבית ו-200.",
+            "טיפול שגיאה בשרת עם 500."
+          ],
+          "how_to_build_code": [
+            "router.get(...) עם שאילתת all.",
+            "res.status(200).json(data).",
+            "catch->res.status(500).json(...)"
+          ]
+        },
+        {
+          "task_id": "api_delete",
+          "appearances": 5,
+          "probability": 6.8,
+          "section_ids": [
+            15,
+            17,
+            25,
+            56,
+            58
+          ],
+          "what_to_know": [
+            "מחיקה לפי מזהה עם בדיקת קיום.",
+            "החזרת הודעת הצלחה יציבה.",
+            "404 כאשר אין רשומה למחוק."
+          ],
+          "how_to_build_code": [
+            "לבדוק קיום רשומה לפי id.",
+            "לבצע delete atomically.",
+            "להחזיר success message או 404."
+          ]
+        },
+        {
+          "task_id": "api_put_update",
+          "appearances": 3,
+          "probability": 4.1,
+          "section_ids": [
+            22,
+            25,
+            71
+          ],
+          "what_to_know": [
+            "איתור רשומה לפי מזהה.",
+            "ולידציה לעדכון חלקי/מלא.",
+            "החזרת 200 אם עודכן, 404 אם לא נמצא."
+          ],
+          "how_to_build_code": [
+            "לאתר רשומה לפי id.",
+            "לעדכן רק שדות מותרות.",
+            "להחזיר 200 + data או 404 אם חסר."
+          ]
+        }
+      ]
+    },
+    {
+      "branch_id": "data_persistence",
+      "branch_label": "Data Layer (DB + Uniqueness)",
+      "sections_count": 20,
+      "probability": 27.4,
+      "section_ids": [
+        3,
+        11,
+        21,
+        26,
+        32,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        56,
+        58
+      ],
+      "subbranches": [
+        {
+          "task_id": "db_uniqueness",
+          "appearances": 16,
+          "probability": 21.9,
+          "section_ids": [
+            11,
+            21,
+            32,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47
+          ],
+          "what_to_know": [
+            "מזהה חד-חד ערכי ברמת לוגיקה/DB.",
+            "בדיקת כפילות לפני insert/update.",
+            "החזרת הודעת שגיאה עקבית במקרה כפילות."
+          ],
+          "how_to_build_code": [
+            "להגדיר unique key לוגי.",
+            "לפני insert לבצע findOne/exists.",
+            "בכפילות להחזיר conflict ברור."
+          ]
+        },
+        {
+          "task_id": "db_persistence",
+          "appearances": 4,
+          "probability": 5.5,
+          "section_ids": [
+            3,
+            26,
+            56,
+            58
+          ],
+          "what_to_know": [
+            "מודל נתונים ברור (schema).",
+            "חיבור DB וניהול failures.",
+            "CRUD נקי עם טיפול שגיאות."
+          ],
+          "how_to_build_code": [
+            "להגדיר schema/model.",
+            "לפתוח חיבור DB באתחול שרת.",
+            "להשתמש במודל בכל CRUD ולתפוס errors."
+          ]
+        }
+      ]
+    },
+    {
+      "branch_id": "js_problem_solving",
+      "branch_label": "JavaScript Problem Solving",
+      "sections_count": 20,
+      "probability": 27.4,
+      "section_ids": [
+        5,
+        18,
+        23,
+        24,
+        30,
+        32,
+        34,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        72
+      ],
+      "subbranches": [
+        {
+          "task_id": "js_algorithms",
+          "appearances": 20,
+          "probability": 27.4,
+          "section_ids": [
+            5,
+            18,
+            23,
+            24,
+            30,
+            32,
+            34,
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            72
+          ],
+          "what_to_know": [
+            "הבנת קלט/פלט מילולית לפני קוד.",
+            "בחירת מבנה נתונים יעיל (Map/Object/Array).",
+            "כתיבה נקייה בלי side-effects לא נדרשים.",
+            "בדיקת דוגמאות ידניות לפני הגשה."
+          ],
+          "how_to_build_code": [
+            "לכתוב pseudocode של השלבים.",
+            "לממש בפונקציה אחת ברורה.",
+            "להחזיר בדיוק את מבנה הפלט הנדרש.",
+            "להריץ בדיקות עם קלטי דוגמה."
+          ]
+        }
+      ]
+    },
+    {
+      "branch_id": "node_oop",
+      "branch_label": "Node File I/O + OOP Design",
+      "sections_count": 4,
+      "probability": 5.5,
+      "section_ids": [
+        21,
+        24,
+        31,
+        73
+      ],
+      "subbranches": [
+        {
+          "task_id": "node_file_io",
+          "appearances": 3,
+          "probability": 4.1,
+          "section_ids": [
+            24,
+            31,
+            73
+          ],
+          "what_to_know": [
+            "fs/promises ליצירה/כתיבה/קריאה.",
+            "ניהול נתיבים וקידוד UTF-8.",
+            "טיפול שגיאות קובץ והרשאות."
+          ],
+          "how_to_build_code": [
+            "constructor מקבל שם קובץ.",
+            "ליצור קובץ אם חסר באמצעות fs.",
+            "לכתוב מתודות write/read/append לפי הדרישה.",
+            "לתפוס שגיאות ולהחזיר הודעות תקינות."
+          ]
+        },
+        {
+          "task_id": "oop_design",
+          "appearances": 2,
+          "probability": 2.7,
+          "section_ids": [
+            21,
+            73
+          ],
+          "what_to_know": [
+            "Class + constructor + methods.",
+            "שמירה על אחריות של כל מחלקה.",
+            "ולידציה בסיסית בתוך מתודות."
+          ],
+          "how_to_build_code": [
+            "להגדיר class עם שדות נתונים.",
+            "לממש בנאי ואתחול נכון.",
+            "להוסיף methods לביזנס לוג׳יק הנדרש.",
+            "ליצור מופעים ולבדוק זרימה מלאה."
+          ]
+        }
+      ]
+    },
+    {
+      "branch_id": "theory",
+      "branch_label": "Theory & Verbal Explanations",
+      "sections_count": 5,
+      "probability": 6.8,
+      "section_ids": [
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "subbranches": [
+        {
+          "task_id": "theory_explanation",
+          "appearances": 5,
+          "probability": 6.8,
+          "section_ids": [
+            25,
+            26,
+            27,
+            28,
+            29
+          ],
+          "what_to_know": [
+            "הגדרה נכונה של מושגים (REST/Mongo/React).",
+            "השוואה תמציתית יתרונות/חסרונות.",
+            "דוגמה קצרה להמחשה."
+          ],
+          "how_to_build_code": [
+            "לענות בפורמט נקודות קצרות.",
+            "לכל טענה לצרף דוגמה קטנה.",
+            "להיצמד לדיוק טרמינולוגי ללא מלל עודף."
+          ]
+        }
+      ]
+    },
+    {
+      "branch_id": "scope_meta",
+      "branch_label": "Scope/Meta Resolution",
+      "sections_count": 18,
+      "probability": 24.7,
+      "section_ids": [
+        4,
+        5,
+        32,
+        33,
+        34,
+        36,
+        37,
+        38,
+        39,
+        41,
+        42,
+        44,
+        45,
+        46,
+        47,
+        50,
+        51,
+        56
+      ],
+      "subbranches": [
+        {
+          "task_id": "question_scope_inherited",
+          "appearances": 14,
+          "probability": 19.2,
+          "section_ids": [
+            5,
+            32,
+            34,
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47,
+            56
+          ],
+          "what_to_know": [
+            "סעיף כותרת לא מספיק לבדיקה אוטומטית.",
+            "חובה לרשת משימות מכל תתי-הסעיפים בשאלה."
+          ],
+          "how_to_build_code": [
+            "לא לדלג על כותרת: לפתוח את תתי-הסעיפים.",
+            "לבנות checklist מכל תתי-הסעיפים לפני קוד."
+          ]
+        },
+        {
+          "task_id": "manual_review",
+          "appearances": 4,
+          "probability": 5.5,
+          "section_ids": [
+            4,
+            33,
+            50,
+            51
+          ],
+          "what_to_know": [
+            "כשהטקסט חלקי נדרש עיון ידני במקור.",
+            "לא מאשרים מוכנות בלי פירוק מלא."
+          ],
+          "how_to_build_code": [
+            "לפתוח את קובץ המקור ולהשלים טקסט חסר.",
+            "להמיר את הכותרת לדרישות טכניות מדויקות."
+          ]
+        }
+      ]
+    }
+  ]
+}

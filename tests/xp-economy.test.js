@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { cssIncludes } = require("./css-evidence.js");
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -65,11 +66,11 @@ describe("XP economy implementation", () => {
   });
 
   it("respects reduced motion for level-up effects", () => {
-    expect(css).toContain("@media (prefers-reduced-motion: reduce)");
+    expect(cssIncludes(css, "@media (prefers-reduced-motion: reduce)")).toBe(true);
     expect(css).toContain(".achievement-toast.level-up-toast");
     expect(css).toContain(".reduced-motion .achievement-toast");
-    expect(css).toContain("transition: none !important");
-    expect(css).toContain("transform: none !important");
+    expect(cssIncludes(css, "transition: none !important")).toBe(true);
+    expect(cssIncludes(css, "transform: none !important")).toBe(true);
   });
 
   it("does not announce duplicate rewards as level ups", () => {

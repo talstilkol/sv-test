@@ -1,0 +1,181 @@
+{
+  "reportVersion": "qwen-output-guard-v1",
+  "target": "output/qwen-coder-next/day-07",
+  "contract": "docs/qwen-coder-next-training/contracts/sv-library-contract.json",
+  "summary": {
+    "checks": 11,
+    "passed": 5,
+    "failed": 6,
+    "ready": false
+  },
+  "checks": [
+    {
+      "id": "target-exists",
+      "label": "Qwen output target exists",
+      "status": "pass",
+      "passed": true,
+      "detail": "Scanning output/qwen-coder-next/day-07.",
+      "evidence": [
+        "output/qwen-coder-next/day-07"
+      ]
+    },
+    {
+      "id": "scannable-files",
+      "label": "Qwen output has scannable files",
+      "status": "pass",
+      "passed": true,
+      "detail": "1 files scanned.",
+      "evidence": [
+        "output/qwen-coder-next/day-07/qwen-response.md"
+      ]
+    },
+    {
+      "id": "no-native-random-api",
+      "label": "Generated output does not use native random API",
+      "status": "pass",
+      "passed": true,
+      "detail": "No native random API token found.",
+      "evidence": []
+    },
+    {
+      "id": "no-placeholder-or-fabricated-data",
+      "label": "Generated output does not contain placeholder or fabricated data markers",
+      "status": "pass",
+      "passed": true,
+      "detail": "No placeholder/fabricated data markers found.",
+      "evidence": []
+    },
+    {
+      "id": "contract-required-endpoints",
+      "label": "All contract endpoints are implemented",
+      "status": "fail",
+      "passed": false,
+      "detail": "Missing: GET /, GET /api/books, GET /api/books/:id, POST /api/books, PUT /api/books/:id, DELETE /api/books/:id, POST /api/books/borrow/:id",
+      "evidence": [
+        "GET /",
+        "GET /api/books",
+        "GET /api/books/:id",
+        "POST /api/books",
+        "PUT /api/books/:id",
+        "DELETE /api/books/:id",
+        "POST /api/books/borrow/:id"
+      ]
+    },
+    {
+      "id": "contract-no-invented-endpoints",
+      "label": "No generated API endpoint exists outside the contract",
+      "status": "pass",
+      "passed": true,
+      "detail": "No unexpected API endpoints found.",
+      "evidence": []
+    },
+    {
+      "id": "contract-required-stack-tokens",
+      "label": "Required stack tokens are present",
+      "status": "fail",
+      "passed": false,
+      "detail": "Missing: express.json, cors, mongoose.connect, Routes, useNavigate, useParams, useEffect, VITE_API_URL",
+      "evidence": [
+        "express.json",
+        "cors",
+        "mongoose.connect",
+        "Routes",
+        "useNavigate",
+        "useParams",
+        "useEffect",
+        "VITE_API_URL"
+      ]
+    },
+    {
+      "id": "contract-required-validation-terms",
+      "label": "Required validation terms are present",
+      "status": "fail",
+      "passed": false,
+      "detail": "Missing: title, author, year, genre, isAvailable, borrowedBy, Fiction, Science, History, Biography",
+      "evidence": [
+        "title",
+        "author",
+        "year",
+        "genre",
+        "isAvailable",
+        "borrowedBy",
+        "Fiction",
+        "Science",
+        "History",
+        "Biography"
+      ]
+    },
+    {
+      "id": "contract-required-status-codes",
+      "label": "Required status codes are present",
+      "status": "fail",
+      "passed": false,
+      "detail": "Missing: 400, 404, 500",
+      "evidence": [
+        400,
+        404,
+        500
+      ]
+    },
+    {
+      "id": "contract-required-js-tokens",
+      "label": "Required JavaScript assessment tokens are present",
+      "status": "fail",
+      "passed": false,
+      "detail": "Missing: Array.isArray, throw new Error, availableCount, borrowedCount, oldestYear, newestYear, mostCommonGenre",
+      "evidence": [
+        "Array.isArray",
+        "throw new Error",
+        "availableCount",
+        "borrowedCount",
+        "oldestYear",
+        "newestYear",
+        "mostCommonGenre"
+      ]
+    },
+    {
+      "id": "contract-required-ts-tokens",
+      "label": "Required TypeScript assessment tokens are present",
+      "status": "fail",
+      "passed": false,
+      "detail": "Missing: interface Book, Partial<Book>, filterBooks",
+      "evidence": [
+        "interface Book",
+        "Partial<Book>",
+        "filterBooks"
+      ]
+    }
+  ],
+  "blockers": [
+    {
+      "id": "contract-required-endpoints",
+      "label": "All contract endpoints are implemented",
+      "detail": "Missing: GET /, GET /api/books, GET /api/books/:id, POST /api/books, PUT /api/books/:id, DELETE /api/books/:id, POST /api/books/borrow/:id"
+    },
+    {
+      "id": "contract-required-stack-tokens",
+      "label": "Required stack tokens are present",
+      "detail": "Missing: express.json, cors, mongoose.connect, Routes, useNavigate, useParams, useEffect, VITE_API_URL"
+    },
+    {
+      "id": "contract-required-validation-terms",
+      "label": "Required validation terms are present",
+      "detail": "Missing: title, author, year, genre, isAvailable, borrowedBy, Fiction, Science, History, Biography"
+    },
+    {
+      "id": "contract-required-status-codes",
+      "label": "Required status codes are present",
+      "detail": "Missing: 400, 404, 500"
+    },
+    {
+      "id": "contract-required-js-tokens",
+      "label": "Required JavaScript assessment tokens are present",
+      "detail": "Missing: Array.isArray, throw new Error, availableCount, borrowedCount, oldestYear, newestYear, mostCommonGenre"
+    },
+    {
+      "id": "contract-required-ts-tokens",
+      "label": "Required TypeScript assessment tokens are present",
+      "detail": "Missing: interface Book, Partial<Book>, filterBooks"
+    }
+  ]
+}

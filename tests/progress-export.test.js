@@ -20,6 +20,8 @@ describe("progress export/import economy coverage", () => {
     expect(app).toContain("level100Readiness: buildLevel100ReadinessExport()");
     expect(app).toContain("answeredQuestions: {}");
     expect(app).toContain("weaknesses: {}");
+    expect(app).toContain("taskBoardProgress: {}");
+    expect(app).toContain("HOMEWORK_EXAM_PROGRESS_KEYS");
     expect(app).toContain("rewardLog: readRewardLog()");
     expect(app).toContain("purchases: getStorePurchases()");
     expect(app).toContain("disabled: isEconomyDisabled()");
@@ -27,6 +29,7 @@ describe("progress export/import economy coverage", () => {
     expect(app).toContain('collectProfileScopedEntries(["lumenportal:prof:"])');
     expect(app).toContain("data.answeredQuestions = collectProfileScopedEntries([ANSWERED_QUESTIONS_KEY])");
     expect(app).toContain("data.weaknesses = collectProfileScopedEntries([MISTAKE_AGENT_KEY, CONFIDENCE_CALIBRATION_KEY, CONFUSION_BLOCKERS_KEY])");
+    expect(app).toContain("data.taskBoardProgress = collectProfileScopedEntries(HOMEWORK_EXAM_PROGRESS_KEYS)");
     expect(app).toContain("masteryProof");
   });
 
@@ -57,7 +60,9 @@ describe("progress export/import economy coverage", () => {
     expect(app).toContain("setEconomyDisabled(economy.disabled === true)");
     expect(app).toContain("Object.entries(data.answeredQuestions || {}).forEach(([k, v]) => localStorage.setItem(k, v))");
     expect(app).toContain("Object.entries(data.weaknesses || {}).forEach(([k, v]) => localStorage.setItem(k, v))");
+    expect(app).toContain("Object.entries(data.taskBoardProgress || {}).forEach(([k, v]) => localStorage.setItem(k, v))");
     expect(app).toContain("importEconomyExport(economy)");
+    expect(app).toContain("applyProgressData,");
   });
 
   it("wires Supabase progress sync without embedded credentials or demo payloads", () => {

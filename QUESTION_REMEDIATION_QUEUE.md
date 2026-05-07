@@ -1,8 +1,8 @@
-# Question Remediation Queue — 2026-04-28
+# Question Remediation Queue — 2026-05-06
 
 > **Historical / Superseded**: this artifact is older than the current source-of-truth run.
-> Captured on: 2026-04-28
-> Source-of-truth refresh date: 2026-05-01
+> Captured on: 2026-05-06
+> Source-of-truth refresh date: 2026-05-07
 > Use `npm run report:source-of-truth:write` to regenerate current artifacts before making live claims.
 
 
@@ -10,18 +10,18 @@ Deterministic rewrite pipeline for flagged MC/Fill items. The script does not in
 
 ## Summary
 
-- Total queued issues: 0
-- Batches: 0 batches of 25
+- Total queued issues: 13
+- Batches: 1 batches of 25
 - Auto rewrite: no
 - Manual review required: yes
 
 ### By Severity
 
-- None
+- note: 13
 
 ### By Action
 
-- None
+- replace-generic-wording: 13
 
 ## Workflow
 
@@ -36,5 +36,18 @@ Deterministic rewrite pipeline for flagged MC/Fill items. The script does not in
 
 | # | Batch | Severity | Action | ID | Kind | Source | Concept | Code | Guidance |
 |---:|---:|---|---|---|---|---|---|---|---|
+| 1 | 1 | note | replace-generic-wording | `mc_chunking_bb_001` | mc | manual | `lesson_ai_engineering::chunking` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 2 | 1 | note | replace-generic-wording | `mc_closure_p_001` | mc | manual | `lesson_closures::closure` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 3 | 1 | note | replace-generic-wording | `mc_l12_filter_manual_002` | mc | manual | `lesson_12::filter` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 4 | 1 | note | replace-generic-wording | `mc_final_semantic_nn_001` | mc | manual | `lesson_html_css_foundations::semantic HTML` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 5 | 1 | note | replace-generic-wording | `mc_l15_catch_manual_002` | mc | manual | `lesson_15::catch` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 6 | 1 | note | replace-generic-wording | `mc_chunking_bb_001` | mc | manual | `lesson_ai_engineering::chunking` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 7 | 1 | note | replace-generic-wording | `mc_l15_sync_r_001` | mc | manual | `lesson_15::Synchronous` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 8 | 1 | note | replace-generic-wording | `mc_ldev_cd_002` | mc | manual | `lesson_devops_deploy::CD` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 9 | 1 | note | replace-generic-wording | `mc_lsql_orm_001` | mc | manual | `lesson_sql_orm::ORM` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 10 | 1 | note | replace-generic-wording | `mc_lai_streaming_002` | mc | manual | `lesson_ai_engineering::streaming response` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 11 | 1 | note | replace-generic-wording | `mc_modelsel_bb_001` | mc | manual | `lesson_ai_engineering::model selection` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 12 | 1 | note | replace-generic-wording | `mc_modelsel_bb_001` | mc | manual | `lesson_ai_engineering::model selection` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
+| 13 | 1 | note | replace-generic-wording | `mc_view_aa_001` | mc | manual | `lesson_sql_orm::SQL` | generic-wording | Replace broad wording such as always/never/all answers with a concrete misconception. |
 
 

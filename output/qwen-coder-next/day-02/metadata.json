@@ -1,0 +1,15 @@
+{
+  "reportVersion": "qwen-training-runner-v1",
+  "model": "qwen3-coder-next:latest",
+  "day": 2,
+  "promptFile": "docs/qwen-coder-next-training/prompts/day-02-backend-crud.md",
+  "outputDir": "output/qwen-coder-next/day-02",
+  "startedAt": "2026-05-05T07:46:48.269Z",
+  "endedAt": "2026-05-05T07:48:44.213Z",
+  "durationMs": 115944,
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "responseBytes": 12956,
+  "stderrBytes": 40756
+}

@@ -149,14 +149,14 @@ var QUESTIONS_BUG = [
 `const [todos, setTodos] = useState([]);
 
 function addTodo(text) {
-  todos.push({ id: Date.now(), text });
+  todos.push({ id: 'todo-' + todos.length + '-' + text.trim().toLowerCase(), text });
   setTodos(todos);
 }`,
     bugLine: 4,
     hint: "מה React משווה כדי להחליט אם לרנדר מחדש?",
     options: [
       "todos.push משנה את אותו array — React משווה לפי הפניה ולא רואה שינוי",
-      "Date.now() לא מחזיר מספר תקין כ-id",
+      "ה-id הדטרמיניסטי הוא הבעיה המרכזית",
       "צריך לקרוא ל-setTodos לפני ה-push",
       "addTodo חייב להיות async"
     ],
@@ -165,7 +165,7 @@ function addTodo(text) {
 `const [todos, setTodos] = useState([]);
 
 function addTodo(text) {
-  setTodos([...todos, { id: Date.now(), text }]);
+  setTodos([...todos, { id: 'todo-' + todos.length + '-' + text.trim().toLowerCase(), text }]);
 }`,
     explanation:
       "React משווה הפניות (===), לא תוכן. push מחזיר את אותו array — אין שינוי הפניה, אין re-render. הפתרון: spread + item חדש = array חדש, הפניה חדשה, re-render.",
@@ -855,7 +855,7 @@ app.post('/users', (req, res) => {
 `function TodoList() {
   const [todos, setTodos] = useState([]);
   function addToTop() {
-    setTodos([{ id: Date.now(), text: 'new' }, ...todos]);
+    setTodos([{ id: 'todo-' + todos.length + '-new', text: 'new' }, ...todos]);
   }
   return (
     <ul>
@@ -876,7 +876,7 @@ app.post('/users', (req, res) => {
 `function TodoList() {
   const [todos, setTodos] = useState([]);
   function addToTop() {
-    setTodos([{ id: Date.now(), text: 'new' }, ...todos]);
+    setTodos([{ id: 'todo-' + todos.length + '-new', text: 'new' }, ...todos]);
   }
   return (
     <ul>

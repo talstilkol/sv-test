@@ -19,6 +19,10 @@ describe("source-of-truth report", () => {
       "QUESTION_QUALITY",
       "FINISH_LINE_PRE_RELEASE",
     ]));
+    const finishLineSignal = report.signals.find((signal) => signal.id === "FINISH_LINE_PRE_RELEASE");
+    expect(["green", "red"]).toContain(finishLineSignal.status);
+    expect(finishLineSignal.detail).toMatch(/passed=\d+\/\d+/);
+    expect(finishLineSignal.source).toBe("FINISH_LINE_PRERELEASE_REPORT.json");
     expect(report.artifactSummary.total).toBe(report.artifacts.length);
     expect(report.artifactSummary.total).toBeGreaterThan(10);
 

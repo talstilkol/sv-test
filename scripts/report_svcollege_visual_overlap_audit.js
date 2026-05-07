@@ -11,6 +11,18 @@ function includesAll(source, snippets) {
   return snippets.every((snippet) => source.includes(snippet));
 }
 
+function normalizeCssText(value) {
+  return String(value || "")
+    .replace(/\s*([{}:;,>!])\s*/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function includesAllCss(source, snippets) {
+  const normalized = normalizeCssText(source);
+  return snippets.every((snippet) => normalized.includes(normalizeCssText(snippet)));
+}
+
 function runAudit() {
   const html = read("index.html");
   const css = read("style.css");
@@ -19,7 +31,7 @@ function runAudit() {
   const checks = [
     {
       id: "floating-control-slots",
-      ok: includesAll(css, [
+      ok: includesAllCss(css, [
         "--floating-control-left: 1rem",
         "--floating-control-top: 5.4rem",
         "--floating-control-step: 3.35rem",
@@ -30,14 +42,14 @@ function runAudit() {
     },
     {
       id: "mobile-control-offset",
-      ok: includesAll(css, [
+      ok: includesAllCss(css, [
         "--floating-control-top: 6.25rem",
         "--floating-control-step: 3.1rem",
       ]),
     },
     {
       id: "focus-mode-hides-main-chrome",
-      ok: includesAll(css, [
+      ok: includesAllCss(css, [
         "body.learning-focus-mode .sidebar",
         "body.learning-focus-mode .top-tabs-bar",
         "body.learning-focus-mode .mobile-menu-toggle",
@@ -46,7 +58,7 @@ function runAudit() {
     },
     {
       id: "left-display-controls-stay-fixed",
-      ok: includesAll(css, [
+      ok: includesAllCss(css, [
         "body.top-chrome-collapsed .theme-toggle-btn",
         "body.top-chrome-collapsed .focus-mode-toggle",
         "body.top-chrome-collapsed .view-mode-fab",
@@ -63,7 +75,7 @@ function runAudit() {
     },
     {
       id: "focus-top-collapse-full-height",
-      ok: includesAll(css, [
+      ok: includesAllCss(css, [
         "body.learning-focus-mode.learning-focus-top-collapsed .top-nav",
         "body.learning-focus-mode.learning-focus-top-collapsed .site-trail-nav",
         "body.learning-focus-mode.learning-focus-top-collapsed .portal-decision-aid",
@@ -73,7 +85,7 @@ function runAudit() {
     },
     {
       id: "lesson-reading-content-first",
-      ok: includesAll(css, [
+      ok: includesAllCss(css, [
         "body.lesson-reading-mode:not(.learning-focus-mode) .sidebar",
         "body.lesson-reading-mode:not(.learning-focus-mode) .top-tabs-bar",
         "body.lesson-reading-mode:not(.learning-focus-mode) .lesson-banner",
@@ -101,7 +113,7 @@ function runAudit() {
         "if (sidebarContextBody) sidebarContextBody.innerHTML = sidebarTreeHtml",
         "if (sidebarContextTree) sidebarContextTree.hidden = !sidebarSections.length",
         "wireContextTreeActions(sidebarContextBody)",
-      ]) && includesAll(css, [
+      ]) && includesAllCss(css, [
         ".sidebar-collapse-btn",
         "body.right-sidebar-collapsed .sidebar",
         "body.right-sidebar-collapsed .sidebar > :not(.sidebar-collapse-btn)",
@@ -112,7 +124,7 @@ function runAudit() {
     },
     {
       id: "single-top-tabs-row",
-      ok: includesAll(css, [
+      ok: includesAllCss(css, [
         ".top-tabs-bar",
         "flex-wrap: nowrap",
         "overflow-x: auto",
@@ -128,7 +140,7 @@ function runAudit() {
         'const TOP_CHROME_COLLAPSED_KEY = "lumenportal:top-chrome-collapsed:v1"',
         "function setTopChromeCollapsed",
         'document.body.classList.toggle("top-chrome-collapsed", enabled)',
-      ]) && includesAll(css, [
+      ]) && includesAllCss(css, [
         ".top-chrome-collapse-btn",
         "body.top-chrome-collapsed .top-tabs-bar",
         "body.top-chrome-collapsed .site-trail-nav",

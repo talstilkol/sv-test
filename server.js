@@ -20,10 +20,18 @@ const fs = require("fs");
 const path = require("path");
 const os = require("os");
 
-const PORT = Number(process.env.PORT) || 8765;
 const ROOT = __dirname;
-const PROFILE_DIR = path.join(os.homedir(), ".lumenportal");
-const PROFILE_FILE = path.join(PROFILE_DIR, "profile.json");
+const PORT = Number(process.env.PORT) || 8765;
+
+function profilePaths() {
+  const profileDir = process.env.LUMEN_PROFILE_DIR
+    ? path.resolve(process.env.LUMEN_PROFILE_DIR)
+    : path.join(os.homedir(), ".lumenportal");
+  return {
+    dir: profileDir,
+    file: path.join(profileDir, "profile.json"),
+  };
+}
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -44,15 +52,17 @@ const MIME = {
 };
 
 function ensureProfileDir() {
-  if (!fs.existsSync(PROFILE_DIR)) {
-    fs.mkdirSync(PROFILE_DIR, { recursive: true });
+  const paths = profilePaths();
+  if (!fs.existsSync(paths.dir)) {
+    fs.mkdirSync(paths.dir, { recursive: true });
   }
 }
 
 function readProfile() {
   try {
-    if (!fs.existsSync(PROFILE_FILE)) return null;
-    const txt = fs.readFileSync(PROFILE_FILE, "utf8");
+    const paths = profilePaths();
+    if (!fs.existsSync(paths.file)) return null;
+    const txt = fs.readFileSync(paths.file, "utf8");
     return JSON.parse(txt);
   } catch (err) {
     console.error("[lumen-server] read profile failed:", err.message);
@@ -63,9 +73,10 @@ function readProfile() {
 function writeProfile(payload) {
   ensureProfileDir();
   // Atomic write: write to tmp, rename
-  const tmp = PROFILE_FILE + ".tmp";
+  const paths = profilePaths();
+  const tmp = paths.file + ".tmp";
   fs.writeFileSync(tmp, JSON.stringify(payload, null, 2), "utf8");
-  fs.renameSync(tmp, PROFILE_FILE);
+  fs.renameSync(tmp, paths.file);
 }
 
 function send(res, status, body, headers = {}) {
@@ -139,7 +150,7 @@ function readBody(req) {
   });
 }
 
-const server = http.createServer(async (req, res) => {
+async function handleRequest(req, res) {
   // CORS for local development
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -165,7 +176,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (req.url === "/api/health") {
-      return sendJson(res, 200, { ok: true, profileExists: fs.existsSync(PROFILE_FILE) });
+      return sendJson(res, 200, { ok: true, profileExists: fs.existsSync(profilePaths().file) });
     }
 
     if (req.method === "GET") {
@@ -177,15 +188,39 @@ const server = http.createServer(async (req, res) => {
     console.error("[lumen-server] error:", err.message);
     return send(res, 500, "Server Error: " + err.message);
   }
-});
+}
 
-server.listen(PORT, () => {
-  ensureProfileDir();
-  const profileExists = fs.existsSync(PROFILE_FILE);
-  console.log("┌──────────────────────────────────────────────────────────");
-  console.log("│ LumenPortal Server");
-  console.log("│ Listening on http://localhost:" + PORT);
-  console.log("│ Profile file: " + PROFILE_FILE);
-  console.log("│ Profile exists: " + (profileExists ? "yes" : "no (fresh start)"));
-  console.log("└──────────────────────────────────────────────────────────");
-});
+function createLumenServer() {
+  return http.createServer(handleRequest);
+}
+
+function startServer() {
+  const server = createLumenServer();
+  server.listen(PORT, "127.0.0.1", () => {
+    ensureProfileDir();
+    const paths = profilePaths();
+    const profileExists = fs.existsSync(paths.file);
+    console.log("┌──────────────────────────────────────────────────────────");
+    console.log("│ LumenPortal Server");
+    console.log("│ Listening on http://localhost:" + PORT);
+    console.log("│ Profile file: " + paths.file);
+    console.log("│ Profile exists: " + (profileExists ? "yes" : "no (fresh start)"));
+    console.log("└──────────────────────────────────────────────────────────");
+  });
+  return server;
+}
+
+if (require.main === module) {
+  startServer();
+}
+
+module.exports = {
+  createLumenServer,
+  ensureProfileDir,
+  handleRequest,
+  profilePaths,
+  readProfile,
+  safeJoin,
+  startServer,
+  writeProfile,
+};

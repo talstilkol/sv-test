@@ -1,0 +1,1504 @@
+{
+  "reportVersion": "release-inventory-v1",
+  "generatedAt": "2026-05-06T15:35:44.347Z",
+  "ready": true,
+  "releaseAllowed": false,
+  "policy": {
+    "noBlindRelease": true,
+    "noFakeOwnership": true,
+    "missingOwnership": "unknown/unavailable",
+    "dirtyWorktreeReleaseRule": "Do not release or commit from a dirty worktree without an explicit reviewed inventory."
+  },
+  "summary": {
+    "totalChangedPaths": 245,
+    "classifiedPaths": 245,
+    "unknownPaths": 0,
+    "dirtyWorktree": true,
+    "byClass": {
+      "generated-report": 102,
+      "documentation": 7,
+      "app-shell": 5,
+      "source": 8,
+      "data": 21,
+      "vendor": 1,
+      "package-config": 1,
+      "test": 50,
+      "script": 45,
+      "asset": 1,
+      "generated-output": 4
+    }
+  },
+  "entries": [
+    {
+      "status": " M",
+      "path": "AI_TUTOR_ALPHA_REPORT.json",
+      "raw": " M AI_TUTOR_ALPHA_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "BRUTAL_MASTER_PLAN_AUDIT.json",
+      "raw": " M BRUTAL_MASTER_PLAN_AUDIT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "BRUTAL_MASTER_PLAN_AUDIT.md",
+      "raw": " M BRUTAL_MASTER_PLAN_AUDIT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "CODE_RUNTIME_REPORT.json",
+      "raw": " M CODE_RUNTIME_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "CODE_RUNTIME_REPORT.md",
+      "raw": " M CODE_RUNTIME_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "CODE_SYNTAX_REPORT.json",
+      "raw": " M CODE_SYNTAX_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "CODE_SYNTAX_REPORT.md",
+      "raw": " M CODE_SYNTAX_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "CONTENT_FACTORY_PIPELINE_REPORT.json",
+      "raw": " M CONTENT_FACTORY_PIPELINE_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "CONTENT_SCHEMA_CONTRACT_REPORT.json",
+      "raw": " M CONTENT_SCHEMA_CONTRACT_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "DISTRACTOR_QUALITY_REPORT.json",
+      "raw": " M DISTRACTOR_QUALITY_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "DISTRACTOR_QUALITY_REPORT.md",
+      "raw": " M DISTRACTOR_QUALITY_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "EXAM_EDITION_RELEASE_FREEZE.json",
+      "raw": " M EXAM_EDITION_RELEASE_FREEZE.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "EXAM_FLOW_SIMULATION_REPORT.json",
+      "raw": " M EXAM_FLOW_SIMULATION_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "EXAM_WEEK_WEAKEST_CONCEPTS.json",
+      "raw": " M EXAM_WEEK_WEAKEST_CONCEPTS.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "FEATURE_COVERAGE_REPORT.json",
+      "raw": " M FEATURE_COVERAGE_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "FINISH_LINE_PRERELEASE_REPORT.json",
+      "raw": " M FINISH_LINE_PRERELEASE_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "FINISH_LINE_PRERELEASE_REPORT.md",
+      "raw": " M FINISH_LINE_PRERELEASE_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "HEBREW_QUALITY_REPORT.json",
+      "raw": " M HEBREW_QUALITY_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "HEBREW_QUALITY_REPORT.md",
+      "raw": " M HEBREW_QUALITY_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "LEARNING_OS_OUTCOME_SCALE_REPORT.json",
+      "raw": " M LEARNING_OS_OUTCOME_SCALE_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "LESSON_COMPLETION_AUDIT.md",
+      "raw": " M LESSON_COMPLETION_AUDIT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "LESSON_QUIZ_KEYS_REPORT.json",
+      "raw": " M LESSON_QUIZ_KEYS_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "LEVEL100_RELEASE_GATE.json",
+      "raw": " M LEVEL100_RELEASE_GATE.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "MANUAL_QUESTION_AUTHORING_PLAN.json",
+      "raw": " M MANUAL_QUESTION_AUTHORING_PLAN.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "MANUAL_QUESTION_AUTHORING_PLAN.md",
+      "raw": " M MANUAL_QUESTION_AUTHORING_PLAN.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "MANUAL_QUESTION_BLOCKER_MAP.json",
+      "raw": " M MANUAL_QUESTION_BLOCKER_MAP.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "MANUAL_QUESTION_BLOCKER_MAP.md",
+      "raw": " M MANUAL_QUESTION_BLOCKER_MAP.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "METRICS_DASHBOARD_REPORT.json",
+      "raw": " M METRICS_DASHBOARD_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "MOCK_EXAM_VARIANTS_REPORT.json",
+      "raw": " M MOCK_EXAM_VARIANTS_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "MUSEUM_EVIDENCE_FIELDS_REPORT.json",
+      "raw": " M MUSEUM_EVIDENCE_FIELDS_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "PHASE6_RELEASE_READINESS_REPORT.json",
+      "raw": " M PHASE6_RELEASE_READINESS_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "PILOT_READINESS_REPORT.json",
+      "raw": " M PILOT_READINESS_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "PORTAL_BOUNDARY_REPORT.json",
+      "raw": " M PORTAL_BOUNDARY_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "POST_EXAM_PRODUCT_SPLIT_REPORT.json",
+      "raw": " M POST_EXAM_PRODUCT_SPLIT_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "PREREQ_GRAPH_AUDIT.json",
+      "raw": " M PREREQ_GRAPH_AUDIT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "PREREQ_GRAPH_AUDIT.md",
+      "raw": " M PREREQ_GRAPH_AUDIT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "PRICING_PACKAGING_PLAN_REPORT.json",
+      "raw": " M PRICING_PACKAGING_PLAN_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_ACTIVITY_AUTHORING_PLAN.json",
+      "raw": " M QUESTION_ACTIVITY_AUTHORING_PLAN.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_ACTIVITY_AUTHORING_PLAN.md",
+      "raw": " M QUESTION_ACTIVITY_AUTHORING_PLAN.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_ACTIVITY_COVERAGE_REPORT.json",
+      "raw": " M QUESTION_ACTIVITY_COVERAGE_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_ACTIVITY_COVERAGE_REPORT.md",
+      "raw": " M QUESTION_ACTIVITY_COVERAGE_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_COVERAGE_TARGETS.json",
+      "raw": " M QUESTION_COVERAGE_TARGETS.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_COVERAGE_TARGETS.md",
+      "raw": " M QUESTION_COVERAGE_TARGETS.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_CURRICULUM_COVERAGE_REPORT.json",
+      "raw": " M QUESTION_CURRICULUM_COVERAGE_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_CURRICULUM_COVERAGE_REPORT.md",
+      "raw": " M QUESTION_CURRICULUM_COVERAGE_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_QA_CHECKLIST.json",
+      "raw": " M QUESTION_QA_CHECKLIST.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_QA_CHECKLIST.md",
+      "raw": " M QUESTION_QA_CHECKLIST.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_QUALITY_REPORT.json",
+      "raw": " M QUESTION_QUALITY_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_QUALITY_REPORT.md",
+      "raw": " M QUESTION_QUALITY_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_REMEDIATION_QUEUE.json",
+      "raw": " M QUESTION_REMEDIATION_QUEUE.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_REMEDIATION_QUEUE.md",
+      "raw": " M QUESTION_REMEDIATION_QUEUE.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_REUSE_AUDIT_REPORT.json",
+      "raw": " M QUESTION_REUSE_AUDIT_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "QUESTION_REUSE_AUDIT_REPORT.md",
+      "raw": " M QUESTION_REUSE_AUDIT_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "REPORT_SOURCE_OF_TRUTH.json",
+      "raw": " M REPORT_SOURCE_OF_TRUTH.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "REPORT_SOURCE_OF_TRUTH.md",
+      "raw": " M REPORT_SOURCE_OF_TRUTH.md",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "ROADMAP_90_DAY_WAVES.json",
+      "raw": " M ROADMAP_90_DAY_WAVES.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "SITE_MAP.md",
+      "raw": " M SITE_MAP.md",
+      "class": "documentation"
+    },
+    {
+      "status": " M",
+      "path": "SVCOLLEGE_COMMAND_CENTER.json",
+      "raw": " M SVCOLLEGE_COMMAND_CENTER.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "SVCOLLEGE_READINESS_REPORT.json",
+      "raw": " M SVCOLLEGE_READINESS_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "SVCOLLEGE_STUDENT_READINESS_EXPORT.json",
+      "raw": " M SVCOLLEGE_STUDENT_READINESS_EXPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "SVCOLLEGE_TAB_MATRIX.json",
+      "raw": " M SVCOLLEGE_TAB_MATRIX.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "SYNC_ALPHA_REPORT.json",
+      "raw": " M SYNC_ALPHA_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "VIDEO_ASSET_TRACKER_REPORT.json",
+      "raw": " M VIDEO_ASSET_TRACKER_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": " M",
+      "path": "app.js",
+      "raw": " M app.js",
+      "class": "app-shell"
+    },
+    {
+      "status": " M",
+      "path": "content-loader.js",
+      "raw": " M content-loader.js",
+      "class": "source"
+    },
+    {
+      "status": " M",
+      "path": "dashboard.html",
+      "raw": " M dashboard.html",
+      "class": "app-shell"
+    },
+    {
+      "status": " M",
+      "path": "data/comparisons.js",
+      "raw": " M data/comparisons.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/extended_explanations.js",
+      "raw": " M data/extended_explanations.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/lesson17.js",
+      "raw": " M data/lesson17.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/lesson18.js",
+      "raw": " M data/lesson18.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/lesson22.js",
+      "raw": " M data/lesson22.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/lesson23.js",
+      "raw": " M data/lesson23.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/lesson25.js",
+      "raw": " M data/lesson25.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/lesson27.js",
+      "raw": " M data/lesson27.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/prerequisites.js",
+      "raw": " M data/prerequisites.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/questions_bank.js",
+      "raw": " M data/questions_bank.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/questions_bug.js",
+      "raw": " M data/questions_bug.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/questions_build.js",
+      "raw": " M data/questions_build.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/what_if.js",
+      "raw": " M data/what_if.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/workbook_taskmanager.js",
+      "raw": " M data/workbook_taskmanager.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "data/zz_questions_trace_phase3.js",
+      "raw": " M data/zz_questions_trace_phase3.js",
+      "class": "data"
+    },
+    {
+      "status": " M",
+      "path": "index.html",
+      "raw": " M index.html",
+      "class": "app-shell"
+    },
+    {
+      "status": " M",
+      "path": "lib/vendor/dompurify.min.js",
+      "raw": " M lib/vendor/dompurify.min.js",
+      "class": "vendor"
+    },
+    {
+      "status": " M",
+      "path": "package.json",
+      "raw": " M package.json",
+      "class": "package-config"
+    },
+    {
+      "status": " M",
+      "path": "playwright.config.js",
+      "raw": " M playwright.config.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "scripts/audit_code_runtime.js",
+      "raw": " M scripts/audit_code_runtime.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/audit_code_syntax.js",
+      "raw": " M scripts/audit_code_syntax.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/audit_distractor_quality.js",
+      "raw": " M scripts/audit_distractor_quality.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/audit_lesson_completion.js",
+      "raw": " M scripts/audit_lesson_completion.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/build_llm_distractor_batch.js",
+      "raw": " M scripts/build_llm_distractor_batch.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_brutal_master_plan_audit.js",
+      "raw": " M scripts/report_brutal_master_plan_audit.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_dom_storage_trust_boundary.js",
+      "raw": " M scripts/report_dom_storage_trust_boundary.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_exam_accessibility_audit.js",
+      "raw": " M scripts/report_exam_accessibility_audit.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_finish_line_prerelease.js",
+      "raw": " M scripts/report_finish_line_prerelease.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_museum_access_smoke.js",
+      "raw": " M scripts/report_museum_access_smoke.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_performance_budget.js",
+      "raw": " M scripts/report_performance_budget.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_question_quality.js",
+      "raw": " M scripts/report_question_quality.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_reward_store_smoke.js",
+      "raw": " M scripts/report_reward_store_smoke.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_source_of_truth.js",
+      "raw": " M scripts/report_source_of_truth.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_svcollege_accessibility_smoke.js",
+      "raw": " M scripts/report_svcollege_accessibility_smoke.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_svcollege_full_portal_smoke.js",
+      "raw": " M scripts/report_svcollege_full_portal_smoke.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_svcollege_pwa_offline_smoke.js",
+      "raw": " M scripts/report_svcollege_pwa_offline_smoke.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "scripts/report_svcollege_visual_overlap_audit.js",
+      "raw": " M scripts/report_svcollege_visual_overlap_audit.js",
+      "class": "script"
+    },
+    {
+      "status": " M",
+      "path": "server.js",
+      "raw": " M server.js",
+      "class": "source"
+    },
+    {
+      "status": " M",
+      "path": "service-worker.js",
+      "raw": " M service-worker.js",
+      "class": "app-shell"
+    },
+    {
+      "status": " M",
+      "path": "src/boot/consent-onboarding.js",
+      "raw": " M src/boot/consent-onboarding.js",
+      "class": "source"
+    },
+    {
+      "status": " M",
+      "path": "style.css",
+      "raw": " M style.css",
+      "class": "app-shell"
+    },
+    {
+      "status": " M",
+      "path": "tests/auto-save-server.test.js",
+      "raw": " M tests/auto-save-server.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/exam-cockpit.test.js",
+      "raw": " M tests/exam-cockpit.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/finish-line-prerelease.test.js",
+      "raw": " M tests/finish-line-prerelease.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/floating-controls-layout.test.js",
+      "raw": " M tests/floating-controls-layout.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/focus-layout.test.js",
+      "raw": " M tests/focus-layout.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/lesson-compact-view.test.js",
+      "raw": " M tests/lesson-compact-view.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/lesson-content-density.test.js",
+      "raw": " M tests/lesson-content-density.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/no-native-random.test.js",
+      "raw": " M tests/no-native-random.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/playwright/smoke.spec.js",
+      "raw": " M tests/playwright/smoke.spec.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/portal-decision-aid.test.js",
+      "raw": " M tests/portal-decision-aid.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/progress-export.test.js",
+      "raw": " M tests/progress-export.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/question-quality-report.test.js",
+      "raw": " M tests/question-quality-report.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/reward-store.test.js",
+      "raw": " M tests/reward-store.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/service-worker-cache.test.js",
+      "raw": " M tests/service-worker-cache.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/settings-tab.test.js",
+      "raw": " M tests/settings-tab.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/site-navigation.test.js",
+      "raw": " M tests/site-navigation.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/source-of-truth.test.js",
+      "raw": " M tests/source-of-truth.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/svcollege-pwa-offline-smoke.test.js",
+      "raw": " M tests/svcollege-pwa-offline-smoke.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/unified-sidebar-navigation.test.js",
+      "raw": " M tests/unified-sidebar-navigation.test.js",
+      "class": "test"
+    },
+    {
+      "status": " M",
+      "path": "tests/xp-economy.test.js",
+      "raw": " M tests/xp-economy.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "AUDIT_DISTRACTORS_2026-05-05.md",
+      "raw": "?? AUDIT_DISTRACTORS_2026-05-05.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "DISTRACTOR_EXAM_GATE_REPORT.json",
+      "raw": "?? DISTRACTOR_EXAM_GATE_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "DISTRACTOR_EXAM_GATE_REPORT.md",
+      "raw": "?? DISTRACTOR_EXAM_GATE_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "DISTRACTOR_REMEDIATION_QUEUE.json",
+      "raw": "?? DISTRACTOR_REMEDIATION_QUEUE.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "DISTRACTOR_REMEDIATION_QUEUE.md",
+      "raw": "?? DISTRACTOR_REMEDIATION_QUEUE.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "DOM_ID_CONTRACT_REPORT.json",
+      "raw": "?? DOM_ID_CONTRACT_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "DOM_STORAGE_TRUST_BOUNDARY_REPORT.json",
+      "raw": "?? DOM_STORAGE_TRUST_BOUNDARY_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "DOM_STORAGE_TRUST_BOUNDARY_REPORT.md",
+      "raw": "?? DOM_STORAGE_TRUST_BOUNDARY_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "EXAM_CRITICAL_QUESTION_NOTES_REPORT.json",
+      "raw": "?? EXAM_CRITICAL_QUESTION_NOTES_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "EXAM_CRITICAL_QUESTION_NOTES_REPORT.md",
+      "raw": "?? EXAM_CRITICAL_QUESTION_NOTES_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "EXAM_MANUAL_REVIEW_SECTIONS_REPORT.json",
+      "raw": "?? EXAM_MANUAL_REVIEW_SECTIONS_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "EXAM_MANUAL_REVIEW_SECTIONS_REPORT.md",
+      "raw": "?? EXAM_MANUAL_REVIEW_SECTIONS_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "EXAM_TASK_BOARD_REPORT.json",
+      "raw": "?? EXAM_TASK_BOARD_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "EXAM_TASK_BOARD_REPORT.md",
+      "raw": "?? EXAM_TASK_BOARD_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "FORWARD_TASK_BOARD.md",
+      "raw": "?? FORWARD_TASK_BOARD.md",
+      "class": "documentation"
+    },
+    {
+      "status": "??",
+      "path": "LLM_DISTRACTOR_BATCH_REPORT.json",
+      "raw": "?? LLM_DISTRACTOR_BATCH_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "LLM_DISTRACTOR_BATCH_REPORT.md",
+      "raw": "?? LLM_DISTRACTOR_BATCH_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "PORTAL_FULL_AUDIT_REPORT.json",
+      "raw": "?? PORTAL_FULL_AUDIT_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "PORTAL_FULL_AUDIT_REPORT.md",
+      "raw": "?? PORTAL_FULL_AUDIT_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "POST_GREEN_HARDENING_REPORT.json",
+      "raw": "?? POST_GREEN_HARDENING_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "POST_GREEN_HARDENING_REPORT.md",
+      "raw": "?? POST_GREEN_HARDENING_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "POST_GREEN_TASK_BOARD.md",
+      "raw": "?? POST_GREEN_TASK_BOARD.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "QUALITY_DEBT_PROGRESS_REPORT.json",
+      "raw": "?? QUALITY_DEBT_PROGRESS_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "QUALITY_DEBT_PROGRESS_REPORT.md",
+      "raw": "?? QUALITY_DEBT_PROGRESS_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "QUALITY_DEBT_TASK_BOARD.md",
+      "raw": "?? QUALITY_DEBT_TASK_BOARD.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "RELEASE_INVENTORY_REPORT.json",
+      "raw": "?? RELEASE_INVENTORY_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "RELEASE_INVENTORY_REPORT.md",
+      "raw": "?? RELEASE_INVENTORY_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "SOLUTION_GUIDE_COVERAGE_REPORT.json",
+      "raw": "?? SOLUTION_GUIDE_COVERAGE_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "SOLUTION_GUIDE_COVERAGE_REPORT.md",
+      "raw": "?? SOLUTION_GUIDE_COVERAGE_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "SOLUTION_GUIDE_DRILLS_REPORT.json",
+      "raw": "?? SOLUTION_GUIDE_DRILLS_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "SOLUTION_GUIDE_DRILLS_REPORT.md",
+      "raw": "?? SOLUTION_GUIDE_DRILLS_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "SYSTEM_BUG_AUDIT_REPORT_2026-05-05_FINAL.md",
+      "raw": "?? SYSTEM_BUG_AUDIT_REPORT_2026-05-05_FINAL.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "SYSTEM_HEALTH_REPORT.json",
+      "raw": "?? SYSTEM_HEALTH_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "SYSTEM_HEALTH_REPORT.md",
+      "raw": "?? SYSTEM_HEALTH_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "SYSTEM_WEAKNESS_CLOSURE_BOARD.md",
+      "raw": "?? SYSTEM_WEAKNESS_CLOSURE_BOARD.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "SYSTEM_WEAKNESS_CLOSURE_REPORT.json",
+      "raw": "?? SYSTEM_WEAKNESS_CLOSURE_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "SYSTEM_WEAKNESS_CLOSURE_REPORT.md",
+      "raw": "?? SYSTEM_WEAKNESS_CLOSURE_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "WEEKLY_PORTAL_STATUS.json",
+      "raw": "?? WEEKLY_PORTAL_STATUS.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "WEEKLY_PORTAL_STATUS.md",
+      "raw": "?? WEEKLY_PORTAL_STATUS.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "WORLD_CLASS_MENU_AUDIT_REPORT.json",
+      "raw": "?? WORLD_CLASS_MENU_AUDIT_REPORT.json",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "WORLD_CLASS_MENU_AUDIT_REPORT.md",
+      "raw": "?? WORLD_CLASS_MENU_AUDIT_REPORT.md",
+      "class": "generated-report"
+    },
+    {
+      "status": "??",
+      "path": "data/exam_practice_extras.js",
+      "raw": "?? data/exam_practice_extras.js",
+      "class": "data"
+    },
+    {
+      "status": "??",
+      "path": "data/exam_tasks_tree.js",
+      "raw": "?? data/exam_tasks_tree.js",
+      "class": "data"
+    },
+    {
+      "status": "??",
+      "path": "data/homework_exam_mode.js",
+      "raw": "?? data/homework_exam_mode.js",
+      "class": "data"
+    },
+    {
+      "status": "??",
+      "path": "data/portal_decision_aids.js",
+      "raw": "?? data/portal_decision_aids.js",
+      "class": "data"
+    },
+    {
+      "status": "??",
+      "path": "data/site_navigation_tree.js",
+      "raw": "?? data/site_navigation_tree.js",
+      "class": "data"
+    },
+    {
+      "status": "??",
+      "path": "data/solution_guide_drills.js",
+      "raw": "?? data/solution_guide_drills.js",
+      "class": "data"
+    },
+    {
+      "status": "??",
+      "path": "docs/qwen-coder-next-training/",
+      "raw": "?? docs/qwen-coder-next-training/",
+      "class": "documentation"
+    },
+    {
+      "status": "??",
+      "path": "docs/svcollege-current-remaining-tasks-2026-05-05.md",
+      "raw": "?? docs/svcollege-current-remaining-tasks-2026-05-05.md",
+      "class": "documentation"
+    },
+    {
+      "status": "??",
+      "path": "docs/svcollege-exam-gap-closure-plan-2026-05-05.md",
+      "raw": "?? docs/svcollege-exam-gap-closure-plan-2026-05-05.md",
+      "class": "documentation"
+    },
+    {
+      "status": "??",
+      "path": "docs/svcollege-forward-remaining-tasks-plan-2026-05-05.md",
+      "raw": "?? docs/svcollege-forward-remaining-tasks-plan-2026-05-05.md",
+      "class": "documentation"
+    },
+    {
+      "status": "??",
+      "path": "docs/svcollege-full-site-ui-navigation-audit-2026-05-05.md",
+      "raw": "?? docs/svcollege-full-site-ui-navigation-audit-2026-05-05.md",
+      "class": "documentation"
+    },
+    {
+      "status": "??",
+      "path": "exam-task-tree-ui.png",
+      "raw": "?? exam-task-tree-ui.png",
+      "class": "asset"
+    },
+    {
+      "status": "??",
+      "path": "output/notebooklm-fullstack-exam/",
+      "raw": "?? output/notebooklm-fullstack-exam/",
+      "class": "generated-output"
+    },
+    {
+      "status": "??",
+      "path": "output/qwen-coder-next/",
+      "raw": "?? output/qwen-coder-next/",
+      "class": "generated-output"
+    },
+    {
+      "status": "??",
+      "path": "output/svcollege-practical-guides/",
+      "raw": "?? output/svcollege-practical-guides/",
+      "class": "generated-output"
+    },
+    {
+      "status": "??",
+      "path": "scripts/evaluate_qwen_project.js",
+      "raw": "?? scripts/evaluate_qwen_project.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/extract_solution_guide_drills.js",
+      "raw": "?? scripts/extract_solution_guide_drills.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/generate_site_map.js",
+      "raw": "?? scripts/generate_site_map.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/materialize_qwen_response.js",
+      "raw": "?? scripts/materialize_qwen_response.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_distractor_exam_gate.js",
+      "raw": "?? scripts/report_distractor_exam_gate.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_dom_id_contract.js",
+      "raw": "?? scripts/report_dom_id_contract.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_exam_critical_question_notes.js",
+      "raw": "?? scripts/report_exam_critical_question_notes.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_exam_manual_review_sections.js",
+      "raw": "?? scripts/report_exam_manual_review_sections.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_exam_task_board.js",
+      "raw": "?? scripts/report_exam_task_board.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_exam_task_tree_coverage.js",
+      "raw": "?? scripts/report_exam_task_tree_coverage.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_lesson_material_gaps.js",
+      "raw": "?? scripts/report_lesson_material_gaps.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_portal_full_audit.js",
+      "raw": "?? scripts/report_portal_full_audit.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_post_green_hardening_progress.js",
+      "raw": "?? scripts/report_post_green_hardening_progress.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_quality_debt_progress.js",
+      "raw": "?? scripts/report_quality_debt_progress.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_qwen_output_guard.js",
+      "raw": "?? scripts/report_qwen_output_guard.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_release_inventory.js",
+      "raw": "?? scripts/report_release_inventory.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_solution_guide_coverage.js",
+      "raw": "?? scripts/report_solution_guide_coverage.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_svcollege_navigation_tree.js",
+      "raw": "?? scripts/report_svcollege_navigation_tree.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_system_health_score.js",
+      "raw": "?? scripts/report_system_health_score.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_system_weakness_closure_progress.js",
+      "raw": "?? scripts/report_system_weakness_closure_progress.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_weekly_portal_status.js",
+      "raw": "?? scripts/report_weekly_portal_status.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/report_world_class_menu_audit.js",
+      "raw": "?? scripts/report_world_class_menu_audit.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/run_qwen_training.js",
+      "raw": "?? scripts/run_qwen_training.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/run_smoke_browser.js",
+      "raw": "?? scripts/run_smoke_browser.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/run_vitest_ui_if_available.js",
+      "raw": "?? scripts/run_vitest_ui_if_available.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/sync_exam_task_tree_training.js",
+      "raw": "?? scripts/sync_exam_task_tree_training.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "scripts/update_forward_task_board.js",
+      "raw": "?? scripts/update_forward_task_board.js",
+      "class": "script"
+    },
+    {
+      "status": "??",
+      "path": "src/boot/file-protocol-guard.js",
+      "raw": "?? src/boot/file-protocol-guard.js",
+      "class": "source"
+    },
+    {
+      "status": "??",
+      "path": "src/boot/module-bootstrap-loader.js",
+      "raw": "?? src/boot/module-bootstrap-loader.js",
+      "class": "source"
+    },
+    {
+      "status": "??",
+      "path": "src/core/learning-types.ts",
+      "raw": "?? src/core/learning-types.ts",
+      "class": "source"
+    },
+    {
+      "status": "??",
+      "path": "src/views/exam100-path-core.js",
+      "raw": "?? src/views/exam100-path-core.js",
+      "class": "source"
+    },
+    {
+      "status": "??",
+      "path": "src/views/homework-exam-mode-view.js",
+      "raw": "?? src/views/homework-exam-mode-view.js",
+      "class": "source"
+    },
+    {
+      "status": "??",
+      "path": "svcollege_fullstack_exam_trainer_v5/",
+      "raw": "?? svcollege_fullstack_exam_trainer_v5/",
+      "class": "generated-output"
+    },
+    {
+      "status": "??",
+      "path": "tests/brutal-master-plan-audit-classification.test.js",
+      "raw": "?? tests/brutal-master-plan-audit-classification.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/code-runtime-audit.test.js",
+      "raw": "?? tests/code-runtime-audit.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/css-evidence.js",
+      "raw": "?? tests/css-evidence.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/distractor-quality-audit.test.js",
+      "raw": "?? tests/distractor-quality-audit.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/dom-id-contract.test.js",
+      "raw": "?? tests/dom-id-contract.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/dom-storage-trust-boundary.test.js",
+      "raw": "?? tests/dom-storage-trust-boundary.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/exam-task-tree-integration.test.js",
+      "raw": "?? tests/exam-task-tree-integration.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/exam100-path-ui.test.js",
+      "raw": "?? tests/exam100-path-ui.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/forward-task-board-run-log.test.js",
+      "raw": "?? tests/forward-task-board-run-log.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/homework-exam-mode.test.js",
+      "raw": "?? tests/homework-exam-mode.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/learning-types-contract.test.js",
+      "raw": "?? tests/learning-types-contract.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/lesson-material-gaps.test.js",
+      "raw": "?? tests/lesson-material-gaps.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/onboarding-id-contract.test.js",
+      "raw": "?? tests/onboarding-id-contract.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/performance-budget-margin.test.js",
+      "raw": "?? tests/performance-budget-margin.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/post-green-hardening-progress.test.js",
+      "raw": "?? tests/post-green-hardening-progress.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/quality-debt-progress-report.test.js",
+      "raw": "?? tests/quality-debt-progress-report.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/question-option-feedback-contract.test.js",
+      "raw": "?? tests/question-option-feedback-contract.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/qwen-materializer.test.js",
+      "raw": "?? tests/qwen-materializer.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/qwen-output-guard.test.js",
+      "raw": "?? tests/qwen-output-guard.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/qwen-runtime-evaluator.test.js",
+      "raw": "?? tests/qwen-runtime-evaluator.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/qwen-training-runner.test.js",
+      "raw": "?? tests/qwen-training-runner.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/release-inventory-report.test.js",
+      "raw": "?? tests/release-inventory-report.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/runtime-protocol-guard.test.js",
+      "raw": "?? tests/runtime-protocol-guard.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/solution-guide-coverage.test.js",
+      "raw": "?? tests/solution-guide-coverage.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/solution-guide-drills.test.js",
+      "raw": "?? tests/solution-guide-drills.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/system-health-score.test.js",
+      "raw": "?? tests/system-health-score.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/system-weakness-closure-progress.test.js",
+      "raw": "?? tests/system-weakness-closure-progress.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/weekly-portal-status-report.test.js",
+      "raw": "?? tests/weekly-portal-status-report.test.js",
+      "class": "test"
+    },
+    {
+      "status": "??",
+      "path": "tests/world-class-menu-audit.test.js",
+      "raw": "?? tests/world-class-menu-audit.test.js",
+      "class": "test"
+    }
+  ],
+  "unknown": []
+}

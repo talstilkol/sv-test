@@ -1,0 +1,1181 @@
+{
+  "generatedAt": "2026-05-07T09:31:12.696Z",
+  "totalItems": 7,
+  "advisoryItems": 0,
+  "deferredItems": 58,
+  "items": [
+    {
+      "id": "mc_dom_002",
+      "conceptKey": "lesson_13::createElement",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "option-no-unique-words",
+      "rawIssue": "option-0-no-unique-words",
+      "currentOptions": [
+        "appendChild → createElement → innerHTML הוא סדר שגוי כי מצרפים לפני יצירה",
+        "createElement → innerHTML → appendChild הוא סדר תקין: יוצרים, ממלאים, מצרפים",
+        "innerHTML → appendChild → createElement שגוי כי אין אלמנט לפני יצירה",
+        "createElement → appendChild → removeChild מסיר את האלמנט במקום להשאירו"
+      ],
+      "recommendedAction": "החלף/י מסיח כללי במסיח שמייצג טעות תלמיד אמיתית עם מונחים ייחודיים, והוסף/י optionFeedback.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 2
+    },
+    {
+      "id": "mc_l_event_loop_001",
+      "conceptKey": "lesson_15::Promise",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "option-no-unique-words",
+      "rawIssue": "option-2-no-unique-words",
+      "currentOptions": [
+        "1, 4, 3, 2 — sync קודם, Promise microtask אחר כך, timeout macrotask בסוף",
+        "1, 2, 3, 4 שגוי כי timeout לא רץ לפי סדר הכתיבה",
+        "1, 4, 2, 3 שגוי כי Promise microtask לפני timeout",
+        "1, 3, 4, 2 שגוי כי console.log(4) הוא sync לפני microtask"
+      ],
+      "recommendedAction": "החלף/י מסיח כללי במסיח שמייצג טעות תלמיד אמיתית עם מונחים ייחודיים, והוסף/י optionFeedback.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 2
+    },
+    {
+      "id": "mc_l15_prace_001",
+      "conceptKey": "lesson_15::Promise",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "option-no-unique-words",
+      "rawIssue": "option-2-no-unique-words",
+      "currentOptions": [
+        "race([fetch(), sleep(N).then(() => { throw new Error(\"timeout\"); })]) יוצר timeout מתחרה",
+        "race([fetch()]).timeout() לא קיים כ-API מובנה של Promise",
+        "fetch().timeout(N) אינו API סטנדרטי של fetch Promise",
+        "Promise.timeout(fetch(), N) אינו API סטנדרטי ב-JavaScript"
+      ],
+      "recommendedAction": "החלף/י מסיח כללי במסיח שמייצג טעות תלמיד אמיתית עם מונחים ייחודיים, והוסף/י optionFeedback.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 2
+    },
+    {
+      "id": "mc_l15_try_manual_002",
+      "conceptKey": "lesson_15::try",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "option-no-unique-words",
+      "rawIssue": "option-3-no-unique-words",
+      "currentOptions": [
+        "A B C שגוי כי throw מונע הגעה ל-console.log(\"B\")",
+        "A C כי A מודפס, throw קופץ ל-catch, ואז C מודפס",
+        "C בלבד שגוי כי A מודפס לפני ה-throw",
+        "A B שגוי כי B לא מודפס ו-catch כן רץ"
+      ],
+      "recommendedAction": "החלף/י מסיח כללי במסיח שמייצג טעות תלמיד אמיתית עם מונחים ייחודיים, והוסף/י optionFeedback.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 2
+    },
+    {
+      "id": "mc_html_css_deep_003",
+      "conceptKey": "lesson_html_css_foundations::box model",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "option-no-unique-words",
+      "rawIssue": "option-1-no-unique-words",
+      "currentOptions": [
+        "content, padding ו-border נכללים בתוך ה-200px כשמשתמשים ב-border-box",
+        "רק content נכון ל-content-box, לא ל-border-box",
+        "רק margin לא נכון כי margin נשאר מחוץ לרוחב",
+        "רק font-size לא קשור לחישוב רוחב ה-box"
+      ],
+      "recommendedAction": "החלף/י מסיח כללי במסיח שמייצג טעות תלמיד אמיתית עם מונחים ייחודיים, והוסף/י optionFeedback.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 2
+    },
+    {
+      "id": "mc_l15_timeout_manual_002",
+      "conceptKey": "lesson_15::setTimeout",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "lengths-too-uniform",
+      "rawIssue": "lengths-too-uniform",
+      "currentOptions": [
+        "Start Timeout End שגוי כי timeout נדחה עד אחרי הקוד הסינכרוני",
+        "Start End Timeout כי setTimeout רץ רק אחרי שה-sync stack מתפנה",
+        "End Start Timeout שגוי כי console.log sync רץ לפי סדר השורות",
+        "Timeout Start End שגוי כי timer callback לא רץ לפני sync code"
+      ],
+      "recommendedAction": "פזר/י מעט את אורכי האופציות בלי לפגוע באיכות כדי למנוע תבנית מלאכותית.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 4
+    },
+    {
+      "id": "mc_l16_dir_002",
+      "conceptKey": "lesson_16::dir",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "lengths-too-uniform",
+      "rawIssue": "lengths-too-uniform",
+      "currentOptions": [
+        "cd משנה את התיקייה הנוכחית ולא מציג תוכן",
+        "ls מציגה את תוכן התיקייה ב-macOS/Linux",
+        "mkdir יוצרת תיקייה חדשה ולא מציגה רשימה",
+        "rm מוחקת קבצים או תיקיות ולא מציגה אותם"
+      ],
+      "recommendedAction": "פזר/י מעט את אורכי האופציות בלי לפגוע באיכות כדי למנוע תבנית מלאכותית.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 4
+    }
+  ],
+  "advisory": [],
+  "deferred": [
+    {
+      "id": "mc_l16_open_002",
+      "conceptKey": "lesson_16::fs.open",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (71 vs avg 27)",
+      "currentOptions": [
+        "לקרוא קובץ פעם אחת בלבד",
+        "לקרוא/לכתוב בחלקים שונים של קובץ (random access) בלי לפתוח מחדש בכל פעם",
+        "למחוק את הקובץ בצורה בטוחה יותר",
+        "ליצור גיבוי אוטומטי של הקובץ"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_l16_json_003",
+      "conceptKey": "lesson_16::JSON",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (33 vs avg 10)",
+      "currentOptions": [
+        "רק מחרוזות",
+        "רק מספרים",
+        "אובייקטים ומערכים (nested values)",
+        "רק בוליאנים"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_l16_module_001",
+      "conceptKey": "lesson_16::module",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (51 vs avg 18)",
+      "currentOptions": [
+        "קובץ JavaScript נפרד שניתן לייבא ולשתף בין פרויקטים",
+        "חלון גרפי של תוכנית",
+        "מסד נתונים מקומי",
+        "פרוטוקול תקשורת לרשת"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lai_embed_002",
+      "conceptKey": "lesson_ai_engineering::embeddings",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (46 vs avg 18)",
+      "currentOptions": [
+        "מדד דמיון בין vectors (0-1): 1 = זהה, 0 = ניצב",
+        "hash function",
+        "distance מוחלטת בלבד",
+        "dot product ללא נרמול"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_laie_finetuning_002",
+      "conceptKey": "lesson_ai_engineering::fine-tuning boundary",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (67 vs avg 22)",
+      "currentOptions": [
+        "כשהידע משתנה לעיתים קרובות או פרטי לארגון — קל לעדכן בלי אימון מחדש",
+        "כשרוצים סגנון כתיבה ייחודי",
+        "כשיש מעט מאוד נתונים",
+        "כשצריך latency אפסי"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_laie_langchain_002",
+      "conceptKey": "lesson_ai_engineering::LangChain",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (69 vs avg 20)",
+      "currentOptions": [
+        "יוצר chain שמעביר קלט דרך prompt template, שולח למודל, ומפרסר את הפלט",
+        "מתקין שלושה packages",
+        "מפעיל שלושה מודלים במקביל",
+        "שומר שלושה קבצים"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_laie_langchain_003",
+      "conceptKey": "lesson_ai_engineering::LangChain",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (64 vs avg 21)",
+      "currentOptions": [
+        "כשצריך orchestration מורכב — שרשראות, agents, memory ו-retrieval",
+        "לchat פשוט עם streaming",
+        "כשעובדים רק עם OpenAI",
+        "כשהפרויקט קטן ופשוט"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lai_rag_002",
+      "conceptKey": "lesson_ai_engineering::RAG",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (46 vs avg 13)",
+      "currentOptions": [
+        "chunking + embedding model + retrieval ranking",
+        "model size בלבד",
+        "temperature",
+        "prompt length"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lai_token_002",
+      "conceptKey": "lesson_ai_engineering::token budget",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (54 vs avg 14)",
+      "currentOptions": [
+        "RAG עם top-K chunks + system prompt קצר + cache prefix",
+        "stream output",
+        "temperature 0",
+        "model גדול יותר"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lai_vstore_002",
+      "conceptKey": "lesson_ai_engineering::vector store",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (64 vs avg 24)",
+      "currentOptions": [
+        "Approximate Nearest Neighbor — מהיר אבל לא exact, tradeoff מקובל",
+        "Accurate Neural Network search",
+        "All-Node Networked search",
+        "Auto-index network"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_laie_vercel_sdk_003",
+      "conceptKey": "lesson_ai_engineering::Vercel AI SDK",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (50 vs avg 13)",
+      "currentOptions": [
+        "ממשק אחיד לכל ספקי AI — מחליפים מודל בלי לשנות קוד",
+        "חינמי לחלוטין",
+        "לא צריך API key",
+        "רץ רק בדפדפן"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_authn_x_001",
+      "conceptKey": "lesson_auth_security::authentication",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (48 vs avg 16)",
+      "currentOptions": [
+        "Verify identity — מי אתה? (login, password, MFA)",
+        "Verify permissions",
+        "Encrypt data",
+        "Throttle requests"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_la_authn_001",
+      "conceptKey": "lesson_auth_security::authentication",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (18 vs avg 7)",
+      "currentOptions": [
+        "מי אתה? אימות זהות",
+        "מה מותר לך?",
+        "איפה?",
+        "מתי?"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_mfa_x_001",
+      "conceptKey": "lesson_auth_security::authentication",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (81 vs avg 21)",
+      "currentOptions": [
+        "Multiple factors — something you know (password) + have (phone) + are (biometric)",
+        "Multi-step single factor",
+        "Single password only",
+        "OTP without password"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lauth_bcrypt_001",
+      "conceptKey": "lesson_auth_security::bcrypt",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (73 vs avg 20)",
+      "currentOptions": [
+        "כדי שtoquف brute force: כל ניסיון לוקח זמן — מיליוני ניסיונות לוקחים שנים",
+        "כי הקוד לא אופטימלי",
+        "כי JavaScript איטי",
+        "כי הוא משתמש ב-network"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lauth_firebase_001",
+      "conceptKey": "lesson_auth_security::Firebase Auth",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (50 vs avg 19)",
+      "currentOptions": [
+        "Admin SDK מאמת signature מול public keys של Google",
+        "סומכים על הclient",
+        "בודקים את שם המשתמש",
+        "שולחים email לGoogle"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lauth_firebase_002",
+      "conceptKey": "lesson_auth_security::Firebase Auth",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (40 vs avg 13)",
+      "currentOptions": [
+        "metadata שמוסיפים ל-JWT כמו role — לRBAC",
+        "שם המשתמש בDB",
+        "סיסמת המשתמש",
+        "גרסת האפליקציה"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_la_guard_002",
+      "conceptKey": "lesson_auth_security::middleware guard",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (58 vs avg 23)",
+      "currentOptions": [
+        "guard רץ לפני route handler — אם fail, route handler לא רץ",
+        "route handler רץ ראשון",
+        "שניהם רצים בו-זמנית",
+        "guard רץ לאחר route handler"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_constant_time_x_001",
+      "conceptKey": "lesson_auth_security::password hashing",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (70 vs avg 6)",
+      "currentOptions": [
+        "crypto.timingSafeEqual — לא מסיים מוקדם. מונע timing attacks על hashes",
+        "Math.eq",
+        "===",
+        "Object.is"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_la_hash_002",
+      "conceptKey": "lesson_auth_security::password hashing",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (62 vs avg 18)",
+      "currentOptions": [
+        "ערך random שנוסף לסיסמה לפני hash — מונע rainbow table attacks",
+        "encryption key סודי",
+        "IV לblock cipher",
+        "secret שמשתתף HMAC"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_la_secure_002",
+      "conceptKey": "lesson_auth_security::secure cookie",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (59 vs avg 21)",
+      "currentOptions": [
+        "cookie לא נשלח ב-cross-site requests — CSRF defense מקסימלי",
+        "מגביל לHTTPS בלבד",
+        "מונע JS access לcookie",
+        "משנה את domain של cookie"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lauth_supabase_001",
+      "conceptKey": "lesson_auth_security::Supabase Auth",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (51 vs avg 15)",
+      "currentOptions": [
+        "שילוב עם Postgres RLS — authorization ברמת database",
+        "שולח SMS בלבד",
+        "עובד רק עם MongoDB",
+        "לא תומך ב-OAuth"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lauth_supabase_002",
+      "conceptKey": "lesson_auth_security::Supabase Auth",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (51 vs avg 15)",
+      "currentOptions": [
+        "מפתח שעוקף RLS — אם דולף, תוקף יכול לקרוא/לכתוב הכל",
+        "מפתח styling",
+        "מפתח לfrontend בלבד",
+        "מפתח חסר הרשאות"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_closure_p_003",
+      "conceptKey": "lesson_closures::closure",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (60 vs avg 20)",
+      "currentOptions": [
+        "(()=>{const _x=1; return {get:()=>_x};})() — _x פרטי לחלוטין",
+        "אין דרך לעשות פרטיות ב-JS",
+        "רק ES6 modules עושים זאת",
+        "syntax error"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_l_closures_002",
+      "conceptKey": "lesson_closures::closure",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (50 vs avg 16)",
+      "currentOptions": [
+        "ה-effect תפס value מ-render קודם, ב-deps array חסר",
+        "useEffect לא עובד",
+        "שגיאת syntax",
+        "TypeScript לא מאפשר"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lclos_lexical_scope_003",
+      "conceptKey": "lesson_closures::lexical scope",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (76 vs avg 28)",
+      "currentOptions": [
+        "מה-scope של createGreeter שבו היא הוצהרה, גם אחרי שהפונקציה החיצונית הסתיימה",
+        "מה-scope של המקום שממנו קוראים ל-greet",
+        "רק מה-scope הגלובלי",
+        "רק ממשתנים שמועברים כפרמטרים"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lc_scope_chain_001",
+      "conceptKey": "lesson_closures::scope chain",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (62 vs avg 22)",
+      "currentOptions": [
+        "שרשרת חיפוש משתנים: מחפשים פנימה החוצה (פונקציה → אב → גלובלי)",
+        "רשימת פונקציות שרצות ברצף",
+        "סדר ה-events ב-Event Loop",
+        "מבנה נתונים ב-DOM"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lds_a11y_002",
+      "conceptKey": "lesson_design_systems::accessible primitive",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (42 vs avg 15)",
+      "currentOptions": [
+        "מודיע לקורא מסך אם אזור מקושר פתוח או סגור",
+        "מגדיל את הכפתור",
+        "מוסיף animation",
+        "מוחק את הכפתור"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lds_cva_002",
+      "conceptKey": "lesson_design_systems::cva",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (46 vs avg 16)",
+      "currentOptions": [
+        "מגדיר ערכי ברירת מחדל כשלא עוברים variant prop",
+        "מוחק את כל ה-variants",
+        "מוסיף animation",
+        "ממיר CSS ל-JS"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lds_cva_003",
+      "conceptKey": "lesson_design_systems::cva",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (52 vs avg 20)",
+      "currentOptions": [
+        "מגדיר classes מיוחדים כשכמה variants פעילים בו-זמנית",
+        "ממחק variants ישנים",
+        "יוצר database tables",
+        "מוסיף JavaScript logic"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_ldevops_dockerfile_004",
+      "conceptKey": "lesson_devops_deploy::Dockerfile",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (17 vs avg 6)",
+      "currentOptions": [
+        "FROM <base-image>",
+        "RUN <cmd>",
+        "COPY .",
+        "CMD"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_ldev_preview_001",
+      "conceptKey": "lesson_devops_deploy::preview deployment",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (45 vs avg 17)",
+      "currentOptions": [
+        "URL זמני לבדיקת שינוי לפני merge ל-production",
+        "backup של ה-database",
+        "גרסת production סופית",
+        "רשיון תוכנה"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_css_boxsize_u_001",
+      "conceptKey": "lesson_html_css_foundations::box model",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (48 vs avg 16)",
+      "currentOptions": [
+        "width = content + padding + border (אינטואיטיבי)",
+        "width = content (default)",
+        "ignore padding",
+        "deprecated"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_css_position_fixed_u_001",
+      "conceptKey": "lesson_html_css_foundations::box model",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (61 vs avg 16)",
+      "currentOptions": [
+        "Stays in viewport regardless of scroll — modal, sticky header",
+        "Same as absolute",
+        "Same as relative",
+        "Always centered"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_css_cascade_u_001",
+      "conceptKey": "lesson_html_css_foundations::cascade and specificity",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (39 vs avg 12)",
+      "currentOptions": [
+        "importance → specificity → source order",
+        "alphabetic",
+        "first wins",
+        "last wins always"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_css_selector_u_001",
+      "conceptKey": "lesson_html_css_foundations::CSS selector",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (33 vs avg 12)",
+      "currentOptions": [
+        "inline style > #id > .class > tag",
+        "tag > class > id",
+        "alphabetic",
+        "no priority"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lnest_ctrl_002",
+      "conceptKey": "lesson_nestjs::controller",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (56 vs avg 18)",
+      "currentOptions": [
+        "מחלץ route params: @Get(':id') + @Param('id') id: string",
+        "מחלץ request body",
+        "מחלץ query string",
+        "מחלץ request headers"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lnest_decorator_002",
+      "conceptKey": "lesson_nestjs::decorator",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (38 vs avg 15)",
+      "currentOptions": [
+        "emitDecoratorMetadata: true ב-tsconfig",
+        "strict: false",
+        "target: ES3",
+        "module: CommonJS בלבד"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lnest_di_002",
+      "conceptKey": "lesson_nestjs::dependency injection",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (54 vs avg 17)",
+      "currentOptions": [
+        "constructor params לפי type → Nest מזריק automatically",
+        "חייבים להעביר ידנית",
+        "singleton בכל מקרה",
+        "אין DI ב-Nest"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lnest_middleware_002",
+      "conceptKey": "lesson_nestjs::middleware",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (69 vs avg 24)",
+      "currentOptions": [
+        "guard מכיר את ה-Nest ExecutionContext ויכול לקרוא metadata של handler",
+        "middleware מהיר יותר",
+        "middleware לא יכול לחסום בקשות",
+        "guard רץ אחרי ה-handler"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lnest_service_002",
+      "conceptKey": "lesson_nestjs::service",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (61 vs avg 17)",
+      "currentOptions": [
+        "constructor DI: constructor(private repo: UsersRepository) {}",
+        "factory function",
+        "manual instantiation",
+        "global singleton"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lnest_testmod_001",
+      "conceptKey": "lesson_nestjs::testing module",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (55 vs avg 22)",
+      "currentOptions": [
+        "overrideProvider(X).useValue(mockValue) ב-TestingModule",
+        "מוחקים את הקובץ",
+        "משנים את הproduction code",
+        "מוסיפים if(test) בservice"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lsql_fk_003",
+      "conceptKey": "lesson_sql_orm::foreign key",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (69 vs avg 19)",
+      "currentOptions": [
+        "FK גם כשהמצב משתנה מצביע ל-row קיים ב-parent table — DB מאכף אוטומטית",
+        "naming convention לFK",
+        "index rule לביצועים",
+        "backup policy לDB"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lsql_pk_002",
+      "conceptKey": "lesson_sql_orm::primary key",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (35 vs avg 11)",
+      "currentOptions": [
+        "NOT NULL + UNIQUE + automatic index",
+        "יכול להיות NULL",
+        "יכול חוזר",
+        "optional"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_sql_deep_001",
+      "conceptKey": "lesson_sql_orm::row",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (50 vs avg 14)",
+      "currentOptions": [
+        "רשומה אחת של משתמש עם ערכים בכל העמודות הרלוונטיות",
+        "שם של עמודה בלבד",
+        "כל בסיס הנתונים",
+        "פקודת SELECT"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_lsql_table_002",
+      "conceptKey": "lesson_sql_orm::table",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (36 vs avg 9)",
+      "currentOptions": [
+        "snake_case ברבים: users, order_items",
+        "camelCase",
+        "PascalCase",
+        "UPPERCASE"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_tooling_eslint_manual_001",
+      "conceptKey": "lesson_tooling_git::ESLint",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (41 vs avg 16)",
+      "currentOptions": [
+        "בודק קוד JavaScript לפי חוקים שנקבעו מראש",
+        "מריץ את הקוד מהר יותר",
+        "מעצב את ה-CSS",
+        "מגבה קבצים לענן"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_tooling_001",
+      "conceptKey": "lesson_tooling_git::Git",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (50 vs avg 18)",
+      "currentOptions": [
+        "לנהל היסטוריית שינויים ולעזור לחזור לגרסאות קודמות",
+        "להחליף את הדפדפן",
+        "לכתוב CSS אוטומטית",
+        "לשמור סיסמאות משתמשים"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_tooling_npm_manual_001",
+      "conceptKey": "lesson_tooling_git::npm scripts",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (32 vs avg 11)",
+      "currentOptions": [
+        "ב-package.json תחת המפתח scripts",
+        "ב-.gitignore",
+        "ב-server.js",
+        "ב-README.md"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_tooling_prettier_manual_001",
+      "conceptKey": "lesson_tooling_git::Prettier",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (55 vs avg 18)",
+      "currentOptions": [
+        "מעצב קוד JavaScript/TypeScript/CSS בצורה עקבית אוטומטית",
+        "בודק שגיאות לוגיות בקוד",
+        "מריץ בדיקות יחידה",
+        "מנהל גרסאות Git"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_tooling_pr_manual_001",
+      "conceptKey": "lesson_tooling_git::pull request",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (50 vs avg 20)",
+      "currentOptions": [
+        "בקשה לסקור ולמזג שינויים מ-branch אחד ל-branch אחר",
+        "פקודת Git ליצירת commit חדש",
+        "תוכנת עיצוב קוד",
+        "שרת לבדיקות יחידה"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_rb_cont_manual_001",
+      "conceptKey": "react_blueprint::Container vs Presentational",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (55 vs avg 15)",
+      "currentOptions": [
+        "רק עיצוב ויזואלי",
+        "לוגיקה, state, ו-fetching — מעביר data ל-presentational",
+        "רندر static HTML",
+        "ניהול CSS בלבד"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_rb_dataflow_manual_003",
+      "conceptKey": "react_blueprint::Data Flow",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (71 vs avg 26)",
+      "currentOptions": [
+        "שכפול קוד — מונעים עם HOC",
+        "העברת props דרך רמות שלא משתמשות בהם — מונעים עם Context או composition",
+        "render מיותר — מונעים עם memo",
+        "שימוש ב-state גלובלי בלבד"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_rb_eb_manual_002",
+      "conceptKey": "react_blueprint::Error Boundaries",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (50 vs avg 17)",
+      "currentOptions": [
+        "כדי לתפוס יותר שגיאות",
+        "כדי שרק החלק השבור יציג fallback והשאר ימשיך לעבוד",
+        "כדי לעקוף SSR",
+        "כדי להאיץ render"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_rb_eb_manual_003",
+      "conceptKey": "react_blueprint::Error Boundaries",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (48 vs avg 16)",
+      "currentOptions": [
+        "try/catch ב-fetch",
+        "throwAsync pattern — העלאת השגיאה ל-render phase",
+        "useEffect ללא deps",
+        "Suspense לבד"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_rb_perf_manual_002",
+      "conceptKey": "react_blueprint::Performance Optimization",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (40 vs avg 15)",
+      "currentOptions": [
+        "מדלג על render אם props לא השתנו shallow",
+        "משנה props ל-read-only",
+        "מבטל useEffect",
+        "מאיץ fetch"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_rb_state_manual_003",
+      "conceptKey": "react_blueprint::State Management",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (63 vs avg 23)",
+      "currentOptions": [
+        "Context לא שומר state",
+        "כל update גורם re-render לכל הצרכנים גם אם לא נגעו בערך הספציפי",
+        "Context לא עובר בין routes",
+        "Context דורש TypeScript"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    },
+    {
+      "id": "mc_rb_test_manual_003",
+      "conceptKey": "react_blueprint::Testing Strategies",
+      "heat": 3,
+      "examCritical": false,
+      "lessonRank": 999,
+      "issue": "correct-much-longer",
+      "rawIssue": "correct-much-longer (50 vs avg 16)",
+      "currentOptions": [
+        "E2E מהירים מאוד",
+        "E2E איטיים, שבירים (רשת, אנימציות), ויקרים לתחזוקה",
+        "E2E לא עובדים ב-CI",
+        "E2E לא בודקים UI"
+      ],
+      "recommendedAction": "הרחב/י את המסיחים להיות מפורטים באותה רמה או קצר/י את התשובה הנכונה כך שהיחס לא יעלה על 2.5x.",
+      "sourceFile": "/Users/tal/Desktop/חומרים לשיעור/data/questions_bank.js",
+      "priority": 1
+    }
+  ]
+}

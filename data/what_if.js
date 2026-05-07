@@ -113,17 +113,17 @@ function addTodo(text) {
       options: [
         {
           label: "❌ todos.push(...); setTodos(todos)",
-          insert: "todos.push({ id: Date.now(), text });\n  setTodos(todos);",
+          insert: "todos.push({ id: 'todo-' + todos.length + '-' + text.trim().toLowerCase(), text });\n  setTodos(todos);",
           outcome: "❌ **אין re-render!** push מעדכן את אותו array → אותה הפניה (===). React משווה הפניות, לא תוכן → לא רואה שינוי. UI לא מתעדכן.",
         },
         {
           label: "✅ setTodos([...todos, newItem])",
-          insert: "setTodos([...todos, { id: Date.now(), text }]);",
+          insert: "setTodos([...todos, { id: 'todo-' + todos.length + '-' + text.trim().toLowerCase(), text }]);",
           outcome: "✅ **re-render תקין.** spread יוצר array חדש (הפניה חדשה). React רואה === false → מרנדר. הדף מתעדכן.",
         },
         {
           label: "🟡 todos = [...todos, newItem]; setTodos(todos)",
-          insert: "todos = [...todos, { id: Date.now(), text }];\n  setTodos(todos);",
+          insert: "todos = [...todos, { id: 'todo-' + todos.length + '-' + text.trim().toLowerCase(), text }];\n  setTodos(todos);",
           outcome: "🟡 **reassignment של const = שגיאה.** todos הוא const מ-useState. ניסיון לשנות ייתן TypeError.",
         },
       ],

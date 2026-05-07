@@ -16,8 +16,12 @@ describe("Finish Line pre-release gate", () => {
     expect(ids).toContain("no-native-random-scan");
     expect(ids).toContain("guard-no-auto-questions");
     expect(ids).toContain("questions-coverage-targets-strict");
+    expect(ids).toContain("exam-solution-guide-coverage-strict");
+    expect(ids).toContain("exam-solution-guide-drills-strict");
+    expect(ids).toContain("exam-task-tree-strict");
     expect(ids).toContain("svcollege-readiness-release");
     expect(ids).toContain("svcollege-student-export-strict");
+    expect(ids).toContain("ux-world-class-menu-strict");
     expect(ids).toContain("vitest-run");
     expect(ids).toContain("vite-build");
   });
@@ -43,6 +47,7 @@ describe("Finish Line pre-release gate", () => {
     expect(pkg.scripts["finish-line:pre-release:plan"]).toBe(
       "node scripts/report_finish_line_prerelease.js --summary",
     );
+    expect(source).toContain('argv.includes("--write") || argv.includes("--strict")');
     expect(source.includes(token)).toBe(false);
   });
 });

@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { cssIncludes } = require("./css-evidence.js");
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -19,19 +20,19 @@ describe("lesson content density layout", () => {
   });
 
   it("collapses duplicate desktop navigation while keeping the content tree reachable", () => {
-    expect(css).toContain("body.lesson-reading-mode:not(.learning-focus-mode) .sidebar");
-    expect(css).toContain("body.lesson-reading-mode:not(.learning-focus-mode) .top-tabs-bar");
-    expect(css).toContain("display: none !important");
-    expect(css).toContain("body.lesson-reading-mode:not(.learning-focus-mode) .context-tree-panel");
-    expect(css).toContain("body.lesson-reading-mode:not(.learning-focus-mode).mobile-context-open .context-tree-panel");
-    expect(css).toContain("body.lesson-reading-mode:not(.learning-focus-mode) .focus-side-toggle");
+    expect(cssIncludes(css, "body.lesson-reading-mode:not(.learning-focus-mode) .sidebar")).toBe(true);
+    expect(cssIncludes(css, "body.lesson-reading-mode:not(.learning-focus-mode) .top-tabs-bar")).toBe(true);
+    expect(cssIncludes(css, "display: none !important")).toBe(true);
+    expect(cssIncludes(css, "body.lesson-reading-mode:not(.learning-focus-mode) .context-tree-panel")).toBe(true);
+    expect(cssIncludes(css, "body.lesson-reading-mode:not(.learning-focus-mode).mobile-context-open .context-tree-panel")).toBe(true);
+    expect(cssIncludes(css, "body.lesson-reading-mode:not(.learning-focus-mode) .focus-side-toggle")).toBe(true);
   });
 
   it("removes repeated lesson chrome from the content body", () => {
     expect(app).not.toContain('class="lesson-body-title"');
     expect(app).toContain("function renderLessonTopMenus");
-    expect(css).toContain("body.lesson-reading-mode:not(.learning-focus-mode) .lesson-banner");
-    expect(css).toContain("body.lesson-reading-mode:not(.learning-focus-mode) .lesson-body-title");
-    expect(css).toContain("body.lesson-reading-mode:not(.learning-focus-mode) .lesson-article");
+    expect(cssIncludes(css, "body.lesson-reading-mode:not(.learning-focus-mode) .lesson-banner")).toBe(true);
+    expect(cssIncludes(css, "body.lesson-reading-mode:not(.learning-focus-mode) .lesson-body-title")).toBe(true);
+    expect(cssIncludes(css, "body.lesson-reading-mode:not(.learning-focus-mode) .lesson-article")).toBe(true);
   });
 });

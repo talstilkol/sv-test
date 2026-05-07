@@ -16,6 +16,17 @@ function addCheck(checks, id, label, passed, detail) {
   checks.push({ id, label, passed: Boolean(passed), status: passed ? "pass" : "fail", detail });
 }
 
+function normalizeCssText(value) {
+  return String(value || "")
+    .replace(/\s*([{}:;,>!])\s*/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function cssIncludes(source, snippet) {
+  return normalizeCssText(source).includes(normalizeCssText(snippet));
+}
+
 function buildReport() {
   const html = read("index.html");
   const app = read("app.js");
@@ -95,11 +106,11 @@ function buildReport() {
     checks,
     "focus-and-motion-css",
     "Focus rings and reduced motion styles are present",
-    css.includes("button:focus-visible") &&
-      css.includes("input:focus-visible") &&
-      css.includes("@media (prefers-reduced-motion: reduce)") &&
-      css.includes("transition: none !important") &&
-      css.includes("transform: none !important"),
+    cssIncludes(css, "button:focus-visible") &&
+      cssIncludes(css, "input:focus-visible") &&
+      cssIncludes(css, "@media (prefers-reduced-motion: reduce)") &&
+      cssIncludes(css, "transition: none !important") &&
+      cssIncludes(css, "transform: none !important"),
     "Core focus visibility and reduced-motion safety must remain available.",
   );
   addCheck(
