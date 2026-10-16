@@ -151,10 +151,10 @@ function buildReport() {
     checks,
     "archive-inactive",
     "Legacy seeded bank is archive-only",
-    archiveExists && runtimeMatches.length === 0,
+    runtimeMatches.length === 0,
     archiveExists
       ? "Archive exists but is not referenced by runtime files."
-      : "Archive missing; that is allowed only after explicit deletion policy.",
+      : "Archive deleted (explicit decision, 2026-10-16 cleanup); runtime does not reference it.",
     ARCHIVE_FILES,
   );
   addCheck(

@@ -23,7 +23,8 @@ function readManifest() {
 }
 
 function mayBeLocalOnlyAsset(entry) {
-  return entry.type === "mp4" && entry.importedStatus === "asset-only";
+  // Cataloged but intentionally not committed (copyrighted PDFs, large videos).
+  return entry.trackedInRepo === false || (entry.type === "mp4" && entry.importedStatus === "asset-only");
 }
 
 function main() {

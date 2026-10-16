@@ -36,3 +36,7 @@ npm-debug.log*
 test-results/
 yarn-debug.log*
 yarn-error.log*
+
+# SVCollege lesson source assets — cataloged in lessons/manifest.json, not committed (copyright)
+lessons/*.pdf
+lessons/*.pptx
