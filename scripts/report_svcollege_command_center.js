@@ -266,8 +266,8 @@ function buildRedFirstQueue(readinessReport) {
 
 function buildDocsStatus() {
   const docs = [
-    "EXECUTION_TASKS.md",
-    "SPEC_AND_MASTER_PLAN.md",
+    "TASKS.md",
+    "MASTER_PLAN_OUTSTANDING.md",
     "SVCOLLEGE_COVERAGE_REPORT.md",
     "SVCOLLEGE_READINESS_REPORT.md",
     "SVCOLLEGE_READINESS_REPORT.json",

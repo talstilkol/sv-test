@@ -9,6 +9,7 @@ _(content purge complete; all 10 release gates green)_
 - [x] Merged `claude/objective-nash-20589f` (PR #35, 27 commits, fast-forward of main)
 - [x] `prebuild` no longer rewrites the 39 tracked `*_REPORT.json` stamps on every `npm run build`; regenerate explicitly with `npm run reports`. `tests/source-of-truth.test.js` no longer depends on the calendar date.
 - [x] Removed 28 SVCollege lesson PDFs (22 MB, copyright, not loaded by the app — `lessons/manifest.json` still catalogs them with `trackedInRepo: false`; `lessons/*.pdf|pptx` gitignored), the retired `data/questions_bank_seeded.js` (3.8 MB, was still copied into `dist/`), and the orphan `dashboard.html`. Kept `output/playwright/svcollege-critical-flows/` (2.8 MB): it is gate evidence consumed by `svcollege:screenshot-evidence` / `svcollege:top-tabs` tests and the level100 release gate.
+- [x] Archived 22 superseded plan docs (`EXECUTION_TASKS.md`, `MASTER_PLAN.md`, `BRUTAL_MASTER_PLAN_AUDIT.*`, 9 overlapping master plans, exam-week docs, hand-off prompts) into `docs/archive/2026-05/` with `git mv`; links and script/test paths updated; `docs/plans/00_CANONICAL_INDEX.md` now names this file + `MASTER_PLAN_OUTSTANDING.md` as live. Added `.mailmap` unifying the two commit identities.
 
 ## Done 2026-05-05 (this session) ✅
 - [x] **Replace 43 boilerplate concepts in lesson_19.js** — all 6 levels (grandma→professor) + codeExample + codeExplanation now real

@@ -200,7 +200,7 @@
 - **משימות חיות:** [EXECUTION_TASKS.md](EXECUTION_TASKS.md)
 - **Brutal audit:** [BRUTAL_MASTER_PLAN_AUDIT.md](BRUTAL_MASTER_PLAN_AUDIT.md) (historical)
 - **תוכנית מקורית:** [MASTER_PLAN.md](MASTER_PLAN.md) (legacy)
-- **Manual question plan:** [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md)
+- **Manual question plan:** [MANUAL_QUESTION_AUTHORING_PLAN.md](../../../MANUAL_QUESTION_AUTHORING_PLAN.md)
 
 ---
 

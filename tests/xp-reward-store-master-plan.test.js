@@ -8,11 +8,11 @@ function read(file) {
 }
 
 describe("XP reward store master plan", () => {
-  const plan = read("XP_REWARD_STORE_MASTER_PLAN.md");
-  const tasks = read("EXECUTION_TASKS.md");
+  const plan = read("docs/archive/2026-05/XP_REWARD_STORE_MASTER_PLAN.md");
+  const tasks = read("docs/archive/2026-05/EXECUTION_TASKS.md");
   const completedArchive = read("docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md");
   const taskRegister = `${tasks}\n${completedArchive}`;
-  const master = read("MASTER_PLAN.md");
+  const master = read("docs/archive/2026-05/MASTER_PLAN.md");
 
   it("documents the XP economy as a canonical Priority 2 plan", () => {
     expect(plan).toContain("100 רמות XP");

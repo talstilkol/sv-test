@@ -1,0 +1,4 @@
+# Map every historical commit identity to the canonical one.
+# Variants verified with: git log --format="%an <%ae>" | sort -u
+Tal Stilkol <talstilkol@gmail.com> Talstilkol <tal_stilkol@hotmail.com>
+Tal Stilkol <talstilkol@gmail.com> talsitelkol <tal_stilkol@hotmail.com>

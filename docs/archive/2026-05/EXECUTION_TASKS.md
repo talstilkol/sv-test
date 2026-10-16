@@ -1,6 +1,6 @@
 # LumenPortal — לוח משימות ביצוע פעיל
 
-> מקור אמת תפעולי. פירוט ההיסטוריה והמשימות שהושלמו הועבר ל-[docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
+> מקור אמת תפעולי. פירוט ההיסטוריה והמשימות שהושלמו הועבר ל-[docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](../../plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
 > עודכן: 2026-05-02
 
 ## כללי ברזל
@@ -44,7 +44,7 @@
 
 ### 🌟 World#1 — Phase A: STABILIZE (שבועות 1-2)
 
-- [V] WORLD1-A1 — innerHTML security audit מלא: 155 DOM sinks ממופים ל-[INNERHTML_SECURITY_AUDIT.md](INNERHTML_SECURITY_AUDIT.md). 7 medium-risk זוהו בקהילה/peer/mentor.
+- [V] WORLD1-A1 — innerHTML security audit מלא: 155 DOM sinks ממופים ל-[INNERHTML_SECURITY_AUDIT.md](../../../INNERHTML_SECURITY_AUDIT.md). 7 medium-risk זוהו בקהילה/peer/mentor.
 - [V] WORLD1-A2 — 30 MC + 20 Fill ל-lesson_13 (method, new, querySelectorAll, removeChild, replaceChild, setAttribute, setItem, style, super, Value). PR #22.
 - [V] WORLD1-A3 — Keyboard accessibility tests (23 tests): Escape/Enter/Arrow/focus/ARIA. tests/keyboard-accessibility.test.js.
 - [~] WORLD1-A4 — QMAN-002 lesson_15: 23 MC + 14 Fill (anonymous function, catch, Error, Exception, reject, resolve, Scope, Synchronous) — בעבודה.
@@ -136,7 +136,7 @@
 
 ### 📊 סיכום התקדמות > Forward Execution Plan — 2026-04-30 > Gate סופי לסגירת Finish Line 1
 
-- [!] FWD-9.4 — `npm run questions:coverage-targets:strict` — חסום עד השלמת `1,388` MC ידניות ו-`893` Fill ידניות לפי [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md).
+- [!] FWD-9.4 — `npm run questions:coverage-targets:strict` — חסום עד השלמת `1,388` MC ידניות ו-`893` Fill ידניות לפי [MANUAL_QUESTION_AUTHORING_PLAN.md](../../../MANUAL_QUESTION_AUTHORING_PLAN.md).
 
 ## בעבודה / חלקיות (6)
 
@@ -187,7 +187,7 @@
 - [ ] FWD-2.5 — לא לסמן batch כ-DONE אם אין `optionFeedback` מלא לכל MC חדש.
 - [ ] FWD-2.6 — לא לסמן batch כ-DONE אם Fill כולל יותר מ-blank אחד, תשובה דולפת, או hint שמגלה את התשובה.
 - [ ] FWD-2.7 — יעד סופי: `questions:coverage-targets:strict` ירוק עם `mcGapCount: 0`, `fillGapCount: 0`.
-- [ ] FWD-2.8 — להקצות owner/reviewer אנושיים לכל batch ב-[MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md); עד אז להשאיר `unknown/unavailable` ולא לסמן review כבוצע.
+- [ ] FWD-2.8 — להקצות owner/reviewer אנושיים לכל batch ב-[MANUAL_QUESTION_AUTHORING_PLAN.md](../../../MANUAL_QUESTION_AUTHORING_PLAN.md); עד אז להשאיר `unknown/unavailable` ולא לסמן review כבוצע.
 
 ### 📊 סיכום התקדמות > Forward Execution Plan — 2026-04-30 > P0 — פערי פעילות Trace/Build/Bug
 
@@ -367,7 +367,7 @@
 
 ## משימות שהושלמו — בסוף
 
-בוצעו 749 מתוך 912 משימות מסומנות. הפירוט המלא עבר לארכיון: [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
+בוצעו 749 מתוך 912 משימות מסומנות. הפירוט המלא עבר לארכיון: [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](../../plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md).
 
 ### הושלם בסבב הנוכחי
 
@@ -378,7 +378,7 @@
 - [V] QMAN-001C — נכתבו ידנית 12 MC ו-6 Fill ל-`lesson_12::יצירת מערך חדש (new array)`, `lesson_12::יצירת מערך חדש מתוך קיים`, `lesson_12::סינון לפי תנאי`, `lesson_12::עבודה עם ערכים לפי אינדקס`; `validate:strict`, `qa:questions:strict` ו-`quality:questions:strict` ירוקים, ו-`questions:coverage-targets:strict` ירד ל-`503`/`498` פערים.
 - [V] QMAN-001B — נכתבו ידנית 12 MC ו-8 Fill ל-`lesson_12::forEach`, `lesson_12::spread`, `lesson_12::uppercase`, `lesson_12::lowercase`; `validate:strict`, `qa:questions:strict` ו-`quality:questions:strict` ירוקים, ו-`questions:coverage-targets:strict` ירד ל-`507`/`502` פערים.
 - [V] QMAN-001A — נכתבו ידנית 12 MC ו-8 Fill ל-`lesson_12::array`, `lesson_12::index`, `lesson_12::map`, `lesson_12::filter`; `validate:strict`, `qa:questions:strict` ו-`quality:questions:strict` ירוקים, ו-`questions:coverage-targets:strict` ירד ל-`511`/`506` פערים.
-- [V] KIMI-AUDIT-6 — עודכן [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) עם reconciliation חי: finish-line, master-plan brutal audit, manual coverage, report drift, DOM/storage inventory, tests ו-build.
+- [V] KIMI-AUDIT-6 — עודכן [SYSTEM_BUG_AUDIT_REPORT.md](../../../SYSTEM_BUG_AUDIT_REPORT.md) עם reconciliation חי: finish-line, master-plan brutal audit, manual coverage, report drift, DOM/storage inventory, tests ו-build.
 - [V] SYS-AUDIT-021 — תוקנו שני טסטים עם ספירות hardcoded אחרי באטצ' שאלות ידני; עכשיו הם בודקים invariants ו-`npm test -- --run` ירוק.
 
 | אזור | משימות שהושלמו |

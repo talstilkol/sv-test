@@ -15,7 +15,7 @@ Rules preserved from the active plan:
 ---
 # LumenPortal — רשימת משימות ביצוע מלאה
 
-> מבוסס על: [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md)
+> מבוסס על: [SPEC_AND_MASTER_PLAN.md](../archive/2026-05/SPEC_AND_MASTER_PLAN.md)
 > סטטוס מתעדכן בכל שלב
 > תאריך התחלה: 2026-04-27
 
@@ -67,7 +67,7 @@ Rules preserved from the active plan:
 
 ### XP Economy + Store Plan — 2026-04-29
 
-נוספה תוכנית חדשה: [XP_REWARD_STORE_MASTER_PLAN.md](XP_REWARD_STORE_MASTER_PLAN.md). היא מגדירה 100 רמות XP לא לינאריות, Coins שמתקבלים מפעולות למידה, חנות חוויות, נעילת אזורי מוזיאון חווייתיים, ושער רמה 100 שמחייב שליטה מלאה בכל המושגים ופתרון קטעי קוד. היישום הוא **Priority 2**: לא חוסם את Finish Line 1 ולא ינעל חומר חובה למבחן.
+נוספה תוכנית חדשה: [XP_REWARD_STORE_MASTER_PLAN.md](../archive/2026-05/XP_REWARD_STORE_MASTER_PLAN.md). היא מגדירה 100 רמות XP לא לינאריות, Coins שמתקבלים מפעולות למידה, חנות חוויות, נעילת אזורי מוזיאון חווייתיים, ושער רמה 100 שמחייב שליטה מלאה בכל המושגים ופתרון קטעי קוד. היישום הוא **Priority 2**: לא חוסם את Finish Line 1 ולא ינעל חומר חובה למבחן.
 
 ### Forward Improvement Plan — 2026-04-29
 
@@ -79,7 +79,7 @@ Rules preserved from the active plan:
 
 ### Exam Week Operating Plan — 2026-04-29
 
-נוסף מסמך הפעלה יומי: [EXAM_WEEK_OPERATING_PLAN.md](EXAM_WEEK_OPERATING_PLAN.md). הוא קובע סדר עבודה עד המבחן: בדיקות בוקר, סגירת פערי מושגים בצהריים, סימולציית תלמיד בערב, ושער Exam Edition. המסמך לא מוסיף scope חדש; הוא מונע פתיחת הרחבות שלא משרתות את SVCollege AI & Full Stack.
+נוסף מסמך הפעלה יומי: [EXAM_WEEK_OPERATING_PLAN.md](../archive/2026-05/EXAM_WEEK_OPERATING_PLAN.md). הוא קובע סדר עבודה עד המבחן: בדיקות בוקר, סגירת פערי מושגים בצהריים, סימולציית תלמיד בערב, ושער Exam Edition. המסמך לא מוסיף scope חדש; הוא מונע פתיחת הרחבות שלא משרתות את SVCollege AI & Full Stack.
 
 ### Exam Week Sprint Addendum — 2026-04-29
 
@@ -91,15 +91,15 @@ Rules preserved from the active plan:
 
 ### System Bug Audit Addendum — 2026-04-30
 
-נוצר [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) ונוסף backlog חדש ב-[MASTER_PLAN.md](MASTER_PLAN.md). מצב gate נוכחי: build/tests/readiness/tab-matrix/command-center/student-export/PWA/performance/feature-coverage/reuse-audit ירוקים, ו-`Math.random()` לא נמצא בקוד הפעיל. הבעיה המרכזית שנותרה היא עומק פעילות: `337/568` concepts activity-ready, `231` פערי Trace/Build/Bug, מתוכם `9` פערי SVCollege-priority. אין לפתוח הרחבות Priority 2 לפני סגירת פערי SVCollege האלה.
+נוצר [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) ונוסף backlog חדש ב-[MASTER_PLAN.md](../archive/2026-05/MASTER_PLAN.md). מצב gate נוכחי: build/tests/readiness/tab-matrix/command-center/student-export/PWA/performance/feature-coverage/reuse-audit ירוקים, ו-`Math.random()` לא נמצא בקוד הפעיל. הבעיה המרכזית שנותרה היא עומק פעילות: `337/568` concepts activity-ready, `231` פערי Trace/Build/Bug, מתוכם `9` פערי SVCollege-priority. אין לפתוח הרחבות Priority 2 לפני סגירת פערי SVCollege האלה.
 
 ### Brutal Master Plan Audit Addendum — 2026-04-30
 
-נוצר [BRUTAL_MASTER_PLAN_AUDIT.md](BRUTAL_MASTER_PLAN_AUDIT.md) עם סריקת סטטוס מחמירה לכל פריטי `MASTER_PLAN.md` ו-`EXECUTION_TASKS.md`: `759` פריטים נסרקו; `332` סווגו DONE, `368` PARTIAL, `50` NOT DONE ו-`9` FAKED/overclaimed. הבעיה המרכזית: חלק מה-`[V]` מסמנים specs, scaffolding, local reports או הבטחות post-exam כאילו הם 100/100 מוצר עובד. נוספו BUG-AUDIT-023 עד BUG-AUDIT-031 ב-[MASTER_PLAN.md](MASTER_PLAN.md): ניקוי overclaim, הורדת סטטוס לכל דבר שתלוי בנתוני אמת, שער קבוע לאודיט הכנות, מניעת drift בין cache/script/tests, מדיניות שאלות ידניות בלבד, וחסימת שני מודולי SVCollege עד authoring ידני.
+נוצר [BRUTAL_MASTER_PLAN_AUDIT.md](../archive/2026-05/BRUTAL_MASTER_PLAN_AUDIT.md) עם סריקת סטטוס מחמירה לכל פריטי `MASTER_PLAN.md` ו-`EXECUTION_TASKS.md`: `759` פריטים נסרקו; `332` סווגו DONE, `368` PARTIAL, `50` NOT DONE ו-`9` FAKED/overclaimed. הבעיה המרכזית: חלק מה-`[V]` מסמנים specs, scaffolding, local reports או הבטחות post-exam כאילו הם 100/100 מוצר עובד. נוספו BUG-AUDIT-023 עד BUG-AUDIT-031 ב-[MASTER_PLAN.md](../archive/2026-05/MASTER_PLAN.md): ניקוי overclaim, הורדת סטטוס לכל דבר שתלוי בנתוני אמת, שער קבוע לאודיט הכנות, מניעת drift בין cache/script/tests, מדיניות שאלות ידניות בלבד, וחסימת שני מודולי SVCollege עד authoring ידני.
 
 ### Manual Question Policy Addendum — 2026-04-30
 
-המשתמש קבע כלל מחייב חדש: אין ליצור שאלות אוטומטיות. בוצע ניתוק מיידי: נמחקו `scripts/seed_questions.js` ו-`scripts/audit_seeded_questions.js`; `content-loader.js` לא מגדיר יותר `ensureSeededBank()` ולא טוען `data/questions_bank_seeded.js`; ה-runtime ב-`app.js` לא מייצר MC/Fill fallback (`generatedMCVariantsForConcept`, `makeCodeFill`, `generatedQuestionId` הוסרו); מאמן/Concept Sprint/Inline Quiz/Mock Exam נשענים על שאלות ידניות קיימות בלבד. `questions:coverage-targets:write` מציג עכשיו אמת ידנית: `ready:false`, `567` פערי MC ו-`561` פערי Fill. נוספו BUG-AUDIT-027 עד BUG-AUDIT-030 ב-[MASTER_PLAN.md](MASTER_PLAN.md) להשלמת authoring ידני וביטול כל drift של legacy generated bank.
+המשתמש קבע כלל מחייב חדש: אין ליצור שאלות אוטומטיות. בוצע ניתוק מיידי: נמחקו `scripts/seed_questions.js` ו-`scripts/audit_seeded_questions.js`; `content-loader.js` לא מגדיר יותר `ensureSeededBank()` ולא טוען `data/questions_bank_seeded.js`; ה-runtime ב-`app.js` לא מייצר MC/Fill fallback (`generatedMCVariantsForConcept`, `makeCodeFill`, `generatedQuestionId` הוסרו); מאמן/Concept Sprint/Inline Quiz/Mock Exam נשענים על שאלות ידניות קיימות בלבד. `questions:coverage-targets:write` מציג עכשיו אמת ידנית: `ready:false`, `567` פערי MC ו-`561` פערי Fill. נוספו BUG-AUDIT-027 עד BUG-AUDIT-030 ב-[MASTER_PLAN.md](../archive/2026-05/MASTER_PLAN.md) להשלמת authoring ידני וביטול כל drift של legacy generated bank.
 
 רענון לאחר מחיקה מלאה של כלי ייצור אוטומטי: גם כלי הבקרה כבר לא קוראים את `data/questions_bank_seeded.js`. `validate:strict`, `qa:questions:strict`, `quality:questions:strict`, `questions:reuse-audit:strict`, `performance:budget:strict`, `svcollege:pwa-offline:strict`, `npm test -- --run` ו-`npm run build` עברו. השערים שנכשלו בכוונה בגלל מדיניות ידנית בלבד: `questions:coverage-targets:strict` (`567` MC, `561` Fill), `svcollege:readiness:release` (`2` blockers), `svcollege:tab-matrix:strict` (`4` gaps), `svcollege:critical-flows:strict` (`trainer`, `mockExam`), `svcollege:command-center:strict`, `svcollege:student-export:strict`, `exam:mock-variants:strict`, ו-`svcollege:console-gate:strict`. החסימות הן `עיצוב רספונסיבי ו-CSS מתקדם` ו-`AI למפתחים` שחסרים כיסוי ידני ב-Trainer וב-Mock Exam; אסור לסגור אותן באמצעות generator.
 
@@ -1672,7 +1672,7 @@ P4.5.1-P4.5.6 סומנו `[-]` כי Mobile Native דורש החלטת מוצר �
 
 ## 🪙 Phase 8 — XP Economy + Experience Store
 
-> מקור קנוני: [XP_REWARD_STORE_MASTER_PLAN.md](XP_REWARD_STORE_MASTER_PLAN.md)  
+> מקור קנוני: [XP_REWARD_STORE_MASTER_PLAN.md](../archive/2026-05/XP_REWARD_STORE_MASTER_PLAN.md)  
 > סטטוס: Priority 2 אחרי Finish Line 1. החנות והמוזיאון הנעול לא חוסמים חומר חובה למבחן ולא נותנים ציון במקום הוכחת ידע.
 
 ### W33 — Economy Core

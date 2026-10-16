@@ -1,6 +1,8 @@
 # LumenPortal Canonical Plan Index
 
-Updated: 2026-04-30
+Updated: 2026-10-16 (archive note); content 2026-04-30
+
+> **2026-10-16:** the live task list is now `TASKS.md` (root) with `MASTER_PLAN_OUTSTANDING.md` as its status companion. `EXECUTION_TASKS.md`, `MASTER_PLAN.md` and the other superseded plan documents were moved unchanged to `docs/archive/2026-05/` (see `docs/archive/2026-05/README.md`). Paths below were updated; the historical text was not rewritten.
 
 This folder is the compact handoff layer for agents. It replaces the old scattered planning files and points to live gates instead of historical claims.
 
@@ -18,9 +20,9 @@ This folder is the compact handoff layer for agents. It replaces the old scatter
 
 | Area | File |
 |---|---|
-| Current execution state | `EXECUTION_TASKS.md` |
+| Current execution state | `TASKS.md` (historical board: `docs/archive/2026-05/EXECUTION_TASKS.md`) |
 | Completed task detail archive | `docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md` |
-| Backlog and bug audit items | `MASTER_PLAN.md` |
+| Backlog and bug audit items | `MASTER_PLAN_OUTSTANDING.md` (historical backlog: `docs/archive/2026-05/MASTER_PLAN.md`) |
 | Pre-release gate summary | `FINISH_LINE_PRERELEASE_REPORT.md` |
 | Manual question batch plan | `MANUAL_QUESTION_AUTHORING_PLAN.md` |
 | Current SVCollege readiness | `SVCOLLEGE_READINESS_REPORT.md` |

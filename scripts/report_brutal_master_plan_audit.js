@@ -5,8 +5,8 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const REPORT_MD = "BRUTAL_MASTER_PLAN_AUDIT.md";
-const REPORT_JSON = "BRUTAL_MASTER_PLAN_AUDIT.json";
+const REPORT_MD = "docs/archive/2026-05/BRUTAL_MASTER_PLAN_AUDIT.md";
+const REPORT_JSON = "docs/archive/2026-05/BRUTAL_MASTER_PLAN_AUDIT.json";
 const REPORT_DATE = new Date().toISOString().slice(0,10);
 
 function read(file) {
@@ -211,8 +211,8 @@ function toMarkdown(report) {
 
 function buildReport() {
   const items = [
-    ...extractItems("MASTER_PLAN.md"),
-    ...extractItems("EXECUTION_TASKS.md"),
+    ...extractItems("docs/archive/2026-05/MASTER_PLAN.md"),
+    ...extractItems("docs/archive/2026-05/EXECUTION_TASKS.md"),
   ].map((item) => ({ ...item, ...classify(item) }));
   return {
     reportVersion: "brutal-master-plan-audit-v1",
