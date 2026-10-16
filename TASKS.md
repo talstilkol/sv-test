@@ -5,6 +5,10 @@
 ## In progress
 _(content purge complete; all 10 release gates green)_
 
+## Maintenance 2026-10-16 (post-exam repo cleanup)
+- [x] Merged `claude/objective-nash-20589f` (PR #35, 27 commits, fast-forward of main)
+- [x] `prebuild` no longer rewrites the 39 tracked `*_REPORT.json` stamps on every `npm run build`; regenerate explicitly with `npm run reports`. `tests/source-of-truth.test.js` no longer depends on the calendar date.
+
 ## Done 2026-05-05 (this session) ✅
 - [x] **Replace 43 boilerplate concepts in lesson_19.js** — all 6 levels (grandma→professor) + codeExample + codeExplanation now real
 - [x] **Replace 30 boilerplate concepts in lesson_20.js** — Database, NoSQL, MongoDB, Atlas, Cluster, Schema, Model, all CRUD ops, all $-operators
