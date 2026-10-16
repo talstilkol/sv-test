@@ -25,11 +25,6 @@
         "codePreview": "// package.json (נוצר אוטומטית)\n{\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\":"
       },
       {
-        "conceptKey": "lesson_22::array reference",
-        "err": "Identifier 'addItem' has already been declared",
-        "codePreview": "// ❌ באג מוכר\nconst [items, setItems] = useState([]);\nconst addItem = (x) => {\n "
-      },
-      {
         "conceptKey": "lesson_26::TypeScript",
         "err": "Unexpected token ':'",
         "codePreview": "// JavaScript — אין הגנה\nfunction greet(name) { return `Hello, ${name.toUpperCas"
@@ -132,13 +127,6 @@
     "skipped": 670,
     "fails": [
       {
-        "id": "fill_l15_anon_manual_001",
-        "conceptKey": "lesson_15::anonymous function",
-        "err": "Unexpected token '=>'",
-        "answer": "function",
-        "codePreview": "setTimeout(function() => console.log('Hello'), 1000);"
-      },
-      {
         "id": "fill_async_004",
         "conceptKey": "lesson_15::Promise",
         "err": "Unexpected token ','",
@@ -185,7 +173,7 @@
         "conceptKey": "lesson_17::Protocol",
         "err": "Unexpected end of input",
         "answer": "//",
-        "codePreview": "// Modern web protocol\nhttps:///example.com"
+        "codePreview": "// Modern web protocol\nhttps://example.com"
       },
       {
         "id": "fill_l17_domain_aaa_001",
@@ -219,8 +207,8 @@
         "id": "fill_l26_array_zz_001",
         "conceptKey": "lesson_26::array type",
         "err": "Unexpected token ':'",
-        "answer": "]",
-        "codePreview": "// Array of numbers\nlet scores: number[]] = [10, 20, 30];"
+        "answer": "[]",
+        "codePreview": "// Array of numbers\nlet scores: number[] = [10, 20, 30];"
       },
       {
         "id": "fill_l26_void_zz_001",
@@ -291,27 +279,6 @@
         "err": "Invalid or unexpected token",
         "answer": "node",
         "codePreview": "# Run Node script\nnode server.js"
-      },
-      {
-        "id": "fill_l17_response_uu_001",
-        "conceptKey": "lesson_17::Response",
-        "err": "Unexpected token ']'",
-        "answer": "json",
-        "codePreview": "// Send JSON response\nres.json({ users: [...] });"
-      },
-      {
-        "id": "fill_es_logical_assign_ll_001",
-        "conceptKey": "lesson_19::nested object",
-        "err": "Unexpected token '='",
-        "answer": "?",
-        "codePreview": "// Assign only if null/undefined\nconfig.timeout ?= 5000;"
-      },
-      {
-        "id": "fill_hook_transition_kk_001",
-        "conceptKey": "lesson_22::Hook",
-        "err": "Unexpected token ')'",
-        "answer": "startTransition",
-        "codePreview": "// Mark update as non-urgent\nconst [isPending, startTransition] = useTransition("
       },
       {
         "id": "fill_build_alias_ff_001",
@@ -431,13 +398,6 @@
         "err": "Unexpected token ':'",
         "answer": "never",
         "codePreview": "function fail(msg: string): never {\n  throw new Error(msg);\n}"
-      },
-      {
-        "id": "fill_l11_isarray_001",
-        "conceptKey": "lesson_11::Array",
-        "err": "Unexpected token ')'",
-        "answer": "isArray",
-        "codePreview": "if (Array.isArray(x)) {\n  x.forEach(...);\n}"
       },
       {
         "id": "fill_aidev_claude_001",
@@ -608,60 +568,11 @@
         "codePreview": "let scores: number[] = [90, 85, 92];"
       },
       {
-        "id": "fill_lwb_pair_001",
-        "conceptKey": "ai_development::AI Pair Programming",
-        "err": "Unexpected end of input",
-        "answer": "comment",
-        "codePreview": "// AI pair programming pattern\n// 1. Write the comment\n// 2. Let AI complete\n// "
-      },
-      {
         "id": "fill_laie_ft_002",
         "conceptKey": "lesson_ai_engineering::fine-tuning boundary",
         "err": "Unexpected token ':'",
         "answer": "system",
         "codePreview": "// Fine-tuning training data format\n{\n  \"messages\": [\n    {\"role\": \"system\", \"co"
-      },
-      {
-        "id": "fill_l17_read_002",
-        "conceptKey": "lesson_17::Read",
-        "err": "missing ) after argument list",
-        "answer": "get",
-        "codePreview": "// Read = קריאת נתונים\n// ב-REST ממופה ל-HTTP method:\napp.get(('/api/users', han"
-      },
-      {
-        "id": "fill_l17_update_002",
-        "conceptKey": "lesson_17::Update",
-        "err": "missing ) after argument list",
-        "answer": "put",
-        "codePreview": "// עדכון מלא של משתמש:\napp.put(('/api/users/:id', (req, res) => {\n  Object.assig"
-      },
-      {
-        "id": "fill_l17_json_002",
-        "conceptKey": "lesson_17::JSON",
-        "err": "missing ) after argument list",
-        "answer": "json",
-        "codePreview": "// שליחת תשובה בפורמט JSON:\nres.json(({ name: 'Tal', age: 25 });"
-      },
-      {
-        "id": "fill_l18_get_001",
-        "conceptKey": "lesson_18::GET",
-        "err": "missing ) after argument list",
-        "answer": "get",
-        "codePreview": "// Route שמחזיר את כל המשתמשים:\napp.get(('/users', (req, res) => {\n  res.json(us"
-      },
-      {
-        "id": "fill_l19_localst_002",
-        "conceptKey": "lesson_19::localStorage",
-        "err": "missing ) after argument list",
-        "answer": "setItem",
-        "codePreview": "// שמירת נתון בדפדפן לצמיתות:\nlocalStorage.setItem(('theme', 'dark');"
-      },
-      {
-        "id": "fill_l19_sessionst_002",
-        "conceptKey": "lesson_19::sessionStorage",
-        "err": "missing ) after argument list",
-        "answer": "getItem",
-        "codePreview": "// קריאת נתון מ-sessionStorage:\nconst theme = sessionStorage.getItem(('theme');"
       },
       {
         "id": "fill_l16_type_nul_002",

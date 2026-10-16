@@ -1,0 +1,3002 @@
+[
+  {
+    "location": "ai_development::AI Limitations::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "בAPIs",
+    "snippet": "מת. לעיתים קרובות הוא טועה במספרי גרסה ובAPIs."
+  },
+  {
+    "location": "lesson_16::package.json::levels.junior",
+    "type": "heb-then-latin",
+    "match": "תnpm",
+    "snippet": "גם אחרי יומיים לא היה לי מושג איזה חבילותnpm צריך להורדה כדי שהמערכת הדפוקה הזו "
+  },
+  {
+    "location": "lesson_17::POST::levels.junior",
+    "type": "heb-then-latin",
+    "match": "וregistration",
+    "snippet": "ST הוא ה-method שמשתמשים בו בטפסי login וregistration. הנתונים לא נראים ב-URL — "
+  },
+  {
+    "location": "lesson_19::var::levels.professor",
+    "type": "heb-then-latin",
+    "match": "הbindings",
+    "snippet": "oisting הוא תוצר של 2-pass evaluation — הbindings נוצרים בכל ה-VariableEnvironme"
+  },
+  {
+    "location": "lesson_19::var::levels.professor",
+    "type": "heb-then-latin",
+    "match": "בpass",
+    "snippet": "ndings נוצרים בכל ה-VariableEnvironment בpass הראשון, אז ה-execution pass מאתחל "
+  },
+  {
+    "location": "lesson_19::const::levels.junior",
+    "type": "heb-then-latin",
+    "match": "הfootprint",
+    "snippet": "ונן שאתה מנסה reassignment. זה מקטין את הfootprint של המוטציות בקוד שלך, מקל על "
+  },
+  {
+    "location": "lesson_19::const::levels.professor",
+    "type": "heb-then-latin",
+    "match": "לreassign",
+    "snippet": "nment עם immutable record flag. הניסיון לreassign נתפס בשלב syntactic לפעמים (as"
+  },
+  {
+    "location": "lesson_19::const::levels.professor",
+    "type": "heb-then-latin",
+    "match": "הvalue",
+    "snippet": "t mode. ל-React: const גם רומז ל-React שהvalue לא יזוז ב-renders, ועל כן מתאים י"
+  },
+  {
+    "location": "lesson_19::function::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לrefactor",
+    "snippet": "ם אפשר. פונקציה ארוכה מ-30 שורות = ירוק לrefactor. פונקציה עם 5+ params = איתות "
+  },
+  {
+    "location": "lesson_19::function::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לrefactor",
+    "snippet": "לrefactor. פונקציה עם 5+ params = איתות לrefactor ל-options object."
+  },
+  {
+    "location": "lesson_19::function::levels.professor",
+    "type": "heb-then-latin",
+    "match": "הouter",
+    "snippet": "וצרות this/arguments חדשים — הן יורשות מהouter, מה שעושה אותן בחירה טבעית בתוך m"
+  },
+  {
+    "location": "lesson_19::function::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "וarrow",
+    "snippet": "function declaration וarrow function עושים אותו דבר כאן (מחבר"
+  },
+  {
+    "location": "lesson_19::function::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "הouter",
+    "snippet": "ו, מתאים למתודות; arrow קצר, יורש this מהouter scope, מתאים לcallbacks."
+  },
+  {
+    "location": "lesson_19::function::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "לcallbacks",
+    "snippet": "row קצר, יורש this מהouter scope, מתאים לcallbacks."
+  },
+  {
+    "location": "lesson_19::closure::levels.professor",
+    "type": "heb-then-latin",
+    "match": "הclosures",
+    "snippet": "שלא הוסר, או cache שגדל ללא הגבלה — שני הclosures שומרים על משתנים בזיכרון."
+  },
+  {
+    "location": "lesson_19::closure::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "לcounter",
+    "snippet": "גם אחרי ש-makeCounter הסתיימה. כל קריאה לcounter() עובדת על אותו count. זה patte"
+  },
+  {
+    "location": "lesson_19::fetch::levels.child",
+    "type": "heb-then-latin",
+    "match": "הPromise",
+    "snippet": "הו'. הדפדפן יוצא, מחכה לתשובה, וחוזר עם הPromise. אתה לא נשאר תקוע — הקוד ממשיך "
+  },
+  {
+    "location": "lesson_19::fetch::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בwrapper",
+    "snippet": "ב-production תעטוף fetch בwrapper פנימי: timeout, retries with ex"
+  },
+  {
+    "location": "lesson_19::fetch::levels.professor",
+    "type": "heb-then-latin",
+    "match": "הbody",
+    "snippet": "עם res.body.getReader() במקום לחכות לכל הbody. CORS preflight מתבצע ב-browser רק"
+  },
+  {
+    "location": "lesson_19::fetch::levels.professor",
+    "type": "heb-then-latin",
+    "match": "לrequests",
+    "snippet": "body. CORS preflight מתבצע ב-browser רק לrequests שאינם 'simple' (custom headers"
+  },
+  {
+    "location": "lesson_22::props::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "בparameter",
+    "snippet": "name ו-age כ-props. Greeting מקבלת אותם בparameter (destructured) ומציגה. אם נשנ"
+  },
+  {
+    "location": "lesson_22::addPost::levels.junior",
+    "type": "heb-then-latin",
+    "match": "שhrshema",
+    "snippet": ". הבנתי שצריך תמיד spread עם ה-setter, ושhrshema החדשה היא משמעותית עבור React."
+  },
+  {
+    "location": "lesson_23::Router::levels.student",
+    "type": "heb-then-latin",
+    "match": "לhost",
+    "snippet": "wserRouter (HTML5 history), HashRouter (לhost ללא server config), MemoryRouter ("
+  },
+  {
+    "location": "lesson_24::expensive calculation::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "שparent",
+    "snippet": "ץ רק כש-records משתנה — לא בכל רינדור (כשparent משתנה ממה שלא קשור)."
+  },
+  {
+    "location": "lesson_24::memoization::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "שprops",
+    "snippet": "mo), ו-React.memo בעצמו מונע re-render כשprops לא השתנו."
+  },
+  {
+    "location": "lesson_26::tsc::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "הCLI",
+    "snippet": "tsc הוא הCLI. בפרויקט עם Vite/SWC — בעיקר משתמשי"
+  },
+  {
+    "location": "lesson_26::type annotation::levels.grandma",
+    "type": "heb-then-latin",
+    "match": "הtype",
+    "snippet": " = 'תווית טיפוס'. const x: number = 5 — הtype הוא number."
+  },
+  {
+    "location": "lesson_26::union::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לnarrow",
+    "snippet": "T | U. הערך יכול להיות ב-T או ב-U. ניתן לnarrow ב-typeof, instanceof."
+  },
+  {
+    "location": "lesson_26::union::levels.junior",
+    "type": "heb-then-latin",
+    "match": "הdesign",
+    "snippet": "Discriminated unions — הdesign pattern החזק ביותר. type Result "
+  },
+  {
+    "location": "lesson_27::Type Narrowing::levels.grandma",
+    "type": "heb-then-latin",
+    "match": "הtype",
+    "snippet": "Type Narrowing = TS לומד מהקוד מה הtype האמיתי. אחרי if (typeof x === 'str"
+  },
+  {
+    "location": "lesson_ai_engineering::OpenAI API::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בDB",
+    "snippet": "ng (Upstash/Redis). 3) Per-user budgets בDB. 4) Retry on 429 (exponential backof"
+  },
+  {
+    "location": "lesson_ai_engineering::Vercel AI SDK::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בstate",
+    "snippet": "Real life: 1) useChat hook מטפל בstate management של chat — saves hours."
+  },
+  {
+    "location": "lesson_ai_engineering::Vercel AI SDK::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בUI",
+    "snippet": "Invocation rendering: render tool calls בUI. 3) generateObject + zod schema = gu"
+  },
+  {
+    "location": "lesson_ai_engineering::LangChain::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לobservability",
+    "snippet": "e, Weaviate, Pgvector, Redis. LangSmith לobservability."
+  },
+  {
+    "location": "lesson_ai_engineering::LangChain::levels.student",
+    "type": "heb-then-latin",
+    "match": "לcomposition",
+    "snippet": "uence, RunnableParallel, RunnableBranch לcomposition. Memory: BufferMemory, Summ"
+  },
+  {
+    "location": "lesson_ai_engineering::structured output::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לbranching",
+    "snippet": "cinated fields. 3) Discriminated unions לbranching: { type: 'success' | 'error',"
+  },
+  {
+    "location": "lesson_ai_engineering::streaming response::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "בclient",
+    "snippet": "useChat. each chunk = delta. accumulate בclient. UI: render כסטטוס loading + tex"
+  },
+  {
+    "location": "lesson_ai_engineering::streaming response::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לlow",
+    "snippet": "Production: 1) Edge runtime לlow-latency streams. 2) Don't buffer en"
+  },
+  {
+    "location": "lesson_ai_engineering::retrieval ranking::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לprompt",
+    "snippet": "ld filter (score >= X). 5) inject top-K לprompt."
+  },
+  {
+    "location": "lesson_closures::lexical scope::illustration",
+    "type": "heb-then-latin",
+    "match": "שmakeGreeter",
+    "snippet": "Tal');↵  g();   // 'שלום Tal' — גם אחרי שmakeGreeter הסתיימה"
+  },
+  {
+    "location": "lesson_closures::closure variables::levels.junior",
+    "type": "heb-then-latin",
+    "match": "שlinked",
+    "snippet": "כשהבנתי שכל variable שlinked ל-closure לא ייאסף ע\"י ה-GC — שמ"
+  },
+  {
+    "location": "lesson_closures::closure in event handlers::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "הprops",
+    "snippet": " חדש בכל רינדור, עם closure על ה-state והprops של אותו רינדור."
+  },
+  {
+    "location": "lesson_closures::closure in useEffect::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "שhe",
+    "snippet": " צריך count ב-deps. delay כן ב-deps כי כשhe משתנה — צריך interval חדש."
+  },
+  {
+    "location": "lesson_closures::closure in setTimeout::levels.student",
+    "type": "heb-then-latin",
+    "match": "שhe",
+    "snippet": "ut נוצרת ברגע שהקוד מגיע ל-setTimeout. כשhe יורה — JS משתמש בה. זה הבסיס לבעיית "
+  },
+  {
+    "location": "lesson_design_systems::shadcn/UI::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לcode",
+    "snippet": "shadcn/UI: CLI installs components לcode (lib/components/ui/). built on Tai"
+  },
+  {
+    "location": "lesson_design_systems::component registry::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לdoc",
+    "snippet": "exports. index.ts re-exports. Storybook לdoc + visual."
+  },
+  {
+    "location": "lesson_devops_deploy::production readiness::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לpre",
+    "snippet": "et CDN + cache. 4) Sentry/DataDog setup לpre-launch. 5) Blue-green or canary dep"
+  },
+  {
+    "location": "lesson_devops_deploy::environment variables::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לproduction",
+    "snippet": " ב-Vite. .env file למקומי, מערכת deploy לproduction. ALWAYS .env ב-.gitignore. N"
+  },
+  {
+    "location": "lesson_devops_deploy::environment variables::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לexpose",
+    "snippet": " .env ב-.gitignore. NEXT_PUBLIC_ prefix לexpose ללקוח (Next)."
+  },
+  {
+    "location": "lesson_devops_deploy::environment variables::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לproduction",
+    "snippet": "מציאות: 1) Vault/AWS Secrets Manager לproduction secrets — לא Vercel UI לrota"
+  },
+  {
+    "location": "lesson_devops_deploy::environment variables::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לrotation",
+    "snippet": "ager לproduction secrets — לא Vercel UI לrotation בלי tooling. 2) NEXT_PUBLIC_ e"
+  },
+  {
+    "location": "lesson_devops_deploy::environment variables::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לbrowser",
+    "snippet": "on בלי tooling. 2) NEXT_PUBLIC_ exposes לbrowser — אסור לסיסמאות. 3) שמור .env.e"
+  },
+  {
+    "location": "lesson_devops_deploy::Vercel deploy::levels.student",
+    "type": "heb-then-latin",
+    "match": "בolt",
+    "snippet": "tion service. Analytics, Speed Insights בolt-on. Pricing: per-execution + bandwi"
+  },
+  {
+    "location": "lesson_devops_deploy::Vercel deploy::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לdev",
+    "snippet": "מציאות: 1) free tier לdev אבל עלויות bandwidth מצטברות מהר. 2"
+  },
+  {
+    "location": "lesson_devops_deploy::Vercel deploy::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לpush",
+    "snippet": "repo cache עוזר. 4) preview deployments לpush — עלות שמרנית. 5) Self-host: Verce"
+  },
+  {
+    "location": "lesson_devops_deploy::preview deployment::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לproduction",
+    "snippet": "eview-specific env (DEV DB), אסור לפנות לproduction DB. 2) auth: protect preview"
+  },
+  {
+    "location": "lesson_devops_deploy::build command::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בBuild",
+    "snippet": "ache. 4) Source maps — upload to Sentry בBuild step, never expose to public. 5) "
+  },
+  {
+    "location": "lesson_devops_deploy::Docker::levels.student",
+    "type": "heb-then-latin",
+    "match": "לproduction",
+    "snippet": "Compose for multi-container, Kubernetes לproduction orchestration."
+  },
+  {
+    "location": "lesson_devops_deploy::Docker::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לsecurity",
+    "snippet": " — node_modules, .git. 3) USER non-root לsecurity. 4) HEALTHCHECK directive. 5) "
+  },
+  {
+    "location": "lesson_devops_deploy::Dockerfile::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לmulti",
+    "snippet": "age תמיד — runtime image קטן. 6) Buildx לmulti-arch (amd64, arm64). 7) avoid COP"
+  },
+  {
+    "location": "lesson_devops_deploy::image::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בpull",
+    "snippet": " staging → prod). 5) Vulnerability gate בpull. 6) Cosign signatures. 7) Layer de"
+  },
+  {
+    "location": "lesson_devops_deploy::container::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לeneter",
+    "snippet": "ogs ב-stdout/stderr — docker logs. exec לeneter shell."
+  },
+  {
+    "location": "lesson_devops_deploy::container::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בcontainer",
+    "snippet": "obes ב-Kubernetes. 6) Don't store state בcontainer — ephemeral by design."
+  },
+  {
+    "location": "lesson_devops_deploy::Docker Compose::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לpersistence",
+    "snippet": " name (service-to-service DNS). volumes לpersistence. depends_on לסדר."
+  },
+  {
+    "location": "lesson_devops_deploy::Docker Compose::levels.student",
+    "type": "heb-then-latin",
+    "match": "לconditional",
+    "snippet": "rride.yaml, compose.prod.yaml. Profiles לconditional services. Variables: ${VAR}"
+  },
+  {
+    "location": "lesson_devops_deploy::Docker Compose::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בcompose",
+    "snippet": "Real-world: 1) Dev: app + DB + Redis בcompose. 2) prod: Kubernetes/ECS, NOT c"
+  },
+  {
+    "location": "lesson_devops_deploy::service::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "בcompose",
+    "snippet": "service בcompose = container definition עם name."
+  },
+  {
+    "location": "lesson_devops_deploy::service::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לexpose",
+    "snippet": "ce name, NOT localhost. 2) ports שדה רק לexpose ל-host; service-to-service ב-int"
+  },
+  {
+    "location": "lesson_devops_deploy::service::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לdev",
+    "snippet": "ternal port. 3) restart: unless-stopped לdev resilience. 4) command override def"
+  },
+  {
+    "location": "lesson_devops_deploy::volume::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "בservice",
+    "snippet": "(memory). syntax: volumes: [name:/path] בservice + named volume בtop-level. data"
+  },
+  {
+    "location": "lesson_devops_deploy::volume::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "בtop",
+    "snippet": "s: [name:/path] בservice + named volume בtop-level. data שורד container restart,"
+  },
+  {
+    "location": "lesson_devops_deploy::volume::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לdev",
+    "snippet": "ta — ALWAYS named volume. 2) Bind mount לdev (live code reload). 3) Backup strat"
+  },
+  {
+    "location": "lesson_devops_deploy::volume::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בcontainer",
+    "snippet": ". 4) volume permissions — UID/GID match בcontainer. 5) Don't bind-mount /var/run"
+  },
+  {
+    "location": "lesson_devops_deploy::CI::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לnode",
+    "snippet": "al-world setup: 1) Cache: actions/cache לnode_modules, build artifacts. 2) Concu"
+  },
+  {
+    "location": "lesson_devops_deploy::smoke test::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בCD",
+    "snippet": "Practical: 1) post-deploy smoke בCD pipeline. 2) Synthetic monitoring: s"
+  },
+  {
+    "location": "lesson_devops_deploy::release checklist::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בdeploy",
+    "snippet": ") Migrations: backwards-compat, no DROP בdeploy אחד. 5) Feature flag → controlle"
+  },
+  {
+    "location": "lesson_nestjs::provider::levels.student",
+    "type": "heb-then-latin",
+    "match": "בtransient",
+    "snippet": "EFAULT, REQUEST, TRANSIENT. אחזקת state בtransient = bug-prone — בדרך כלל single"
+  },
+  {
+    "location": "lesson_nestjs::provider::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בprovider",
+    "snippet": " External SDKs (Stripe, AWS S3) wrapped בprovider. 4) Mocking בtests via overrid"
+  },
+  {
+    "location": "lesson_nestjs::provider::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בtests",
+    "snippet": ", AWS S3) wrapped בprovider. 4) Mocking בtests via overrideProvider. 5) Avoid 'G"
+  },
+  {
+    "location": "lesson_nestjs::provider::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לdynamic",
+    "snippet": "by responsibility. 6) Factory providers לdynamic config (region, env-based)."
+  },
+  {
+    "location": "lesson_nestjs::service::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בservice",
+    "snippet": "o): Promise<User>. 3) Domain validation בservice (after schema validation בpipe)"
+  },
+  {
+    "location": "lesson_nestjs::service::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בpipe",
+    "snippet": "ation בservice (after schema validation בpipe). 4) Transactions wrapped at servi"
+  },
+  {
+    "location": "lesson_nestjs::dependency injection::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לnon",
+    "snippet": "tor(@Inject('TOKEN') private dep: Type) לnon-class providers. 2) circular DI = b"
+  },
+  {
+    "location": "lesson_nestjs::dependency injection::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לwhole",
+    "snippet": " 2) circular DI = bad design — refactor לwhole new module. 3) tests: Test.create"
+  },
+  {
+    "location": "lesson_nestjs::dependency injection::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לcase",
+    "snippet": "injection (@Inject() prop:) — שמרני, רק לcase מסוים."
+  },
+  {
+    "location": "lesson_nestjs::decorator::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לoverride",
+    "snippet": "les('admin') + RolesGuard. 3) @Public() לoverride global auth guard. 4) @Transac"
+  },
+  {
+    "location": "lesson_nestjs::DTO::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לAPI",
+    "snippet": " class או interface שמתאר shape של data לAPI. עם class-validator: decorators לva"
+  },
+  {
+    "location": "lesson_nestjs::DTO::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לvalidation",
+    "snippet": "ta לAPI. עם class-validator: decorators לvalidation (@IsString, @IsEmail, @MinLe"
+  },
+  {
+    "location": "lesson_nestjs::DTO::levels.student",
+    "type": "heb-then-latin",
+    "match": "לpagination",
+    "snippet": "ansformer plainToInstance. Generic DTOs לpagination, filtering. אסור: DTO עם beh"
+  },
+  {
+    "location": "lesson_nestjs::validation pipe::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לformat",
+    "snippet": "ted לחומרה. 3) custom exception factory לformat consistent errors (validation er"
+  },
+  {
+    "location": "lesson_nestjs::pipe::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לquery",
+    "snippet": "Pipe לכל :id ב-URL. 2) DefaultValuePipe לquery params: @Query('page', new Defaul"
+  },
+  {
+    "location": "lesson_nestjs::pipe::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לupload",
+    "snippet": ". 3) ParseFilePipe עם FileTypeValidator לupload. 4) Custom: TrimPipe לstrip whit"
+  },
+  {
+    "location": "lesson_nestjs::pipe::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לstrip",
+    "snippet": "eValidator לupload. 4) Custom: TrimPipe לstrip whitespace. 5) שילוב עם DTOs דרך "
+  },
+  {
+    "location": "lesson_nestjs::middleware::levels.child",
+    "type": "heb-then-latin",
+    "match": "לlcontroller",
+    "snippet": "ל תחנה = middleware. רק בסוף הוא 'מוכן' לlcontroller."
+  },
+  {
+    "location": "lesson_nestjs::middleware::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לlogging",
+    "snippet": "ap (app.use). 2) Class middleware עם DI לlogging service. 3) Cookie parsing → re"
+  },
+  {
+    "location": "lesson_nestjs::middleware::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בrootmodule",
+    "snippet": "uest. 6) Sentry/APM — global middleware בrootmodule."
+  },
+  {
+    "location": "lesson_nestjs::exception filter::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לlogging",
+    "snippet": "ExceptionsFilter ב-@Catch() (catch-all) לlogging. 2) BusinessLogicFilter ל-domai"
+  },
+  {
+    "location": "lesson_nestjs::exception filter::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בproduction",
+    "snippet": "nError → 422). 3) Hide internal details בproduction — מיפוי מ-stack trace ל-{mes"
+  },
+  {
+    "location": "lesson_nestjs::repository pattern::levels.student",
+    "type": "heb-then-latin",
+    "match": "בservice",
+    "snippet": "peORM @EntityRepository, Prisma wrapped בservice, custom interface + adapter."
+  },
+  {
+    "location": "lesson_nestjs::repository pattern::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לcomplex",
+    "snippet": "or) > offset. 4) Specifications pattern לcomplex queries — encapsulate. 5) Don't"
+  },
+  {
+    "location": "lesson_nestjs::testing module::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לhmock",
+    "snippet": "ce. .overrideProvider(X).useValue(mock) לhmock. supertest על app instance ל-e2e."
+  },
+  {
+    "location": "lesson_nestjs::testing module::levels.student",
+    "type": "heb-then-latin",
+    "match": "לcomplex",
+    "snippet": "2E (full app via supertest). useFactory לcomplex mocks. INestApplication: create"
+  },
+  {
+    "location": "lesson_nestjs::testing module::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לentities",
+    "snippet": "tegration. 2) factories (test-data-bot) לentities. 3) DB reset בbeforeEach (TRUN"
+  },
+  {
+    "location": "lesson_nestjs::testing module::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בbeforeEach",
+    "snippet": " (test-data-bot) לentities. 3) DB reset בbeforeEach (TRUNCATE + seed). 4) Faker."
+  },
+  {
+    "location": "lesson_nestjs::testing module::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לrealistic",
+    "snippet": "foreEach (TRUNCATE + seed). 4) Faker.js לrealistic data. 5) snapshot tests לresp"
+  },
+  {
+    "location": "lesson_nestjs::testing module::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לresponse",
+    "snippet": "r.js לrealistic data. 5) snapshot tests לresponse shape. 6) coverage threshold ("
+  },
+  {
+    "location": "lesson_nextjs::layout::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לdata",
+    "snippet": "ך אותו segment. ב-RSC: יכול להיות async לdata fetching."
+  },
+  {
+    "location": "lesson_nextjs::layout::levels.student",
+    "type": "heb-then-latin",
+    "match": "בLayout",
+    "snippet": "ildren prop עובר את העמוד הנוכחי. State בLayout לא מתאפס — שימושי לnavigation, s"
+  },
+  {
+    "location": "lesson_nextjs::layout::levels.student",
+    "type": "heb-then-latin",
+    "match": "לnavigation",
+    "snippet": "הנוכחי. State בLayout לא מתאפס — שימושי לnavigation, sidebar state, audio player"
+  },
+  {
+    "location": "lesson_nextjs::layout::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בlayout",
+    "snippet": "Practical: 1) Auth checks בlayout — מקצר vs בכל page. 2) Providers"
+  },
+  {
+    "location": "lesson_nextjs::page::levels.student",
+    "type": "heb-then-latin",
+    "match": "בlevels",
+    "snippet": "tchCache. Suspense boundaries אוטומטיות בlevels."
+  },
+  {
+    "location": "lesson_nextjs::page::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בpage",
+    "snippet": "eEffect needed. 2) searchParams זמין רק בpage, וקריאה אליו marks page dynamic. 3"
+  },
+  {
+    "location": "lesson_nextjs::page::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לcomponent",
+    "snippet": "page dynamic. 3) shared logic — extract לcomponent, לא לlayout. 4) Loading state"
+  },
+  {
+    "location": "lesson_nextjs::page::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לlayout",
+    "snippet": ") shared logic — extract לcomponent, לא לlayout. 4) Loading state: loading.jsx ב"
+  },
+  {
+    "location": "lesson_nextjs::server component::levels.student",
+    "type": "heb-then-latin",
+    "match": "לcomponents",
+    "snippet": "lized React tree). Hydration: client רק לcomponents שהוגדרו \"use client\". יתרון:"
+  },
+  {
+    "location": "lesson_nextjs::server component::levels.student",
+    "type": "heb-then-latin",
+    "match": "לserver",
+    "snippet": "ts שהוגדרו \"use client\". יתרון: zero JS לserver components, smaller bundles, dir"
+  },
+  {
+    "location": "lesson_nextjs::server component::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בpage",
+    "snippet": "Production lessons: 1) DB queries ישר בpage = OK. fetch מ-API חיצוני = use cac"
+  },
+  {
+    "location": "lesson_nextjs::server component::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בproblem",
+    "snippet": "ר server→client אוטומטי. 3) async props בproblem נפוץ: server component מקבל pro"
+  },
+  {
+    "location": "lesson_nextjs::client component::levels.junior",
+    "type": "heb-then-latin",
+    "match": "כprop",
+    "snippet": " component עוטף client component ומעביר כprop רק מה שצריך. אל תכניס כל הapp ל-\"u"
+  },
+  {
+    "location": "lesson_nextjs::client component::levels.junior",
+    "type": "heb-then-latin",
+    "match": "הapp",
+    "snippet": "t ומעביר כprop רק מה שצריך. אל תכניס כל הapp ל-\"use client\" — מבטל את היתרון של "
+  },
+  {
+    "location": "lesson_nextjs::route handler::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בpackages",
+    "snippet": "ge מהיר אבל מוגבל ב-APIs (אין fs, מוגבל בpackages). 6) Try/catch עם status נכון:"
+  },
+  {
+    "location": "lesson_nextjs::route handler::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לbad",
+    "snippet": "ages). 6) Try/catch עם status נכון: 400 לbad input, 401 לauth, 500 לserver."
+  },
+  {
+    "location": "lesson_nextjs::route handler::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לauth",
+    "snippet": "tch עם status נכון: 400 לbad input, 401 לauth, 500 לserver."
+  },
+  {
+    "location": "lesson_nextjs::route handler::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לserver",
+    "snippet": "us נכון: 400 לbad input, 401 לauth, 500 לserver."
+  },
+  {
+    "location": "lesson_nextjs::API route::levels.grandma",
+    "type": "heb-then-latin",
+    "match": "הfrontend",
+    "snippet": "יא בודקת מחיר, מקבלת תשלום, נותנת קבלה. הfrontend מבקש — הAPI עונה."
+  },
+  {
+    "location": "lesson_nextjs::API route::levels.grandma",
+    "type": "heb-then-latin",
+    "match": "הAPI",
+    "snippet": "בלת תשלום, נותנת קבלה. הfrontend מבקש — הAPI עונה."
+  },
+  {
+    "location": "lesson_nextjs::API route::levels.student",
+    "type": "heb-then-latin",
+    "match": "לactions",
+    "snippet": "ndlers. Server actions החליפו חלק מ-API לactions internal. Auth via session cook"
+  },
+  {
+    "location": "lesson_nextjs::API route::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לpayment",
+    "snippet": "\" } — לא רק string. 5) Idempotency keys לpayment APIs. 6) Test עם supertest או P"
+  },
+  {
+    "location": "lesson_nextjs::server action::levels.child",
+    "type": "heb-then-latin",
+    "match": "הUI",
+    "snippet": "server action הוא ידית לפעולות שרת מתוך הUI."
+  },
+  {
+    "location": "lesson_nextjs::server action::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "מclient",
+    "snippet": "function עם \"use server\" שאפשר לקרוא לה מclient. Form action={createTask} משלב ע"
+  },
+  {
+    "location": "lesson_nextjs::server action::levels.student",
+    "type": "heb-then-latin",
+    "match": "לclient",
+    "snippet": "m מובנה ב-RSC. Function reference מועבר לclient כ-id; קריאה משם trigger fetch ל-"
+  },
+  {
+    "location": "lesson_nextjs::server action::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בpop",
+    "snippet": "מהשטח: 1) ALWAYS validate בpop של action — client יכול לזייף formD"
+  },
+  {
+    "location": "lesson_nextjs::server action::levels.junior",
+    "type": "heb-then-latin",
+    "match": "מholder",
+    "snippet": "מתוך action — לא return. 5) Bind values מholder closure: action.bind(null, userI"
+  },
+  {
+    "location": "lesson_nextjs::SSG::levels.student",
+    "type": "heb-then-latin",
+    "match": "בdynamic",
+    "snippet": "mponent שלא משתמש ב-cookies/headers ולא בdynamic search → automatically static. "
+  },
+  {
+    "location": "lesson_nextjs::SSG::levels.student",
+    "type": "heb-then-latin",
+    "match": "לdynamic",
+    "snippet": "static. Hybrid: SSG + client-side fetch לdynamic parts."
+  },
+  {
+    "location": "lesson_nextjs::metadata API::levels.student",
+    "type": "heb-then-latin",
+    "match": "בlayout",
+    "snippet": "ata({ params })). Composition: metadata בlayout מתמזג עם child page (template, d"
+  },
+  {
+    "location": "lesson_nextjs::metadata API::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בpage",
+    "snippet": "ם יש URL כפילים. 6) JSON-LD: רנדור ידני בpage כ-script tag — Next לא מטפל."
+  },
+  {
+    "location": "lesson_nextjs::SEO::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לSEO",
+    "snippet": "מציאות: 1) SSR/SSG חיוניים לSEO — Googlebot מריץ JS אבל איטי. 2) si"
+  },
+  {
+    "location": "lesson_nextjs::SEO::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לdynamic",
+    "snippet": " Lighthouse לבדיקה. 4) generateMetadata לdynamic SEO — title-per-product. 5) הימ"
+  },
+  {
+    "location": "lesson_nextjs::SEO::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לmonitoring",
+    "snippet": "כפול. 6) alt לתמונות. 7) Search Console לmonitoring. 8) Original content > cleve"
+  },
+  {
+    "location": "lesson_nextjs::image optimization::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לresponsive",
+    "snippet": "ny priority = waste. 2) sizes prop חובה לresponsive layouts. 3) external images:"
+  },
+  {
+    "location": "lesson_nextjs::image optimization::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בconfig",
+    "snippet": "external images: domains/remotePatterns בconfig. 4) SVG — Next לא מאופטם, saniti"
+  },
+  {
+    "location": "lesson_nextjs::Vercel deploy::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "לmain",
+    "snippet": "uilds → preview URL לכל PR → production לmain merge. כולל: serverless functions,"
+  },
+  {
+    "location": "lesson_sql_orm::PostgreSQL::levels.student",
+    "type": "heb-then-latin",
+    "match": "לconcurrent",
+    "snippet": "לאות + custom types + inheritance. MVCC לconcurrent reads ללא locks. WAL (Write-"
+  },
+  {
+    "location": "lesson_sql_orm::database::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בenv",
+    "snippet": "ימליות. 4) connection string בקוד במקום בenv."
+  },
+  {
+    "location": "lesson_sql_orm::foreign key::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בodel",
+    "snippet": "nt הופך לאיטי. 2) CASCADE מסוכן — שגיאה בodel יכולה למחוק טבלה שלמה. 3) deferred"
+  },
+  {
+    "location": "lesson_sql_orm::schema::levels.soldier",
+    "type": "heb-then-latin",
+    "match": "בschema",
+    "snippet": "Ks, views, functions. Postgres גם משתמש בschema כ-namespace: schema.table."
+  },
+  {
+    "location": "lesson_sql_orm::migration::levels.junior",
+    "type": "latin-then-heb",
+    "match": "brutalו",
+    "snippet": "Production rules brutalות: 1) אסור DROP COLUMN ב-deploy א"
+  },
+  {
+    "location": "lesson_sql_orm::ORM::levels.student",
+    "type": "heb-then-latin",
+    "match": "לcomplex",
+    "snippet": ", Drizzle (TS-first, SQL-like), raw SQL לcomplex."
+  },
+  {
+    "location": "lesson_sql_orm::ORM::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לcomplex",
+    "snippet": "ape hatch — תמיד יש; לא מתביישים להשתמש לcomplex queries."
+  },
+  {
+    "location": "lesson_sql_orm::Drizzle::levels.student",
+    "type": "heb-then-latin",
+    "match": "לmigrations",
+    "snippet": "overhead כמו Prisma engine. drizzle-kit לmigrations (generate + push). תומך Post"
+  },
+  {
+    "location": "lesson_sql_orm::transaction::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לlock",
+    "snippet": "מזהה ומחזיר error. 3) SELECT FOR UPDATE לlock pessimistic. 4) optimistic locking"
+  },
+  {
+    "location": "lesson_sql_orm::transaction::levels.junior",
+    "type": "heb-then-latin",
+    "match": "לnested",
+    "snippet": "locking עם version column. 5) SAVEPOINT לnested rollback. 6) idempotency: id ייח"
+  },
+  {
+    "location": "react_blueprint::Container vs Presentational::levels.junior",
+    "type": "heb-then-latin",
+    "match": "בPresentational",
+    "snippet": "וגע ב-Container בלבד. אם העיצוב משתנה — בPresentational."
+  },
+  {
+    "location": "react_blueprint::Code Splitting::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "הnavigation",
+    "snippet": "ינה. ה-bundle הראשי נשאר רזה — רק App + הnavigation."
+  },
+  {
+    "location": "react_blueprint::Testing Strategies::codeExplanation",
+    "type": "heb-then-latin",
+    "match": "לhe",
+    "snippet": "ההתנהגות נשארה — ה-test עובר. resilient לhe-refactor."
+  },
+  {
+    "location": "mc_l19_consolelog_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בstdout",
+    "snippet": "console.log מדפיס במצב dev. לא נחשב פלט בstdout production."
+  },
+  {
+    "location": "mc_l19_debugger_001::explanation",
+    "type": "heb-then-latin",
+    "match": "שDevTools",
+    "snippet": "breakpoint תכנותי. רק כשDevTools פתוחים."
+  },
+  {
+    "location": "mc_l19_class_001::question",
+    "type": "heb-then-latin",
+    "match": "בJS",
+    "snippet": "מה class בJS?"
+  },
+  {
+    "location": "mc_l19_cookies_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בheaders",
+    "snippet": "cookies נשלחים בheaders. httpOnly + secure + sameSite ל"
+  },
+  {
+    "location": "mc_l22_parent_001::question",
+    "type": "heb-then-latin",
+    "match": "לchild",
+    "snippet": "איך parent מעביר data לchild?"
+  },
+  {
+    "location": "mc_l23_main_001::question",
+    "type": "heb-then-latin",
+    "match": "בdesign",
+    "snippet": "מה MainScreen בdesign של אפליקציה?"
+  },
+  {
+    "location": "mc_l24_stateupdate_001::question",
+    "type": "heb-then-latin",
+    "match": "בdev",
+    "snippet": "למה useEffect עם [count] רץ פעמיים בdev mode?"
+  },
+  {
+    "location": "mc_l26_enum_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בcompile",
+    "snippet": "const enum נמחק בcompile. אופציה גם: union string litera"
+  },
+  {
+    "location": "mc_l26_never_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בexhaustive",
+    "snippet": "): never { throw new Error(); }. Useful בexhaustive checks."
+  },
+  {
+    "location": "mc_l27_book_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בPaste",
+    "snippet": "מתחיל בPaste ראשונים. גם yearPublished, ISBN ו"
+  },
+  {
+    "location": "mc_l27_income_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdiscrimination",
+    "snippet": "גם type: 'income' | 'expense' לdiscrimination."
+  },
+  {
+    "location": "mc_l27_amount_001::explanation",
+    "type": "heb-then-latin",
+    "match": "דbeat",
+    "snippet": "לכספים: שמור במספר שלמים (cents) או דbeat."
+  },
+  {
+    "location": "mc_lai_vsdk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בserver",
+    "snippet": "Chat() ב-React. generateText/streamText בserver."
+  },
+  {
+    "location": "mc_lai_chunk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בchunking",
+    "snippet": "ens. overlap לסמנטיקה. quality פלט תלוי בchunking."
+  },
+  {
+    "location": "mc_la_jwt_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לddebug",
+    "snippet": "jwt.io לddebug. payload base64 (לא הצפנה!). sig"
+  },
+  {
+    "location": "mc_la_refresh_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בDB",
+    "snippet": "Only cookie. לרוב יום-שבועות. revocable בDB."
+  },
+  {
+    "location": "mc_la_xss_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לbefore",
+    "snippet": "defense in depth. תמיד escape לbefore inserting user data."
+  },
+  {
+    "location": "mc_la_cors_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לcomplex",
+    "snippet": "-Allow-Origin header. preflight OPTIONS לcomplex requests."
+  },
+  {
+    "location": "mc_lds_variants_001::explanation",
+    "type": "heb-then-latin",
+    "match": "דrock",
+    "snippet": "cva (class-variance-authority) לדrock variants ב-Tailwind."
+  },
+  {
+    "location": "mc_lds_test_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdocs",
+    "snippet": "Storybook לdocs + visual tests. axe-core לWCAG."
+  },
+  {
+    "location": "mc_lds_test_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לWCAG",
+    "snippet": "torybook לdocs + visual tests. axe-core לWCAG."
+  },
+  {
+    "location": "mc_ldev_env_001::explanation",
+    "type": "heb-then-latin",
+    "match": "כdoc",
+    "snippet": ".env.example כdoc. .gitignore .env. dotenv או built-i"
+  },
+  {
+    "location": "mc_ldev_dockerfile_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לoptimize",
+    "snippet": "שלבים בסדר. layers cached. multi-stage לoptimize size."
+  },
+  {
+    "location": "mc_ldev_image_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לregistry",
+    "snippet": " → container (running instance). pushed לregistry."
+  },
+  {
+    "location": "mc_lnext_server_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בdrap",
+    "snippet": "async/await בdrap. SEO + faster initial. אין useStat"
+  },
+  {
+    "location": "mc_lnext_api_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בbody",
+    "snippet": "App Router משתמש ב-Web API. גם הבדל בbody parsing."
+  },
+  {
+    "location": "mc_lnext_isr_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בthe",
+    "snippet": "export const revalidate = 60. בthe-best-of-both-worlds."
+  },
+  {
+    "location": "mc_lsql_fk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdelete",
+    "snippet": ".user_id → users.id. CASCADE / RESTRICT לdelete."
+  },
+  {
+    "location": "mc_lsql_relation_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בtable",
+    "snippet": "FK בtable של many. user.posts (Prisma gener"
+  },
+  {
+    "location": "mc_l19_for_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לiterables",
+    "snippet": "for...in לאובייקטים (keys). for...of לiterables (values). על arrays — for...o"
+  },
+  {
+    "location": "mc_l19_closure_002::explanation",
+    "type": "heb-then-latin",
+    "match": "שsetTimeout",
+    "snippet": "function scope, אז יש i יחיד שמשתנה. עד שsetTimeout רץ — i כבר 3. עם let → 0 1 2"
+  },
+  {
+    "location": "mc_l17_preventDefault_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בFront",
+    "snippet": "vigation/reload. ב-SPA אנחנו רוצים לטפל בFront-end ולשלוח fetch בלבד."
+  },
+  {
+    "location": "mc_l17_query_002::question",
+    "type": "heb-then-latin",
+    "match": "הQuery",
+    "snippet": "איפה ב-Express מוצאים את הQuery Parameters של ?page=2&limit=10?"
+  },
+  {
+    "location": "mc_l20_connstr_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לrepo",
+    "snippet": "nection string מכיל credentials. commit לrepo = leak. .env (לא committed) או sec"
+  },
+  {
+    "location": "mc_l20_insertOne_002::explanation",
+    "type": "heb-then-latin",
+    "match": "הdoc",
+    "snippet": "insertedId שימושי לקבלת ה-ID של הdoc החדש. חיוני לresponses ב-API."
+  },
+  {
+    "location": "mc_l20_insertOne_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לresponses",
+    "snippet": "d שימושי לקבלת ה-ID של הdoc החדש. חיוני לresponses ב-API."
+  },
+  {
+    "location": "mc_l20_insertMany_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בrequest",
+    "snippet": "bulkWrite שולח operations מעורבים בrequest אחד — חוסך round trips. insertM"
+  },
+  {
+    "location": "mc_l20_findUpdate_002::question",
+    "type": "heb-then-latin",
+    "match": "הdocument",
+    "snippet": "איך מקבלים את הdocument המעודכן (לא הישן) מ-findOneAnd"
+  },
+  {
+    "location": "mc_l20_findUpdate_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לoperation",
+    "snippet": "). returnDocument: 'after' = החדש. שמור לoperation אטומי בdocs ייחודיים."
+  },
+  {
+    "location": "mc_l20_findUpdate_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בdocs",
+    "snippet": ": 'after' = החדש. שמור לoperation אטומי בdocs ייחודיים."
+  },
+  {
+    "location": "mc_l20_updateMany_002::explanation",
+    "type": "heb-then-latin",
+    "match": "הdocs",
+    "snippet": "updateMany({}, { $set: {x:1} }) → כל הdocs! תמיד filter קפדני. חשוב כפליים אם"
+  },
+  {
+    "location": "mc_l20_updateMany_002::explanation",
+    "type": "heb-then-latin",
+    "match": "מuser",
+    "snippet": "s! תמיד filter קפדני. חשוב כפליים אם בא מuser input."
+  },
+  {
+    "location": "mc_l20_deleteOne_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בlogs",
+    "snippet": "etedCount: 0 = לא נמחק כלום. אין שגיאה. בlogs/UI חשוב לבדוק."
+  },
+  {
+    "location": "mc_l20_ne_002::question",
+    "type": "heb-then-latin",
+    "match": "בquery",
+    "snippet": "מתי $ne (not equal) לא מתפקד כצפוי בquery?"
+  },
+  {
+    "location": "mc_l21_npmcreate_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לbundle",
+    "snippet": " Vite משתמש ב-native ESM ב-dev, esbuild לbundle, hot reload מהיר."
+  },
+  {
+    "location": "mc_l21_npminstall_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בproduction",
+    "snippet": "נכשל אם לא תואם — מבטיח reproducibility בproduction."
+  },
+  {
+    "location": "mc_l21_appjsx_002::explanation",
+    "type": "heb-then-latin",
+    "match": "הapp",
+    "snippet": "er/providers/layout. children שלו = שאר הapp."
+  },
+  {
+    "location": "mc_l22_rerender_002::question",
+    "type": "heb-then-latin",
+    "match": "לcomponent",
+    "snippet": "מתי React מבצע re-render לcomponent?"
+  },
+  {
+    "location": "mc_l23_to_002::explanation",
+    "type": "heb-then-latin",
+    "match": "וuseNavigate",
+    "snippet": "Link וuseNavigate מנהלים את ה-history API ללא"
+  },
+  {
+    "location": "mc_l24_stateupdate_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בbatching",
+    "snippet": "בbatching/concurrent React, count יכול ל"
+  },
+  {
+    "location": "mc_l26_strongly_002::explanation",
+    "type": "heb-then-latin",
+    "match": "שJS",
+    "snippet": "TS captures category errors שJS מציג רק ב-prod. IDE autocompletion +"
+  },
+  {
+    "location": "mc_l26_typesafety_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בvalue",
+    "snippet": "+ error checking. השתמש ב-unknown במקום בvalue from external source."
+  },
+  {
+    "location": "mc_l27_book_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לoptional",
+    "snippet": "וץ. interface אקוויולנטי. אפשר להוסיף ? לoptional fields (subtitle?, isbn?)."
+  },
+  {
+    "location": "mc_lai_embeddings_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בvector",
+    "snippet": "ing-3-small ממירים text ל-vector. דמיון בvector space ≈ דמיון ב-meaning. בסיס ל-"
+  },
+  {
+    "location": "mc_lauth_hash_002::question",
+    "type": "heb-then-latin",
+    "match": "לpasswords",
+    "snippet": "מה ההבדל בין bcrypt ל-SHA256 לpasswords?"
+  },
+  {
+    "location": "mc_lnest_exception_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לlog",
+    "snippet": "eptionFilter כברירת מחדל. custom filter לlog + transform error response. shape J"
+  },
+  {
+    "location": "mc_lnext_metadata_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לdynamic",
+    "snippet": "head. type-safe. async generateMetadata לdynamic title (e.g. by slug)."
+  },
+  {
+    "location": "mc_lsql_sql_002::explanation",
+    "type": "heb-then-latin",
+    "match": "הoptimizer",
+    "snippet": "ERE active = 1 — לא אומר 'scan כל row'. הoptimizer בוחר index/join order."
+  },
+  {
+    "location": "mc_lsql_table_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לconvention",
+    "snippet": "nake_case ברבים = standard. ORMs נצמדים לconvention."
+  },
+  {
+    "location": "mc_lsql_schema_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לseparation",
+    "snippet": "מרובים: public, audit, analytics. ניצול לseparation לוגי + permissions."
+  },
+  {
+    "location": "mc_lds_aschild_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בDOM",
+    "snippet": "n> — ה-Button מתנהג כמו ה-Link (לא נמצא בDOM, רק מעביר behavior)."
+  },
+  {
+    "location": "mc_l20_update_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לbulk",
+    "snippet": ", doc מעודכן עם new:true. updateOne טוב לbulk."
+  },
+  {
+    "location": "mc_l23_addpost_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בsubmit",
+    "snippet": "onChange (useState local) + onAdd(text) בsubmit. ההורה מחליט מה לעשות עם הtext."
+  },
+  {
+    "location": "mc_l23_addpost_002::explanation",
+    "type": "heb-then-latin",
+    "match": "הtext",
+    "snippet": "(text) בsubmit. ההורה מחליט מה לעשות עם הtext."
+  },
+  {
+    "location": "mc_l24_dom_002::explanation",
+    "type": "heb-then-latin",
+    "match": "שReact",
+    "snippet": "ref.current = null עד שReact מוסיף את ה-DOM element. לכן useEf"
+  },
+  {
+    "location": "mc_l27_genre_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בdefault",
+    "snippet": "const _: never = g בdefault של switch — TypeScript יוודא שכ"
+  },
+  {
+    "location": "mc_l27_guest_002::explanation",
+    "type": "heb-then-latin",
+    "match": "שuser",
+    "snippet": "n: if (user.type === 'GUEST') — TS יודע שuser הוא GuestUser. type literal = disc"
+  },
+  {
+    "location": "mc_lai_guard_002::question",
+    "type": "heb-then-latin",
+    "match": "בpipeline",
+    "snippet": "מה הסדר הנכון של guardrails בpipeline?"
+  },
+  {
+    "location": "mc_ldev_smoke_002::question",
+    "type": "heb-then-latin",
+    "match": "בdeploy",
+    "snippet": "מה smoke test בודק בdeploy?"
+  },
+  {
+    "location": "mc_l19_dom_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לtekst",
+    "snippet": "r input = XSS. תמיד השתמש ב-textContent לtekst שמגיע מהמשתמש. innerHTML טוב לtem"
+  },
+  {
+    "location": "mc_l19_dom_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לtemplates",
+    "snippet": "ent לtekst שמגיע מהמשתמש. innerHTML טוב לtemplates שאתה שולט בהם."
+  },
+  {
+    "location": "mc_l19_arrow_003::question",
+    "type": "heb-then-latin",
+    "match": "כmethod",
+    "snippet": "למה arrow function לא מתאימה כmethod ב-object?"
+  },
+  {
+    "location": "mc_l19_switch_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לstring",
+    "snippet": "switch לstring/number enum מרובה = readable. if"
+  },
+  {
+    "location": "mc_l19_switch_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לranges",
+    "snippet": "ber enum מרובה = readable. if/else עדיף לranges (age > 18), boolean conditions."
+  },
+  {
+    "location": "mc_l19_ifelse_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לexpressions",
+    "snippet": "גר' : 'קטין'; — שורה אחת במקום 4. מתאים לexpressions, לא לstatements."
+  },
+  {
+    "location": "mc_l19_ifelse_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לstatements",
+    "snippet": "ורה אחת במקום 4. מתאים לexpressions, לא לstatements."
+  },
+  {
+    "location": "mc_l17_1xx_002::explanation",
+    "type": "heb-then-latin",
+    "match": "הbrowser",
+    "snippet": "4 = conditional GET. שרת לא שולח body — הbrowser משתמש בcopy שיש לו. חוסך bandwi"
+  },
+  {
+    "location": "mc_l17_1xx_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בcopy",
+    "snippet": " GET. שרת לא שולח body — הbrowser משתמש בcopy שיש לו. חוסך bandwidth."
+  },
+  {
+    "location": "mc_l19_alert_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לdebug",
+    "snippet": "שתמש ב-toast notification / console.log לdebug."
+  },
+  {
+    "location": "mc_l19_camel_003::question",
+    "type": "heb-then-latin",
+    "match": "לqfunkciat",
+    "snippet": "מה naming convention נכון לqfunkciat handler לאירוע click?"
+  },
+  {
+    "location": "mc_l19_camel_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לmethods",
+    "snippet": "JS convention: camelCase לmethods/functions. PascalCase לClasses/"
+  },
+  {
+    "location": "mc_l19_camel_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לClasses",
+    "snippet": "amelCase לmethods/functions. PascalCase לClasses/React Components. kebab-case = "
+  },
+  {
+    "location": "mc_l19_reduce_003::question",
+    "type": "heb-then-latin",
+    "match": "מarray",
+    "snippet": "איך reduce() יוצר object מarray?"
+  },
+  {
+    "location": "mc_l19_reduce_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לobject",
+    "snippet": " map, flatten. initial value קריטי — {} לobject, [] לarray, 0 לsum."
+  },
+  {
+    "location": "mc_l19_reduce_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לarray",
+    "snippet": "n. initial value קריטי — {} לobject, [] לarray, 0 לsum."
+  },
+  {
+    "location": "mc_l19_reduce_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לsum",
+    "snippet": " value קריטי — {} לobject, [] לarray, 0 לsum."
+  },
+  {
+    "location": "mc_l17_apppost_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לerror",
+    "snippet": " next() להעברה ל-middleware הבא (שימושי לerror handling)."
+  },
+  {
+    "location": "mc_l17_4xx_002::question",
+    "type": "heb-then-latin",
+    "match": "הbdifference",
+    "snippet": "מה הbdifference בין 401 לבין 403?"
+  },
+  {
+    "location": "mc_l17_4xx_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לlogout",
+    "snippet": "401 → יש לlogout ולlogin מחדש. 403 → logged in אב"
+  },
+  {
+    "location": "mc_l17_4xx_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לlogin",
+    "snippet": "401 → יש לlogout ולlogin מחדש. 403 → logged in אבל אין per"
+  },
+  {
+    "location": "mc_lai_stream_002::question",
+    "type": "heb-then-latin",
+    "match": "לstreaming",
+    "snippet": "מה הפרוטוקול הנפוץ לstreaming tokens מ-LLM ל-browser?"
+  },
+  {
+    "location": "mc_lai_vstore_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בANN",
+    "snippet": "off. Pinecone, Chroma, pgvector משתמשים בANN."
+  },
+  {
+    "location": "mc_la_access_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לrevoke",
+    "snippet": "resh, מחליפים אותו. stateless = לא ניתן לrevoke."
+  },
+  {
+    "location": "mc_la_hash_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בhash",
+    "snippet": "bcrypt מייצר salt אוטומטית ושומר בhash output. אין צורך לשמור בנפרד. argo"
+  },
+  {
+    "location": "mc_la_guard_002::explanation",
+    "type": "heb-then-latin",
+    "match": "הdeal",
+    "snippet": "e handler → response. 401 מ-guard = סוף הdeal."
+  },
+  {
+    "location": "mc_lnest_ctrl_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לrequest",
+    "snippet": "@Param('id') מחלץ :id מה-URL. @Body() לrequest body. @Query() לquery params. ג"
+  },
+  {
+    "location": "mc_lnest_ctrl_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לquery",
+    "snippet": "מה-URL. @Body() לrequest body. @Query() לquery params. גם @Headers()."
+  },
+  {
+    "location": "mc_wb_vars_002::explanation",
+    "type": "heb-then-latin",
+    "match": "הreference",
+    "snippet": "rage...)). const נכשל אם תנסה להחליף את הreference. DOM-as-state מקשה על debug ו"
+  },
+  {
+    "location": "mc_wb_async_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לreads",
+    "snippet": "localStorage עצמו synchronous (אבל איטי לreads גדולים — שקול IndexedDB)."
+  },
+  {
+    "location": "mc_aidev_chatgpt_002::question",
+    "type": "heb-then-latin",
+    "match": "לdebug",
+    "snippet": "ה הסיכון העיקרי בהדבקת קוד לתוך ChatGPT לdebug?"
+  },
+  {
+    "location": "mc_aidev_chatgpt_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בinline",
+    "snippet": "את הקוד ל-OpenAI servers. אם יש secrets בinline — דליפה. תמיד לסנן/scrub לפני הד"
+  },
+  {
+    "location": "mc_aidev_limits_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לrun",
+    "snippet": "יכול להמציא method/library/syntax. תמיד לrun + לבדוק ב-docs. RAG עם docs רשמיים "
+  },
+  {
+    "location": "mc_l11_arrow_clr_001::question",
+    "type": "heb-then-latin",
+    "match": "בarrow",
+    "snippet": "מה this בarrow function בתוך method של object?"
+  },
+  {
+    "location": "mc_l11_arrow_clr_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הcontext",
+    "snippet": "arrow ל-this שלה מהcontext שבו הוגדרה. לכן arrow כ-method "
+  },
+  {
+    "location": "mc_l15_async_clr_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הreturn",
+    "snippet": "כל async function עוטפת את הreturn ב-Promise.resolve."
+  },
+  {
+    "location": "mc_l11_var_clr_002::explanation",
+    "type": "heb-then-latin",
+    "match": "שsetTimeout",
+    "snippet": "var = function scope. כשsetTimeout נקראים, i כבר 3."
+  },
+  {
+    "location": "mc_immutable_react_001::explanation",
+    "type": "heb-then-latin",
+    "match": "תbroke",
+    "snippet": "אם תbroke same ref, React חושב שלא השתנה."
+  },
+  {
+    "location": "mc_l24_useff_p_003::explanation",
+    "type": "latin-then-heb",
+    "match": "renderי",
+    "snippet": "anup מבטיח שאין side effects דולפים בין renderים."
+  },
+  {
+    "location": "mc_l22_arrayref_p_001::explanation",
+    "type": "latin-then-heb",
+    "match": "referenceי",
+    "snippet": "React שומר על referenceיוילדים. mutation in-place + sa"
+  },
+  {
+    "location": "mc_l22_arrayref_p_002::explanation",
+    "type": "heb-then-latin",
+    "match": "שReact",
+    "snippet": "Spread יוצר reference חדש שReact יזהה."
+  },
+  {
+    "location": "mc_l22_arrayref_p_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לdeep",
+    "snippet": "hallow = רק רמה 1 חדשה. structuredClone לdeep."
+  },
+  {
+    "location": "mc_l24_useff_cleanup_p_001::question",
+    "type": "heb-then-latin",
+    "match": "שcleanup",
+    "snippet": "מה החזיר ה-effect כדי שcleanup ירוץ?"
+  },
+  {
+    "location": "mc_l11_byval_p_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בpassing",
+    "snippet": "primitives by-value בpassing."
+  },
+  {
+    "location": "mc_l22_usestate_q_003::explanation",
+    "type": "heb-then-latin",
+    "match": "בasync",
+    "snippet": "Functional update חיוני בasync chains."
+  },
+  {
+    "location": "mc_l22_usestate_q_004::explanation",
+    "type": "heb-then-latin",
+    "match": "בevent",
+    "snippet": "React 17 רק batched בevent handlers. 18+ אוטומטי בכל מקום."
+  },
+  {
+    "location": "mc_l22_setstate_q_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בdefault",
+    "snippet": "React batches בdefault מ-18+."
+  },
+  {
+    "location": "mc_l22_customhook_q_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לsearch",
+    "snippet": "Pattern קלאסי לsearch boxes."
+  },
+  {
+    "location": "mc_react_state_q_002::question",
+    "type": "heb-then-latin",
+    "match": "לstate",
+    "snippet": "Discriminated union לstate machine:"
+  },
+  {
+    "location": "mc_l15_throw_r_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdebug",
+    "snippet": "Stack חיוני לdebug."
+  },
+  {
+    "location": "mc_l13_getbyid_s_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בdocument",
+    "snippet": "id צריך להיות unique בdocument."
+  },
+  {
+    "location": "mc_l13_setattr_s_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בproperty",
+    "snippet": "butes באים כ-presence, not value. השתמש בproperty."
+  },
+  {
+    "location": "mc_perf_reflow_ee_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לrelayout",
+    "snippet": "Layout. שינוי על אלמנט אחד יכול לגרום לrelayout של עץ שלם. transform/opacity ל"
+  },
+  {
+    "location": "mc_build_webpack_ff_001::question",
+    "type": "heb-then-latin",
+    "match": "הtarget",
+    "snippet": "מה הtarget של webpack.config.js?"
+  },
+  {
+    "location": "mc_build_esbuild_ff_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לproduction",
+    "snippet": " משתמש ב-ESBuild ל-pre-bundle, ב-Rollup לproduction."
+  },
+  {
+    "location": "mc_build_lockfile_ff_001::question",
+    "type": "heb-then-latin",
+    "match": "לcommit",
+    "snippet": "מה הסיבה לcommit ל-lockfile?"
+  },
+  {
+    "location": "mc_quirk_then_chain_gg_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לrejection",
+    "snippet": "Promise קולט throws והופך לrejection אוטומטית. שרשרת promise מבוסס"
+  },
+  {
+    "location": "mc_dsa_bigo_nlogn_hh_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לcomparison",
+    "snippet": "Lower bound לcomparison sort. Tim sort ב-Array.proto"
+  },
+  {
+    "location": "mc_dsa_space_hh_001::question",
+    "type": "heb-then-latin",
+    "match": "לspace",
+    "snippet": "מה ההבדל בין time complexity לspace complexity?"
+  },
+  {
+    "location": "mc_dsa_set_hh_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdedupes",
+    "snippet": "cludes/indexOf O(n). Set.has O(1). חשוב לdedupes ולחיפושים."
+  },
+  {
+    "location": "mc_dsa_memo_hh_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לFib",
+    "snippet": "om-up DP בלולאה גם O(n) זמן, O(1) space לFib."
+  },
+  {
+    "location": "mc_fp_curry_ii_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לpartial",
+    "snippet": " => b => a + b; add(2)(3) === 5. שימושי לpartial application."
+  },
+  {
+    "location": "mc_fp_compose_ii_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בRamda",
+    "snippet": "s.reduceRight((acc, fn) => fn(acc), x). בRamda/lodash/fp."
+  },
+  {
+    "location": "mc_fp_filter_map_ii_001::question",
+    "type": "heb-then-latin",
+    "match": "בbig",
+    "snippet": "למה .filter().map() נחשב anti-pattern בbig data?"
+  },
+  {
+    "location": "mc_fp_lodash_ii_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לtree",
+    "snippet": "lodash-es לtree shake. ב-modern JS חלק מהפיצ'רים n"
+  },
+  {
+    "location": "mc_fp_iife_ii_001::explanation",
+    "type": "heb-then-latin",
+    "match": "וtop",
+    "snippet": "ו רוב השימושים. עדיין שימושי לסקופ פרטי וtop-level await."
+  },
+  {
+    "location": "mc_fp_point_free_ii_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בRamda",
+    "snippet": "Tacit programming. שימושי בRamda. compact אך לעיתים מקטין readabil"
+  },
+  {
+    "location": "mc_fp_recursion_iter_ii_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdeep",
+    "snippet": "call stack. trampoline / explicit stack לdeep trees."
+  },
+  {
+    "location": "mc_test_stub_jj_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בJS",
+    "snippet": "טכנית בJS השמות מתערבבים. Sinon מבחין בין spy/"
+  },
+  {
+    "location": "mc_test_inline_snapshot_jj_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בPR",
+    "snippet": "ב-Diff בPR אפשר לראות את השינוי. שונה מ-toMatch"
+  },
+  {
+    "location": "mc_test_http_jj_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לclose",
+    "snippet": "p.listen קוראים, מומלץ לשמור reference ולcloseב-afterAll."
+  },
+  {
+    "location": "mc_test_http_jj_001::explanation",
+    "type": "latin-then-heb",
+    "match": "closeב",
+    "snippet": ".listen קוראים, מומלץ לשמור reference ולcloseב-afterAll."
+  },
+  {
+    "location": "mc_test_db_test_jj_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לMongo",
+    "snippet": "mongodb-memory-server לMongo. testcontainers ל-Postgres/MySQL."
+  },
+  {
+    "location": "mc_hook_layouteffect_kk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לuseEffect",
+    "snippet": "eLayoutEffect: sync, חוסם paint. עדיפות לuseEffect."
+  },
+  {
+    "location": "mc_hook_useid_kk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לhydration",
+    "snippet": "{useId()}-name`} — מתאים בין SSR render לhydration."
+  },
+  {
+    "location": "mc_hook_strict_mode_kk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בDEV",
+    "snippet": "ct לא idempotent (subscribes×2), תופסים בDEV. ב-PROD רץ פעם אחת."
+  },
+  {
+    "location": "mc_hook_memo_deps_kk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הrule",
+    "snippet": " => { console.log(x); }, []) — x stale. הrule מציג הזהרה."
+  },
+  {
+    "location": "mc_hook_forwardRef_kk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "כprop",
+    "snippet": "ref={ref} {...props} />). React 19: ref כprop רגיל."
+  },
+  {
+    "location": "mc_hook_strict_mode_double_kk_001::question",
+    "type": "heb-then-latin",
+    "match": "לcomponent",
+    "snippet": "למה Strict Mode קורא לcomponent body פעמיים?"
+  },
+  {
+    "location": "mc_hook_strict_mode_double_kk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בPROD",
+    "snippet": "אם render רץ פעמיים ויוצא שונה — bug. בPROD רץ פעם אחת."
+  },
+  {
+    "location": "mc_hook_index_key_kk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בstart",
+    "snippet": "ב-list דינמית: insert בstart → כל הkeys 'זזים' → React חושב שכ"
+  },
+  {
+    "location": "mc_hook_index_key_kk_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הkeys",
+    "snippet": "ב-list דינמית: insert בstart → כל הkeys 'זזים' → React חושב שכל ה-items הש"
+  },
+  {
+    "location": "mc_oop_polymorphism_mm_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בpolymorphism",
+    "snippet": "Late binding — בpolymorphism dispatch לפי runtime type."
+  },
+  {
+    "location": "mc_oop_encapsulation_mm_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לcleaner",
+    "snippet": "Pillar of OOP. אחד הסיבות העיקריות לcleaner code."
+  },
+  {
+    "location": "mc_final_immut_arr_nn_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בRedux",
+    "snippet": "טה יוצרת array חדש. splice/push mutate. בRedux/React חיוני."
+  },
+  {
+    "location": "mc_final_css_box_nn_001::explanation",
+    "type": "heb-then-latin",
+    "match": "כstandard",
+    "snippet": "* { box-sizing: border-box; } כstandard reset. ברירת מחדל: content-box"
+  },
+  {
+    "location": "mc_final_css_flex_nn_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לresponsive",
+    "snippet": "x:1 חולקים שווה. flex:2 מקבל פי 2. בסיס לresponsive layout."
+  },
+  {
+    "location": "mc_final_mongoose_index_nn_001::question",
+    "type": "heb-then-latin",
+    "match": "לcreate",
+    "snippet": "מתי לcreate index ב-MongoDB?"
+  },
+  {
+    "location": "mc_final_jwt_secret_nn_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לprod",
+    "snippet": "AWS Secrets Manager / Vault / Doppler לprod. .env לdev. החלפה תקופתית."
+  },
+  {
+    "location": "mc_final_jwt_secret_nn_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdev",
+    "snippet": "s Manager / Vault / Doppler לprod. .env לdev. החלפה תקופתית."
+  },
+  {
+    "location": "mc_final_password_hash_nn_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לhcompute",
+    "snippet": " — 12 rounds = ~250ms. attacker לא יכול לhcompute hashes מהר."
+  },
+  {
+    "location": "mc_final_react_jsx_nn_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לrequired",
+    "snippet": "ב-React 17+ jsx-runtime הופך לrequired automatic. JSX ≠ HTML strict ("
+  },
+  {
+    "location": "mc_final_react_state_lift_nn_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdeep",
+    "snippet": "Single Source of Truth. אלטרנטיבות לdeep trees: Context, Zustand, Redux."
+  },
+  {
+    "location": "mc_trace_var_hoist_oo_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הassignment",
+    "snippet": "עבר לראש scope (initialized undefined). הassignment נשאר במקום."
+  },
+  {
+    "location": "mc_trace_let_tdz_oo_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הblock",
+    "snippet": "TDZ: מהתחלת הblock עד ההצהרה. let/const אינם נגישים."
+  },
+  {
+    "location": "mc_trace_eq_oo_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לnumber",
+    "snippet": "pt abstract equality: שני הצדדים מומרים לnumber. '0' === false → false (no coerc"
+  },
+  {
+    "location": "mc_bug_missing_dep_pp_001::explanation",
+    "type": "heb-then-latin",
+    "match": "שmin",
+    "snippet": "exhaustive-deps תופס. כל value מ-render שmin dep."
+  },
+  {
+    "location": "mc_bug_key_index_pp_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לlist",
+    "snippet": "Stable IDs עדיפים. index OK רק לlist static."
+  },
+  {
+    "location": "mc_bug_no_cleanup_pp_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לresource",
+    "snippet": "Cleanup חיוני לresource lifecycle (timers, subs, liste"
+  },
+  {
+    "location": "mc_bug_strict_mode_pp_001::question",
+    "type": "heb-then-latin",
+    "match": "לbug",
+    "snippet": "t, useEffect רץ פעמיים. מה הסיבה הסבירה לbug?"
+  },
+  {
+    "location": "mc_build_groupby_qq_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בonate",
+    "snippet": "reduce בonate accumulator object. ?:= מאתחל אם "
+  },
+  {
+    "location": "mc_build_flatten_qq_001::question",
+    "type": "heb-then-latin",
+    "match": "לarrays",
+    "snippet": "איך לעשות flatten עמוק לarrays?"
+  },
+  {
+    "location": "mc_pred_promise_then_rr_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הreturn",
+    "snippet": "Each .then מחזיר Promise חדש. value = הreturn מ-prev callback."
+  },
+  {
+    "location": "mc_pred_async_await_rr_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הvalue",
+    "snippet": "await x ⇔ await Promise.resolve(x). הvalue זורם."
+  },
+  {
+    "location": "mc_pred_parse_float_rr_001::explanation",
+    "type": "heb-then-latin",
+    "match": "שmust",
+    "snippet": "parseFloat. שונה מ-Number שmust כל ה-string תקין."
+  },
+  {
+    "location": "mc_pred_array_map_promise_rr_001::question",
+    "type": "heb-then-latin",
+    "match": "הtype",
+    "snippet": "מה הtype של ret: const ret = [1,2,3].map(as"
+  },
+  {
+    "location": "mc_iv_event_loop_ss_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בinterview",
+    "snippet": "ways before next macrotask. שאלה קלאסית בinterview."
+  },
+  {
+    "location": "mc_iv_memoize_ss_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לpure",
+    "snippet": "Trade space for time. נכון לpure functions בלבד."
+  },
+  {
+    "location": "mc_iv_react_perf_ss_001::question",
+    "type": "heb-then-latin",
+    "match": "לoptimization",
+    "snippet": "כלים לoptimization ב-React?"
+  },
+  {
+    "location": "mc_iv_db_index_ss_001::question",
+    "type": "heb-then-latin",
+    "match": "לcreate",
+    "snippet": "מתי לcreate index ב-DB?"
+  },
+  {
+    "location": "mc_iv_cap_ss_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בpractice",
+    "snippet": "Eric Brewer 2000. בpractice: CP (MongoDB, HBase) או AP (Ca"
+  },
+  {
+    "location": "mc_edge_dom_node_types_tt_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לbtraversal",
+    "snippet": "node.nodeType. שימושי לbtraversal עם sub-types."
+  },
+  {
+    "location": "mc_ai_hallu_uu_002::question",
+    "type": "heb-then-latin",
+    "match": "בproduction",
+    "snippet": "איך למנוע hallucinations בproduction?"
+  },
+  {
+    "location": "mc_ai_hallu_uu_003::question",
+    "type": "heb-then-latin",
+    "match": "בpractice",
+    "snippet": "איך לזהות hallucination בpracticeה?"
+  },
+  {
+    "location": "mc_ai_hallu_uu_003::question",
+    "type": "latin-then-heb",
+    "match": "practiceה",
+    "snippet": "איך לזהות hallucination בpracticeה?"
+  },
+  {
+    "location": "mc_l26_compiler_vv_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הreference",
+    "snippet": "tsc הוא הreference. Vite משתמש ב-ESBuild + tsc ל"
+  },
+  {
+    "location": "mc_l26_compiler_vv_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לcheck",
+    "snippet": " הreference. Vite משתמש ב-ESBuild + tsc לcheck."
+  },
+  {
+    "location": "mc_wb_tasks_ww_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לrendering",
+    "snippet": "Schema common. id stable identity לrendering."
+  },
+  {
+    "location": "mc_l18_validation_xx_001::question",
+    "type": "heb-then-latin",
+    "match": "לvalidation",
+    "snippet": "Best practice לvalidation?"
+  },
+  {
+    "location": "mc_wb_arrays_xx_001::question",
+    "type": "heb-then-latin",
+    "match": "בtasks",
+    "snippet": "Array methods בtasks?"
+  },
+  {
+    "location": "mc_l27_user_yy_001::question",
+    "type": "heb-then-latin",
+    "match": "בBudget",
+    "snippet": "מה type User בBudget Manager?"
+  },
+  {
+    "location": "mc_l23_navigate_zz_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לpath",
+    "snippet": "back button חוזר לpath הקודם, לא ה-current."
+  },
+  {
+    "location": "mc_l23_use_context_zz_002::question",
+    "type": "heb-then-latin",
+    "match": "לcustom",
+    "snippet": "Pattern לcustom hook עם useContext?"
+  },
+  {
+    "location": "mc_l24_focus_aaa_001::explanation",
+    "type": "heb-then-latin",
+    "match": "דinto",
+    "snippet": "ning safe-guard. cleanup לא נדרש (focus דinto)."
+  },
+  {
+    "location": "mc_l27_genre_bbb_001::question",
+    "type": "heb-then-latin",
+    "match": "בBookRepo",
+    "snippet": "Genre בBookRepo?"
+  },
+  {
+    "location": "mc_l20_model_bbb_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לcollection",
+    "snippet": "e.model('User', userSchema). Pluralizes לcollection name."
+  },
+  {
+    "location": "mc_l22_setstate_ccc_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בfunctional",
+    "snippet": "ב-class setState merged. בfunctional useState replaces."
+  },
+  {
+    "location": "mc_l19_class_eee_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לclass",
+    "snippet": "ES6 syntax ייחודי לclass body and object literals."
+  },
+  {
+    "location": "mc_wb_fn_001::question",
+    "type": "heb-then-latin",
+    "match": "בfunctions",
+    "snippet": "מה רכיבים בfunctions?"
+  },
+  {
+    "location": "mc_wb_obj_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdone",
+    "snippet": "rypto.randomUUID() ל-id ייחודי. boolean לdone."
+  },
+  {
+    "location": "mc_wb_try_001::question",
+    "type": "heb-then-latin",
+    "match": "בTask",
+    "snippet": "מתי משתמשים ב-try/catch בTask Manager?"
+  },
+  {
+    "location": "mc_wb_async_001::question",
+    "type": "heb-then-latin",
+    "match": "בasync",
+    "snippet": "איך מטפלים בasync ב-Task Manager?"
+  },
+  {
+    "location": "mc_aidev_pair_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בroutine",
+    "snippet": "trust + verify. AI מצוין בroutine."
+  },
+  {
+    "location": "mc_aidev_review_001::question",
+    "type": "heb-then-latin",
+    "match": "לcode",
+    "snippet": "איך משתמשים ב-AI לcode review?"
+  },
+  {
+    "location": "mc_l18_storage_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בDB",
+    "snippet": "ction) או fs/disk (dev). אל תאחסן blobs בDB."
+  },
+  {
+    "location": "mc_l15_reject_manual_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לUnhandled",
+    "snippet": "Promise מדחה ללא catch גורם לUnhandled Promise Rejection. ב-Node.js "
+  },
+  {
+    "location": "mc_l22_controlled_001::explanation",
+    "type": "latin-then-heb",
+    "match": "validצ",
+    "snippet": " onChange={setState}. נותן שליטה מלאה — validציה, formatting, disabling."
+  },
+  {
+    "location": "mc_l20_mongodb_002::explanation",
+    "type": "heb-then-latin",
+    "match": "וscalable",
+    "snippet": "אחסן נתונים כ-JSON-like documents. גמיש וscalable."
+  },
+  {
+    "location": "mc_laie_lang_001::question",
+    "type": "heb-then-latin",
+    "match": "שOpenAI",
+    "snippet": "מה LangChain מספק שOpenAI SDK לבד לא נותן?"
+  },
+  {
+    "location": "mc_lai_context_window_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לoutput",
+    "snippet": "ow = input + output. אם input גדול מדי, לoutput נשאר מעט מקום — התשובה נחתכת."
+  },
+  {
+    "location": "mc_laie_langchain_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לchat",
+    "snippet": "LangChain חזקה ב-orchestration מורכב. לchat פשוט — AI SDK קל ומהיר יותר."
+  },
+  {
+    "location": "mc_laie_model_selection_003::question",
+    "type": "heb-then-latin",
+    "match": "בprod",
+    "snippet": "מה הגישה המומלצת לבחירת מודל AI בprod?"
+  },
+  {
+    "location": "mc_lnest_decorator_001::explanation",
+    "type": "heb-then-latin",
+    "match": "שNest",
+    "snippet": "ontroller, @Get, @Body מוסיפים metadata שNest משתמש בו לbuild routes ו-DI."
+  },
+  {
+    "location": "mc_lnest_decorator_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לbuild",
+    "snippet": ", @Body מוסיפים metadata שNest משתמש בו לbuild routes ו-DI."
+  },
+  {
+    "location": "mc_lds_themetokens_002::explanation",
+    "type": "heb-then-latin",
+    "match": "שReact",
+    "snippet": "t קטן שקורא preference וממקם class לפני שReact מרנדר."
+  },
+  {
+    "location": "mc_lds_themetokens_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לcontexts",
+    "snippet": "ליים, ו-.dark (או data-theme) דורס אותם לcontexts אחרים."
+  },
+  {
+    "location": "mc_lds_registry_003::explanation",
+    "type": "heb-then-latin",
+    "match": "לcomponent",
+    "snippet": "עובד אבל planned לרמ. יש migration path לcomponent חדש."
+  },
+  {
+    "location": "mc_lds_dstesting_001::explanation",
+    "type": "heb-then-latin",
+    "match": "שbreak",
+    "snippet": " screenshots בין גרסאות ותופס שינויי UI שbreak design."
+  },
+  {
+    "location": "mc_ldev_vercel_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לserverless",
+    "snippet": "פצל build output: סטטי ל-CDN, functions לserverless, ו-edge לV8 isolates."
+  },
+  {
+    "location": "mc_ldev_container_001::question",
+    "type": "heb-then-latin",
+    "match": "בcontainer",
+    "snippet": "מה קורה לנתונים בcontainer כשהוא נמחק?"
+  },
+  {
+    "location": "mc_ldev_container_002::explanation",
+    "type": "heb-then-latin",
+    "match": "שcontainer",
+    "snippet": "unless-stopped מבטיח שcontainer חוזר אחרי crash אבל לא אחרי s"
+  },
+  {
+    "location": "mc_lauth_supabase_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בPostgres",
+    "snippet": "Supabase Auth משתלב עם RLS בPostgres — auth + authorization באותו e"
+  },
+  {
+    "location": "mc_lauth_kinde_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בDocker",
+    "snippet": "pwrite הוא BaaS open-source שניתן להריץ בDocker — בניגוד ל-Firebase שmanaged."
+  },
+  {
+    "location": "mc_lauth_kinde_001::explanation",
+    "type": "heb-then-latin",
+    "match": "שmanaged",
+    "snippet": "שניתן להריץ בDocker — בניגוד ל-Firebase שmanaged."
+  },
+  {
+    "location": "mc_l27_enum_003::explanation",
+    "type": "heb-then-latin",
+    "match": "בdebugging",
+    "snippet": "tring enum מקצה ערך מפורש לכל key. ברור בdebugging ולא תלוי בסדר."
+  },
+  {
+    "location": "mc_lnext_vercel_004::explanation",
+    "type": "heb-then-latin",
+    "match": "לbranch",
+    "snippet": "כל push לbranch = preview URL ייחודי. main → pro"
+  },
+  {
+    "location": "mc_l20_update_many_manual_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לbulk",
+    "snippet": "teMany מעדכן את כולם. Bulk update חיוני לbulk fixes."
+  },
+  {
+    "location": "mc_l20_model_manual_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לcollection",
+    "snippet": "('User', userSchema). Model מקשר schema לcollection ('users') ומספק CRUD API."
+  },
+  {
+    "location": "fill_lnext_dyn_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בpage",
+    "snippet": " '...' } מתוך URL. searchParams זמין רק בpage component."
+  },
+  {
+    "location": "fill_ldev_compose_001::hint",
+    "type": "heb-then-latin",
+    "match": "שservice",
+    "snippet": "מה מציין שservice אחד תלוי בservice אחר."
+  },
+  {
+    "location": "fill_ldev_compose_001::hint",
+    "type": "heb-then-latin",
+    "match": "בservice",
+    "snippet": "מה מציין שservice אחד תלוי בservice אחר."
+  },
+  {
+    "location": "fill_git_clone_y_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הremote",
+    "snippet": "tory — יוצר עותק מקומי עם כל ההיסטוריה והremote tracking."
+  },
+  {
+    "location": "fill_l17_express_001_O::explanation",
+    "type": "heb-then-latin",
+    "match": "לroute",
+    "snippet": "app.get לroute GET."
+  },
+  {
+    "location": "fill_lsql_fk_001::hint",
+    "type": "heb-then-latin",
+    "match": "הprimary",
+    "snippet": "העמודה שה-FK מצביע אליה ב-parent table (הprimary key)"
+  },
+  {
+    "location": "fill_lnest_ctrl_001::hint",
+    "type": "heb-then-latin",
+    "match": "הdecorator",
+    "snippet": "הdecorator שמחלץ route parameter מה-URL"
+  },
+  {
+    "location": "fill_lnest_ctrl_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לrequest",
+    "snippet": "@Param('id') מחלץ :id מה-URL. @Body() לrequest body. @Query() לquery string pa"
+  },
+  {
+    "location": "fill_lnest_ctrl_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לquery",
+    "snippet": "מה-URL. @Body() לrequest body. @Query() לquery string params."
+  },
+  {
+    "location": "fill_ldev_build_001::hint",
+    "type": "heb-then-latin",
+    "match": "הcommand",
+    "snippet": "הcommand שמפעיל npm scripts המוגדרים ב-p"
+  },
+  {
+    "location": "fill_lai_embed_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הembed",
+    "snippet": "input = הטקסט להembed. מחזיר float[] (1536 dims). cosin"
+  },
+  {
+    "location": "fill_la_secure_001::hint",
+    "type": "heb-then-latin",
+    "match": "לHTTPS",
+    "snippet": "ה-flag שמגביל את ה-cookie לHTTPS בלבד"
+  },
+  {
+    "location": "fill_l19_spread_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הarray",
+    "snippet": "spread (...) מפזר את איברי הarray. הוא יוצר array חדש — immutable, "
+  },
+  {
+    "location": "fill_l19_catch_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdebugging",
+    "snippet": "ssues. console.error לכשלים חמורים. log לdebugging רגיל."
+  },
+  {
+    "location": "fill_l19_closure_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לcount",
+    "snippet": "ה-arrow function שומר reference לcount דרך closure. count חי בזיכרון כל "
+  },
+  {
+    "location": "fill_l19_closure_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הclosure",
+    "snippet": "nt דרך closure. count חי בזיכרון כל עוד הclosure קיים."
+  },
+  {
+    "location": "fill_l19_event_obj_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בsubmit",
+    "snippet": "preventDefault מונע page reload בsubmit, ניווט בקליק על link, וכו'. שונה"
+  },
+  {
+    "location": "fill_l17_domain_001::explanation",
+    "type": "heb-then-latin",
+    "match": "שDNS",
+    "snippet": "omain (host) ב-URL = השם הקריא לבני אדם שDNS resolver ממיר ל-IP address."
+  },
+  {
+    "location": "fill_l17_headers_001::hint",
+    "type": "heb-then-latin",
+    "match": "הheaders",
+    "snippet": "property של req שמכיל את כל הheaders של הrequest."
+  },
+  {
+    "location": "fill_l17_headers_001::hint",
+    "type": "heb-then-latin",
+    "match": "הrequest",
+    "snippet": "property של req שמכיל את כל הheaders של הrequest."
+  },
+  {
+    "location": "fill_l17_create_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הURL",
+    "snippet": "אב. השרת מחזיר 201 + Location header עם הURL החדש."
+  },
+  {
+    "location": "fill_l17_port_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הport",
+    "snippet": "hosts מקצים את הport דרך env. dev: 3000 default. prod: "
+  },
+  {
+    "location": "fill_l17_route_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הroutes",
+    "snippet": "Router מאפשר לפצל routes לקבצים נפרדים. הroutes שלו מקבלים prefix מהapp.use."
+  },
+  {
+    "location": "fill_l17_route_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הapp",
+    "snippet": "בצים נפרדים. הroutes שלו מקבלים prefix מהapp.use."
+  },
+  {
+    "location": "fill_l17_get_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לrequests",
+    "snippet": "app.get(path, handler) רושם handler לrequests מסוג GET לpath. מקביל ל-app.po"
+  },
+  {
+    "location": "fill_l17_get_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לpath",
+    "snippet": "andler) רושם handler לrequests מסוג GET לpath. מקביל ל-app.post/app.put/etc."
+  },
+  {
+    "location": "fill_l20_connstr_001::hint",
+    "type": "heb-then-latin",
+    "match": "לconnection",
+    "snippet": "ה-suffix הסטנדרטי לconnection string env var."
+  },
+  {
+    "location": "fill_l20_updateMany_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בbatch",
+    "snippet": "updateMany חיוני בbatch. תמיד filter קפדני — {} ריק מעדכן"
+  },
+  {
+    "location": "fill_l20_updateMany_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הcollection",
+    "snippet": " תמיד filter קפדני — {} ריק מעדכן את כל הcollection!"
+  },
+  {
+    "location": "fill_l20_ne_001::hint",
+    "type": "heb-then-latin",
+    "match": "לnot",
+    "snippet": "operator לnot-equal ב-MongoDB query."
+  },
+  {
+    "location": "fill_l21_npmrundev_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לbuild",
+    "snippet": "ckage.json: 'dev' מריץ את vite. 'build' לbuild. 'preview' לpreview של build."
+  },
+  {
+    "location": "fill_l21_npmrundev_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לpreview",
+    "snippet": "מריץ את vite. 'build' לbuild. 'preview' לpreview של build."
+  },
+  {
+    "location": "fill_l24_expensive_001::hint",
+    "type": "heb-then-latin",
+    "match": "שcache",
+    "snippet": "Hook ב-React שcache תוצאה לפי dependencies array."
+  },
+  {
+    "location": "fill_l26_js_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בmigration",
+    "snippet": "מוסיף גם type-checking על ה-.js. שימושי בmigration גרדואלי."
+  },
+  {
+    "location": "fill_l26_never_001::hint",
+    "type": "heb-then-latin",
+    "match": "לbranches",
+    "snippet": "ה-bottom type ב-TS לbranches שלא יכולים להגיע."
+  },
+  {
+    "location": "fill_lai_vector_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לRAG",
+    "snippet": "topK = k ב-k-NN. 3-10 טיפוסי לRAG context. גבוה יותר = יותר context א"
+  },
+  {
+    "location": "fill_lai_agent_001::hint",
+    "type": "heb-then-latin",
+    "match": "לagent",
+    "snippet": "max iterations טיפוסי לagent loop (defensive bound)."
+  },
+  {
+    "location": "fill_lauth_cookie_001::explanation",
+    "type": "heb-then-latin",
+    "match": "וsharing",
+    "snippet": " חסום. Strict חוסם הכל cross-site (קשה לוsharing). None דורש Secure ופוגע ב-CSRF"
+  },
+  {
+    "location": "fill_ldev_image_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לbuild",
+    "snippet": "(אחרי ARGs). alpine = ~50MB image, מהיר לbuild. multi-stage נפוץ בproduction."
+  },
+  {
+    "location": "fill_ldev_image_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בproduction",
+    "snippet": "MB image, מהיר לbuild. multi-stage נפוץ בproduction."
+  },
+  {
+    "location": "fill_ldev_service_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לreadiness",
+    "snippet": "פני app. רק start order — לא readiness. לreadiness: healthcheck + condition: ser"
+  },
+  {
+    "location": "fill_ldev_cd_001::hint",
+    "type": "heb-then-latin",
+    "match": "לcheckout",
+    "snippet": "ה-action הסטנדרטי לcheckout של ה-repo."
+  },
+  {
+    "location": "fill_lnest_exception_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הfilter",
+    "snippet": "h-all. @Catch(HttpException) = רק HTTP. הfilter רושם ב-app.useGlobalFilters."
+  },
+  {
+    "location": "fill_lnext_approuter_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לwrapper",
+    "snippet": "xport של route ב-App Router. layout.tsx לwrapper, loading.tsx, error.tsx."
+  },
+  {
+    "location": "fill_lnext_seo_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לnoindex",
+    "snippet": "ots' content='index, follow'>. או לסטות לnoindex על pages פנימיות."
+  },
+  {
+    "location": "fill_lsql_sql_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בconvention",
+    "snippet": "WHERE pred ORDER BY col. נשמר uppercase בconvention. ה-DB עצמו insensitive."
+  },
+  {
+    "location": "fill_lds_aschild_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הLink",
+    "snippet": "utton asChild><Link>X</Link></Button> = הLink מקבל את ה-Button styling."
+  },
+  {
+    "location": "fill_lds_form_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הschema",
+    "snippet": "s נקבעות אוטומטית. validation messages מהschema (zod)."
+  },
+  {
+    "location": "fill_l20_value_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לproperties",
+    "snippet": "ngoose document = JS object. גישה ישירה לproperties כמו doc.name, doc.email, doc"
+  },
+  {
+    "location": "fill_l23_value_001::explanation",
+    "type": "heb-then-latin",
+    "match": "שuseContext",
+    "snippet": "value prop = מה שuseContext() יחזיר. יכול להיות כל type:"
+  },
+  {
+    "location": "fill_l23_main_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הposts",
+    "snippet": "{ ...prev items, text } = spread הposts הקיימים + object חדש עם text. sho"
+  },
+  {
+    "location": "fill_l23_addpost_001::hint",
+    "type": "heb-then-latin",
+    "match": "לcallback",
+    "snippet": "קורא לcallback שהתקבל מההורה כ-prop."
+  },
+  {
+    "location": "fill_l23_addpost_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הtext",
+    "snippet": "ת כלפי מעלה. ה-parent מחליט מה לעשות עם הtext. AddPost עצמה רק קולטת קלט."
+  },
+  {
+    "location": "fill_l23_postlist_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לempty",
+    "snippet": "ate check. early return = clean pattern לempty state."
+  },
+  {
+    "location": "fill_l27_genre_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הunion",
+    "snippet": "g: Genre = TypeScript יאשר רק ערכים מהunion. compile error על 'Drama'. exhaus"
+  },
+  {
+    "location": "fill_l27_genre_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בswitch",
+    "snippet": " error על 'Drama'. exhaustiveness check בswitch."
+  },
+  {
+    "location": "fill_l27_guest_001::hint",
+    "type": "heb-then-latin",
+    "match": "כdiscriminant",
+    "snippet": "literal type שמשמש כdiscriminant ב-GuestUser."
+  },
+  {
+    "location": "fill_l27_guest_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בdiscriminated",
+    "snippet": "') → TS מצמצם ל-GuestUser. pattern נפוץ בdiscriminated unions."
+  },
+  {
+    "location": "fill_lai_guard_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בpipeline",
+    "snippet": "ונע דליפת PII. part of defense-in-depth בpipeline AI."
+  },
+  {
+    "location": "fill_lnest_repo_001::hint",
+    "type": "heb-then-latin",
+    "match": "הrecords",
+    "snippet": "method שמחזיר את כל הrecords מה-DB."
+  },
+  {
+    "location": "fill_lnest_repo_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בrepository",
+    "snippet": "findAll() בrepository = abstraction מעל Prisma/Typ"
+  },
+  {
+    "location": "fill_l19_array_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לReact",
+    "snippet": " x] = העתקה + הוספה. immutable, perfect לReact state."
+  },
+  {
+    "location": "fill_l19_inheritance_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לconstructor",
+    "snippet": "s + super() = inheritance. super() קורא לconstructor של ה-parent. method overrid"
+  },
+  {
+    "location": "fill_l19_dom_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לclick",
+    "snippet": "EventListener('click', handler) = מאזין לclick. גם: 'input', 'submit', 'keydown'"
+  },
+  {
+    "location": "fill_l19_let_001::hint",
+    "type": "heb-then-latin",
+    "match": "לmutable",
+    "snippet": "מילת מפתח לmutable, block-scoped variable."
+  },
+  {
+    "location": "fill_l19_let_001::explanation",
+    "type": "heb-then-latin",
+    "match": "מvar",
+    "snippet": "let = block-scoped + TDZ. בשונה מvar שfunction-scoped. ניתן לreassign, ב"
+  },
+  {
+    "location": "fill_l19_let_001::explanation",
+    "type": "heb-then-latin",
+    "match": "שfunction",
+    "snippet": "let = block-scoped + TDZ. בשונה מvar שfunction-scoped. ניתן לreassign, בשונה "
+  },
+  {
+    "location": "fill_l19_let_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לreassign",
+    "snippet": " TDZ. בשונה מvar שfunction-scoped. ניתן לreassign, בשונה מconst."
+  },
+  {
+    "location": "fill_l19_let_001::explanation",
+    "type": "heb-then-latin",
+    "match": "מconst",
+    "snippet": "שfunction-scoped. ניתן לreassign, בשונה מconst."
+  },
+  {
+    "location": "fill_l19_let_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בfor",
+    "snippet": "let בfor = binding חדש לכל iteration. closur"
+  },
+  {
+    "location": "fill_l19_const_001::hint",
+    "type": "heb-then-latin",
+    "match": "לmutable",
+    "snippet": "מילת מפתח לmutable binding שלא ניתן לreassign."
+  },
+  {
+    "location": "fill_l19_const_001::hint",
+    "type": "heb-then-latin",
+    "match": "לreassign",
+    "snippet": "מילת מפתח לmutable binding שלא ניתן לreassign."
+  },
+  {
+    "location": "fill_l19_const_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לconstants",
+    "snippet": "const = no reassign. naming: UPPER_CASE לconstants primitive. const arr = []; ar"
+  },
+  {
+    "location": "fill_l19_switch_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לcase",
+    "snippet": " === 'Sunday'. ללא break → fall-through לcase הבא."
+  },
+  {
+    "location": "fill_l17_POST_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לJSON",
+    "snippet": "d חייב uppercase. headers + body נדרשים לJSON POST."
+  },
+  {
+    "location": "fill_l17_1xx_001::hint",
+    "type": "heb-then-latin",
+    "match": "שresource",
+    "snippet": "HTTP status code שמציין שresource חדש נוצר בהצלחה."
+  },
+  {
+    "location": "fill_l17_1xx_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הbest",
+    "snippet": "201 Created = הbest practice ל-POST מוצלח. מגיע עם ה-r"
+  },
+  {
+    "location": "fill_l17_appuse_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לpipeline",
+    "snippet": "app.use() מוסיף middleware לpipeline. express.json() = body parser."
+  },
+  {
+    "location": "fill_l19_script_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בhead",
+    "snippet": "y = HTML נטען לפני JS. defer/async = גם בhead אבל לא חוסמים."
+  },
+  {
+    "location": "fill_l19_alert_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לdebug",
+    "snippet": "dal. בפיתוח מקצועי: השתמש ב-console.log לdebug, toast/notification לUX."
+  },
+  {
+    "location": "fill_l19_alert_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לUX",
+    "snippet": "-console.log לdebug, toast/notification לUX."
+  },
+  {
+    "location": "fill_l19_camel_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לclasses",
+    "snippet": " (snake_case) ולא UserEmail (PascalCase לclasses)."
+  },
+  {
+    "location": "fill_l19_dowhile_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לwhile",
+    "snippet": " לפחות. while בסוף — הבדיל בין do/while לwhile."
+  },
+  {
+    "location": "fill_l19_find_002::explanation",
+    "type": "heb-then-latin",
+    "match": "שmatch",
+    "snippet": "find = הראשון שmatch. לא נמצא → undefined. findIndex →"
+  },
+  {
+    "location": "fill_l19_object_002::hint",
+    "type": "heb-then-latin",
+    "match": "לproperty",
+    "snippet": "גישה לproperty בשם 'population' מה-object."
+  },
+  {
+    "location": "fill_l17_apppost_002::hint",
+    "type": "heb-then-latin",
+    "match": "בroute",
+    "snippet": "שם ה-response object בroute handler."
+  },
+  {
+    "location": "fill_lwb_cond_002::explanation",
+    "type": "heb-then-latin",
+    "match": "הstring",
+    "snippet": "= תנאי בסיסי. title.trim() === '' בודק שהstring ריק (אחרי הסרת רווחים). guard cl"
+  },
+  {
+    "location": "fill_lwb_fn_002::hint",
+    "type": "heb-then-latin",
+    "match": "לarrow",
+    "snippet": "סימן החץ שהופך ביטוי לarrow function."
+  },
+  {
+    "location": "fill_lwb_copilot_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הcomment",
+    "snippet": "b) => a-b) = מיון עולה. Copilot מזהה את הcomment ומשלים. תמיד לוודא שההשלמה נכונ"
+  },
+  {
+    "location": "fill_lwb_pair_002::hint",
+    "type": "heb-then-latin",
+    "match": "לClaude",
+    "snippet": "הפקודה לClaude Code שמבקשת בדיקת קוד."
+  },
+  {
+    "location": "fill_lwb_limit_001::hint",
+    "type": "heb-then-latin",
+    "match": "שAPI",
+    "snippet": "המקום הרשמי שבו מוודאים שAPI/פונקציה באמת קיימים."
+  },
+  {
+    "location": "fill_lwb_limit_002::explanation",
+    "type": "heb-then-latin",
+    "match": "לstock",
+    "snippet": "g cutoff = תאריך שאחריו למודל אין מידע. לstock prices, חדשות, או APIs חדשים — צר"
+  },
+  {
+    "location": "fill_lwb_halluc_001::hint",
+    "type": "heb-then-latin",
+    "match": "שAI",
+    "snippet": "שם package שAI המציא — לא קיים ב-npm."
+  },
+  {
+    "location": "fill_lwb_halluc_002::hint",
+    "type": "heb-then-latin",
+    "match": "שAI",
+    "snippet": "מתודת מערך שAI עלול להמציא (קיימת רק בגרסאות חדשות)"
+  },
+  {
+    "location": "fill_lwb_halluc_002::explanation",
+    "type": "heb-then-latin",
+    "match": "מcrash",
+    "snippet": "ל להציע גרסה לא נכונה. typeof check מגן מcrash."
+  },
+  {
+    "location": "fill_laie_lang_001::hint",
+    "type": "heb-then-latin",
+    "match": "בLangChain",
+    "snippet": "ה-class בLangChain שיוצר template לprompt messag"
+  },
+  {
+    "location": "fill_laie_lang_001::hint",
+    "type": "heb-then-latin",
+    "match": "לprompt",
+    "snippet": "ה-class בLangChain שיוצר template לprompt messages."
+  },
+  {
+    "location": "fill_laie_agent_002::hint",
+    "type": "heb-then-latin",
+    "match": "הaction",
+    "snippet": "סוג הaction שמסיים את לולאת הAgent."
+  },
+  {
+    "location": "fill_laie_agent_002::hint",
+    "type": "heb-then-latin",
+    "match": "הAgent",
+    "snippet": "סוג הaction שמסיים את לולאת הAgent."
+  },
+  {
+    "location": "fill_laie_guard_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בinput",
+    "snippet": "some() = true אם לפחות phrase אחד נמצא בinput. guardrail ראשוני נגד prompt inje"
+  },
+  {
+    "location": "fill_lai_claude_code_002::hint",
+    "type": "heb-then-latin",
+    "match": "שClaude",
+    "snippet": "מה שם קובץ ההנחיות שClaude Code טוען אוטומטית?"
+  },
+  {
+    "location": "fill_lnext_saction_001::hint",
+    "type": "heb-then-latin",
+    "match": "מclient",
+    "snippet": "ctive שמסמן פונקציה שרצה בצד שרת ונקראת מclient."
+  },
+  {
+    "location": "fill_lnext_saction_001::explanation",
+    "type": "heb-then-latin",
+    "match": "מclient",
+    "snippet": "r\" הופך פונקציה ל-server action — נקראת מclient דרך form או fetch."
+  },
+  {
+    "location": "fill_lnest_middleware_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הroutes",
+    "snippet": "ילו routes ה-middleware יחול — '*' = כל הroutes."
+  },
+  {
+    "location": "fill_lnest_testmod_001::hint",
+    "type": "heb-then-latin",
+    "match": "מNest",
+    "snippet": "class מNest שיוצר module קטן לבדיקות."
+  },
+  {
+    "location": "fill_lnest_testmod_001::explanation",
+    "type": "heb-then-latin",
+    "match": "לunit",
+    "snippet": "eTestingModule בונה DI container מצומצם לunit/integration tests."
+  },
+  {
+    "location": "fill_lnest_testmod_002::hint",
+    "type": "heb-then-latin",
+    "match": "בmock",
+    "snippet": "method שמחליף provider בmock בזמן בדיקה."
+  },
+  {
+    "location": "fill_lds_radix_001::hint",
+    "type": "heb-then-latin",
+    "match": "הDialog",
+    "snippet": "sub-component שמפעיל את פתיחת הDialog."
+  },
+  {
+    "location": "fill_lds_radix_001::explanation",
+    "type": "heb-then-latin",
+    "match": "הDialog",
+    "snippet": "Dialog.Trigger הוא הכפתור שפותח את הDialog — מטפל ב-click וב-ARIA."
+  },
+  {
+    "location": "fill_lds_themetokens_001::hint",
+    "type": "heb-then-latin",
+    "match": "לmode",
+    "snippet": "CSS class שדורס tokens לmode חשוך."
+  },
+  {
+    "location": "fill_lds_dstesting_001::explanation",
+    "type": "heb-then-latin",
+    "match": "וname",
+    "snippet": "utton') בודק שהאלמנט הנכון קיים עם role וname — בדיקה accessible."
+  },
+  {
+    "location": "fill_ldev_vercel_001::hint",
+    "type": "heb-then-latin",
+    "match": "לVercel",
+    "snippet": "flag שאומר לVercel לפרסם ל-production ולא preview."
+  },
+  {
+    "location": "fill_lsql_col_001::explanation",
+    "type": "heb-then-latin",
+    "match": "שrows",
+    "snippet": "OLUMN מוסיף עמודה חדשה — עם DEFAULT כדי שrows קיימות יקבלו ערך."
+  },
+  {
+    "location": "fill_lauth_provider_001::hint",
+    "type": "heb-then-latin",
+    "match": "בprovider",
+    "snippet": "method נפוץ בprovider auth שמחזיר session מאומתת."
+  },
+  {
+    "location": "fill_lauth_firebase_001::explanation",
+    "type": "heb-then-latin",
+    "match": "בAdmin",
+    "snippet": "verifyIdToken בAdmin SDK בודק signature, iss, aud ו-ex"
+  },
+  {
+    "location": "fill_l27_enum_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בdebug",
+    "snippet": "string enum: ערכים מפורשים. עזר בdebug ובconsistency."
+  },
+  {
+    "location": "fill_l27_enum_002::explanation",
+    "type": "heb-then-latin",
+    "match": "בconsistency",
+    "snippet": "string enum: ערכים מפורשים. עזר בdebug ובconsistency."
+  }
+]

@@ -8,7 +8,7 @@ Version: report-source-of-truth-v1
 | Artifact | State | Date | Version | Type | Markdown Date |
 |---|---|---|---|---|---|
 | AI_TUTOR_ALPHA_REPORT | historical | 2026-04-29 | ai-tutor-alpha-gate-v1 | markdown+json | 2026-04-29 |
-| BRUTAL_MASTER_PLAN_AUDIT | historical | 2026-04-30 | brutal-master-plan-audit-v1 | markdown+json | 2026-04-30 |
+| BRUTAL_MASTER_PLAN_AUDIT | active | 2026-05-04 | brutal-master-plan-audit-v1 | markdown+json | 2026-05-04 |
 | CONTENT_FACTORY_PIPELINE_REPORT | historical | 2026-04-30 | content-factory-pipeline-v1 | markdown+json | 2026-04-30 |
 | CONTENT_SCHEMA_CONTRACT_REPORT | historical | 2026-04-29 | content-schema-contract-report-v1 | markdown+json | 2026-04-29 |
 | EXAM_EDITION_RELEASE_FREEZE | historical | 2026-04-29 | exam-edition-release-freeze-v1 | markdown+json | 2026-04-29 |
@@ -55,7 +55,7 @@ Version: report-source-of-truth-v1
 
 ## Source-of-Truth Findings
 
-- [P1] 37 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical. (recon-003)
+- [P1] 36 tracked report snapshots are older than the source-of-truth date and should be regenerated or explicitly kept historical. (recon-003)
 
 ## Policy
 

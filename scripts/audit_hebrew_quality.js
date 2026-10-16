@@ -16,6 +16,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
@@ -43,15 +44,16 @@ const SUSPICIOUS_PATTERNS = [
   [/\bפרוייקט\b/, "פרוייקט → פרויקט (Academia)"],
 ];
 
-// Niqqud (vowel marks)
-const NIQQUD_RE = /[֑-ׇ]/;
+// Niqqud (vowel marks) — excludes U+05BE (MAQAF, legitimate compound joiner)
+// Ranges: U+0591–U+05AF cantillation, U+05B0–U+05BD vowel points, U+05C1–U+05C2 sin/shin dots
+const NIQQUD_RE = /[֑-ְ֯-ׇֽׁׂׅׄ]/;
 
 // Latin word in Hebrew sentence without LTR isolation
 const MIXED_DIR_RE = /[֐-׿].{0,2}[A-Za-z]{3,}.{0,2}[֐-׿]/;
 
 function loadAll() {
   const sandbox = { window: {}, console };
-  fs.readdirSync(DATA_DIR).filter(f => f.endsWith(".js")).sort().forEach(f => {
+  fs.readdirSync(DATA_DIR).filter(f => f.endsWith(".js")).sort(byFilename).forEach(f => {
     vm.runInNewContext(fs.readFileSync(path.join(DATA_DIR, f), "utf8"), sandbox, { filename: f });
   });
   return sandbox;

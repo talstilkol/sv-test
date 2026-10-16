@@ -6,6 +6,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const OUT_DIR = path.join(ROOT, "docs", "exam-prep");
@@ -24,7 +25,7 @@ function deterministicSort(items, salt) {
   return [...items].sort((a, b) => {
     const ka = `${salt}:${a.id || a.conceptKey || ""}`;
     const kb = `${salt}:${b.id || b.conceptKey || ""}`;
-    return ka.localeCompare(kb);
+    return byFilename(ka, kb);
   });
 }
 

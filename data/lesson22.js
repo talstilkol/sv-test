@@ -677,7 +677,7 @@ var LESSON_22 = {
       codeExample:
         "// ❌ באג מוכר\n" +
         "const [items, setItems] = useState([]);\n" +
-        "const addItem = (x) => {\n" +
+        "const addItemBroken = (x) => {\n" +
         "  items.push(x);     // משנה במקום\n" +
         "  setItems(items);   // אותה הפניה → React לא מתרענן!\n" +
         "};\n\n" +

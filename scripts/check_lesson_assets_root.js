@@ -3,6 +3,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const LESSONS_DIR = path.join(ROOT, "lessons");
@@ -13,7 +14,7 @@ function listAssetFiles(dir) {
   if (!fs.existsSync(dir)) return [];
   return fs.readdirSync(dir)
     .filter((name) => ASSET_RE.test(name))
-    .sort((a, b) => a.localeCompare(b, "he"));
+    .sort(byFilename);
 }
 
 function readManifest() {

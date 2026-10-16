@@ -17,7 +17,9 @@
             Content-Security-Policy: frame-ancestors 'none'
             X-Frame-Options: DENY
          Either prevents clickjacking via iframe embedding. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; form-action 'self'; base-uri 'self';" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; worker-src 'self'; manifest-src 'self'; form-action 'self'; base-uri 'self';" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <script src="src/boot/standalone-museum.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Outfit:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
@@ -374,7 +376,7 @@
             <span class="emoji" aria-hidden="true">🛒</span><span>חנות</span>
           </button>
           <button class="top-tab" id="open-flashcards" data-tab="flashcards" aria-label="פתח כרטיסיות חזרה לפי SRS">
-            <span class="emoji" aria-hidden="true">🃏</span><span>כרטיסיות</span>
+            <span class="emoji" aria-hidden="true">🃏</span><span>כרטיסיות</span><span class="fc-due-badge" id="fc-due-badge" hidden aria-label="כרטיסים לחזרה היום" data-nav-skip="true" aria-hidden="true"></span>
           </button>
           <button class="top-tab" id="open-codeblocks" data-tab="codeblocks" aria-label="פתח בלוקי קוד">
             <span class="emoji" aria-hidden="true">💻</span><span>בלוקי קוד</span>
@@ -424,7 +426,7 @@
         </nav>
 
         <nav class="site-trail-nav" id="site-trail-nav" aria-label="עץ אתר, חזרה ובית">
-          <button class="site-nav-btn" id="site-back-btn" type="button" aria-label="חזור אחורה במסלול הלמידה">
+          <button class="site-nav-btn" id="site-back-btn" type="button" aria-label="חזרה אחורה במסלול הלמידה">
             <span aria-hidden="true">←</span><span>חזרה</span>
           </button>
           <button class="site-nav-btn" id="site-home-btn" type="button" aria-label="חזרה לעמוד הבית">
@@ -461,7 +463,7 @@
             <!-- UX 2026-05-02: Clean focused home — resume CTA is the primary action -->
             <div class="welcome-hero glass-panel">
               <div class="welcome-icon">📚</div>
-              <h3>ברוך שובך</h3>
+              <h2>ברוך שובך</h2>
               <p class="welcome-subtitle">המשך בדיוק מהמקום שעצרת. השמירה האוטומטית פועלת ברקע.</p>
 
               <button class="welcome-resume-btn" id="welcome-resume-btn" type="button" hidden>
@@ -561,6 +563,7 @@
                     <button type="button" class="settings-toggle" data-settings-a11y="high-contrast">ניגודיות גבוהה</button>
                     <button type="button" class="settings-toggle" data-settings-a11y="large-text">טקסט גדול</button>
                   </div>
+                  <button type="button" class="km-btn-mini" id="btn-open-a11y-statement" style="margin-top:0.75rem">♿ הצהרת נגישות</button>
                 </section>
 
                 <section class="settings-card settings-card-wide" aria-label="חלקים גלויים בשיעור">
@@ -592,6 +595,7 @@
                   <div class="progress-sync-row">
                     <button class="km-btn-mini" id="btn-export-progress" title="ייצא את כל ההתקדמות שלך לקובץ JSON">⬇️ ייצוא התקדמות</button>
                     <button class="km-btn-mini" id="btn-import-progress" title="ייבא קובץ התקדמות JSON שייצאת בעבר">⬆️ ייבוא התקדמות</button>
+                    <button class="km-btn-mini" id="btn-merge-progress" title="מזג קובץ התקדמות מהתקן אחר — שומר את הנתון הטוב ביותר מכל מקור">🔀 מיזוג התקדמות</button>
                     <button class="km-btn-mini" id="btn-sync-config" title="הגדר Supabase URL, anon key ו-access token אמיתיים">הגדר Sync</button>
                     <button class="km-btn-mini" id="btn-sync-now" title="סנכרן לפי last-write-wins בין הדפדפן ל-Supabase">סנכרן עכשיו</button>
                     <button class="km-btn-mini" id="btn-sync-pull" title="משוך את snapshot ההתקדמות האחרון מ-Supabase">משוך</button>
@@ -605,6 +609,10 @@
 
                 <section class="settings-card settings-card-wide" aria-label="ניהול מתקדם">
                   <h3>ניהול מתקדם</h3>
+                  <div class="teacher-impersonate-row">
+                    <button class="km-btn-mini" id="btn-preview-student" type="button" title="טען קובץ JSON של תלמיד וצפה בפורטל מנקודת מבטו (ללא שינוי נתוניך)">👁 צפה כתלמיד</button>
+                    <input type="file" id="teacher-preview-file" accept=".json,application/json" style="display:none" aria-label="בחר קובץ התקדמות תלמיד" />
+                  </div>
                   <details class="teacher-class-panel">
                     <summary>ניהול כיתה למורה</summary>
                     <div class="teacher-class-form">
@@ -1462,7 +1470,7 @@
     <!-- P4.6.4 — HTML sanitization must patch legacy rendering before app.js -->
     <script src="lib/vendor/dompurify.min.js"></script>
     <script src="src/core/sanitize-early.js"></script>
-    <script src="app.js?v=cleanup-shards-v105"></script>
+    <script src="app.js?v=cleanup-shards-v109"></script>
     <script type="module" src="/src/main.js?v=core-bootstrap-v2"></script>
 
     <!-- W12 — Achievements overlay -->
@@ -1602,6 +1610,54 @@
       </div>
     </div>
 
+    <!-- Accessibility statement modal -->
+    <div id="a11y-statement-modal" hidden role="dialog" aria-modal="true" aria-labelledby="a11y-statement-title">
+      <div class="a11y-statement-backdrop" id="a11y-statement-backdrop"></div>
+      <div class="a11y-statement-panel">
+        <button class="a11y-statement-close" id="a11y-statement-close" aria-label="סגור הצהרת נגישות">✕</button>
+        <h2 id="a11y-statement-title">♿ הצהרת נגישות</h2>
+        <p class="a11y-statement-date">עודכן: 2026-05-04</p>
+        <section>
+          <h3>רמת ציות</h3>
+          <p>
+            LumenPortal שואף לעמוד בתקן <strong>WCAG 2.1 רמה AA</strong>
+            בהתאם לדירקטיבה האירופית 2016/2102 ולתקן הישראלי ת"י 5568.
+            ביקורת נגישות אחרונה: <strong>Lighthouse Accessibility 100/100</strong>
+            (2026-05-04) ו-<strong>0 כשלי מקלדת-בלבד</strong>.
+          </p>
+        </section>
+        <section>
+          <h3>מאפיינים נגישים</h3>
+          <ul>
+            <li>ניווט מקלדת מלא — Tab, Shift+Tab, Enter, Space, Arrow בכל הרכיבים.</li>
+            <li>ניגודיות צבעים AA בכל ערכות הצבע (כהה ובהיר).</li>
+            <li>תמיכה ב-<code>prefers-reduced-motion</code> — כבה אנימציות בהגדרות.</li>
+            <li>תמיכה ב-<code>prefers-color-scheme</code> — ערכת צבע אוטומטית.</li>
+            <li>תוויות ARIA מלאות על כל כפתורי אייקון ושדות טופס.</li>
+            <li>סדר כותרות לוגי (H1 → H2 → H3) בכל עמוד.</li>
+            <li>Focus-visible גלוי על כל אלמנט אינטראקטיבי.</li>
+          </ul>
+        </section>
+        <section>
+          <h3>מגבלות ידועות</h3>
+          <ul>
+            <li><strong>ביצועים:</strong> Lighthouse Performance 47 — app.js (~1.75MB) עדיין לא מפוצל למודולים. משפיע על TTI בטעינה ראשונה, לא על שימוש שוטף.</li>
+            <li><strong>CLS:</strong> 0.064 — גופן Heebo נטען מ-Google Fonts עם <code>font-display: swap</code>; גלוי רק בטעינה ראשונה ללא cache.</li>
+            <li><strong>תוכן RTL ↔ LTR:</strong> קטעי קוד תמיד LTR בתוך ממשק RTL — התנהגות מכוונת.</li>
+          </ul>
+        </section>
+        <section>
+          <h3>יצירת קשר לנגישות</h3>
+          <p>
+            נתקלת בבעיית נגישות? כתב/י לנו ב-
+            <a href="https://github.com/talstilkol/sv-test/issues" target="_blank" rel="noopener">GitHub Issues</a>
+            עם התווית <code>accessibility</code>.
+            נטפל בתוך 14 יום עסקים.
+          </p>
+        </section>
+      </div>
+    </div>
+
     <!-- Generic non-blocking confirm dialog — replaces native confirm() so we
          don't ship jarring browser dialogs and so programmatic flows aren't
          blocked. Promise-based API exposed as window.lumenConfirm(message, opts). -->
@@ -1644,5 +1700,13 @@
     </div>
     <script src="src/boot/lumen-confirm.js"></script>
     <script src="src/boot/consent-onboarding.js"></script>
+  <div id="curriculum-update-banner" role="status" aria-live="polite" hidden>
+    <span id="curriculum-update-label">📚 תוכן עודכן — גרסת תוכן <strong id="curriculum-update-version"></strong> זמינה</span>
+    <button type="button" id="btn-curriculum-dismiss" class="km-btn-mini" aria-label="סגור הודעת עדכון תוכן">✖ סגור</button>
+  </div>
+  <div id="teacher-preview-banner" role="alert" aria-live="assertive" hidden>
+    <span id="teacher-preview-label">מצב תצפית — תלמיד: <strong id="teacher-preview-name"></strong></span>
+    <button type="button" id="btn-exit-preview" class="km-btn-mini">✖ יציאה מתצפית</button>
+  </div>
   </body>
 </html>

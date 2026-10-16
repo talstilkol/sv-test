@@ -43,6 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("error", (e) => {
     window.__lumenIIFEError = window.__lumenIIFEError || { msg: e.message, file: e.filename, line: e.lineno, col: e.colno };
   });
+  const CURRICULUM_VERSION = "2026-05-04";
+  const CURRICULUM_VERSION_KEY = "lumenportal:curriculum-version:v1";
+
   const standaloneMuseumMode = (() => {
     try {
       const params = new URLSearchParams(window.location.search);
@@ -1352,6 +1355,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return String(value || "").replace(/\s+/g, " ").trim();
   }
 
+  function getTabLabel(tab) {
+    if (!tab) return "";
+    let text = "";
+    tab.childNodes.forEach((node) => {
+      if (node.nodeType === Node.ELEMENT_NODE && node.dataset.navSkip) return;
+      text += node.textContent || "";
+    });
+    return text || tab.getAttribute("aria-label") || "";
+  }
+
   function isSiteViewVisible(el) {
     return !!el && !el.hidden && el.style.display !== "none";
   }
@@ -1384,7 +1397,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return {
         type: "tab",
         id: activeTab.dataset.tab || activeTab.id || "tab",
-        label: cleanSiteNavText(activeTab.textContent || activeTab.getAttribute("aria-label") || "טאב"),
+        label: cleanSiteNavText(getTabLabel(activeTab) || activeTab.getAttribute("aria-label") || "טאב"),
       };
     }
 
@@ -1409,7 +1422,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabItems = topTabs
       .map((tab) => {
         const id = tab.dataset.tab || tab.id || "";
-        const label = cleanSiteNavText(tab.textContent || tab.getAttribute("aria-label") || "");
+        const label = cleanSiteNavText(getTabLabel(tab) || tab.getAttribute("aria-label") || "");
         if (!id || !label) return "";
         const active = state.type === "tab" && state.id === id ? " active" : "";
         return `<button class="site-map-item${active}" type="button" data-site-tab="${esc(id)}">${esc(label)}</button>`;
@@ -26644,14 +26657,52 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (completed) {
+      const sessionStats = (() => {
+        try { return JSON.parse(localStorage.getItem(FLASHCARDS_STATS_KEY) || "{}"); } catch (_) { return {}; }
+      })();
+      const DAY_MS_FC = window.SRS?.DAY_MS || 86400000;
+      const nowFc = Date.now();
+      const forecast = Array.from({ length: 7 }, (_, i) => ({ day: i, count: 0 }));
+      allConcepts().forEach(({ lesson, concept }) => {
+        const sc = getScore(lesson.id, concept.conceptName);
+        if (!sc.srsState?.due) return;
+        const daysUntil = Math.round((sc.srsState.due - nowFc) / DAY_MS_FC);
+        const bucket = daysUntil <= 0 ? 0 : Math.min(daysUntil, 6);
+        forecast[bucket].count++;
+      });
+      const maxFc = Math.max(1, ...forecast.map((f) => f.count));
+      const DAY_LABELS = ["היום", "מחר", "+2", "+3", "+4", "+5", "+6"];
+      const ratingChips = [
+        { key: "again", label: "↺ Again" },
+        { key: "hard", label: "קשה" },
+        { key: "good", label: "טוב" },
+        { key: "easy", label: "קל" },
+      ].map(({ key, label }) => {
+        const n = sessionStats[key] || 0;
+        return `<div class="fc-rating-chip ${key}"><span class="fc-chip-n">${n}</span><span class="fc-chip-label">${label}</span></div>`;
+      }).join("");
+      const forecastBars = forecast.map((f, i) => {
+        const h = Math.max(3, Math.round((f.count / maxFc) * 48));
+        return `<div class="fc-forecast-col${i === 0 ? " today" : ""}">
+          <span class="fc-forecast-n">${f.count > 0 ? f.count : ""}</span>
+          <div class="fc-forecast-bar-wrap"><div class="fc-forecast-bar" style="height:${h}px"></div></div>
+          <span class="fc-forecast-day">${DAY_LABELS[i]}</span>
+        </div>`;
+      }).join("");
       shell.innerHTML = `
         <div class="fc-complete">
           <div class="big-icon">✅</div>
           <h3>הסשן הושלם</h3>
-          <p>נסקרו ${flashcardsReviewed} כרטיסים. אפשר להתחיל שוב עם אותו סינון או לעבור למפת הידע כדי לראות את השינוי ברמות.</p>
+          <p>נסקרו ${flashcardsReviewed} כרטיסים בסשן זה.</p>
           <div class="fc-complete-actions">
             <button class="km-btn-mini" id="fc-restart-complete">↺ התחל שוב</button>
             <button class="km-btn-mini" id="fc-open-km-complete">🗺️ פתח מפת ידע</button>
+          </div>
+          <div class="fc-session-summary">
+            <h4>דירוג סשן זה</h4>
+            <div class="fc-rating-breakdown">${ratingChips}</div>
+            <h4>תזמון חזרות — 7 ימים הבאים</h4>
+            <div class="fc-forecast"><div class="fc-forecast-bars">${forecastBars}</div></div>
           </div>
         </div>`;
       document.getElementById("fc-restart-complete")?.addEventListener("click", () => {
@@ -26710,8 +26761,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button class="fc-rate hard" data-fc-rate="hard">קשה</button>
                 <button class="fc-rate good" data-fc-rate="good">טוב</button>
                 <button class="fc-rate easy" data-fc-rate="easy">קל</button>
+                <p class="fc-keyboard-hint"><kbd>1</kbd> Again &nbsp;<kbd>2</kbd> קשה &nbsp;<kbd>3</kbd> טוב &nbsp;<kbd>4</kbd> קל</p>
               `
-              : `<button class="fc-reveal-btn" id="fc-reveal">הצג תשובה</button>`
+              : `<button class="fc-reveal-btn" id="fc-reveal">הצג תשובה</button>
+                 <p class="fc-keyboard-hint"><kbd>Space</kbd> הצג תשובה</p>`
           }
           <button class="km-btn-mini" id="fc-open-lesson">פתח בשיעור</button>
         </div>
@@ -26816,6 +26869,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateProgress();
     saveFlashcardsSession();
     renderFlashcards();
+    updateFcDueBadge();
   }
 
   document.getElementById("fc-search")?.addEventListener("input", (e) => {
@@ -26839,6 +26893,51 @@ document.addEventListener("DOMContentLoaded", () => {
     flashcardIndex = 0;
     flashcardsRevealed = false;
     refreshFlashcards();
+  });
+
+  // SRS v2: due-count badge on the flashcards tab button
+  function updateFcDueBadge() {
+    const badge = document.getElementById("fc-due-badge");
+    if (!badge) return;
+    const due = allConcepts().reduce((n, { lesson, concept }) => {
+      const sc = getScore(lesson.id, concept.conceptName);
+      return n + (isSrsDue(sc) || (sc.attempts || 0) === 0 ? 1 : 0);
+    }, 0);
+    if (due > 0) {
+      badge.textContent = due > 99 ? "99+" : String(due);
+      badge.removeAttribute("hidden");
+      badge.setAttribute("aria-label", `${due} כרטיסים לחזרה היום`);
+    } else {
+      badge.setAttribute("hidden", "");
+    }
+  }
+  // Initial badge after scores load
+  setTimeout(updateFcDueBadge, 200);
+
+  // SRS v2: keyboard shortcuts inside the flashcards view
+  document.addEventListener("keydown", (e) => {
+    const fcView = document.getElementById("flashcards-view");
+    if (!fcView || fcView.style.display !== "block") return;
+    // Don't fire if focus is in an input/textarea/select
+    const tag = (document.activeElement?.tagName || "").toUpperCase();
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    // Don't fire if the a11y statement modal is open
+    if (!document.getElementById("a11y-statement-modal")?.hidden) return;
+    const completed = flashcardQueue.length > 0 && flashcardIndex >= flashcardQueue.length;
+    if (completed) return;
+    if (e.key === " " || e.code === "Space") {
+      e.preventDefault();
+      if (!flashcardsRevealed) {
+        flashcardsRevealed = true;
+        renderFlashcards();
+        updateFcDueBadge();
+      }
+    } else if (flashcardsRevealed) {
+      if (e.key === "1") { e.preventDefault(); rateFlashcard("again"); }
+      else if (e.key === "2") { e.preventDefault(); rateFlashcard("hard"); }
+      else if (e.key === "3") { e.preventDefault(); rateFlashcard("good"); }
+      else if (e.key === "4") { e.preventDefault(); rateFlashcard("easy"); }
+    }
   });
 
   // Toolbar wiring (guide)
@@ -35319,7 +35418,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return card?.dataset.concept || "";
       })();
       const ctxBar = document.getElementById("ai-context-bar");
-      if (ctxBar) ctxBar.textContent = concName ? `📌 הקשר: ${concName}` : "";
+      const content = concName ? getConceptContent(concName) : null;
+      if (ctxBar) {
+        ctxBar.textContent = concName
+          ? `📌 ${concName}${content ? ` · ${content.lessonTitle}` : ""}` : "";
+      }
       if (prefillMsg) {
         const inp = document.getElementById("ai-input");
         if (inp) inp.value = prefillMsg;
@@ -35377,6 +35480,39 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
   };
 
+  function getConceptContent(conceptName) {
+    if (!conceptName) return null;
+    const entry = allConcepts().find((e) => e.concept.conceptName === conceptName);
+    if (!entry) return null;
+    return {
+      explanation: entry.concept.levels?.soldier || entry.concept.levels?.student || entry.concept.levels?.child || "",
+      code: entry.concept.codeExample || "",
+      codeNote: entry.concept.codeExplanation || "",
+      lessonTitle: entry.lesson.title || "",
+    };
+  }
+
+  function buildLocalAIResponse(mode, conceptName, userMessage) {
+    const content = getConceptContent(conceptName);
+    if (!content || !content.explanation) {
+      return getAIDemoResponse(mode, conceptName);
+    }
+    const codeBlock = content.code
+      ? `\n\nדוגמת קוד:\n\`\`\`js\n${content.code}\`\`\`${content.codeNote ? "\n" + content.codeNote : ""}`
+      : "";
+    if (mode === "explain") {
+      return `📖 ${conceptName} — מתוך: ${content.lessonTitle}\n\n${content.explanation}${codeBlock}`;
+    }
+    if (mode === "coach") {
+      const hint = content.explanation.slice(0, 120);
+      return `🧭 רמז למושג "${conceptName}":\n${hint}...\n\nנסה לענות שוב, ואם תיתקע — שאל "הסבר לי יותר" ואני אפתח את כל ההסבר.`;
+    }
+    if (mode === "check") {
+      return `✔️ בדיקה עצמית — "${conceptName}":\n\nלפי ההגדרה: "${content.explanation.slice(0, 100)}..."\n\nהאם תוכל לכתוב דוגמה קוד קצרה שממחישה את המושג? כתוב אותה בתיבת הטקסט ואני אנסה להעריך.`;
+    }
+    return getAIDemoResponse(mode, conceptName);
+  }
+
   function getAIDemoResponse(mode, conceptName) {
     const pool = AI_DEMO_RESPONSES[mode] || AI_DEMO_RESPONSES.coach;
     const usage = getAIUsage();
@@ -35433,9 +35569,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let reply = "";
     try {
       const data = await callProductionAITutor({ message: msg, mode: aiCurrentMode, concept: concName });
-      reply = data?.reply || getAIDemoResponse(aiCurrentMode, concName);
+      reply = data?.reply || buildLocalAIResponse(aiCurrentMode, concName, msg);
     } catch {
-      reply = getAIDemoResponse(aiCurrentMode, concName);
+      reply = buildLocalAIResponse(aiCurrentMode, concName, msg);
     }
 
     thinkingEl.remove();
@@ -35681,6 +35817,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = {
       version: 2,
       exportedAt: Number.isNaN(date.getTime()) ? new Date(0).toISOString() : date.toISOString(),
+      curriculumVersion: CURRICULUM_VERSION,
       profile: {
         id: localProfileStore?.activeProfile?.id || "",
         name: localProfileStore?.activeProfile?.name || "",
@@ -35783,6 +35920,277 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     reader.readAsText(file);
   }
+
+  // ===== OFFLINE SYNC MERGE =====
+  function mergeScoreObjects(local, incoming) {
+    const merged = Object.assign({}, local);
+    Object.keys(incoming).forEach((conceptKey) => {
+      const inc = incoming[conceptKey];
+      const loc = local[conceptKey];
+      if (!loc) { merged[conceptKey] = inc; return; }
+      merged[conceptKey] = {
+        ...loc,
+        level: Math.max(loc.level || 1, inc.level || 1),
+        attempts: Math.max(loc.attempts || 0, inc.attempts || 0),
+        correct: Math.max(loc.correct || 0, inc.correct || 0),
+        taggedAttempts: Math.max(loc.taggedAttempts || 0, inc.taggedAttempts || 0),
+        taggedCorrect: Math.max(loc.taggedCorrect || 0, inc.taggedCorrect || 0),
+        weakReports: Math.max(loc.weakReports || 0, inc.weakReports || 0),
+        correctRunCount: Math.max(loc.correctRunCount || 0, inc.correctRunCount || 0),
+        passedMC: !!(loc.passedMC || inc.passedMC),
+        passedFill: !!(loc.passedFill || inc.passedFill),
+        markedKnown: !!(loc.markedKnown || inc.markedKnown),
+        masteryProof: loc.masteryProof || inc.masteryProof || null,
+        oneLineProof: loc.oneLineProof || inc.oneLineProof || null,
+        scratchProof: loc.scratchProof || inc.scratchProof || null,
+        codeProof: loc.codeProof || inc.codeProof || null,
+        lastAttemptAt: (loc.lastAttemptAt || 0) >= (inc.lastAttemptAt || 0)
+          ? loc.lastAttemptAt : inc.lastAttemptAt,
+      };
+    });
+    return merged;
+  }
+
+  function mergeJsonArrayKey(localRaw, incomingRaw) {
+    try {
+      const localArr = JSON.parse(localRaw || "[]");
+      const incArr = JSON.parse(incomingRaw || "[]");
+      if (!Array.isArray(localArr) || !Array.isArray(incArr)) return incomingRaw;
+      return JSON.stringify([...new Set([...localArr, ...incArr])]);
+    } catch (_) { return incomingRaw; }
+  }
+
+  function mergeEconomy(localEcon, incomingEcon) {
+    const inc = incomingEcon || {};
+    const loc = localEcon || {};
+    const mergedLog = [...(loc.rewardLog || []), ...(inc.rewardLog || [])];
+    const seen = new Set();
+    const deduped = mergedLog.filter((entry) => {
+      const id = entry.id || entry.at || JSON.stringify(entry);
+      if (seen.has(id)) return false;
+      seen.add(id);
+      return true;
+    });
+    return {
+      xp: Math.max(Number(loc.xp) || 0, Number(inc.xp) || 0),
+      coins: Math.max(Number(loc.coins) || 0, Number(inc.coins) || 0),
+      lifetimeXp: Math.max(Number(loc.lifetimeXp) || 0, Number(inc.lifetimeXp) || 0),
+      lifetimeCoinsEarned: Math.max(Number(loc.lifetimeCoinsEarned) || 0, Number(inc.lifetimeCoinsEarned) || 0),
+      disabled: loc.disabled || inc.disabled,
+      rewardLog: deduped.slice(0, 80),
+      purchases: Object.assign({}, loc.purchases || {}, inc.purchases || {}),
+    };
+  }
+
+  async function mergeProgressData(incoming) {
+    const snapshot = buildProgressSnapshot();
+    const mergedScoresKey = Object.keys(snapshot.scores)[0] || "lumenportal:scores:v1";
+    const mergedScores = {};
+    const allScoreKeys = new Set([
+      ...Object.keys(snapshot.scores),
+      ...Object.keys(incoming.scores || {}),
+    ]);
+    allScoreKeys.forEach((k) => {
+      try {
+        const localObj = JSON.parse(snapshot.scores[k] || "{}");
+        const incObj = JSON.parse((incoming.scores || {})[k] || "{}");
+        mergedScores[k] = JSON.stringify(mergeScoreObjects(localObj, incObj));
+      } catch (_) { mergedScores[k] = snapshot.scores[k] || (incoming.scores || {})[k]; }
+    });
+    const mergedProf = {};
+    const allProfKeys = new Set([
+      ...Object.keys(snapshot.proficiency),
+      ...Object.keys(incoming.proficiency || {}),
+    ]);
+    allProfKeys.forEach((k) => {
+      try {
+        const localVal = JSON.parse(snapshot.proficiency[k] || "{}");
+        const incVal = JSON.parse((incoming.proficiency || {})[k] || "{}");
+        const merged = Object.assign({}, localVal);
+        if (typeof incVal.level === "number" && incVal.level > (merged.level || 0)) merged.level = incVal.level;
+        mergedProf[k] = JSON.stringify(merged);
+      } catch (_) { mergedProf[k] = snapshot.proficiency[k] || (incoming.proficiency || {})[k]; }
+    });
+    const mergedAQ = {};
+    const allAQKeys = new Set([
+      ...Object.keys(snapshot.answeredQuestions),
+      ...Object.keys(incoming.answeredQuestions || {}),
+    ]);
+    allAQKeys.forEach((k) => {
+      mergedAQ[k] = mergeJsonArrayKey(
+        snapshot.answeredQuestions[k],
+        (incoming.answeredQuestions || {})[k],
+      );
+    });
+    const mergedWeaknesses = Object.assign({}, snapshot.weaknesses, incoming.weaknesses || {});
+    const mergedEcon = mergeEconomy(snapshot.economy, incoming.economy);
+    Object.entries(mergedScores).forEach(([k, v]) => localStorage.setItem(k, v));
+    Object.entries(mergedProf).forEach(([k, v]) => localStorage.setItem(k, v));
+    Object.entries(mergedAQ).forEach(([k, v]) => localStorage.setItem(k, v));
+    Object.entries(mergedWeaknesses).forEach(([k, v]) => localStorage.setItem(k, v));
+    importEconomyExport(mergedEcon);
+  }
+
+  function mergeProgress(file) {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (!data.version || (!data.scores && !data.proficiency)) {
+          alert("הקובץ אינו קובץ התקדמות תקין של LumenPortal.");
+          return;
+        }
+        const summary =
+          `מיזוג התקדמות מהתקן אחר:\n` +
+          `${Object.keys(data.scores || {}).length} שיעורים · ${Number((data.economy || {}).xp) || 0} XP\n\n` +
+          `הנתון הטוב ביותר מכל מקור יישמר — ציונים, XP וסמני מסטרי גבוהים יותר ינצחו.`;
+        const confirmed = await (window.lumenConfirm
+          ? window.lumenConfirm(summary, {
+              title: "אישור מיזוג התקדמות",
+              primary: "מזג",
+              secondary: "ביטול",
+              danger: false,
+            })
+          : Promise.resolve(confirm(summary)));
+        if (!confirmed) return;
+        await mergeProgressData(data);
+        alert("המיזוג הצליח! רענן את הדף כדי לראות את הנתונים המאוחדים.");
+      } catch (err) {
+        alert("שגיאה בקובץ — ודא שזה קובץ JSON תקין שיוצא מ-LumenPortal.");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  document.getElementById("btn-merge-progress")?.addEventListener("click", () => {
+    const picker = document.createElement("input");
+    picker.type = "file";
+    picker.accept = ".json,application/json";
+    picker.onchange = (e) => { if (e.target.files[0]) mergeProgress(e.target.files[0]); };
+    picker.click();
+  });
+
+  // ===== TEACHER PREVIEW (impersonation) =====
+  const PREVIEW_BACKUP_KEY = "lumenportal:teacher-preview-backup:v1";
+
+  function snapshotAllLumenKeys() {
+    const snap = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("lumenportal:")) snap[k] = localStorage.getItem(k);
+    }
+    return snap;
+  }
+
+  function restoreLumenKeysFromSnap(snap) {
+    // Remove all current lumenportal: keys
+    const toClear = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("lumenportal:") && k !== PREVIEW_BACKUP_KEY) toClear.push(k);
+    }
+    toClear.forEach((k) => localStorage.removeItem(k));
+    // Restore snapshot
+    Object.entries(snap).forEach(([k, v]) => localStorage.setItem(k, v));
+  }
+
+  function isInPreviewMode() {
+    return !!localStorage.getItem(PREVIEW_BACKUP_KEY);
+  }
+
+  function showPreviewBanner(studentName) {
+    const banner = document.getElementById("teacher-preview-banner");
+    const nameEl = document.getElementById("teacher-preview-name");
+    if (!banner) return;
+    if (nameEl) nameEl.textContent = studentName || "לא ידוע";
+    banner.removeAttribute("hidden");
+  }
+
+  function hidePreviewBanner() {
+    document.getElementById("teacher-preview-banner")?.setAttribute("hidden", "");
+  }
+
+  async function startTeacherPreview(file) {
+    if (!file) return;
+    let data;
+    try {
+      const text = await new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = (e) => resolve(String(e.target?.result || ""));
+        r.onerror = () => reject(new Error("read failed"));
+        r.readAsText(file);
+      });
+      data = JSON.parse(text);
+    } catch (_) {
+      alert("שגיאה בקריאת הקובץ — ודא שזה JSON תקין.");
+      return;
+    }
+    if (!data.version || (!data.scores && !data.proficiency)) {
+      alert("הקובץ אינו קובץ התקדמות תקין של LumenPortal.");
+      return;
+    }
+    const studentName = data.profile?.name || data.exportedAt || "לא ידוע";
+    // Backup current teacher state
+    const backup = snapshotAllLumenKeys();
+    localStorage.setItem(PREVIEW_BACKUP_KEY, JSON.stringify(backup));
+    // Apply student data (no confirmation needed — we have a backup)
+    try {
+      await applyProgressData(data, { requireConfirmation: false });
+    } catch (err) {
+      // Rollback
+      localStorage.removeItem(PREVIEW_BACKUP_KEY);
+      alert("שגיאה בטעינת נתוני התלמיד: " + (err.message || "unknown error"));
+      return;
+    }
+    showPreviewBanner(studentName);
+    // Reload UI to reflect student's state
+    window.location.reload();
+  }
+
+  function exitTeacherPreview() {
+    const raw = localStorage.getItem(PREVIEW_BACKUP_KEY);
+    if (!raw) { hidePreviewBanner(); return; }
+    try {
+      const backup = JSON.parse(raw);
+      localStorage.removeItem(PREVIEW_BACKUP_KEY);
+      restoreLumenKeysFromSnap(backup);
+    } catch (_) {
+      localStorage.removeItem(PREVIEW_BACKUP_KEY);
+    }
+    window.location.reload();
+  }
+
+  // Restore banner if we're still in preview mode after reload
+  if (isInPreviewMode()) {
+    try {
+      const backup = JSON.parse(localStorage.getItem(PREVIEW_BACKUP_KEY) || "{}");
+      // Try to show student's name from exported progress
+      const studentSnap = buildProgressSnapshot();
+      showPreviewBanner(studentSnap.profile?.name || "תלמיד");
+    } catch (_) { showPreviewBanner("תלמיד"); }
+  }
+
+  // ===== CURRICULUM VERSIONING =====
+  function checkCurriculumVersion() {
+    const stored = localStorage.getItem(CURRICULUM_VERSION_KEY) || "";
+    if (!stored) {
+      // First visit — record silently
+      localStorage.setItem(CURRICULUM_VERSION_KEY, CURRICULUM_VERSION);
+      return;
+    }
+    if (stored === CURRICULUM_VERSION) return;
+    // New version available — show banner
+    const banner = document.getElementById("curriculum-update-banner");
+    const versionEl = document.getElementById("curriculum-update-version");
+    if (!banner) return;
+    if (versionEl) versionEl.textContent = CURRICULUM_VERSION;
+    banner.removeAttribute("hidden");
+  }
+
+  document.getElementById("btn-curriculum-dismiss")?.addEventListener("click", () => {
+    document.getElementById("curriculum-update-banner")?.setAttribute("hidden", "");
+    localStorage.setItem(CURRICULUM_VERSION_KEY, CURRICULUM_VERSION);
+  });
 
   function progressSyncCore() {
     return window.LUMEN_CORE && window.LUMEN_CORE.progressSync;
@@ -35928,6 +36336,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Wire export/import buttons (added to settings/profile area)
+  document.getElementById("btn-preview-student")?.addEventListener("click", () => {
+    const picker = document.getElementById("teacher-preview-file");
+    if (!picker) return;
+    picker.onchange = (e) => { if (e.target.files?.[0]) startTeacherPreview(e.target.files[0]); };
+    picker.click();
+  });
+  document.getElementById("btn-exit-preview")?.addEventListener("click", exitTeacherPreview);
   document.getElementById("btn-export-progress")?.addEventListener("click", exportProgress);
   document.getElementById("btn-import-progress")?.addEventListener("click", () => {
     const picker = document.createElement("input");
@@ -36112,18 +36527,58 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function parseStudentsCsvLocal(csvText) {
+    const lines = csvText.trim().split(/\r?\n/).filter(Boolean);
+    if (lines.length < 2) return [];
+    const headers = lines[0].split(",").map((h) => h.trim().toLowerCase());
+    const nameIdx = headers.findIndex((h) => h.includes("name") || h.includes("שם"));
+    const emailIdx = headers.findIndex((h) => h.includes("email") || h.includes("מייל"));
+    const statusIdx = headers.findIndex((h) => h.includes("status") || h.includes("סטטוס"));
+    return lines.slice(1).map((line, i) => {
+      const cols = line.split(",").map((c) => c.trim());
+      return {
+        id: `csv-${i}`,
+        displayName: (nameIdx >= 0 ? cols[nameIdx] : cols[0]) || `תלמיד ${i + 1}`,
+        status: (statusIdx >= 0 ? cols[statusIdx] : "active") || "active",
+        joinedAt: new Date().toLocaleDateString("he-IL"),
+        lastActiveAt: "—",
+        email: (emailIdx >= 0 ? cols[emailIdx] : cols[1]) || "",
+      };
+    }).filter((s) => s.displayName);
+  }
+
   async function importTeacherStudentsCsvFromForm() {
+    const classId = teacherClassIdInput?.value?.trim() || "";
+    const file = teacherStudentCsvInput?.files?.[0];
+    if (!classId) {
+      if (!file) {
+        updateTeacherBulkStatus("בחר קובץ CSV (עמודות: name/שם, email, status/סטטוס). ללא Class ID — הצגה מקומית בלבד.", "blocked");
+        return;
+      }
+      try {
+        const csvText = await readFileAsText(file);
+        const students = parseStudentsCsvLocal(csvText);
+        if (!students.length) {
+          updateTeacherBulkStatus("קובץ CSV ריק או בפורמט לא מזוהה. נדרשת שורת כותרת.", "error");
+          return;
+        }
+        renderTeacherStudentRows(students);
+        updateTeacherBulkStatus(`יובאו ${students.length} תלמידים מ-CSV (מקומי — ללא שמירה ב-Supabase).`, "ready");
+        updateTeacherStudentStatus(`מוצגים ${students.length} תלמידים מ-CSV.`, "ready");
+      } catch (err) {
+        updateTeacherBulkStatus(`קריאת CSV נכשלה: ${err.message || "שגיאה לא ידועה"}`, "error");
+      }
+      return;
+    }
     const core = teacherBulkImportCore();
     if (!core) {
       updateTeacherBulkStatus("ייבוא CSV חסום: מודול teacher-bulk-import לא נטען.", "error");
       return;
     }
-    const classId = teacherClassIdInput?.value || "";
     if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
       updateTeacherBulkStatus("ייבוא CSV חסום: צריך Class ID תקין.", "blocked");
       return;
     }
-    const file = teacherStudentCsvInput?.files?.[0];
     if (!file) {
       updateTeacherBulkStatus("ייבוא CSV חסום: צריך לבחור קובץ CSV.", "blocked");
       return;
@@ -36159,40 +36614,72 @@ document.addEventListener("DOMContentLoaded", () => {
     teacherExportStatusEl.classList.add(state);
   }
 
+  function setTableSectionHTML(el, html) {
+    const bypass = Symbol.for("lumenportal.htmlSanitizerBypass");
+    const prev = window[bypass];
+    window[bypass] = true;
+    try { el.innerHTML = html; } finally { window[bypass] = prev; }
+  }
+
   function renderTeacherHeatmap(report) {
     if (!teacherHeatmapHead || !teacherHeatmapBody) return;
     const students = Array.isArray(report?.students) ? report.students : [];
     const concepts = Array.isArray(report?.concepts) ? report.concepts : [];
     if (!students.length || !concepts.length) {
-      teacherHeatmapHead.innerHTML = "<tr><th>מושג</th></tr>";
-      teacherHeatmapBody.innerHTML = '<tr><td>אין נתוני mastery קיימים לכיתה הזו.</td></tr>';
+      setTableSectionHTML(teacherHeatmapHead, "<tr><th>מושג</th></tr>");
+      setTableSectionHTML(teacherHeatmapBody, '<tr><td>אין נתוני mastery קיימים.</td></tr>');
       return;
     }
-    teacherHeatmapHead.innerHTML = `
-      <tr>
-        <th>מושג</th>
-        ${students.map((student) => `<th>${esc(student.name || "unknown/unavailable")}</th>`).join("")}
-      </tr>
-    `;
-    teacherHeatmapBody.innerHTML = concepts.map((conceptKey) => `
-      <tr>
-        <td>${esc(conceptKey)}</td>
-        ${students.map((student) => {
-          const cell = report.cells?.[`${student.id}::${conceptKey}`];
-          if (!cell) return '<td class="teacher-heatmap-cell unknown">unknown</td>';
-          return `<td class="teacher-heatmap-cell ${esc(cell.status)}" title="${esc(`${cell.correct}/${cell.attempts} correct · ${cell.lastEvidenceAt}`)}">${cell.masteryPct}%</td>`;
-        }).join("")}
-      </tr>
-    `).join("");
+    setTableSectionHTML(teacherHeatmapHead, `<tr><th>מושג</th>${students.map((s) => `<th>${esc(s.name || "unknown")}</th>`).join("")}</tr>`);
+    setTableSectionHTML(teacherHeatmapBody, concepts.map((conceptKey) =>
+      `<tr><td>${esc(conceptKey)}</td>${students.map((student) => {
+        const cell = report.cells?.[`${student.id}::${conceptKey}`];
+        if (!cell) return '<td class="teacher-heatmap-cell unknown">—</td>';
+        return `<td class="teacher-heatmap-cell ${esc(cell.status)}" title="${esc(cell.correct + "/" + cell.attempts + " · " + cell.lastEvidenceAt)}">${cell.masteryPct}%</td>`;
+      }).join("")}</tr>`
+    ).join(""));
+  }
+
+  function buildLocalHeatmapReport() {
+    const attempted = [];
+    allConcepts().forEach(({ lesson, concept }) => {
+      const sc = getScore(lesson.id, concept.conceptName);
+      if ((sc.attempts || 0) === 0) return;
+      const key = `${lesson.id}::${concept.conceptName}`;
+      const correct = sc.correct || 0;
+      const attempts = sc.attempts;
+      const masteryPct = Math.round((correct / attempts) * 100);
+      const status = masteryPct >= 80 ? "mastered" : masteryPct >= 50 ? "learning" : "struggling";
+      const lastAt = sc.lastAttemptAt ? new Date(sc.lastAttemptAt).toLocaleDateString("he-IL") : "—";
+      attempted.push({ key, masteryPct, status, correct, attempts, lastAt });
+    });
+    attempted.sort((a, b) => a.key.localeCompare(b.key));
+    const concepts = attempted.map((r) => r.key);
+    const cells = {};
+    attempted.forEach((r) => {
+      cells[`local::${r.key}`] = { status: r.status, masteryPct: r.masteryPct, correct: r.correct, attempts: r.attempts, lastEvidenceAt: r.lastAt };
+    });
+    return { students: [{ id: "local", name: "אני (נתונים מקומיים)" }], concepts, cells, rowCount: concepts.length, source: "local" };
   }
 
   async function loadTeacherHeatmapFromForm() {
+    const classId = teacherClassIdInput?.value?.trim() || "";
+    if (!classId) {
+      const report = buildLocalHeatmapReport();
+      if (!report.rowCount) {
+        updateTeacherHeatmapStatus("אין נתוני mastery מקומיים עדיין — תרגל מושגים כדי לראות heatmap.", "blocked");
+        return;
+      }
+      latestTeacherHeatmapReport = report;
+      renderTeacherHeatmap(report);
+      updateTeacherHeatmapStatus(`heatmap מקומי: ${report.rowCount} מושגים שתורגלו.`, "ready");
+      return;
+    }
     const core = teacherHeatmapCore();
     if (!core) {
       updateTeacherHeatmapStatus("טעינת heatmap חסומה: מודול teacher-heatmap לא נטען.", "error");
       return;
     }
-    const classId = teacherClassIdInput?.value || "";
     if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
       updateTeacherHeatmapStatus("טעינת heatmap חסומה: צריך Class ID תקין.", "blocked");
       return;
@@ -36273,13 +36760,45 @@ document.addEventListener("DOMContentLoaded", () => {
     `).join("");
   }
 
+  function buildLocalRiskAlerts() {
+    const alerts = [];
+    allConcepts().forEach(({ lesson, concept }) => {
+      const sc = getScore(lesson.id, concept.conceptName);
+      const attempts = sc.attempts || 0;
+      if (attempts < 3) return;
+      const correct = sc.correct || 0;
+      const pct = Math.round((correct / attempts) * 100);
+      if (pct < 40) {
+        alerts.push({
+          studentName: "אני (נתונים מקומיים)",
+          type: "low_mastery",
+          conceptKey: `${lesson.id}::${concept.conceptName}`,
+          metric: `${pct}% (${correct}/${attempts})`,
+          message: `שליטה נמוכה לאחר ${attempts} ניסיונות — מומלץ לחזור על המושג.`,
+          severity: pct < 20 ? "high" : "medium",
+        });
+      }
+    });
+    alerts.sort((a, b) => (a.severity === "high" ? -1 : 1) - (b.severity === "high" ? -1 : 1));
+    return alerts;
+  }
+
   async function loadTeacherRiskAlertsFromForm() {
+    const classId = teacherClassIdInput?.value?.trim() || "";
+    if (!classId) {
+      const alerts = buildLocalRiskAlerts();
+      renderTeacherRiskAlerts(alerts);
+      updateTeacherRiskStatus(
+        alerts.length ? `נמצאו ${alerts.length} מושגים עם שליטה נמוכה (נתונים מקומיים).` : "אין מושגים עם שליטה נמוכה בנתונים המקומיים.",
+        "ready",
+      );
+      return;
+    }
     const core = teacherRiskAlertsCore();
     if (!core) {
       updateTeacherRiskStatus("טעינת סיכונים חסומה: מודול teacher-risk-alerts לא נטען.", "error");
       return;
     }
-    const classId = teacherClassIdInput?.value || "";
     if (!teacherStudentsCore()?.normalizeClassId(classId).valid) {
       updateTeacherRiskStatus("טעינת סיכונים חסומה: צריך Class ID תקין.", "blocked");
       return;
@@ -36427,19 +36946,42 @@ document.addEventListener("DOMContentLoaded", () => {
     return communityConceptKeyInput?.value || "";
   }
 
+  const LOCAL_THREADS_KEY = "lumenportal:community-threads:v1";
+
+  function getLocalThreads(conceptKey) {
+    try { return (JSON.parse(localStorage.getItem(LOCAL_THREADS_KEY) || "{}")[conceptKey]) || []; } catch (_) { return []; }
+  }
+
+  function saveLocalThread(thread) {
+    try {
+      const all = JSON.parse(localStorage.getItem(LOCAL_THREADS_KEY) || "{}");
+      const key = thread.conceptKey;
+      all[key] = [thread, ...(all[key] || [])].slice(0, 50);
+      localStorage.setItem(LOCAL_THREADS_KEY, JSON.stringify(all));
+    } catch (_) {}
+  }
+
   async function loadCommunityThreadsFromForm() {
+    const conceptKey = communityConceptKey();
+    if (!conceptKey.trim()) {
+      updateCommunityDiscussionStatus("טעינת דיונים חסומה: הכנס concept key.", "blocked");
+      return;
+    }
     const core = communityDiscussionsCore();
+    const config = ensureSupabaseSyncConfig();
+    if (!config) {
+      const threads = getLocalThreads(conceptKey);
+      renderCommunityThreads(threads);
+      updateCommunityDiscussionStatus(
+        threads.length ? `${threads.length} פתקים מקומיים למושג הזה.` : "אין פתקים מקומיים למושג הזה — צור דיון כדי להוסיף.",
+        "ready",
+      );
+      return;
+    }
     if (!core) {
       updateCommunityDiscussionStatus("טעינת דיונים חסומה: מודול community-discussions לא נטען.", "error");
       return;
     }
-    const conceptKey = communityConceptKey();
-    if (!conceptKey.trim()) {
-      updateCommunityDiscussionStatus("טעינת דיונים חסומה: צריך concept key.", "blocked");
-      return;
-    }
-    const config = ensureSupabaseSyncConfig();
-    if (!config) return;
     updateCommunityDiscussionStatus("טוען דיונים מ-Supabase...", "blocked");
     try {
       const report = await core.fetchConceptDiscussionThreads({ config, conceptKey });
@@ -36454,22 +36996,33 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function createCommunityThreadFromForm() {
+    const conceptKey = communityConceptKey();
+    const title = communityThreadTitleInput?.value?.trim() || "";
+    const body = communityThreadBodyInput?.value?.trim() || "";
+    if (!conceptKey.trim() || !title) {
+      updateCommunityDiscussionStatus("יצירת דיון חסומה: צריך concept key וכותרת.", "blocked");
+      return;
+    }
     const core = communityDiscussionsCore();
+    const config = ensureSupabaseSyncConfig();
+    if (!config) {
+      const thread = { id: `local-${Date.now()}`, conceptKey, title, body, status: "open", createdAt: new Date().toLocaleDateString("he-IL"), source: "local" };
+      saveLocalThread(thread);
+      if (communityThreadTitleInput) communityThreadTitleInput.value = "";
+      if (communityThreadBodyInput) communityThreadBodyInput.value = "";
+      updateCommunityDiscussionStatus(`פתק נוסף: "${title}" (מקומי).`, "ready");
+      renderCommunityThreads(getLocalThreads(conceptKey));
+      return;
+    }
     if (!core) {
       updateCommunityDiscussionStatus("יצירת דיון חסומה: מודול community-discussions לא נטען.", "error");
       return;
     }
-    const draft = core.normalizeDiscussionDraft({
-      conceptKey: communityConceptKey(),
-      title: communityThreadTitleInput?.value || "",
-      body: communityThreadBodyInput?.value || "",
-    });
+    const draft = core.normalizeDiscussionDraft({ conceptKey, title, body });
     if (!draft.valid) {
       updateCommunityDiscussionStatus("יצירת דיון חסומה: צריך concept key וכותרת.", "blocked");
       return;
     }
-    const config = ensureSupabaseSyncConfig();
-    if (!config) return;
     updateCommunityDiscussionStatus("יוצר דיון ב-Supabase...", "blocked");
     try {
       const created = await core.createConceptDiscussionThread({ config, draft });
@@ -37304,6 +37857,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== end Local Auto-Save =====
 
+  // Consent banner + onboarding overlay are handled by src/boot/consent-onboarding.js
+  // which runs before app.js. Keys: lumen-consent = "accept"/"decline",
+  // lumen-onboarded = "1". window.__lumenConsentDeclined is set on decline.
+
+  // =========== ACCESSIBILITY STATEMENT ===========
+  (function initA11yStatement() {
+    const modal = document.getElementById("a11y-statement-modal");
+    const openBtn = document.getElementById("btn-open-a11y-statement");
+    const closeBtn = document.getElementById("a11y-statement-close");
+    const backdrop = document.getElementById("a11y-statement-backdrop");
+    if (!modal || !openBtn) return;
+    let lastFocus = null;
+    function openModal() {
+      lastFocus = document.activeElement;
+      modal.removeAttribute("hidden");
+      closeBtn?.focus();
+    }
+    function closeModal() {
+      modal.setAttribute("hidden", "");
+      lastFocus?.focus();
+    }
+    openBtn.addEventListener("click", openModal);
+    closeBtn?.addEventListener("click", closeModal);
+    backdrop?.addEventListener("click", closeModal);
+    modal.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { e.preventDefault(); closeModal(); }
+    });
+  })();
+
   // =========== BOOT ===========
   installFeatureErrorTelemetry();
   // Restore profile from server file BEFORE rendering anything dependent on profile
@@ -37338,6 +37920,8 @@ document.addEventListener("DOMContentLoaded", () => {
     setPortalDecisionAid("home");
     setHomeContextTree();
   }, 150);
+
+  checkCurriculumVersion();
 
   // QA sentinel: confirms DOMContentLoaded callback completed
   window.__lumenIIFEComplete = true;

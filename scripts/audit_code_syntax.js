@@ -17,6 +17,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
@@ -119,7 +120,7 @@ function syntaxCheck(code, label) {
 
 function loadData() {
   const sandbox = { window: {}, console };
-  fs.readdirSync(DATA_DIR).filter(f => f.endsWith(".js")).sort().forEach(f => {
+  fs.readdirSync(DATA_DIR).filter(f => f.endsWith(".js")).sort(byFilename).forEach(f => {
     vm.runInNewContext(fs.readFileSync(path.join(DATA_DIR, f), "utf8"), sandbox, { filename: f });
   });
   const lessons = Object.values(sandbox).filter(v => v && typeof v.id === "string" && Array.isArray(v.concepts));

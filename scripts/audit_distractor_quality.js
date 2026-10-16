@@ -16,6 +16,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
+const { byFilename } = require("./lib/sort.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
@@ -24,7 +25,7 @@ const MD_PATH = path.join(ROOT, "DISTRACTOR_QUALITY_REPORT.md");
 
 function loadBank() {
   const sandbox = { window: {}, console };
-  fs.readdirSync(DATA_DIR).filter(f => f.endsWith(".js")).sort().forEach(f => {
+  fs.readdirSync(DATA_DIR).filter(f => f.endsWith(".js")).sort(byFilename).forEach(f => {
     vm.runInNewContext(fs.readFileSync(path.join(DATA_DIR, f), "utf8"), sandbox, { filename: f });
   });
   return sandbox.QUESTIONS_BANK || { mc: [] };

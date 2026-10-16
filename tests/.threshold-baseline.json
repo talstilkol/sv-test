@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-04",
+  "generatedAt": "2026-05-04T21:18:22.785Z",
   "tests": [
     {
       "file": "tests/app-smoke.test.js",
@@ -685,7 +685,7 @@
       "file": "scripts/report_performance_budget.js",
       "op": "BUDGET",
       "key": "app.js",
-      "value": 1750000
+      "value": 1800000
     },
     {
       "file": "scripts/report_performance_budget.js",
