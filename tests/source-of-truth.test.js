@@ -25,7 +25,8 @@ describe("source-of-truth report", () => {
     const ids = report.artifacts.map((artifact) => artifact.id);
     expect(ids).toContain("REPORT_SOURCE_OF_TRUTH");
     expect(ids).toContain("FEATURE_COVERAGE_REPORT");
-    expect(report.artifacts.find((artifact) => artifact.id === "REPORT_SOURCE_OF_TRUTH")).toMatchObject({ state: "active" });
+    // State is "active" only on the day the report was last regenerated (`npm run reports`); do not couple the suite to the calendar.
+    expect(report.artifacts.find((artifact) => artifact.id === "REPORT_SOURCE_OF_TRUTH")).toMatchObject({ state: expect.stringMatching(/^(active|historical)$/) });
 
     expect(report.artifactSummary.historical + report.artifactSummary.active).toBe(report.artifactSummary.total);
   });
