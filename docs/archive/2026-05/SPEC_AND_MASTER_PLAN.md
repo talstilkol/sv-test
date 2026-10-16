@@ -2,7 +2,7 @@
 
 > תאריך: 2026-04-28 · גרסה: 5.4 · סטטוס: מסמך פעיל
 >
-> מסמך זה הוא מסמך איפיון היסטורי פעיל-לקריאה בלבד. אינדקס התוכנית הקומפקטי והמחייב לסוכנים נמצא ב-[docs/plans/00_CANONICAL_INDEX.md](docs/plans/00_CANONICAL_INDEX.md).
+> מסמך זה הוא מסמך איפיון היסטורי פעיל-לקריאה בלבד. אינדקס התוכנית הקומפקטי והמחייב לסוכנים נמצא ב-[docs/plans/00_CANONICAL_INDEX.md](../../plans/00_CANONICAL_INDEX.md).
 >
 > קבצי legacy ישנים כמו PRODUCT_SPEC.md, MASTER_PLAN_V2.md, MASTER_PLAN_V3.md ו-COORDINATION.md נמחקו; התוכן הרלוונטי שלהם מרוכז ב-`docs/plans/` ובמקורות האמת החיים.
 > מבוסס על: כל הסבבים של דיון, AUDITs, COMPETITIVE_ANALYSIS, ועבודת Tracks A-D.
@@ -59,7 +59,7 @@
 
 ## 0.2 מיפוי SVCollege נוכחי
 
-המיפוי הקנוני נמצא ב-[data/course_blueprints.js](data/course_blueprints.js) והדוח הניהולי נמצא ב-[SVCOLLEGE_COVERAGE_REPORT.md](SVCOLLEGE_COVERAGE_REPORT.md).
+המיפוי הקנוני נמצא ב-[data/course_blueprints.js](../../../data/course_blueprints.js) והדוח הניהולי נמצא ב-[SVCOLLEGE_COVERAGE_REPORT.md](../../../SVCOLLEGE_COVERAGE_REPORT.md).
 
 סטטוס תמציתי:
 
@@ -155,7 +155,7 @@ Phase 10 הוא Priority 2 עד ש-Finish Line 1 ו-Phase 9 ירוקים.
 
 ## 0.9 System Bug Audit — 2026-04-30
 
-נוסף דוח מצב מקיף: [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md), וה-backlog שלו נרשם גם ב-[MASTER_PLAN.md](MASTER_PLAN.md) תחת `0A`.
+נוסף דוח מצב מקיף: [SYSTEM_BUG_AUDIT_REPORT.md](../../../SYSTEM_BUG_AUDIT_REPORT.md), וה-backlog שלו נרשם גם ב-[MASTER_PLAN.md](MASTER_PLAN.md) תחת `0A`.
 
 מסקנת האודיט: שערי release, build, tests, performance, feature coverage, SVCollege readiness, tab matrix, command center, student export ו-PWA ירוקים. הבעיה הפעילה המרכזית היא לא runtime crash אלא עומק למידה: `337/568` concepts הם activity-ready, ו-`231` concepts עדיין חסרים Trace/Build/Bug activity. מתוך זה `9` הם פערי SVCollege-priority ולכן הם קודמים לכל הרחבת מוזיאון/חנות/קהילה. אודיט כנות נוסף מצא גם overclaim בתוכנית: אין לסמן specs, scaffolding או נתוני פיילוט/usage שלא קיימים כ-DONE.
 

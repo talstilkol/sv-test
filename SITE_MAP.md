@@ -142,9 +142,9 @@
 | קובץ | תכלית |
 |---|---|
 | [docs/plans/00_CANONICAL_INDEX.md](docs/plans/00_CANONICAL_INDEX.md) | אינדקס התוכנית הקומפקטי והמחייב לסוכנים |
-| [EXECUTION_TASKS.md](EXECUTION_TASKS.md) | תוכנית ביצוע חיה לפי gates |
-| [MASTER_PLAN.md](MASTER_PLAN.md) | backlog חי ו-bug audit |
-| [SPEC_AND_MASTER_PLAN.md](SPEC_AND_MASTER_PLAN.md) | איפיון היסטורי לקריאה בלבד |
+| [EXECUTION_TASKS.md](docs/archive/2026-05/EXECUTION_TASKS.md) | תוכנית ביצוע חיה לפי gates |
+| [MASTER_PLAN.md](docs/archive/2026-05/MASTER_PLAN.md) | backlog חי ו-bug audit |
+| [SPEC_AND_MASTER_PLAN.md](docs/archive/2026-05/SPEC_AND_MASTER_PLAN.md) | איפיון היסטורי לקריאה בלבד |
 | [docs/plans/04_AGENT_HANDOFF.md](docs/plans/04_AGENT_HANDOFF.md) | פרומפט המשך לסוכן הבא |
 | [docs/plans/05_LEGACY_DOC_MIGRATION.md](docs/plans/05_LEGACY_DOC_MIGRATION.md) | מפת הגירה שמסבירה מה נשמר מכל קובץ תכנון ישן שנמחק |
 | [docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md](docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md) | ארכיון פירוט המשימות שהושלמו והלוג ההיסטורי |

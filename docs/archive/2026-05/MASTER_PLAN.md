@@ -16,7 +16,7 @@
 
 > **עדכון Exam Sprint 2026-04-29:** נוסף P-0.3 ב-[EXECUTION_TASKS.md](EXECUTION_TASKS.md): ספרינט 7 ימים לפני מבחן. הוא מתמקד ב-weakest 10, no-repeat simulation, harder-after-correct, wrong-answer repair, smoke מובייל/פוקוס, וגיבוש `Exam Edition RC`.
 
-> **עדכון System Bug Audit 2026-05-01:** [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `249` פריטים: `DONE 22`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 220`.
+> **עדכון System Bug Audit 2026-05-01:** [SYSTEM_BUG_AUDIT_REPORT.md](../../../SYSTEM_BUG_AUDIT_REPORT.md) רוענן לפי gates חיים. מצב אמת: `finish-line:pre-release` הוא `17/18`, החסם היחיד הוא `questions:coverage-targets:strict`, `QUESTION_ACTIVITY_AUTHORING_PLAN` מציג `222` פערי activity לא-עדיפותיים ו-`svcollegePriorityGaps: 0`, ו-`BRUTAL_MASTER_PLAN_AUDIT` מציג `249` פריטים: `DONE 22`, `FAKED 0`, `PARTIAL 7`, `NOT DONE 220`.
 
 > **עדכון Manual Questions 2026-05-01:** חל איסור מוחלט על יצירת שאלות אוטומטיות. `scripts/seed_questions.js`, `scripts/audit_seeded_questions.js` ו-`tests/seeded-qa.test.js` נמחקו; `content-loader.js` לא טוען יותר `questions_bank_seeded.js`; כלי validation/coverage כבר לא קוראים את archive; והדוחות סופרים readiness רק מתוך בנק ידני. אחרי QMAN-001I, מצב אמת: `questions:coverage-targets` מדווח `ready:false`, עם `471` פערי MC ו-`466` פערי Fill ידניים; `MANUAL_QUESTION_AUTHORING_PLAN.md` דורש עדיין `1,347` MC ו-`865` Fill ידניות. הבנק הידני הפעיל עומד על `357` MC ו-`271` Fill.
 
@@ -42,7 +42,7 @@
 
 ## 0A. Current Verified System Bug Backlog — 2026-05-01
 
-מקור עדכני: [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md), [FINISH_LINE_PRERELEASE_REPORT.md](FINISH_LINE_PRERELEASE_REPORT.md), [BRUTAL_MASTER_PLAN_AUDIT.md](BRUTAL_MASTER_PLAN_AUDIT.md), [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md). רק ממצאים שאומתו בפקודות חיות נכנסים לכאן כמצב פעיל.
+מקור עדכני: [SYSTEM_BUG_AUDIT_REPORT.md](../../../SYSTEM_BUG_AUDIT_REPORT.md), [FINISH_LINE_PRERELEASE_REPORT.md](../../../FINISH_LINE_PRERELEASE_REPORT.md), [BRUTAL_MASTER_PLAN_AUDIT.md](BRUTAL_MASTER_PLAN_AUDIT.md), [MANUAL_QUESTION_AUTHORING_PLAN.md](../../../MANUAL_QUESTION_AUTHORING_PLAN.md). רק ממצאים שאומתו בפקודות חיות נכנסים לכאן כמצב פעיל.
 
 | ID | סטטוס | עדיפות | משימה |
 |---|---|---:|---|
@@ -75,12 +75,12 @@
 
 הסעיף הבא נשמר כהיסטוריה של משימות שכבר נוספו בעבר. בחלק מהשורות יש מספרים ישנים או מצב שהשתנה אחרי gates חיים. אם יש סתירה, סעיף `0A` והדוחות החיים גוברים.
 
-מקור: [SYSTEM_BUG_AUDIT_REPORT.md](SYSTEM_BUG_AUDIT_REPORT.md). העיקרון המחייב: לסגור קודם פערים שמחזקים הכנה אמיתית למבחן SVCollege, ורק אחר כך הרחבות מוזיאון/חנות/קהילה.
+מקור: [SYSTEM_BUG_AUDIT_REPORT.md](../../../SYSTEM_BUG_AUDIT_REPORT.md). העיקרון המחייב: לסגור קודם פערים שמחזקים הכנה אמיתית למבחן SVCollege, ורק אחר כך הרחבות מוזיאון/חנות/קהילה.
 
 | ID | סטטוס | עדיפות | משימה |
 |---|---|---:|---|
-| BUG-AUDIT-001 | [ ] | P0 | לסגור `222/568` פערי פעילות Trace/Build/Bug באמצעות תוכן אמיתי בלבד, לפי [QUESTION_ACTIVITY_AUTHORING_PLAN.md](QUESTION_ACTIVITY_AUTHORING_PLAN.md). |
-| BUG-AUDIT-002 | [V] | P0 | נסגרו `9` פערי SVCollege-priority ב-Design Systems באמצעות Trace ידני; [QUESTION_ACTIVITY_AUTHORING_PLAN.md](QUESTION_ACTIVITY_AUTHORING_PLAN.md) מציג עכשיו `svcollegePriorityGaps: 0`. |
+| BUG-AUDIT-001 | [ ] | P0 | לסגור `222/568` פערי פעילות Trace/Build/Bug באמצעות תוכן אמיתי בלבד, לפי [QUESTION_ACTIVITY_AUTHORING_PLAN.md](../../../QUESTION_ACTIVITY_AUTHORING_PLAN.md). |
+| BUG-AUDIT-002 | [V] | P0 | נסגרו `9` פערי SVCollege-priority ב-Design Systems באמצעות Trace ידני; [QUESTION_ACTIVITY_AUTHORING_PLAN.md](../../../QUESTION_ACTIVITY_AUTHORING_PLAN.md) מציג עכשיו `svcollegePriorityGaps: 0`. |
 | BUG-AUDIT-003 | [ ] | P1 | להשאיר `222` פערים לא-עדיפותיים ב-deferred עד סגירת SVCollege, ואז לשייך אותם לפורטל מתאים. |
 | BUG-AUDIT-004 | [ ] | P1 | להשלים בדיקות keyboard-only ל-Esc/Enter/Arrow, ניווט מושגים, מעבר שיעור, פתיחת/סגירת טאבים ומצבי focus. |
 | BUG-AUDIT-005 | [ ] | P1 | להמשיך פירוק `app.js` למודולי `src/` קטנים: lesson renderer, chrome/menu, settings, bug log, question panels. |
@@ -308,7 +308,7 @@ lesson_27: type, interface, enum, string, number, boolean, void
 סעיף האוטומציה הישן מבוטל. אסור ליצור שאלות בעזרת seed script, prompt ל-LLM, generator או הרחבת תוכן אוטומטית. כל שאלה שנכנסת לבנק הפעיל חייבת להיכתב ידנית מול חומר השיעור, לקבל `conceptKey` אמיתי, לקבל feedback לכל אפשרות MC, ולעבור validation/QA לפני commit.
 
 ### שלב A — בחירת מושג מתוך תוכנית authoring
-פותחים את [MANUAL_QUESTION_AUTHORING_PLAN.md](MANUAL_QUESTION_AUTHORING_PLAN.md), בוחרים את המושגים הראשונים לפי סדר P0, וקוראים את חומר השיעור המקורי לפני כתיבה.
+פותחים את [MANUAL_QUESTION_AUTHORING_PLAN.md](../../../MANUAL_QUESTION_AUTHORING_PLAN.md), בוחרים את המושגים הראשונים לפי סדר P0, וקוראים את חומר השיעור המקורי לפני כתיבה.
 
 ### שלב B — כתיבה ידנית ובדיקה קפדנית
 כותבים ידנית 3 MC ו-2 Fill לכל מושג חסר, בלי placeholder ובלי תשובה שדולפת בקוד. אם אין מספיק ידע מקור, מסמנים `unknown/unavailable` ולא ממלאים תוכן מומצא.

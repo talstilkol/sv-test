@@ -11,8 +11,8 @@ Canonical destinations:
 - `docs/plans/02_MANUAL_CONTENT_GOVERNANCE.md` — manual-only authoring policy and guards.
 - `docs/plans/03_DEFERRED_BACKLOG.md` — work that waits until Finish Line 1 is green.
 - `docs/plans/04_AGENT_HANDOFF.md` — prompt for Kimi 2.6 or another continuing agent.
-- `EXECUTION_TASKS.md` — operational task list.
-- `MASTER_PLAN.md` — live backlog and bug audit.
+- `docs/archive/2026-05/EXECUTION_TASKS.md` — operational task list (archived 2026-10-16; live list is `TASKS.md`).
+- `docs/archive/2026-05/MASTER_PLAN.md` — backlog and bug audit (archived 2026-10-16; live status is `MASTER_PLAN_OUTSTANDING.md`).
 
 ## Migration Rules
 
@@ -47,8 +47,8 @@ For any new agent, read these files instead of the deleted files:
 2. `docs/plans/01_FINISH_LINE_1.md`
 3. `docs/plans/02_MANUAL_CONTENT_GOVERNANCE.md`
 4. `docs/plans/05_LEGACY_DOC_MIGRATION.md`
-5. `EXECUTION_TASKS.md`
-6. `MASTER_PLAN.md`
+5. `TASKS.md` (historical: `docs/archive/2026-05/EXECUTION_TASKS.md`)
+6. `MASTER_PLAN_OUTSTANDING.md` (historical: `docs/archive/2026-05/MASTER_PLAN.md`)
 7. `MANUAL_QUESTION_AUTHORING_PLAN.md`
 8. `FINISH_LINE_PRERELEASE_REPORT.md`
 

@@ -7,7 +7,7 @@
 ## 7 ימים לפני המבחן
 
 ### יום 7 — מיפוי + עוצמות וחולשות
-- [ ] לפתוח את [TASKS_NUMBERED.md](../../TASKS_NUMBERED.md) ולוודא שכל ה-V מסומנים
+- [ ] לפתוח את [TASKS_NUMBERED.md](../archive/2026-05/TASKS_NUMBERED.md) ולוודא שכל ה-V מסומנים
 - [ ] להריץ `npm run validate:strict` — לוודא 0 errors
 - [ ] לעבור על [COMMON_PITFALLS.md](COMMON_PITFALLS.md) פעם אחת מהירה
 - [ ] לזהות 3-5 שיעורים חלשים אישית
@@ -84,4 +84,4 @@
 
 **תאריך יצירה:** 2026-05-02
 
-**שאלות?** קרא את [MASTER_PLAN_V2_PERSONAL.md](../../MASTER_PLAN_V2_PERSONAL.md).
+**שאלות?** קרא את [MASTER_PLAN_V2_PERSONAL.md](../archive/2026-05/MASTER_PLAN_V2_PERSONAL.md).

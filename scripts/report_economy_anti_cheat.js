@@ -55,7 +55,7 @@ function addCheck(checks, id, label, passed, detail) {
 function buildReport() {
   const app = read("app.js");
   const tasks = [
-    read("EXECUTION_TASKS.md"),
+    read("docs/archive/2026-05/EXECUTION_TASKS.md"),
     read("docs/plans/06_EXECUTION_TASKS_COMPLETED_ARCHIVE.md"),
   ].join("\n");
   const rewardLogId = functionBody(app, "rewardLogId");
