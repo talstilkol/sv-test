@@ -1,12 +1,13 @@
 {
   "schemaVersion": "svcollege-lessons-manifest-v1",
-  "updated": "2026-04-28",
-  "scope": "Raw SVCollege lesson/source assets moved out of the repository root.",
-  "rootPolicy": "No PDF, MP4, DOCX or PPTX lesson assets should live in the repo root.",
+  "updated": "2026-10-16",
+  "scope": "Catalog of the raw SVCollege lesson/source assets (slides, homework, summaries, videos) that data/ was authored from. The PDFs themselves are not committed (SVCollege copyright; not loaded by the app) — keep local copies under lessons/ (gitignored) when re-auditing content.",
+  "rootPolicy": "No PDF, MP4, DOCX or PPTX lesson assets should live in the repo root. lessons/*.pdf, *.pptx and *.mp4 are gitignored; entries with trackedInRepo=false may be absent from disk.",
   "assets": [
     {
       "filename": "Lesson 11.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
       "lessonId": "lesson_11",
@@ -16,6 +17,7 @@
     {
       "filename": "שיעורי בית 11.docx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "homework-export",
       "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
       "lessonId": "lesson_11",
@@ -25,6 +27,7 @@
     {
       "filename": "שיעורי בית 12.docx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "homework-export",
       "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
       "lessonId": "lesson_12",
@@ -34,6 +37,7 @@
     {
       "filename": "Lesson 13.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
       "lessonId": "lesson_13",
@@ -43,6 +47,7 @@
     {
       "filename": "שיעורי בית 13.docx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "homework-export",
       "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
       "lessonId": "lesson_13",
@@ -52,6 +57,7 @@
     {
       "filename": "lesson 15.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "JavaScript מודרני / async",
       "lessonId": "lesson_15",
@@ -61,6 +67,7 @@
     {
       "filename": "Lesson 16.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "Node.js / Express / REST",
       "lessonId": "lesson_16",
@@ -70,6 +77,7 @@
     {
       "filename": "Lesson 17.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "Node.js / Express / REST",
       "lessonId": "lesson_17",
@@ -79,6 +87,7 @@
     {
       "filename": "שיעורי בית 18.docx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "homework-export",
       "svcollegeModule": "Node.js / Express / REST",
       "lessonId": "lesson_18",
@@ -88,6 +97,7 @@
     {
       "filename": "lesson 19.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "lesson-export",
       "svcollegeModule": "Node.js / File System",
       "lessonId": "lesson_19",
@@ -97,6 +107,7 @@
     {
       "filename": "Lesson 20.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "Database בסיסי",
       "lessonId": "lesson_20",
@@ -106,6 +117,7 @@
     {
       "filename": "Lesson 21.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "React Frontend",
       "lessonId": "lesson_21",
@@ -115,6 +127,7 @@
     {
       "filename": "Lesson 22.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "React Frontend",
       "lessonId": "lesson_22",
@@ -124,6 +137,7 @@
     {
       "filename": "שיעורי בית 22.docx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "homework-export",
       "svcollegeModule": "React Frontend",
       "lessonId": "lesson_22",
@@ -133,6 +147,7 @@
     {
       "filename": "LESSON 23.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "React Frontend",
       "lessonId": "lesson_23",
@@ -142,6 +157,7 @@
     {
       "filename": "שיעורי בית 23.docx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "homework-export",
       "svcollegeModule": "React Frontend",
       "lessonId": "lesson_23",
@@ -151,6 +167,7 @@
     {
       "filename": "lesson24.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "React Frontend",
       "lessonId": "lesson_24",
@@ -160,6 +177,7 @@
     {
       "filename": "שיעורי בית 24.docx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "homework-export",
       "svcollegeModule": "React Frontend",
       "lessonId": "lesson_24",
@@ -169,6 +187,7 @@
     {
       "filename": "Lesson 25.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "Tailwind / responsive",
       "lessonId": "lesson_25",
@@ -178,6 +197,7 @@
     {
       "filename": "פרוייקט 25.docx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "project-export",
       "svcollegeModule": "Tailwind / responsive",
       "lessonId": "lesson_25",
@@ -187,6 +207,7 @@
     {
       "filename": "Lesson 26.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "TypeScript + React",
       "lessonId": "lesson_26",
@@ -196,6 +217,7 @@
     {
       "filename": "Lesson 26 part 2.pptx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "slide-deck-export",
       "svcollegeModule": "TypeScript + React",
       "lessonId": "lesson_26",
@@ -205,6 +227,7 @@
     {
       "filename": "lesson 27_homwork.docx.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "homework-export",
       "svcollegeModule": "TypeScript + React",
       "lessonId": "lesson_27",
@@ -214,6 +237,7 @@
     {
       "filename": "שיעורי בת lesson 27_homwork.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "homework-export",
       "svcollegeModule": "TypeScript + React",
       "lessonId": "lesson_27",
@@ -223,6 +247,7 @@
     {
       "filename": "חוברת תרגול JavaScript.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "workbook-export",
       "svcollegeModule": "JavaScript בסיסי ודינמיקה בדפדפן",
       "lessonId": "workbook_taskmanager",
@@ -232,6 +257,7 @@
     {
       "filename": "React_Architect_Blueprint.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "blueprint-export",
       "svcollegeModule": "Architecture / Testing",
       "lessonId": "react_blueprint",
@@ -241,6 +267,7 @@
     {
       "filename": "שימוש בAI בצורה נכונה בפיתוח.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "lesson-export",
       "svcollegeModule": "AI למפתחים",
       "lessonId": "ai_development",
@@ -250,6 +277,7 @@
     {
       "filename": "svcollege_full_lesson_summaries.pdf",
       "type": "pdf",
+      "trackedInRepo": false,
       "sourceKind": "summary-export",
       "svcollegeModule": "SVCollege full course summary",
       "lessonId": "svcollege_fullstack_ai",
