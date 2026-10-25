@@ -181,7 +181,7 @@
   "devDependencies": {
     "@playwright/test": "^1.59.1",
     "happy-dom": "^20.9.0",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   },
   "dependencies": {
     "@codesandbox/sandpack-client": "^2.19.8",
