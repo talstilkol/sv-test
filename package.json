@@ -185,6 +185,6 @@
   },
   "dependencies": {
     "@codesandbox/sandpack-client": "^2.19.8",
-    "dompurify": "^3.4.16"
+    "dompurify": "^3.4.17"
   }
 }
